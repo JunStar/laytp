@@ -30,12 +30,84 @@
             <li class="layui-nav-item layui-nav-itemed">
                 <a href="javascript:;">权限管理</a>
                 <dl class="layui-nav-child">
-                    <dd><a href="">菜单管理</a></dd>
+                    <dd class="layui-bg-green"><a href="">菜单管理</a></dd>
                     <dd><a href="{:url('demo/index/table')}">管理员管理</a></dd>
                     <dd><a href="{:url('demo/index/form')}">角色组</a></dd>
                 </dl>
             </li>
         </ul>
+    </div>
+</div>
+{/block}
+
+{block name="main"}
+<div class="layui-btn-group">
+    <button class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe654;</i>添加</button>
+</div>
+
+<!-- 表格部分 -->
+<table class="layui-table" lay-size="sm">
+    <colgroup>
+        <col width="150">
+        <col width="200">
+        <col>
+    </colgroup>
+    <thead>
+    <tr>
+        <th>昵称</th>
+        <th>加入时间</th>
+        <th>签名</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>贤心</td>
+        <td>2016-11-29</td>
+        <td>人生就像是一场修行</td>
+    </tr>
+    <tr>
+        <td>许闲心</td>
+        <td>2016-11-28</td>
+        <td>于千万人之中遇见你所遇见的人，于千万年之中，时间的无涯的荒野里…</td>
+    </tr>
+    </tbody>
+</table>
+<!-- 分页部分 -->
+<div class="layui-table-page">
+    <div id="layui-table-page1">
+        <div class="layui-box layui-laypage layui-laypage-default" id="layui-laypage-2">
+            <a href="javascript:;" class="layui-laypage-prev layui-disabled" data-page="0">
+                <i class="layui-icon"></i>
+            </a>
+            <span class="layui-laypage-curr"><em class="layui-laypage-em"></em><em>1</em></span>
+            <a href="javascript:;" data-page="2">2</a>
+            <a href="javascript:;" data-page="3">3</a>
+            <span class="layui-laypage-spr">…</span>
+            <a href="javascript:;" class="layui-laypage-last" title="尾页" data-page="34">34</a>
+            <a href="javascript:;" class="layui-laypage-next" data-page="2">
+                <i class="layui-icon"></i>
+            </a>
+            <span class="layui-laypage-skip">
+                到第
+                <input type="text" min="1" value="1" class="layui-input">
+                页
+                <button type="button" class="layui-laypage-btn">确定</button>
+            </span>
+            <span class="layui-laypage-count">共 1000 条</span>
+            <span class="layui-laypage-limits">
+                <select lay-ignore="">
+                    <option value="10">10 条/页</option>
+                    <option value="20">20 条/页</option>
+                    <option value="30" selected="">30 条/页</option>
+                    <option value="40">40 条/页</option>
+                    <option value="50">50 条/页</option>
+                    <option value="60">60 条/页</option>
+                    <option value="70">70 条/页</option>
+                    <option value="80">80 条/页</option>
+                    <option value="90">90 条/页</option>
+                </select>
+            </span>
+        </div>
     </div>
 </div>
 {/block}
