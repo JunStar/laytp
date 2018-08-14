@@ -1,2 +1,2 @@
 *.php
-!/demo/
+!/demo/*.php
