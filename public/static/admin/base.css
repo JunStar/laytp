@@ -1,0 +1,10 @@
+/* layui的css在后台有一些需要调整的放在这里 */
+body{font-family:'微软雅黑','Microsoft YaHei','Helvetica Neue','Luxi Sans','DejaVu Sans','Hiragino Sans GB',serif}
+
+.junadmin-nav{
+    padding: 0;
+}
+
+.junadmin-logo{
+    font-size:18px;
+}
