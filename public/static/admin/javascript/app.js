@@ -1,4 +1,6 @@
 (function func_app() {
+    var $ = layui.$;
+
     window.junadmin = {};  //全局对象
 
     var main = {};
