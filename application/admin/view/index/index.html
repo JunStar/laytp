@@ -1,1 +1,150 @@
-{extend name="admin@public/main"}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>JunAdmin</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    {block name="style"}
+    <link rel="stylesheet" href="__STATIC__/layui/css/layui.css" media="all">
+    {/block}
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    {block name="menus"}
+    <div class="layui-header">
+        <div class="layui-logo">layui 后台布局</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item"><a href="">首页</a></li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+                    贤心
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">基本资料</a></dd>
+                    <dd><a href="">安全设置</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href="">退了</a></li>
+        </ul>
+    </div>
+    {/block}
+
+    <div class="layui-body" style="position: static">
+        <!-- 内容主体区域 -->
+        <div style="padding: 15px;">
+            {block name="main"}
+            <div class="layui-card-body">
+
+                <table class="layui-table" lay-even="" lay-skin="line">
+                    <colgroup>
+                        <col width="20%">
+                        <col width="30%">
+                        <col width="20%">
+                        <col width="30%">
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th class="text-left" colspan="2">系统信息</th>
+                        <th class="text-left" colspan="2">产品团队</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td style="max-width:200px" class="nowrap">ThinkAdmin 版本</td>
+                        <td class="nowrap">3.0 dev</td>
+                        <td style="max-width:200px" class="nowrap">产品名称</td>
+                        <td class="nowrap">ThinkAdmin 管理框架</td>
+                    </tr>
+                    <tr>
+                        <td class="nowrap">ThinkPHP 版本</td>
+                        <td class="nowrap">5.1.22</td>
+                        <td class="nowrap">产品名称</td>
+                        <td class="nowrap">ThinkAdmin 管理框架</td>
+                    </tr>
+                    <tr>
+                        <td class="nowrap">服务器操作系统</td>
+                        <td class="nowrap">Linux</td>
+                        <td class="nowrap">产品DEMO体验</td>
+                        <td class="nowrap">
+                            <a target="_blank" href="http://demo.thinkadmin.top">http://demo.thinkadmin.top</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="nowrap">WEB运行环境</td>
+                        <td class="nowrap">fpm-fcgi</td>
+                        <td class="nowrap">官方QQ群</td>
+                        <td class="nowrap">
+                            <a href="http://shang.qq.com/wpa/qunwpa?idkey=ae25cf789dafbef62e50a980ffc31242f150bc61a61164458216dd98c411832a">
+                                <img src="//pub.idqqimg.com/wpa/images/group.png" style="height:18px;width:auto" target="_blank">
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="nowrap">MySQL数据库版本</td>
+                        <td class="nowrap">5.5.60-log</td>
+                        <td class="nowrap">BUG反馈</td>
+                        <td class="nowrap">
+                            <a target="_blank" href="https://github.com/zoujingli/ThinkAdmin/issues">
+                                https://github.com/zoujingli/ThinkAdmin/issues
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="nowrap">运行PHP版本</td>
+                        <td class="nowrap">7.2.8</td>
+                        <td class="nowrap">项目地址</td>
+                        <td class="nowrap">
+                            <a target="_blank" href="https://github.com/zoujingli/ThinkAdmin">
+                                https://github.com/zoujingli/ThinkAdmin
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="nowrap">上传大小限制</td>
+                        <td class="nowrap">50M</td>
+                        <td class="nowrap">公司官网</td>
+                        <td class="nowrap"><a target="_blank" href="http://www.cuci.cc">http://www.cuci.cc</a></td>
+                    </tr>
+                    <tr>
+                        <td class="nowrap">POST大小限制</td>
+                        <td class="nowrap">50M</td>
+                        <td class="nowrap">公司地址</td>
+                        <td class="nowrap">广州市天河区东圃一横路东泷商贸中心C座316</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            {/block}
+        </div>
+    </div>
+
+
+    {block name="footer"}
+    <div class="layui-footer" style="left:0">
+        <!-- 底部固定区域 -->
+        © layui.com - 底部固定区域
+    </div>
+    {/block}
+</div>
+{block name="script"}
+<script src="__STATIC__/layui/layui.js" charset="utf-8"></script>
+<script>
+    //JavaScript代码区域
+    layui.use('element', function(){
+        var element = layui.element;
+
+    });
+</script>
+{/block}
+</body>
+</html>
