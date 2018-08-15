@@ -1,9 +1,12 @@
 <?php
-namespace app\admin\controller;
+/**
+ * 菜单
+ */
+namespace app\admin\controller\core;
 
 use controller\BasicAdmin;
 
-class Index extends BasicAdmin
+class Menu extends BasicAdmin
 {
     public function index()
     {
