@@ -20,7 +20,7 @@
     init.btnAdd = function(){
         $('.btn-add').click(function(){
             var url = $(this).data("open");
-            facade.popup('添加',url, 800, 800);
+            facade.popup('添加',url, 800, 500);
         });
     }
 
