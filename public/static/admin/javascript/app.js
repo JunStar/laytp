@@ -70,8 +70,8 @@
 
     main.ajaxDel = function()
     {
-        $("[ajax-del]").click(function(){
-            var url = $(this).attr('ajax-del');
+        $("[btn-del]").click(function(){
+            var url = $(this).attr('btn-del');
             layer.open({
                 title: '提示',
                 content: '此操作不可恢复，确定继续吗？',

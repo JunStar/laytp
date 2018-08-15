@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>JunAdmin</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    {block name="style"}
+    <link rel="stylesheet" href="__STATIC__/layui/css/layui.css" media="all">
+    {/block}
+</head>
+<body>
+<div style="padding: 15px 15px 55px 15px;">
+{block name="body"}
+主体内容
+{/block}
+</div>
+<style>
+    .popup-footer{
+        position:fixed;
+        left:0;
+        right:0;
+        bottom:0;
+        height:44px;
+        line-height:44px;
+        padding: 0 15px;
+        background-color:#eee;
+    }
+</style>
+<div class="popup-footer">
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-sm">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary layui-btn-sm">重置</button>
+        </div>
+    </div>
+</div>
+{block name="script"}
+<script src="__STATIC__/layui/layui.all.js" charset="utf-8"></script>
+<script src="__ADMIN__/facade.js" charset="utf-8"></script>
+<script src="__ADMIN__/init.js" charset="utf-8"></script>
+{/block}
+</body>
+</html>

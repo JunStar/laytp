@@ -12,4 +12,8 @@ class Menu extends BasicAdmin
     {
         return $this->fetch();
     }
+
+    public function add(){
+        return $this->fetch();
+    }
 }
