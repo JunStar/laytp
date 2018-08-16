@@ -51,7 +51,12 @@
                 data: data.field,
                 dataType: 'json',
                 success: function (res) {
-                    facade.success('操作成功');
+                    if( res.code == 1 ){
+                        facade.success(res.msg);
+                        layer.closeAll();
+                    }else{
+                        facade.error(res.msg);
+                    }
                 },
                 error: function (xhr) {
                     if( xhr.status == '500' ){
