@@ -22,9 +22,10 @@ class MenuController extends BasicAdmin
     public function add()
     {
         if( $this->request->isAjax() && $this->request->isPost() ){
+            return $this->success('操作成功');
             $post = $this->request->post("row/a");
             if( $this->model->add($post) ){
-                return $this->success('操作成功','',$post);
+                return $this->success('操作成功');
             }else{
                 return $this->error('数据存入失败');
             }

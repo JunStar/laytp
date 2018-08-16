@@ -53,7 +53,7 @@
                 success: function (res) {
                     if( res.code == 1 ){
                         facade.success(res.msg);
-                        layer.closeAll();
+                        parent.layer.closeAll();
                     }else{
                         facade.error(res.msg);
                     }
