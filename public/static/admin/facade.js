@@ -10,6 +10,8 @@ if (typeof layui !== 'undefined') {
     }
 }
 
+var pop_select_input = "";
+
 (function func_facade() {
     window.facade = {};  //全局对象
 

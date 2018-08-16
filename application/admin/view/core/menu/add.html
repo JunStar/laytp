@@ -1,25 +1,20 @@
-{extend name="admin@public/popup"}
+{extend name="admin@public/form"}
 
-{block name="body"}
-<form class="layui-form layui-form-pane" action="">
+{block name="form"}
+
     <div class="layui-form-item">
         <label class="layui-form-label">菜单</label>
         <div class="layui-input-block">
-            <input type="radio" name="is_menu" value="1" title="是" checked="checked">
-            <input type="radio" name="is_menu" value="0" title="否">
+            <input type="radio" id="is_menu_1" name="row[is_menu]" value="1" title="是" checked="checked">
+            <input type="radio" id="is_menu_0" name="row[is_menu]" value="0" title="否">
         </div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label">父级</label>
         <div class="layui-input-block">
-            <select name="interest" lay-filter="aihao">
+            <select id="pid" name="row[pid]">
                 <option value=""></option>
-                <option value="0">写作</option>
-                <option value="1" selected="">阅读</option>
-                <option value="2">游戏</option>
-                <option value="3">音乐</option>
-                <option value="4">旅行</option>
             </select>
         </div>
     </div>
@@ -27,31 +22,35 @@
     <div class="layui-form-item">
         <label class="layui-form-label">标题</label>
         <div class="layui-input-block">
-            <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+            <input type="text" name="row[title]" lay-verify="required" autocomplete="off" placeholder="请输入标题" class="layui-input">
         </div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label">规则</label>
         <div class="layui-input-block">
-            <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入规则" class="layui-input">
+            <input type="text" name="row[rule]" lay-verify="required" autocomplete="off" placeholder="请输入规则" class="layui-input">
         </div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label">图标</label>
         <div class="layui-input-inline" style="margin-right:0;width:70%;">
-            <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入图标" class="layui-input">
+            <input type="text" id="icon" name="row[icon]" lay-verify="required" autocomplete="off" placeholder="请输入图标" class="layui-input">
         </div>
-        <a class="layui-form-label popup-select" data-template_id="choose_icon_tpl" data-source="__ADMIN__/data/icon.json" style="margin-left: -1px;">搜索图标</a>
+        <a class="layui-form-label popup-select" style="margin-left: -1px;"
+           data-template_id="choose_icon_tpl"
+           data-source="__ADMIN__/data/icon.json"
+           data-input_id="icon"
+        >搜索图标</a>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label">排序</label>
         <div class="layui-input-block">
-            <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入排序，从大到小，倒序排列" class="layui-input">
+            <input type="text" id="sort" name="row[sort]" autocomplete="off" placeholder="请输入排序，从大到小，倒序排列" class="layui-input">
         </div>
     </div>
-</form>
+
 {include file="core/menu/choose_icon_tpl" /}
 {/block}

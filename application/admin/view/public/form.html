@@ -18,7 +18,31 @@
 <body>
 <div style="padding: 15px 50px 55px 15px;">
 {block name="body"}
-主题内容
+<form class="layui-form layui-form-pane">
+    {block name="form"}
+    表单内容
+    {/block}
+    <style>
+        .form-footer{
+            position:fixed;
+            left:0;
+            right:0;
+            bottom:0;
+            height:44px;
+            line-height:44px;
+            padding: 0 15px;
+            background-color:#eee;
+        }
+    </style>
+    <div class="form-footer">
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn layui-btn-sm" lay-submit lay-filter="*">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary layui-btn-sm">重置</button>
+            </div>
+        </div>
+    </div>
+</form>
 {/block}
 </div>
 {block name="script"}

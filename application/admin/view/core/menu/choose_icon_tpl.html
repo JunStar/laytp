@@ -25,7 +25,7 @@
         <div>
             <ul class="list-inline">
                 {{#  layui.each(d, function(index, item){ }}
-                <li>
+                <li class="pop-select-to-input" data-input_value="{{ item.name }}">
                     <i class="{{ item.name }}"></i>
                 </li>
                 {{#  }); }}
