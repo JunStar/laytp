@@ -43,7 +43,7 @@
         <div class="layui-input-inline" style="margin-right:0;width:70%;">
             <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入图标" class="layui-input">
         </div>
-        <a class="layui-form-label" style="margin-left: -1px;">搜索图标</a>
+        <a class="layui-form-label popup-select" data-template_id="choose_icon_tpl" data-source="__ADMIN__/data/icon.json" style="margin-left: -1px;">搜索图标</a>
     </div>
 
     <div class="layui-form-item">
@@ -53,4 +53,5 @@
         </div>
     </div>
 </form>
+{include file="core/menu/choose_icon_tpl" /}
 {/block}

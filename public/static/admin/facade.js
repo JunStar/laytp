@@ -2,7 +2,9 @@
 if (typeof layui !== 'undefined') {
     var form = layui.form,
         layer = layui.layer,
-        laydate = layui.laydate;
+        laydate = layui.laydate,
+        laytpl = layui.laytpl
+    ;
     if (typeof jQuery === 'undefined') {
         var $ = jQuery = layui.$;
     }
@@ -27,18 +29,34 @@ if (typeof layui !== 'undefined') {
     }
 
     //layer弹窗iFrame
-    main.popup = function(title, url, width, height){
+    main.popup_frame = function(title, url, width, height){
         if(width == undefined) {
-            width = 500;
+            width = '500px';
         }
         if(height == undefined) {
-            height = 220;
+            height = '220px';
         }
         layer.open({
             type : 2,
             title : title,
             content : url,
-            area: [width+'px',height+'px'],
+            area: [width,height],
+        });
+    }
+
+    //layer弹出层
+    main.popup_div = function(title, content, width, height){
+        if(width == undefined) {
+            width = '500px';
+        }
+        if(height == undefined) {
+            height = '220px';
+        }
+        layer.open({
+            type : 1,
+            title : title,
+            content : content,
+            area: [width,height],
         });
     }
 
