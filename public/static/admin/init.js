@@ -50,10 +50,10 @@
                 url: window.location.href,
                 data: data.field,
                 dataType: 'json',
-                success: function (res, textStatus, xhr) {
+                success: function (res) {
                     facade.success('操作成功');
                 },
-                error: function (xhr, textStatus) {
+                error: function (xhr) {
                     if( xhr.status == '500' ){
                         facade.error('本地网络问题或者服务器错误');
                     }else if( xhr.status == '404' ){
