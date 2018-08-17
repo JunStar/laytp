@@ -53,6 +53,7 @@
                 success: function (res) {
                     if( res.code == 1 ){
                         facade.success(res.msg);
+                        parent.core_menu.table_render();
                         parent.layer.closeAll();
                     }else{
                         facade.error(res.msg);
