@@ -3,7 +3,8 @@ if (typeof layui !== 'undefined') {
     var form = layui.form,
         layer = layui.layer,
         laydate = layui.laydate,
-        laytpl = layui.laytpl
+        laytpl = layui.laytpl,
+        table = layui.table
     ;
     if (typeof jQuery === 'undefined') {
         var $ = jQuery = layui.$;
@@ -24,10 +25,10 @@ var pop_select_input = "";
 
     //组装成url
     main.url = function(path, params){
-        params = $.param(params);
-        params = params.replace('=','/');
-        params = params.replace('&','/');
-        return path + '/' + params + '.html';
+        // params = $.param(params);
+        // params = params.replace('=','/');
+        // params = params.replace('&','/');
+        return path + '.html';
     }
 
     //layer弹窗iFrame

@@ -16,6 +16,14 @@ class MenuController extends BasicAdmin
 
     public function index()
     {
+        if( $this->request->isAjax() ){
+//            $json['code'] = 1;
+            $json['code'] = 0;
+            $json['msg'] = '暂无数据';
+            $json['count'] = $this->model->count();
+            $json['data'] = $this->model->select()->toArray();
+            return json($json);
+        }
         return $this->fetch();
     }
 
