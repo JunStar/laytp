@@ -1,7 +1,6 @@
 {extend name="admin@public/form"}
 
 {block name="form"}
-
     <div class="layui-form-item">
         <label class="layui-form-label">菜单</label>
         <div class="layui-input-block">
@@ -51,6 +50,8 @@
             <input type="text" id="sort" name="row[sort]" placeholder="请输入排序，从大到小，倒序排列" class="layui-input">
         </div>
     </div>
+{/block}
 
-{include file="core/menu/choose_icon_tpl" /}
+{block name="js_template"}
+    {include file="core/menu/choose_icon_tpl" /}
 {/block}

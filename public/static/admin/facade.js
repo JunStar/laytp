@@ -25,10 +25,19 @@ var pop_select_input = "";
 
     //组装成url
     main.url = function(path, params){
-        // params = $.param(params);
-        // params = params.replace('=','/');
-        // params = params.replace('&','/');
-        return path + '.html';
+        if( typeof params !== 'undefined' ){
+            params = $.param(params);
+            params = params.replace('=','/');
+            params = params.replace('&','/');
+            params = '/' + params;
+        }else{
+            params = '';
+        }
+
+        path = '/' + path.replace(/(^\/)|(\/$)/,'');
+
+        var url = path + params + '.html';
+        return url;
     }
 
     //layer弹窗iFrame

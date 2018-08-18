@@ -17,11 +17,9 @@
 </head>
 <body>
 <div style="padding: 15px 50px 55px 15px;">
-{block name="body"}
 <form class="layui-form layui-form-pane">
-    {block name="form"}
-    表单内容
-    {/block}
+    <!-- 表单内容部分 -->
+    {block name="form"}{/block}
     <style>
         .form-footer{
             position:fixed;
@@ -43,8 +41,11 @@
         </div>
     </div>
 </form>
-{/block}
 </div>
+
+<!-- js模板部分 -->
+{block name="js_template"}{/block}
+
 {block name="script"}
 <script src="__STATIC__/layui/layui.all.js" charset="utf-8"></script>
 <script src="__ADMIN__/facade.js" charset="utf-8"></script>

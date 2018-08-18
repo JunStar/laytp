@@ -59,34 +59,21 @@
     <div class="layui-body">
         <!-- 内容主体区域 -->
         <div style="padding: 15px;">
-            {block name="main"}
-            内容主体区域
+            <!-- 搜索表单部分 -->
+            {block name="search_form"}{/block}
 
-            <br><br>
-            <blockquote class="layui-elem-quote">
-                layui 之所以赢得如此多人的青睐，更多是在于它“前后台系统通吃”的能力。既可编织出绚丽的前台页面，又可满足繁杂的后台功能需求。
-                <br>layui 后台布局， 致力于让每一位开发者都能轻松搭建自己的后台模板。
-            </blockquote>
+            <!-- 按钮列表部分 -->
+            {block name="button_list"}{/block}
 
-            <a href="/doc/element/layout.html#admin" target="_blank" class="layui-btn layui-btn-big">获取该布局代码</a>
-
-            <br><br><br><br>
-
-
-
-
-            下面是充数内容，为的是出现滚动条<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>
-            {/block}
+            <!-- 固定的layui-table -->
+            <table class="layui-hide-sm"></table>
         </div>
     </div>
 
-
-    {block name="footer"}
+    <!-- 底部固定区域 -->
     <div class="layui-footer">
-        <!-- 底部固定区域 -->
-        © layui.com - 底部固定区域
+        © junadmin.phpby.com
     </div>
-    {/block}
 </div>
 {block name="script"}
 <script src="__STATIC__/layui/layui.all.js" charset="utf-8"></script>
