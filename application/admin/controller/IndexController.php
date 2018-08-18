@@ -3,7 +3,7 @@ namespace app\admin\controller;
 
 use controller\BasicAdmin;
 
-class Index extends BasicAdmin
+class IndexController extends BasicAdmin
 {
     public function index()
     {
