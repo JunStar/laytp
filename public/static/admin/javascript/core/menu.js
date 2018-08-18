@@ -18,6 +18,5 @@
     }
 
     core_menu.table_render();
-
     window.core_menu = core_menu;
 })()
