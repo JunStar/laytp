@@ -62,12 +62,7 @@
         });
 
         function index(data){
-            var url = window.location.href;
-            console.log(url);
-            console.log(data.field);
-            core_menu.table_render(url, data.field);
-            return false;
-            eval(current_fun_obj+".table_render('"+url+"',"+data.field+")");
+            controller.table_render(data.field);
         }
 
         function add(data){
@@ -79,7 +74,7 @@
                 success: function (res) {
                     if( res.code == 1 ){
                         facade.success(res.msg);
-                        eval("parent."+current_fun_obj+".table_render()");
+                        parent.controller.table_render();
                         parent.layer.closeAll();
                     }else{
                         facade.error(res.msg);

@@ -29,4 +29,22 @@ class BasicAdmin extends Controller
         $assign['js_global_var']['current_fun_obj'] = str_replace('.','_',$controller);
         $this->assign($assign);
     }
+
+    public function build_params(){
+        $where = [];
+        $search_param = $this->request->post('search_param');
+        if( $search_param ){
+            foreach($search_param as $k=>$v){
+                if( $v['field'] && $v['condition'] && $v['field_val'] ){
+                    if( $v['condition'] == 'like' ){
+                        $where[] = [$v['field'],$v['condition'],'%'.$v['field_val'].'%'];
+                    }
+//                    if( $v['condition'] == 'time' ){
+//                        $where[] = [$v['field'],$v['condition'],'%'.$v['field_val'].'%'];
+//                    }
+                }
+            }
+        }
+        return $where;
+    }
 }

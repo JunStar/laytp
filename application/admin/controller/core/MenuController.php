@@ -11,13 +11,7 @@ class MenuController extends BasicAdmin
     public function index()
     {
         if( $this->request->isAjax() ){
-            $where = [];
-            $search_param = $this->request->post('search_param');
-            if( $search_param ){
-                foreach($search_param as $k=>$v){
-                    $where[$v['field']] = [$v['condition'],$v['field_val']];
-                }
-            }
+            $where = $this->build_params();
             $data = model('Menu')->where($where)->order('id asc')->paginate(1)->toArray();
             return layui_table_data($data);
         }
