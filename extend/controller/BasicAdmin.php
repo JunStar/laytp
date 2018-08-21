@@ -18,7 +18,14 @@ class BasicAdmin extends Controller
     }
 
     public function js_global_var(){
+        $module = $this->request->module();
         $controller = strtolower($this->request->controller());
+        $action = strtolower($this->request->action());
+
+        $assign['js_global_var']['module'] = $module;
+        $assign['js_global_var']['controller'] = $controller;
+        $assign['js_global_var']['action'] = $action;
+
         $assign['js_global_var']['current_fun_obj'] = str_replace('.','_',$controller);
         $this->assign($assign);
     }

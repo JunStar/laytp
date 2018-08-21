@@ -42,9 +42,35 @@
         });
     }
 
-    //表单绑定事件
+    /**
+     * 表单提交按钮绑定事件，包括添加表单、编辑表单和搜索表单
+     * <form class="layui-form">
+     *  <button class="layui-btn layui-btn-sm" lay-submit lay-filter="*">立即提交</button>
+     * </form>
+     * 重要的是
+     *  1.form的class值为layui-form;
+     *  2.button的属性值lay-submit lay-filter="*";
+     */
     init.form = function(){
         form.on('submit(*)', function(data){
+            if( action == 'index' ){
+                index(data);
+            }else if( action == 'add' ){
+                add(data);
+            }
+            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        });
+
+        function index(data){
+            var url = window.location.href;
+            console.log(url);
+            console.log(data.field);
+            core_menu.table_render(url, data.field);
+            return false;
+            eval(current_fun_obj+".table_render('"+url+"',"+data.field+")");
+        }
+
+        function add(data){
             $.ajax({
                 type: 'POST',
                 url: window.location.href,
@@ -67,9 +93,22 @@
                     }
                 }
             });
-            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        }
+    }
+
+    /**
+     * 搜索表单，添加搜索条件绑定事件
+     */
+    init.add_search_condition = function(){
+        $(document).on('click','.add_search_condition',function(){
+            var search_condition_tpl = $('#search_condition_tpl').html();
+            console.log(search_condition_tpl);
+            $('form > div').append(search_condition_tpl);
+            form.render();
         });
     }
+
+    //
 
     for(key in init){
         eval("init."+key+"();");
