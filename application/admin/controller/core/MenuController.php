@@ -12,7 +12,8 @@ class MenuController extends BasicAdmin
     {
         if( $this->request->isAjax() ){
             $where = $this->build_params();
-            $data = model('Menu')->where($where)->order('id asc')->paginate(1)->toArray();
+            $limit = $this->request->param('limit');
+            $data = model('Menu')->where($where)->order('id asc')->paginate($limit)->toArray();
             return layui_table_data($data);
         }
         return $this->fetch();

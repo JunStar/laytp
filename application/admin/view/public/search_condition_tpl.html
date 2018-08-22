@@ -1,15 +1,15 @@
 <script id="search_condition_tpl" type="text/html">
 <div class="layui-form-item">
     <div class="layui-input-inline">
-        <select name="search_param[1][field]">
+        <select name="search_param[{{ d }}][field]">
             <option value="">字段选择</option>
             <option value="id">ID</option>
-            <option value="title">标题</option>
+            <option value="name">标题</option>
             <option value="rule">规则</option>
         </select>
     </div>
     <div class="layui-input-inline" style="width: 100px;">
-        <select name="search_param[1][condition]">
+        <select name="search_param[{{ d }}][condition]">
             <option value="">条件选择</option>
             <option value="=">等于 =</option>
             <option value=">">大于 ></option>
@@ -19,7 +19,7 @@
         </select>
     </div>
     <div class="layui-input-inline">
-        <input name="search_param[1][field_val]" value="" placeholder="请输入搜索值" class="layui-input">
+        <input name="search_param[{{ d }}][field_val]" value="" placeholder="请输入搜索值" class="layui-input">
     </div>
 </div>
 </script>

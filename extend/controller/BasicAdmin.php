@@ -17,6 +17,9 @@ class BasicAdmin extends Controller
         $this->js_global_var();
     }
 
+    /**
+     * 渲染js全局变量
+     */
     public function js_global_var(){
         $module = $this->request->module();
         $controller = strtolower($this->request->controller());
@@ -30,6 +33,10 @@ class BasicAdmin extends Controller
         $this->assign($assign);
     }
 
+    /**
+     * 生成查询条件
+     * @return array
+     */
     public function build_params(){
         $where = [];
         $search_param = $this->request->post('search_param');
@@ -37,8 +44,9 @@ class BasicAdmin extends Controller
             foreach($search_param as $k=>$v){
                 if( $v['field'] && $v['condition'] && $v['field_val'] ){
                     if( $v['condition'] == 'like' ){
-                        $where[] = [$v['field'],$v['condition'],'%'.$v['field_val'].'%'];
+                        $v['field_val'] = '%'.$v['field_val'].'%';
                     }
+                    $where[] = [$v['field'],$v['condition'],$v['field_val']];
 //                    if( $v['condition'] == 'time' ){
 //                        $where[] = [$v['field'],$v['condition'],'%'.$v['field_val'].'%'];
 //                    }

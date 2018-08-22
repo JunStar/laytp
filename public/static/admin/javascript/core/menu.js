@@ -15,8 +15,11 @@
                 , {field: 'rule', title: '规则', sort: true}
                 , {field: 'icon', title: '图标'}
                 , {field: 'sort', title: '排序'}
+                , {field: 'operation', title: '操作', toolbar:'#operation'}
             ]]
         });
+
+        table.on()
     }
 
     controller.table_render();
