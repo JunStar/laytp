@@ -24,8 +24,27 @@
             var data = obj.data;
             if(obj.event === 'del'){
                 layer.confirm('真的删除行么', function(index){
-                    obj.del();
-                    layer.close(index);
+                    $.ajax({
+                        type: 'POST',
+                        url: facade.url('admin/core.menu/del'),
+                        data: {id:data.id},
+                        dataType: 'json',
+                        success: function (res) {
+                            if( res.code == 1 ){
+                                obj.del();
+                            }else{
+                                facade.error(res.msg);
+                            }
+                            layer.close(index);
+                        },
+                        error: function (xhr) {
+                            if( xhr.status == '500' ){
+                                facade.error('本地网络问题或者服务器错误');
+                            }else if( xhr.status == '404' ){
+                                facade.error('请求地址不存在');
+                            }
+                        }
+                    });
                 });
             }else if(obj.event === 'edit'){
                 layer.alert('编辑行：<br>'+ JSON.stringify(data));

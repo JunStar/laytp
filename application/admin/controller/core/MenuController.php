@@ -31,4 +31,8 @@ class MenuController extends BasicAdmin
         }
         return $this->fetch();
     }
+
+    public function del(){
+        return $this->success('操作成功');
+    }
 }
