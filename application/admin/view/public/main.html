@@ -68,12 +68,10 @@
             {block name="button_list"}{/block}
 
             <!-- 固定的layui-table -->
-            <table class="layui-hide-sm"></table>
-            <script type="text/html" id="operation">
-                <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
-                <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-            </script>
+            {block name="table"}
+            <table class="layui-hide-sm" lay-filter="default"></table>
+            {include file="public/operation_tpl"}
+            {/block}
         </div>
     </div>
 
