@@ -57,4 +57,10 @@ class MenuController extends BasicAdmin
             return $this->error('操作失败');
         }
     }
+
+    //设置状态
+    public function do_set_status(){
+        $field = $this->request->param('field');
+        $field_val = $this->request->param('field_val');
+    }
 }
