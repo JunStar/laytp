@@ -15,7 +15,7 @@
                 , {field: 'rule', title: '规则', sort: true, align: 'center'}
                 , {field: 'icon', title: '图标', align: 'center'}
                 , {field: 'sort', title: '排序', align: 'center'}
-                , {field: 'is_menu', title: '性别', width: 85, templet: '#switchTpl', unresize: true}
+                , {field: 'is_menu', title: '是否菜单', width: 85, templet: '#switch_is_menu', unresize: true}
                 , {field: 'operation', title: '操作', toolbar: '#operation', fixed: 'right', align: 'center'}
             ]]
         });
@@ -23,7 +23,6 @@
         //监听工具条
         table.on('tool(default)', function(obj){
             var data = obj.data;
-            console.log(data.id);
             //点击删除按钮
             if(obj.event === 'del'){
                 layer.confirm('真的删除行么', function(index){
@@ -55,6 +54,16 @@
                 facade.popup_frame('添加', url, '800px', '500px');
             }
         });
+
+        //监听性别操作
+        form.on('switch(default)', function(obj){
+            // layer.tips(this.value + ' ' + this.name + '：'+ obj.elem.checked, obj.othis);
+            console.log();
+            $.ajax({
+                
+            });
+        });
+
     }
 
     func_controller.table_render();

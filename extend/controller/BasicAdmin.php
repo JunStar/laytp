@@ -17,6 +17,11 @@ class BasicAdmin extends Controller
         $this->js_global_var();
     }
 
+    //设置菜单
+    public function menu(){
+        $menu = model('Menu')->where()->select()->toArray();
+    }
+
     /**
      * 渲染js全局变量
      */
@@ -28,8 +33,6 @@ class BasicAdmin extends Controller
         $assign['js_global_var']['module'] = $module;
         $assign['js_global_var']['controller'] = $controller;
         $assign['js_global_var']['action'] = $action;
-
-        $assign['js_global_var']['current_fun_obj'] = str_replace('.','_',$controller);
         $this->assign($assign);
     }
 

@@ -4,7 +4,6 @@
 
     //添加按钮
     init.btn_add = function(){
-        // $('.btn-add').click(function(){
         $(document).on('click','.btn-add',function(){
             var url = $(this).data("open");
             facade.popup_frame('添加', url, '800px', '500px');
@@ -62,7 +61,7 @@
             //当前url的action值为edit，编辑表单进行了提交
             }else if( action == 'edit' ){
                 console.log(window.location.href);
-                do_update(data);
+                do_update(data);func_controller
             }
             return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
         });
@@ -113,8 +112,6 @@
             });
         });
     }
-
-    //
 
     for(key in init){
         eval("init."+key+"();");
