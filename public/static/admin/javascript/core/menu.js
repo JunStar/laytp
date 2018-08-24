@@ -1,7 +1,7 @@
 (function func_controller() {
-    var controller = {};
+    var func_controller = {};
 
-    controller.table_render = function (where) {
+    func_controller.table_render = function (where) {
         table.render({
             elem: '.layui-hide-sm'
             , url: window.location.href
@@ -15,13 +15,16 @@
                 , {field: 'rule', title: '规则', sort: true, align: 'center'}
                 , {field: 'icon', title: '图标', align: 'center'}
                 , {field: 'sort', title: '排序', align: 'center'}
-                , {field: 'operation', title: '操作', toolbar:'#operation', fixed: 'right', align: 'center'}
+                , {field: 'is_menu', title: '性别', width: 85, templet: '#switchTpl', unresize: true}
+                , {field: 'operation', title: '操作', toolbar: '#operation', fixed: 'right', align: 'center'}
             ]]
         });
 
         //监听工具条
         table.on('tool(default)', function(obj){
             var data = obj.data;
+            console.log(data.id);
+            //点击删除按钮
             if(obj.event === 'del'){
                 layer.confirm('真的删除行么', function(index){
                     $.ajax({
@@ -46,13 +49,15 @@
                         }
                     });
                 });
+            //点击编辑按钮
             }else if(obj.event === 'edit'){
-                layer.alert('编辑行：<br>'+ JSON.stringify(data));
+                var url = facade.url(module + '/' + controller + '/edit',{id:data.id});
+                facade.popup_frame('添加', url, '800px', '500px');
             }
         });
     }
 
-    controller.table_render();
+    func_controller.table_render();
 
-    window.controller = controller;
+    window.func_controller = func_controller;
 })()

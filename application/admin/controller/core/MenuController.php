@@ -26,13 +26,35 @@ class MenuController extends BasicAdmin
             if( model('Menu')->addData($post) ){
                 return $this->success('操作成功');
             }else{
-                return $this->error('数据存入失败');
+                return $this->error('操作失败');
             }
         }
         return $this->fetch();
     }
 
+    public function edit(){
+        $edit_where['id'] = $this->request->param('id');
+
+        if( $this->request->isAjax() && $this->request->isPost() ){
+            $post = $this->request->post("row/a");
+            if( model('Menu')->where($edit_where)->update($post) ){
+                return $this->success('操作成功');
+            }else{
+                return $this->error('操作失败');
+            }
+        }
+
+        $assign = model('Menu')->where($edit_where)->find()->toArray();
+        $this->assign($assign);
+        return $this->fetch();
+    }
+
     public function del(){
-        return $this->success('操作成功');
+        $del_where['id'] = $this->request->param('id');
+        if( model('Menu')->where($del_where)->delete() ){
+            return $this->success('操作成功');
+        }else{
+            return $this->error('操作失败');
+        }
     }
 }

@@ -53,19 +53,27 @@
      */
     init.form = function(){
         form.on('submit(*)', function(data){
+            //当前url的action值为index，搜索表单进行了提交
             if( action == 'index' ){
                 index(data);
+            //当前url的action值为add，添加表单进行了提交
             }else if( action == 'add' ){
-                add(data);
+                do_update(data);
+            //当前url的action值为edit，编辑表单进行了提交
+            }else if( action == 'edit' ){
+                console.log(window.location.href);
+                do_update(data);
             }
             return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
         });
 
+        //搜索表单进行提交时，触发的方法
         function index(data){
             controller.table_render(data.field);
         }
 
-        function add(data){
+        //添加和编辑的表单进行提交时触发的方法
+        function do_update(data){
             $.ajax({
                 type: 'POST',
                 url: window.location.href,
@@ -74,7 +82,7 @@
                 success: function (res) {
                     if( res.code == 1 ){
                         facade.success(res.msg);
-                        parent.controller.table_render();
+                        parent.func_controller.table_render();
                         parent.layer.closeAll();
                     }else{
                         facade.error(res.msg);
