@@ -15,13 +15,13 @@
                 , {field: 'rule', title: '规则', sort: true, align: 'center'}
                 , {field: 'icon', title: '图标', align: 'center'}
                 , {field: 'sort', title: '排序', align: 'center'}
-                , {field: 'is_menu', title: '是否菜单', width: 85, templet: '#switch_is_menu', unresize: true}
+                , {field: 'is_menu', title: '是否菜单', templet: '#switch_is_menu', align: 'center'}
                 , {field: 'operation', title: '操作', toolbar: '#operation', fixed: 'right', align: 'center'}
             ]]
         });
 
         //监听工具条
-        table.on('tool(default)', function(obj){
+        table.on('tool()', function(obj){
             var data = obj.data;
             //点击删除按钮
             if(obj.event === 'del'){
@@ -55,13 +55,28 @@
             }
         });
 
-        //监听性别操作
-        form.on('switch(default)', function(obj){
-            // layer.tips(this.value + ' ' + this.name + '：'+ obj.elem.checked, obj.othis);
-            console.log();
-            $.ajax({
-                
-            });
+        //监听是否菜单操作
+        form.on('switch(set_is_menu)', function(obj){
+            var is_menu_list = {1:true,0:false};
+            for(key in is_menu_list){
+                if(is_menu_list[key] == obj.elem.checked){
+                    var post_data = {field:this.name,field_val:key,id:this.value};
+                    $.ajax({
+                        url: facade.url(module + '/' + controller + '/set_status/'),
+                        method: 'POST',
+                        data: post_data,
+                        success: function(res){
+                            if(res.code == 1){
+                                facade.success(res.msg);
+                                func_controller.table_render();
+                            }else{
+                                facade.error(res.msg);
+                                func_controller.table_render();
+                            }
+                        },
+                    });
+                }
+            }
         });
 
     }

@@ -51,7 +51,7 @@
      *  2.button的属性值lay-submit lay-filter="*";
      */
     init.form = function(){
-        form.on('submit(*)', function(data){
+        form.on('submit(default_submit)', function(data){
             //当前url的action值为index，搜索表单进行了提交
             if( action == 'index' ){
                 index(data);
@@ -60,7 +60,6 @@
                 do_update(data);
             //当前url的action值为edit，编辑表单进行了提交
             }else if( action == 'edit' ){
-                console.log(window.location.href);
                 do_update(data);func_controller
             }
             return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
@@ -68,7 +67,7 @@
 
         //搜索表单进行提交时，触发的方法
         function index(data){
-            controller.table_render(data.field);
+            func_controller.table_render(data.field);
         }
 
         //添加和编辑的表单进行提交时触发的方法

@@ -59,8 +59,15 @@ class MenuController extends BasicAdmin
     }
 
     //设置状态
-    public function do_set_status(){
+    public function set_status(){
+        $where['id'] = $this->request->param('id');
         $field = $this->request->param('field');
         $field_val = $this->request->param('field_val');
+        $save[$field] = $field_val;
+        if( model('Menu')->where($where)->update($save) ){
+            return $this->success('操作成功');
+        }else{
+            return $this->error('操作失败');
+        }
     }
 }
