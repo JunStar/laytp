@@ -5,16 +5,24 @@
 namespace app\admin\controller\core;
 
 use controller\BasicAdmin;
+use library\Tree;
 
 class MenuController extends BasicAdmin
 {
+    public function initialize(){
+        parent::initialize();
+        $where = $this->build_params();
+        $data = model('Menu')->where($where)->select()->toArray();
+        $menu_tree_obj = Tree::instance();
+        $menu_tree_obj->init($data);
+        $this->menu_list = $menu_tree_obj->getTreeList($menu_tree_obj->getTreeArray(0));
+        $this->assign('menu_list', $this->menu_list);
+    }
+
     public function index()
     {
         if( $this->request->isAjax() ){
-            $where = $this->build_params();
-            $limit = $this->request->param('limit');
-            $data = model('Menu')->where($where)->order('id asc')->paginate($limit)->toArray();
-            return layui_table_data($data);
+            return layui_table_data($this->menu_list);
         }
         return $this->fetch();
     }

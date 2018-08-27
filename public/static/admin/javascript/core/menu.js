@@ -8,11 +8,11 @@
             , where: where
             , method: 'POST'
             , cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
-            , page: true //开启分页
+            // , page: true //开启分页
             , cols: [[ //表头
                 {field: 'id', title: 'ID', sort: true, fixed: 'left', align: 'center'}
-                , {field: 'name', title: '标题', align: 'center'}
-                , {field: 'rule', title: '规则', sort: true, align: 'center'}
+                , {field: 'name', title: '标题'}
+                , {field: 'rule', title: '规则', sort: true}
                 , {field: 'icon', title: '图标', align: 'center'}
                 , {field: 'sort', title: '排序', align: 'center'}
                 , {field: 'is_menu', title: '是否菜单', templet: '#switch_is_menu', align: 'center'}
@@ -21,7 +21,7 @@
         });
 
         //监听工具条
-        table.on('tool()', function(obj){
+        table.on('tool(default)', function(obj){
             var data = obj.data;
             //点击删除按钮
             if(obj.event === 'del'){
@@ -78,7 +78,6 @@
                 }
             }
         });
-
     }
 
     func_controller.table_render();

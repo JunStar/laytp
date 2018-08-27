@@ -13,7 +13,10 @@
         <label class="layui-form-label">父级</label>
         <div class="layui-input-block">
             <select id="pid" name="row[pid]">
-                <option value=""></option>
+                <option value="0">------请选择------</option>
+                {foreach $menu_list as $key=>$vo}
+                <option value="{$vo.id}">{$vo.name}</option>
+                {/foreach}
             </select>
         </div>
     </div>
