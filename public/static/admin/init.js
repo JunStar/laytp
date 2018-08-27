@@ -100,12 +100,12 @@
     /**
      * 搜索表单，添加搜索条件绑定事件
      */
-    var click_num = 0;
+    var add_search_condition_click_num = 0;
     init.add_search_condition = function(){
         $(document).on('click','.add_search_condition',function(){
             var search_condition_tpl = $('#search_condition_tpl').html();
-            click_num = click_num + 1;
-            laytpl(search_condition_tpl).render(click_num, function(html){
+            add_search_condition_click_num = add_search_condition_click_num + 1;
+            laytpl(search_condition_tpl).render(add_search_condition_click_num, function(html){
                 $('form > div').append(html);
                 form.render();
             });
