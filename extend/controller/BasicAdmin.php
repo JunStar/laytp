@@ -25,7 +25,11 @@ class BasicAdmin extends Controller
         //当前菜单信息
         $now_node_where['rule'] = $now_node;
         $now_menus = model('Menu')->where($now_node_where)->order('pid desc')->select()->toArray();
-        $now_menu = $now_menus[0];
+        if( !$now_menus ){
+            return true;
+        }else{
+            $now_menu = $now_menus[0];
+        }
         //当前二级菜单信息
         $now_second_menu = model('Menu')->where('id','=',$now_menu['pid'])->find();
         if($now_second_menu){
