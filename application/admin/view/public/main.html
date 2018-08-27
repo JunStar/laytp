@@ -22,8 +22,9 @@
         <div class="layui-logo">layui 后台布局</div>
         <!-- 头部区域（可配合layui已有的水平导航） -->
         <ul class="layui-nav layui-layout-left">
-            <li class="layui-nav-item"><a href="">首页</a></li>
-            <li class="layui-nav-item"><a href="{:url('/admin/core.menu/index')}">系统</a></li>
+            {foreach $first_menu as $fv}
+            <li class="layui-nav-item {if $fv['selected']}layui-bg-green{/if}"><a href="{:url($fv['rule'])}"><i class="{$fv['icon']}"></i> {$fv['name']}</a></li>
+            {/foreach}
         </ul>
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
@@ -44,12 +45,18 @@
         <div class="layui-side-scroll">
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul class="layui-nav layui-nav-tree"  lay-filter="test">
-                <li class="layui-nav-item layui-nav-itemed">
-                    <a class="" href="javascript:;">首页</a>
+                {foreach $left_menu as $sv}
+                <li class="layui-nav-item {if $sv['selected']}layui-nav-itemed{/if}">
+                    <a class="" href="javascript:;"><i class="{$sv['icon']}"></i> {$sv['name']}</a>
+                    {if $sv['child']}
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">首页</a></dd>
+                        {foreach $sv['child'] as $tv}
+                        <dd {if $tv['selected']}class="layui-bg-green"{/if}><a href="javascript:;"><i class="{$tv['icon']}"></i> {$tv['name']}</a></dd>
+                        {/foreach}
                     </dl>
+                    {/if}
                 </li>
+                {/foreach}
             </ul>
         </div>
     </div>

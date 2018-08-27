@@ -1,53 +1,5 @@
 {extend name="admin@public/main"}
 
-{block name="menus"}
-<div class="layui-header">
-    <div class="layui-logo">layui 后台布局</div>
-    <!-- 头部区域（可配合layui已有的水平导航） -->
-    <ul class="layui-nav layui-layout-left">
-        <li class="layui-nav-item"><a href="{:url('/admin')}">首页</a></li>
-        <li class="layui-nav-item layui-bg-green"><a href="{:url('/admin/core.menu/index')}"><i class="layui-icon layui-icon-face-smile"></i> 系统核心</a></li>
-    </ul>
-    <ul class="layui-nav layui-layout-right">
-        <li class="layui-nav-item">
-            <a href="javascript:;">
-                <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-                贤心
-            </a>
-            <dl class="layui-nav-child">
-                <dd><a href="">基本资料</a></dd>
-                <dd><a href="">安全设置</a></dd>
-            </dl>
-        </li>
-        <li class="layui-nav-item"><a href="">退了</a></li>
-    </ul>
-</div>
-
-<div class="layui-side layui-bg-black">
-    <div class="layui-side-scroll">
-        <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-        <ul class="layui-nav layui-nav-tree">
-            <li class="layui-nav-item layui-nav-itemed">
-                <a href="javascript:;"><i class="layui-icon layui-icon-face-smile"></i> 权限管理</a>
-                <dl class="layui-nav-child">
-                    <dd class="layui-bg-green"><a href="">&nbsp;<i class="layui-icon layui-icon-face-smile"></i> 菜单管理</a></dd>
-                    <dd><a href="{:url('demo/index/table')}">管理员管理</a></dd>
-                    <dd><a href="{:url('demo/index/form')}">角色组</a></dd>
-                    <li class="layui-nav-item layui-nav-itemed">
-                        <a href="javascript:;">&nbsp;<i class="layui-icon layui-icon-face-smile"></i> 权限管理</a>
-                        <dl class="layui-nav-child">
-                            <dd class="layui-bg-green"><a href=""><i class="layui-icon layui-icon-face-smile"></i> 菜单管理</a></dd>
-                            <dd><a href="{:url('demo/index/table')}">管理员管理</a></dd>
-                            <dd><a href="{:url('demo/index/form')}">角色组</a></dd>
-                        </dl>
-                    </li>
-                </dl>
-            </li>
-        </ul>
-    </div>
-</div>
-{/block}
-
 {block name="search_form"}
 <form class="layui-form layui-form-pane">
     <div class="layui-form-item layui-inline">
