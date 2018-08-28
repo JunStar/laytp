@@ -32,7 +32,7 @@ class BasicAdmin extends Controller
         }
         //当前二级菜单信息
         $now_second_menu = model('Menu')->where('id','=',$now_menu['pid'])->find();
-        if($now_second_menu){
+        if($now_second_menu && $now_second_menu['pid']){
             $now_second_menu = $now_second_menu->toArray();
         }else{
             $now_second_menu = $now_menu;

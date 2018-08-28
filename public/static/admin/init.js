@@ -2,9 +2,12 @@
 (function func_init() {
     var init = {};
 
-    //添加按钮
-    init.btn_add = function(){
-        $(document).on('click','.btn-add',function(){
+    /**
+     * 弹窗展示页面
+     * 使用实例：1.添加按钮
+     */
+    init.popup_frame = function(){
+        $(document).on('click','.popup-frame',function(){
             var url = $(this).data("open");
             facade.popup_frame('添加', url, '800px', '500px');
         });
@@ -60,7 +63,7 @@
                 do_update(data);
             //当前url的action值为edit，编辑表单进行了提交
             }else if( action == 'edit' ){
-                do_update(data);func_controller
+                do_update(data);
             }
             return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
         });

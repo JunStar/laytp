@@ -34,18 +34,17 @@
     </div>
 </form>
 {include file="public/js_tpl/search_condition_tpl"}
-{include file="public/js_tpl/operation_tpl"}
-{include file="core/menu/switch_is_menu_tpl"}
-{include file="core/menu/show_icon_tpl"}
+{include file="autocreate/curd/operation_tpl"}
+{include file="autocreate/curd/button_tpl"}
 {/block}
 
 {block name="button_list"}
 <div class="layui-btn-group">
-    <button class="layui-btn layui-btn-sm popup-frame" data-open="{:url('admin/core.menu/add')}"><i class="layui-icon">&#xe654;</i>添加</button>
+    <button class="layui-btn layui-btn-sm popup-frame" data-open="{:url('admin/autocreate.curd/add')}"><i class="layui-icon">&#xe654;</i>添加</button>
 </div>
 {/block}
 
 {block name="script"}
 {__block__}
-<script src="__ADMIN_JS__/core/menu.js" charset="utf-8"></script>
+<script src="__ADMIN_JS__/autocreate/curd.js" charset="utf-8"></script>
 {/block}

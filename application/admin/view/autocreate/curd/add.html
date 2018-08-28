@@ -1,0 +1,21 @@
+{extend name="admin@public/form"}
+
+{block name="form"}
+    <div class="layui-form-item">
+        <label class="layui-form-label">表名</label>
+        <div class="layui-input-block">
+            <input type="text" name="row[name]" lay-verify="required" placeholder="请输入标题" class="layui-input" lay-verType="tips">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">表注释</label>
+        <div class="layui-input-block">
+            <input type="text" name="row[comment]" lay-verify="required" placeholder="请输入标题" class="layui-input" lay-verType="tips">
+        </div>
+    </div>
+{/block}
+
+{block name="js_template"}
+    {include file="core/menu/choose_icon_tpl" /}
+{/block}

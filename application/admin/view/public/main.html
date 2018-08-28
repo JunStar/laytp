@@ -47,11 +47,11 @@
             <ul class="layui-nav layui-nav-tree"  lay-filter="test">
                 {foreach $left_menu as $sv}
                 <li class="layui-nav-item {if $sv['selected']}layui-nav-itemed{/if}">
-                    <a class="" href="javascript:;"><i class="{$sv['icon']}"></i> {$sv['name']}</a>
+                    <a class="" href="javascript:void(0);"><i class="{$sv['icon']}"></i> {$sv['name']}</a>
                     {if $sv['child']}
                     <dl class="layui-nav-child">
                         {foreach $sv['child'] as $tv}
-                        <dd {if $tv['selected']}class="layui-bg-green"{/if}><a href="javascript:;"><i class="{$tv['icon']}"></i> {$tv['name']}</a></dd>
+                        <dd {if $tv['selected']}class="layui-bg-green"{/if}><a href="{:url($tv['rule'])}">&nbsp;&nbsp;<i class="{$tv['icon']}"></i> {$tv['name']}</a></dd>
                         {/foreach}
                     </dl>
                     {/if}

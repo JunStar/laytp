@@ -5,8 +5,7 @@ use controller\BasicAdmin;
 
 class IndexController extends BasicAdmin
 {
-    public function index()
-    {
+    public function index(){
         return $this->fetch();
     }
 }
