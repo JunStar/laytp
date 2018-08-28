@@ -9,7 +9,15 @@
     init.popup_frame = function(){
         $(document).on('click','.popup-frame',function(){
             var url = $(this).data("open");
-            facade.popup_frame('添加', url, '800px', '500px');
+            var width = $(this).data("width");
+            var height = $(this).data("height");
+            if( !width ){
+                width = '800px';
+            }
+            if( !height ){
+                height = '500px';
+            }
+            facade.popup_frame('添加', url, width, height);
         });
     }
 

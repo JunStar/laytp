@@ -34,14 +34,15 @@
     </div>
 </form>
 {include file="public/js_tpl/search_condition_tpl"}
+{include file="public/js_tpl/toolbar_tpl"}
 {include file="autocreate/curd/operation_tpl"}
-{include file="autocreate/curd/button_tpl"}
+{include file="autocreate/curd/set_fields_tpl"}
 {/block}
 
 {block name="button_list"}
-<div class="layui-btn-group">
-    <button class="layui-btn layui-btn-sm popup-frame" data-open="{:url('admin/autocreate.curd/add')}"><i class="layui-icon">&#xe654;</i>添加</button>
-</div>
+<!--<div class="layui-btn-group">-->
+    <!--<button class="layui-btn layui-btn-sm popup-frame" data-open="{:url('admin/autocreate.curd/add')}"><i class="layui-icon">&#xe654;</i>添加</button>-->
+<!--</div>-->
 {/block}
 
 {block name="script"}

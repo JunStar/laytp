@@ -5,6 +5,7 @@
         table.render({
             elem: '.layui-hide-sm'
             , url: window.location.href
+            , toolbar: '#default_toolbar'
             , where: where
             , method: 'POST'
             , cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
@@ -13,7 +14,7 @@
                 {field: 'id', title: 'ID', sort: true, fixed: 'left', align: 'center'}
                 , {field: 'name', title: '表名', align: 'center'}
                 , {field: 'comment', title: '表注释', align: 'center'}
-                , {field: 'fields', title: '字段', templet: '#button', align: 'center'}
+                , {field: 'fields', title: '字段', templet: '#set_fields', align: 'center'}
                 , {field: 'operation', title: '操作', toolbar: '#operation', fixed: 'right', align: 'center'}
             ]]
         });
