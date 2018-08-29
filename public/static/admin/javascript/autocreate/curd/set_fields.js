@@ -39,7 +39,7 @@
                     ,field_comment:"ID"
                     ,field_type:"int"
                     ,field_length:"11"
-                    ,field_default_val:"0"
+                    ,field_default_val:""
                     ,table_width:"100"
                     ,table_min_width:"60"
                     ,table_type:"60"
