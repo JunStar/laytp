@@ -1,0 +1,9 @@
+<script type="text/html" id="field_additional">
+    {{# if(d.field_name === 'id'){ }}
+        <input type="checkbox" name="row[field_ai]" value="{{d.field_name}}" title="自增" checked="checked" />
+        <input type="checkbox" name="row[field_pk]" value="{{d.field_name}}" title="主键" checked="checked" />
+        <input type="checkbox" name="row[field_required][]" value="{{d.field_name}}" title="必填" />
+    {{# }else{ }}
+        <input type="checkbox" name="row[field_required][]" value="{{d.field_name}}" title="必填" />
+    {{# } }}
+</script>

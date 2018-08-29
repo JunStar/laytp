@@ -17,6 +17,15 @@
                 , {field: 'fields', title: '字段', templet: '#set_fields', align: 'center'}
                 , {field: 'operation', title: '操作', toolbar: '#operation', fixed: 'right', align: 'center'}
             ]]
+            ,done: function(res, curr, count){
+                var tableElem = this.elem.next('.layui-table-view');
+                count || tableElem.find('.layui-table-header').css('overflow', 'auto');
+                layui.each(tableElem.find('tbody select'), function(){
+                    var elem = $(item)
+                    elem.parents('div .layui-table-cell').css('overflow', 'visible');
+                });
+                form.render();
+            }
         });
 
         //监听默认工具条

@@ -1,58 +1,32 @@
 {extend name="admin@public/popup"}
 
 {block name="body"}
-<table class="layui-hide" id="test"></table>
+<style>
+    /* 表格里面使用下拉框对样式的修改 */
+    .layui-table-cell{
+        height: auto;
+    }
+    .layui-form-select dl{
+        position:static;
+    }
+    .layui-input{
+        height:30px;
+    }
+</style>
+<table class="layui-hide-sm"></table>
 
-<script type="text/html" id="typeTpl">
-    <div class="layui-form">
-    <div class="layui-form-item">
-        <label class="layui-form-label">选择框</label>
-        <div class="layui-input-block">
-            <select name="city" lay-verify="required">
-                <option value=""></option>
-                <option value="0">北京</option>
-                <option value="1">上海</option>
-                <option value="2">广州</option>
-                <option value="3">深圳</option>
-                <option value="4">杭州</option>
-            </select>
-        </div>
-        </div>
-    </div>
-    </div>
-</script>
+{include file="autocreate/curd/set_fields_operation_tpl" /}
+{include file="autocreate/curd/field/additional_tpl" /}
+{include file="autocreate/curd/field/type_tpl" /}
+{include file="autocreate/curd/table/type_tpl" /}
+{include file="autocreate/curd/table/width_tpl" /}
+{include file="autocreate/curd/table/align_tpl" /}
+{include file="autocreate/curd/table/additional_tpl" /}
+{include file="autocreate/curd/form/additional_tpl" /}
+{include file="autocreate/curd/form/type_tpl" /}
+{/block}
 
-
-
-<script src="__STATIC__/layui/layui.all.js" charset="utf-8"></script>
-<script src="__ADMIN__/facade.js" charset="utf-8"></script>
-<script src="__ADMIN__/init.js" charset="utf-8"></script>
-<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
-
-<script>
-    layui.use('table', function(){
-        var table = layui.table
-            ,form = layui.form;
-
-        table.render({
-            elem: '#test'
-            ,url:''
-            ,cellMinWidth: 80
-            ,cols: [[
-                {title:'序号', type:'numbers'}
-                ,{field:'id', title:'字段名称', width:100, unresize: true, sort: true}
-                ,{field:'type', title:'字段类型', templet: '#typeTpl'}
-            ]]
-            ,data:[{
-                id:"id",
-                type:"int"
-            }]
-        });
-    });
-
-    layui.use('form', function(){
-        var form = layui.form;
-        form.render();
-    });
-</script>
+{block name="script"}
+{__block__}
+<script src="__ADMIN_JS__/autocreate/curd/set_fields.js" charset="utf-8"></script>
 {/block}
