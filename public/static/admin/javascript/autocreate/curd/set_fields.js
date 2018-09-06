@@ -1,7 +1,9 @@
 (function func_controller() {
     var func_controller = {};
 
-    func_controller.table_render = function () {
+    func_controller.data = [];
+
+    func_controller.table_render = function (data) {
         table.render({
             elem: '.layui-hide-sm'
             ,url:''
@@ -34,32 +36,34 @@
                     ,{field:'table_additional', title:'附加选项', templet: "#table_additional", align: 'center', width: 520}
                 ]
             ]
-            ,data:[
-                {
-                    field_name:"id"
-                    ,field_comment:"ID"
-                    ,field_type:"int"
-                    ,field_length:"11"
-                    ,field_decimal:"0"
-                    ,field_val:""
-                    ,table_width:"100"
-                    ,table_min_width:"60"
-                    ,table_type:"60"
-                }
-            ]
+            ,data:data
+            ,done:function(res){
+                func_controller.data = res.data;
+            }
         });
 
         form.on('select(field_type)',function(data){
             console.log(data);
+            console.log($(data).data('field_name'));
             var sel_val = data.value;
             //有int附加选项才有自增,主键,无符号,必填
-
-            // func_controller.table_render();
             return true;
         });
     }
 
-    func_controller.table_render();
+    func_controller.table_render([
+        {
+            field_name:"id"
+            ,field_comment:"ID"
+            ,field_type:"int"
+            ,field_length:"11"
+            ,field_decimal:"0"
+            ,field_val:""
+            ,table_width:"100"
+            ,table_min_width:"60"
+            ,table_type:"60"
+        }
+    ]);
 
     window.func_controller = func_controller;
 })()

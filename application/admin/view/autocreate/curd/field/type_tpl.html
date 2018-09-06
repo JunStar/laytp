@@ -1,5 +1,5 @@
 <script type="text/html" id="field_type">
-    <select name="field_type[]" lay-search="true" lay-filter="field_type">
+    <select name="field_type[]" lay-search="true" lay-filter="field_type" data-field_name="{{d.field_name}}}">
         <option value="bigint" {{# if(d.field_type=='bigint'){ }}selected="selected"{{# } }}>bigint</option>
         <option value="binary" {{# if(d.field_type=='binary'){ }}selected="selected"{{# } }}>binary</option>
         <option value="bit" {{# if(d.field_type=='bit'){ }}selected="selected"{{# } }}>bit</option>
