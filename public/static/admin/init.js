@@ -62,7 +62,7 @@
      *  2.button的属性值lay-submit lay-filter="*";
      */
     init.form = function(){
-        form.on('submit(default)', function(data){
+        form.on('submit(*)', function(data){
             /**
              * 所有的表单提交都是执行ajax，ajax请求的地址都是当前的url
              * 列表页的搜索表单要使用到layui的table控件进行ajax提交，其他表单使用jQuery的ajax提交方式
