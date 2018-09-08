@@ -1,0 +1,14 @@
+{extend name="admin@public/form"}
+
+{block name="form"}
+    <div class="layui-form-item">
+        <label class="layui-form-label">数据表</label>
+        <div class="layui-input-block">
+        <select name="row[table_name]">
+            {foreach $table_list as $vo}
+            <option value="{$vo['TABLE_COMMENT']}：{$vo['TABLE_NAME']}">{$vo['TABLE_COMMENT']}：{$vo['TABLE_NAME']}</option>
+            {/foreach}
+        </select>
+        </div>
+    </div>
+{/block}

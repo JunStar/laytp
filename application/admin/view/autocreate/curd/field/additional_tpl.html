@@ -1,10 +1,14 @@
 <script type="text/html" id="field_additional">
-    {{# if(d.field_name === 'id'){ }}
-        <input type="checkbox" name="row[field_ai]" value="{{d.field_name}}" title="自增" checked="checked" />
-        <input type="checkbox" name="row[field_pk]" value="{{d.field_name}}" title="主键" checked="checked" />
-        <input type="checkbox" name="row[field_unsigned][]" value="{{d.field_name}}" title="无符号" checked="checked" />
-        <input type="checkbox" name="row[field_required][]" value="{{d.field_name}}" title="必填" />
-    {{# }else{ }}
-        <input type="checkbox" name="row[field_required][]" value="{{d.field_name}}" title="必填" />
+    {{# if(d.field_ai_show === true){ }}
+    <input type="checkbox" name="row[field_ai]" value="{{d.field_name}}" title="自增" {{# if(d.field_ai === '1'){ }} checked="checked" {{# } }}  />
+    {{# } }}
+    {{# if(d.field_pk_show === true){ }}
+    <input type="checkbox" name="row[field_pk]" value="{{d.field_name}}" title="主键" {{# if(d.field_pk === '1'){ }} checked="checked" {{# } }} />
+    {{# } }}
+    {{# if(d.field_unsigned_show === true){ }}
+    <input type="checkbox" name="row[field_unsigned][]" value="{{d.field_name}}" title="无符号" {{# if(d.field_unsigned === '1'){ }} checked="checked" {{# } }} />
+    {{# } }}
+    {{# if(d.field_required_show === true){ }}
+    <input type="checkbox" name="row[field_required][]" value="{{d.field_name}}" title="必填" {{# if(d.field_required === '1'){ }} checked="checked" {{# } }} />
     {{# } }}
 </script>

@@ -7,6 +7,7 @@
      */
     init.popup_frame = function(){
         $(document).on('click','.popup-frame',function(){
+            var name = $(this).data("name") ? $(this).data("name") : '添加';
             var url = $(this).data("open");
             var width = $(this).data("width");
             var height = $(this).data("height");
@@ -16,7 +17,7 @@
             if( !height ){
                 height = '500px';
             }
-            facade.popup_frame('添加', url, width, height);
+            facade.popup_frame(name, url, width, height);
         });
     }
 
@@ -61,15 +62,16 @@
      *  2.button的属性值lay-submit lay-filter="*";
      */
     init.form = function(){
-        form.on('submit(default_submit)', function(data){
+        form.on('submit(default)', function(data){
+            /**
+             * 所有的表单提交都是执行ajax，ajax请求的地址都是当前的url
+             * 列表页的搜索表单要使用到layui的table控件进行ajax提交，其他表单使用jQuery的ajax提交方式
+             */
             //当前url的action值为index，搜索表单进行了提交
             if( action == 'index' ){
                 index(data);
-            //当前url的action值为add，添加表单进行了提交
-            }else if( action == 'add' ){
-                do_update(data);
-            //当前url的action值为edit，编辑表单进行了提交
-            }else if( action == 'edit' ){
+            //当前url的action值不是index，就ajax提交到当前url
+            }else{
                 do_update(data);
             }
             return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。

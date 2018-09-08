@@ -20,6 +20,8 @@
 <form class="layui-form layui-form-pane">
     <!-- 表单内容部分 -->
     {block name="form"}{/block}
+    <!-- 表单底部按钮部分 -->
+    {block name="form_footer"}
     <style>
         .form-footer{
             position:fixed;
@@ -35,11 +37,12 @@
     <div class="form-footer">
         <div class="layui-form-item">
             <div class="layui-input-block">
-                <button class="layui-btn layui-btn-sm" lay-submit lay-filter="default_submit">立即提交</button>
+                <button class="layui-btn layui-btn-sm" lay-submit lay-filter="default">立即提交</button>
                 <button type="reset" class="layui-btn layui-btn-primary layui-btn-sm">重置</button>
             </div>
         </div>
     </div>
+    {/block}
 </form>
 </div>
 

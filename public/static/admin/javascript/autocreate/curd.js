@@ -5,15 +5,15 @@
         table.render({
             elem: '.layui-hide-sm'
             , url: window.location.href
-            , toolbar: '#default_toolbar'
+            , toolbar: '#curd_toolbar'
             , where: where
             , method: 'POST'
             , cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
             , page: true //开启分页
             , cols: [[ //表头
                 {field: 'id', title: 'ID', sort: true, fixed: 'left', align: 'center'}
-                , {field: 'name', title: '表名', align: 'center'}
-                , {field: 'comment', title: '表注释', align: 'center'}
+                , {field: 'table_name', title: '表名', align: 'center'}
+                , {field: 'table_comment', title: '表注释', align: 'center'}
                 , {field: 'fields', title: '字段', templet: '#set_fields', align: 'center'}
                 , {field: 'operation', title: '操作', toolbar: '#operation', fixed: 'right', align: 'center'}
             ]]
@@ -36,7 +36,7 @@
                 layer.confirm('真的删除行么', function(index){
                     $.ajax({
                         type: 'POST',
-                        url: facade.url('admin/core.menu/del'),
+                        url: facade.url(module + '/' + controller +'/del'),
                         data: {id:data.id},
                         dataType: 'json',
                         success: function (res) {
