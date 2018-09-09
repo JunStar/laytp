@@ -4,6 +4,7 @@
  */
 namespace app\admin\controller\autocreate;
 
+use app\admin\validate\autocreate\import;
 use controller\BasicAdmin;
 
 class CurdController extends BasicAdmin
@@ -43,6 +44,11 @@ class CurdController extends BasicAdmin
             $post_data = explode('：', $post['table_name']);
             $add_data['table_comment'] = $post_data[0];
             $add_data['table_name'] = $post_data[1];
+            $validate = new \app\admin\validate\autocreate\curd\import();
+            if (!$validate->check($add_data))
+            {
+                return $this->error($validate->getError());
+            }
             if( $this->model->addData($add_data) ){
                 return $this->success('操作成功');
             }else{
