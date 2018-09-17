@@ -61,6 +61,11 @@ class CurdController extends BasicAdmin
         return $this->fetch();
     }
 
+    //页面设置
+    public function set_page(){
+        return $this->fetch();
+    }
+
     //设置字段信息
     public function set_fields(){
         if( $this->request->isAjax() && $this->request->isPost() ){

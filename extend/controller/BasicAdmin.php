@@ -92,6 +92,7 @@ class BasicAdmin extends Controller
 
         $assign['js_global_var']['module'] = $module;
         $assign['js_global_var']['controller'] = $controller;
+        $assign['js_global_var']['js_controller'] = str_replace('.','/',$controller);
         $assign['js_global_var']['action'] = $action;
         $this->assign($assign);
     }

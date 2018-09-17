@@ -1,0 +1,29 @@
+{extend name="admin@public/popup"}
+
+{block name="body"}
+<style>
+    /* 表格里面使用下拉框对样式的修改 */
+    .layui-table-cell{
+        height: auto;
+    }
+    .layui-form-select dl{
+        position:static;
+    }
+    .layui-input{
+        height:30px;
+    }
+</style>
+<table class="layui-hide-sm"></table>
+
+{include file="autocreate/curd/set_page/table/type_tpl" /}
+{include file="autocreate/curd/set_page/table/width_tpl" /}
+{include file="autocreate/curd/set_page/table/align_tpl" /}
+{include file="autocreate/curd/set_page/table/additional_tpl" /}
+{include file="autocreate/curd/set_page/form/validate_tpl" /}
+{include file="autocreate/curd/set_page/form/type_tpl" /}
+{/block}
+
+{block name="script"}
+{__block__}
+<script src="__ADMIN_JS__/{$js_global_var.js_controller}/{$js_global_var.action}.js" charset="utf-8"></script>
+{/block}
