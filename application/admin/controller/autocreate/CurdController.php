@@ -63,8 +63,8 @@ class CurdController extends BasicAdmin
         return $this->fetch();
     }
 
-    //页面设置
-    public function set_page(){
+    //配置
+    public function set_config(){
         if( $this->request->isAjax() ){
             $table = $this->request->param('table');
             $model = Db::table($table);
