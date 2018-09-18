@@ -6,6 +6,8 @@ namespace app\admin\controller\autocreate;
 
 use app\admin\validate\autocreate\import;
 use controller\BasicAdmin;
+use think\Db;
+use think\Model;
 
 class CurdController extends BasicAdmin
 {
@@ -63,6 +65,20 @@ class CurdController extends BasicAdmin
 
     //页面设置
     public function set_page(){
+        if( $this->request->isAjax() ){
+            $table = $this->request->param('table');
+            $model = Db::table($table);
+            $fields = $model->getTableFields();
+            $pk = $model->getPk();
+            $result = [];
+            foreach($fields as $k=>$v){
+                if( $v != $pk ){
+                    $result[$k]['field_name'] = $v;
+                }
+            }
+            sort($result);
+            return layui_table_data( $result );
+        }
         return $this->fetch();
     }
 
