@@ -66,18 +66,29 @@ class CurdController extends BasicAdmin
     //配置
     public function set_config(){
         if( $this->request->isAjax() ){
-            $table = $this->request->param('table');
-            $model = Db::table($table);
-            $fields = $model->getTableFields();
-            $pk = $model->getPk();
-            $result = [];
-            foreach($fields as $k=>$v){
-                if( $v != $pk ){
-                    $result[$k]['field_name'] = $v;
+            //GET是展示表格数据
+            if( $this->request->isGet() ){
+                $table = $this->request->param('table');
+                $model = Db::table($table);
+                $fields = $model->getTableFields();
+                $pk = $model->getPk();
+                $result = [];
+                $comment = model('InformationSchema')->getFieldsComment($table)->toArray();
+                $comment_map = arrToMap($comment,'COLUMN_NAME');
+                foreach($fields as $k=>$v){
+                    if( $v != $pk ){
+                        $result[$k]['field_name'] = $v;
+                        $result[$k]['field_comment'] = $comment_map[$v]['COLUMN_COMMENT'];
+                        $result[$k]['table_width'] = '80';
+                        $result[$k]['table_min_width'] = '80';
+                    }
                 }
+                sort($result);
+                return layui_table_data( $result );
+            //POST是提交表格数据入库
+            }else if( $this->request->isPost() ){
+                $this->success('操作成功');
             }
-            sort($result);
-            return layui_table_data( $result );
         }
         return $this->fetch();
     }

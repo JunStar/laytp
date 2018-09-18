@@ -1,6 +1,16 @@
 {extend name="admin@public/popup"}
 
 {block name="body"}
+
+<div class="layui-form layui-form-pane" action="">
+<div class="layui-form-item">
+    <div class="layui-input-inline">
+        <input type="checkbox" name="like[write]" title="全局模型">
+    </div>
+    <div class="layui-form-mid layui-word-aux">选中全局模型，model层文件将生成在application/common/model目录下，不选中则生成在application/admin/model目录下</div>
+</div>
+</div>
+
 <style>
     /* 表格里面使用下拉框对样式的修改 */
     .layui-table-cell{
@@ -15,13 +25,36 @@
 </style>
 <table class="layui-hide-sm"></table>
 
-{include file="autocreate/curd/set_page/table/type_tpl" /}
-{include file="autocreate/curd/set_page/table/width_tpl" /}
-{include file="autocreate/curd/set_page/table/align_tpl" /}
-{include file="autocreate/curd/set_page/table/additional_tpl" /}
-{include file="autocreate/curd/set_page/form/additional_tpl" /}
-{include file="autocreate/curd/set_page/form/type_tpl" /}
-{include file="autocreate/curd/set_page/form/required_tpl" /}
+{include file="autocreate/curd/set_config/table/type_tpl" /}
+{include file="autocreate/curd/set_config/table/width_tpl" /}
+{include file="autocreate/curd/set_config/table/align_tpl" /}
+{include file="autocreate/curd/set_config/table/additional_tpl" /}
+{include file="autocreate/curd/set_config/form/additional_tpl" /}
+{include file="autocreate/curd/set_config/form/type_tpl" /}
+{include file="autocreate/curd/set_config/form/required_tpl" /}
+{/block}
+
+{block name="form_footer"}
+<style>
+    .form-footer{
+        position:fixed;
+        left:0;
+        right:0;
+        bottom:0;
+        height:44px;
+        line-height:44px;
+        padding: 0 15px;
+        background-color:#eee;
+    }
+</style>
+<div class="form-footer">
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-sm" id="curd_set_config_btn">立即提交</button>
+            <button class="layui-btn layui-btn-primary layui-btn-sm" onclick="parent.layer.closeAll();">关闭</button>
+        </div>
+    </div>
+</div>
 {/block}
 
 {block name="script"}

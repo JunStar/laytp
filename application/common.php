@@ -22,12 +22,27 @@ function layui_table_page_data($data){
     return json($json);
 }
 
+/**
+ * 获取不分页的layui_table数据
+ * @param $data
+ * @return \think\response\Json
+ */
 function layui_table_data($data){
     $count_data = count($data);
     $json['code'] = ($count_data > 0) ? 0 : 1;
     $json['msg'] = '暂无数据';
     $json['data'] = $data;
     return json($json);
+}
+
+function arrToMap($array, $field){
+    $result = [];
+    foreach($array as $k=>$v){
+        if(isset($v[$field])){
+            $result[$v[$field]] = $v;
+        }
+    }
+    return $result;
 }
 
 /**
