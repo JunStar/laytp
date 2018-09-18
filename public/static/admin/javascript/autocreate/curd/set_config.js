@@ -1,20 +1,6 @@
 (function func_controller() {
     var func_controller = {};
 
-    // func_controller.default_data = [
-    //     {
-    //         field_name:"id"//字段名称
-    //         ,field_comment:"ID"//字段注释
-    //         ,form_type:"1"//表单元素
-    //         ,form_validate:""//表单验证
-    //         ,table_width:"100"//绝对列宽
-    //         ,table_min_width:"60"//最小列宽
-    //         ,table_type:"60"//列类型
-    //         ,table_align:"60"//排列方式
-    //         ,table_additional:"60"//附加选项
-    //     }
-    // ];
-
     func_controller.table_render = function () {
         table.render({
             elem: '.layui-hide-sm'
