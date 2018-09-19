@@ -12,6 +12,9 @@
             ,width:400
             //添加验证
             ,verify:'required'
+            ,click_dd_after:function(){
+                console.log('选中数据后，执行回调函数');
+            }
         });
     });
 

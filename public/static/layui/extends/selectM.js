@@ -47,7 +47,10 @@ layui.define(['jquery', 'layer'], function(exports){
 			delimiter: ',',
 			
 			//候选项数据的键名 status=0为禁用状态
-			field: {idName:'id',titleName:'name',statusName:'status'}
+			field: {idName:'id',titleName:'name',statusName:'status'},
+
+			//点击选项后出发的动作
+			click_dd_after: ''
 		}
 
 		this.config = $.extend(this.config,config);
@@ -253,6 +256,9 @@ layui.define(['jquery', 'layer'], function(exports){
 			}
 			
 			o.setSelected();
+			if(typeof c.click_dd_after == "function"){
+                c.click_dd_after();
+			}
 		});
 		
 		//删除选项
