@@ -12,7 +12,8 @@ if (typeof layui !== 'undefined') {
     layui.config({
         base: '/static/layui/extends/'
     }).extend({
-        selectM : 'selectM'
+        selectM : 'selectM',
+        select_multi : 'select_multi'
     });
 }
 

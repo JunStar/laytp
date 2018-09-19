@@ -23,7 +23,7 @@ layui.define(['jquery', 'layer'], function(exports){
 			//选择器id或class
 			elem: '',
 			//候选项数据[{id:"1",name:"名称1",status:0},{id:"2",name:"名称2",status:1}]
-			data: [],			
+			data: [],
 	
 			//默认选中值
 			selected: [],
@@ -165,7 +165,7 @@ layui.define(['jquery', 'layer'], function(exports){
 		}
 	};	
 	//渲染一个实例
-  obj.prototype.render = function(){
+    obj.prototype.render = function(){
 		var o=this,c=o.config,f=c.field;
 		$E = $(c.elem);
 		if($E.length==0){
@@ -288,7 +288,7 @@ layui.define(['jquery', 'layer'], function(exports){
 	//输出模块
 	exports(MOD_NAME, function (config) {
 		var _this = new obj(config);
-		_this.render();
-		return _this;
+        _this.render();
+        return _this;
   });
 });
