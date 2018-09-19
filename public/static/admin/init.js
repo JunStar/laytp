@@ -124,12 +124,6 @@
         });
     }
 
-    layui.config({
-        base: '/static/layui/extends/'
-    }).extend({
-        selectM : 'selectM'
-    });
-
     for(key in init){
         eval("init."+key+"();");
     }

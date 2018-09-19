@@ -1,17 +1,18 @@
 (function func_controller() {
     var func_controller = {};
 
-    var selectM = layui.selectM;
-
-    var tagIns1 = selectM({
-        //元素容器【必填】
-        elem: '#select_fields'
-        //候选数据【必填】
-        ,data: {test:'test',test1:'test1'}
-        ,max:2
-        ,width:400
-        //添加验证
-        ,verify:'required'
+    layui.use(['selectM'],function(){
+        var selectM = layui.selectM;
+        selectM({
+            //元素容器【必填】
+            elem: '#select_fields'
+            //候选数据【必填】
+            ,data: [{id:1,name:'test'},{id:2,name:'test1'}]
+            ,max:2
+            ,width:400
+            //添加验证
+            ,verify:'required'
+        });
     });
 
     //监听选择表下拉框onchange事件

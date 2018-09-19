@@ -9,6 +9,11 @@ if (typeof layui !== 'undefined') {
     if (typeof jQuery === 'undefined') {
         var $ = jQuery = layui.$;
     }
+    layui.config({
+        base: '/static/layui/extends/'
+    }).extend({
+        selectM : 'selectM'
+    });
 }
 
 var pop_select_input = "";
