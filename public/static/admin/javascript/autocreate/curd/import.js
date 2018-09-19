@@ -1,12 +1,53 @@
 (function func_controller() {
     var func_controller = {};
 
+    var selectM = layui.selectM;
+
+    var tagIns1 = selectM({
+        //元素容器【必填】
+        elem: '#select_fields'
+        //候选数据【必填】
+        ,data: {test:'test',test1:'test1'}
+        ,max:2
+        ,width:400
+        //添加验证
+        ,verify:'required'
+    });
+
+    //监听选择表下拉框onchange事件
+    form.on('select(select_table)',function(data){
+        var post_data = {'table_name':data.value};
+        $.ajax({
+            type: 'POST',
+            url: facade.url('/' + module + '/' + controller + '/get_fields_by_table_name'),
+            data: post_data,
+            dataType: 'json',
+            success: function (res) {
+                if( res.code == 1 ){
+                    for(key in res.data){
+                        $('#select_fields').append('<option value="'+res.data[key]['field_name']+'">'+res.data[key]['field_name']+'</option>');
+                        form.render('select');
+                    }
+                }else{
+                    facade.error(res.msg);
+                }
+            },
+            error: function (xhr) {
+                if( xhr.status == '500' ){
+                    facade.error('本地网络问题或者服务器错误');
+                }else if( xhr.status == '404' ){
+                    facade.error('请求地址不存在');
+                }
+            }
+        });
+    });
+
     func_controller.table_render = function () {
         table.render({
             elem: '.layui-hide-sm'
-            ,url: window.location.href
-            ,method: 'GET'
             ,cellMinWidth: 100
+            ,text:{none:'请选择需要显示的字段'}
+            ,data:[]
             ,cols: [
                 [
                     {title:'数据库字段查看', width:100, align: 'center', colspan: 3}
@@ -27,7 +68,7 @@
                     ,{field:'table_min_width', title:'最小列宽(数字或者百分比)', align: 'center', edit: 'text'}
                     ,{field:'table_type', title:'列类型', templet: '#table_type', align: 'center', width: 120}
                     ,{field:'table_align', title:'排列方式', templet: '#table_align', align: 'center', width: 120}
-                    ,{field:'table_additional', title:'附加选项', templet: "#table_additional", align: 'center', width: 520}
+                    ,{field:'table_additional', title:'附加选项', templet: "#table_additional", align: 'center', width: 400}
                 ]
             ]
             ,done:function(res){
@@ -101,56 +142,68 @@
 
     func_controller.curd_set_config = function(){
         $('#curd_set_config_btn').on('click', function(){
-            console.log(table.cache[1]);
+            var table_data_arr = table.cache[1];
             var field_name
-            ,field_comment
-            ,form_type
-            ,form_additional
-            ,form_required
-            ,table_width
-            ,table_min_width
-            ,table_type
-            ,table_align
-            ,table_additional_unresize
-            ,table_additional_sort
-            ,table_additional_edit
-            ,table_additional_hide
-            ;
-            field_name = table.cache[1][0]['field_name'];
-            field_comment = table.cache[1][0]['field_comment'];
-            form_type = $('#form_type_'+field_name).val();
-            form_additional = get_form_additional_val(field_name,form_type);
-            form_required = $('#form_required_'+field_name+':checked').val();
-            form_required = (typeof form_required == "undefined") ? 0 : form_required;
-            table_width = table.cache[1][0]['table_width'];
-            table_min_width = table.cache[1][0]['table_min_width'];
-            table_type = $('#table_type_'+field_name).val();
-            table_align = $('#table_align_'+field_name).val();
-            table_additional_unresize = $('#table_additional_unresize_'+field_name+':checked').val();
-            table_additional_unresize = (typeof table_additional_unresize == "undefined") ? 0 : table_additional_unresize;
-            table_additional_sort = $('#table_additional_sort_'+field_name+':checked').val();
-            table_additional_sort = (typeof table_additional_sort == "undefined") ? 0 : table_additional_sort;
-            table_additional_edit = $('#table_additional_edit_'+field_name+':checked').val();
-            table_additional_edit = (typeof table_additional_edit == "undefined") ? 0 : table_additional_edit;
-            table_additional_hide = $('#table_additional_hide_'+field_name+':checked').val();
-            table_additional_hide = (typeof table_additional_hide == "undefined") ? 0 : table_additional_hide;
-            var post_data = {
-                'field_name':field_name
-                ,'field_comment':field_comment
-                ,'form_type':form_type
-                ,'form_additional':form_additional
-                ,'form_required':form_required
-                ,'table_width':table_width
-                ,'table_min_width':table_min_width
-                ,'table_type':table_type
-                ,'table_align':table_align
-                ,'table_additional_unresize':table_additional_unresize
-                ,'table_additional_sort':table_additional_sort
-                ,'table_additional_edit':table_additional_edit
-                ,'table_additional_hide':table_additional_hide
+                ,field_comment
+                ,form_type
+                ,form_additional
+                ,form_required
+                ,table_width
+                ,table_min_width
+                ,table_type
+                ,table_align
+                ,table_additional_unresize
+                ,table_additional_sort
+                ,table_additional_edit
+                ;
+            var post_data = {'field_list':{},'global':{}};
+            for(key in table_data_arr){
+                field_name = table_data_arr[key]['field_name'];
+                field_comment = table_data_arr[key]['field_comment'];
+                form_type = $('#form_type_'+field_name).val();
+                form_additional = get_form_additional_val(field_name,form_type);
+                form_required = $('#form_required_'+field_name+':checked').val();
+                form_required = (typeof form_required == "undefined") ? 0 : form_required;
+                table_width = table_data_arr[key]['table_width'];
+                table_min_width = table_data_arr[key]['table_min_width'];
+                table_type = $('#table_type_'+field_name).val();
+                table_align = $('#table_align_'+field_name).val();
+                table_additional_unresize = $('#table_additional_unresize_'+field_name+':checked').val();
+                table_additional_unresize = (typeof table_additional_unresize == "undefined") ? 0 : table_additional_unresize;
+                table_additional_sort = $('#table_additional_sort_'+field_name+':checked').val();
+                table_additional_sort = (typeof table_additional_sort == "undefined") ? 0 : table_additional_sort;
+                table_additional_edit = $('#table_additional_edit_'+field_name+':checked').val();
+                table_additional_edit = (typeof table_additional_edit == "undefined") ? 0 : table_additional_edit;
+                post_data['field_list'][key] = {
+                    'field_name':field_name
+                    ,'field_comment':field_comment
+                    ,'form_type':form_type
+                    ,'form_additional':form_additional
+                    ,'form_required':form_required
+                    ,'table_width':table_width
+                    ,'table_min_width':table_min_width
+                    ,'table_type':table_type
+                    ,'table_align':table_align
+                    ,'table_additional_unresize':table_additional_unresize
+                    ,'table_additional_sort':table_additional_sort
+                    ,'table_additional_edit':table_additional_edit
+                };
+            }
+            var common_model
+                ,hide_pk
+                ,create_number;
+            common_model = $('#common_model:checked').val();
+            common_model = (typeof common_model == "undefined") ? 0 : common_model;
+            hide_pk = $('#hide_pk:checked').val();
+            hide_pk = (typeof hide_pk == "undefined") ? 0 : hide_pk;
+            create_number = $('#create_number:checked').val();
+            create_number = (typeof create_number == "undefined") ? 0 : create_number;
+            post_data['global'] = {
+                'common_model':common_model
+                ,'hide_pk':hide_pk
+                ,'create_number':create_number
             };
             console.log(post_data);
-            return false;
             $.ajax({
                 type: 'POST',
                 url: window.location.href,

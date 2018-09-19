@@ -7,7 +7,6 @@ namespace app\admin\controller\autocreate;
 use app\admin\validate\autocreate\import;
 use controller\BasicAdmin;
 use think\Db;
-use think\Model;
 
 class CurdController extends BasicAdmin
 {
@@ -39,7 +38,7 @@ class CurdController extends BasicAdmin
         return $this->fetch();
     }
 
-    public function import()
+    public function import_bak()
     {
         if( $this->request->isAjax() && $this->request->isPost() ){
             $post = $this->request->post("row/a");
@@ -57,40 +56,64 @@ class CurdController extends BasicAdmin
                 return $this->error('操作失败');
             }
         }
-        //获取所有的数据库名称
+        //获取所有的表名称
         $assign['table_list'] = model('InformationSchema')->getTableList();
         $this->assign($assign);
         return $this->fetch();
     }
 
     //配置
-    public function set_config(){
+    public function import(){
         if( $this->request->isAjax() ){
             //GET是展示表格数据
             if( $this->request->isGet() ){
-                $table = $this->request->param('table');
-                $model = Db::table($table);
-                $fields = $model->getTableFields();
-                $pk = $model->getPk();
-                $result = [];
-                $comment = model('InformationSchema')->getFieldsComment($table)->toArray();
-                $comment_map = arrToMap($comment,'COLUMN_NAME');
-                foreach($fields as $k=>$v){
-                    if( $v != $pk ){
-                        $result[$k]['field_name'] = $v;
-                        $result[$k]['field_comment'] = $comment_map[$v]['COLUMN_COMMENT'];
-                        $result[$k]['table_width'] = '80';
-                        $result[$k]['table_min_width'] = '80';
-                    }
-                }
-                sort($result);
-                return layui_table_data( $result );
+//                $table = $this->request->param('table');
+//                $model = Db::table($table);
+//                $fields = $model->getTableFields();
+//                $pk = $model->getPk();
+//                $result = [];
+//                $comment = model('InformationSchema')->getFieldsComment($table)->toArray();
+//                $comment_map = arrToMap($comment,'COLUMN_NAME');
+//                foreach($fields as $k=>$v){
+//                    if( $v != $pk ){
+//                        $result[$k]['field_name'] = $v;
+//                        $result[$k]['field_comment'] = $comment_map[$v]['COLUMN_COMMENT'];
+//                        $result[$k]['table_width'] = '80';
+//                        $result[$k]['table_min_width'] = '80';
+//                    }
+//                }
+//                sort($result);
+//                return layui_table_data( $result );
             //POST是提交表格数据入库
             }else if( $this->request->isPost() ){
+                //这里要将数据存入数据库
                 $this->success('操作成功');
             }
         }
+        //获取所有的表名称
+        $assign['table_list'] = model('InformationSchema')->getTableList();
+        $this->assign($assign);
         return $this->fetch();
+    }
+
+    public function get_fields_by_table_name(){
+        $table = $this->request->param('table_name');
+        $model = Db::table($table);
+        $fields = $model->getTableFields();
+        $pk = $model->getPk();
+        $result = [];
+        $comment = model('InformationSchema')->getFieldsComment($table)->toArray();
+        $comment_map = arrToMap($comment,'COLUMN_NAME');
+        foreach($fields as $k=>$v){
+            if( $v != $pk ){
+                $result[$k]['field_name'] = $v;
+                $result[$k]['field_comment'] = $comment_map[$v]['COLUMN_COMMENT'];
+                $result[$k]['table_width'] = '80';
+                $result[$k]['table_min_width'] = '80';
+            }
+        }
+        sort($result);
+        $this->success('获取成功', '', $result);
     }
 
     //设置字段信息

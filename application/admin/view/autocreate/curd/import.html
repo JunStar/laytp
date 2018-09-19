@@ -1,14 +1,95 @@
-{extend name="admin@public/form"}
+{extend name="admin@public/popup"}
 
-{block name="form"}
-    <div class="layui-form-item">
-        <label class="layui-form-label">数据表</label>
-        <div class="layui-input-block">
-        <select name="row[table_name]">
-            {foreach $table_list as $vo}
-            <option value="{$vo['TABLE_COMMENT']}：{$vo['TABLE_NAME']}">{$vo['TABLE_COMMENT']}：{$vo['TABLE_NAME']}</option>
-            {/foreach}
-        </select>
+{block name="body"}
+<fieldset class="layui-elem-field">
+    <legend>全局设置</legend>
+    <div class="layui-field-box">
+        <div class="layui-form layui-form-pane">
+            <div class="layui-form-item">
+                <label class="layui-form-label">模式选择</label>
+                <div class="layui-input-inline">
+                    <input type="checkbox" id="common_model" title="全局模型">
+                </div>
+                <div class="layui-form-mid layui-word-aux">选中全局模型，model层文件将生成在application/common/model目录下，反之，则生成在application/admin/model目录下</div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">主键列</label>
+                <div class="layui-input-block">
+                    <input type="checkbox" id="hide_pk" title="隐藏主键列">
+                    <input type="checkbox" id="create_number" title="生成序号列">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">选择表</label>
+                <div class="layui-input-inline">
+                    <select name="select_table" id="select_table" lay-filter="select_table">
+                        <option></option>
+                        {foreach $table_list as $k=>$v}
+                        <option value="{$v.TABLE_NAME}">{$v.TABLE_NAME}</option>
+                        {/foreach}
+                    </select>
+                </div>
+                <label class="layui-form-label">显示字段</label>
+                <div class="layui-input-inline">
+                    <select name="select_fields" id="select_fields">
+                        <option></option>
+                    </select>
+                </div>
+            </div>
         </div>
     </div>
+</fieldset>
+
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+    <legend>字段设置</legend>
+</fieldset>
+<style>
+    /* 表格里面使用下拉框对样式的修改 */
+    .layui-table-view .layui-table-cell{
+        height: auto;
+    }
+    .layui-table-view .layui-form-select dl{
+        position:static;
+    }
+    .layui-table-view .layui-input{
+        height:30px;
+    }
+</style>
+<table class="layui-hide-sm"></table>
+
+{include file="autocreate/curd/import/table/type_tpl" /}
+{include file="autocreate/curd/import/table/width_tpl" /}
+{include file="autocreate/curd/import/table/align_tpl" /}
+{include file="autocreate/curd/import/table/additional_tpl" /}
+{include file="autocreate/curd/import/form/additional_tpl" /}
+{include file="autocreate/curd/import/form/type_tpl" /}
+{include file="autocreate/curd/import/form/required_tpl" /}
+{/block}
+
+{block name="form_footer"}
+<style>
+    .form-footer{
+        position:fixed;
+        left:0;
+        right:0;
+        bottom:0;
+        height:44px;
+        line-height:44px;
+        padding: 0 15px;
+        background-color:#eee;
+    }
+</style>
+<div class="form-footer">
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-sm" id="curd_import_btn">立即生成</button>
+            <button class="layui-btn layui-btn-primary layui-btn-sm" onclick="parent.layer.closeAll();">关闭</button>
+        </div>
+    </div>
+</div>
+{/block}
+
+{block name="script"}
+{__block__}
+<script src="__ADMIN_JS__/{$js_global_var.js_controller}/{$js_global_var.action}.js" charset="utf-8"></script>
 {/block}
