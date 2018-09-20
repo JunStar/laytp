@@ -65,29 +65,15 @@ class CurdController extends BasicAdmin
     //配置
     public function import(){
         if( $this->request->isAjax() ){
-            //GET是展示表格数据
-            if( $this->request->isGet() ){
-//                $table = $this->request->param('table');
-//                $model = Db::table($table);
-//                $fields = $model->getTableFields();
-//                $pk = $model->getPk();
-//                $result = [];
-//                $comment = model('InformationSchema')->getFieldsComment($table)->toArray();
-//                $comment_map = arrToMap($comment,'COLUMN_NAME');
-//                foreach($fields as $k=>$v){
-//                    if( $v != $pk ){
-//                        $result[$k]['field_name'] = $v;
-//                        $result[$k]['field_comment'] = $comment_map[$v]['COLUMN_COMMENT'];
-//                        $result[$k]['table_width'] = '80';
-//                        $result[$k]['table_min_width'] = '80';
-//                    }
-//                }
-//                sort($result);
-//                return layui_table_data( $result );
-            //POST是提交表格数据入库
-            }else if( $this->request->isPost() ){
+            if( $this->request->isPost() ){
                 //这里要将数据存入数据库
-                $this->success('操作成功');
+                $post_data = $this->request->post();
+                $result = $this->model->import($post_data);
+                if( $result['code'] ){
+                    $this->success($result['msg']);
+                }else{
+                    $this->error($result['msg']);
+                }
             }
         }
         //获取所有的表名称

@@ -19,6 +19,21 @@ layui.define(['jquery', 'layer', 'form', 'table', 'laytpl', 'select_multi'], fun
     ;
 
     junAdmin.facade = {
+        //获取一个对象的元素个数
+        get_count: function(param){
+            let t = typeof param;
+            if(t == 'string'){
+                return param.length;
+            }else if(t == 'object'){
+                let n = 0;
+                layui.each(param,function(){
+                    n++;
+                });
+                return n;
+            }
+            return 0;
+        },
+
         //多维数组的key换成item里面的某一个唯一的field的值
         array_to_map: function(array,field){
             let map = {};
