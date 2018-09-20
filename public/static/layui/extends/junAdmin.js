@@ -6,7 +6,10 @@
 * @Last Modified time: 2018年09月20日11:47:00
 */
 let add_search_condition_click_num = 0;
-layui.define(['jquery', 'layer', 'form', 'table', 'laytpl', 'select_multi'], function(exports){
+layui.define([
+    'jquery', 'layer', 'form', 'table', 'laytpl', 'element'
+    ,'select_multi'
+], function(exports){
     const MOD_NAME = 'junAdmin';
     let junAdmin = {};
     const

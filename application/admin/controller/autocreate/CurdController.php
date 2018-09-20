@@ -15,6 +15,7 @@ class CurdController extends BasicAdminController
         $this->model = model('AutocreateCurd');
     }
 
+    //首页
     public function index(){
         if( $this->request->isAjax() ){
             $where = $this->build_params();
@@ -22,9 +23,12 @@ class CurdController extends BasicAdminController
             $data = $this->model->where($where)->paginate($limit)->toArray();
             return layui_table_page_data($data);
         }
+        $result = exec_command('app\admin\command\Curd');
+        dump($result);
         return $this->fetch();
     }
 
+    //添加
     public function add()
     {
         if( $this->request->isAjax() && $this->request->isPost() ){
@@ -38,31 +42,7 @@ class CurdController extends BasicAdminController
         return $this->fetch();
     }
 
-    public function import_bak()
-    {
-        if( $this->request->isAjax() && $this->request->isPost() ){
-            $post = $this->request->post("row/a");
-            $post_data = explode('：', $post['table_name']);
-            $add_data['table_comment'] = $post_data[0];
-            $add_data['table_name'] = $post_data[1];
-            $validate = new \app\admin\validate\autocreate\curd\import();
-            if (!$validate->check($add_data))
-            {
-                return $this->error($validate->getError());
-            }
-            if( $this->model->addData($add_data) ){
-                return $this->success('操作成功');
-            }else{
-                return $this->error('操作失败');
-            }
-        }
-        //获取所有的表名称
-        $assign['table_list'] = model('InformationSchema')->getTableList();
-        $this->assign($assign);
-        return $this->fetch();
-    }
-
-    //配置
+    //导入
     public function import(){
         if( $this->request->isAjax() ){
             if( $this->request->isPost() ){
@@ -82,6 +62,7 @@ class CurdController extends BasicAdminController
         return $this->fetch();
     }
 
+    //根据表名获取字段列表
     public function get_fields_by_table_name(){
         $table = $this->request->param('table_name');
         if(!$table){
@@ -92,7 +73,7 @@ class CurdController extends BasicAdminController
         $pk = $model->getPk();
         $result = [];
         $comment = model('InformationSchema')->getFieldsComment($table)->toArray();
-        $comment_map = arrToMap($comment,'COLUMN_NAME');
+        $comment_map = arr_to_map($comment,'COLUMN_NAME');
         foreach($fields as $k=>$v){
             if( $v != $pk ){
                 $result[$k]['field_name'] = $v;
@@ -118,6 +99,7 @@ class CurdController extends BasicAdminController
         return $this->fetch();
     }
 
+    //删除
     public function del(){
         $del_where['id'] = $this->request->param('id');
         if( $this->model->where($del_where)->delete() ){

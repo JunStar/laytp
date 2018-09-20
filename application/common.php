@@ -1,41 +1,22 @@
 <?php
 /**
- * 分页数据格式化成layui_table能用的数据
- * @param $data
- * @return \think\response\Json
+ * 二维数组，外层索引替换成item内某个索引对应的值
+ * @param $array
+ * @param $field
+ * @return array
+ * @example
+ *  $array = [
+ *      0   =>  ['field'=>'id','comment'=>'ID'],
+ *      1   =>  ['field'=>'name','comment'=>'标题']
+ *  ];
+ *  $result = arrToMap($array, 'field');
+ *  $result结果：
+ *  $result = [
+ *      'id'    =>  ['field'=>'id','comment'=>'ID'],
+ *      'name'  =>  ['field'=>'name','comment'=>'标题']
+ *  ];
  */
-function layui_table_page_data($data){
-    if( array_key_exists('total', $data) ){
-        $json['code'] = ($data['total'] > 0) ? 0 : 1;
-    }else{
-        $data['total'] = 0;
-        $json['code'] = 1;
-    }
-    $json['msg'] = '暂无数据';
-    $json['count'] = $data['total'];
-
-    if( array_key_exists('data', $data) ){
-        $json['data'] = $data['data'];
-    }else{
-        $json['data'] = [];
-    }
-    return json($json);
-}
-
-/**
- * 获取不分页的layui_table数据
- * @param $data
- * @return \think\response\Json
- */
-function layui_table_data($data){
-    $count_data = count($data);
-    $json['code'] = ($count_data > 0) ? 0 : 1;
-    $json['msg'] = '暂无数据';
-    $json['data'] = $data;
-    return json($json);
-}
-
-function arrToMap($array, $field){
+function arr_to_map($array, $field){
     $result = [];
     foreach($array as $k=>$v){
         if(isset($v[$field])){
@@ -46,16 +27,24 @@ function arrToMap($array, $field){
 }
 
 /**
- * 生成下拉列表
- * @param string $name
- * @param mixed $options
- * @param mixed $selected
- * @param mixed $attr
- * @return string
+ * 执行命令行
+ * @param string $command_class_name 命令行完整类名
+ * @param $argv 命令行参数
+ * @return string 返回的信息
+ * @example
+ * exe_command('');
  */
-function build_select($name, $options, $selected = [], $attr = [])
-{
-    $options = is_array($options) ? $options : explode(',', $options);
-    $selected = is_array($selected) ? $selected : explode(',', $selected);
-    return Form::select($name, $options, $selected, $attr);
+function exec_command($command_class_name, $argv=[]){
+    $input = new \think\console\Input($argv);
+    $command = app($command_class_name);
+    $output = app('library\Output');
+    try {
+        $command->run($input, $output);
+        $result = implode("\n", $output->getMessage());
+    } catch (Exception $e) {
+        $result = implode("\n", $output->getMessage()) . "\n";
+        $result .= $e->getMessage();
+    }
+    $result = trim($result);
+    return $result;
 }
