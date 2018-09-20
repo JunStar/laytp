@@ -1,0 +1,12 @@
+
+    //查看
+    public function index()
+    {
+        if( $this->request->isAjax() ){
+            $where = $this->build_params();
+            $limit = $this->request->param('limit');
+            $data = $this->model->where($where)->paginate($limit)->toArray();
+            return layui_table_page_data($data);
+        }
+        return $this->fetch();
+    }

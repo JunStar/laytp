@@ -1,0 +1,29 @@
+<?php
+
+namespace {%controllerNamespace%};
+
+use controller\BasicAdminController;
+
+/**
+ * {%tableComment%}
+ */
+class {%controllerName%} extends BasicAdminController
+{
+
+    /**
+     * {%modelName%}模型对象
+     * @var \{%modelNamespace%}\{%modelName%}
+     */
+    protected $model = null;
+
+    public function _initialize()
+    {
+        parent::_initialize();
+        $this->model = model('{%modelName%}');
+{%controllerAssignList%}
+}
+{%controllerIndex%}
+{%controllerAdd%}
+{%controllerEdit%}
+{%controllerDel%}
+}

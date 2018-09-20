@@ -23,17 +23,18 @@ layui.use(['junAdmin'],function() {
                 , {field: 'table_comment', title: '表注释', align: 'center'}
                 , {field: 'create_time', title: '创建时间', align: 'center'}
                 , {field: 'exec_update_time', title: '最近生成时间', align: 'center'}
-                , {field: 'operation', title: '操作', toolbar: '#operation', fixed: 'right', align: 'center'}
+                , {field: 'exec_count', title: '生成次数', align: 'center'}
+                , {field: 'operation', title: '操作', toolbar: '#operation', fixed: 'right', align: 'center', width: 200}
             ]]
-            ,done: function(res, curr, count){
-                var tableElem = this.elem.next('.layui-table-view');
-                count || tableElem.find('.layui-table-header').css('overflow', 'auto');
-                layui.each(tableElem.find('tbody select'), function(){
-                    var elem = $(item)
-                    elem.parents('div .layui-table-cell').css('overflow', 'visible');
-                });
-                form.render();
-            }
+            // ,done: function(res, curr, count){
+            //     var tableElem = this.elem.next('.layui-table-view');
+            //     count || tableElem.find('.layui-table-header').css('overflow', 'auto');
+            //     layui.each(tableElem.find('tbody select'), function(){
+            //         var elem = $(item)
+            //         elem.parents('div .layui-table-cell').css('overflow', 'visible');
+            //     });
+            //     form.render();
+            // }
         });
 
         //监听默认工具条
@@ -41,7 +42,7 @@ layui.use(['junAdmin'],function() {
             var data = obj.data;
             //点击删除按钮
             if(obj.event === 'del'){
-                layer.confirm('真的删除行么', function(index){
+                layer.confirm('真的删除么?', function(index){
                     $.ajax({
                         type: 'POST',
                         url: facade.url(module + '/' + controller +'/del'),
