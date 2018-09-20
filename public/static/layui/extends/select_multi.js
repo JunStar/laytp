@@ -80,7 +80,8 @@ layui.define(['jquery', 'layer'], function(exports){
                 }
                 html +='<dd lay-value="'+d[i][f.idName]+'" class="'+disabled1+'">';
                 html +=		'<div class="layui-unselect layui-form-checkbox'+disabled2+'" lay-skin="primary">';
-                html +=			'<span>'+d[i][f.titleName]+'</span><i class="layui-icon">&#xe605;</i>';
+                html +=			'<span>'+d[i][f.titleName]+'</span>';
+                html +=         '<i class="layui-icon">&#xe605;</i>';
                 html +=		'</div>';
                 html +='</dd>';
             }
@@ -129,7 +130,8 @@ layui.define(['jquery', 'layer'], function(exports){
                     item[f.titleName] = n;
                     values.push(v);
                     names.push(n);
-                    spans.push('<a href="javascript:;"><span lay-value="'+v+'">'+n+'</span><i class="layui-icon">&#x1006;</i></a>');
+                    // spans.push('<a href="javascript:;"><span lay-value="'+v+'">'+n+'</span><i class="layui-icon">&#x1006;</i></a>');
+                    spans.push('<a href="javascript:;"><span lay-value="'+v+'">'+n+'</span></a>');
                     selected.push(item);
                 });
             }
@@ -168,6 +170,7 @@ layui.define(['jquery', 'layer'], function(exports){
     obj.render = function(){
         var o=this,c=o.config,f=c.field;
         $E = $(c.elem);
+
         if($E.length==0){
             console.error(MOD_NAME+' hint：找不到容器 ' +c.elem);
             return false;
@@ -180,6 +183,9 @@ layui.define(['jquery', 'layer'], function(exports){
             }
             o.config.data =  data;
         }
+        $E.off('click','.layui-select-title,.multiple,.multiple.layui-edge');
+        $E.off('click','dd');
+        $E.off('click','a i');
 
         //给容器添加一个类名
         $E.addClass('lay-ext-mulitsel');
@@ -188,7 +194,8 @@ layui.define(['jquery', 'layer'], function(exports){
         }
         //添加专属的style
         if($('#lay-ext-mulitsel-style').length==0){
-            var style = '.lay-ext-mulitsel .layui-form-select dl dd div{margin-top:0px!important;}.lay-ext-mulitsel .layui-form-select dl dd.layui-this{background-color:#fff}.lay-ext-mulitsel .layui-input.multiple{line-height:auto;height:auto;padding:4px 10px 4px 10px;overflow:hidden;min-height:38px;margin-top:-38px;left:0;z-index:99;position:relative;background:#fff;}.lay-ext-mulitsel .layui-input.multiple a{padding:2px 5px;background:#5FB878;border-radius:2px;color:#fff;display:block;line-height:20px;height:20px;margin:2px 5px 2px 0;float:left;}.lay-ext-mulitsel .layui-input.multiple a i{margin-left:4px;font-size:14px;} .lay-ext-mulitsel .layui-input.multiple a i:hover{background-color:#009E94;border-radius:2px;}.lay-ext-mulitsel .danger{border-color:#FF5722!important}.lay-ext-mulitsel .tips{pointer-events: none;position: absolute;left: 10px;top: 10px;color:#757575;}';
+            // var style = '.lay-ext-mulitsel .layui-form-select dl dd div{margin-top:0px!important;}.lay-ext-mulitsel .layui-form-select dl dd.layui-this{background-color:#fff}.lay-ext-mulitsel .layui-input.multiple{line-height:auto;height:auto;padding:4px 10px 4px 10px;overflow:hidden;min-height:38px;margin-top:-38px;left:0;z-index:99;position:relative;background:#fff;}.lay-ext-mulitsel .layui-input.multiple a{padding:2px 5px;background:#5FB878;border-radius:2px;color:#fff;display:block;line-height:20px;height:20px;margin:2px 5px 2px 0;float:left;}.lay-ext-mulitsel .layui-input.multiple a i{margin-left:4px;font-size:14px;} .lay-ext-mulitsel .layui-input.multiple a i:hover{background-color:#009E94;border-radius:2px;}.lay-ext-mulitsel .danger{border-color:#FF5722!important}.lay-ext-mulitsel .tips{pointer-events: none;position: absolute;left: 10px;top: 10px;color:#757575;}';
+            var style = '.lay-ext-mulitsel .layui-form-select dl dd div{margin-top:0px!important;}.lay-ext-mulitsel .layui-form-select dl dd.layui-this{background-color:#fff}.lay-ext-mulitsel .layui-input.multiple{padding:4px 10px 4px 10px;overflow:hidden;min-height:38px;margin-top:-38px;left:0;z-index:99;position:relative;background:#fff;}.lay-ext-mulitsel .layui-input.multiple a{padding:2px 5px;background:#5FB878;border-radius:2px;color:#fff;display:block;line-height:20px;height:20px;margin:2px 5px 2px 0;float:left;}.lay-ext-mulitsel .layui-input.multiple a i{margin-left:4px;font-size:14px;} .lay-ext-mulitsel .layui-input.multiple a i:hover{background-color:#009E94;border-radius:2px;}.lay-ext-mulitsel .danger{border-color:#FF5722!important}.lay-ext-mulitsel .tips{pointer-events: none;position: absolute;left: 10px;top: 10px;color:#757575;}';
             $('<style id="lay-ext-mulitsel-style"></style>').text(style).appendTo($('head'));
         };
 

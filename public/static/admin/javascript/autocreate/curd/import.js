@@ -1,30 +1,14 @@
 (function func_controller() {
     var func_controller = {};
 
-    // layui.use(['selectM'],function(){
-    //     var selectM = layui.selectM;
-    //     selectM({
-    //         //元素容器【必填】
-    //         elem: '#select_fields'
-    //         //候选数据【必填】
-    //         ,data: [{id:1,name:'test'},{id:2,name:'test1'}]
-    //         ,max:2
-    //         //添加验证
-    //         ,verify:'required'
-    //         ,click_dd_after:function(){
-    //             console.log('选中数据后，执行回调函数');
-    //         }
-    //     });
-    // });
-
     layui.use(['select_multi'],function(){
         var select_multi = layui.select_multi;
         select_multi.set_config({
             //元素容器【必填】
             elem: '#select_fields'
             //候选数据【必填】
-            ,data: [{id:1,name:'test'},{id:2,name:'test1'}]
-            ,max:2
+            ,data: []
+            ,max:0
             //添加验证
             ,verify:'required'
             ,click_dd_after:function(){
@@ -44,23 +28,6 @@
             dataType: 'json',
             success: function (res) {
                 if( res.code == 1 ){
-                    // form.render('select');
-                    // layui.use(['selectM'],function(){
-                    //     var selectM = layui.selectM;
-                    //     selectM({
-                    //         //元素容器【必填】
-                    //         elem: '#select_fields'
-                    //         //候选数据【必填】
-                    //         ,data: res.data
-                    //         ,max:res.data.length
-                    //         //添加验证
-                    //         ,verify:'required'
-                    //         ,click_dd_after:function(){
-                    //             console.log('选中数据后，执行回调函数');
-                    //         },
-                    //         field:{idName:'field_name',titleName:'field_name'}
-                    //     });
-                    // });
                     layui.use(['select_multi'],function(){
                         var select_multi = layui.select_multi;
                         select_multi.set_config({
