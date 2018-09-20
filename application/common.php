@@ -42,11 +42,11 @@ function exec_command($command_class_name, $argv=[]){
     $output = app('library\Output');
     try {
         $command->run($input, $output);
-        $result = implode("\n", $output->getMessage());
+        $result['msg'] = implode("\n", $output->getMessage());
+        $result['code'] = 1;
     } catch (Exception $e) {
-        $result = implode("\n", $output->getMessage()) . "\n";
-        $result .= $e->getMessage();
+        $result['msg'] = $e->getMessage();
+        $result['code'] = 0;
     }
-    $result = trim($result);
     return $result;
 }

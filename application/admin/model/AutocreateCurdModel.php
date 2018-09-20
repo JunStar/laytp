@@ -29,7 +29,12 @@ class AutocreateCurdModel extends BaseAdminModel
             if($is_exist){
                 $data['update_time'] = time();
                 $result = $this->field(true)->where(['table_name'=>$table_name])->update($data);
-                return $this->success('更新成功',$result);
+                if( $result ){
+                    $id = $this->where(['table_name'=>$table_name])->value('id');
+                    return $this->success('更新成功',$id);
+                }else{
+                    return $this->error('更新失败');
+                }
             }else{
                 $data['create_time'] = time();
                 $data['update_time'] = time();

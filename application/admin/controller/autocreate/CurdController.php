@@ -7,6 +7,7 @@ namespace app\admin\controller\autocreate;
 use app\admin\validate\autocreate\import;
 use controller\BasicAdminController;
 use think\Db;
+use think\Exception;
 
 class CurdController extends BasicAdminController
 {
@@ -48,7 +49,12 @@ class CurdController extends BasicAdminController
                 $post_data = $this->request->post();
                 $result = $this->model->import($post_data);
                 if( $result['code'] ){
-                    $this->success($result['msg']);
+                    $exec_res = exec_command('app\admin\command\Curd',['--id='.$result['data']]);
+                    if($exec_res['code']){
+                        $this->success($exec_res['msg']);
+                    }else{
+                        $this->error($exec_res['msg']);
+                    }
                 }else{
                     $this->error($result['msg']);
                 }
@@ -82,6 +88,17 @@ class CurdController extends BasicAdminController
         }
         sort($result);
         $this->success('获取成功', $result);
+    }
+
+    //重新生成Curd
+    public function re_create(){
+        $id = $this->request->param('id');
+        $exec_res = exec_command('app\admin\command\Curd',['--id='.$id]);
+        if($exec_res['code']){
+            $this->success($exec_res['msg']);
+        }else{
+            $this->error($exec_res['msg']);
+        }
     }
 
     //设置字段信息

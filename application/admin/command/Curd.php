@@ -7,10 +7,12 @@
  */
 namespace app\admin\command;
 
+use app\admin\model\AutocreateCurdModel;
 use think\console\Command;
 use think\console\Input;
 use think\console\input\Option;
 use think\console\Output;
+use think\Exception;
 
 class Curd extends Command
 {
@@ -22,6 +24,20 @@ class Curd extends Command
 
     protected function execute(Input $input, Output $output){
         $id = $input->getOption('id') ?: 0;
-        $output->info($id);
+        if(!$id){
+            throw new Exception('id is error');
+        }
+
+        $autocreateCurdModel = new AutocreateCurdModel();
+
+        //更新时间
+        $info = $autocreateCurdModel->get($id);
+        if(!$info['exec_create_time']){
+            $save['exec_create_time'] = time();
+        }
+        $save['exec_update_time'] = time();
+        $autocreateCurdModel->where(['id'=>$id])->update($save);
+
+        $output->info('生成成功');
     }
 }

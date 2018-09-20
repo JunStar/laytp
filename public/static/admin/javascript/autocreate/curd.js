@@ -22,7 +22,7 @@ layui.use(['junAdmin'],function() {
                 , {field: 'table_name', title: '表名', align: 'center'}
                 , {field: 'table_comment', title: '表注释', align: 'center'}
                 , {field: 'update_time', title: '数据更新时间', align: 'center'}
-                , {field: 'exe_update_time', title: '最近生成时间', align: 'center'}
+                , {field: 'exec_update_time', title: '最近生成时间', align: 'center'}
                 , {field: 'operation', title: '操作', toolbar: '#operation', fixed: 'right', align: 'center'}
             ]]
             ,done: function(res, curr, count){
@@ -68,6 +68,28 @@ layui.use(['junAdmin'],function() {
             }else if(obj.event === 'edit'){
                 var url = facade.url(module + '/' + controller + '/edit',{id:data.id});
                 facade.popup_frame('添加', url, '800px', '500px');
+            }else if(obj.event === 're_create'){
+                $.ajax({
+                    type: 'POST',
+                    url: facade.url(module + '/' + controller +'/re_create'),
+                    data: {id:data.id},
+                    dataType: 'json',
+                    success: function (res) {
+                        if( res.code == 1 ){
+                            facade.success(res.msg);
+                            func_controller.table_render();
+                        }else{
+                            facade.error(res.msg);
+                        }
+                    },
+                    error: function (xhr) {
+                        if( xhr.status == '500' ){
+                            facade.error('本地网络问题或者服务器错误');
+                        }else if( xhr.status == '404' ){
+                            facade.error('请求地址不存在');
+                        }
+                    }
+                });
             }
         });
     }
