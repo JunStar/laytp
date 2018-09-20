@@ -303,7 +303,6 @@ layui.define(['jquery', 'layer'], function(exports){
             exports_obj[config.elem].set_config(config);
             exports_obj[config.elem].pro_render();
         }
-        console.log('exports_obj', exports_obj);
     }
 
     //输出模块
