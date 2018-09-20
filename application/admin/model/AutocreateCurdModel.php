@@ -27,9 +27,12 @@ class AutocreateCurdModel extends BaseAdmin
                 'global' => json_encode($post_data['global'])
             ];
             if($is_exist){
+                $data['update_time'] = time();
                 $result = $this->field(true)->where(['table_name'=>$table_name])->update($data);
                 return $this->success('更新成功',$result);
             }else{
+                $data['create_time'] = time();
+                $data['update_time'] = time();
                 $result = $this->field(true)->insert($data);
                 return $this->success('添加成功',$result);
             }
