@@ -30,7 +30,8 @@ layui.define(['jquery', 'layer'], function(exports){
             selected: [],
 
             //空值项提示，支持将{max}替换为max
-            tips: '请选择 最多 {max} 个',
+            // tips: '请选择 最多 {max} 个',
+            tips: '请选择',
 
             //最多选中个数，默认5
             max : 5,
@@ -147,6 +148,9 @@ layui.define(['jquery', 'layer'], function(exports){
             var h = $E.find('.multiple').height()+14;
             $E.find('.layui-form-select dl').css('top',h+'px');
             o.values=values,o.names=names,o.selected = selected;
+            if(typeof c.click_dd_after == "function"){
+                c.click_dd_after();
+            }
         }
         //ajax方式获取候选数据
         this.getData = function(url){
@@ -167,7 +171,7 @@ layui.define(['jquery', 'layer'], function(exports){
         }
     };
     //渲染一个实例
-    obj.render = function(){
+    obj.pro_render = function(){
         var o=this,c=o.config,f=c.field;
         $E = $(c.elem);
 
@@ -263,9 +267,6 @@ layui.define(['jquery', 'layer'], function(exports){
             }
 
             o.setSelected();
-            if(typeof c.click_dd_after == "function"){
-                c.click_dd_after();
-            }
         });
 
         //删除选项
@@ -290,6 +291,12 @@ layui.define(['jquery', 'layer'], function(exports){
                 $(c.elem+' .multiple').removeClass('danger');
             },3000);
         });
+    }
+
+    obj.render = function(config){
+        obj.set_config(config);
+        obj.pro_render();
+        return obj;
     }
 
     //输出模块
