@@ -4,10 +4,8 @@
  */
 namespace app\admin\controller\autocreate;
 
-use app\admin\validate\autocreate\import;
 use controller\BasicAdminController;
 use think\Db;
-use think\Exception;
 
 class CurdController extends BasicAdminController
 {
@@ -21,7 +19,7 @@ class CurdController extends BasicAdminController
         if( $this->request->isAjax() ){
             $where = $this->build_params();
             $limit = $this->request->param('limit');
-            $data = $this->model->where($where)->paginate($limit)->toArray();
+            $data = $this->model->where($where)->order('exec_update_time','desc')->paginate($limit)->toArray();
             return layui_table_page_data($data);
         }
         return $this->fetch();
