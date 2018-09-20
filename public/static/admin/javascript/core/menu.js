@@ -1,5 +1,12 @@
-(function func_controller() {
-    var func_controller = {};
+layui.use(['junAdmin'],function() {
+    const
+        func_controller = {}
+        , junAdmin = layui.junAdmin
+        , $ = junAdmin.$
+        , facade = junAdmin.facade
+        , form = junAdmin.form
+        , table = junAdmin.table
+    ;
 
     func_controller.table_render = function (where) {
         table.render({
@@ -49,7 +56,7 @@
                         }
                     });
                 });
-            //点击编辑按钮
+                //点击编辑按钮
             }else if(obj.event === 'edit'){
                 var url = facade.url(module + '/' + controller + '/edit',{id:data.id});
                 facade.popup_frame('添加', url, '800px', '500px');
@@ -84,4 +91,4 @@
     func_controller.table_render();
 
     window.func_controller = func_controller;
-})()
+});

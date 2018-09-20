@@ -1,5 +1,12 @@
-(function func_controller() {
-    var func_controller = {};
+layui.use(['junAdmin'],function() {
+    const
+        func_controller = {}
+        , junAdmin = layui.junAdmin
+        , $ = junAdmin.$
+        , facade = junAdmin.facade
+        , form = junAdmin.form
+        , table = junAdmin.table
+    ;
 
     func_controller.table_render = function (where) {
         table.render({
@@ -67,4 +74,5 @@
     func_controller.table_render();
 
     window.func_controller = func_controller;
-})()
+
+});

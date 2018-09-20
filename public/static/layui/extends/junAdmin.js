@@ -187,7 +187,7 @@ layui.define(['jquery', 'layer', 'form', 'table', 'laytpl', 'select_multi'], fun
                     success: function (res) {
                         if( res.code == 1 ){
                             junAdmin.facade.success(res.msg);
-                            parent.table.render();
+                            parent.func_controller.table_render();
                             parent.layer.closeAll();
                         }else{
                             junAdmin.facade.error(res.msg);
