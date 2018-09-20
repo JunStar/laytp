@@ -98,6 +98,9 @@ class CurdController extends BasicAdmin
 
     public function get_fields_by_table_name(){
         $table = $this->request->param('table_name');
+        if(!$table){
+            $this->success('获取成功',[]);
+        }
         $model = Db::table($table);
         $fields = $model->getTableFields();
         $pk = $model->getPk();
@@ -108,12 +111,12 @@ class CurdController extends BasicAdmin
             if( $v != $pk ){
                 $result[$k]['field_name'] = $v;
                 $result[$k]['field_comment'] = $comment_map[$v]['COLUMN_COMMENT'];
-                $result[$k]['table_width'] = '80';
-                $result[$k]['table_min_width'] = '80';
+                $result[$k]['table_width'] = '自适应';
+                $result[$k]['table_min_width'] = '使用全局配置';
             }
         }
         sort($result);
-        $this->success('获取成功', '', $result);
+        $this->success('获取成功', $result);
     }
 
     //设置字段信息

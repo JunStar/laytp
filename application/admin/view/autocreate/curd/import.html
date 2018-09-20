@@ -6,20 +6,6 @@
     <div class="layui-field-box">
         <div class="layui-form layui-form-pane">
             <div class="layui-form-item">
-                <label class="layui-form-label">模式选择</label>
-                <div class="layui-input-inline">
-                    <input type="checkbox" id="common_model" title="全局模型">
-                </div>
-                <div class="layui-form-mid layui-word-aux">选中全局模型，model层文件将生成在application/common/model目录下，反之，则生成在application/admin/model目录下</div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">主键列</label>
-                <div class="layui-input-block">
-                    <input type="checkbox" id="hide_pk" title="隐藏主键列">
-                    <input type="checkbox" id="create_number" title="生成序号列">
-                </div>
-            </div>
-            <div class="layui-form-item">
                 <label class="layui-form-label">选择表</label>
                 <div class="layui-input-inline">
                     <select name="select_table" id="select_table" lay-filter="select_table">
@@ -34,12 +20,44 @@
                     <div id="select_fields"></div>
                 </div>
             </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">模式选择</label>
+                <div class="layui-input-inline">
+                    <input type="checkbox" id="common_model" title="全局模型" lay-filter="common_model" value="1">
+                </div>
+                <div class="layui-form-mid layui-word-aux">选中全局模型，model层文件将生成在application/common/model目录下，反之，则生成在application/admin/model目录下</div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">表格列表</label>
+                <div class="layui-input-block">
+                    <input type="checkbox" id="hide_pk" title="隐藏主键列" value="1">
+                    <input type="checkbox" id="create_number" title="生成序号列" value="1">
+                    <input type="checkbox" id="close_page" title="关闭分页" value="1">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">搜索模式</label>
+                <div class="layui-input-inline">
+                    <select name="search_mode" id="search_mode" lay-filter="search_mode">
+                        <option value="down">下拉模式</option>
+                        <option value="all_show">全显模式</option>
+                    </select>
+                </div>
+                <label class="layui-form-label">搜索字段</label>
+                <div class="layui-input-inline">
+                    <div id="search_fields"></div>
+                </div>
+                <label class="layui-form-label">最小列宽</label>
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input layui-form-danger" id="cell_min_width" title="隐藏主键列" value="80">
+                </div>
+            </div>
         </div>
     </div>
 </fieldset>
 
 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
-    <legend>字段设置</legend>
+    <legend>详细设置</legend>
 </fieldset>
 <style>
     /* 表格里面使用下拉框对样式的修改 */

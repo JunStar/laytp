@@ -63,6 +63,11 @@ layui.use(['junAdmin'],function(){
             elem: '#select_fields',data: []
         });
 
+        //渲染多选下拉框
+        select_multi.render({
+            elem: '#search_fields',data: []
+        });
+
         //监听选择表下拉框onchange事件
         form.on('select(select_table)',function(data){
             var post_data = {'table_name':data.value};
@@ -97,6 +102,16 @@ layui.use(['junAdmin'],function(){
                                 });
                                 func_controller.table_render(table_render_data);
                             }
+                        });
+                        //重新渲染多选下拉框
+                        select_multi.render({
+                            elem: '#search_fields'
+                            ,data: res.data
+                            ,max: res.data.length
+                            ,verify: 'required'
+                            ,field: {idName:'field_name',titleName:'field_name'}
+                            ,selected: selected_data
+                            ,click_dd_after: function(){}
                         });
                     }else{
                         facade.error(res.msg);
