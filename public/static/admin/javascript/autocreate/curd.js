@@ -21,7 +21,7 @@ layui.use(['junAdmin'],function() {
                 {field: 'id', title: 'ID', sort: true, fixed: 'left', align: 'center'}
                 , {field: 'table_name', title: '表名', align: 'center'}
                 , {field: 'table_comment', title: '表注释', align: 'center'}
-                , {field: 'update_time', title: '数据更新时间', align: 'center'}
+                , {field: 'create_time', title: '创建时间', align: 'center'}
                 , {field: 'exec_update_time', title: '最近生成时间', align: 'center'}
                 , {field: 'operation', title: '操作', toolbar: '#operation', fixed: 'right', align: 'center'}
             ]]
