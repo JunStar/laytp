@@ -5,10 +5,10 @@
 namespace app\admin\controller\autocreate;
 
 use app\admin\validate\autocreate\import;
-use controller\BasicAdmin;
+use controller\BasicAdminController;
 use think\Db;
 
-class CurdController extends BasicAdmin
+class CurdController extends BasicAdminController
 {
     public function initialize(){
         parent::initialize();

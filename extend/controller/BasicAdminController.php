@@ -7,7 +7,7 @@ namespace controller;
 
 use think\Controller;
 
-class BasicAdmin extends Controller
+class BasicAdminController extends Controller
 {
     public function initialize(){
         $this->module = $this->request->module();

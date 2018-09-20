@@ -4,13 +4,10 @@
  */
 namespace app\admin\model;
 
-use think\Model;
+use model\BaseAdminModel;
 
-class MenuModel extends Model
+class MenuModel extends BaseAdminModel
 {
-    // 设置当前模型对应的完整数据表名称
-//    protected $table = 'sys_menu';
-
     public function addData($data){
         return $this->field(true)->insert($data);
     }

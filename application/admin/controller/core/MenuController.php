@@ -4,10 +4,10 @@
  */
 namespace app\admin\controller\core;
 
-use controller\BasicAdmin;
+use controller\BasicAdminController;
 use library\Tree;
 
-class MenuController extends BasicAdmin
+class MenuController extends BasicAdminController
 {
     public function initialize(){
         parent::initialize();

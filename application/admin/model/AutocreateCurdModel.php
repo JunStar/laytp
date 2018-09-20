@@ -4,10 +4,10 @@
  */
 namespace app\admin\model;
 
-use model\BaseAdmin;
+use model\BaseAdminModel;
 use think\Exception;
 
-class AutocreateCurdModel extends BaseAdmin
+class AutocreateCurdModel extends BaseAdminModel
 {
     public function addData($data){
         return $this->field(true)->insert($data);
