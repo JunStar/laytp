@@ -7,3 +7,5 @@ layui.config({
     select_multi : 'select_multi'
     ,junAdmin : 'junAdmin'
 });
+
+layui.use(['junAdmin']);
