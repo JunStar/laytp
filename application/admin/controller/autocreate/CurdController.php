@@ -23,8 +23,6 @@ class CurdController extends BasicAdminController
             $data = $this->model->where($where)->paginate($limit)->toArray();
             return layui_table_page_data($data);
         }
-        $result = exec_command('app\admin\command\Curd');
-        dump($result);
         return $this->fetch();
     }
 

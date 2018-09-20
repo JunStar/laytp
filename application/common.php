@@ -27,12 +27,14 @@ function arr_to_map($array, $field){
 }
 
 /**
- * 执行命令行
+ * 执行命令行，使用此函数可以调用命令行程序，不需要application/command.php文件注册命令行
  * @param string $command_class_name 命令行完整类名
- * @param $argv 命令行参数
+ * @param array $argv 命令行参数
  * @return string 返回的信息
  * @example
- * exe_command('');
+ * exec_command('app\admin\command\Curd',['--id=1','--name=test']);
+ * 类似于执行:
+ * php think curd --id=1 --name=test
  */
 function exec_command($command_class_name, $argv=[]){
     $input = new \think\console\Input($argv);
