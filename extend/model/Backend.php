@@ -6,7 +6,7 @@ namespace model;
 
 use think\Model;
 
-class BaseAdminModel extends Model
+class Backend extends Model
 {
     public function success($msg,$data){
         $result['code'] = 1;

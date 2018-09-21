@@ -4,9 +4,9 @@
  */
 namespace app\admin\model;
 
-use model\BaseAdminModel;
+use model\Backend;
 
-class MenuModel extends BaseAdminModel
+class Menu extends Backend
 {
     public function addData($data){
         return $this->field(true)->insert($data);

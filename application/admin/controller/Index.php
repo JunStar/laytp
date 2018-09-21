@@ -1,9 +1,9 @@
 <?php
 namespace app\admin\controller;
 
-use controller\BasicAdminController;
+use controller\Backend;
 
-class IndexController extends BasicAdminController
+class Index extends Backend
 {
     public function index(){
         return $this->fetch();

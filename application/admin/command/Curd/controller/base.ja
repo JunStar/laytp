@@ -2,12 +2,12 @@
 
 namespace {%controllerNamespace%};
 
-use controller\BasicAdminController;
+use controller\Backend;
 
 /**
  * {%tableComment%}
  */
-class {%controllerName%} extends BasicAdminController
+class {%controllerName%} extends Backend
 {
 
     /**

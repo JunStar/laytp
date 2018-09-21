@@ -2,13 +2,16 @@
 /**
  * 后台菜单模型
  */
-namespace app\admin\model;
+namespace app\admin\model\autocreate;
 
-use model\BaseAdminModel;
+use model\Backend;
 use think\Exception;
 
-class AutocreateCurdModel extends BaseAdminModel
+class Curd extends Backend
 {
+    // 表名
+    protected $name = 'autocreate_curd';
+
     public function addData($data){
         return $this->field(true)->insert($data);
     }

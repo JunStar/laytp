@@ -7,8 +7,13 @@ namespace controller;
 
 use think\Controller;
 
-class BasicAdminController extends Controller
+class Backend extends Controller
 {
+    use \library\traits\Backend;
+    public $module;
+    public $controller;
+    public $action;
+
     public function initialize(){
         $this->module = $this->request->module();
         $this->controller = strtolower($this->request->controller());

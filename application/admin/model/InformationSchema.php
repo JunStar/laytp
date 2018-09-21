@@ -4,10 +4,10 @@
  */
 namespace app\admin\model;
 
-use model\BaseAdminModel;
+use model\Backend;
 use think\facade\Config;
 
-class InformationSchemaModel extends BaseAdminModel
+class InformationSchema extends Backend
 {
     // 设置当前模型的数据库连接
     protected $connection = [

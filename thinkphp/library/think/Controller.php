@@ -64,9 +64,6 @@ class Controller
         $this->request = $this->app['request'];
         $this->view    = $this->app['view'];
 
-        // 控制器初始化
-        $this->initialize();
-
         // 控制器中间件
         if ($this->middleware) {
             foreach ($this->middleware as $key => $val) {
@@ -90,6 +87,9 @@ class Controller
             $this->beforeAction($options) :
             $this->beforeAction($method, $options);
         }
+
+        // 控制器初始化
+        $this->initialize();
     }
 
     // 初始化

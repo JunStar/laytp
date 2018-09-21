@@ -4,14 +4,16 @@
  */
 namespace app\admin\controller\autocreate;
 
-use controller\BasicAdminController;
+use controller\Backend;
 use think\Db;
 
-class CurdController extends BasicAdminController
+class Curd extends Backend
 {
+    public $model;
+
     public function initialize(){
         parent::initialize();
-        $this->model = model('AutocreateCurd');
+        $this->model = model('autocreate.Curd');
     }
 
     //首页
@@ -19,7 +21,11 @@ class CurdController extends BasicAdminController
         if( $this->request->isAjax() ){
             $where = $this->build_params();
             $limit = $this->request->param('limit');
-            $data = $this->model->where($where)->order('exec_update_time','desc')->paginate($limit)->toArray();
+            $data = $this->model
+                ->where($where)
+                ->order('exec_update_time','desc')
+                ->paginate($limit)
+                ->toArray();
             return layui_table_page_data($data);
         }
         return $this->fetch();
