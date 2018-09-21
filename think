@@ -14,6 +14,9 @@ namespace think;
 
 // 加载基础文件
 require __DIR__ . '/thinkphp/base.php';
+if (!defined('DS')) {
+    define('DS', DIRECTORY_SEPARATOR);
+}
 
 // 应用初始化
 Container::get('app')->path(__DIR__ . '/application/')->initialize();
