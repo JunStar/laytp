@@ -1,0 +1,1 @@
+<input type="text" name="row[{%filed_name%}]" lay-verify="required" placeholder="请输入{%field_comment%}" value="{${%filed_name%}}" class="layui-input" lay-verType="tips">

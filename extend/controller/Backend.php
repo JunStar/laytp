@@ -31,6 +31,12 @@ class Backend extends Controller
         $now_node_where['rule'] = $now_node;
         $now_menus = model('Menu')->where($now_node_where)->order('pid desc')->select()->toArray();
         if( !$now_menus ){
+            $first_menu = model('Menu')->where('pid','=',0)->select()->toArray();
+            foreach($first_menu as $k=>$v){
+                $first_menu[$k]['selected'] = false;
+            }
+            $this->assign('first_menu', $first_menu);
+            $this->assign('left_menu', []);
             return true;
         }else{
             $now_menu = $now_menus[0];

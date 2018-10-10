@@ -1,0 +1,35 @@
+layui.use(['junAdmin'],function() {
+    const
+        func_controller = {}
+        , junAdmin = layui.junAdmin
+        , facade = junAdmin.facade
+        , table = junAdmin.table
+    ;
+
+    func_controller.table_render = function (where) {
+        table.render({
+            elem: '.layui-hide-sm'
+            , url: window.location.href
+            , toolbar: '#default_toolbar'
+            , where: where
+            , method: 'POST'
+            , cellMinWidth: 80
+            , page: true //开启分页
+            , cols: [[
+                {%cols%}
+            ]]
+        });
+
+        //监听默认工具条
+        table.on('tool(default)', function(obj){
+            if(default_table_tool.indexOf(obj.event) != -1){
+                facade.table_tool(obj);
+            }
+        });
+    }
+
+    func_controller.table_render();
+
+    window.func_controller = func_controller;
+
+});

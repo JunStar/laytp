@@ -4,7 +4,6 @@ layui.use(['junAdmin'],function() {
         , junAdmin = layui.junAdmin
         , $ = junAdmin.$
         , facade = junAdmin.facade
-        , form = junAdmin.form
         , table = junAdmin.table
     ;
 
@@ -26,20 +25,11 @@ layui.use(['junAdmin'],function() {
                 , {field: 'exec_count', title: '生成次数', align: 'center'}
                 , {field: 'operation', title: '操作', toolbar: '#operation', fixed: 'right', align: 'center', width: 200}
             ]]
-            // ,done: function(res, curr, count){
-            //     var tableElem = this.elem.next('.layui-table-view');
-            //     count || tableElem.find('.layui-table-header').css('overflow', 'auto');
-            //     layui.each(tableElem.find('tbody select'), function(){
-            //         var elem = $(item)
-            //         elem.parents('div .layui-table-cell').css('overflow', 'visible');
-            //     });
-            //     form.render();
-            // }
         });
 
         //监听默认工具条
         table.on('tool(default)', function(obj){
-            var data = obj.data;
+            let data = obj.data;
             //点击删除按钮
             if(obj.event === 'del'){
                 layer.confirm('真的删除么?', function(index){
@@ -68,7 +58,7 @@ layui.use(['junAdmin'],function() {
                 //点击编辑按钮
             }else if(obj.event === 'edit'){
                 var url = facade.url(module + '/' + controller + '/edit',{id:data.id});
-                facade.popup_frame('添加', url, '800px', '500px');
+                facade.popup_frame('编辑', url, '800px', '500px');
             }else if(obj.event === 're_create'){
                 $.ajax({
                     type: 'POST',

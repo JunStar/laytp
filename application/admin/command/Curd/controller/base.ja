@@ -7,18 +7,18 @@ use controller\Backend;
 /**
  * {%tableComment%}
  */
-class {%controllerName%} extends Backend
+class {%controllerClassName%} extends Backend
 {
 
     /**
      * {%modelName%}模型对象
-     * @var \{%modelNamespace%}\{%modelName%}
+     * @var {%modelNamespace%}\{%modelClassName%}
      */
     protected $model;
 
-    public function _initialize()
+    public function initialize()
     {
-        parent::_initialize();
-        $this->model = model('{%modelName%}');
+        parent::initialize();
+        $this->model = new \{%modelNamespace%}\{%modelClassName%}();
     }
 }

@@ -1,0 +1,15 @@
+<?php
+/**
+ * {%tableComment%}模型
+ */
+namespace {%modelNamespace%};
+
+use think\Model;
+
+class {%modelClassName%} extends Model
+{
+    // 表名
+    protected $name = '{%modelName%}';
+
+    {%tableName%}
+}

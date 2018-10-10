@@ -108,6 +108,40 @@ layui.define([
         //layer提示操作失败
         error: function(text){
             layer.msg(text,{icon:2});
+        },
+
+        //表格点击编辑删除按钮
+        table_tool: function(obj){
+            let data = obj.data;
+            if(obj.event === 'del'){
+                layer.confirm('真的删除么?', function(index){
+                    $.ajax({
+                        type: 'POST',
+                        url: junAdmin.facade.url(module + '/' + controller +'/del'),
+                        data: {id:data.id},
+                        dataType: 'json',
+                        success: function (res) {
+                            if( res.code == 1 ){
+                                obj.del();
+                            }else{
+                                junAdmin.facade.error(res.msg);
+                            }
+                            layer.close(index);
+                        },
+                        error: function (xhr) {
+                            if( xhr.status == '500' ){
+                                junAdmin.facade.error('本地网络问题或者服务器错误');
+                            }else if( xhr.status == '404' ){
+                                junAdmin.facade.error('请求地址不存在');
+                            }
+                        }
+                    });
+                });
+            //点击编辑按钮
+            }else if(obj.event === 'edit'){
+                let url = junAdmin.facade.url(module + '/' + controller + '/edit',{id:data.id});
+                this.popup_frame('添加', url, '800px', '500px');
+            }
         }
     
         //时间插件

@@ -5,6 +5,7 @@
 namespace app\admin\model;
 
 use model\Backend;
+use think\Db;
 use think\facade\Config;
 
 class InformationSchema extends Backend
@@ -30,5 +31,22 @@ class InformationSchema extends Backend
         $field = 'COLUMN_NAME,COLUMN_COMMENT';
         $list = $this->table('columns')->where($where)->field($field)->select();
         return $list;
+    }
+
+    //获取某个表的主键名称和注释
+    public function getPkInfo($table){
+        $model = Db::table($table);
+        $fields = $model->getTableFields();
+        $pk = $model->getPk();
+        $comment = $this->getFieldsComment($table)->toArray();
+        $comment_map = arr_to_map($comment,'COLUMN_NAME');
+        $field_comment = 'ID';
+        foreach($fields as $k=>$v){
+            if( $v == $pk ){
+                $field_comment = $comment_map[$v]['COLUMN_COMMENT'];
+                break;
+            }
+        }
+        return ['pk'=>$pk,'field_comment'=>$field_comment];
     }
 }
