@@ -230,6 +230,7 @@ layui.use(['junAdmin'],function(){
             }
             let common_model
                 ,hide_pk
+                ,hide_del
                 ,create_number
                 ,table_name
                 ,fields_name
@@ -242,6 +243,8 @@ layui.use(['junAdmin'],function(){
             common_model = (typeof common_model == "undefined") ? 0 : common_model;
             hide_pk = $('#hide_pk:checked').val();
             hide_pk = (typeof hide_pk == "undefined") ? 0 : hide_pk;
+            hide_del = $('#hide_del:checked').val();
+            hide_del = (typeof hide_del == "undefined") ? 0 : hide_del;
             create_number = $('#create_number:checked').val();
             create_number = (typeof create_number == "undefined") ? 0 : create_number;
             table_name = $('#select_table').val();
@@ -254,6 +257,7 @@ layui.use(['junAdmin'],function(){
             post_data['global'] = {
                 'common_model':common_model
                 ,'hide_pk':hide_pk
+                ,'hide_del':hide_del
                 ,'create_number':create_number
                 ,'table_name':table_name
                 ,'fields_name':fields_name
@@ -271,7 +275,7 @@ layui.use(['junAdmin'],function(){
                     if( res.code == 1 ){
                         facade.success(res.msg);
                         parent.func_controller.table_render();
-                        parent.layer.closeAll();
+                        // parent.layer.closeAll();
                     }else{
                         facade.error(res.msg);
                     }

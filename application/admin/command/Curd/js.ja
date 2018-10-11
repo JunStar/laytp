@@ -13,8 +13,8 @@ layui.use(['junAdmin'],function() {
             , toolbar: '#default_toolbar'
             , where: where
             , method: 'POST'
-            , cellMinWidth: 80
-            , page: true //开启分页
+            , cellMinWidth: {%cellMinWidth%}
+            {%close_page%}, page: true
             , cols: [[
                 {%cols%}
             ]]

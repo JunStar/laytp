@@ -5,6 +5,7 @@
 namespace app\admin\model\autocreate;
 
 use model\Backend;
+use think\Db;
 use think\Exception;
 
 class Curd extends Backend
@@ -25,6 +26,23 @@ class Curd extends Backend
         try{
             $table_name = $post_data['global']['table_name'];
             $is_exist = $this->where(['table_name'=>$table_name])->find();
+            $post_data['global']['show_fields'] = $post_data['global']['fields_name'];
+
+            $model = Db::table($table_name);
+            $fields = $model->getTableFields();
+            $pk = $model->getPk();
+            $comment = model('admin/InformationSchema')->getFieldsComment($table_name)->toArray();
+            $comment_map = arr_to_map($comment,'COLUMN_NAME');
+            $all_fields = [];
+            foreach($fields as $k=>$v){
+                if( $v != $pk ){
+                    $temp['field_name'] = $v;
+                    $temp['field_comment'] = $comment_map[$v]['COLUMN_COMMENT'];
+                    $all_fields[] = $temp;
+                }
+            }
+            $post_data['global']['all_fields'] = $all_fields;
+
             $data = [
                 'field_list' => json_encode($post_data['field_list']),
                 'global' => json_encode($post_data['global'])

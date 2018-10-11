@@ -252,18 +252,53 @@ class Curd extends Command
     protected function set_js_param(){
         $tpl_name = 'js';
         $cols = "";
+        $has_first_cols = false;//是否已经有了正常的第一行数据
+        //是否隐藏主键列
         if(!$this->curd_config['global']['hide_pk']){
+            $has_first_cols = true;
             $pk = model('admin/InformationSchema')->getPkInfo($this->curd_config['table_name']);
-            $temp = "{field:'{$pk['pk']}',title:'{$pk['field_comment']}',fixed:'left',align:'center',width:80}\n\t\t\t\t,";
+            $temp = "{field:'{$pk['pk']}',title:'{$pk['field_comment']}',fixed:'left',align:'center',width:80}\n";
+            $cols .= $temp;
+        }else{
+            $pk = model('admin/InformationSchema')->getPkInfo($this->curd_config['table_name']);
+            $temp = "//{field:'{$pk['pk']}',title:'{$pk['field_comment']}',fixed:'left',align:'center',width:80}\n";
             $cols .= $temp;
         }
-        foreach($this->curd_config['field_list'] as $k=>$v){
-            $temp = "{field:'{$v['field_name']}',title:'{$v['field_comment']}',align:'center'}\n\t\t\t\t,";
+        //是否生成序号列
+        if($this->curd_config['global']['create_number']){
+            if($has_first_cols){
+                $temp = "\t\t\t\t,{field:'layui_number',title:'序号',fixed:'left',align:'center',width:80,type:'numbers'}\n";
+                $cols .= $temp;
+            }else{
+                $temp = "\t\t\t\t{field:'layui_number',title:'序号',fixed:'left',align:'center',width:80,type:'numbers'}\n";
+                $cols .= $temp;
+            }
+            if(!$has_first_cols) $has_first_cols = true;
+        }
+        $show_fields = explode(',', $this->curd_config['global']['show_fields']);
+        $all_fields = $this->curd_config['global']['all_fields'];
+        foreach($all_fields as $k=>$v){
+            if( !in_array($v['field_name'], $show_fields) ){
+                $temp = "\t\t\t\t//,{field:'{$v['field_name']}',title:'{$v['field_comment']}',align:'center'}\n";
+            }else{
+                if(!$has_first_cols){
+                    $has_first_cols = true;
+                    $temp = "\t\t\t\t{field:'{$v['field_name']}',title:'{$v['field_comment']}',align:'center'}\n";
+                }else{
+                    $temp = "\t\t\t\t,{field:'{$v['field_name']}',title:'{$v['field_comment']}',align:'center'}\n";
+                }
+            }
             $cols .= $temp;
         }
-        $temp = "{field:'operation',title:'操作',align:'center',toolbar:'#operation',fixed:'right',width:200}";
+        if($this->curd_config['global']['hide_del']){
+            $temp = "\t\t\t\t,{field:'operation',title:'操作',align:'center',toolbar:'#operation_only_edit',fixed:'right',width:200}";
+        }else{
+            $temp = "\t\t\t\t,{field:'operation',title:'操作',align:'center',toolbar:'#operation',fixed:'right',width:200}";
+        }
         $cols .= $temp;
         $data['cols'] = $cols;
+        $data['close_page'] = $this->curd_config['global']['close_page'] ? '//' : '';
+        $data['cellMinWidth'] = $this->curd_config['global']['cell_min_width'] ?: 80;
         $this->jsParam = ['tpl_name'=>$tpl_name,'data'=>$data,'c_file_name'=>$this->js_c_file_name];
     }
 
@@ -279,7 +314,6 @@ class Curd extends Command
         $index_tpl_name = 'html' . DS . 'index';
         $index_data['jsFileName'] = strtolower(strtolower($this->mid_name));
         $this->htmlIndexParam = ['tpl_name'=>$index_tpl_name,'data'=>$index_data,'c_file_name'=>$this->html_index_c_file_name];
-
 
         $add_data = [];
         $edit_data = [];
@@ -356,9 +390,9 @@ EOD;
 
 
     /**
-     * 获取input
+     * 获取input需要生成的html，在生成add和edit表单的时候可以用到
      * @param $info
-     * @param $type
+     * @param $type 类型，add或者edit
      * @return string
      */
     protected function get_input_html($info,$type){
