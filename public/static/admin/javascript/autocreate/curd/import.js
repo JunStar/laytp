@@ -14,7 +14,7 @@ layui.use(['junAdmin'],function(){
         table.render({
             elem: '.layui-hide-sm'
             ,cellMinWidth: 100
-            ,text:{none:'请选择需要显示的字段'}
+            ,text:{none:'请选择数据表和需要显示的字段'}
             ,data:data
             ,cols: [
                 [
@@ -30,11 +30,11 @@ layui.use(['junAdmin'],function(){
                     //表单设置
                     ,{field:'form_type', title:'表单元素', templet: "#form_type", align: 'center', width: 170}
                     ,{field:'form_additional', title:'附加设置', templet: "#form_additional", align: 'center', width: 220}
-                    ,{field:'form_required', title:'允许为空', templet: "#form_required", align: 'center', width: 140}
+                    ,{field:'form_empty', title:'允许为空', templet: "#form_empty", align: 'center', width: 140}
                     //列表设置
                     ,{field:'table_width', title:'绝对列宽(数字或者百分比)', align: 'center', edit: 'text'}
                     ,{field:'table_min_width', title:'最小列宽(数字或者百分比)', align: 'center', edit: 'text', width: 120}
-                    ,{field:'table_type', title:'列类型', templet: '#table_type', align: 'center', width: 120}
+                    ,{field:'table_templet', title:'列类型', templet: '#table_templet', align: 'center', width: 140}
                     ,{field:'table_align', title:'排列方式', templet: '#table_align', align: 'center', width: 120}
                     ,{field:'table_additional', title:'附加选项', templet: "#table_additional", align: 'center', width: 400}
                 ]
@@ -131,11 +131,11 @@ layui.use(['junAdmin'],function(){
     func_controller.form_type_select_after = function(field_name, value){
         let input_html = '<select name="form_additional_input_'+field_name+'" id="form_additional_input_'+field_name+'">' +
             '<option value="">不限制</option>' +
-            '<option value="email">Email</option>' +
-            '<option value="required|phone">手机号码</option>' +
-            '<option value="number">数字</option>' +
-            '<option value="url">链接</option>' +
-            '<option value="identity">身份证</option>' +
+            '<option value="junAdmin_email">Email</option>' +
+            '<option value="junAdmin_phone">手机号码</option>' +
+            '<option value="junAdmin_number">数字</option>' +
+            '<option value="junAdmin_url">链接</option>' +
+            '<option value="junAdmin_identity">身份证</option>' +
             '</select>';
         let set_value_html = '<input type="text" class="layui-input layui-input-inline" placeholder="value1=text1,value2=text2..." name="form_additional_set_value_input_'+field_name+'" id="form_additional_set_value_input_'+field_name+'" />';
         let select_page_html = '<select name="form_additional_select_page_table_'+field_name+'" id="form_additional_select_page_table_'+field_name+'">' +
@@ -186,10 +186,10 @@ layui.use(['junAdmin'],function(){
                 ,field_comment
                 ,form_type
                 ,form_additional
-                ,form_required
+                ,form_empty
                 ,table_width
                 ,table_min_width
-                ,table_type
+                ,table_templet
                 ,table_align
                 ,table_additional_unresize
                 ,table_additional_sort
@@ -201,11 +201,11 @@ layui.use(['junAdmin'],function(){
                 field_comment = table_data_arr[key]['field_comment'];
                 form_type = $('#form_type_'+field_name).val();
                 form_additional = get_form_additional_val(field_name,form_type);
-                form_required = $('#form_required_'+field_name+':checked').val();
-                form_required = (typeof form_required == "undefined") ? 0 : form_required;
+                form_empty = $('#form_empty_'+field_name+':checked').val();
+                form_empty = (typeof form_empty == "undefined") ? 0 : form_empty;
                 table_width = table_data_arr[key]['table_width'];
                 table_min_width = table_data_arr[key]['table_min_width'];
-                table_type = $('#table_type_'+field_name).val();
+                table_templet = $('#table_templet_'+field_name).val();
                 table_align = $('#table_align_'+field_name).val();
                 table_additional_unresize = $('#table_additional_unresize_'+field_name+':checked').val();
                 table_additional_unresize = (typeof table_additional_unresize == "undefined") ? 0 : table_additional_unresize;
@@ -218,10 +218,10 @@ layui.use(['junAdmin'],function(){
                     ,'field_comment':field_comment
                     ,'form_type':form_type
                     ,'form_additional':form_additional
-                    ,'form_required':form_required
+                    ,'form_empty':form_empty
                     ,'table_width':table_width
                     ,'table_min_width':table_min_width
-                    ,'table_type':table_type
+                    ,'table_templet':table_templet
                     ,'table_align':table_align
                     ,'table_additional_unresize':table_additional_unresize
                     ,'table_additional_sort':table_additional_sort

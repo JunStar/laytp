@@ -277,16 +277,41 @@ class Curd extends Command
         }
         $show_fields = explode(',', $this->curd_config['global']['show_fields']);
         $all_fields = $this->curd_config['global']['all_fields'];
+        $fields_list = arr_to_map($this->curd_config['field_list'], 'field_name');
         foreach($all_fields as $k=>$v){
             if( !in_array($v['field_name'], $show_fields) ){
                 $temp = "\t\t\t\t//,{field:'{$v['field_name']}',title:'{$v['field_comment']}',align:'center'}\n";
             }else{
                 if(!$has_first_cols){
                     $has_first_cols = true;
-                    $temp = "\t\t\t\t{field:'{$v['field_name']}',title:'{$v['field_comment']}',align:'center'}\n";
+                    $temp = "\t\t\t\t{field:'{$v['field_name']}',title:'{$v['field_comment']}'";
                 }else{
-                    $temp = "\t\t\t\t,{field:'{$v['field_name']}',title:'{$v['field_comment']}',align:'center'}\n";
+                    $temp = "\t\t\t\t,{field:'{$v['field_name']}',title:'{$v['field_comment']}'";
                 }
+                if($fields_list[$v['field_name']]['table_width'] !== '自适应' && $fields_list[$v['field_name']]['table_width']){
+                    $temp .= ",width:".$fields_list[$v['field_name']]['table_width'];
+                }
+                if($fields_list[$v['field_name']]['table_min_width'] !== '使用全局配置' && $fields_list[$v['field_name']]['table_min_width']){
+                    $temp .= ",minWidth:".$fields_list[$v['field_name']]['table_min_width'];
+                }
+//                if($fields_list[$v['field_name']]['table_templet']){
+//                    if($fields_list[$v['field_name']]['table_templet'] == 'checkbox'){
+//                        $temp .= ",templet:''";
+//                    }else if($fields_list[$v['field_name']]['table_templet'] == 'radio'){
+//                        $temp .= ",templet:'<div><input type=\"checkbox\" name=\"sex\" value=\"{{d.id}}\" lay-skin=\"switch\" lay-text=\"女|男\" lay-filter=\"sexDemo\"></div>'";
+//                    }
+//                }
+                $temp .= ",align:'".$fields_list[$v['field_name']]['table_align']."'";
+                if($fields_list[$v['field_name']]['table_additional_unresize']){
+                    $temp .= ",unresize:true";
+                }
+                if($fields_list[$v['field_name']]['table_additional_sort']){
+                    $temp .= ",sort:true";
+                }
+                if($fields_list[$v['field_name']]['table_additional_edit']){
+                    $temp .= ",edit:'text'";
+                }
+                $temp .= "}\n";
             }
             $cols .= $temp;
         }
@@ -399,6 +424,10 @@ EOD;
         $name = 'html' . DS . $type . DS . 'input';
         $data['filed_name'] = $info['field_name'];
         $data['field_comment'] = $info['field_comment'];
+        $data['verify'] = $info['form_additional'];
+        if(!$info['form_empty']){
+            $data['verify'] = $data['verify'] ? 'required|'.$data['verify'] : 'required';
+        }
         return $this->get_replaced_tpl($name, $data);
     }
 }

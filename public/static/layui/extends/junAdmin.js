@@ -21,6 +21,45 @@ layui.define([
         ,laytpl = junAdmin.laytpl = layui.laytpl
     ;
 
+    //自定义表单验证器
+    form.verify({
+        junAdmin_email:function(value){
+            if(value.length > 0){
+                if(!form.config.verify.email[0].test(value)){
+                    return form.config.verify.email[1];
+                }
+            }
+        },
+        junAdmin_phone:function(value){
+            if(value.length > 0){
+                if(!form.config.verify.phone[0].test(value)){
+                    return form.config.verify.phone[1];
+                }
+            }
+        },
+        junAdmin_number:function(value){
+            if(value.length > 0){
+                if(!form.config.verify.number[0].test(value)){
+                    return form.config.verify.number[1];
+                }
+            }
+        },
+        junAdmin_url:function(value){
+            if(value.length > 0){
+                if(!form.config.verify.url[0].test(value)){
+                    return form.config.verify.url[1];
+                }
+            }
+        },
+        junAdmin_identity:function(value){
+            if(value.length > 0){
+                if(!form.config.verify.identity[0].test(value)){
+                    return form.config.verify.identity[1];
+                }
+            }
+        },
+    });
+
     junAdmin.facade = {
         //获取一个对象的元素个数
         get_count: function(param){
