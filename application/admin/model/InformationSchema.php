@@ -49,4 +49,15 @@ class InformationSchema extends Backend
         }
         return ['pk'=>$pk,'field_comment'=>$field_comment];
     }
+
+    //获取某个表的注释
+    public function getTableComment($table_name){
+        $table_list = $this->getTableList()->toArray();
+        foreach($table_list as $k=>$v){
+            if($v['TABLE_NAME'] == $table_name){
+                return $v['TABLE_COMMENT'];
+            }
+        }
+        return '';
+    }
 }

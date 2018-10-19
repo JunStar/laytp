@@ -45,7 +45,7 @@ function exec_command($command_class_name, $argv=[]){
         $result['msg'] = implode("\n", $output->getMessage());
         $result['code'] = 1;
     } catch (Exception $e) {
-        $result['msg'] = $e->getMessage();
+        $result['msg'] = $e->getFile() . '<br />' . $e->getLine() . '<br />' . $e->getMessage() . '<br />' . $e->getCode();
         $result['code'] = 0;
     }
     return $result;
