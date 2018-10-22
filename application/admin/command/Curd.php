@@ -430,4 +430,18 @@ EOD;
         }
         return $this->get_replaced_tpl($name, $data);
     }
+
+    /**
+     * 获取input需要生成的html，在生成add和edit表单的时候可以用到
+     * @param $info
+     * @param $type 类型，add或者edit
+     * @return string
+     */
+    protected function get_textarea_html($info,$type){
+        $name = 'html' . DS . $type . DS . 'textarea';
+        $data['filed_name'] = $info['field_name'];
+        $data['field_comment'] = $info['field_comment'];
+        $data['verify'] = $info['form_empty'] ? '' : 'required';
+        return $this->get_replaced_tpl($name, $data);
+    }
 }

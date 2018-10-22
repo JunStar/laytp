@@ -1,0 +1,1 @@
+<textarea name="row[{%filed_name%}]" placeholder="请输入{%field_comment%}" class="layui-textarea" lay-verify="{%verify%}" lay-verType="tips">{${%filed_name%}}</textarea>

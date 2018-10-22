@@ -137,7 +137,7 @@ layui.use(['junAdmin'],function(){
             '<option value="junAdmin_url">链接</option>' +
             '<option value="junAdmin_identity">身份证</option>' +
             '</select>';
-        let set_value_html = '<input type="text" class="layui-input layui-input-inline" placeholder="value1=text1,value2=text2..." name="form_additional_set_value_input_'+field_name+'" id="form_additional_set_value_input_'+field_name+'" />';
+        let set_value_html = '<input type="text" class="layui-input layui-input-inline" placeholder="value1=text1,value2=text2,default=value..." name="form_additional_set_value_input_'+field_name+'" id="form_additional_set_value_input_'+field_name+'" />';
         let select_page_html = '<select name="form_additional_select_page_table_'+field_name+'" id="form_additional_select_page_table_'+field_name+'">' +
             '<option value="">搜索的表名</option>' +
             '<option value="ja_test">ja_test</option>' +
@@ -296,11 +296,12 @@ layui.use(['junAdmin'],function(){
             if(set_value_input_type.indexOf(value) != -1){
                 return $('#form_additional_set_value_input_' + field_name).val();
             }else if(type_arr.indexOf(value) != -1){
-                if(value != 'select_page'){
-                    return $('#form_additional_' + value + '_' + field_name).val();
-                }else{
-
-                }
+                return "";
+                // if(value != 'select_page'){
+                //     return $('#form_additional_' + value + '_' + field_name).val();
+                // }else{
+                //
+                // }
             }
         }
     }
