@@ -452,7 +452,6 @@ EOD;
      * @return string
      */
     protected function get_radio_html($info,$type){
-
         $items = explode(",", $info['form_additional']);
         $radio_items = [];//待选项数组
         $default_value = '';//默认值
