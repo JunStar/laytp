@@ -1,0 +1,1 @@
+<input type="radio" name="row[{%filed_name%}]" value="{%value%}" title="{%title%}" {if ${%filed_name%} == '{%value%}'}checked="checked"{/if} />

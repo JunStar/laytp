@@ -487,7 +487,16 @@ EOD;
             }
             return $this->get_replaced_tpl($name, $data);
         }else if(count($radio_items) > 2){
-
+            $name = 'html' . DS . $type . DS . 'radio';
+            $radio_html = '';
+            foreach($radio_items as $k=>$v){
+                $temp_data['filed_name'] = $info['field_name'];
+                $temp_data['value'] = $v['value'];
+                $temp_data['title'] = $v['text'];
+                $temp_data['checked_status'] = ($v['value'] == $default_value) ? 'checked="checked"' : '';
+                $radio_html .= $this->get_replaced_tpl($name, $temp_data);
+            }
+            return $radio_html;
         }
     }
 }
