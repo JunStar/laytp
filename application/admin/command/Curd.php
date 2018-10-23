@@ -498,4 +498,42 @@ EOD;
             return $radio_html;
         }
     }
+
+    /**
+     * 获取select需要生成的html，在生成add和edit表单的时候可以用到
+     * @param $info
+     * @param $type 类型，add或者edit
+     * @return string
+     */
+    protected function get_select_html($info,$type){
+        $name = 'html' . DS . $type . DS . 'select_'.$info['form_additional']['single_multi'];
+        $data['filed_name'] = $info['field_name'];
+        $items = explode(',', $info['form_additional']['values']);
+        $default_value = '';
+        $option_items = [];
+        foreach($items as $k=>$v){
+            $temp = explode('=', $v);
+            if($temp[0]!='default'){
+                $option_items[] = ['value'=>$temp[0], 'text'=>$temp[1]];
+            }else{
+                $default_value = $temp[1];
+            }
+        }
+        $options = '';
+        foreach($option_items as $k=>$v){
+            if($type == 'add'){
+                if($default_value == $v['value']){
+                    $options .= '<option value="'.$v['value'].'" selected="selected">'.$v['text'].'</option>';
+                }else{
+                    $options .= '<option value="'.$v['value'].'">'.$v['text'].'</option>';
+                }
+            }else{
+                $options .= '<option value="'.$v['value'].'" {if $'.$info['field_name'].' == \''.$v['value'].'\'}selected="selected"{/if}>'.$v['text'].'</option>';
+            }
+        }
+        $data['options'] = $options;
+        $data['field_comment'] = $info['field_comment'];
+        $data['verify'] = $info['form_empty'] ? '' : 'required';
+        return $this->get_replaced_tpl($name, $data);
+    }
 }

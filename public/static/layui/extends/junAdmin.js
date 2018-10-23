@@ -9,6 +9,7 @@ let add_search_condition_click_num = 0;
 layui.define([
     'jquery', 'layer', 'form', 'table', 'laytpl', 'element'
     ,'select_multi'
+    ,'select_search'
 ], function(exports){
     const MOD_NAME = 'junAdmin';
     let junAdmin = {};

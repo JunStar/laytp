@@ -45,6 +45,7 @@ layui.use(['junAdmin'],function(){
         form.on('select(form_type)',function(data){
             let field_name = $('#'+data.elem.id).data('field_name');
             let value = data.elem.value;
+            console.log(field_name, value);
             func_controller.form_type_select_after(field_name, value);
             form.render('select');
             return true;
@@ -138,7 +139,12 @@ layui.use(['junAdmin'],function(){
             '<option value="junAdmin_identity">身份证</option>' +
             '</select>';
         let set_value_html = '<input type="text" class="layui-input layui-input-inline" placeholder="value1=text1,value2=text2,default=value..." name="form_additional_set_value_input_'+field_name+'" id="form_additional_set_value_input_'+field_name+'" />';
-        let select_page_html = '<select name="form_additional_select_page_table_'+field_name+'" id="form_additional_select_page_table_'+field_name+'">' +
+        let select_single_multi = '<select name="form_additional_select_single_multi_'+field_name+'" id="form_additional_select_single_multi_'+field_name+'">' +
+            '<option value="single">单选</option>' +
+            '<option value="multi">多选</option>' +
+            '</select>';
+        let select_html = select_single_multi + set_value_html;
+        let select_page_html = select_single_multi + '<select name="form_additional_select_page_table_'+field_name+'" id="form_additional_select_page_table_'+field_name+'">' +
             '<option value="">搜索的表名</option>' +
             '<option value="ja_test">ja_test</option>' +
             '</select>' +
@@ -169,8 +175,8 @@ layui.use(['junAdmin'],function(){
         let upload_html = '';
         let textarea_html = '';
         let editor_html = '';
-        let type_arr = ['input','select_page','time','city','upload','textarea','editor'];
-        let set_value_input_type = ['radio','checkbox','select'];
+        let type_arr = ['input','select','select_page','time','city','upload','textarea','editor'];
+        let set_value_input_type = ['radio','checkbox'];
         if(set_value_input_type.indexOf(value) != -1){
             $('#form_additional_' + field_name).html(set_value_html);
         }else if(type_arr.indexOf(value) != -1){
@@ -201,6 +207,7 @@ layui.use(['junAdmin'],function(){
                 field_comment = table_data_arr[key]['field_comment'];
                 form_type = $('#form_type_'+field_name).val();
                 form_additional = get_form_additional_val(field_name,form_type);
+                console.log(form_additional);
                 form_empty = $('#form_empty_'+field_name+':checked').val();
                 form_empty = (typeof form_empty == "undefined") ? 0 : form_empty;
                 table_width = table_data_arr[key]['table_width'];
@@ -291,17 +298,22 @@ layui.use(['junAdmin'],function(){
         });
 
         function get_form_additional_val(field_name,value){
-            let type_arr = ['input','select_page','time','city','upload','textarea','editor'];
-            let set_value_input_type = ['radio','checkbox','select'];
+            let no_form_additionnal_arr = ['input','textarea'];
+            let type_arr = ['select','select_page','time','city','upload','editor'];
+            let set_value_input_type = ['radio','checkbox'];
             if(set_value_input_type.indexOf(value) != -1){
                 return $('#form_additional_set_value_input_' + field_name).val();
             }else if(type_arr.indexOf(value) != -1){
+                if(value == 'select'){
+                    return {
+                        'single_multi' : $('#form_additional_select_single_multi_' + field_name).val(),
+                        'values' : $('#form_additional_set_value_input_' + field_name).val()
+                    };
+                }else{
+                    return "";
+                }
+            }else if(no_form_additionnal_arr.indexOf(value) != -1){
                 return "";
-                // if(value != 'select_page'){
-                //     return $('#form_additional_' + value + '_' + field_name).val();
-                // }else{
-                //
-                // }
             }
         }
     }
