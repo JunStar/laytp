@@ -13,49 +13,42 @@ layui.define([
 ], function(exports){
     const MOD_NAME = 'junAdmin';
     let junAdmin = {};
-    const
-        $ = junAdmin.$ = layui.jquery
-        ,select_multi = junAdmin.select_multi = layui.select_multi
-        ,layer = junAdmin.layer = layui.layer
-        ,form = junAdmin.form = layui.form
-        ,table = junAdmin.table = layui.table
-        ,laytpl = junAdmin.laytpl = layui.laytpl
-    ;
+    const $ = junAdmin.$ = layui.jquery;
 
     //自定义表单验证器
-    form.verify({
+    layui.form.verify({
         junAdmin_email:function(value){
             if(value.length > 0){
-                if(!form.config.verify.email[0].test(value)){
-                    return form.config.verify.email[1];
+                if(!layui.form.config.verify.email[0].test(value)){
+                    return layui.form.config.verify.email[1];
                 }
             }
         },
         junAdmin_phone:function(value){
             if(value.length > 0){
-                if(!form.config.verify.phone[0].test(value)){
-                    return form.config.verify.phone[1];
+                if(!layui.form.config.verify.phone[0].test(value)){
+                    return layui.form.config.verify.phone[1];
                 }
             }
         },
         junAdmin_number:function(value){
             if(value.length > 0){
-                if(!form.config.verify.number[0].test(value)){
-                    return form.config.verify.number[1];
+                if(!layui.form.config.verify.number[0].test(value)){
+                    return layui.form.config.verify.number[1];
                 }
             }
         },
         junAdmin_url:function(value){
             if(value.length > 0){
-                if(!form.config.verify.url[0].test(value)){
-                    return form.config.verify.url[1];
+                if(!layui.form.config.verify.url[0].test(value)){
+                    return layui.form.config.verify.url[1];
                 }
             }
         },
         junAdmin_identity:function(value){
             if(value.length > 0){
-                if(!form.config.verify.identity[0].test(value)){
-                    return form.config.verify.identity[1];
+                if(!layui.form.config.verify.identity[0].test(value)){
+                    return layui.form.config.verify.identity[1];
                 }
             }
         },
@@ -90,7 +83,7 @@ layui.define([
         redirect: function(url){
             location.href = url;
         },
-    
+
         //组装成url
         url: function(path, params){
             if( typeof params !== 'undefined' ){
@@ -101,13 +94,13 @@ layui.define([
             }else{
                 params = '';
             }
-    
+
             path = '/' + path.replace(/(^\/)|(\/$)/,'');
-    
+
             var url = path + params + '.html';
             return url;
         },
-    
+
         //layer弹窗iFrame
         popup_frame: function(title, url, width, height){
             if(width == undefined) {
@@ -116,14 +109,18 @@ layui.define([
             if(height == undefined) {
                 height = '220px';
             }
-            layer.open({
+            console.log('popup_frame');
+            layui.layer.open({
                 type : 2,
                 title : title,
                 content : url,
                 area: [width,height],
+                success: function(layero, index){
+                    junAdmin.facade.after_popup_frame(layero,index);
+                }
             });
         },
-    
+
         //layer弹出层
         popup_div: function(title, content, width, height){
             if(width == undefined) {
@@ -132,29 +129,29 @@ layui.define([
             if(height == undefined) {
                 height = '220px';
             }
-            layer.open({
+            layui.layer.open({
                 type : 1,
                 title : title,
                 content : content,
                 area: [width,height],
             });
         },
-    
+
         //layer提示操作成功
         success: function(text){
-            layer.msg(text,{icon:1});
+            layui.layer.msg(text,{icon:1});
         },
-    
+
         //layer提示操作失败
         error: function(text){
-            layer.msg(text,{icon:2});
+            layui.layer.msg(text,{icon:2});
         },
 
         //表格点击编辑删除按钮
         table_tool: function(obj){
             let data = obj.data;
             if(obj.event === 'del'){
-                layer.confirm('真的删除么?', function(index){
+                layui.layer.confirm('真的删除么?', function(index){
                     $.ajax({
                         type: 'POST',
                         url: junAdmin.facade.url(module + '/' + controller +'/del'),
@@ -166,7 +163,7 @@ layui.define([
                             }else{
                                 junAdmin.facade.error(res.msg);
                             }
-                            layer.close(index);
+                            layui.layer.close(index);
                         },
                         error: function (xhr) {
                             if( xhr.status == '500' ){
@@ -182,13 +179,49 @@ layui.define([
                 let url = junAdmin.facade.url(module + '/' + controller + '/edit',{id:data.id});
                 this.popup_frame('添加', url, '800px', '500px');
             }
-        }
-    
+        },
+
+        //多选下拉框
+        select_multi:function(elem,data,name,layero,index){
+            //重新渲染多选下拉框
+            layui.select_multi.render({
+                elem: elem
+                ,name: name
+                ,index:index
+                ,layero:layero
+                ,data: data
+                ,max: 3
+                ,verify: 'required'
+                ,field: {idName:'id',titleName:'name'}
+                ,selected: ['0','1','2']
+                ,click_dd_after: function(){}
+            });
+        },
+
         //时间插件
-    
+
         //表格插件
-    
+
         //其他插件,等等...
+
+        after_popup_frame: function(layero,index){
+            junAdmin.facade.select_multi(
+                layui.layer.getChildFrame('#select_multi', index),
+                [
+                    {id:0,name:'游泳'},
+                    {id:1,name:'下棋'},
+                    {id:2,name:'游戏'},
+                    {id:3,name:'乒乓球'},
+                    {id:4,name:'羽毛'},
+                    {id:5,name:'跑步'},
+                    {id:6,name:'爬山'},
+                    {id:7,name:'美食'}
+                ],
+                'select_multi',
+                layero,
+                index
+            );
+        }
     }
 
     junAdmin.init = {
@@ -226,7 +259,7 @@ layui.define([
                 pop_select_input = $(this).data('input_id');
                 $.get(source,{},function(res){
                     var data = res.data;
-                    laytpl($('#'+template_id).html()).render(data, function(html){
+                    layui.laytpl($('#'+template_id).html()).render(data, function(html){
                         junAdmin.facade.popup_div(title, html, '99%', '98%');
                     });
                 });
@@ -235,7 +268,7 @@ layui.define([
             $(document).on('click','.pop-select-to-input',function(){
                 var value = $(this).data('input_value');
                 $("#"+pop_select_input).val(value);
-                layer.closeAll();
+                layui.layer.closeAll();
             });
         },
 
@@ -249,7 +282,7 @@ layui.define([
          *  2.button的属性值lay-submit lay-filter="*";
          */
         form: function(){
-            form.on('submit(*)', function(data){
+            layui.form.on('submit(*)', function(data){
                 /**
                  * 所有的表单提交都是执行ajax，ajax请求的地址都是当前的url
                  * 列表页的搜索表单要使用到layui的table控件进行ajax提交，其他表单使用jQuery的ajax提交方式
@@ -280,7 +313,7 @@ layui.define([
                         if( res.code == 1 ){
                             junAdmin.facade.success(res.msg);
                             parent.func_controller.table_render();
-                            parent.layer.closeAll();
+                            parent.layui.layer.closeAll();
                         }else{
                             junAdmin.facade.error(res.msg);
                         }
@@ -303,9 +336,9 @@ layui.define([
             $(document).on('click','.add_search_condition',function(){
                 let search_condition_tpl = $('#search_condition_tpl').html();
                 add_search_condition_click_num = add_search_condition_click_num + 1;
-                laytpl(search_condition_tpl).render(add_search_condition_click_num, function(html){
+                layui.laytpl(search_condition_tpl).render(add_search_condition_click_num, function(html){
                     $('form > div').append(html);
-                    form.render();
+                    layui.form.render();
                 });
             });
         }

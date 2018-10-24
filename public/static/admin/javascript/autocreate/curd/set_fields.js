@@ -69,7 +69,7 @@
         });
 
         form.on('select(field_type)',function(data){
-            console.log(table.cache[1]);
+            // console.log(table.cache[1]);
 
             //有int附加选项才有自增,主键,无符号,必填
             return true;

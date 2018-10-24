@@ -63,14 +63,14 @@ layui.define(['jquery', 'layer'], function(exports){
                 this.createOption = function(){
                     let o=this,c=o.config,f=c.field,d = c.data;
                     let s = c.selected;
-                    $E = $(c.elem);
+                    $E = (typeof c.elem == 'object') ? c.elem : $(c.elem);
                     let tips = c.tips.replace('{max}',c.max);
                     let inputName = c.name=='' ? c.elem.replace('#','').replace('.','') : c.name;
                     let verify = c.verify=='' ? '' : 'lay-verify="'+c.verify+'" ';
                     let html = '';
                     html +=	'<div class="layui-unselect layui-form-select">';
                     html +=			'<div class="layui-select-title">';
-                    html +=				'<input '+verify+'name="'+inputName+'" type="text" readonly="" class="layui-input layui-unselect">';
+                    html +=				'<input '+verify+'name="'+inputName+'" type="text" readonly="readonly" class="layui-input layui-unselect">';
                     html +=			'</div>';
                     html +=			'<div class="layui-input multiple">';
                     html +=			'</div>';
@@ -99,7 +99,7 @@ layui.define(['jquery', 'layer'], function(exports){
                 this.set = function(selected){
                     let o=this,c=o.config;
                     let s = typeof selected=='undefined' ? c.selected : selected;
-                    $E = $(c.elem);
+                    $E = (typeof c.elem == 'object') ? c.elem : $(c.elem);
                     $E.find('.layui-form-checkbox').removeClass('layui-form-checked');
                     $E.find('dd').removeClass('layui-this');
                     //为默认选中值添加类名
@@ -118,7 +118,7 @@ layui.define(['jquery', 'layer'], function(exports){
                 //设置选中值 每次点击操作后执行
                 this.setSelected = function(first){
                     let o=this,c=o.config,f=c.field;
-                    $E = $(c.elem);
+                    $E = (typeof c.elem == 'object') ? c.elem : $(c.elem);
                     let values=[],names=[],selected = [],spans = [];
                     let items = $E.find('dd.layui-this');
                     if(items.length==0){
@@ -176,13 +176,15 @@ layui.define(['jquery', 'layer'], function(exports){
             //渲染一个实例
             obj.pro_render = function(){
                 let o=this,c=o.config,f=c.field;
-                $E = $(c.elem);
+                $E = (typeof c.elem == 'object') ? c.elem : $(c.elem);
 
                 if($E.length==0){
                     console.error(MOD_NAME+' hint：找不到容器 ' +c.elem);
                     return false;
                 }
                 if(Object.prototype.toString.call(c.data)!='[object Array]'){
+                    console.log(Object.prototype.toString.call(c.data));
+                    console.log(c.data);
                     let data = o.getData(c.data);
                     if(data===false){
                         console.error(MOD_NAME+' hint：缺少分类数据');
@@ -203,7 +205,11 @@ layui.define(['jquery', 'layer'], function(exports){
                 if($('#lay-ext-mulitsel-style').length==0){
                     // let style = '.lay-ext-mulitsel .layui-form-select dl dd div{margin-top:0px!important;}.lay-ext-mulitsel .layui-form-select dl dd.layui-this{background-color:#fff}.lay-ext-mulitsel .layui-input.multiple{line-height:auto;height:auto;padding:4px 10px 4px 10px;overflow:hidden;min-height:38px;margin-top:-38px;left:0;z-index:99;position:relative;background:#fff;}.lay-ext-mulitsel .layui-input.multiple a{padding:2px 5px;background:#5FB878;border-radius:2px;color:#fff;display:block;line-height:20px;height:20px;margin:2px 5px 2px 0;float:left;}.lay-ext-mulitsel .layui-input.multiple a i{margin-left:4px;font-size:14px;} .lay-ext-mulitsel .layui-input.multiple a i:hover{background-color:#009E94;border-radius:2px;}.lay-ext-mulitsel .danger{border-color:#FF5722!important}.lay-ext-mulitsel .tips{pointer-events: none;position: absolute;left: 10px;top: 10px;color:#757575;}';
                     let style = '.lay-ext-mulitsel .layui-form-select dl dd div{margin-top:0px!important;}.lay-ext-mulitsel .layui-form-select dl dd.layui-this{background-color:#fff}.lay-ext-mulitsel .layui-input.multiple{padding:4px 10px 4px 10px;overflow:hidden;min-height:38px;margin-top:-38px;left:0;z-index:99;position:relative;background:#fff;}.lay-ext-mulitsel .layui-input.multiple a{padding:2px 5px;background:#5FB878;border-radius:2px;color:#fff;display:block;line-height:20px;height:20px;margin:2px 5px 2px 0;float:left;}.lay-ext-mulitsel .layui-input.multiple a i{margin-left:4px;font-size:14px;} .lay-ext-mulitsel .layui-input.multiple a i:hover{background-color:#009E94;border-radius:2px;}.lay-ext-mulitsel .danger{border-color:#FF5722!important}.lay-ext-mulitsel .tips{pointer-events: none;position: absolute;left: 10px;top: 10px;color:#757575;}';
-                    $('<style id="lay-ext-mulitsel-style"></style>').text(style).appendTo($('head'));
+                    if( typeof c.index != 'undefined'){
+                        $('<style id="lay-ext-mulitsel-style"></style>').text(style).appendTo(layer.getChildFrame('head', c.index));
+                    }else{
+                        $('<style id="lay-ext-mulitsel-style"></style>').text(style).appendTo($('head'));
+                    }
                 };
 
                 //创建选项
@@ -252,12 +258,25 @@ layui.define(['jquery', 'layer'], function(exports){
                     //选中
                     else{
                         if(o.selected.length >= c.max){
-                            $(c.elem+' .multiple').addClass('danger');
-                            layer.tips('最多只能选择 '+c.max+' 个', c.elem+' .multiple', {
+                            let multiple_obj = '';
+                            if(typeof c.elem != 'object'){
+                                multiple_obj = $(c.elem+' .multiple');
+                            }else{
+                                multiple_obj = c.elem.find(".multiple");
+                            }
+                            multiple_obj.addClass('danger');
+                            let layer_i = '';
+                            if(typeof c.layero != 'undefined') {
+                                let iframeWin = window[c.layero.find('iframe')[0]['name']];
+                                layer_i = iframeWin.layer
+                            }else{
+                                layer_i = layer;
+                            }
+                            layer_i.tips('最多只能选择 '+c.max+' 个', multiple_obj, {
                                 tips: 3,
-                                time: 1000,
+                                time: 100000000,
                                 end:function(){
-                                    $(c.elem+' .multiple').removeClass('danger');
+                                    multiple_obj.removeClass('danger');
                                 }
                             });
                             return false;

@@ -1472,7 +1472,7 @@ layui.define(['jquery'], function(exports){
     };
 
     Common.prototype.log = function (obj) {
-        console.log(obj);
+        // console.log(obj);
     };
 
     var Select4 = function Select4() {

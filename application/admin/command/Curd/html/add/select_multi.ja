@@ -1,0 +1,1 @@
+<div id="{%field_name%}" class="select_multi" selected_data="{%selected_data%}" max="{%max%}" name="row[{%field_name%}]"></div>

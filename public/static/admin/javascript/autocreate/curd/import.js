@@ -3,15 +3,11 @@ layui.use(['junAdmin'],function(){
         func_controller = {}
         ,junAdmin = layui.junAdmin
         ,$ = junAdmin.$
-        ,facade = junAdmin.facade
-        ,form = junAdmin.form
-        ,table = junAdmin.table
-        ,select_multi = junAdmin.select_multi
     ;
 
     //渲染表格
     func_controller.table_render = function (data) {
-        table.render({
+        layui.table.render({
             elem: '.layui-hide-sm'
             ,cellMinWidth: 100
             ,text:{none:'请选择数据表和需要显示的字段'}
@@ -42,12 +38,11 @@ layui.use(['junAdmin'],function(){
         });
 
         //监听表单元素下拉框onchange事件
-        form.on('select(form_type)',function(data){
+        layui.form.on('select(form_type)',function(data){
             let field_name = $('#'+data.elem.id).data('field_name');
             let value = data.elem.value;
-            console.log(field_name, value);
             func_controller.form_type_select_after(field_name, value);
-            form.render('select');
+            layui.form.render('select');
             return true;
         });
     }
@@ -58,21 +53,21 @@ layui.use(['junAdmin'],function(){
         func_controller.table_render([]);
 
         //显示字段渲染多选下拉框
-        select_multi.render({
+        layui.select_multi.render({
             elem: '#select_fields',data: []
         });
 
         //搜索字段渲染多选下拉框
-        select_multi.render({
+        layui.select_multi.render({
             elem: '#search_fields',data: []
         });
 
         //监听选择表下拉框onchange事件
-        form.on('select(select_table)',function(data){
+        layui.form.on('select(select_table)',function(data){
             let post_data = {'table_name':data.value};
             $.ajax({
                 type: 'POST',
-                url: facade.url('/' + module + '/' + controller + '/get_fields_by_table_name'),
+                url: junAdmin.facade.url('/' + module + '/' + controller + '/get_fields_by_table_name'),
                 data: post_data,
                 dataType: 'json',
                 success: function (res) {
@@ -82,7 +77,7 @@ layui.use(['junAdmin'],function(){
                             selected_data.push(i['field_name']);
                         });
                         //重新渲染多选下拉框
-                        select_multi.render({
+                        layui.select_multi.render({
                             elem: '#select_fields'
                             ,data: res.data
                             ,max: res.data.length
@@ -93,7 +88,7 @@ layui.use(['junAdmin'],function(){
                                 let select_fields = $('input[name="select_fields"]').val();
                                 let select_fields_arr = select_fields.split(',');
                                 let table_render_data = [];
-                                let res_data_map = facade.array_to_map(res.data, 'field_name');
+                                let res_data_map = junAdmin.facade.array_to_map(res.data, 'field_name');
                                 layui.each(select_fields_arr,function (key,item) {
                                     if(typeof res_data_map[item] != "undefined"){
                                         table_render_data.push(res_data_map[item]);
@@ -103,7 +98,7 @@ layui.use(['junAdmin'],function(){
                             }
                         });
                         //重新渲染多选下拉框
-                        select_multi.render({
+                        layui.select_multi.render({
                             elem: '#search_fields'
                             ,data: res.data
                             ,max: res.data.length
@@ -113,14 +108,14 @@ layui.use(['junAdmin'],function(){
                             ,click_dd_after: function(){}
                         });
                     }else{
-                        facade.error(res.msg);
+                        junAdmin.facade.error(res.msg);
                     }
                 },
                 error: function (xhr) {
                     if( xhr.status == '500' ){
-                        facade.error('本地网络问题或者服务器错误');
+                        junAdmin.facade.error('本地网络问题或者服务器错误');
                     }else if( xhr.status == '404' ){
-                        facade.error('请求地址不存在');
+                        junAdmin.facade.error('请求地址不存在');
                     }
                 }
             });
@@ -143,7 +138,7 @@ layui.use(['junAdmin'],function(){
             '<option value="single">单选</option>' +
             '<option value="multi">多选</option>' +
             '</select>';
-        let select_html = select_single_multi + set_value_html;
+        let select_html =  select_single_multi + '<input type="text" class="layui-input layui-input-inline" placeholder="最多可选个数，多选才有效，默认不限制" name="form_additional_select_max_'+field_name+'" id="form_additional_select_max_'+field_name+'" /><br/>' + set_value_html;
         let select_page_html = select_single_multi + '<select name="form_additional_select_page_table_'+field_name+'" id="form_additional_select_page_table_'+field_name+'">' +
             '<option value="">搜索的表名</option>' +
             '<option value="ja_test">ja_test</option>' +
@@ -186,8 +181,8 @@ layui.use(['junAdmin'],function(){
 
     func_controller.curd_import = function(){
         $(document).on('click','#curd_import_btn', function(){
-            let cache_count = facade.get_count(table.cache);
-            let table_data_arr = table.cache[cache_count];
+            let cache_count = junAdmin.facade.get_count(junAdmin.table.cache);
+            let table_data_arr = layui.table.cache[cache_count];
             let field_name
                 ,field_comment
                 ,form_type
@@ -207,7 +202,6 @@ layui.use(['junAdmin'],function(){
                 field_comment = table_data_arr[key]['field_comment'];
                 form_type = $('#form_type_'+field_name).val();
                 form_additional = get_form_additional_val(field_name,form_type);
-                console.log(form_additional);
                 form_empty = $('#form_empty_'+field_name+':checked').val();
                 form_empty = (typeof form_empty == "undefined") ? 0 : form_empty;
                 table_width = table_data_arr[key]['table_width'];
@@ -280,18 +274,18 @@ layui.use(['junAdmin'],function(){
                 dataType: 'json',
                 success: function (res) {
                     if( res.code == 1 ){
-                        facade.success(res.msg);
+                        junAdmin.facade.success(res.msg);
                         parent.func_controller.table_render();
                         // parent.layer.closeAll();
                     }else{
-                        facade.error(res.msg);
+                        junAdmin.facade.error(res.msg);
                     }
                 },
                 error: function (xhr) {
                     if( xhr.status == '500' ){
-                        facade.error('本地网络问题或者服务器错误');
+                        junAdmin.facade.error('本地网络问题或者服务器错误');
                     }else if( xhr.status == '404' ){
-                        facade.error('请求地址不存在');
+                        junAdmin.facade.error('请求地址不存在');
                     }
                 }
             });
@@ -307,6 +301,7 @@ layui.use(['junAdmin'],function(){
                 if(value == 'select'){
                     return {
                         'single_multi' : $('#form_additional_select_single_multi_' + field_name).val(),
+                        'max' : $('#form_additional_select_max_' + field_name).val(),
                         'values' : $('#form_additional_set_value_input_' + field_name).val()
                     };
                 }else{

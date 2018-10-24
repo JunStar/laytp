@@ -8,8 +8,15 @@ use think\Model;
 
 class {%modelClassName%} extends Model
 {
-    // 表名
+    //模型名
     protected $name = '{%modelName%}';
 
+    //表名
     {%tableName%}
+
+    //数组常量
+    {%arrayConst%}
+
+    //获取数组常量的函数
+    {%getArrayConstListFunction%}
 }

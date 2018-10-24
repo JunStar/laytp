@@ -26,7 +26,9 @@ class Curd extends Command
         $model_app_name,//模型所在app名称，全局模型就在common下，否则就在admin下
         $controller_model_class_name,//控制器和模型的类名
         $mid_name,//中间名称，比如表名为ja_test_a_b那么这里的mid_name就是/test/a/B,拼接控制器和模型文件的路径和namespace都需要用到
+        $controller_array_const,//控制器层数组常量
         $controller_c_file_name,//需要生成的控制器文件的文件名
+        $model_array_const,//模型层数组常量
         $model_c_file_name,//需要生成的模型层文件的文件名
         $js_c_file_name,//需要生成的js文件的文件名
         $html_index_c_file_name,//需要生成的html首页文件的文件名
@@ -97,10 +99,10 @@ class Curd extends Command
     }
 
     public function create(){
+        $this->c_html();
+        $this->c_js();
         $this->c_controller();
         $this->c_model();
-        $this->c_js();
-        $this->c_html();
     }
 
     public function update_exec_time(){
@@ -140,7 +142,7 @@ class Curd extends Command
      * @param array $data key=>value形式的替换数组
      * @return string
      */
-    protected function get_replaced_tpl($name, $data)
+    protected function get_replaced_tpl($name, $data=[])
     {
         foreach ($data as $index => &$datum) {
             $datum = is_array($datum) ? '' : $datum;
@@ -386,13 +388,45 @@ EOD;
 
     }
 
+    protected function set_controller_array_const($field_name){
+        if(!isset($this->controller_array_const[$field_name])){
+            $this->controller_array_const[$field_name] = '$assign[\''.$field_name.'\'] = $this->model->getArrayConstList(\''.$field_name.'\');';
+        }
+    }
+
     //生成controller层
     protected function c_controller(){
+        if(!empty($this->controller_array_const)){
+            $this->controllerParam['data']['arrayConstAssign'] = implode("\n", $this->controller_array_const);
+            $this->controllerParam['data']['arrayConstAssign'] .= "\n\t\t".'$this->assign($assign);';
+        }
         $this->write_to_file($this->controllerParam['tpl_name'], $this->controllerParam['data'], $this->controllerParam['c_file_name']);
+    }
+
+    //设置模型层的数组常量
+    protected function set_model_array_const($field_name, $array){
+        //设置常量
+        $str_arr = '';
+        foreach($array as $k=>$v){
+            $str_arr .= '\'' . $k . '\'=>\'' . $v . '\',';
+        }
+        $str_arr = '['.trim($str_arr, ',').'];';
+        $new_model_array_const = 'public $'.$field_name." = ".$str_arr;
+        if(!isset($this->model_array_const[$field_name])){
+            $this->model_array_const[$field_name] = $new_model_array_const;
+        }
     }
 
     //生成model层文件
     protected function c_model(){
+        if(!empty($this->model_array_const)){
+            $this->modelParam['data']['arrayConst'] = implode("\n", $this->model_array_const);
+        }
+        //设置获取常量的函数
+        if(!empty($this->model_array_const)){
+            $array_const_function_ja = 'model' . DS . 'array_const_function';
+            $this->modelParam['data']['getArrayConstListFunction'] = $this->get_replaced_tpl($array_const_function_ja);
+        }
         $this->write_to_file($this->modelParam['tpl_name'], $this->modelParam['data'], $this->modelParam['c_file_name']);
     }
 
@@ -407,7 +441,6 @@ EOD;
         $this->write_to_file($this->htmlAddParam['tpl_name'], $this->htmlAddParam['data'], $this->htmlAddParam['c_file_name']);
         $this->write_to_file($this->htmlEditParam['tpl_name'], $this->htmlEditParam['data'], $this->htmlEditParam['c_file_name']);
     }
-
 
     /**
      * 接下来是html的各种控件模板内容生成，比如input、select、upload等等
@@ -461,10 +494,10 @@ EOD;
                 $default_value = $temp[0];
             }
 
-            if($temp[0]!='default'){
-                $radio_items[] = ['value'=>$temp[0], 'text'=>$temp[1]];
-            }else{
+            if($temp[0]=='default'){
                 $default_value = $temp[1];
+            }else{
+                $radio_items[] = ['value'=>$temp[0], 'text'=>$temp[1]];
             }
         }
         /**
@@ -506,34 +539,67 @@ EOD;
      * @return string
      */
     protected function get_select_html($info,$type){
-        $name = 'html' . DS . $type . DS . 'select_'.$info['form_additional']['single_multi'];
+        if($info['form_additional']['single_multi'] == 'single'){
+            return $this->get_select_single_html($info,$type);
+        }else if($info['form_additional']['single_multi'] == 'multi'){
+            return $this->get_select_multi_html($info,$type);
+        }
+    }
+
+    protected function get_select_single_html($info,$type){
+        $name = 'html' . DS . $type . DS . 'select_single';
         $data['filed_name'] = $info['field_name'];
         $items = explode(',', $info['form_additional']['values']);
         $default_value = '';
         $option_items = [];
         foreach($items as $k=>$v){
             $temp = explode('=', $v);
-            if($temp[0]!='default'){
-                $option_items[] = ['value'=>$temp[0], 'text'=>$temp[1]];
-            }else{
+            if($temp[0]=='default'){
                 $default_value = $temp[1];
+            }else{
+                $option_items[] = ['value'=>$temp[0], 'text'=>$temp[1]];
             }
         }
         $options = '';
         foreach($option_items as $k=>$v){
             if($type == 'add'){
                 if($default_value == $v['value']){
-                    $options .= '<option value="'.$v['value'].'" selected="selected">'.$v['text'].'</option>';
+                    $options .= '<option value="'.$v['value'].'" selected="selected">'.$v['text'].'</option>'."\n";
                 }else{
-                    $options .= '<option value="'.$v['value'].'">'.$v['text'].'</option>';
+                    $options .= '<option value="'.$v['value'].'">'.$v['text'].'</option>'."\n";
                 }
             }else{
-                $options .= '<option value="'.$v['value'].'" {if $'.$info['field_name'].' == \''.$v['value'].'\'}selected="selected"{/if}>'.$v['text'].'</option>';
+                $options .= '<option value="'.$v['value'].'" {if $'.$info['field_name'].' == \''.$v['value'].'\'}selected="selected"{/if}>'.$v['text'].'</option>'."\n";
             }
         }
         $data['options'] = $options;
         $data['field_comment'] = $info['field_comment'];
         $data['verify'] = $info['form_empty'] ? '' : 'required';
+        return $this->get_replaced_tpl($name, $data);
+    }
+
+    protected function get_select_multi_html($info,$type){
+        $name = 'html' . DS . $type . DS . 'select_multi';
+        $data['field_name'] = $info['field_name'];
+        $data['max'] = intval( $info['form_additional']['max'] );
+        $items = explode(',', $info['form_additional']['values']);
+        $default_value = '';
+        $option_items = [];
+        $model_array_const = [];
+        foreach($items as $k=>$v){
+            $temp = explode('=', $v);
+            if($temp[0]=='default'){
+                $default_value = $temp[1];
+            }else{
+                $option_items[] = ['id'=>$temp[0], 'name'=>$temp[1]];
+                $model_array_const[(string)$temp[0]] = $temp[1];
+            }
+        }
+        if($type == 'add'){
+            $data['selected_data'] = $default_value ? '[\''.str_replace(';','\',\'',$default_value).'\']' : '';
+        }
+        $this->set_model_array_const($info['field_name'], $model_array_const);
+        $this->set_controller_array_const($info['field_name'], $model_array_const);
         return $this->get_replaced_tpl($name, $data);
     }
 }

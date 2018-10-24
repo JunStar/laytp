@@ -1,0 +1,1 @@
+<div id="{%field_name%}" class="select_multi" selected_data="['{:str_replace(',','\',\'',$field_name}']" max="{%max%}" name="row[{%field_name%}]"></div>

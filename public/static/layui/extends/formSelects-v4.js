@@ -1496,7 +1496,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 	};
 
 	Common.prototype.log = function (obj) {
-		console.log(obj);
+		// console.log(obj);
 	};
 
 	var Select4 = function Select4() {

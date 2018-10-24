@@ -1,14 +1,12 @@
 layui.use(['junAdmin'],function() {
     const
         func_controller = {}
-        , junAdmin = layui.junAdmin
-        , $ = junAdmin.$
-        , facade = junAdmin.facade
-        , table = junAdmin.table
+        ,junAdmin = layui.junAdmin
+        ,$ = layui.jquery
     ;
 
     func_controller.table_render = function (where) {
-        table.render({
+        layui.table.render({
             elem: '.layui-hide-sm'
             , url: window.location.href
             , toolbar: '#curd_toolbar'
@@ -28,56 +26,56 @@ layui.use(['junAdmin'],function() {
         });
 
         //监听默认工具条
-        table.on('tool(default)', function(obj){
+        layui.table.on('tool(default)', function(obj){
             let data = obj.data;
             //点击删除按钮
             if(obj.event === 'del'){
-                layer.confirm('真的删除么?', function(index){
+                layui.layer.confirm('真的删除么?', function(index){
                     $.ajax({
                         type: 'POST',
-                        url: facade.url(module + '/' + controller +'/del'),
+                        url: junAdmin.facade.url(module + '/' + controller +'/del'),
                         data: {id:data.id},
                         dataType: 'json',
                         success: function (res) {
                             if( res.code == 1 ){
                                 obj.del();
                             }else{
-                                facade.error(res.msg);
+                                junAdmin.facade.error(res.msg);
                             }
-                            layer.close(index);
+                            layui.layer.close(index);
                         },
                         error: function (xhr) {
                             if( xhr.status == '500' ){
-                                facade.error('本地网络问题或者服务器错误');
+                                junAdmin.facade.error('本地网络问题或者服务器错误');
                             }else if( xhr.status == '404' ){
-                                facade.error('请求地址不存在');
+                                junAdmin.facade.error('请求地址不存在');
                             }
                         }
                     });
                 });
                 //点击编辑按钮
             }else if(obj.event === 'edit'){
-                var url = facade.url(module + '/' + controller + '/edit',{id:data.id});
-                facade.popup_frame('编辑', url, '800px', '500px');
+                var url = junAdmin.facade.url(module + '/' + controller + '/edit',{id:data.id});
+                junAdmin.facade.popup_frame('编辑', url, '800px', '500px');
             }else if(obj.event === 're_create'){
                 $.ajax({
                     type: 'POST',
-                    url: facade.url(module + '/' + controller +'/re_create'),
+                    url: junAdmin.facade.url(module + '/' + controller +'/re_create'),
                     data: {id:data.id},
                     dataType: 'json',
                     success: function (res) {
                         if( res.code == 1 ){
-                            facade.success(res.msg);
+                            junAdmin.facade.success(res.msg);
                             func_controller.table_render();
                         }else{
-                            facade.error(res.msg);
+                            junAdmin.facade.error(res.msg);
                         }
                     },
                     error: function (xhr) {
                         if( xhr.status == '500' ){
-                            facade.error('本地网络问题或者服务器错误');
+                            junAdmin.facade.error('本地网络问题或者服务器错误');
                         }else if( xhr.status == '404' ){
-                            facade.error('请求地址不存在');
+                            junAdmin.facade.error('请求地址不存在');
                         }
                     }
                 });

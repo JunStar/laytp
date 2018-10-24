@@ -1,13 +1,12 @@
 layui.use(['junAdmin'],function() {
     const
         func_controller = {}
-        , junAdmin = layui.junAdmin
-        , facade = junAdmin.facade
-        , table = junAdmin.table
+        ,junAdmin = layui.junAdmin
+        ,$ = layui.jquery
     ;
 
     func_controller.table_render = function (where) {
-        table.render({
+        layui.table.render({
             elem: '.layui-hide-sm'
             , url: window.location.href
             , toolbar: '#default_toolbar'
@@ -21,9 +20,9 @@ layui.use(['junAdmin'],function() {
         });
 
         //监听默认工具条
-        table.on('tool(default)', function(obj){
+        layui.table.on('tool(default)', function(obj){
             if(default_table_tool.indexOf(obj.event) != -1){
-                facade.table_tool(obj);
+                junAdmin.facade.table_tool(obj);
             }
         });
     }
