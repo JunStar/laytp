@@ -44,4 +44,5 @@
 {block name="script"}
 {__block__}
 <script src="__ADMIN_JS__/{%jsFileName%}.js" charset="utf-8"></script>
+{%jsParam%}
 {/block}

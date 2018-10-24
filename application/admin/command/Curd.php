@@ -31,6 +31,7 @@ class Curd extends Command
         $model_array_const,//模型层数组常量
         $model_c_file_name,//需要生成的模型层文件的文件名
         $js_c_file_name,//需要生成的js文件的文件名
+        $html_array_const_js_param,//数组常量渲染成js常量
         $html_index_c_file_name,//需要生成的html首页文件的文件名
         $html_add_c_file_name,//需要生成的html添加页面文件的文件名
         $html_edit_c_file_name,//需要生成的html编辑页面文件的文件名
@@ -435,8 +436,15 @@ EOD;
         $this->write_to_file($this->jsParam['tpl_name'], $this->jsParam['data'], $this->jsParam['c_file_name']);
     }
 
+    protected function set_html_array_const_js_param($field_name, $str){
+        $this->html_array_const_js_param[$field_name] = $str;
+    }
+
     //生成html模板文件
     protected function c_html(){
+        if(!empty($this->html_array_const_js_param)){
+            $this->htmlIndexParam['data']['jsParam'] = '<script>'.implode("\n", $this->html_array_const_js_param).'</script>';
+        }
         $this->write_to_file($this->htmlIndexParam['tpl_name'], $this->htmlIndexParam['data'], $this->htmlIndexParam['c_file_name']);
         $this->write_to_file($this->htmlAddParam['tpl_name'], $this->htmlAddParam['data'], $this->htmlAddParam['c_file_name']);
         $this->write_to_file($this->htmlEditParam['tpl_name'], $this->htmlEditParam['data'], $this->htmlEditParam['c_file_name']);
@@ -598,8 +606,10 @@ EOD;
         if($type == 'add'){
             $data['selected_data'] = $default_value ? '[\''.str_replace(';','\',\'',$default_value).'\']' : '';
         }
+        $data['verify'] = $info['form_empty'] ? '' : 'required';
         $this->set_model_array_const($info['field_name'], $model_array_const);
         $this->set_controller_array_const($info['field_name'], $model_array_const);
+        $this->set_html_array_const_js_param($info['field_name'], 'const '.$info['field_name'].' = {:getSelectMultiJsConst($'.$info['field_name'].')};');
         return $this->get_replaced_tpl($name, $data);
     }
 }

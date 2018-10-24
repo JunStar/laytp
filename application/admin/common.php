@@ -34,3 +34,16 @@ function layui_table_data($data){
     $json['data'] = $data;
     return json($json);
 }
+
+/**
+ * 生成普通多选下拉框的Js常量
+ * @param $array
+ * @return false|string
+ */
+function getSelectMultiJsConst($array){
+    $result = [];
+    foreach($array as $v=>$name){
+        $result[] = ['id'=>$v,'name'=>$name];
+    }
+    return json_encode($result);
+}

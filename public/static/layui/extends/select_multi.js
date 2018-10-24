@@ -274,7 +274,7 @@ layui.define(['jquery', 'layer'], function(exports){
                             }
                             layer_i.tips('最多只能选择 '+c.max+' 个', multiple_obj, {
                                 tips: 3,
-                                time: 100000000,
+                                time: 1000,
                                 end:function(){
                                     multiple_obj.removeClass('danger');
                                 }

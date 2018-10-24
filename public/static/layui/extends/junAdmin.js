@@ -109,7 +109,6 @@ layui.define([
             if(height == undefined) {
                 height = '220px';
             }
-            console.log('popup_frame');
             layui.layer.open({
                 type : 2,
                 title : title,
@@ -177,24 +176,43 @@ layui.define([
             //点击编辑按钮
             }else if(obj.event === 'edit'){
                 let url = junAdmin.facade.url(module + '/' + controller + '/edit',{id:data.id});
-                this.popup_frame('添加', url, '800px', '500px');
+                junAdmin.facade.popup_frame('添加', url, '800px', '500px');
             }
         },
 
         //多选下拉框
-        select_multi:function(elem,data,name,layero,index){
-            //重新渲染多选下拉框
-            layui.select_multi.render({
-                elem: elem
-                ,name: name
-                ,index:index
-                ,layero:layero
-                ,data: data
-                ,max: 3
-                ,verify: 'required'
-                ,field: {idName:'id',titleName:'name'}
-                ,selected: ['0','1','2']
-                ,click_dd_after: function(){}
+        select_multi:function(layero,index){
+            //获取所有的class="select_multi"节点
+            let
+                elem
+                ,name
+                ,data
+                ,max
+                ,verify
+                ,field
+                ,selected
+            ;
+            field = {idName:'id',titleName:'name'};
+
+            layui.each(layui.layer.getChildFrame('.select_multi', index),function(key,item){
+                elem = layui.layer.getChildFrame('#'+$(item).attr('id'), index);
+                name = $(item).attr('name');
+                data = eval($(item).attr('id'));
+                max = $(item).attr('max');
+                verify = $(item).attr('lay-verify');
+                selected = eval($(item).attr('selected_data'));
+                layui.select_multi.render({
+                    elem: elem
+                    ,name: name
+                    ,index:index
+                    ,layero:layero
+                    ,data: data
+                    ,max: max
+                    ,verify: verify
+                    ,field: field
+                    ,selected: selected
+                    ,click_dd_after: function(){}
+                });
             });
         },
 
@@ -205,22 +223,24 @@ layui.define([
         //其他插件,等等...
 
         after_popup_frame: function(layero,index){
-            junAdmin.facade.select_multi(
-                layui.layer.getChildFrame('#select_multi', index),
-                [
-                    {id:0,name:'游泳'},
-                    {id:1,name:'下棋'},
-                    {id:2,name:'游戏'},
-                    {id:3,name:'乒乓球'},
-                    {id:4,name:'羽毛'},
-                    {id:5,name:'跑步'},
-                    {id:6,name:'爬山'},
-                    {id:7,name:'美食'}
-                ],
-                'select_multi',
-                layero,
-                index
-            );
+            junAdmin.facade.select_multi(layero,index);
+
+            // junAdmin.facade.select_multi(
+            //     layui.layer.getChildFrame('#select_multi', index),
+            //     [
+            //         {id:0,name:'游泳'},
+            //         {id:1,name:'下棋'},
+            //         {id:2,name:'游戏'},
+            //         {id:3,name:'乒乓球'},
+            //         {id:4,name:'羽毛'},
+            //         {id:5,name:'跑步'},
+            //         {id:6,name:'爬山'},
+            //         {id:7,name:'美食'}
+            //     ],
+            //     'select_multi',
+            //     layero,
+            //     index
+            // );
         }
     }
 
