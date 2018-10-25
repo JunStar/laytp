@@ -181,7 +181,7 @@ layui.use(['junAdmin'],function(){
 
     func_controller.curd_import = function(){
         $(document).on('click','#curd_import_btn', function(){
-            let cache_count = junAdmin.facade.get_count(junAdmin.table.cache);
+            let cache_count = junAdmin.facade.get_count(layui.table.cache);
             let table_data_arr = layui.table.cache[cache_count];
             let field_name
                 ,field_comment

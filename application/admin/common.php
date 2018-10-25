@@ -47,3 +47,12 @@ function getSelectMultiJsConst($array){
     }
     return json_encode($result);
 }
+
+/**
+ * 生成复选框的Js常量
+ * @param $array
+ * @return false|string
+ */
+function getCheckboxJsConst($array){
+    return json_encode($array);
+}

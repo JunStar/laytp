@@ -400,6 +400,9 @@ EOD;
         if(!empty($this->controller_array_const)){
             $this->controllerParam['data']['arrayConstAssign'] = implode("\n", $this->controller_array_const);
             $this->controllerParam['data']['arrayConstAssign'] .= "\n\t\t".'$this->assign($assign);';
+        }else{
+            $this->controllerParam['data']['arrayConstAssign'] = '';
+            $this->controllerParam['data']['arrayConstAssign'] .= '';
         }
         $this->write_to_file($this->controllerParam['tpl_name'], $this->controllerParam['data'], $this->controllerParam['c_file_name']);
     }
@@ -422,11 +425,15 @@ EOD;
     protected function c_model(){
         if(!empty($this->model_array_const)){
             $this->modelParam['data']['arrayConst'] = implode("\n", $this->model_array_const);
+        }else{
+            $this->modelParam['data']['arrayConst'] = '';
         }
         //设置获取常量的函数
         if(!empty($this->model_array_const)){
             $array_const_function_ja = 'model' . DS . 'array_const_function';
             $this->modelParam['data']['getArrayConstListFunction'] = $this->get_replaced_tpl($array_const_function_ja);
+        }else{
+            $this->modelParam['data']['getArrayConstListFunction'] = '';
         }
         $this->write_to_file($this->modelParam['tpl_name'], $this->modelParam['data'], $this->modelParam['c_file_name']);
     }
@@ -538,6 +545,42 @@ EOD;
             }
             return $radio_html;
         }
+    }
+
+    protected function get_checkbox_html($info,$type){
+        $name = 'html' . DS . $type . DS . 'checkbox';
+        $data['field_name'] = $info['field_name'];
+        $items = explode(',', $info['form_additional']);
+        $default_value = '';
+        $option_items = [];
+        $model_array_const = [];
+        $checkbox_html = '';
+        foreach($items as $k=>$v){
+            $temp = explode('=', $v);
+            if($temp[0]=='default'){
+                $default_value = $temp[1];
+            }else{
+                $option_items[] = ['value'=>$temp[0], 'text'=>$temp[1]];
+                $model_array_const[(string)$temp[0]] = $temp[1];
+            }
+        }
+
+        $default_value_arr = [];
+        if($default_value){
+            $default_value_arr = explode(';', $default_value);
+        }
+
+        foreach($option_items as $k=>$v){
+            if($type == 'add'){
+                $data['checked'] = in_array($v, $default_value_arr) ? 'checked="checked"' : '';
+            }
+            $data['value'] = $v['value'];
+            $data['text'] = $v['text'];
+            $checkbox_html .= $this->get_replaced_tpl($name, $data)."\n\t\t\t";
+        }
+
+        $this->set_model_array_const($info['field_name'], $model_array_const);
+        return $checkbox_html;
     }
 
     /**

@@ -15,6 +15,9 @@ layui.define([
     let junAdmin = {};
     const $ = junAdmin.$ = layui.jquery;
 
+    const default_popup_frame_width = '60%';
+    const default_popup_frame_height = '70%';
+
     //自定义表单验证器
     layui.form.verify({
         junAdmin_email:function(value){
@@ -104,10 +107,10 @@ layui.define([
         //layer弹窗iFrame
         popup_frame: function(title, url, width, height){
             if(width == undefined) {
-                width = '500px';
+                width = default_popup_frame_width;
             }
             if(height == undefined) {
-                height = '220px';
+                height = default_popup_frame_height;
             }
             layui.layer.open({
                 type : 2,
@@ -176,7 +179,7 @@ layui.define([
             //点击编辑按钮
             }else if(obj.event === 'edit'){
                 let url = junAdmin.facade.url(module + '/' + controller + '/edit',{id:data.id});
-                junAdmin.facade.popup_frame('添加', url, '800px', '500px');
+                junAdmin.facade.popup_frame('编辑', url);
             }
         },
 
@@ -224,23 +227,6 @@ layui.define([
 
         after_popup_frame: function(layero,index){
             junAdmin.facade.select_multi(layero,index);
-
-            // junAdmin.facade.select_multi(
-            //     layui.layer.getChildFrame('#select_multi', index),
-            //     [
-            //         {id:0,name:'游泳'},
-            //         {id:1,name:'下棋'},
-            //         {id:2,name:'游戏'},
-            //         {id:3,name:'乒乓球'},
-            //         {id:4,name:'羽毛'},
-            //         {id:5,name:'跑步'},
-            //         {id:6,name:'爬山'},
-            //         {id:7,name:'美食'}
-            //     ],
-            //     'select_multi',
-            //     layero,
-            //     index
-            // );
         }
     }
 
@@ -252,10 +238,10 @@ layui.define([
                 var width = $(this).data("width");
                 var height = $(this).data("height");
                 if( !width ){
-                    width = '800px';
+                    width = default_popup_frame_width;
                 }
                 if( !height ){
-                    height = '500px';
+                    height = default_popup_frame_height;
                 }
                 junAdmin.facade.popup_frame(name, url, width, height);
             });
