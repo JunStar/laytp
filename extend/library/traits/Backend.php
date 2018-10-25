@@ -20,7 +20,7 @@ trait Backend
     public function add()
     {
         if( $this->request->isAjax() && $this->request->isPost() ){
-            $post = $this->request->post("row/a");
+            $post = filterPostData($this->request->post("row/a"));
             if( $this->model->insert($post) ){
                 return $this->success('操作成功');
             }else{

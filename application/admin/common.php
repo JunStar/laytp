@@ -56,3 +56,17 @@ function getSelectMultiJsConst($array){
 function getCheckboxJsConst($array){
     return json_encode($array);
 }
+
+/**
+ * 统一处理post数据
+ * @param $post
+ * @return mixed
+ */
+function filterPostData($post){
+    foreach($post as $k=>$v){
+        if(is_array($v)){
+            $post[$k] = implode(',',$v);
+        }
+    }
+    return $post;
+}

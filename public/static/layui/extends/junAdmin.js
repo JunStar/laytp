@@ -202,7 +202,7 @@ layui.define([
                 name = $(item).attr('name');
                 data = eval($(item).attr('id'));
                 max = $(item).attr('max');
-                verify = $(item).attr('lay-verify');
+                verify = $(item).attr('verify');
                 selected = eval($(item).attr('selected_data'));
                 layui.select_multi.render({
                     elem: elem
@@ -210,7 +210,7 @@ layui.define([
                     ,index:index
                     ,layero:layero
                     ,data: data
-                    ,max: max
+                    ,max: (parseInt(max) > 0) ? max : data.length
                     ,verify: verify
                     ,field: field
                     ,selected: selected

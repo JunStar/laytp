@@ -70,7 +70,7 @@ layui.define(['jquery', 'layer'], function(exports){
                     let html = '';
                     html +=	'<div class="layui-unselect layui-form-select">';
                     html +=			'<div class="layui-select-title">';
-                    html +=				'<input '+verify+'name="'+inputName+'" type="text" readonly="readonly" class="layui-input layui-unselect">';
+                    html +=				'<input '+verify+'name="'+inputName+'" lay-verType="tips" type="text" readonly="readonly" class="layui-input layui-unselect">';
                     html +=			'</div>';
                     html +=			'<div class="layui-input multiple">';
                     html +=			'</div>';
