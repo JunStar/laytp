@@ -1,4 +1,3 @@
 <select name="row[{%filed_name%}]" lay-verify="{%verify%}" placeholder="请输入{%field_comment%}">
-    <option value=""></option>
-    {%options%}
-</select>
+{%options%}
+            </select>

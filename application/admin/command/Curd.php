@@ -541,8 +541,9 @@ EOD;
                 $temp_data['value'] = $v['value'];
                 $temp_data['title'] = $v['text'];
                 $temp_data['checked_status'] = ($v['value'] == $default_value) ? 'checked="checked"' : '';
-                $radio_html .= $this->get_replaced_tpl($name, $temp_data);
+                $radio_html .= $this->get_replaced_tpl($name, $temp_data) . "\n\t\t\t";
             }
+            $radio_html = rtrim($radio_html,"\n\t\t\t");
             return $radio_html;
         }
     }
@@ -572,12 +573,13 @@ EOD;
 
         foreach($option_items as $k=>$v){
             if($type == 'add'){
-                $data['checked'] = in_array($v, $default_value_arr) ? 'checked="checked"' : '';
+                $data['checked'] = in_array($v['value'], $default_value_arr) ? 'checked="checked"' : '';
             }
             $data['value'] = $v['value'];
             $data['text'] = $v['text'];
             $checkbox_html .= $this->get_replaced_tpl($name, $data)."\n\t\t\t";
         }
+        $checkbox_html = rtrim($checkbox_html,"\n\t\t\t");
 
         $this->set_model_array_const($info['field_name'], $model_array_const);
         return $checkbox_html;
@@ -615,14 +617,15 @@ EOD;
         foreach($option_items as $k=>$v){
             if($type == 'add'){
                 if($default_value == $v['value']){
-                    $options .= '<option value="'.$v['value'].'" selected="selected">'.$v['text'].'</option>'."\n";
+                    $options .= "\t\t\t\t".'<option value="'.$v['value'].'" selected="selected">'.$v['text'].'</option>'."\n";
                 }else{
-                    $options .= '<option value="'.$v['value'].'">'.$v['text'].'</option>'."\n";
+                    $options .= "\t\t\t\t".'<option value="'.$v['value'].'">'.$v['text'].'</option>'."\n";
                 }
             }else{
-                $options .= '<option value="'.$v['value'].'" {if $'.$info['field_name'].' == \''.$v['value'].'\'}selected="selected"{/if}>'.$v['text'].'</option>'."\n";
+                $options .= "\t\t\t\t".'<option value="'.$v['value'].'" {if $'.$info['field_name'].' == \''.$v['value'].'\'}selected="selected"{/if}>'.$v['text'].'</option>'."\n";
             }
         }
+        $options = "\t\t\t\t".'<option value=""></option>' . "\n" . rtrim($options,"\n");
         $data['options'] = $options;
         $data['field_comment'] = $info['field_comment'];
         $data['verify'] = $info['form_empty'] ? '' : 'required';
