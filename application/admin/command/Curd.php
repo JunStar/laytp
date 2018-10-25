@@ -402,7 +402,6 @@ EOD;
             $this->controllerParam['data']['arrayConstAssign'] .= "\n\t\t".'$this->assign($assign);';
         }else{
             $this->controllerParam['data']['arrayConstAssign'] = '';
-            $this->controllerParam['data']['arrayConstAssign'] .= '';
         }
         $this->write_to_file($this->controllerParam['tpl_name'], $this->controllerParam['data'], $this->controllerParam['c_file_name']);
     }
@@ -410,21 +409,29 @@ EOD;
     //设置模型层的数组常量
     protected function set_model_array_const($field_name, $array){
         //设置常量
-        $str_arr = '';
+        $new_model_array_const = [];
+        $new_model_array_const[] = "\t".'public $'.$field_name." = [";
+        $i=0;
         foreach($array as $k=>$v){
-            $str_arr .= '\'' . $k . '\'=>\'' . $v . '\',';
+            if($i==0){
+                $new_model_array_const[] = "\n\t\t".'\'' . $k . '\'=>\'' . $v . '\'';
+            }else{
+                $new_model_array_const[] = "\n\t\t".',\'' . $k . '\'=>\'' . $v . '\'';
+            }
+            $i++;
         }
-        $str_arr = '['.trim($str_arr, ',').'];';
-        $new_model_array_const = 'public $'.$field_name." = ".$str_arr;
+        $new_model_array_const[] = "\n\t".'];';
+        $new_model_array_const_str = implode("",$new_model_array_const);
+
         if(!isset($this->model_array_const[$field_name])){
-            $this->model_array_const[$field_name] = $new_model_array_const;
+            $this->model_array_const[$field_name] = $new_model_array_const_str;
         }
     }
 
     //生成model层文件
     protected function c_model(){
         if(!empty($this->model_array_const)){
-            $this->modelParam['data']['arrayConst'] = implode("\n", $this->model_array_const);
+            $this->modelParam['data']['arrayConst'] = implode("\n\n", $this->model_array_const);
         }else{
             $this->modelParam['data']['arrayConst'] = '';
         }
@@ -503,6 +510,7 @@ EOD;
         $items = explode(",", $info['form_additional']);
         $radio_items = [];//待选项数组
         $default_value = '';//默认值
+        $model_array_const = [];
         foreach($items as $k=>$v){
             $temp = explode('=', $v);
             if($k==0){
@@ -513,6 +521,7 @@ EOD;
                 $default_value = $temp[1];
             }else{
                 $radio_items[] = ['value'=>$temp[0], 'text'=>$temp[1]];
+                $model_array_const[(string)$temp[0]] = $temp[1];
             }
         }
         /**
@@ -532,6 +541,7 @@ EOD;
             }else{
                 $data['lay_text'] = $radio_items[0]['text'] . '|' . $radio_items[1]['text'];
             }
+            $this->set_model_array_const($info['field_name'], $model_array_const);
             return $this->get_replaced_tpl($name, $data);
         }else if(count($radio_items) > 2){
             $name = 'html' . DS . $type . DS . 'radio';
@@ -544,6 +554,7 @@ EOD;
                 $radio_html .= $this->get_replaced_tpl($name, $temp_data) . "\n\t\t\t";
             }
             $radio_html = rtrim($radio_html,"\n\t\t\t");
+            $this->set_model_array_const($info['field_name'], $model_array_const);
             return $radio_html;
         }
     }
@@ -605,12 +616,14 @@ EOD;
         $items = explode(',', $info['form_additional']['values']);
         $default_value = '';
         $option_items = [];
+        $model_array_const = [];
         foreach($items as $k=>$v){
             $temp = explode('=', $v);
             if($temp[0]=='default'){
                 $default_value = $temp[1];
             }else{
                 $option_items[] = ['value'=>$temp[0], 'text'=>$temp[1]];
+                $model_array_const[(string)$temp[0]] = $temp[1];
             }
         }
         $options = '';
@@ -629,6 +642,7 @@ EOD;
         $data['options'] = $options;
         $data['field_comment'] = $info['field_comment'];
         $data['verify'] = $info['form_empty'] ? '' : 'required';
+        $this->set_model_array_const($info['field_name'], $model_array_const);
         return $this->get_replaced_tpl($name, $data);
     }
 
