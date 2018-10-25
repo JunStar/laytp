@@ -35,7 +35,7 @@ trait Backend
         $edit_where['id'] = $this->request->param('id');
 
         if( $this->request->isAjax() && $this->request->isPost() ){
-            $post = $this->request->post("row/a");
+            $post = filterPostData($this->request->post("row/a"));
             if( $this->model->where($edit_where)->update($post) ){
                 return $this->success('操作成功');
             }else{
