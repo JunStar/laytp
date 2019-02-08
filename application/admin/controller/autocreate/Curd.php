@@ -82,15 +82,16 @@ class Curd extends Backend
         $result = [];
         $comment = model('InformationSchema')->getFieldsComment($table)->toArray();
         $comment_map = arr_to_map($comment,'COLUMN_NAME');
+        $i = 0;
         foreach($fields as $k=>$v){
             if( $v != $pk ){
-                $result[$k]['field_name'] = $v;
-                $result[$k]['field_comment'] = $comment_map[$v]['COLUMN_COMMENT'];
-                $result[$k]['table_width'] = '自适应';
-                $result[$k]['table_min_width'] = '使用全局配置';
+                $result[$i]['field_name'] = $v;
+                $result[$i]['field_comment'] = $comment_map[$v]['COLUMN_COMMENT'];
+                $result[$i]['table_width'] = '自适应';
+                $result[$i]['table_min_width'] = '使用全局配置';
+                $i++;
             }
         }
-        sort($result);
         $this->success('获取成功', $result);
     }
 

@@ -318,7 +318,7 @@ class Curd extends Command
             }
             $cols .= $temp;
         }
-        if($this->curd_config['global']['hide_del']){
+        if(isset($this->curd_config['global']['hide_del']) && $this->curd_config['global']['hide_del']){
             $temp = "\t\t\t\t,{field:'operation',title:'操作',align:'center',toolbar:'#operation_only_edit',fixed:'right',width:200}";
         }else{
             $temp = "\t\t\t\t,{field:'operation',title:'操作',align:'center',toolbar:'#operation',fixed:'right',width:200}";
@@ -410,17 +410,18 @@ EOD;
     protected function set_model_array_const($field_name, $array){
         //设置常量
         $new_model_array_const = [];
-        $new_model_array_const[] = "\t".'public $'.$field_name." = [";
+//        $new_model_array_const[] = "\t".'public $'.$field_name." = [";
+        $new_model_array_const[] = "\t\t'{$field_name}' => [";
         $i=0;
         foreach($array as $k=>$v){
             if($i==0){
-                $new_model_array_const[] = "\n\t\t".'\'' . $k . '\'=>\'' . $v . '\'';
+                $new_model_array_const[] = "\n\t\t\t".'\'' . $k . '\'=>\'' . $v . '\'';
             }else{
-                $new_model_array_const[] = "\n\t\t".',\'' . $k . '\'=>\'' . $v . '\'';
+                $new_model_array_const[] = "\n\t\t\t".',\'' . $k . '\'=>\'' . $v . '\'';
             }
             $i++;
         }
-        $new_model_array_const[] = "\n\t".'];';
+        $new_model_array_const[] = "\n\t\t".'],';
         $new_model_array_const_str = implode("",$new_model_array_const);
 
         if(!isset($this->model_array_const[$field_name])){

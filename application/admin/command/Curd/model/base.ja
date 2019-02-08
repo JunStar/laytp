@@ -15,7 +15,9 @@ class {%modelClassName%} extends Model
     {%tableName%}
 
     //数组常量
+    public $const = [
 {%arrayConst%}
+    ];
 
     //获取数组常量的函数
     {%getArrayConstListFunction%}
