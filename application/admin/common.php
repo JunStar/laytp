@@ -35,6 +35,19 @@ function layui_table_data($data){
     return json($json);
 }
 
+function get_const_val($field_name, $field_val, $const){
+    $result = [];
+    $field_val_arr = explode(',', $field_val);
+    foreach($const[$field_name] as $k=>$v){
+        foreach($field_val_arr as $fv){
+            if($fv == $k){
+                $result[] = $v;
+            }
+        }
+    }
+    return implode(',', $result);
+}
+
 /**
  * 生成普通多选下拉框的Js常量
  * @param $array

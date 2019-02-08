@@ -11,6 +11,13 @@ trait Backend
             $where = $this->build_params();
             $limit = $this->request->param('limit');
             $data = $this->model->where($where)->paginate($limit)->toArray();
+            foreach($data['data'] as $k=>$v){
+                foreach($v as $field_name => $field_val){
+                    if(isset($this->model->const[$field_name])){
+                        $data['data'][$k][$field_name] = get_const_val($field_name, $field_val, $this->model->const);
+                    }
+                }
+            }
             return layui_table_page_data($data);
         }
         return $this->fetch();
