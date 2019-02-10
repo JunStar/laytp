@@ -10,7 +10,7 @@ trait Backend
         if( $this->request->isAjax() ){
             $where = $this->build_params();
             $limit = $this->request->param('limit');
-            $data = $this->model->where($where)->paginate($limit)->toArray();
+            $data = $this->model->where($where)->order('id desc')->paginate($limit)->toArray();
             foreach($data['data'] as $k=>$v){
                 foreach($v as $field_name => $field_val){
                     if(isset($this->model->const[$field_name])){

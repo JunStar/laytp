@@ -61,8 +61,8 @@ class Curd extends Backend
                 $data['table_comment'] = model('admin/InformationSchema')->getTableComment($table_name);
                 $data['create_time'] = time();
                 $data['update_time'] = time();
-                $result = $this->field(true)->insert($data);
-                return $this->success('添加成功',$result);
+                $this->field(true)->insert($data);
+                return $this->success('添加成功',$this->getLastInsID());
             }
         }catch (Exception $e){
             return $this->error($e->getMessage());
