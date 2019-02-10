@@ -341,6 +341,20 @@ class Curd extends Command
     protected function set_html_param(){
         $index_tpl_name = 'html' . DS . 'index';
         $index_data['jsFileName'] = strtolower(strtolower($this->mid_name));
+
+        $index_search_form = [];
+        $search_fields = explode(',', $this->curd_config['global']['search_fields']);
+        foreach($search_fields as $k=>$v){
+            foreach($this->curd_config['field_list'] as $fk=>$fv){
+                if($v == $fv['field_name']){
+                    $search_item_content = $this->get_search_form_item($fv,'add');
+                    $index_search_form[] = $this->get_search_form_group($fv['field_comment'], $search_item_content);
+                    break;
+                }
+            }
+        }
+
+        $index_data['searchForm'] = implode("\n\n", $index_search_form);
         $this->htmlIndexParam = ['tpl_name'=>$index_tpl_name,'data'=>$index_data,'c_file_name'=>$this->html_index_c_file_name];
 
         $add_data = [];
@@ -384,6 +398,23 @@ class Curd extends Command
 EOD;
     }
 
+    protected function get_search_form_item($info){
+        $func = 'get_search_'.$info['form_type'].'_html';
+        return $this->$func($info);
+    }
+
+    protected function get_search_form_group($field, $content)
+    {
+        return <<<EOD
+    <div class="layui-form-item layui-inline">
+        <label class="layui-form-label">{$field}</label>
+        <div class="layui-input-inline">
+            {$content}
+        </div>
+    </div>
+EOD;
+    }
+
     //生成控制器的验证器
     protected function c_validate(){
 
@@ -410,7 +441,6 @@ EOD;
     protected function set_model_array_const($field_name, $array){
         //设置常量
         $new_model_array_const = [];
-//        $new_model_array_const[] = "\t".'public $'.$field_name." = [";
         $new_model_array_const[] = "\t\t'{$field_name}' => [";
         $i=0;
         foreach($array as $k=>$v){
@@ -488,6 +518,18 @@ EOD;
     }
 
     /**
+     * 获取input需要生成的html，在生成搜索表单时用到
+     * @param $info
+     * @return string
+     */
+    protected function get_search_input_html($info){
+        $name = 'html' . DS . 'search' . DS . 'input';
+        $data['filed_name'] = $info['field_name'];
+        $data['field_comment'] = $info['field_comment'];
+        return $this->get_replaced_tpl($name, $data);
+    }
+
+    /**
      * 获取input需要生成的html，在生成add和edit表单的时候可以用到
      * @param $info
      * @param $type 类型，add或者edit
@@ -498,6 +540,18 @@ EOD;
         $data['filed_name'] = $info['field_name'];
         $data['field_comment'] = $info['field_comment'];
         $data['verify'] = $info['form_empty'] ? '' : 'required';
+        return $this->get_replaced_tpl($name, $data);
+    }
+
+    /**
+     * 获取input需要生成的html，在生成搜索表单时用到
+     * @param $info
+     * @return string
+     */
+    protected function get_search_textarea_html($info){
+        $name = 'html' . DS . 'search' . DS . 'textarea';
+        $data['filed_name'] = $info['field_name'];
+        $data['field_comment'] = $info['field_comment'];
         return $this->get_replaced_tpl($name, $data);
     }
 
@@ -560,6 +614,25 @@ EOD;
         }
     }
 
+    protected function get_search_radio_html($info){
+        $name = 'html' . DS . 'search' . DS . 'radio';
+        $data['filed_name'] = $info['field_name'];
+        $items = explode(',', $info['form_additional']);
+        $option_items = [];
+        foreach($items as $k=>$v){
+            $temp = explode('=', $v);
+            $option_items[] = ['value'=>$temp[0], 'text'=>$temp[1]];
+        }
+        $options = '';
+        foreach($option_items as $k=>$v){
+            $options .= "\t\t\t\t".'<option value="'.$v['value'].'">'.$v['text'].'</option>'."\n";
+        }
+        $options = "\t\t\t\t".'<option value=""></option>' . "\n" . rtrim($options,"\n");
+        $data['options'] = $options;
+        $data['field_comment'] = $info['field_comment'];
+        return $this->get_replaced_tpl($name, $data);
+    }
+
     protected function get_checkbox_html($info,$type){
         $name = 'html' . DS . $type . DS . 'checkbox';
         $data['field_name'] = $info['field_name'];
@@ -597,6 +670,23 @@ EOD;
         return $checkbox_html;
     }
 
+    protected function get_search_checkbox_html($info){
+        $name = 'html' . DS . 'search' . DS . 'select_multi';
+        $data['field_name'] = $info['field_name'];
+        $items = explode(',', $info['form_additional']);
+        $data['max'] = count($items);
+        $option_items = [];
+        $model_array_const = [];
+        foreach($items as $k=>$v){
+            $temp = explode('=', $v);
+            $option_items[] = ['id'=>$temp[0], 'name'=>$temp[1]];
+            $model_array_const[(string)$temp[0]] = $temp[1];
+        }
+        $this->set_controller_array_const($info['field_name'], $model_array_const);
+        $this->set_html_array_const_js_param($info['field_name'], 'const '.$info['field_name'].' = {:getSelectMultiJsConst($'.$info['field_name'].')};');
+        return $this->get_replaced_tpl($name, $data);
+    }
+
     /**
      * 获取select需要生成的html，在生成add和edit表单的时候可以用到
      * @param $info
@@ -608,6 +698,14 @@ EOD;
             return $this->get_select_single_html($info,$type);
         }else if($info['form_additional']['single_multi'] == 'multi'){
             return $this->get_select_multi_html($info,$type);
+        }
+    }
+
+    protected function get_search_select_html($info){
+        if($info['form_additional']['single_multi'] == 'single'){
+            return $this->get_search_select_single_html($info);
+        }else if($info['form_additional']['single_multi'] == 'multi'){
+            return $this->get_search_select_multi_html($info);
         }
     }
 
@@ -647,6 +745,25 @@ EOD;
         return $this->get_replaced_tpl($name, $data);
     }
 
+    protected function get_search_select_single_html($info){
+        $name = 'html' . DS . 'search' . DS . 'radio';
+        $data['filed_name'] = $info['field_name'];
+        $items = explode(',', $info['form_additional']['values']);
+        $option_items = [];
+        foreach($items as $k=>$v){
+            $temp = explode('=', $v);
+            $option_items[] = ['value'=>$temp[0], 'text'=>$temp[1]];
+        }
+        $options = '';
+        foreach($option_items as $k=>$v){
+            $options .= "\t\t\t\t".'<option value="'.$v['value'].'">'.$v['text'].'</option>'."\n";
+        }
+        $options = "\t\t\t\t".'<option value=""></option>' . "\n" . rtrim($options,"\n");
+        $data['options'] = $options;
+        $data['field_comment'] = $info['field_comment'];
+        return $this->get_replaced_tpl($name, $data);
+    }
+
     protected function get_select_multi_html($info,$type){
         $name = 'html' . DS . $type . DS . 'select_multi';
         $data['field_name'] = $info['field_name'];
@@ -669,6 +786,23 @@ EOD;
         }
         $data['verify'] = $info['form_empty'] ? '' : 'required';
         $this->set_model_array_const($info['field_name'], $model_array_const);
+        $this->set_controller_array_const($info['field_name'], $model_array_const);
+        $this->set_html_array_const_js_param($info['field_name'], 'const '.$info['field_name'].' = {:getSelectMultiJsConst($'.$info['field_name'].')};');
+        return $this->get_replaced_tpl($name, $data);
+    }
+
+    protected function get_search_select_multi_html($info){
+        $name = 'html' . DS . 'search' . DS . 'select_multi';
+        $data['field_name'] = $info['field_name'];
+        $items = explode(',', $info['form_additional']['values']);
+        $data['max'] = count($items);
+        $option_items = [];
+        $model_array_const = [];
+        foreach($items as $k=>$v){
+            $temp = explode('=', $v);
+            $option_items[] = ['id'=>$temp[0], 'name'=>$temp[1]];
+            $model_array_const[(string)$temp[0]] = $temp[1];
+        }
         $this->set_controller_array_const($info['field_name'], $model_array_const);
         $this->set_html_array_const_js_param($info['field_name'], 'const '.$info['field_name'].' = {:getSelectMultiJsConst($'.$info['field_name'].')};');
         return $this->get_replaced_tpl($name, $data);

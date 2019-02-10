@@ -116,19 +116,29 @@ class Backend extends Controller
         $where = [];
         $search_param = $this->request->post('search_param');
         if( $search_param ){
-            foreach($search_param as $k=>$v){
-                if( $v['field'] && $v['condition'] && $v['field_val'] ){
-                    if( $v['condition'] == 'like' ){
-                        $v['field_val'] = '%'.$v['field_val'].'%';
+            foreach($search_param as $field=>$value_condition){
+                if($value_condition['value'] != ''){
+                    switch( $value_condition['condition'] ){
+                        case '=':
+                            $where[] = "$field = {$value_condition['value']}";
+                            break;
+                        case 'FIND_IN_SET':
+                            $values = explode(',', $value_condition['value']);
+                            $find_in_set = [];
+                            foreach($values as $val){
+                                $find_in_set[] = "find_in_set({$val},{$field})";
+                            }
+                            $where[] = '(' . implode(' OR ', $find_in_set) . ')';
+                            break;
+                        case 'LIKE':
+                            $where[] = "$field LIKE '%{$value_condition['value']}%'";
+                            break;
                     }
-                    $where[] = [$v['field'],$v['condition'],$v['field_val']];
-//                    if( $v['condition'] == 'time' ){
-//                        $where[] = [$v['field'],$v['condition'],'%'.$v['field_val'].'%'];
-//                    }
                 }
             }
         }
-        return $where;
+        $whereStr = implode(' AND ', $where);
+        return $whereStr;
     }
 
     //重写tp基类的success方法，修改下data和url参数的位置

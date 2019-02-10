@@ -1,10 +1,3 @@
-/*
-* @version: 2.0
-* @Author:  tomato
-* @Date:    2018-5-5 11:29:57
-* @Last Modified by:   tomato
-* @Last Modified time: 2018-5-26 18:08:43
-*/
 //多选下拉框
 layui.define(['jquery', 'layer'], function(exports){
     let MOD_NAME = 'select_multi';
@@ -325,6 +318,5 @@ layui.define(['jquery', 'layer'], function(exports){
     }
 
     //输出模块
-    // exports(MOD_NAME, obj);
     exports(MOD_NAME, exports_obj);
 });

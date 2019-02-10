@@ -184,8 +184,9 @@ layui.define([
         },
 
         //多选下拉框
+        //layero,index有值时，说明是layer弹窗中进行渲染，添加和编辑都是layer弹窗
+        //layero,index无值时，说明是非layer弹窗中进行渲染，列表页搜索表单部分使用到了
         select_multi:function(layero,index){
-            //获取所有的class="select_multi"节点
             let
                 elem
                 ,name
@@ -197,26 +198,53 @@ layui.define([
             ;
             field = {idName:'id',titleName:'name'};
 
-            layui.each(layui.layer.getChildFrame('.select_multi', index),function(key,item){
-                elem = layui.layer.getChildFrame('#'+$(item).attr('id'), index);
-                name = $(item).attr('name');
-                data = eval($(item).attr('id'));
-                max = $(item).attr('max');
-                verify = $(item).attr('verify');
-                selected = eval($(item).attr('selected_data'));
-                layui.select_multi.render({
-                    elem: elem
-                    ,name: name
-                    ,index:index
-                    ,layero:layero
-                    ,data: data
-                    ,max: (parseInt(max) > 0) ? max : data.length
-                    ,verify: verify
-                    ,field: field
-                    ,selected: selected
-                    ,click_dd_after: function(){}
+            //获取所有的class="select_multi"节点进行插件渲染
+
+            //非弹窗内渲染多选下拉框
+            if(layero == undefined && index == undefined){
+                layui.each($('.select_multi'),function(key,item){
+                    elem = '#'+$(item).attr('id');
+                    name = $(item).attr('name');
+                    data = eval($(item).attr('id'));
+                    max = $(item).attr('max');
+                    verify = $(item).attr('verify');
+                    selected = eval($(item).attr('selected_data'));
+                    layui.select_multi.render({
+                        elem: elem
+                        ,name: name
+                        ,index:index
+                        ,layero:layero
+                        ,data: data
+                        ,max: (parseInt(max) > 0) ? max : data.length
+                        ,verify: verify
+                        ,field: field
+                        ,selected: selected
+                        ,click_dd_after: function(){}
+                    });
                 });
-            });
+            //弹窗内渲染多选下拉框
+            }else{
+                layui.each(layui.layer.getChildFrame('.select_multi', index),function(key,item){
+                    elem = layui.layer.getChildFrame('#'+$(item).attr('id'), index);
+                    name = $(item).attr('name');
+                    data = eval($(item).attr('id'));
+                    max = $(item).attr('max');
+                    verify = $(item).attr('verify');
+                    selected = eval($(item).attr('selected_data'));
+                    layui.select_multi.render({
+                        elem: elem
+                        ,name: name
+                        ,index:index
+                        ,layero:layero
+                        ,data: data
+                        ,max: (parseInt(max) > 0) ? max : data.length
+                        ,verify: verify
+                        ,field: field
+                        ,selected: selected
+                        ,click_dd_after: function(){}
+                    });
+                });
+            }
         },
 
         //时间插件

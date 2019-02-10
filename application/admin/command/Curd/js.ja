@@ -5,6 +5,14 @@ layui.use(['junAdmin'],function() {
         ,$ = layui.jquery
     ;
 
+    //搜索表单渲染
+    func_controller.search_form_render = function(){
+        junAdmin.facade.select_multi();
+    }
+
+    func_controller.search_form_render();
+
+    //表格渲染
     func_controller.table_render = function (where) {
         layui.table.render({
             elem: '.layui-hide-sm'

@@ -1,9 +1,9 @@
 <?php
 namespace app\demo\controller;
 
-use controller\BasicAdmin;
+use think\Controller;
 
-class Index extends BasicAdmin
+class Index extends Controller
 {
     //首页
     public function index()

@@ -1,0 +1,4 @@
+<select name="search_param[{%filed_name%}][value]" placeholder="请输入{%field_comment%}">
+{%options%}
+            </select>
+<input type="hidden" name="search_param[{%filed_name%}][condition]" value="=">
