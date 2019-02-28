@@ -195,13 +195,14 @@ layui.define(['jquery', 'layer'], function(exports){
                     $E.css('width',c.width+'px');
                 }
                 //添加专属的style
-                if($('#lay-ext-mulitsel-style').length==0){
+                c.index = (c.index == undefined) ? 0 : c.index;
+                if($('#lay-ext-mulitsel-style-'+c.index).length==0){
                     // let style = '.lay-ext-mulitsel .layui-form-select dl dd div{margin-top:0px!important;}.lay-ext-mulitsel .layui-form-select dl dd.layui-this{background-color:#fff}.lay-ext-mulitsel .layui-input.multiple{line-height:auto;height:auto;padding:4px 10px 4px 10px;overflow:hidden;min-height:38px;margin-top:-38px;left:0;z-index:99;position:relative;background:#fff;}.lay-ext-mulitsel .layui-input.multiple a{padding:2px 5px;background:#5FB878;border-radius:2px;color:#fff;display:block;line-height:20px;height:20px;margin:2px 5px 2px 0;float:left;}.lay-ext-mulitsel .layui-input.multiple a i{margin-left:4px;font-size:14px;} .lay-ext-mulitsel .layui-input.multiple a i:hover{background-color:#009E94;border-radius:2px;}.lay-ext-mulitsel .danger{border-color:#FF5722!important}.lay-ext-mulitsel .tips{pointer-events: none;position: absolute;left: 10px;top: 10px;color:#757575;}';
                     let style = '.lay-ext-mulitsel .layui-form-select dl dd div{margin-top:0px!important;}.lay-ext-mulitsel .layui-form-select dl dd.layui-this{background-color:#fff}.lay-ext-mulitsel .layui-input.multiple{padding:4px 10px 4px 10px;overflow:hidden;min-height:38px;margin-top:-38px;left:0;z-index:99;position:relative;background:#fff;}.lay-ext-mulitsel .layui-input.multiple a{padding:2px 5px;background:#5FB878;border-radius:2px;color:#fff;display:block;line-height:20px;height:20px;margin:2px 5px 2px 0;float:left;}.lay-ext-mulitsel .layui-input.multiple a i{margin-left:4px;font-size:14px;} .lay-ext-mulitsel .layui-input.multiple a i:hover{background-color:#009E94;border-radius:2px;}.lay-ext-mulitsel .danger{border-color:#FF5722!important}.lay-ext-mulitsel .tips{pointer-events: none;position: absolute;left: 10px;top: 10px;color:#757575;}';
-                    if( typeof c.index != 'undefined'){
-                        $('<style id="lay-ext-mulitsel-style"></style>').text(style).appendTo(layer.getChildFrame('head', c.index));
+                    if( c.index > 0 ){
+                        $('<style id="lay-ext-mulitsel-style-'+c.index+'"></style>').text(style).appendTo(layer.getChildFrame('head', c.index));
                     }else{
-                        $('<style id="lay-ext-mulitsel-style"></style>').text(style).appendTo($('head'));
+                        $('<style id="lay-ext-mulitsel-style-'+c.index+'"></style>').text(style).appendTo($('head'));
                     }
                 };
 

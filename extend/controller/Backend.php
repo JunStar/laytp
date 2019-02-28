@@ -118,7 +118,8 @@ class Backend extends Controller
         if( $search_param ){
             foreach($search_param as $field=>$value_condition){
                 if($value_condition['value'] != ''){
-                    switch( $value_condition['condition'] ){
+                    $condition = strtoupper($value_condition['condition']);
+                    switch( $condition ){
                         case '=':
                             $where[] = "$field = {$value_condition['value']}";
                             break;

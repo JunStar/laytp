@@ -9,7 +9,7 @@ let add_search_condition_click_num = 0;
 layui.define([
     'jquery', 'layer', 'form', 'table', 'laytpl', 'element'
     ,'select_multi'
-    ,'select_search'
+    ,'formSelects'
 ], function(exports){
     const MOD_NAME = 'junAdmin';
     let junAdmin = {};
@@ -245,6 +245,12 @@ layui.define([
                     });
                 });
             }
+        },
+
+        //select_page插件
+        formSelects:function(){
+            // layui.formSelects.value('select1');
+            layui.formSelects.render('select2');
         },
 
         //时间插件
