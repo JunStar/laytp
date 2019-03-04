@@ -139,21 +139,15 @@ layui.use(['junAdmin'],function(){
             '<option value="multi">多选</option>' +
             '</select>';
         let select_html =  select_single_multi + '<input type="text" class="layui-input layui-input-inline" placeholder="最多可选个数，多选才有效，默认不限制" name="form_additional_select_max_'+field_name+'" id="form_additional_select_max_'+field_name+'" /><br/>' + set_value_html;
-        let select_page_html = select_single_multi + '<select name="form_additional_select_page_table_'+field_name+'" id="form_additional_select_page_table_'+field_name+'">' +
-            '<option value="">搜索的表名</option>' +
-            '<option value="ja_test">ja_test</option>' +
+        let select_page_html = select_single_multi + '<input type="text" class="layui-input layui-input-inline" placeholder="最多可选个数，多选才有效，默认不限制" name="form_additional_select_max_'+field_name+'" id="form_additional_select_max_'+field_name+'" /><br/>' +
+            '<select name="form_additional_select_page_table_'+field_name+'" id="form_additional_select_page_table_'+field_name+'" lay-filter="form_additional_select_page_table_'+field_name+'">' +
+                '<option value="">搜索的表名</option>' +
             '</select>' +
             '<select name="form_additional_select_page_search_field_'+field_name+'" id="form_additional_select_page_search_field_'+field_name+'">' +
-            '<option value="">搜索的字段</option>' +
-            '<option value="ja_test">ja_test</option>' +
+                '<option value="">搜索的字段</option>' +
             '</select>' +
             '<select name="form_additional_select_page_show_field_'+field_name+'" id="form_additional_select_page_show_field_'+field_name+'">' +
-            '<option value="">显示的字段</option>' +
-            '<option value="ja_test">ja_test</option>' +
-            '</select>' +
-            '<select name="form_additional_select_page_save_field_'+field_name+'" id="form_additional_select_page_save_field_'+field_name+'">' +
-            '<option value="">存入的字段</option>' +
-            '<option value="ja_test">ja_test</option>' +
+                '<option value="">显示的字段</option>' +
             '</select>';
         let time_html = '<select name="form_additional_time_'+field_name+'" id="form_additional_time_'+field_name+'">' +
             '<option value="Y-m-d H:i:s">年-月-日 时:分:秒</option>' +
@@ -176,6 +170,70 @@ layui.use(['junAdmin'],function(){
             $('#form_additional_' + field_name).html(set_value_html);
         }else if(type_arr.indexOf(value) != -1){
             $('#form_additional_' + field_name).html(eval(value+'_html'));
+            if(value == 'select_page'){
+                $.ajax({
+                    type: 'POST',
+                    url: junAdmin.facade.url('admin/autocreate.curd/get_table_list'),
+                    data: {},
+                    dataType: 'json',
+                    success: function (res) {
+                        func_controller.set_select_page_table_name(field_name, res.data);
+                        layui.form.on('select(form_additional_select_page_table_'+field_name+')',function(data){
+                            let table_name = data.value;
+                            $.ajax({
+                                type: 'POST',
+                                url: junAdmin.facade.url('admin/autocreate.curd/get_fields_by_table_name'),
+                                data: {table_name:table_name},
+                                dataType: 'json',
+                                success: function (res) {
+                                    func_controller.set_select_page_search_field_name(field_name, res.data);
+                                    func_controller.set_select_page_show_field_name(field_name, res.data);
+
+                                    layui.form.render('select');
+                                }
+                            });
+                        });
+
+                        layui.form.render('select');
+                    },
+                    error: function (xhr) {
+                        if( xhr.status == '500' ){
+                            junAdmin.facade.error('本地网络问题或者服务器错误');
+                        }else if( xhr.status == '404' ){
+                            junAdmin.facade.error('请求地址不存在');
+                        }
+                    }
+                });
+            }
+        }
+    }
+
+    //设置搜索下拉框待搜索表名
+    func_controller.set_select_page_table_name = function(field_name, data, selected){
+        let option_html;
+        for(key in data){
+            option_html = '<option value="'+data[key]['TABLE_NAME']+'">'+data[key]['TABLE_NAME']+'</option>';
+            $('#form_additional_select_page_table_'+field_name).append(option_html);
+        }
+    }
+
+    //设置搜索下拉框待搜索的字段
+    func_controller.set_select_page_search_field_name = function(field_name, data, selected){
+        $('#form_additional_select_page_search_field_'+field_name).empty();
+        let option_html;
+        for(key in data){
+            option_html = '<option value="'+data[key]['field_name']+'">'+data[key]['field_name']+'</option>';
+            $('#form_additional_select_page_search_field_'+field_name).append(option_html);
+        }
+    }
+
+    //设置搜索下拉框显示的字段
+    func_controller.set_select_page_show_field_name = function(field_name, data, selected){
+        $('#form_additional_select_page_show_field_'+field_name).empty();
+        let option_html;
+        for(key in data){
+            option_html = '<option value="'+data[key]['field_name']+'">'+data[key]['field_name']+'</option>';
+            $('#form_additional_select_page_show_field_'+field_name).append(option_html);
         }
     }
 
@@ -298,14 +356,26 @@ layui.use(['junAdmin'],function(){
             if(set_value_input_type.indexOf(value) != -1){
                 return $('#form_additional_set_value_input_' + field_name).val();
             }else if(type_arr.indexOf(value) != -1){
-                if(value == 'select'){
-                    return {
-                        'single_multi' : $('#form_additional_select_single_multi_' + field_name).val(),
-                        'max' : $('#form_additional_select_max_' + field_name).val(),
-                        'values' : $('#form_additional_set_value_input_' + field_name).val()
-                    };
-                }else{
-                    return "";
+                switch (value) {
+                    case 'select':
+                        return {
+                            'single_multi' : $('#form_additional_select_single_multi_' + field_name).val(),
+                            'max' : $('#form_additional_select_max_' + field_name).val(),
+                            'values' : $('#form_additional_set_value_input_' + field_name).val()
+                        };
+                        break;
+                    case 'select_page':
+                        return {
+                            'single_multi' : $('#form_additional_select_single_multi_' + field_name).val(),
+                            'max' : $('#form_additional_select_max_' + field_name).val(),
+                            'table_name' : $('#form_additional_select_page_table_' + field_name).val(),
+                            'search_field_name' : $('#form_additional_select_page_search_field_' + field_name).val(),
+                            'show_field_name' : $('#form_additional_select_page_show_field_' + field_name).val()
+                        };
+                        break;
+                    default:
+                        return "";
+                        break;
                 }
             }else if(no_form_additionnal_arr.indexOf(value) != -1){
                 return "";

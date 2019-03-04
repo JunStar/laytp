@@ -261,6 +261,13 @@ layui.define([
 
         after_popup_frame: function(layero,index){
             junAdmin.facade.select_multi(layero,index);
+            //server模式
+            // layui.formSelects.data('category_id', 'server', {
+            //     url: 'http://local.junadmin.com/admin/test.category/index.html',
+            //     keyword: '水果'
+            // });
+            layui.formSelects.value('category_id',[1]);
+            // layui.formSelects.render('category_id');
         }
     }
 

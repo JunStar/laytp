@@ -83,6 +83,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 		data: {},
 		searchUrl: '',
 		searchName: 'keyword',
+        search_selected_data:'',
 		searchVal: null,
 		keyName: 'name',
 		keyVal: 'id',
@@ -329,6 +330,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 				var select_obj = $("select[xm-select="+id+"]");
 				var show_field = select_obj.attr('xm-select-search-show-field');
 				ajaxs[id].keyName = show_field ? show_field : ajaxs[id].keyName;
+                ajaxs[id].search_selected_data = select_obj.attr('xm-search-selected-data');
 				$(document).on('input', 'div.' + PNAME + '[FS_ID="' + id + '"] .' + INPUT, function (e) {
 					_this2.search(id, searchField, searchCondition, e, fs.config.searchUrl);
 				});
@@ -428,6 +430,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 	};
 
 	Common.prototype.clearInput = function (id) {
+		return true;
 		var div = $('.' + PNAME + '[fs_id="' + id + '"]');
 		var input = data[id].config.searchType == 0 ? div.find('.' + LABEL + ' .' + INPUT) : div.find('dl .' + FORM_DL_INPUT + ' .' + INPUT);
 		input.val('');
@@ -505,7 +508,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 		var pcInput = reElem.find('.' + TDIV + ' input');
 
 		dataArr = this.exchangeData(id, dataArr);
+        var search_selected_data = ajaxConfig.search_selected_data ? ajaxConfig.search_selected_data.split(',') : [];
+        // FORM_SELECTED
 		var values = [];
+		var key = '';
 		reElem.find('dl').html(this.renderSelect(id, pcInput.attr('placeholder') || pcInput.attr('back'), dataArr.map(function (item) {
 			var itemVal = $.extend({}, item, {
 				innerHTML: item[ajaxConfig.keyName],
@@ -515,9 +521,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 				type: item.type,
 				name: item[ajaxConfig.keyName]
 			});
-			if (itemVal.sel) {
-				values.push(itemVal);
-			}
+			//search 远程搜索 控制是否选中
+			for(key in search_selected_data){
+			    if( item[ajaxConfig.keyVal] == search_selected_data[key] ){
+                    values.push(itemVal);
+                }
+            }
+			//之前是远程返回的数据中是否有selected
+			// if (itemVal.sel) {
+			// 	values.push(itemVal);
+			// }
 			return itemVal;
 		})));
 

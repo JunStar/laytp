@@ -70,6 +70,12 @@ class Curd extends Backend
         return $this->fetch();
     }
 
+    //获取所有表名
+    public function get_table_list(){
+        $result = model('InformationSchema')->getTableList();
+        $this->success('获取成功', $result);
+    }
+
     //根据表名获取字段列表
     public function get_fields_by_table_name(){
         $table = $this->request->param('table_name');

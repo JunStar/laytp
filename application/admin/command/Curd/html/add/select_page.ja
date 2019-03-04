@@ -1,0 +1,9 @@
+<select name="row[{%field_name%}]" id="{%field_name%}"
+                xm-select="select"
+                xm-select-search="{%search_url%}"
+                xm-select-search-field="{%search_field%}"
+                xm-select-search-show-field="{%show_field%}"
+                xm-select-search-condition="LIKE"
+                xm-select-height="36px"
+                {%max%} {%single_multi%}>
+        </select>

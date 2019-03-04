@@ -807,4 +807,35 @@ EOD;
         $this->set_html_array_const_js_param($info['field_name'], 'const '.$info['field_name'].' = {:getSelectMultiJsConst($'.$info['field_name'].')};');
         return $this->get_replaced_tpl($name, $data);
     }
+
+    protected function get_select_page_html($info,$type){
+        $name = 'html' . DS . $type . DS . 'select_page';
+        $data['field_name'] = $info['field_name'];
+
+        $search_url = substr($info['form_additional']['table_name'], strlen(Config::get('database.prefix')) );
+        $search_url = str_replace('_','.', $search_url);
+        $data['search_url'] = "{:url('admin/".$search_url."/index')}";
+
+        $data['search_field'] = $info['form_additional']['search_field_name'];
+        $data['show_field'] = $info['form_additional']['show_field_name'];
+
+        if( intval($info['form_additional']['max']) ){
+            $data['max'] = 'xm-select-max='.intval($info['form_additional']['max']);
+        }else{
+            $data['max'] = '';
+        }
+
+        if( $info['form_additional']['single_multi'] == 'single' ){
+            $data['single_multi'] = 'xm-select-radio=""';
+        }else{
+            $data['single_multi'] = '';
+        }
+
+        return $this->get_replaced_tpl($name, $data);
+    }
+
+    protected function get_search_select_page_html($info){
+        $name = 'html' . DS . 'search' . DS . 'select_page';
+        return $this->get_replaced_tpl($name, []);
+    }
 }
