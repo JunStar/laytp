@@ -134,6 +134,9 @@ class Backend extends Controller
                         case 'LIKE':
                             $where[] = "$field LIKE '%{$value_condition['value']}%'";
                             break;
+                        case 'IN':
+                            $where[] = "$field IN ({$value_condition['value']})";
+                            break;
                     }
                 }
             }

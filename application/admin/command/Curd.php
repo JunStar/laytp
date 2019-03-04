@@ -852,9 +852,9 @@ EOD;
         }
 
         if( $info['form_additional']['single_multi'] == 'single' ){
-            $data['single_multi'] = 'xm-select-radio=""';
+            $data['condition'] = 'IN';
         }else{
-            $data['single_multi'] = '';
+            $data['condition'] = 'FIND_IN_SET';
         }
 
         return $this->get_replaced_tpl($name, $data);
