@@ -330,7 +330,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 				var select_obj = $("select[xm-select="+id+"]");
 				var show_field = select_obj.attr('xm-select-search-show-field');
 				ajaxs[id].keyName = show_field ? show_field : ajaxs[id].keyName;
-                ajaxs[id].search_selected_data = select_obj.attr('xm-search-selected-data');
+                ajaxs[id].search_selected_data = select_obj.attr('xm-select-search-selected-data');
 				$(document).on('input', 'div.' + PNAME + '[FS_ID="' + id + '"] .' + INPUT, function (e) {
 					_this2.search(id, searchField, searchCondition, e, fs.config.searchUrl);
 				});

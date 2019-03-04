@@ -1,1 +1,1 @@
-<input type="radio" name="row[{%filed_name%}]" value="{%value%}" title="{%title%}" {%checked_status%} />
+<input type="radio" name="row[{%field_name%}]" value="{%value%}" title="{%title%}" {%checked_status%} />

@@ -508,7 +508,7 @@ EOD;
      */
     protected function get_input_html($info,$type){
         $name = 'html' . DS . $type . DS . 'input';
-        $data['filed_name'] = $info['field_name'];
+        $data['field_name'] = $info['field_name'];
         $data['field_comment'] = $info['field_comment'];
         $data['verify'] = $info['form_additional'];
         if(!$info['form_empty']){
@@ -524,7 +524,7 @@ EOD;
      */
     protected function get_search_input_html($info){
         $name = 'html' . DS . 'search' . DS . 'input';
-        $data['filed_name'] = $info['field_name'];
+        $data['field_name'] = $info['field_name'];
         $data['field_comment'] = $info['field_comment'];
         return $this->get_replaced_tpl($name, $data);
     }
@@ -537,7 +537,7 @@ EOD;
      */
     protected function get_textarea_html($info,$type){
         $name = 'html' . DS . $type . DS . 'textarea';
-        $data['filed_name'] = $info['field_name'];
+        $data['field_name'] = $info['field_name'];
         $data['field_comment'] = $info['field_comment'];
         $data['verify'] = $info['form_empty'] ? '' : 'required';
         return $this->get_replaced_tpl($name, $data);
@@ -550,7 +550,7 @@ EOD;
      */
     protected function get_search_textarea_html($info){
         $name = 'html' . DS . 'search' . DS . 'textarea';
-        $data['filed_name'] = $info['field_name'];
+        $data['field_name'] = $info['field_name'];
         $data['field_comment'] = $info['field_comment'];
         return $this->get_replaced_tpl($name, $data);
     }
@@ -588,7 +588,7 @@ EOD;
          */
         if(count($radio_items) == 2){
             $name = 'html' . DS . $type . DS . 'radio_switch';
-            $data['filed_name'] = $info['field_name'];
+            $data['field_name'] = $info['field_name'];
             $data['default_value'] = $default_value;
             $data['checked_value'] = ($radio_items[0]['value'] == $default_value) ? $radio_items[1]['value'] : $radio_items[0]['value'];
             if(($radio_items[0]['value'] == $default_value)) {
@@ -602,7 +602,7 @@ EOD;
             $name = 'html' . DS . $type . DS . 'radio';
             $radio_html = '';
             foreach($radio_items as $k=>$v){
-                $temp_data['filed_name'] = $info['field_name'];
+                $temp_data['field_name'] = $info['field_name'];
                 $temp_data['value'] = $v['value'];
                 $temp_data['title'] = $v['text'];
                 $temp_data['checked_status'] = ($v['value'] == $default_value) ? 'checked="checked"' : '';
@@ -616,7 +616,7 @@ EOD;
 
     protected function get_search_radio_html($info){
         $name = 'html' . DS . 'search' . DS . 'radio';
-        $data['filed_name'] = $info['field_name'];
+        $data['field_name'] = $info['field_name'];
         $items = explode(',', $info['form_additional']);
         $option_items = [];
         foreach($items as $k=>$v){
@@ -711,7 +711,7 @@ EOD;
 
     protected function get_select_single_html($info,$type){
         $name = 'html' . DS . $type . DS . 'select_single';
-        $data['filed_name'] = $info['field_name'];
+        $data['field_name'] = $info['field_name'];
         $items = explode(',', $info['form_additional']['values']);
         $default_value = '';
         $option_items = [];
@@ -747,7 +747,7 @@ EOD;
 
     protected function get_search_select_single_html($info){
         $name = 'html' . DS . 'search' . DS . 'radio';
-        $data['filed_name'] = $info['field_name'];
+        $data['field_name'] = $info['field_name'];
         $items = explode(',', $info['form_additional']['values']);
         $option_items = [];
         foreach($items as $k=>$v){
