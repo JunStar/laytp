@@ -1,7 +1,7 @@
 {extend name="admin@public/main"}
 
 {block name="search_form"}
-<form class="layui-form">
+<form class="layui-form layui-form-pane">
 {%searchForm%}
 
     <div class="layui-form-item layui-inline">

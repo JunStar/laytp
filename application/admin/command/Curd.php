@@ -390,7 +390,7 @@ class Curd extends Command
     {
         return <<<EOD
     <div class="layui-form-item">
-        <label class="layui-form-label">{$field}</label>
+        <label class="layui-form-label" title="{$field}">{$field}</label>
         <div class="layui-input-block">
             {$content}
         </div>
@@ -407,7 +407,7 @@ EOD;
     {
         return <<<EOD
     <div class="layui-form-item layui-inline">
-        <label class="layui-form-label">{$field}</label>
+        <label class="layui-form-label" title="{$field}">{$field}</label>
         <div class="layui-input-inline">
             {$content}
         </div>
