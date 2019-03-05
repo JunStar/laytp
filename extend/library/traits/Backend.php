@@ -15,6 +15,8 @@ trait Backend
                 foreach($v as $field_name => $field_val){
                     if(isset($this->model->const[$field_name])){
                         $data['data'][$k][$field_name] = get_const_val($field_name, $field_val, $this->model->const);
+                    }elseif (isset($this->relation[$field_name]) && $field_val){
+                        $data['data'][$k][$field_name] = join(',', $this->relation[$field_name]['model']->where('id in ('. $field_val .')')->column($this->relation[$field_name]['show_field']));
                     }
                 }
             }

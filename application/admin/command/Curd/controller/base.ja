@@ -2,7 +2,7 @@
 
 namespace {%controllerNamespace%};
 
-use controller\Backend;
+use controller\Backend;{%useModel%}
 
 /**
  * {%tableComment%}
@@ -20,6 +20,6 @@ class {%controllerClassName%} extends Backend
     {
         parent::initialize();
         $this->model = new \{%modelNamespace%}\{%modelClassName%}();
-        {%arrayConstAssign%}
+        {%relation%}
     }
 }

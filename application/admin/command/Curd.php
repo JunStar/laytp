@@ -426,6 +426,14 @@ EOD;
         }
     }
 
+    protected function set_controller_relation($field_name, $model, $show_field){
+        $this->controller_relation[$field_name] = [
+            'model' => $model,
+            'show_field' => $show_field
+        ];
+        $this->controllerParam['data']['useModel'] = "\n".'use think\Db;';
+    }
+
     //生成controller层
     protected function c_controller(){
         if(!empty($this->controller_array_const)){
@@ -434,6 +442,25 @@ EOD;
         }else{
             $this->controllerParam['data']['arrayConstAssign'] = '';
         }
+
+        if( count($this->controller_relation) ){
+            $relation[] = "\n\t\t".'$this->relation = [';
+            foreach($this->controller_relation as $field_name=>$val){
+                $temp = "\n\t\t\t".'\'' . $field_name . '\'=> [';
+                foreach($val as $key=>$v){
+                    if($key == 'model'){
+                        $temp .= "\n\t\t\t\t".'\'' . $key . '\'=>'. $v . ',';
+                    }elseif($key == 'show_field'){
+                        $temp .= "\n\t\t\t\t".'\'' . $key . '\'=>\''. $v . '\',';
+                    }
+                }
+                $temp .= "\n\t\t\t".'],';
+                $relation[] = $temp;
+            }
+            $relation[] = "\n\t\t".'];';
+            $this->controllerParam['data']['relation'] = implode("",$relation);
+        }
+
         $this->write_to_file($this->controllerParam['tpl_name'], $this->controllerParam['data'], $this->controllerParam['c_file_name']);
     }
 
@@ -856,6 +883,7 @@ EOD;
         }else{
             $data['condition'] = 'FIND_IN_SET';
         }
+        $this->set_controller_relation($info['field_name'],'Db::table(\''.$info['form_additional']['table_name'].'\') ', $info['form_additional']['show_field_name']);
 
         return $this->get_replaced_tpl($name, $data);
     }
