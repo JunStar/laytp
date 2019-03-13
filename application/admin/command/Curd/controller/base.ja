@@ -14,12 +14,13 @@ class {%controllerClassName%} extends Backend
      * {%modelName%}模型对象
      * @var {%modelNamespace%}\{%modelClassName%}
      */
-    protected $model;
+    protected $model;{%relation_def%}
 
     public function initialize()
     {
         parent::initialize();
         $this->model = new \{%modelNamespace%}\{%modelClassName%}();
         {%relation%}
+        {%arrayConstAssign%}
     }
 }

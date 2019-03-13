@@ -459,6 +459,7 @@ EOD;
             }
             $relation[] = "\n\t\t".'];';
             $this->controllerParam['data']['relation'] = implode("",$relation);
+            $this->controllerParam['data']['relation_def'] = "\n\t".'protected $relation;';
         }
 
         $this->write_to_file($this->controllerParam['tpl_name'], $this->controllerParam['data'], $this->controllerParam['c_file_name']);
@@ -872,11 +873,7 @@ EOD;
         $data['search_field'] = $info['form_additional']['search_field_name'];
         $data['show_field'] = $info['form_additional']['show_field_name'];
 
-        if( intval($info['form_additional']['max']) ){
-            $data['max'] = 'xm-select-max='.intval($info['form_additional']['max']);
-        }else{
-            $data['max'] = '';
-        }
+        $data['max'] = '';
 
         if( $info['form_additional']['single_multi'] == 'single' ){
             $data['condition'] = 'IN';
