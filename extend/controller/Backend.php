@@ -137,6 +137,10 @@ class Backend extends Controller
                         case 'IN':
                             $where[] = "$field IN ({$value_condition['value']})";
                             break;
+                        case 'BETWEEN':
+                            $arr_between = explode(' - ', $value_condition['value']);
+                            $where[] = "($field BETWEEN '{$arr_between[0]}' and '{$arr_between[1]}')";
+                            break;
                     }
                 }
             }

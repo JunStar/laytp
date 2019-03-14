@@ -40,7 +40,8 @@ class Curd extends Command
         $jsParam,//生成js文件的参数,是一个数组['tpl_name'=>使用到的模板名称,'data'=>模板中需要替换的数据,'c_file_name'=>需要生成的文件名称]
         $htmlIndexParam,//生成html首页文件的参数,是一个数组['tpl_name'=>使用到的模板名称,'data'=>模板中需要替换的数据,'c_file_name'=>需要生成的文件名称]
         $htmlAddParam,//生成html添加页面文件的参数,是一个数组['tpl_name'=>使用到的模板名称,'data'=>模板中需要替换的数据,'c_file_name'=>需要生成的文件名称]
-        $htmlEditParam//生成html编辑页面文件的参数,是一个数组['tpl_name'=>使用到的模板名称,'data'=>模板中需要替换的数据,'c_file_name'=>需要生成的文件名称]
+        $htmlEditParam,//生成html编辑页面文件的参数,是一个数组['tpl_name'=>使用到的模板名称,'data'=>模板中需要替换的数据,'c_file_name'=>需要生成的文件名称]
+        $controller_relation//控制器中需要设置的关联数组
     ;
     protected function configure(){
         $this->setName('curd')
@@ -426,6 +427,12 @@ EOD;
         }
     }
 
+    /**
+     * 设置关联属性
+     * @param $field_name
+     * @param $model
+     * @param $show_field
+     */
     protected function set_controller_relation($field_name, $model, $show_field){
         $this->controller_relation[$field_name] = [
             'model' => $model,
@@ -443,7 +450,7 @@ EOD;
             $this->controllerParam['data']['arrayConstAssign'] = '';
         }
 
-        if( count($this->controller_relation) ){
+        if( is_array($this->controller_relation) && count($this->controller_relation) ){
             $relation[] = "\n\t\t".'$this->relation = [';
             foreach($this->controller_relation as $field_name=>$val){
                 $temp = "\n\t\t\t".'\'' . $field_name . '\'=> [';
@@ -460,6 +467,10 @@ EOD;
             $relation[] = "\n\t\t".'];';
             $this->controllerParam['data']['relation'] = implode("",$relation);
             $this->controllerParam['data']['relation_def'] = "\n\t".'protected $relation;';
+        }else{
+            $this->controllerParam['data']['useModel'] = '';
+            $this->controllerParam['data']['relation'] = '';
+            $this->controllerParam['data']['relation_def'] = '';
         }
 
         $this->write_to_file($this->controllerParam['tpl_name'], $this->controllerParam['data'], $this->controllerParam['c_file_name']);
@@ -882,6 +893,22 @@ EOD;
         }
         $this->set_controller_relation($info['field_name'],'Db::table(\''.$info['form_additional']['table_name'].'\') ', $info['form_additional']['show_field_name']);
 
+        return $this->get_replaced_tpl($name, $data);
+    }
+
+    protected function get_time_html($info,$type){
+        $name = 'html' . DS . $type . DS . 'time';
+        $data['field_name'] = $info['field_name'];
+
+        $data['laydate_type'] = $info['form_additional'];
+        return $this->get_replaced_tpl($name, $data);
+    }
+
+    protected function get_search_time_html($info){
+        $name = 'html' . DS . 'search' . DS . 'time';
+        $data['field_name'] = $info['field_name'];
+
+        $data['laydate_type'] = $info['form_additional'];
         return $this->get_replaced_tpl($name, $data);
     }
 }

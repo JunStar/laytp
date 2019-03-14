@@ -149,16 +149,13 @@ layui.use(['junAdmin'],function(){
             '<select name="form_additional_select_page_show_field_'+field_name+'" id="form_additional_select_page_show_field_'+field_name+'">' +
                 '<option value="">显示的字段</option>' +
             '</select>';
+        // let time_html = '<input class="layui-input layui-input-inline" placeholder="输入时间格式，比如，Y-m-d H:i:s" value="Y-m-d H:i:s" name="form_additional_time_\'+field_name+\'" id="form_additional_time_\'+field_name+\'" />';
         let time_html = '<select name="form_additional_time_'+field_name+'" id="form_additional_time_'+field_name+'">' +
-            '<option value="Y-m-d H:i:s">年-月-日 时:分:秒</option>' +
-            '<option value="Y-m-d H:i">年-月-日 时:分</option>' +
-            '<option value="Y-m-d H">年-月-日 时</option>' +
+            '<option value="datetime">年-月-日 时:分:秒</option>' +
+            '<option value="month">年-月</option>' +
+            '<option value="year">年</option>' +
             '<option value="Y-m-d">年-月-日</option>' +
-            '<option value="Y">年</option>' +
-            '<option value="m">月</option>' +
-            '<option value="d">日</option>' +
-            '<option value="Y-m">年-月</option>' +
-            '<option value="m-d">月-日</option>' +
+            '<option value="time">时:分:秒</option>' +
             '</select>';
         let city_html = '';
         let upload_html = '';
@@ -372,6 +369,9 @@ layui.use(['junAdmin'],function(){
                             'search_field_name' : $('#form_additional_select_page_search_field_' + field_name).val(),
                             'show_field_name' : $('#form_additional_select_page_show_field_' + field_name).val()
                         };
+                        break;
+                    case 'time':
+                        return $('#form_additional_time_' + field_name).val();
                         break;
                     default:
                         return "";

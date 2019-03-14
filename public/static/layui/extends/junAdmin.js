@@ -7,7 +7,7 @@
 */
 let add_search_condition_click_num = 0;
 layui.define([
-    'jquery', 'layer', 'form', 'table', 'laytpl', 'element'
+    'jquery', 'layer', 'form', 'table', 'laytpl', 'element','laydate'
     ,'select_multi'
     ,'formSelects'
 ], function(exports){
@@ -121,6 +121,10 @@ layui.define([
                     junAdmin.facade.after_popup_frame(layero,index);
                 }
             });
+        },
+
+        after_popup_frame: function(layero,index){
+            junAdmin.facade.select_multi(layero,index);
         },
 
         //layer弹出层
@@ -247,28 +251,23 @@ layui.define([
             }
         },
 
-        //select_page插件
-        formSelects:function(){
-            // layui.formSelects.value('select1');
-            layui.formSelects.render('select2');
-        },
-
         //时间插件
+        laydate_render:function(){
+            layui.each($('.laydate'),function(key,item){
+                let elem = '#'+$(item).attr('id');
+                let laydate_type = $(item).attr('laydate_type');
+                layui.laydate.render({
+                    elem: elem //指定元素
+                    ,type: laydate_type
+                });
+            });
+        }
 
         //表格插件
 
         //其他插件,等等...
 
-        after_popup_frame: function(layero,index){
-            junAdmin.facade.select_multi(layero,index);
-            //server模式
-            // layui.formSelects.data('category_id', 'server', {
-            //     url: 'http://local.junadmin.com/admin/test.category/index.html',
-            //     keyword: '水果'
-            // });
-            layui.formSelects.value('category_id',[1]);
-            // layui.formSelects.render('category_id');
-        }
+
     }
 
     junAdmin.init = {
@@ -386,6 +385,22 @@ layui.define([
                 layui.laytpl(search_condition_tpl).render(add_search_condition_click_num, function(html){
                     $('form > div').append(html);
                     layui.form.render();
+                });
+            });
+        },
+
+        /**
+         * 渲染时间插件
+         */
+        laydate_render:function(){
+            layui.each($("input[laydate='true']"),function(key,item){
+                let elem = '#'+$(item).attr('id');
+                let laydate_type = $(item).attr('laydate_type') ? $(item).attr('laydate_type') : 'datetime';
+                let laydate_range = ($(item).attr('laydate_range') == 'true') ? true : false;
+                layui.laydate.render({
+                    elem: elem //指定元素
+                    ,type: laydate_type
+                    ,range: laydate_range
                 });
             });
         }
