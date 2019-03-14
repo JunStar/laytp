@@ -45,9 +45,12 @@ trait Backend
 
         if( $this->request->isAjax() && $this->request->isPost() ){
             $post = filterPostData($this->request->post("row/a"));
-            if( $this->model->where($edit_where)->update($post) ){
+            $update_res = $this->model->where($edit_where)->update($post);
+            if( $update_res ){
                 return $this->success('操作成功');
-            }else{
+            }else if( $update_res === 0 ){
+                return $this->success('未做修改');
+            }else if( $update_res === null ){
                 return $this->error('操作失败');
             }
         }
