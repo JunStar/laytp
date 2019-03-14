@@ -125,7 +125,7 @@ layui.use(['junAdmin'],function(){
     func_controller.init();
 
     func_controller.form_type_select_after = function(field_name, value){
-        let input_html = '<select name="form_additional_input_'+field_name+'" id="form_additional_input_'+field_name+'">' +
+        let input_html = '<select name="form_additional_set_value_input_'+field_name+'" id="form_additional_set_value_input_'+field_name+'">' +
             '<option value="">不限制</option>' +
             '<option value="junAdmin_email">Email</option>' +
             '<option value="junAdmin_phone">手机号码</option>' +
@@ -150,7 +150,7 @@ layui.use(['junAdmin'],function(){
                 '<option value="">显示的字段</option>' +
             '</select>';
         // let time_html = '<input class="layui-input layui-input-inline" placeholder="输入时间格式，比如，Y-m-d H:i:s" value="Y-m-d H:i:s" name="form_additional_time_\'+field_name+\'" id="form_additional_time_\'+field_name+\'" />';
-        let time_html = '<select name="form_additional_time_'+field_name+'" id="form_additional_time_'+field_name+'">' +
+        let time_html = '<select name="form_additional_set_value_input_'+field_name+'" id="form_additional_set_value_input_'+field_name+'">' +
             '<option value="datetime">年-月-日 时:分:秒</option>' +
             '<option value="month">年-月</option>' +
             '<option value="year">年</option>' +
@@ -346,13 +346,13 @@ layui.use(['junAdmin'],function(){
             });
         });
 
-        function get_form_additional_val(field_name,value){
-            let no_form_additionnal_arr = ['input','textarea'];
-            let type_arr = ['select','select_page','time','city','upload','editor'];
-            let set_value_input_type = ['radio','checkbox'];
-            if(set_value_input_type.indexOf(value) != -1){
+        function get_form_additional_val(field_name,form_type){
+            let no_form_additionnal_arr = ['textarea'];
+            let type_arr = ['select','select_page','city','upload','editor'];
+            let set_value_input_type = ['input','time','radio','checkbox'];
+            if(set_value_input_type.indexOf(form_type) != -1){
                 return $('#form_additional_set_value_input_' + field_name).val();
-            }else if(type_arr.indexOf(value) != -1){
+            }else if(type_arr.indexOf(form_type) != -1){
                 switch (value) {
                     case 'select':
                         return {
@@ -370,14 +370,11 @@ layui.use(['junAdmin'],function(){
                             'show_field_name' : $('#form_additional_select_page_show_field_' + field_name).val()
                         };
                         break;
-                    case 'time':
-                        return $('#form_additional_time_' + field_name).val();
-                        break;
                     default:
                         return "";
                         break;
                 }
-            }else if(no_form_additionnal_arr.indexOf(value) != -1){
+            }else if(no_form_additionnal_arr.indexOf(form_type) != -1){
                 return "";
             }
         }
