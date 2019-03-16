@@ -474,6 +474,13 @@ layui.define([
                     $(this).closest("li").remove();
                 });
             });
+        },
+
+        ueditor_render: function(){
+            layui.each($("script[editor='true']"),function(key,item) {
+                let id = $(item).attr('id');
+                UE.getEditor(id);
+            });
         }
     }
 

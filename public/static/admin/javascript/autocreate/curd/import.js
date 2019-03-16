@@ -171,7 +171,10 @@ layui.use(['junAdmin'],function(){
                 '<option value="file">所有文件类型</option>' +
             '</select>';
         let textarea_html = '';
-        let editor_html = '';
+        let editor_html =
+            '<select name="form_additional_set_value_input_'+field_name+'" id="form_additional_set_value_input_'+field_name+'" lay-filter="form_additional_set_value_input_'+field_name+'">' +
+                '<option value="ueditor">UEditor</option>' +
+            '</select>';
         let type_arr = ['input','select','select_page','time','city','upload','textarea','editor'];
         let set_value_input_type = ['radio','checkbox'];
         if(set_value_input_type.indexOf(value) != -1){
@@ -359,8 +362,8 @@ layui.use(['junAdmin'],function(){
 
         function get_form_additional_val(field_name,form_type){
             let no_form_additionnal_arr = ['textarea'];
-            let type_arr = ['select','select_page','city','upload','editor'];
-            let set_value_input_type = ['input','time','radio','checkbox'];
+            let type_arr = ['select','select_page','city','upload'];
+            let set_value_input_type = ['input','time','radio','checkbox','editor'];
             if(set_value_input_type.indexOf(form_type) != -1){
                 return $('#form_additional_set_value_input_' + field_name).val();
             }else if(type_arr.indexOf(form_type) != -1){
@@ -386,6 +389,7 @@ layui.use(['junAdmin'],function(){
                             'single_multi' : $('#form_additional_upload_single_multi_' + field_name).val(),
                             'accept' : $('#form_additional_upload_accept_' + field_name).val()
                         };
+                        break;
                     default:
                         return "";
                         break;

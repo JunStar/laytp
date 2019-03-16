@@ -952,4 +952,18 @@ EOD;
     protected function get_search_upload_html(){
         return '';
     }
+
+    protected function get_editor_html($info,$type){
+        $name = 'html' . DS . $type . DS . 'editor' . DS . $info['form_additional'];
+        $data['field_name'] = $info['field_name'];
+
+        return $this->get_replaced_tpl($name, $data);
+    }
+
+    protected function get_search_editor_html($info){
+        $name = 'html' . DS . 'search' . DS . 'editor' . DS . $info['form_additional'];
+        $data['field_name'] = $info['field_name'];
+        $data['field_comment'] = $info['field_comment'];
+        return $this->get_replaced_tpl($name, $data);
+    }
 }
