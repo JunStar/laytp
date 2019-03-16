@@ -11,6 +11,7 @@ layui.use(['junAdmin'],function(){
             elem: '.layui-hide-sm'
             ,cellMinWidth: 100
             ,text:{none:'请选择数据表和需要显示的字段'}
+            ,limit: 10000
             ,data:data
             ,cols: [
                 [
@@ -152,13 +153,23 @@ layui.use(['junAdmin'],function(){
         // let time_html = '<input class="layui-input layui-input-inline" placeholder="输入时间格式，比如，Y-m-d H:i:s" value="Y-m-d H:i:s" name="form_additional_time_\'+field_name+\'" id="form_additional_time_\'+field_name+\'" />';
         let time_html = '<select name="form_additional_set_value_input_'+field_name+'" id="form_additional_set_value_input_'+field_name+'">' +
             '<option value="datetime">年-月-日 时:分:秒</option>' +
-            '<option value="month">年-月</option>' +
-            '<option value="year">年</option>' +
-            '<option value="Y-m-d">年-月-日</option>' +
-            '<option value="time">时:分:秒</option>' +
+            // '<option value="month">年-月</option>' +
+            // '<option value="year">年</option>' +
+            // '<option value="Y-m-d">年-月-日</option>' +
+            // '<option value="time">时:分:秒</option>' +
             '</select>';
         let city_html = '';
-        let upload_html = '';
+        let upload_html =
+            '<select name="form_additional_upload_single_multi_'+field_name+'" id="form_additional_upload_single_multi_'+field_name+'" lay-filter="form_additional_upload_single_multi_'+field_name+'">' +
+                '<option value="single">单个文件</option>' +
+                '<option value="multi">多个文件</option>' +
+            '</select>' +
+            '<select name="form_additional_upload_accept_'+field_name+'" id="form_additional_upload_accept_'+field_name+'" lay-filter="form_additional_upload_accept_'+field_name+'">' +
+                '<option value="images">图片</option>' +
+                '<option value="video">视频</option>' +
+                '<option value="audio">音频</option>' +
+                '<option value="file">所有文件类型</option>' +
+            '</select>';
         let textarea_html = '';
         let editor_html = '';
         let type_arr = ['input','select','select_page','time','city','upload','textarea','editor'];
@@ -353,7 +364,7 @@ layui.use(['junAdmin'],function(){
             if(set_value_input_type.indexOf(form_type) != -1){
                 return $('#form_additional_set_value_input_' + field_name).val();
             }else if(type_arr.indexOf(form_type) != -1){
-                switch (value) {
+                switch (form_type) {
                     case 'select':
                         return {
                             'single_multi' : $('#form_additional_select_single_multi_' + field_name).val(),
@@ -370,6 +381,11 @@ layui.use(['junAdmin'],function(){
                             'show_field_name' : $('#form_additional_select_page_show_field_' + field_name).val()
                         };
                         break;
+                    case 'upload':
+                        return {
+                            'single_multi' : $('#form_additional_upload_single_multi_' + field_name).val(),
+                            'accept' : $('#form_additional_upload_accept_' + field_name).val()
+                        };
                     default:
                         return "";
                         break;

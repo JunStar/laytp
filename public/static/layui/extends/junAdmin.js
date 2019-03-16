@@ -7,7 +7,7 @@
 */
 let add_search_condition_click_num = 0;
 layui.define([
-    'jquery', 'layer', 'form', 'table', 'laytpl', 'element','laydate'
+    'jquery', 'layer', 'form', 'table', 'laytpl', 'element','laydate','upload'
     ,'select_multi'
     ,'formSelects'
 ], function(exports){
@@ -249,25 +249,7 @@ layui.define([
                     });
                 });
             }
-        },
-
-        //时间插件
-        laydate_render:function(){
-            layui.each($('.laydate'),function(key,item){
-                let elem = '#'+$(item).attr('id');
-                let laydate_type = $(item).attr('laydate_type');
-                layui.laydate.render({
-                    elem: elem //指定元素
-                    ,type: laydate_type
-                });
-            });
         }
-
-        //表格插件
-
-        //其他插件,等等...
-
-
     }
 
     junAdmin.init = {
@@ -392,7 +374,7 @@ layui.define([
         /**
          * 渲染时间插件
          */
-        laydate_render:function(){
+        laydate_render: function(){
             layui.each($("input[laydate='true']"),function(key,item){
                 let elem = '#'+$(item).attr('id');
                 let laydate_type = $(item).attr('laydate_type') ? $(item).attr('laydate_type') : 'datetime';
@@ -401,6 +383,95 @@ layui.define([
                     elem: elem //指定元素
                     ,type: laydate_type
                     ,range: laydate_range
+                });
+            });
+        },
+
+        /**
+         * 渲染上传插件
+         */
+        upload_img_render: function(){
+            layui.each($("button[upload='true']"),function(key,item) {
+                let id = $(item).attr('id');
+                let elem = '#' + id;
+                let single_multi = $(item).attr('single_multi');
+                let is_multiple = ( single_multi == 'multi' ) ? true : false;
+                let accept = $(item).attr('accept');
+                layui.upload.render({
+                    elem: elem,
+                    url: '/admin/ajax/upload/',
+                    accept: accept,
+                    multiple: is_multiple,
+                    before: function (obj) {
+                        if(accept == 'images'){
+                            $('#preview_' + id).html('');
+                        }
+                        $('#input_'+id).val('');
+                        layer.msg('上传中...', {
+                            icon: 16,
+                            shade: 0.01,
+                            time: 0
+                        });
+                    },
+                    done: function (res) {
+                        layer.close(layer.msg());//关闭上传提示窗口
+                        if (res.status == 0) {
+                            return layer.msg(res.msg);
+                        }
+                        if(is_multiple){
+                            //预览
+                            if(accept == 'images') {
+                                $('#preview_' + id).append(
+                                    '<li class="item_img">' +
+                                    '<div class="operate">' +
+                                    '<i class="upload_img_close layui-icon" file_url_data="' + res.data.data + '"></i>' +
+                                    '</div>' +
+                                    '<img src="' + res.data.data + '" class="img" >' +
+                                    '</li>'
+                                );
+                            }
+                            //隐藏input框增加文件值
+                            let input_value = $('#input_'+id).val();
+                            if(input_value){
+                                $('#input_'+id).val( $('#input_'+id).val() + ',' + res.data.data );
+                            }else{
+                                $('#input_'+id).val( res.data.data );
+                            }
+                        }else{
+                            //预览
+                            if(accept == 'images') {
+                                $('#preview_' + id).html(
+                                    '<li class="item_img">' +
+                                    '<div class="operate">' +
+                                    '<i class="upload_img_close layui-icon" file_url_data="' + res.data.data + '"></i>' +
+                                    '</div>' +
+                                    '<img src="' + res.data.data + '" class="img" >' +
+                                    '</li>'
+                                );
+                            }
+                            //隐藏input框增加文件值
+                            $('#input_'+id).val( res.data.data );
+                        }
+                    }
+                });
+                //点击多图上传的X,删除当前的图片
+                $("body").on("click", ".upload_img_close", function () {
+                    if(is_multiple){
+                        let file_url_value = $(this).attr('file_url_data');
+                        let input_value = $('#input_'+id).val();
+                        let new_input_value = "";
+                        if( input_value.indexOf(file_url_value+',') != -1 ){
+                            let reg = new RegExp(file_url_value + ',');
+                            new_input_value = input_value.replace(reg, "");
+                        }else{
+                            let reg = new RegExp(file_url_value);
+                            new_input_value = input_value.replace(reg, "");
+                        }
+                        $('#input_'+id).val(new_input_value);
+                    }else{
+                        $('#input_'+id).val('');
+                    }
+                    $(this).closest("li").remove();
                 });
             });
         }

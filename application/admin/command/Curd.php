@@ -911,4 +911,45 @@ EOD;
         $data['laydate_type'] = $info['form_additional'];
         return $this->get_replaced_tpl($name, $data);
     }
+
+    protected function get_upload_html($info,$type){
+        $name = 'html' . DS . $type . DS . 'upload';
+        $data['field_name'] = $info['field_name'];
+
+        $data['accept'] = $info['form_additional']['accept'];
+        $data['single_multi'] = $info['form_additional']['single_multi'];
+        if($info['form_additional']['accept'] == 'images'){
+            if($type == 'add'){
+                $data['preview'] = "\n\t\t\t".
+                    '<div class="pic-more">
+                        <ul class="pic-more-upload-list" id="preview_'.$info['field_name'].'"></ul>
+                    </div>';
+            }else{
+                $data['preview'] = "\n\t\t\t".
+                    '<div class="pic-more">
+                        <ul class="pic-more-upload-list" id="preview_'.$info['field_name'].'">
+                        {foreach :explode(",",$'.$info['field_name'].') as $key=>$vo } 
+                            <li class="item_img">
+                                <div class="operate">
+                                    <i class="upload_img_close layui-icon" file_url_data="{$vo}"></i>
+                                </div>
+                                <img src="{$vo}" class="img">
+                            </li>
+                        {/foreach}
+                        </ul>
+                    </div>';
+            }
+        }else{
+            $data['preview'] = '';
+        }
+        $data['preview'] = ( $info['form_additional']['accept'] == 'images' ) ?
+        "\n\t\t\t".'<div class="pic-more">
+            <ul class="pic-more-upload-list" id="preview_'.$info['field_name'].'"></ul>
+        </div>' : '';
+        return $this->get_replaced_tpl($name, $data);
+    }
+
+    protected function get_search_upload_html(){
+        return '';
+    }
 }

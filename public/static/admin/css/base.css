@@ -8,3 +8,20 @@ body{font-family:'微软雅黑','Microsoft YaHei','Helvetica Neue','Luxi Sans','
 .junadmin-logo{
     font-size:18px;
 }
+
+/**
+ * 图片上传插件
+ */
+ .layui-upload-img { width: 90px; height: 90px; margin: 0; }
+.pic-more { width:100%; margin: 10px 0px 0px 0px;}
+.pic-more li { width:90px; float: left; margin-right: 5px; display:inline-block; padding-left: 5px; padding-right: 5px;}
+.pic-more li .layui-input { display: initial; }
+.pic-more li a { position: absolute; top: 0; }
+.pic-more li a i { font-size: 24px; background-color: #008800; }
+.pic-more-upload-list .item_img img{ width: 90px; height: 90px;background-color:#fff;border:1px solid #ddd;border-radius:3px; padding: 4px;}
+.pic-more-upload-list li{position: relative;}
+.pic-more-upload-list li .operate{ color: #000; display: none;}
+.pic-more-upload-list li .toleft{ position: absolute;top: 40px; left: 1px; cursor:pointer;}
+.pic-more-upload-list li .toright{ position: absolute;top: 40px; right: 1px;cursor:pointer;}
+.pic-more-upload-list li .upload_img_close{position: absolute;top: 5px; right: 5px;cursor:pointer;}
+.pic-more-upload-list li:hover .operate{ display: block;}
