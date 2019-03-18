@@ -10,6 +10,7 @@
                     ajax-url="admin/ajax/area"
                     selected-id="{%selected_id%}"
                     is-province="{%is_province%}"
+                    parent-id="{%parent_id%}"
                     change-linkage-id="{%change_linkage_id%}">
                     {%options%}
                 </select>

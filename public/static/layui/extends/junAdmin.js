@@ -496,6 +496,7 @@ layui.define([
                 let ajax_url = $(item).attr('ajax-url');
                 let selected_id = $(item).attr('selected-id');
                 let change_linkage_id = $(item).attr('change-linkage-id');
+                let parent_id = $(item).attr('parent-id');
                 if(is_province=='true'){
                     $.ajax({
                         type: 'POST',

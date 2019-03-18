@@ -171,10 +171,16 @@ layui.use(['junAdmin'],function(){
                 '<option value="">请选择联动城市字段</option>' +
             '</select>';
         let city_html =
-            '<select name="form_additional_set_value_input_'+field_name+'" id="form_additional_set_value_input_'+field_name+'">' +
+            '<select name="form_additional_city_linkage_province_field_'+field_name+'" id="form_additional_city_linkage_province_field_'+field_name+'">' +
+                '<option value="">请选择联动省份字段</option>' +
+            '</select>' +
+            '<select name="form_additional_city_linkage_county_field_'+field_name+'" id="form_additional_city_linkage_county_field_'+field_name+'">' +
                 '<option value="">请选择联动区县字段</option>' +
             '</select>';
-        let county_html = '';
+        let county_html =
+            '<select name="form_additional_set_value_input_'+field_name+'" id="form_additional_set_value_input_'+field_name+'">' +
+                '<option value="">请选择联动城市字段</option>' +
+            '</select>';
         let upload_html =
             '<select name="form_additional_upload_single_multi_'+field_name+'" id="form_additional_upload_single_multi_'+field_name+'" lay-filter="form_additional_upload_single_multi_'+field_name+'">' +
                 '<option value="single">单个文件</option>' +
@@ -251,7 +257,7 @@ layui.use(['junAdmin'],function(){
                         data: {table_name:select_table_name},
                         dataType: 'json',
                         success: function (res) {
-                            func_controller.set_select_linkage_city_field(field_name, res.data);
+                            func_controller.set_province_linkage_city_field(field_name, res.data);
 
                             layui.form.render('select');
                         }
@@ -264,7 +270,21 @@ layui.use(['junAdmin'],function(){
                         data: {table_name:select_table_name},
                         dataType: 'json',
                         success: function (res) {
-                            func_controller.set_county_city_id_field(field_name, res.data);
+                            func_controller.set_city_linkage_province_field(field_name, res.data);
+                            func_controller.set_city_linkage_county_field(field_name, res.data);
+
+                            layui.form.render('select');
+                        }
+                    });
+                    break;
+                case 'county':
+                    $.ajax({
+                        type: 'POST',
+                        url: junAdmin.facade.url('admin/autocreate.curd/get_fields_by_table_name'),
+                        data: {table_name:select_table_name},
+                        dataType: 'json',
+                        success: function (res) {
+                            func_controller.set_county_linkage_city_field(field_name, res.data);
 
                             layui.form.render('select');
                         }
@@ -275,7 +295,7 @@ layui.use(['junAdmin'],function(){
     }
 
     //设置搜索下拉框待搜索表名
-    func_controller.set_select_page_table_name = function(field_name, data, selected){
+    func_controller.set_select_page_table_name = function(field_name, data){
         let option_html;
         for(key in data){
             option_html = '<option value="'+data[key]['TABLE_NAME']+'">'+data[key]['TABLE_NAME']+'</option>';
@@ -284,7 +304,7 @@ layui.use(['junAdmin'],function(){
     }
 
     //设置搜索下拉框待搜索的字段
-    func_controller.set_select_page_search_field_name = function(field_name, data, selected){
+    func_controller.set_select_page_search_field_name = function(field_name, data){
         $('#form_additional_select_page_search_field_'+field_name).empty();
         let option_html;
         for(key in data){
@@ -294,7 +314,7 @@ layui.use(['junAdmin'],function(){
     }
 
     //设置搜索下拉框显示的字段
-    func_controller.set_select_page_show_field_name = function(field_name, data, selected){
+    func_controller.set_select_page_show_field_name = function(field_name, data){
         $('#form_additional_select_page_show_field_'+field_name).empty();
         let option_html;
         for(key in data){
@@ -317,7 +337,7 @@ layui.use(['junAdmin'],function(){
     }
 
     //设置省份联动的城市字段
-    func_controller.set_select_linkage_city_field = function(field_name, data){
+    func_controller.set_province_linkage_city_field = function(field_name, data){
         $('#form_additional_linkage_city_field_'+field_name).empty();
         let option_1 = '<option value="">请选择联动城市字段</option>';
         $('#form_additional_linkage_city_field_'+field_name).append(option_1);
@@ -329,10 +349,36 @@ layui.use(['junAdmin'],function(){
         }
     }
 
+    //设置城市联动的省份字段
+    func_controller.set_city_linkage_province_field = function(field_name, data){
+        $('#form_additional_city_linkage_province_field_'+field_name).empty();
+        let option_1 = '<option value="">请选择联动省份字段</option>';
+        $('#form_additional_city_linkage_province_field_'+field_name).append(option_1);
+        let option_html;
+        let key;
+        for(key in data){
+            option_html = '<option value="'+data[key]['field_name']+'">'+data[key]['field_name']+'</option>';
+            $('#form_additional_city_linkage_province_field_'+field_name).append(option_html);
+        }
+    }
+
     //设置城市联动的区县字段
-    func_controller.set_county_city_id_field = function(field_name, data){
-        $('#form_additional_set_value_input_'+field_name).empty();
+    func_controller.set_city_linkage_county_field = function(field_name, data){
+        $('#form_additional_city_linkage_county_field_'+field_name).empty();
         let option_1 = '<option value="">请选择联动区县字段</option>';
+        $('#form_additional_city_linkage_county_field_'+field_name).append(option_1);
+        let option_html;
+        let key;
+        for(key in data){
+            option_html = '<option value="'+data[key]['field_name']+'">'+data[key]['field_name']+'</option>';
+            $('#form_additional_city_linkage_county_field_'+field_name).append(option_html);
+        }
+    }
+
+    //设置区县联动的城市字段
+    func_controller.set_county_linkage_city_field = function(field_name, data){
+        $('#form_additional_set_value_input_'+field_name).empty();
+        let option_1 = '<option value="">请选择联动城市字段</option>';
         $('#form_additional_set_value_input_'+field_name).append(option_1);
         let option_html;
         let key;
@@ -488,6 +534,12 @@ layui.use(['junAdmin'],function(){
                         return {
                             'default_province_id' : $('#form_additional_default_province_id_' + field_name).val(),
                             'change_linkage_id' : $('#form_additional_linkage_city_field_' + field_name).val()
+                        };
+                        break;
+                    case 'city':
+                        return {
+                            'linkage_province_field' : $('#form_additional_city_linkage_province_field_' + field_name).val(),
+                            'linkage_county_field' : $('#form_additional_city_linkage_county_field_' + field_name).val()
                         };
                         break;
                     default:
