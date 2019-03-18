@@ -502,8 +502,8 @@ layui.use(['junAdmin'],function(){
 
         function get_form_additional_val(field_name,form_type){
             let no_form_additionnal_arr = ['textarea'];
-            let type_arr = ['select','select_page','province','upload','editor'];
-            let set_value_input_type = ['input','time','radio','city','checkbox','editor'];
+            let type_arr = ['select','select_page','province','city','upload','editor'];
+            let set_value_input_type = ['input','time','radio','county','checkbox','editor'];
             if(set_value_input_type.indexOf(form_type) != -1){
                 return $('#form_additional_set_value_input_' + field_name).val();
             }else if(type_arr.indexOf(form_type) != -1){

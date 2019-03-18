@@ -510,9 +510,37 @@ layui.define([
                             let option_html;
                             let key;
                             for(key in res.data){
-                                option_html = '<option value="'+res.data[key]['id']+'">'+res.data[key]['name']+'</option>';
+                                if(selected_id == res.data[key]['id']){
+                                    option_html = '<option value="'+res.data[key]['id']+'" selected="selected">'+res.data[key]['name']+'</option>';
+                                }else{
+                                    option_html = '<option value="'+res.data[key]['id']+'">'+res.data[key]['name']+'</option>';
+                                }
+
                                 $(item).append(option_html);
                             }
+
+                            // if(selected_id > 0){
+                            //     $.ajax({
+                            //         type: 'POST',
+                            //         url: junAdmin.facade.url(ajax_url),
+                            //         data: {parent_id:selected_id},
+                            //         dataType: 'json',
+                            //         success: function (res) {
+                            //             let option_1 = $('#'+change_linkage_id).children().first().prop("outerHTML");
+                            //             $('#'+change_linkage_id).empty();
+                            //             $('#'+change_linkage_id).append(option_1);
+                            //             let option_html;
+                            //             let key;
+                            //             for(key in res.data){
+                            //                 option_html = '<option value="'+res.data[key]['id']+'">'+res.data[key]['name']+'</option>';
+                            //
+                            //                 $('#'+change_linkage_id).append(option_html);
+                            //             }
+                            //             layui.form.render('select');
+                            //         }
+                            //     });
+                            // }
+
                             layui.form.render('select');
                         }
                     });
@@ -532,13 +560,13 @@ layui.define([
                                 let option_html;
                                 let key;
                                 for(key in res.data){
-                                    if(key == 0){
-                                        option_html = '<option value="'+res.data[key]['id']+'" selected="selected">'+res.data[key]['name']+'</option>';
-                                        $('#'+change_linkage_id).append(option_html);
-                                    }else{
+                                    // if(key == 0){
+                                    //     option_html = '<option value="'+res.data[key]['id']+'" selected="selected">'+res.data[key]['name']+'</option>';
+                                    //     $('#'+change_linkage_id).append(option_html);
+                                    // }else{
                                         option_html = '<option value="'+res.data[key]['id']+'">'+res.data[key]['name']+'</option>';
                                         $('#'+change_linkage_id).append(option_html);
-                                    }
+                                    // }
                                 }
                                 let city_change_linkage_id = $('#'+change_linkage_id).attr('change-linkage-id');
                                 if( city_change_linkage_id ){
@@ -549,6 +577,32 @@ layui.define([
                                 layui.form.render('select');
                             }
                         });
+                    });
+                }
+
+                if(parent_id > 0){
+                    $.ajax({
+                        type: 'POST',
+                        url: junAdmin.facade.url(ajax_url),
+                        data: {parent_id:parent_id},
+                        dataType: 'json',
+                        success: function (res) {
+                            let option_1 = $(item).children().first().prop("outerHTML");
+                            $(item).empty();
+                            $(item).append(option_1);
+                            let option_html;
+                            let key;
+                            for(key in res.data){
+                                if(selected_id == res.data[key]['id']){
+                                    option_html = '<option value="'+res.data[key]['id']+'" selected="selected">'+res.data[key]['name']+'</option>';
+                                }else{
+                                    option_html = '<option value="'+res.data[key]['id']+'">'+res.data[key]['name']+'</option>';
+                                }
+
+                                $(item).append(option_html);
+                            }
+                            layui.form.render('select');
+                        }
                     });
                 }
             });

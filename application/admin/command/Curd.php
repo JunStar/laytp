@@ -1007,6 +1007,7 @@ EOD;
         }
         $data['is_province'] = 'true';
         $data['change_linkage_id'] = isset($info['form_additional']['change_linkage_id']) ? $info['form_additional']['change_linkage_id'] : '';
+        $data['parent_id'] = '';
         $data['options'] = '<option value="">请选择省份</option>';
 
         return $this->get_replaced_tpl($name, $data);
@@ -1031,9 +1032,24 @@ EOD;
         $data['field_name'] = $info['field_name'];
         $data['verify'] = $info['form_empty'] ? '' : 'required';
         $data['field_comment'] = $info['field_comment'];
-        $data['change_linkage_id'] = isset($info['form_additional']) ? $info['form_additional'] : '';
+        $data['change_linkage_id'] = isset($info['form_additional']['linkage_county_field']) ? $info['form_additional']['linkage_county_field'] : '';
         $data['selected_id'] = ($type == 'edit') ?'{$'.$info['field_name'].'}' : '';
         $data['is_province'] = 'false';
+        if($type == 'edit'){
+            $data['parent_id'] = isset($info['form_additional']['linkage_province_field']) ?
+                '{$'.$info['form_additional']['linkage_province_field'].'}' : '';
+        }else{
+            $data['parent_id'] = '';
+            foreach($this->curd_config['field_list'] as $k=>$v){
+                if($v['field_name'] == $info['form_additional']['linkage_province_field']){
+                    if(isset($v['form_additional']['default_province_id'])){
+                        $data['parent_id'] = $v['form_additional']['default_province_id'];
+                        break;
+                    }
+                }
+            }
+        }
+
         $data['options'] = '<option value="">请选择城市</option>';
 
         return $this->get_replaced_tpl($name, $data);
@@ -1045,7 +1061,7 @@ EOD;
         $data['verify'] = $info['form_empty'] ? '' : 'required';
         $data['field_comment'] = $info['field_comment'];
         $data['selected_id'] = '';
-        $data['change_linkage_id'] = isset($info['form_additional']) ? $info['form_additional'] : '';
+        $data['change_linkage_id'] = isset($info['form_additional']['linkage_county_field']) ? $info['form_additional']['linkage_county_field'] : '';
         $data['selected_id'] = '';
         $data['is_province'] = 'false';
         $data['options'] = '<option value="">请选择城市</option>';
@@ -1059,9 +1075,14 @@ EOD;
         $data['verify'] = $info['form_empty'] ? '' : 'required';
         $data['field_comment'] = $info['field_comment'];
         $data['selected_id'] = '';
-        $data['change_linkage_id'] = isset($info['form_additional']) ? $info['form_additional'] : '';
+        $data['change_linkage_id'] = '';
         $data['selected_id'] = ($type == 'edit') ?'{$'.$info['field_name'].'}' : '';
         $data['is_province'] = 'false';
+        if($type == 'edit'){
+            $data['parent_id'] = isset($info['form_additional']) ? '{$'.$info['form_additional'].'}' : '';
+        }else{
+            $data['parent_id'] = '';
+        }
         $data['options'] = '<option value="">请选择区县</option>';
 
         return $this->get_replaced_tpl($name, $data);
