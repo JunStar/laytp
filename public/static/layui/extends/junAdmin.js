@@ -486,9 +486,70 @@ layui.define([
             });
         },
 
+        /**
+         * 省市区联动下拉框渲染
+         */
         area_render: function(){
             layui.each($("select[linkage_area='true']"),function(key,item) {
+                let id = $(item).attr('id');
+                let is_province = $(item).attr('is-province');
+                let ajax_url = $(item).attr('ajax-url');
+                let selected_id = $(item).attr('selected-id');
+                let change_linkage_id = $(item).attr('change-linkage-id');
+                if(is_province=='true'){
+                    $.ajax({
+                        type: 'POST',
+                        url: junAdmin.facade.url(ajax_url),
+                        data: {parent_id:0},
+                        dataType: 'json',
+                        success: function (res) {
+                            let option_1 = $(item).children().first().prop("outerHTML");
+                            $(item).empty();
+                            $(item).append(option_1);
+                            let option_html;
+                            let key;
+                            for(key in res.data){
+                                option_html = '<option value="'+res.data[key]['id']+'">'+res.data[key]['name']+'</option>';
+                                $(item).append(option_html);
+                            }
+                            layui.form.render('select');
+                        }
+                    });
+                }
 
+                if(change_linkage_id){
+                    layui.form.on('select('+id+')',function(data){
+                        $.ajax({
+                            type: 'POST',
+                            url: junAdmin.facade.url(ajax_url),
+                            data: {parent_id:data.value},
+                            dataType: 'json',
+                            success: function (res) {
+                                let option_1 = $('#'+change_linkage_id).children().first().prop("outerHTML");
+                                $('#'+change_linkage_id).empty();
+                                $('#'+change_linkage_id).append(option_1);
+                                let option_html;
+                                let key;
+                                for(key in res.data){
+                                    if(key == 0){
+                                        option_html = '<option value="'+res.data[key]['id']+'" selected="selected">'+res.data[key]['name']+'</option>';
+                                        $('#'+change_linkage_id).append(option_html);
+                                    }else{
+                                        option_html = '<option value="'+res.data[key]['id']+'">'+res.data[key]['name']+'</option>';
+                                        $('#'+change_linkage_id).append(option_html);
+                                    }
+                                }
+                                let city_change_linkage_id = $('#'+change_linkage_id).attr('change-linkage-id');
+                                if( city_change_linkage_id ){
+                                    let county_option_1 = $('#'+city_change_linkage_id).children().first().prop("outerHTML");
+                                    $('#'+city_change_linkage_id).empty();
+                                    $('#'+city_change_linkage_id).append(county_option_1);
+                                }
+                                layui.form.render('select');
+                            }
+                        });
+                    });
+                }
             });
         }
     }

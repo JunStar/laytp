@@ -1005,6 +1005,7 @@ EOD;
         }else{
             $data['selected_id'] = '{$'.$info['field_name'].'}';
         }
+        $data['is_province'] = 'true';
         $data['change_linkage_id'] = isset($info['form_additional']['change_linkage_id']) ? $info['form_additional']['change_linkage_id'] : '';
         $data['options'] = '<option value="">请选择省份</option>';
 
@@ -1019,6 +1020,7 @@ EOD;
         $data['selected_id'] = '';
         $data['change_linkage_id'] = isset($info['form_additional']['change_linkage_id']) ? $info['form_additional']['change_linkage_id'] : '';
         $data['selected_id'] = '';
+        $data['is_province'] = 'true';
         $data['options'] = '<option value="">请选择省份</option>';
 
         return $this->get_replaced_tpl($name, $data);
@@ -1031,6 +1033,7 @@ EOD;
         $data['field_comment'] = $info['field_comment'];
         $data['change_linkage_id'] = isset($info['form_additional']) ? $info['form_additional'] : '';
         $data['selected_id'] = ($type == 'edit') ?'{$'.$info['field_name'].'}' : '';
+        $data['is_province'] = 'false';
         $data['options'] = '<option value="">请选择城市</option>';
 
         return $this->get_replaced_tpl($name, $data);
@@ -1044,6 +1047,7 @@ EOD;
         $data['selected_id'] = '';
         $data['change_linkage_id'] = isset($info['form_additional']) ? $info['form_additional'] : '';
         $data['selected_id'] = '';
+        $data['is_province'] = 'false';
         $data['options'] = '<option value="">请选择城市</option>';
 
         return $this->get_replaced_tpl($name, $data);
@@ -1057,6 +1061,7 @@ EOD;
         $data['selected_id'] = '';
         $data['change_linkage_id'] = isset($info['form_additional']) ? $info['form_additional'] : '';
         $data['selected_id'] = ($type == 'edit') ?'{$'.$info['field_name'].'}' : '';
+        $data['is_province'] = 'false';
         $data['options'] = '<option value="">请选择区县</option>';
 
         return $this->get_replaced_tpl($name, $data);
@@ -1070,6 +1075,7 @@ EOD;
         $data['selected_id'] = '';
         $data['change_linkage_id'] = isset($info['form_additional']) ? $info['form_additional'] : '';
         $data['selected_id'] = '';
+        $data['is_province'] = 'false';
         $data['options'] = '<option value="">请选择区县</option>';
 
         return $this->get_replaced_tpl($name, $data);
