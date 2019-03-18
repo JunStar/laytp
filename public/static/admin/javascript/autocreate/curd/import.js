@@ -158,28 +158,23 @@ layui.use(['junAdmin'],function(){
         let time_html =
             '<select name="form_additional_set_value_input_'+field_name+'" id="form_additional_set_value_input_'+field_name+'">' +
                 '<option value="datetime">年-月-日 时:分:秒</option>' +
-                // '<option value="month">年-月</option>' +
-                // '<option value="year">年</option>' +
-                // '<option value="Y-m-d">年-月-日</option>' +
-                // '<option value="time">时:分:秒</option>' +
+                '<option value="month">年-月</option>' +
+                '<option value="year">年</option>' +
+                '<option value="Y-m-d">年-月-日</option>' +
+                '<option value="time">时:分:秒</option>' +
             '</select>';
         let province_html =
-            '<select name="form_additional_set_value_input_'+field_name+'" id="form_additional_set_value_input_'+field_name+'">' +
-                '<option value="">默认省份</option>' +
-            '</select>'
-        let city_html =
-            '<select name="form_additional_city_province_id_type_'+field_name+'" id="form_additional_city_province_id_type_'+field_name+'" lay-filter="form_additional_city_province_id_type_'+field_name+'">' +
-                '<option value="">省份联动的方式</option>' +
-                '<option value="set_province_id_field">省份字段</option>' +
-                '<option value="set_province_id">固定省份</option>' +
+            '<select name="form_additional_default_province_id_'+field_name+'" id="form_additional_default_province_id_'+field_name+'">' +
+                '<option value="">请选择默认省份</option>' +
             '</select>' +
-            '<select name="form_additional_city_province_id_type_value_'+field_name+'" id="form_additional_city_province_id_type_value_'+field_name+'">' +
-                '<option value="">先选择省份联动方式</option>' +
+            '<select name="form_additional_linkage_city_field_'+field_name+'" id="form_additional_linkage_city_field_'+field_name+'">' +
+                '<option value="">请选择联动城市字段</option>' +
             '</select>';
-        let area_html =
+        let city_html =
             '<select name="form_additional_set_value_input_'+field_name+'" id="form_additional_set_value_input_'+field_name+'">' +
-                '<option value="">城市字段</option>' +
+                '<option value="">请选择联动区县字段</option>' +
             '</select>';
+        let county_html = '';
         let upload_html =
             '<select name="form_additional_upload_single_multi_'+field_name+'" id="form_additional_upload_single_multi_'+field_name+'" lay-filter="form_additional_upload_single_multi_'+field_name+'">' +
                 '<option value="single">单个文件</option>' +
@@ -196,7 +191,7 @@ layui.use(['junAdmin'],function(){
             '<select name="form_additional_set_value_input_'+field_name+'" id="form_additional_set_value_input_'+field_name+'" lay-filter="form_additional_set_value_input_'+field_name+'">' +
                 '<option value="ueditor">UEditor</option>' +
             '</select>';
-        let type_arr = ['input','select','select_page','time','province','city','area','upload','textarea','editor'];
+        let type_arr = ['input','select','select_page','time','province','city','county','upload','textarea','editor'];
         let set_value_input_type = ['radio','checkbox'];
         if(set_value_input_type.indexOf(value) != -1){
             $('#form_additional_' + field_name).html(set_value_html);
@@ -250,45 +245,26 @@ layui.use(['junAdmin'],function(){
                             layui.form.render('select');
                         }
                     });
-                    break;
-                case 'city':
-                    layui.form.on('select(form_additional_city_province_id_type_'+field_name+')',function(data){
-                        let type = data.value;
-                        if(type == 'set_province_id_field'){
-                            $.ajax({
-                                type: 'POST',
-                                url: junAdmin.facade.url('admin/autocreate.curd/get_fields_by_table_name'),
-                                data: {table_name:select_table_name},
-                                dataType: 'json',
-                                success: function (res) {
-                                    func_controller.set_city_province_id_field(field_name, res.data);
-
-                                    layui.form.render('select');
-                                }
-                            });
-                        }else if(type == 'set_province_id'){
-                            $.ajax({
-                                type: 'POST',
-                                url: junAdmin.facade.url('admin/ajax/area'),
-                                data: {table_name:select_table_name},
-                                dataType: 'json',
-                                success: function (res) {
-                                    func_controller.set_city_province_id(field_name, res.data);
-
-                                    layui.form.render('select');
-                                }
-                            });
-                        }
-                    });
-                    break;
-                case 'area':
                     $.ajax({
                         type: 'POST',
                         url: junAdmin.facade.url('admin/autocreate.curd/get_fields_by_table_name'),
                         data: {table_name:select_table_name},
                         dataType: 'json',
                         success: function (res) {
-                            func_controller.set_area_city_id_field(field_name, res.data);
+                            func_controller.set_select_linkage_city_field(field_name, res.data);
+
+                            layui.form.render('select');
+                        }
+                    });
+                    break;
+                case 'city':
+                    $.ajax({
+                        type: 'POST',
+                        url: junAdmin.facade.url('admin/autocreate.curd/get_fields_by_table_name'),
+                        data: {table_name:select_table_name},
+                        dataType: 'json',
+                        success: function (res) {
+                            func_controller.set_county_city_id_field(field_name, res.data);
 
                             layui.form.render('select');
                         }
@@ -329,66 +305,39 @@ layui.use(['junAdmin'],function(){
 
     //设置默认省份待选列表
     func_controller.set_default_province_list = function(field_name, data){
-        $('#form_additional_set_value_input_'+field_name).empty();
-        let option_1 = '<option value="">默认省份</option>';
-        $('#form_additional_set_value_input_'+field_name).append(option_1);
-        let option_2 = '<option value="0">不设置默认省份</option>';
-        $('#form_additional_set_value_input_'+field_name).append(option_2);
+        $('#form_additional_default_province_id_'+field_name).empty();
+        let option_1 = '<option value="">请选择默认省份</option>';
+        $('#form_additional_default_province_id_'+field_name).append(option_1);
         let option_html;
         let key;
         for(key in data){
             option_html = '<option value="'+data[key]['id']+'">'+data[key]['name']+'</option>';
-            $('#form_additional_set_value_input_'+field_name).append(option_html);
+            $('#form_additional_default_province_id_'+field_name).append(option_html);
         }
     }
 
-    //设置城市省份联动方式为省份字段时，设置值列表
-    func_controller.set_city_province_id_field = function(field_name, data){
-        $('#form_additional_city_province_id_type_value_'+field_name).empty();
-        let option_1 = '<option value="">请选择字段</option>';
-        $('#form_additional_city_province_id_type_value_'+field_name).append(option_1);
+    //设置省份联动的城市字段
+    func_controller.set_select_linkage_city_field = function(field_name, data){
+        $('#form_additional_linkage_city_field_'+field_name).empty();
+        let option_1 = '<option value="">请选择联动城市字段</option>';
+        $('#form_additional_linkage_city_field_'+field_name).append(option_1);
         let option_html;
         let key;
         for(key in data){
-            if( key == 0 ){
-                option_html = '<option value="'+data[key]['field_name']+'" selected="selected">'+data[key]['field_name']+'</option>';
-            }else{
-                option_html = '<option value="'+data[key]['field_name']+'">'+data[key]['field_name']+'</option>';
-            }
-            $('#form_additional_city_province_id_type_value_'+field_name).append(option_html);
+            option_html = '<option value="'+data[key]['field_name']+'">'+data[key]['field_name']+'</option>';
+            $('#form_additional_linkage_city_field_'+field_name).append(option_html);
         }
     }
 
-    //设置城市省份联动方式为省份字段时，设置值列表
-    func_controller.set_city_province_id = function(field_name, data){
-        $('#form_additional_city_province_id_type_value_'+field_name).empty();
-        let option_1 = '<option value="">请选择省份</option>';
-        $('#form_additional_city_province_id_type_value_'+field_name).append(option_1);
-        let option_html;
-        let key;
-        for(key in data){
-            if( key == 0 ){
-                option_html = '<option value="'+data[key]['id']+'" selected="selected">'+data[key]['name']+'</option>';
-            }else{
-                option_html = '<option value="'+data[key]['id']+'">'+data[key]['name']+'</option>';
-            }
-            $('#form_additional_city_province_id_type_value_'+field_name).append(option_html);
-        }
-    }
-
-    //设置城市省份联动方式为省份字段时，设置值列表
-    func_controller.set_area_city_id_field = function(field_name, data){
+    //设置城市联动的区县字段
+    func_controller.set_county_city_id_field = function(field_name, data){
         $('#form_additional_set_value_input_'+field_name).empty();
-        let option_1 = '<option value="">城市字段</option>';
+        let option_1 = '<option value="">请选择联动区县字段</option>';
         $('#form_additional_set_value_input_'+field_name).append(option_1);
         let option_html;
         let key;
         for(key in data){
-            if( key == 0 ){
-                option_html = '<option value="'+data[key]['field_name']+'" selected="selected">'+data[key]['field_name']+'</option>';
-            }else{
-                option_html = '<option value="'+data[key]['field_name']+'">'+data[key]['field_name']+'</option>';
-            }
+            option_html = '<option value="'+data[key]['field_name']+'">'+data[key]['field_name']+'</option>';
             $('#form_additional_set_value_input_'+field_name).append(option_html);
         }
     }
@@ -507,7 +456,7 @@ layui.use(['junAdmin'],function(){
 
         function get_form_additional_val(field_name,form_type){
             let no_form_additionnal_arr = ['textarea'];
-            let type_arr = ['select','select_page','city','upload','editor'];
+            let type_arr = ['select','select_page','province','upload','editor'];
             let set_value_input_type = ['input','time','radio','checkbox','editor'];
             if(set_value_input_type.indexOf(form_type) != -1){
                 return $('#form_additional_set_value_input_' + field_name).val();
@@ -535,10 +484,10 @@ layui.use(['junAdmin'],function(){
                             'accept' : $('#form_additional_upload_accept_' + field_name).val()
                         };
                         break;
-                    case 'city':
+                    case 'province':
                         return {
-                            'set_province_id_type' : $('#form_additional_city_province_id_type_' + field_name).val(),
-                            'set_province_id_value' : $('#form_additional_city_province_id_type_value_' + field_name).val()
+                            'default_province_id' : $('#form_additional_default_province_id_' + field_name).val(),
+                            'linkage_city_id' : $('#form_additional_linkage_city_field_' + field_name).val()
                         };
                         break;
                     default:
