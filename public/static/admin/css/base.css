@@ -10,9 +10,14 @@ body{font-family:'微软雅黑','Microsoft YaHei','Helvetica Neue','Luxi Sans','
 }
 
 /**
+ * 搜索
+ */
+.search-form-item{ margin: 5px 0px 5px 0}
+
+/**
  * 图片上传插件
  */
- .layui-upload-img { width: 90px; height: 90px; margin: 0; }
+.layui-upload-img { width: 90px; height: 90px; margin: 0; }
 .pic-more { width:100%; margin: 10px 0px 0px 0px;}
 .pic-more li { width:90px; float: left; margin-right: 5px; display:inline-block; padding-left: 5px; padding-right: 5px;}
 .pic-more li .layui-input { display: initial; }
@@ -25,3 +30,4 @@ body{font-family:'微软雅黑','Microsoft YaHei','Helvetica Neue','Luxi Sans','
 .pic-more-upload-list li .toright{ position: absolute;top: 40px; right: 1px;cursor:pointer;}
 .pic-more-upload-list li .upload_img_close{position: absolute;top: 5px; right: 5px;cursor:pointer;}
 .pic-more-upload-list li:hover .operate{ display: block;}
+

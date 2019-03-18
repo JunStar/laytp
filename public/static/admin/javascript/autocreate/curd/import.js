@@ -25,7 +25,7 @@ layui.use(['junAdmin'],function(){
                     ,{field:'field_name', title:'字段名称', width:100, align: 'center', edit: 'text'}
                     ,{field:'field_comment', title:'字段注释(表头和表单中显示的文字)', width:100, align: 'center', edit: 'text'}
                     //表单设置
-                    ,{field:'form_type', title:'表单元素', templet: "#form_type", align: 'center', width: 170}
+                    ,{field:'form_type', title:'表单元素', templet: "#form_type", align: 'center', width: 190}
                     ,{field:'form_additional', title:'附加设置', templet: "#form_additional", align: 'center', width: 220}
                     ,{field:'form_empty', title:'允许为空', templet: "#form_empty", align: 'center', width: 140}
                     //列表设置
@@ -48,6 +48,7 @@ layui.use(['junAdmin'],function(){
         });
     }
 
+    let select_table_name = '';
     //初始化方法，页面加载完毕立即执行的内容
     func_controller.init = function(){
         //渲染空表格
@@ -65,6 +66,7 @@ layui.use(['junAdmin'],function(){
 
         //监听选择表下拉框onchange事件
         layui.form.on('select(select_table)',function(data){
+            select_table_name = data.value;
             let post_data = {'table_name':data.value};
             $.ajax({
                 type: 'POST',
@@ -121,23 +123,30 @@ layui.use(['junAdmin'],function(){
                 }
             });
         });
+
+        //监听选择表下拉框onchange事件
+        layui.form.on('select(select_table)',function(data){
+
+        });
     }
 
     func_controller.init();
 
     func_controller.form_type_select_after = function(field_name, value){
-        let input_html = '<select name="form_additional_set_value_input_'+field_name+'" id="form_additional_set_value_input_'+field_name+'">' +
-            '<option value="">不限制</option>' +
-            '<option value="junAdmin_email">Email</option>' +
-            '<option value="junAdmin_phone">手机号码</option>' +
-            '<option value="junAdmin_number">数字</option>' +
-            '<option value="junAdmin_url">链接</option>' +
-            '<option value="junAdmin_identity">身份证</option>' +
+        let input_html =
+            '<select name="form_additional_set_value_input_'+field_name+'" id="form_additional_set_value_input_'+field_name+'">' +
+                '<option value="">不限制</option>' +
+                '<option value="junAdmin_email">Email</option>' +
+                '<option value="junAdmin_phone">手机号码</option>' +
+                '<option value="junAdmin_number">数字</option>' +
+                '<option value="junAdmin_url">链接</option>' +
+                '<option value="junAdmin_identity">身份证</option>' +
             '</select>';
         let set_value_html = '<input type="text" class="layui-input layui-input-inline" placeholder="value1=text1,value2=text2,default=value..." name="form_additional_set_value_input_'+field_name+'" id="form_additional_set_value_input_'+field_name+'" />';
-        let select_single_multi = '<select name="form_additional_select_single_multi_'+field_name+'" id="form_additional_select_single_multi_'+field_name+'">' +
-            '<option value="single">单选</option>' +
-            '<option value="multi">多选</option>' +
+        let select_single_multi =
+            '<select name="form_additional_select_single_multi_'+field_name+'" id="form_additional_select_single_multi_'+field_name+'">' +
+                '<option value="single">单选</option>' +
+                '<option value="multi">多选</option>' +
             '</select>';
         let select_html =  select_single_multi + '<input type="text" class="layui-input layui-input-inline" placeholder="最多可选个数，多选才有效，默认不限制" name="form_additional_select_max_'+field_name+'" id="form_additional_select_max_'+field_name+'" /><br/>' + set_value_html;
         let select_page_html = select_single_multi + '<input type="text" class="layui-input layui-input-inline" placeholder="最多可选个数，多选才有效，默认不限制" name="form_additional_select_max_'+field_name+'" id="form_additional_select_max_'+field_name+'" /><br/>' +
@@ -151,14 +160,31 @@ layui.use(['junAdmin'],function(){
                 '<option value="">显示的字段</option>' +
             '</select>';
         // let time_html = '<input class="layui-input layui-input-inline" placeholder="输入时间格式，比如，Y-m-d H:i:s" value="Y-m-d H:i:s" name="form_additional_time_\'+field_name+\'" id="form_additional_time_\'+field_name+\'" />';
-        let time_html = '<select name="form_additional_set_value_input_'+field_name+'" id="form_additional_set_value_input_'+field_name+'">' +
-            '<option value="datetime">年-月-日 时:分:秒</option>' +
-            // '<option value="month">年-月</option>' +
-            // '<option value="year">年</option>' +
-            // '<option value="Y-m-d">年-月-日</option>' +
-            // '<option value="time">时:分:秒</option>' +
+        let time_html =
+            '<select name="form_additional_set_value_input_'+field_name+'" id="form_additional_set_value_input_'+field_name+'">' +
+                '<option value="datetime">年-月-日 时:分:秒</option>' +
+                // '<option value="month">年-月</option>' +
+                // '<option value="year">年</option>' +
+                // '<option value="Y-m-d">年-月-日</option>' +
+                // '<option value="time">时:分:秒</option>' +
             '</select>';
-        let city_html = '';
+        let province_html =
+            '<select name="form_additional_set_value_input_'+field_name+'" id="form_additional_set_value_input_'+field_name+'">' +
+                '<option value="">默认省份</option>' +
+            '</select>'
+        let city_html =
+            '<select name="form_additional_city_province_id_type_'+field_name+'" id="form_additional_city_province_id_type_'+field_name+'" lay-filter="form_additional_city_province_id_type_'+field_name+'">' +
+                '<option value="">省份联动的方式</option>' +
+                '<option value="set_province_id_field">省份字段</option>' +
+                '<option value="set_province_id">固定省份</option>' +
+            '</select>' +
+            '<select name="form_additional_city_province_id_type_value_'+field_name+'" id="form_additional_city_province_id_type_value_'+field_name+'">' +
+                '<option value="">先选择省份联动方式</option>' +
+            '</select>';
+        let area_html =
+            '<select name="form_additional_set_value_input_'+field_name+'" id="form_additional_set_value_input_'+field_name+'">' +
+                '<option value="0">地区字段</option>' +
+            '</select>';
         let upload_html =
             '<select name="form_additional_upload_single_multi_'+field_name+'" id="form_additional_upload_single_multi_'+field_name+'" lay-filter="form_additional_upload_single_multi_'+field_name+'">' +
                 '<option value="single">单个文件</option>' +
@@ -175,53 +201,99 @@ layui.use(['junAdmin'],function(){
             '<select name="form_additional_set_value_input_'+field_name+'" id="form_additional_set_value_input_'+field_name+'" lay-filter="form_additional_set_value_input_'+field_name+'">' +
                 '<option value="ueditor">UEditor</option>' +
             '</select>';
-        let type_arr = ['input','select','select_page','time','city','upload','textarea','editor'];
+        let type_arr = ['input','select','select_page','time','province','city','area','upload','textarea','editor'];
         let set_value_input_type = ['radio','checkbox'];
         if(set_value_input_type.indexOf(value) != -1){
             $('#form_additional_' + field_name).html(set_value_html);
         }else if(type_arr.indexOf(value) != -1){
             $('#form_additional_' + field_name).html(eval(value+'_html'));
-            if(value == 'select_page'){
-                $.ajax({
-                    type: 'POST',
-                    url: junAdmin.facade.url('admin/autocreate.curd/get_table_list'),
-                    data: {},
-                    dataType: 'json',
-                    success: function (res) {
-                        func_controller.set_select_page_table_name(field_name, res.data);
-                        layui.form.on('select(form_additional_select_page_table_'+field_name+')',function(data){
-                            let table_name = data.value;
-                            $.ajax({
-                                type: 'POST',
-                                url: junAdmin.facade.url('admin/autocreate.curd/get_fields_by_table_name'),
-                                data: {table_name:table_name},
-                                dataType: 'json',
-                                success: function (res) {
-                                    func_controller.set_select_page_search_field_name(field_name, res.data);
-                                    func_controller.set_select_page_show_field_name(field_name, res.data);
+            switch (value) {
+                case 'select_page':
+                    $.ajax({
+                        type: 'POST',
+                        url: junAdmin.facade.url('admin/autocreate.curd/get_table_list'),
+                        data: {},
+                        dataType: 'json',
+                        success: function (res) {
+                            func_controller.set_select_page_table_name(field_name, res.data);
+                            layui.form.on('select(form_additional_select_page_table_'+field_name+')',function(data){
+                                let table_name = data.value;
+                                $.ajax({
+                                    type: 'POST',
+                                    url: junAdmin.facade.url('admin/autocreate.curd/get_fields_by_table_name'),
+                                    data: {table_name:table_name},
+                                    dataType: 'json',
+                                    success: function (res) {
+                                        func_controller.set_select_page_search_field_name(field_name, res.data);
+                                        func_controller.set_select_page_show_field_name(field_name, res.data);
 
-                                    layui.form.render('select');
-                                }
+                                        layui.form.render('select');
+                                    }
+                                });
                             });
-                        });
 
-                        layui.form.render('select');
-                    },
-                    error: function (xhr) {
-                        if( xhr.status == '500' ){
-                            junAdmin.facade.error('本地网络问题或者服务器错误');
-                        }else if( xhr.status == '404' ){
-                            junAdmin.facade.error('请求地址不存在');
+                            layui.form.render('select');
+                        },
+                        error: function (xhr) {
+                            if( xhr.status == '500' ){
+                                junAdmin.facade.error('本地网络问题或者服务器错误');
+                            }else if( xhr.status == '404' ){
+                                junAdmin.facade.error('请求地址不存在');
+                            }
                         }
-                    }
-                });
+                    });
+                    break;
+                case 'province':
+                    $.ajax({
+                        type: 'POST',
+                        url: junAdmin.facade.url('admin/ajax/area'),
+                        data: {table_name:select_table_name},
+                        dataType: 'json',
+                        success: function (res) {
+                            func_controller.set_default_province_list(field_name, res.data);
+
+                            layui.form.render('select');
+                        }
+                    });
+                    break;
+                // case 'city':
+                //     layui.form.on('select(form_additional_city_province_id_type_'+field_name+')',function(data){
+                //         let type = data.value;
+                //         if(type == 'set_province_id_field'){
+                //             $.ajax({
+                //                 type: 'POST',
+                //                 url: junAdmin.facade.url('admin/autocreate.curd/get_fields_by_table_name'),
+                //                 data: {table_name:select_table_name},
+                //                 dataType: 'json',
+                //                 success: function (res) {
+                //                     func_controller.set_city_province_id_field(field_name, res.data);
+                //
+                //                     layui.form.render('select');
+                //                 }
+                //             });
+                //         }else if(type == 'set_province_id'){
+                //             $.ajax({
+                //                 type: 'POST',
+                //                 url: junAdmin.facade.url('admin/ajax/area'),
+                //                 data: {table_name:select_table_name},
+                //                 dataType: 'json',
+                //                 success: function (res) {
+                //                     func_controller.set_city_province_id(field_name, res.data);
+                //
+                //                     layui.form.render('select');
+                //                 }
+                //             });
+                //         }
+                //     });
+                //     break;
             }
         }
     }
 
     //设置搜索下拉框待搜索表名
-    func_controller.set_select_page_table_name = function(field_name, data, selected){
+    func_controller.set_select_page_table_name = function(field_name, data){
         let option_html;
+        let key;
         for(key in data){
             option_html = '<option value="'+data[key]['TABLE_NAME']+'">'+data[key]['TABLE_NAME']+'</option>';
             $('#form_additional_select_page_table_'+field_name).append(option_html);
@@ -229,22 +301,85 @@ layui.use(['junAdmin'],function(){
     }
 
     //设置搜索下拉框待搜索的字段
-    func_controller.set_select_page_search_field_name = function(field_name, data, selected){
+    func_controller.set_select_page_search_field_name = function(field_name, data){
         $('#form_additional_select_page_search_field_'+field_name).empty();
+        let option_1 = '<option value="">搜索的字段</option>';
+        $('#form_additional_select_page_search_field_'+field_name).append(option_1);
         let option_html;
+        let key;
         for(key in data){
-            option_html = '<option value="'+data[key]['field_name']+'">'+data[key]['field_name']+'</option>';
+            if( key == 0 ){
+                option_html = '<option value="'+data[key]['field_name']+'" selected="selected">'+data[key]['field_name']+'</option>';
+            }else{
+                option_html = '<option value="'+data[key]['field_name']+'">'+data[key]['field_name']+'</option>';
+            }
             $('#form_additional_select_page_search_field_'+field_name).append(option_html);
         }
     }
 
     //设置搜索下拉框显示的字段
-    func_controller.set_select_page_show_field_name = function(field_name, data, selected){
+    func_controller.set_select_page_show_field_name = function(field_name, data){
         $('#form_additional_select_page_show_field_'+field_name).empty();
+        let option_1 = '<option value="">显示的字段</option>';
+        $('#form_additional_select_page_show_field_'+field_name).append(option_1);
         let option_html;
+        let key;
         for(key in data){
-            option_html = '<option value="'+data[key]['field_name']+'">'+data[key]['field_name']+'</option>';
+            if( key == 0 ){
+                option_html = '<option value="'+data[key]['field_name']+'" selected="selected">'+data[key]['field_name']+'</option>';
+            }else{
+                option_html = '<option value="'+data[key]['field_name']+'">'+data[key]['field_name']+'</option>';
+            }
             $('#form_additional_select_page_show_field_'+field_name).append(option_html);
+        }
+    }
+
+    //设置默认省份待选列表
+    func_controller.set_default_province_list = function(field_name, data){
+        $('#form_additional_set_value_input_'+field_name).empty();
+        let option_1 = '<option value="">默认省份</option>';
+        $('#form_additional_set_value_input_'+field_name).append(option_1);
+        let option_2 = '<option value="0">不设置默认省份</option>';
+        $('#form_additional_set_value_input_'+field_name).append(option_2);
+        let option_html;
+        let key;
+        for(key in data){
+            option_html = '<option value="'+data[key]['id']+'">'+data[key]['name']+'</option>';
+            $('#form_additional_set_value_input_'+field_name).append(option_html);
+        }
+    }
+
+    //设置城市省份联动方式为省份字段时，设置值列表
+    func_controller.set_city_province_id_field = function(field_name, data){
+        $('#form_additional_city_province_id_type_value_'+field_name).empty();
+        let option_1 = '<option value="">请选择字段</option>';
+        $('#form_additional_city_province_id_type_value_'+field_name).append(option_1);
+        let option_html;
+        let key;
+        for(key in data){
+            if( key == 0 ){
+                option_html = '<option value="'+data[key]['field_name']+'" selected="selected">'+data[key]['field_name']+'</option>';
+            }else{
+                option_html = '<option value="'+data[key]['field_name']+'">'+data[key]['field_name']+'</option>';
+            }
+            $('#form_additional_city_province_id_type_value_'+field_name).append(option_html);
+        }
+    }
+
+    //设置城市省份联动方式为省份字段时，设置值列表
+    func_controller.set_city_province_id = function(field_name, data){
+        $('#form_additional_city_province_id_type_value_'+field_name).empty();
+        let option_1 = '<option value="">请选择省份</option>';
+        $('#form_additional_city_province_id_type_value_'+field_name).append(option_1);
+        let option_html;
+        let key;
+        for(key in data){
+            if( key == 0 ){
+                option_html = '<option value="'+data[key]['id']+'" selected="selected">'+data[key]['name']+'</option>';
+            }else{
+                option_html = '<option value="'+data[key]['id']+'">'+data[key]['name']+'</option>';
+            }
+            $('#form_additional_city_province_id_type_value_'+field_name).append(option_html);
         }
     }
 

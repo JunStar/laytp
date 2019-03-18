@@ -4,7 +4,7 @@
 <form class="layui-form layui-form-pane">
 {%searchForm%}
 
-    <div class="layui-form-item layui-inline">
+    <div class="search-form-item layui-inline">
         <button class="layui-btn layui-btn-primary" lay-submit lay-filter="*"><i class="layui-icon"></i> 搜 索</button>
     </div>
 </form>

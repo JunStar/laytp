@@ -6,6 +6,7 @@ use think\Exception;
 
 class Ajax extends Controller
 {
+    //上传接口
     public function upload(){
         $file = $this->request->file('file'); // 获取上传的文件
         try{
@@ -14,5 +15,12 @@ class Ajax extends Controller
         }catch (Exception $e){
             $this->error('上传失败','',['data'=>$e->getMessage()]);
         }
+    }
+
+    //省市区接口
+    public function area(){
+        $parent_id = $this->request->post('parent_id') ? $this->request->post('parent_id') : 0;
+        $result = model('Area')->where('pid', '=', $parent_id)->select();
+        $this->success('获取成功','',$result);
     }
 }
