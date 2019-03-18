@@ -167,7 +167,15 @@ layui.use(['junAdmin'],function(){
             '<select name="form_additional_set_value_input_'+field_name+'" id="form_additional_set_value_input_'+field_name+'">' +
                 '<option value="">默认省份</option>' +
             '</select>'
-        let city_html = '';
+        let city_html =
+            '<select name="form_additional_city_province_id_type_'+field_name+'" id="form_additional_city_province_id_type_'+field_name+'" lay-filter="form_additional_city_province_id_type_'+field_name+'">' +
+                '<option value="">省份联动的方式</option>' +
+                '<option value="set_province_id_field">省份字段</option>' +
+                '<option value="set_province_id">固定省份</option>' +
+            '</select>' +
+            '<select name="form_additional_city_province_id_type_value_'+field_name+'" id="form_additional_city_province_id_type_value_'+field_name+'">' +
+                '<option value="">先选择省份联动方式</option>' +
+            '</select>';
         let upload_html =
             '<select name="form_additional_upload_single_multi_'+field_name+'" id="form_additional_upload_single_multi_'+field_name+'" lay-filter="form_additional_upload_single_multi_'+field_name+'">' +
                 '<option value="single">单个文件</option>' +
@@ -239,6 +247,36 @@ layui.use(['junAdmin'],function(){
                         }
                     });
                     break;
+                case 'city':
+                    layui.form.on('select(form_additional_city_province_id_type_'+field_name+')',function(data){
+                        let type = data.value;
+                        if(type == 'set_province_id_field'){
+                            $.ajax({
+                                type: 'POST',
+                                url: junAdmin.facade.url('admin/autocreate.curd/get_fields_by_table_name'),
+                                data: {table_name:select_table_name},
+                                dataType: 'json',
+                                success: function (res) {
+                                    func_controller.set_city_province_id_field(field_name, res.data);
+
+                                    layui.form.render('select');
+                                }
+                            });
+                        }else if(type == 'set_province_id'){
+                            $.ajax({
+                                type: 'POST',
+                                url: junAdmin.facade.url('admin/ajax/area'),
+                                data: {table_name:select_table_name},
+                                dataType: 'json',
+                                success: function (res) {
+                                    func_controller.set_city_province_id(field_name, res.data);
+
+                                    layui.form.render('select');
+                                }
+                            });
+                        }
+                    });
+                    break;
             }
         }
     }
@@ -284,6 +322,40 @@ layui.use(['junAdmin'],function(){
         for(key in data){
             option_html = '<option value="'+data[key]['id']+'">'+data[key]['name']+'</option>';
             $('#form_additional_set_value_input_'+field_name).append(option_html);
+        }
+    }
+
+    //设置城市省份联动方式为省份字段时，设置值列表
+    func_controller.set_city_province_id_field = function(field_name, data){
+        $('#form_additional_city_province_id_type_value_'+field_name).empty();
+        let option_1 = '<option value="">请选择字段</option>';
+        $('#form_additional_city_province_id_type_value_'+field_name).append(option_1);
+        let option_html;
+        let key;
+        for(key in data){
+            if( key == 0 ){
+                option_html = '<option value="'+data[key]['field_name']+'" selected="selected">'+data[key]['field_name']+'</option>';
+            }else{
+                option_html = '<option value="'+data[key]['field_name']+'">'+data[key]['field_name']+'</option>';
+            }
+            $('#form_additional_city_province_id_type_value_'+field_name).append(option_html);
+        }
+    }
+
+    //设置城市省份联动方式为省份字段时，设置值列表
+    func_controller.set_city_province_id = function(field_name, data){
+        $('#form_additional_city_province_id_type_value_'+field_name).empty();
+        let option_1 = '<option value="">请选择省份</option>';
+        $('#form_additional_city_province_id_type_value_'+field_name).append(option_1);
+        let option_html;
+        let key;
+        for(key in data){
+            if( key == 0 ){
+                option_html = '<option value="'+data[key]['id']+'" selected="selected">'+data[key]['name']+'</option>';
+            }else{
+                option_html = '<option value="'+data[key]['id']+'">'+data[key]['name']+'</option>';
+            }
+            $('#form_additional_city_province_id_type_value_'+field_name).append(option_html);
         }
     }
 
