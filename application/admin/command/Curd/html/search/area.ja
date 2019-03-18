@@ -1,8 +1,9 @@
 <div class="layui-inline">
                 <select
                     name="row[{%field_name%}]"
+                    id="{%field_name%}"
                     placeholder="请选择{%field_comment%}"
-                    is_province_city_area="true"
+                    linkage_area="true"
                     ajax-url="admin/ajax/area"
                     selected-id="{%selected_id%}"
                     change-linkage-id="{%change_linkage_id%}">

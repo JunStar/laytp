@@ -476,10 +476,19 @@ layui.define([
             });
         },
 
+        /**
+         * 百度编辑器
+         */
         ueditor_render: function(){
             layui.each($("script[editor='true']"),function(key,item) {
                 let id = $(item).attr('id');
                 UE.getEditor(id);
+            });
+        },
+
+        area_render: function(){
+            layui.each($("select[linkage_area='true']"),function(key,item) {
+
             });
         }
     }

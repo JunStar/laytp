@@ -1029,7 +1029,7 @@ EOD;
         $data['field_name'] = $info['field_name'];
         $data['verify'] = $info['form_empty'] ? '' : 'required';
         $data['field_comment'] = $info['field_comment'];
-        $data['change_linkage_id'] = isset($info['form_additional']['change_linkage_id']) ? $info['form_additional']['change_linkage_id'] : '';
+        $data['change_linkage_id'] = isset($info['form_additional']) ? $info['form_additional'] : '';
         $data['selected_id'] = ($type == 'edit') ?'{$'.$info['field_name'].'}' : '';
         $data['options'] = '<option value="">请选择城市</option>';
 
@@ -1042,7 +1042,7 @@ EOD;
         $data['verify'] = $info['form_empty'] ? '' : 'required';
         $data['field_comment'] = $info['field_comment'];
         $data['selected_id'] = '';
-        $data['change_linkage_id'] = isset($info['form_additional']['change_linkage_id']) ? $info['form_additional']['change_linkage_id'] : '';
+        $data['change_linkage_id'] = isset($info['form_additional']) ? $info['form_additional'] : '';
         $data['selected_id'] = '';
         $data['options'] = '<option value="">请选择城市</option>';
 
@@ -1055,7 +1055,7 @@ EOD;
         $data['verify'] = $info['form_empty'] ? '' : 'required';
         $data['field_comment'] = $info['field_comment'];
         $data['selected_id'] = '';
-        $data['change_linkage_id'] = isset($info['form_additional']['change_linkage_id']) ? $info['form_additional']['change_linkage_id'] : '';
+        $data['change_linkage_id'] = isset($info['form_additional']) ? $info['form_additional'] : '';
         $data['selected_id'] = ($type == 'edit') ?'{$'.$info['field_name'].'}' : '';
         $data['options'] = '<option value="">请选择区县</option>';
 
@@ -1068,7 +1068,7 @@ EOD;
         $data['verify'] = $info['form_empty'] ? '' : 'required';
         $data['field_comment'] = $info['field_comment'];
         $data['selected_id'] = '';
-        $data['change_linkage_id'] = isset($info['form_additional']['change_linkage_id']) ? $info['form_additional']['change_linkage_id'] : '';
+        $data['change_linkage_id'] = isset($info['form_additional']) ? $info['form_additional'] : '';
         $data['selected_id'] = '';
         $data['options'] = '<option value="">请选择区县</option>';
 
