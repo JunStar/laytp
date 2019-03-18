@@ -25,7 +25,7 @@ layui.use(['junAdmin'],function(){
                     ,{field:'field_name', title:'字段名称', width:100, align: 'center', edit: 'text'}
                     ,{field:'field_comment', title:'字段注释(表头和表单中显示的文字)', width:100, align: 'center', edit: 'text'}
                     //表单设置
-                    ,{field:'form_type', title:'表单元素', templet: "#form_type", align: 'center', width: 170}
+                    ,{field:'form_type', title:'表单元素', templet: "#form_type", align: 'center', width: 190}
                     ,{field:'form_additional', title:'附加设置', templet: "#form_additional", align: 'center', width: 220}
                     ,{field:'form_empty', title:'允许为空', templet: "#form_empty", align: 'center', width: 140}
                     //列表设置
@@ -176,6 +176,10 @@ layui.use(['junAdmin'],function(){
             '<select name="form_additional_city_province_id_type_value_'+field_name+'" id="form_additional_city_province_id_type_value_'+field_name+'">' +
                 '<option value="">先选择省份联动方式</option>' +
             '</select>';
+        let area_html =
+            '<select name="form_additional_set_value_input_'+field_name+'" id="form_additional_set_value_input_'+field_name+'">' +
+                '<option value="">城市字段</option>' +
+            '</select>';
         let upload_html =
             '<select name="form_additional_upload_single_multi_'+field_name+'" id="form_additional_upload_single_multi_'+field_name+'" lay-filter="form_additional_upload_single_multi_'+field_name+'">' +
                 '<option value="single">单个文件</option>' +
@@ -192,7 +196,7 @@ layui.use(['junAdmin'],function(){
             '<select name="form_additional_set_value_input_'+field_name+'" id="form_additional_set_value_input_'+field_name+'" lay-filter="form_additional_set_value_input_'+field_name+'">' +
                 '<option value="ueditor">UEditor</option>' +
             '</select>';
-        let type_arr = ['input','select','select_page','time','province','city','upload','textarea','editor'];
+        let type_arr = ['input','select','select_page','time','province','city','area','upload','textarea','editor'];
         let set_value_input_type = ['radio','checkbox'];
         if(set_value_input_type.indexOf(value) != -1){
             $('#form_additional_' + field_name).html(set_value_html);
@@ -277,6 +281,19 @@ layui.use(['junAdmin'],function(){
                         }
                     });
                     break;
+                case 'area':
+                    $.ajax({
+                        type: 'POST',
+                        url: junAdmin.facade.url('admin/autocreate.curd/get_fields_by_table_name'),
+                        data: {table_name:select_table_name},
+                        dataType: 'json',
+                        success: function (res) {
+                            func_controller.set_area_city_id_field(field_name, res.data);
+
+                            layui.form.render('select');
+                        }
+                    });
+                    break;
             }
         }
     }
@@ -356,6 +373,23 @@ layui.use(['junAdmin'],function(){
                 option_html = '<option value="'+data[key]['id']+'">'+data[key]['name']+'</option>';
             }
             $('#form_additional_city_province_id_type_value_'+field_name).append(option_html);
+        }
+    }
+
+    //设置城市省份联动方式为省份字段时，设置值列表
+    func_controller.set_area_city_id_field = function(field_name, data){
+        $('#form_additional_set_value_input_'+field_name).empty();
+        let option_1 = '<option value="">城市字段</option>';
+        $('#form_additional_set_value_input_'+field_name).append(option_1);
+        let option_html;
+        let key;
+        for(key in data){
+            if( key == 0 ){
+                option_html = '<option value="'+data[key]['field_name']+'" selected="selected">'+data[key]['field_name']+'</option>';
+            }else{
+                option_html = '<option value="'+data[key]['field_name']+'">'+data[key]['field_name']+'</option>';
+            }
+            $('#form_additional_set_value_input_'+field_name).append(option_html);
         }
     }
 
@@ -499,6 +533,12 @@ layui.use(['junAdmin'],function(){
                         return {
                             'single_multi' : $('#form_additional_upload_single_multi_' + field_name).val(),
                             'accept' : $('#form_additional_upload_accept_' + field_name).val()
+                        };
+                        break;
+                    case 'city':
+                        return {
+                            'set_province_id_type' : $('#form_additional_city_province_id_type_' + field_name).val(),
+                            'set_province_id_value' : $('#form_additional_city_province_id_type_value_' + field_name).val()
                         };
                         break;
                     default:
