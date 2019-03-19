@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>登入</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="__STATIC__/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="__STATIC__/admin/css/admin.css" media="all">
+    <link rel="stylesheet" href="__STATIC__/admin/css/login.css" media="all">
+</head>
+<body>
+
+<div class="layadmin-user-login layadmin-user-display-show" id="user-login" style="display: none;">
+    <div class="layadmin-user-login-main">
+        <div class="layadmin-user-login-box layadmin-user-login-header">
+            <h2>JunAdmin</h2>
+            <p>Layui + ThinkPHP5 极速后台开发管理系统</p>
+        </div>
+        <div class="layadmin-user-login-box layadmin-user-login-body layui-form">
+            <div class="layui-form-item">
+                <label class="layadmin-user-login-icon layui-icon layui-icon-username" for="user-login-username"></label>
+                <input type="text" name="name" id="user-login-username" lay-verify="required" placeholder="用户名" class="layui-input">
+            </div>
+            <div class="layui-form-item">
+                <label class="layadmin-user-login-icon layui-icon layui-icon-password" for="user-login-password"></label>
+                <input type="password" name="password" id="user-login-password" lay-verify="required" placeholder="密码" class="layui-input">
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-row">
+                    <div class="layui-col-xs7">
+                        <label class="layadmin-user-login-icon layui-icon layui-icon-vercode" for="user-login-vercode"></label>
+                        <input type="text" name="code" id="code" id="user-login-vercode" lay-verify="required" placeholder="图形验证码" class="layui-input">
+                    </div>
+                    <div class="layui-col-xs5">
+                        <div style="margin-left: 10px;">
+                            <img src="{:captcha_src()}" class="layadmin-user-login-codeimg" id="user-get-vercode" onclick="this.src='{:captcha_src()}'">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <button class="layui-btn layui-btn-fluid" id="submitBtn" lay-submit lay-filter="user-login-submit">登 入</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-trans layadmin-user-login-footer">
+        <p>© 2018 <a href="http://www.layui.com/" target="_blank">layui.com</a></p>
+    </div>
+</div>
+
+<script src="__STATIC__/layui/layui.js"></script>
+<script>
+    layui.config({
+        version: false //一般用于更新模块缓存，默认不开启。设为true即让浏览器不缓存。也可以设为一个固定的值，如：201610
+        ,debug: false //用于开启调试模式，默认false，如果设为true，则JS模块的节点会保留在页面
+        ,base: '/static/layui/extends/' //设定扩展的Layui模块的所在目录，一般用于外部模块扩展
+    }).use(['junAdmin'],function(){
+        let $ = layui.$
+            ,form = layui.form
+            ,junAdmin = layui.junAdmin
+        ;
+        form.render();
+
+        form.on('submit(user-login-submit)', function(obj){
+            $.ajax({
+                type: 'POST'
+                ,url: '/admin/auth.login/do_login'
+                ,data: obj.field
+                ,dataType: 'json'
+                ,success:function(res){
+                    if(res.code == 1){
+                        junAdmin.facade.success(res.msg);
+                        setTimeout( redirect, 1000 );
+                    }else{
+                        junAdmin.facade.error(res.msg);
+                    }
+                }
+                ,error: function (xhr) {
+                    if( xhr.status == '500' ){
+                        junAdmin.facade.error('本地网络问题或者服务器错误');
+                    }else if( xhr.status == '404' ){
+                        junAdmin.facade.error('请求地址不存在');
+                    }
+                }
+            });
+        });
+
+        function redirect()
+        {
+            location.href = "/admin/";
+        }
+
+        $("#code").focus(function()
+        {
+            $(document).on("keydown",function(event)
+            {
+                if( event.keyCode == 13 )
+                {
+                    $('#submitBtn').click();
+                }
+            });
+            $("#code").unbind();
+        });
+    });
+</script>
+
+</body>
+</html>

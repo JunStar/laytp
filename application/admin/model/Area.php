@@ -1,6 +1,6 @@
 <?php
 /**
- * 后台菜单模型
+ * 省市区模型
  */
 namespace app\admin\model;
 
