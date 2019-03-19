@@ -472,7 +472,7 @@ EOD;
     //生成controller层
     protected function c_controller(){
         if(!empty($this->controller_array_const)){
-            $this->controllerParam['data']['arrayConstAssign'] = implode("\n", $this->controller_array_const);
+            $this->controllerParam['data']['arrayConstAssign'] = implode("\n\t\t", $this->controller_array_const);
             $this->controllerParam['data']['arrayConstAssign'] .= "\n\t\t".'$this->assign($assign);';
         }else{
             $this->controllerParam['data']['arrayConstAssign'] = '';
@@ -1010,6 +1010,8 @@ EOD;
         $data['parent_id'] = '';
         $data['options'] = '<option value="">请选择省份</option>';
 
+        $this->set_controller_relation($info['field_name'],'Db::table(\'ja_area\') ', 'name');
+
         return $this->get_replaced_tpl($name, $data);
     }
 
@@ -1052,6 +1054,8 @@ EOD;
 
         $data['options'] = '<option value="">请选择城市</option>';
 
+        $this->set_controller_relation($info['field_name'],'Db::table(\'ja_area\') ', 'name');
+
         return $this->get_replaced_tpl($name, $data);
     }
 
@@ -1084,6 +1088,8 @@ EOD;
             $data['parent_id'] = '';
         }
         $data['options'] = '<option value="">请选择区县</option>';
+
+        $this->set_controller_relation($info['field_name'],'Db::table(\'ja_area\') ', 'name');
 
         return $this->get_replaced_tpl($name, $data);
     }

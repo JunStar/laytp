@@ -1,6 +1,6 @@
 <div class="layui-inline">
                 <select
-                    name="row[{%field_name%}]"
+                    name="search_param[{%field_name%}][value]"
                     id="{%field_name%}"
                     lay-filter="{%field_name%}"
                     placeholder="请选择{%field_comment%}"
@@ -12,3 +12,4 @@
                     {%options%}
                 </select>
             </div>
+            <input type="hidden" name="search_param[{%field_name%}][condition]" value="=">
