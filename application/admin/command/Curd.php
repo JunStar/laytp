@@ -1094,7 +1094,7 @@ EOD;
         $data['verify'] = $info['form_empty'] ? '' : 'required';
         $data['field_comment'] = $info['field_comment'];
         $data['selected_id'] = '';
-        $data['change_linkage_id'] = isset($info['form_additional']) ? $info['form_additional'] : '';
+        $data['change_linkage_id'] = '';
         $data['selected_id'] = '';
         $data['is_province'] = 'false';
         $data['options'] = '<option value="">请选择区县</option>';
