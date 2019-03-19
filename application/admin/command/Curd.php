@@ -356,7 +356,7 @@ class Curd extends Command
             $search_area_item_content[1] = isset( $area_search_html['city'] ) ? $area_search_html['city'] : $area_search_html['county'];
             $search_area_item_content[2] = isset( $area_search_html['county'] ) ? $area_search_html['county'] : '';
             $search_area_item_contents = join("\n\t\t\t", $search_area_item_content);
-            $index_search_form[] = $this->get_search_form_group('地区设置', $search_area_item_contents);
+            $index_search_form[] = $this->get_area_search_form_group('地区设置', $search_area_item_contents);
         }
 
         $index_data['searchForm'] = implode("\n\n", $index_search_form);
@@ -435,11 +435,21 @@ EOD;
     protected function get_search_form_group($field, $content)
     {
         return <<<EOD
-    <div class="search-form-item layui-inline">
+    <div class="layui-inline" style="padding-left: 50px;">
         <label class="layui-form-label" title="{$field}">{$field}</label>
         <div class="layui-input-inline">
             {$content}
         </div>
+    </div>
+EOD;
+    }
+
+    protected function get_area_search_form_group($field, $content)
+    {
+        return <<<EOD
+    <div class="layui-inline" style="padding-left: 50px;">
+        <label class="layui-form-label" title="{$field}">{$field}</label>
+        {$content}
     </div>
 EOD;
     }

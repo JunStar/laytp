@@ -1,10 +1,10 @@
 {extend name="admin@public/main"}
 
 {block name="search_form"}
-<form class="layui-form layui-form-pane">
+<form class="layui-form-item layui-form-pane">
 {%searchForm%}
 
-    <div class="search-form-item layui-inline">
+    <div class="layui-inline">
         <button class="layui-btn layui-btn-primary" lay-submit lay-filter="*"><i class="layui-icon"></i> 搜 索</button>
     </div>
 </form>

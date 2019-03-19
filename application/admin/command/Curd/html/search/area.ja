@@ -1,4 +1,4 @@
-<div class="layui-inline">
+<div class="layui-input-inline">
                 <select
                     name="search_param[{%field_name%}][value]"
                     id="{%field_name%}"
@@ -11,5 +11,5 @@
                     change-linkage-id="{%change_linkage_id%}">
                     {%options%}
                 </select>
+                <input type="hidden" name="search_param[{%field_name%}][condition]" value="=">
             </div>
-            <input type="hidden" name="search_param[{%field_name%}][condition]" value="=">

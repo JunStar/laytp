@@ -1,40 +1,5 @@
 {extend name="admin@public/main"}
 
-{block name="search_form"}
-<form class="layui-form layui-form-pane">
-    <div class="layui-form-item layui-inline">
-        <div class="layui-form-item">
-            <div class="layui-input-inline">
-                <select name="search_param[0][field]">
-                    <option value="">字段选择</option>
-                    <option value="id">ID</option>
-                    <option value="name">标题</option>
-                    <option value="rule">规则</option>
-                </select>
-            </div>
-            <div class="layui-input-inline" style="width: 100px;">
-                <select name="search_param[0][condition]">
-                    <option value="">条件选择</option>
-                    <option value="=">等于 =</option>
-                    <option value=">">大于 ></option>
-                    <option value="<">小于 <</option>
-                    <option value="like">模糊 like</option>
-                    <option value="time">时间范围</option>
-                </select>
-            </div>
-            <div class="layui-input-inline">
-                <input name="search_param[0][field_val]" value="" placeholder="请输入搜索值" class="layui-input">
-            </div>
-
-            <div class="layui-form-item layui-inline">
-                <a class="layui-btn layui-btn-danger add_search_condition" title="添加搜索条件"><i class="layui-icon layui-icon-add-circle"></i></a>
-                <button class="layui-btn layui-btn-primary" lay-submit lay-filter="*"><i class="layui-icon"></i> 搜 索</button>
-            </div>
-        </div>
-    </div>
-</form>
-{/block}
-
 {block name="js_template"}
 {include file="public/js_tpl/search_condition_tpl"}
 {include file="autocreate/curd/toolbar_tpl"}
