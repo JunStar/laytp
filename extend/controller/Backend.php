@@ -67,7 +67,7 @@ class Backend extends Controller
         }
         $this->assign('first_menu', $first_menu);
         //获取当前一级菜单下的二级和三级菜单
-        $second_menu = model('Menu')->where('pid','=',$now_first_menu['id'])->select()->toArray();
+        $second_menu = model('Menu')->where('pid','=',$now_first_menu['id'])->order('sort desc')->select()->toArray();
         foreach($second_menu as $sk=>$sv){
             //设置选中的二级菜单
             if($sv['id'] == $now_second_menu['id']){
