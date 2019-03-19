@@ -1,6 +1,7 @@
 {extend name="admin@public/main"}
 
 {block name="search_form"}
+<div class="layui-form layui-card-header" style="height: auto">
 <form class="layui-form-item layui-form-pane">
 {%searchForm%}
 
@@ -8,6 +9,7 @@
         <button class="layui-btn layui-btn-primary" lay-submit lay-filter="*"><i class="layui-icon"></i> 搜 索</button>
     </div>
 </form>
+</div>
 {/block}
 
 {block name="js_template"}
