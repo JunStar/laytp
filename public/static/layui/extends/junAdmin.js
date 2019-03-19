@@ -253,6 +253,7 @@ layui.define([
     }
 
     junAdmin.init = {
+        //弹窗
         popup_frame: function(){
             $(document).on('click','.popup-frame',function(){
                 var name = $(this).data("name") ? $(this).data("name") : '添加';
@@ -266,6 +267,17 @@ layui.define([
                     height = default_popup_frame_height;
                 }
                 junAdmin.facade.popup_frame(name, url, width, height);
+            });
+        },
+
+        //筛选
+        show_hidden_search_form:function(){
+            $(document).on('click','.show-hidden-search-form',function(){
+                if($('#search-form').css("display") == 'none'){
+                    $('#search-form').show();
+                }else{
+                    $('#search-form').hide();
+                }
             });
         },
 
