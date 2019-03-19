@@ -340,7 +340,7 @@ class Curd extends Command
         $search_fields = explode(',', $this->curd_config['global']['search_fields']);
         $area_search_html = [];
         foreach($this->curd_config['field_list'] as $k=>$v){
-            if(in_array($v['field_name'], $search_fields)){
+            if(in_array($v['field_name'], $search_fields) && $v['form_type']!='upload'){
                 if( in_array( $v['form_type'], ['province','city','county'] ) ){
                     $area_search_html[$v['form_type']] = $this->get_search_form_item($v);
                 }else{
