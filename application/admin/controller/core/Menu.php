@@ -14,7 +14,8 @@ class Menu extends Backend
     public function initialize(){
         parent::initialize();
         $where = $this->build_params();
-        $data = model('Menu')->where($where)->select()->toArray();
+        $sort = "sort desc";
+        $data = model('Menu')->where($where)->order($sort)->select()->toArray();
         $menu_tree_obj = Tree::instance();
         $menu_tree_obj->init($data);
         $this->menu_list = $menu_tree_obj->getTreeList($menu_tree_obj->getTreeArray(0));
