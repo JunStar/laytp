@@ -9,7 +9,7 @@ layui.use(['junAdmin'],function() {
         layui.table.render({
             elem: '.layui-hide-sm'
             , url: window.location.href
-            , toolbar: '#default_toolbar'
+            , toolbar: '#menu_toolbar'
             , where: where
             , method: 'POST'
             , cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
@@ -17,7 +17,7 @@ layui.use(['junAdmin'],function() {
             , cols: [[ //表头
                 {field: 'id', title: 'ID', sort: true, fixed: 'left', align: 'center'}
                 , {field: 'name', title: '标题'}
-                , {field: 'rule', title: '规则', sort: true}
+                , {field: 'rule', title: '规则', width: 220}
                 , {field: 'icon', title: '图标', align: 'center', templet: '#show_icon'}
                 , {field: 'sort', title: '排序', align: 'center'}
                 , {field: 'is_menu', title: '是否菜单', templet: '#switch_is_menu', align: 'center'}
