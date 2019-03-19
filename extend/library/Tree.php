@@ -26,8 +26,7 @@ class Tree
      * @var array
      */
     public $icon = array('│', '├', '└');
-//    public $nbsp = "&nbsp;";
-    public $nbsp = "_";
+    public $nbsp = "&nbsp;&nbsp;";
     public $pidname = 'pid';
 
     public function __construct($options = [])
