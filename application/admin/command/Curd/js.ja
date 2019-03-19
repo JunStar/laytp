@@ -19,6 +19,7 @@ layui.use(['junAdmin'],function() {
             , url: window.location.href
             , toolbar: '#default_toolbar'
             , where: where
+            , even: true
             , method: 'POST'
             , cellMinWidth: {%cellMinWidth%}
             {%close_page%}, page: true

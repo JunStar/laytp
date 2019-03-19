@@ -11,6 +11,7 @@ layui.use(['junAdmin'],function() {
             , url: window.location.href
             , toolbar: '#curd_toolbar'
             , where: where
+            , even: true
             , method: 'POST'
             , cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
             , page: true //开启分页

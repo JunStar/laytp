@@ -10,6 +10,7 @@ layui.use(['junAdmin'],function() {
             elem: '.layui-hide-sm'
             , url: window.location.href
             , toolbar: '#menu_toolbar'
+            , even: true
             , where: where
             , method: 'POST'
             , cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增

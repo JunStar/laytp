@@ -9,6 +9,8 @@ use library\Tree;
 
 class Menu extends Backend
 {
+    public $menu_list;
+
     public function initialize(){
         parent::initialize();
         $where = $this->build_params();
