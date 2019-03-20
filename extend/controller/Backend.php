@@ -15,12 +15,19 @@ class Backend extends Controller
     public $action;
 
     public function initialize(){
+        $this->auth();
+
         $this->module = $this->request->module();
         $this->controller = strtolower($this->request->controller());
         $this->action = strtolower($this->request->action());
 
         $this->js_global_var();
         $this->menu();
+    }
+
+    //权限检测
+    public function auth(){
+
     }
 
     //设置菜单
@@ -75,7 +82,7 @@ class Backend extends Controller
             }else{
                 $second_menu[$sk]['selected'] = false;
             }
-            $third_menu = model('Menu')->where('pid','=',$sv['id'])->select()->toArray();
+            $third_menu = model('Menu')->where('pid','=',$sv['id'])->order('sort desc')->select()->toArray();
             if( count($third_menu) ){
                 foreach($third_menu as $tk=>$tv){
                     //设置选中的三级菜单

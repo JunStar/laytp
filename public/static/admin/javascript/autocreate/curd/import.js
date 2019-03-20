@@ -137,6 +137,7 @@ layui.use(['junAdmin'],function(){
                 '<option value="junAdmin_url">链接</option>' +
                 '<option value="junAdmin_identity">身份证</option>' +
             '</select>';
+        let password_html = '';
         let set_value_html = '<input type="text" class="layui-input layui-input-inline" placeholder="value1=text1,value2=text2,default=value..." name="form_additional_set_value_input_'+field_name+'" id="form_additional_set_value_input_'+field_name+'" />';
         let select_single_multi =
             '<select name="form_additional_select_single_multi_'+field_name+'" id="form_additional_select_single_multi_'+field_name+'">' +
@@ -197,7 +198,7 @@ layui.use(['junAdmin'],function(){
             '<select name="form_additional_set_value_input_'+field_name+'" id="form_additional_set_value_input_'+field_name+'" lay-filter="form_additional_set_value_input_'+field_name+'">' +
                 '<option value="ueditor">UEditor</option>' +
             '</select>';
-        let type_arr = ['input','select','select_page','time','province','city','county','upload','textarea','editor'];
+        let type_arr = ['input','password','select','select_page','time','province','city','county','upload','textarea','editor'];
         let set_value_input_type = ['radio','checkbox'];
         if(set_value_input_type.indexOf(value) != -1){
             $('#form_additional_' + field_name).html(set_value_html);

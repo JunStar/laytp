@@ -133,7 +133,7 @@ class Curd extends Command
         $content = $this->get_replaced_tpl($name, $data);
 
         if (!is_dir(dirname($pathname))) {
-            mkdir(dirname($pathname), 0755, true);
+            mkdir(dirname($pathname), 0777, true);
         }
         return file_put_contents($pathname, $content);
     }
@@ -339,8 +339,9 @@ class Curd extends Command
         $index_search_form = [];
         $search_fields = explode(',', $this->curd_config['global']['search_fields']);
         $area_search_html = [];
+        $un_search_type = ['password','upload'];
         foreach($this->curd_config['field_list'] as $k=>$v){
-            if(in_array($v['field_name'], $search_fields) && $v['form_type']!='upload'){
+            if(in_array($v['field_name'], $search_fields) && !in_array( $v['form_type'], $un_search_type )){
                 if( in_array( $v['form_type'], ['province','city','county'] ) ){
                     $area_search_html[$v['form_type']] = $this->get_search_form_item($v);
                 }else{
@@ -604,6 +605,18 @@ EOD;
         $data['field_name'] = $info['field_name'];
         $data['field_comment'] = $info['field_comment'];
         return $this->get_replaced_tpl($name, $data);
+    }
+
+    protected function get_password_html($info,$type){
+        $name = 'html' . DS . $type . DS . 'password';
+        $data['field_name'] = $info['field_name'];
+        $data['field_comment'] = $info['field_comment'];
+        $data['verify'] = $info['form_empty'] ? 'required' : '';
+        return $this->get_replaced_tpl($name, $data);
+    }
+
+    protected function get_search_password_html(){
+        return '';
     }
 
     /**

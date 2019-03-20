@@ -1,0 +1,33 @@
+{extend name="admin@public/form"}
+
+{block name="form"}
+    <div class="layui-form-item">
+        <label class="layui-form-label" title="用户名">用户名</label>
+        <div class="layui-input-block">
+            <input type="text" name="row[name]" placeholder="请输入用户名" value="{$name}" class="layui-input" lay-verify="required" lay-verType="tips">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label" title="密码">密码</label>
+        <div class="layui-input-block">
+            <input type="text" name="row[password]" placeholder="请输入密码" value="{$password}" class="layui-input" lay-verType="tips">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label" title="是否为超级管理员。0.不是;1.是;">是否为超级管理员。0.不是;1.是;</label>
+        <div class="layui-input-block">
+            <!-- 隐藏域设置开关未选中时需要传递的参数值 -->
+            <input type="hidden" name="row[is_super_manage]" value="0" />
+            <input type="checkbox" name="row[is_super_manage]" lay-skin="switch" lay-text="是|否" value="1" {if 1 == $is_super_manage}checked="checked"{/if} />
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label" title="创建时间">创建时间</label>
+        <div class="layui-input-block">
+            <input type="text" class="layui-input" name="row[create_time]" id="create_time" laydate="true" laydate_type="datetime" placeholder="请选择时间" value="{$create_time}">
+        </div>
+    </div>
+{/block}
