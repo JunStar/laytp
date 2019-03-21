@@ -28,6 +28,7 @@ class Curd extends Command
         $mid_name,//中间名称，比如表名为ja_test_a_b那么这里的mid_name就是/test/a/B,拼接控制器和模型文件的路径和namespace都需要用到
         $controller_array_const,//控制器层数组常量
         $controller_c_file_name,//需要生成的控制器文件的文件名
+        $controller_array_upload_field,//上传控件的字段列表，controller层定义，在值输出时就可以判断输出成图片、音频、视频等控件
         $model_array_const,//模型层数组常量
         $model_c_file_name,//需要生成的模型层文件的文件名
         $js_c_file_name,//需要生成的js文件的文件名
@@ -466,6 +467,12 @@ EOD;
         }
     }
 
+    protected function set_controller_array_upload_field($field_name,$type){
+        if(!isset($this->controller_array_upload_field[$field_name])){
+            $this->controller_array_upload_field[$field_name] = $type;
+        }
+    }
+
     /**
      * 设置关联属性
      * @param $field_name
@@ -510,6 +517,21 @@ EOD;
             $this->controllerParam['data']['useModel'] = '';
             $this->controllerParam['data']['relation'] = '';
             $this->controllerParam['data']['relation_def'] = '';
+        }
+
+        if( is_array($this->controller_relation) && count($this->controller_relation) ){
+            $upload_field[] = "\n\t\t".'$this->upload_field = [';
+            foreach($this->controller_array_upload_field as $field_name=>$val){
+                $temp = "\n\t\t\t".'\'' . $field_name . '\'=>'.$val;
+                $temp .= "\n\t\t\t".',';
+                $upload_field[] = $temp;
+            }
+            $upload_field[] = "\n\t\t".'];';
+            $this->controllerParam['data']['upload_field'] = implode("",$upload_field);
+            $this->controllerParam['data']['upload_field_def'] = "\n\t".'protected $relation;';
+        }else{
+            $this->controllerParam['data']['upload_field'] = '';
+            $this->controllerParam['data']['upload_field_def'] = '';
         }
 
         $this->write_to_file($this->controllerParam['tpl_name'], $this->controllerParam['data'], $this->controllerParam['c_file_name']);
@@ -980,18 +1002,21 @@ EOD;
                     $data['preview'] = "\n\t\t\t".
                         '<div class="pic-more">
                 <ul class="pic-more-upload-list" id="preview_'.$info['field_name'].'">
+                {if '.$info['field_name'].'}
                     <li class="item_img">
                         <div class="operate">
                             <i class="upload_img_close layui-icon" file_url_data="{$'.$info['field_name'].'}"></i>
                         </div>
                         <img src="{$'.$info['field_name'].'}" class="img">
                     </li>
+                {/if}
                 </ul>
             </div>';
                 }else{
                     $data['preview'] = "\n\t\t\t".
                         '<div class="pic-more">
                 <ul class="pic-more-upload-list" id="preview_'.$info['field_name'].'">
+                {if '.$info['field_name'].'}
                 {foreach :explode(",",$'.$info['field_name'].') as $key=>$vo} 
                     <li class="item_img">
                         <div class="operate">
@@ -1000,14 +1025,21 @@ EOD;
                         <img src="{$vo}" class="img">
                     </li>
                 {/foreach}
+                {/if}
                 </ul>
             </div>';
                 }
-
             }
+        }elseif($info['form_additional']['accept'] == 'video'){
+            $data['preview'] = '';
+        }elseif($info['form_additional']['accept'] == 'audio'){
+            $data['preview'] = '';
         }else{
             $data['preview'] = '';
         }
+
+        $this->set_controller_array_upload_field($info['field_name'],$info['form_type']);
+
         return $this->get_replaced_tpl($name, $data);
     }
 
