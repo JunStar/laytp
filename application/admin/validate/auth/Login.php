@@ -36,8 +36,8 @@ class Login extends Validate
     //自定义密码检验方法
     protected function checkPassword($password, $rule, $data){
         $name = $data['name'];
-        $password_in_db = model('auth.AdminUser')->getFieldByName($name, 'password');
-        if( md5( $password ) != $password_in_db )
+        $password_hash = model('auth.User')->getFieldByName($name, 'password');
+        if( !password_verify( $password, $password_hash ) )
         {
             return '账户信息错误';
         }

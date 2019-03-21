@@ -27,7 +27,7 @@ class Login extends Controller
         if (!$validate->check($param))
             return $this->error($validate->getError());
         //设置SESSION
-        $session = model('auth.AdminUser')->field('id,name')->getByName($param['name']);
+        $session = model('auth.User')->field('id,name')->getByName($param['name']);
         Session::set('user', $session);
         return $this->success('登录成功');
     }

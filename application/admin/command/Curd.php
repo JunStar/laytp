@@ -976,27 +976,38 @@ EOD;
                         <ul class="pic-more-upload-list" id="preview_'.$info['field_name'].'"></ul>
                     </div>';
             }else{
-                $data['preview'] = "\n\t\t\t".
-                    '<div class="pic-more">
-                        <ul class="pic-more-upload-list" id="preview_'.$info['field_name'].'">
-                        {foreach :explode(",",$'.$info['field_name'].') as $key=>$vo } 
-                            <li class="item_img">
-                                <div class="operate">
-                                    <i class="upload_img_close layui-icon" file_url_data="{$vo}"></i>
-                                </div>
-                                <img src="{$vo}" class="img">
-                            </li>
-                        {/foreach}
-                        </ul>
-                    </div>';
+                if($data['single_multi'] == 'single'){
+                    $data['preview'] = "\n\t\t\t".
+                        '<div class="pic-more">
+                <ul class="pic-more-upload-list" id="preview_'.$info['field_name'].'">
+                    <li class="item_img">
+                        <div class="operate">
+                            <i class="upload_img_close layui-icon" file_url_data="{$'.$info['field_name'].'}"></i>
+                        </div>
+                        <img src="{$'.$info['field_name'].'}" class="img">
+                    </li>
+                </ul>
+            </div>';
+                }else{
+                    $data['preview'] = "\n\t\t\t".
+                        '<div class="pic-more">
+                <ul class="pic-more-upload-list" id="preview_'.$info['field_name'].'">
+                {foreach :explode(",",$'.$info['field_name'].') as $key=>$vo} 
+                    <li class="item_img">
+                        <div class="operate">
+                            <i class="upload_img_close layui-icon" file_url_data="{$vo}"></i>
+                        </div>
+                        <img src="{$vo}" class="img">
+                    </li>
+                {/foreach}
+                </ul>
+            </div>';
+                }
+
             }
         }else{
             $data['preview'] = '';
         }
-        $data['preview'] = ( $info['form_additional']['accept'] == 'images' ) ?
-        "\n\t\t\t".'<div class="pic-more">
-            <ul class="pic-more-upload-list" id="preview_'.$info['field_name'].'"></ul>
-        </div>' : '';
         return $this->get_replaced_tpl($name, $data);
     }
 

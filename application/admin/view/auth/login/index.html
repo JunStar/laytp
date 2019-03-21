@@ -76,6 +76,7 @@
                         setTimeout( redirect, 1000 );
                     }else{
                         junAdmin.facade.error(res.msg);
+                        $('#user-get-vercode').click();
                     }
                 }
                 ,error: function (xhr) {

@@ -17,6 +17,8 @@ trait Backend
                         $data['data'][$k][$field_name] = get_const_val($field_name, $field_val, $this->model->const);
                     }elseif (isset($this->relation[$field_name]) && $field_val){
                         $data['data'][$k][$field_name] = join(',', $this->relation[$field_name]['model']->where('id in ('. $field_val .')')->column($this->relation[$field_name]['show_field']));
+                    }elseif ($field_name == 'single_img'){
+                        $data['data'][$k][$field_name] = '<img src="'.$data['data'][$k][$field_name].'" style="width:40px;height:40px;" />';
                     }
                 }
             }
