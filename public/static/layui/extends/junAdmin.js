@@ -422,7 +422,7 @@ layui.define([
                     accept: accept,
                     multiple: is_multiple,
                     before: function (obj) {
-                        if(!is_multiple){
+                        if(!is_multiple || accept == 'file'){
                             $('#preview_' + id).html('');
                             $('#input_'+id).val('');
                         }
