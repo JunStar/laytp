@@ -418,7 +418,7 @@ layui.define([
                 let accept = $(item).attr('accept');
                 layui.upload.render({
                     elem: elem,
-                    url: '/admin/ajax/upload/',
+                    url: junAdmin.facade.url('/admin/ajax/upload'),
                     accept: accept,
                     multiple: is_multiple,
                     before: function (obj) {
@@ -458,7 +458,7 @@ layui.define([
                             }else if(accept == 'audio'){
                                 $('#preview_' + id).append(
                                     '<li class="item_audio">' +
-                                    '<audio src="' + res.data.data + '" controls="controls" width="200px" height="200px"></audio>' +
+                                    '<audio src="' + res.data.data + '" controls="controls" style="height:54px;"></audio>' +
                                     '<button class="layui-btn layui-btn-sm layui-btn-danger upload_delete" style="display: block; width: 100%;" file_url_data="' + res.data.data + '" node="'+id+'"><i class="layui-icon">&#xe640;</i></button>' +
                                     '</li>'
                                 );
@@ -491,7 +491,7 @@ layui.define([
                             }else if(accept == 'audio'){
                                 $('#preview_' + id).html(
                                     '<li class="item_audio">' +
-                                    '<audio src="' + res.data.data + '" controls="controls"></audio>' +
+                                    '<audio src="' + res.data.data + '" controls="controls" style="height:54px;"></audio>' +
                                     '<button class="layui-btn layui-btn-sm layui-btn-danger upload_delete" style="display: block; width: 100%;" file_url_data="' + res.data.data + '" node="'+id+'"><i class="layui-icon">&#xe640;</i></button>' +
                                     '</li>'
                                 );
@@ -633,6 +633,16 @@ layui.define([
                         }
                     });
                 }
+            });
+        },
+
+        /**
+         * 下载文件
+         */
+        download_file:function(){
+            $(document).on('click','[download]',function(){
+                let file_url = $(this).attr('download');
+                window.open(junAdmin.facade.url('/admin/ajax/download',{'file_url':window.btoa(file_url)}));
             });
         }
     }

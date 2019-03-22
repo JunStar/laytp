@@ -17,8 +17,38 @@ trait Backend
                         $data['data'][$k][$field_name] = get_const_val($field_name, $field_val, $this->model->const);
                     }elseif (isset($this->relation[$field_name]) && $field_val){
                         $data['data'][$k][$field_name] = join(',', $this->relation[$field_name]['model']->where('id in ('. $field_val .')')->column($this->relation[$field_name]['show_field']));
-                    }elseif ($field_name == 'single_img'){
-                        $data['data'][$k][$field_name] = '<img src="'.$data['data'][$k][$field_name].'" style="width:40px;height:40px;" />';
+                    }elseif (isset($this->upload_field) && in_array( $field_name, array_keys($this->upload_field) )){
+                        switch ($this->upload_field[$field_name]){
+                            case 'images':
+                                $temp = '';
+                                foreach(explode(',', $data['data'][$k][$field_name] ) as $kk=>$vv ){
+                                    $temp .= '<img src="'.$vv.'" style="width:30px;height:30px;" /> ';
+                                }
+                                $data['data'][$k][$field_name] = $temp;
+                                break;
+                            case 'video':
+                                $temp = '';
+                                foreach(explode(',', $data['data'][$k][$field_name] ) as $kk=>$vv ){
+                                    $temp .= '<video src="'.$vv.'" width="200px" controls="controls"></video>';
+                                }
+                                $data['data'][$k][$field_name] = $temp;
+                                break;
+                            case 'audio':
+                                $temp = '';
+                                foreach(explode(',', $data['data'][$k][$field_name] ) as $kk=>$vv ){
+                                    $temp .= '<audio src="'.$vv.'" controls="controls"></audio>';
+                                }
+                                $data['data'][$k][$field_name] = $temp;
+                                break;
+                            case 'file':
+                                $temp = [];
+                                foreach(explode(',', $data['data'][$k][$field_name] ) as $kk=>$vv ){
+                                    $temp[] = '<a src="javascript:void(0);" download="'.$vv.'">'.$vv.'</a>';
+                                }
+                                $data['data'][$k][$field_name] = implode(' | ', $temp );
+                                break;
+                        }
+
                     }
                 }
             }

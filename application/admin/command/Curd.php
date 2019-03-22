@@ -519,16 +519,15 @@ EOD;
             $this->controllerParam['data']['relation_def'] = '';
         }
 
-        if( is_array($this->controller_relation) && count($this->controller_relation) ){
+        if( is_array($this->controller_array_upload_field) && count($this->controller_array_upload_field) ){
             $upload_field[] = "\n\t\t".'$this->upload_field = [';
             foreach($this->controller_array_upload_field as $field_name=>$val){
-                $temp = "\n\t\t\t".'\'' . $field_name . '\'=>'.$val;
-                $temp .= "\n\t\t\t".',';
+                $temp = "\n\t\t\t".'\'' . $field_name . '\'=>\''.$val.'\',';
                 $upload_field[] = $temp;
             }
             $upload_field[] = "\n\t\t".'];';
             $this->controllerParam['data']['upload_field'] = implode("",$upload_field);
-            $this->controllerParam['data']['upload_field_def'] = "\n\t".'protected $relation;';
+            $this->controllerParam['data']['upload_field_def'] = "\n\t".'protected $upload_field;';
         }else{
             $this->controllerParam['data']['upload_field'] = '';
             $this->controllerParam['data']['upload_field_def'] = '';
@@ -1078,7 +1077,7 @@ EOD;
                 <ul class="pic-more-upload-list" id="preview_' . $info['field_name'] . '">
                 {if $' . $info['field_name'] . '}
                     <li class="item_audio">
-                        <audio src="{$' . $info['field_name'] . '}" controls="controls"></audio>
+                        <audio src="{$' . $info['field_name'] . '}" controls="controls" style="height:54px;"></audio>
                         <button class="layui-btn layui-btn-sm layui-btn-danger upload_delete" style="display: block; width: 100%;" file_url_data="{$vo}" node="'.$info['field_name'].'"><i class="layui-icon">&#xe640;</i></button>
                     </li>
                 {/if}
@@ -1091,7 +1090,7 @@ EOD;
                 {if $' . $info['field_name'] . '}
                     {foreach :explode(",",$'.$info['field_name'].') as $key=>$vo} 
                     <li class="item_audio">
-                        <audio src="{$vo}" controls="controls"></audio>
+                        <audio src="{$vo}" controls="controls" style="height:54px;"></audio>
                         <button class="layui-btn layui-btn-sm layui-btn-danger upload_delete" style="display: block; width: 100%;" file_url_data="{$vo}" node="'.$info['field_name'].'"><i class="layui-icon">&#xe640;</i></button>
                     </li>
                     {/foreach}
@@ -1104,7 +1103,7 @@ EOD;
             $data['preview'] = '';
         }
 
-        $this->set_controller_array_upload_field($info['field_name'],$info['form_type']);
+        $this->set_controller_array_upload_field($info['field_name'],$info['form_additional']['accept']);
 
         return $this->get_replaced_tpl($name, $data);
     }
