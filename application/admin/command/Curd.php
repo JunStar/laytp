@@ -1044,7 +1044,7 @@ EOD;
                 {if $' . $info['field_name'] . '}
                     <li class="item_video">
                         <video src="{$' . $info['field_name'] . '}" controls="controls" width="200px" height="200px"></video>
-                        <button class="layui-btn layui-btn-sm layui-btn-danger upload_delete" style="display: block; width: 200px;"><i class="layui-icon">&#xe640;</i></button>
+                        <button class="layui-btn layui-btn-sm layui-btn-danger upload_delete" style="display: block; width: 100%;"><i class="layui-icon">&#xe640;</i></button>
                     </li>
                 {/if}
                 </ul>
@@ -1057,7 +1057,7 @@ EOD;
                     {foreach :explode(",",$'.$info['field_name'].') as $key=>$vo} 
                     <li class="item_video">
                         <video src="{$vo}" controls="controls" width="200px" height="200px"></video>
-                        <button class="layui-btn layui-btn-sm layui-btn-danger upload_delete" style="display: block; width: 200px;" file_url_data="{$vo}" node="'.$info['field_name'].'"><i class="layui-icon">&#xe640;</i></button>
+                        <button class="layui-btn layui-btn-sm layui-btn-danger upload_delete" style="display: block; width: 100%;" file_url_data="{$vo}" node="'.$info['field_name'].'"><i class="layui-icon">&#xe640;</i></button>
                     </li>
                     {/foreach}
                 {/if}
@@ -1066,7 +1066,40 @@ EOD;
                 }
             }
         }elseif($info['form_additional']['accept'] == 'audio'){
-            $data['preview'] = '';
+            if($type == 'add'){
+                $data['preview'] = "\n\t\t\t".
+                    '<div class="pic-more">
+                <ul class="pic-more-upload-list" id="preview_'.$info['field_name'].'"></ul>
+            </div>';
+            }else{
+                if($data['single_multi'] == 'single') {
+                    $data['preview'] = "\n\t\t\t" .
+                        '<div class="pic-more">
+                <ul class="pic-more-upload-list" id="preview_' . $info['field_name'] . '">
+                {if $' . $info['field_name'] . '}
+                    <li class="item_audio">
+                        <audio src="{$' . $info['field_name'] . '}" controls="controls"></audio>
+                        <button class="layui-btn layui-btn-sm layui-btn-danger upload_delete" style="display: block; width: 100%;" file_url_data="{$vo}" node="'.$info['field_name'].'"><i class="layui-icon">&#xe640;</i></button>
+                    </li>
+                {/if}
+                </ul>
+            </div>';
+                }else{
+                    $data['preview'] = "\n\t\t\t" .
+                        '<div class="pic-more">
+                <ul class="pic-more-upload-list" id="preview_' . $info['field_name'] . '">
+                {if $' . $info['field_name'] . '}
+                    {foreach :explode(",",$'.$info['field_name'].') as $key=>$vo} 
+                    <li class="item_audio">
+                        <audio src="{$vo}" controls="controls"></audio>
+                        <button class="layui-btn layui-btn-sm layui-btn-danger upload_delete" style="display: block; width: 100%;" file_url_data="{$vo}" node="'.$info['field_name'].'"><i class="layui-icon">&#xe640;</i></button>
+                    </li>
+                    {/foreach}
+                {/if}
+                </ul>
+            </div>';
+                }
+            }
         }else{
             $data['preview'] = '';
         }
