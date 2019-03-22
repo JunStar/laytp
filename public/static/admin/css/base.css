@@ -22,6 +22,7 @@
 .pic-more li a { position: absolute; top: 0; }
 .pic-more li a i { font-size: 24px; background-color: #008800; }
 .pic-more-upload-list .item_img img{ width: 90px; height: 90px;background-color:#fff;border:1px solid #ddd;border-radius:3px; padding: 4px;}
+.pic-more-upload-list .item_video { width: 200px; height: 232px;background-color:#fff;border:1px solid #ddd;border-radius:3px; padding: 4px; margin-bottom: 10px}
 .pic-more-upload-list li{position: relative;}
 .pic-more-upload-list li .operate{ color: #000; display: none;}
 .pic-more-upload-list li .toleft{ position: absolute;top: 40px; left: 1px; cursor:pointer;}

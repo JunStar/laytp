@@ -253,6 +253,13 @@ layui.define([
     }
 
     junAdmin.init = {
+        //jquery ajax set
+        ajaxSet: function(){
+            $.ajaxSetup({
+                "async": false
+            });
+        },
+
         //弹窗
         popup_frame: function(){
             $(document).on('click','.popup-frame',function(){
@@ -402,7 +409,7 @@ layui.define([
         /**
          * 渲染上传插件
          */
-        upload_img_render: function(){
+        upload_render: function(){
             layui.each($("button[upload='true']"),function(key,item) {
                 let id = $(item).attr('id');
                 let elem = '#' + id;
@@ -415,10 +422,10 @@ layui.define([
                     accept: accept,
                     multiple: is_multiple,
                     before: function (obj) {
-                        if(accept == 'images'){
+                        if(!is_multiple){
                             $('#preview_' + id).html('');
+                            $('#input_'+id).val('');
                         }
-                        $('#input_'+id).val('');
                         layer.msg('上传中...', {
                             icon: 16,
                             shade: 0.01,
@@ -436,16 +443,23 @@ layui.define([
                                 $('#preview_' + id).append(
                                     '<li class="item_img">' +
                                     '<div class="operate">' +
-                                    '<i class="upload_img_close layui-icon" file_url_data="' + res.data.data + '"></i>' +
+                                    '<i class="upload_img_close layui-icon" file_url_data="' + res.data.data + '" node="'+id+'"></i>' +
                                     '</div>' +
                                     '<img src="' + res.data.data + '" class="img" >' +
+                                    '</li>'
+                                );
+                            }else if(accept == 'video'){
+                                $('#preview_' + id).append(
+                                    '<li class="item_video">' +
+                                    '<video src="' + res.data.data + '" controls="controls" width="200px" height="200px"></video>' +
+                                    '<button class="layui-btn layui-btn-sm layui-btn-danger upload_delete" style="display: block; width: 200px;" file_url_data="' + res.data.data + '" node="'+id+'"><i class="layui-icon">&#xe640;</i></button>' +
                                     '</li>'
                                 );
                             }
                             //隐藏input框增加文件值
                             let input_value = $('#input_'+id).val();
                             if(input_value){
-                                $('#input_'+id).val( $('#input_'+id).val() + ',' + res.data.data );
+                                $('#input_'+id).val( input_value + ',' + res.data.data );
                             }else{
                                 $('#input_'+id).val( res.data.data );
                             }
@@ -460,28 +474,43 @@ layui.define([
                                     '<img src="' + res.data.data + '" class="img" >' +
                                     '</li>'
                                 );
+                            }else if(accept == 'video'){
+                                $('#preview_' + id).html(
+                                    '<li class="item_video">' +
+                                    '<video src="' + res.data.data + '" controls="controls" width="200px" height="200px"></video>' +
+                                    '<button class="layui-btn layui-btn-sm layui-btn-danger upload_delete" style="display: block; width: 200px;" file_url_data="' + res.data.data + '"><i class="layui-icon">&#xe640;</i></button>' +
+                                    '</li>'
+                                );
                             }
                             //隐藏input框增加文件值
                             $('#input_'+id).val( res.data.data );
                         }
                     }
                 });
-                //点击多图上传的X,删除当前的图片
-                $("body").on("click", ".upload_img_close", function () {
-                    if(is_multiple){
+                //删除已经上传的东西
+                $("body").on("click", ".upload_img_close, .upload_delete", function () {
+                    let node = $(this).attr('node');
+                    let single_multi_val = $('#'+node).attr('single_multi');
+                    let is_multiple_val = ( single_multi_val == 'multi' ) ? true : false;
+                    if(is_multiple_val){
                         let file_url_value = $(this).attr('file_url_data');
-                        let input_value = $('#input_'+id).val();
+                        let input_value = $('#input_'+node).val();
                         let new_input_value = "";
                         if( input_value.indexOf(file_url_value+',') != -1 ){
                             let reg = new RegExp(file_url_value + ',');
                             new_input_value = input_value.replace(reg, "");
                         }else{
-                            let reg = new RegExp(file_url_value);
-                            new_input_value = input_value.replace(reg, "");
+                            if( input_value.indexOf(',' + file_url_value) != -1 ){
+                                let reg = new RegExp(','+file_url_value);
+                                new_input_value = input_value.replace(reg, "");
+                            }else{
+                                let reg = new RegExp(file_url_value);
+                                new_input_value = input_value.replace(reg, "");
+                            }
                         }
-                        $('#input_'+id).val(new_input_value);
+                        $('#input_'+node).val(new_input_value);
                     }else{
-                        $('#input_'+id).val('');
+                        $('#input_'+node).val('');
                     }
                     $(this).closest("li").remove();
                 });
