@@ -21,29 +21,37 @@ trait Backend
                         switch ($this->upload_field[$field_name]){
                             case 'images':
                                 $temp = '';
-                                foreach(explode(',', $data['data'][$k][$field_name] ) as $kk=>$vv ){
-                                    $temp .= '<img src="'.$vv.'" style="width:30px;height:30px;" /> ';
+                                if($data['data'][$k][$field_name]){
+                                    foreach(explode(',', $data['data'][$k][$field_name] ) as $kk=>$vv ){
+                                        $temp .= '<img src="'.$vv.'" style="width:30px;height:30px;" /> ';
+                                    }
                                 }
                                 $data['data'][$k][$field_name] = $temp;
                                 break;
                             case 'video':
                                 $temp = '';
-                                foreach(explode(',', $data['data'][$k][$field_name] ) as $kk=>$vv ){
-                                    $temp .= '<video src="'.$vv.'" width="200px" controls="controls"></video>';
+                                if($data['data'][$k][$field_name]) {
+                                    foreach (explode(',', $data['data'][$k][$field_name]) as $kk => $vv) {
+                                        $temp .= '<video src="' . $vv . '" width="200px" controls="controls"></video>';
+                                    }
                                 }
                                 $data['data'][$k][$field_name] = $temp;
                                 break;
                             case 'audio':
                                 $temp = '';
-                                foreach(explode(',', $data['data'][$k][$field_name] ) as $kk=>$vv ){
-                                    $temp .= '<audio src="'.$vv.'" controls="controls"></audio>';
+                                if($data['data'][$k][$field_name]) {
+                                    foreach (explode(',', $data['data'][$k][$field_name]) as $kk => $vv) {
+                                        $temp .= '<audio src="' . $vv . '" controls="controls"></audio>';
+                                    }
                                 }
                                 $data['data'][$k][$field_name] = $temp;
                                 break;
                             case 'file':
                                 $temp = [];
-                                foreach(explode(',', $data['data'][$k][$field_name] ) as $kk=>$vv ){
-                                    $temp[] = '<a src="javascript:void(0);" download="'.$vv.'" title="点击下载">'.$vv.'</a>';
+                                if($data['data'][$k][$field_name]) {
+                                    foreach (explode(',', $data['data'][$k][$field_name]) as $kk => $vv) {
+                                        $temp[] = '<a src="javascript:void(0);" download="' . $vv . '" title="点击下载">' . $vv . '</a>';
+                                    }
                                 }
                                 $data['data'][$k][$field_name] = implode(' ', $temp );
                                 break;
