@@ -43,9 +43,9 @@ trait Backend
                             case 'file':
                                 $temp = [];
                                 foreach(explode(',', $data['data'][$k][$field_name] ) as $kk=>$vv ){
-                                    $temp[] = '<a src="javascript:void(0);" download="'.$vv.'">'.$vv.'</a>';
+                                    $temp[] = '<a src="javascript:void(0);" download="'.$vv.'" title="点击下载">'.$vv.'</a>';
                                 }
-                                $data['data'][$k][$field_name] = implode(' | ', $temp );
+                                $data['data'][$k][$field_name] = implode(' ', $temp );
                                 break;
                         }
 
