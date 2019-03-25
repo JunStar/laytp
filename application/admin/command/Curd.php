@@ -111,9 +111,9 @@ class Curd extends Command
     public function update_exec_time(){
         //更新时间和次数
         if(!$this->info['exec_create_time']){
-            $save['exec_create_time'] = time();
+            $save['exec_create_time'] = date('Y-m-d H:i:s');
         }
-        $save['exec_update_time'] = time();
+        $save['exec_update_time'] = date('Y-m-d H:i:s');
         $save['exec_count'] = Db::raw('exec_count+1');
         $this->curdModel->where(['id'=>$this->id])->update($save);
     }

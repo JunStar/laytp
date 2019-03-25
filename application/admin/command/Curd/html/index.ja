@@ -12,14 +12,14 @@
 </div>
 {/block}
 
-{block name="js_template"}
-{include file="public/js_tpl/search_condition_tpl"}
-{include file="public/js_tpl/toolbar_tpl"}
-{include file="public/js_tpl/operation_tpl"}
-{/block}
-
 {block name="script"}
 {__block__}
 <script src="__ADMIN_JS__/{%jsFileName%}.js" charset="utf-8"></script>
 {%jsParam%}
+{/block}
+
+{block name="js_template"}
+{include file="public/js_tpl/search_condition_tpl"}
+{include file="public/js_tpl/toolbar_tpl"}
+{include file="public/js_tpl/operation_tpl"}
 {/block}

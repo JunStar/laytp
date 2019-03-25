@@ -1,13 +1,13 @@
 {extend name="admin@public/main"}
 
+{block name="script"}
+{__block__}
+<script src="__ADMIN_JS__/autocreate/curd.js" charset="utf-8"></script>
+{/block}
+
 {block name="js_template"}
 {include file="public/js_tpl/search_condition_tpl"}
 {include file="autocreate/curd/toolbar_tpl"}
 {include file="autocreate/curd/operation_tpl"}
 {include file="autocreate/curd/set_config_tpl"}
-{/block}
-
-{block name="script"}
-{__block__}
-<script src="__ADMIN_JS__/autocreate/curd.js" charset="utf-8"></script>
 {/block}

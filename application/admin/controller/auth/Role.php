@@ -31,9 +31,25 @@ class Role extends Backend
         return $this->fetch();
     }
 
+    //添加
     public function add()
     {
-        $menu_list = model('auth.Menu')->order('id desc')->select()->toArray();
-        $this->assign('menu_list', $menu_list);
+        if( $this->request->isAjax() && $this->request->isPost() ){
+            $post = filterPostData($this->request->post("row/a"));
+            if( $this->model->insert($post) ){
+                return $this->success('操作成功');
+            }else{
+                return $this->error('操作失败');
+            }
+        }
+
+        $menu_list = model('auth.Menu')->field('id,pid,name')->order('id desc')->select()->toArray();
+        $node_list = [];
+        foreach($menu_list as $k=>$v){
+            $parent = $v['pid'] ? $v['pid'] : '#';
+            $node_list[] = ['id'=>$v['id'],'parent'=>$parent,'text'=>$v['name'],'type'=>'menu','state'=>['selected'=>false]];
+        }
+        $this->assign('node_list', $node_list);
+        return $this->fetch();
     }
 }

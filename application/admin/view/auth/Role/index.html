@@ -1,14 +1,14 @@
 {extend name="admin@public/main"}
 
-{block name="js_template"}
-{include file="public/js_tpl/search_condition_tpl"}
-{include file="core/menu/toolbar_tpl"}
-{include file="public/js_tpl/operation_tpl"}
-{include file="core/menu/switch_is_menu_tpl"}
-{include file="core/menu/show_icon_tpl"}
-{/block}
-
 {block name="script"}
 {__block__}
 <script src="__ADMIN_JS__/auth/role.js" charset="utf-8"></script>
+{/block}
+
+{block name="js_template"}
+{include file="public/js_tpl/search_condition_tpl"}
+{include file="auth/menu/toolbar_tpl"}
+{include file="public/js_tpl/operation_tpl"}
+{include file="auth/menu/switch_is_menu_tpl"}
+{include file="auth/menu/show_icon_tpl"}
 {/block}
