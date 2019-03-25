@@ -23,7 +23,6 @@ audio{
 /**
  * 图片上传插件
  */
-.layui-upload-img { width: 90px; height: 90px; margin: 0; }
 .pic-more { width:100%; margin: 10px 0px 0px 0px;}
 .pic-more li { width:90px; float: left; margin-right: 5px; display:inline-block; padding-left: 5px; padding-right: 5px;}
 .pic-more li .layui-input { display: initial; }
@@ -38,4 +37,11 @@ audio{
 .pic-more-upload-list li .toright{ position: absolute;top: 40px; right: 1px;cursor:pointer;}
 .pic-more-upload-list li .upload_img_close{position: absolute;top: 5px; right: 5px;cursor:pointer;}
 .pic-more-upload-list li:hover .operate{ display: block;}
+
+/**
+ * 解决下拉框被编辑器挡住的问题
+ */
+.layui-form-select dl{
+    z-index: 1000;
+}
 
