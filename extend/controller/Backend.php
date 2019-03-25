@@ -28,7 +28,8 @@ class Backend extends Controller
 
     //权限检测
     public function auth(){
-        $admin_user = Session::get('admin_user');
+        $admin_user_id = Session::get('admin_user_id');
+        $admin_user = model('auth.User')->get($admin_user_id);
     }
 
     //设置菜单
