@@ -43,7 +43,7 @@ class Role extends Backend
             }
         }
 
-        $menu_list = model('auth.Menu')->field('id,pid,name')->order('id desc')->select()->toArray();
+        $menu_list = model('auth.Menu')->field('id,pid,name')->order('sort',' desc')->select()->toArray();
         $node_list = [];
         foreach($menu_list as $k=>$v){
             $parent = $v['pid'] ? $v['pid'] : '#';

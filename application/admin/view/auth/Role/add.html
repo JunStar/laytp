@@ -1,5 +1,10 @@
 {extend name="admin@public/form"}
 
+{block name="style"}
+{__block__}
+<link rel="stylesheet" href="__STATIC__/library/jstree/themes/default/style.css" media="all">
+{/block}
+
 {block name="form"}
     <div class="layui-form-item">
         <label class="layui-form-label">父级</label>
@@ -23,19 +28,72 @@
     <div class="layui-form-item">
         <label class="layui-form-label">权限设置</label>
         <div class="layui-input-block">
-            <div id="node_tree"></div>
+            <input type="checkbox" title="全选" lay-filter="checkall">
+            <input type="checkbox" title="展开" lay-filter="expandall">
+
+            <div id="treeview"></div>
+            <input type="hidden" name="row[node_list]" id="node_list" />
         </div>
     </div>
 {/block}
 
 {block name="script"}
+<style>
+    #treeview .jstree-container-ul .jstree-node {
+        display: block;
+        clear: both;
+    }
+
+    #treeview .jstree-leaf:not(:first-child) {
+        float: left;
+        background: none;
+        margin-left: 0;
+        width: 80px;
+        clear: none;
+    }
+
+    #treeview .jstree-leaf {
+        float: left;
+        margin-left: 0;
+        padding-left: 24px;
+        /*width: 100px;*/
+        clear: none;
+        color: #777;
+    }
+
+    #treeview .jstree-leaf > .jstree-icon,#treeview .jstree-leaf .jstree-themeicon {
+        display: none;
+    }
+
+    #treeview .jstree-last {
+        background-position: -292px -4px;
+        background-repeat: repeat-y;
+    }
+
+    #treeview .jstree-children:before,#treeview .jstree-children:after {
+        content: " ";
+        display: table;
+    }
+
+    #treeview .jstree-children:after {
+        clear: both;
+    }
+
+    #treeview .jstree-themeicon {
+        display: none;
+    }
+</style>
 {__block__}
-<script src="__STATIC__/library/layui/layui.js" charset="utf-8"></script>
+<script src="__STATIC__/library/jquery_3.3.1.js" charset="utf-8"></script>
 <script src="__STATIC__/library/jstree/jstree.js" charset="utf-8"></script>
 <script>
-const nodel_list = {:json_encode($node_list)};
+const node_list = {:json_encode($node_list)};
 
-layui.$('#node_tree').jstree(
+$('#treeview')
+    .on("changed.jstree", function (e, data) {
+        $('#node_list').val(data.selected.join(','));
+    })
+    .jstree(
     {
         "themes": {"stripes": true},
         "checkbox": {
@@ -44,9 +102,19 @@ layui.$('#node_tree').jstree(
         "plugins": ["checkbox", "types"],
         "core": {
             'check_callback': true,
-            "data": [{"id":1,"parent":"#","text":"控制台","type":"menu","state":{"selected":false}},{"id":13,"parent":1,"text":"查看","type":"menu","state":{"selected":false}},{"id":14,"parent":1,"text":"添加","type":"menu","state":{"selected":false}},{"id":16,"parent":1,"text":"编辑","type":"menu","state":{"selected":false}},{"id":15,"parent":1,"text":"删除","type":"menu","state":{"selected":false}},{"id":17,"parent":1,"text":"批量更新","type":"menu","state":{"selected":false}},{"id":2,"parent":"#","text":"常规管理","type":"menu","state":{"selected":false}},{"id":6,"parent":2,"text":"系统配置","type":"menu","state":{"selected":false}},{"id":18,"parent":6,"text":"查看","type":"menu","state":{"selected":false}},{"id":19,"parent":6,"text":"添加","type":"menu","state":{"selected":false}},{"id":20,"parent":6,"text":"编辑","type":"menu","state":{"selected":false}},{"id":21,"parent":6,"text":"删除","type":"menu","state":{"selected":false}},{"id":22,"parent":6,"text":"批量更新","type":"menu","state":{"selected":false}},{"id":7,"parent":2,"text":"附件管理","type":"menu","state":{"selected":false}},{"id":23,"parent":7,"text":"查看","type":"menu","state":{"selected":false}},{"id":24,"parent":7,"text":"选择附件","type":"menu","state":{"selected":false}},{"id":25,"parent":7,"text":"添加","type":"menu","state":{"selected":false}},{"id":26,"parent":7,"text":"编辑","type":"menu","state":{"selected":false}},{"id":27,"parent":7,"text":"删除","type":"menu","state":{"selected":false}},{"id":28,"parent":7,"text":"批量更新","type":"menu","state":{"selected":false}},{"id":8,"parent":2,"text":"个人配置","type":"menu","state":{"selected":false}},{"id":29,"parent":8,"text":"查看","type":"menu","state":{"selected":false}},{"id":30,"parent":8,"text":"更新个人信息","type":"menu","state":{"selected":false}},{"id":31,"parent":8,"text":"添加","type":"menu","state":{"selected":false}},{"id":32,"parent":8,"text":"编辑","type":"menu","state":{"selected":false}},{"id":33,"parent":8,"text":"删除","type":"menu","state":{"selected":false}},{"id":34,"parent":8,"text":"批量更新","type":"menu","state":{"selected":false}},{"id":3,"parent":"#","text":"分类管理","type":"menu","state":{"selected":false}},{"id":35,"parent":3,"text":"查看","type":"menu","state":{"selected":false}},{"id":36,"parent":3,"text":"添加","type":"menu","state":{"selected":false}},{"id":37,"parent":3,"text":"编辑","type":"menu","state":{"selected":false}},{"id":38,"parent":3,"text":"删除","type":"menu","state":{"selected":false}},{"id":39,"parent":3,"text":"批量更新","type":"menu","state":{"selected":false}},{"id":5,"parent":"#","text":"权限管理","type":"menu","state":{"selected":false}},{"id":9,"parent":5,"text":"管理员管理","type":"menu","state":{"selected":false}},{"id":40,"parent":9,"text":"查看","type":"menu","state":{"selected":false}},{"id":41,"parent":9,"text":"添加","type":"menu","state":{"selected":false}},{"id":42,"parent":9,"text":"编辑","type":"menu","state":{"selected":false}},{"id":43,"parent":9,"text":"删除","type":"menu","state":{"selected":false}},{"id":10,"parent":5,"text":"管理员日志","type":"menu","state":{"selected":false}},{"id":44,"parent":10,"text":"查看","type":"menu","state":{"selected":false}},{"id":45,"parent":10,"text":"详情","type":"menu","state":{"selected":false}},{"id":46,"parent":10,"text":"删除","type":"menu","state":{"selected":false}},{"id":11,"parent":5,"text":"角色组","type":"menu","state":{"selected":false}},{"id":47,"parent":11,"text":"查看","type":"menu","state":{"selected":false}},{"id":48,"parent":11,"text":"添加","type":"menu","state":{"selected":false}},{"id":49,"parent":11,"text":"编辑","type":"menu","state":{"selected":false}},{"id":50,"parent":11,"text":"删除","type":"menu","state":{"selected":false}},{"id":12,"parent":5,"text":"菜单规则","type":"menu","state":{"selected":false}},{"id":51,"parent":12,"text":"查看","type":"menu","state":{"selected":false}},{"id":52,"parent":12,"text":"添加","type":"menu","state":{"selected":false}},{"id":53,"parent":12,"text":"编辑","type":"menu","state":{"selected":false}},{"id":54,"parent":12,"text":"删除","type":"menu","state":{"selected":false}},{"id":4,"parent":"#","text":"插件管理","type":"menu","state":{"selected":false}},{"id":55,"parent":4,"text":"查看","type":"menu","state":{"selected":false}},{"id":56,"parent":4,"text":"添加","type":"menu","state":{"selected":false}},{"id":57,"parent":4,"text":"编辑","type":"menu","state":{"selected":false}},{"id":58,"parent":4,"text":"删除","type":"menu","state":{"selected":false}},{"id":59,"parent":4,"text":"本地安装","type":"menu","state":{"selected":false}},{"id":60,"parent":4,"text":"禁用启用","type":"menu","state":{"selected":false}},{"id":61,"parent":4,"text":"安装","type":"menu","state":{"selected":false}},{"id":62,"parent":4,"text":"卸载","type":"menu","state":{"selected":false}},{"id":63,"parent":4,"text":"配置","type":"menu","state":{"selected":false}},{"id":64,"parent":4,"text":"刷新","type":"menu","state":{"selected":false}},{"id":65,"parent":4,"text":"批量更新","type":"menu","state":{"selected":false}},{"id":66,"parent":"#","text":"会员管理","type":"menu","state":{"selected":false}},{"id":67,"parent":66,"text":"会员管理","type":"menu","state":{"selected":false}},{"id":68,"parent":67,"text":"查看","type":"menu","state":{"selected":false}},{"id":69,"parent":67,"text":"编辑","type":"menu","state":{"selected":false}},{"id":70,"parent":67,"text":"添加","type":"menu","state":{"selected":false}},{"id":71,"parent":67,"text":"删除","type":"menu","state":{"selected":false}},{"id":72,"parent":67,"text":"批量更新","type":"menu","state":{"selected":false}},{"id":73,"parent":66,"text":"会员分组","type":"menu","state":{"selected":false}},{"id":74,"parent":73,"text":"添加","type":"menu","state":{"selected":false}},{"id":75,"parent":73,"text":"编辑","type":"menu","state":{"selected":false}},{"id":76,"parent":73,"text":"查看","type":"menu","state":{"selected":false}},{"id":77,"parent":73,"text":"删除","type":"menu","state":{"selected":false}},{"id":78,"parent":73,"text":"批量更新","type":"menu","state":{"selected":false}},{"id":79,"parent":66,"text":"会员规则","type":"menu","state":{"selected":false}},{"id":80,"parent":79,"text":"查看","type":"menu","state":{"selected":false}},{"id":81,"parent":79,"text":"删除","type":"menu","state":{"selected":false}},{"id":82,"parent":79,"text":"添加","type":"menu","state":{"selected":false}},{"id":83,"parent":79,"text":"编辑","type":"menu","state":{"selected":false}},{"id":84,"parent":79,"text":"批量更新","type":"menu","state":{"selected":false}},{"id":85,"parent":"#","text":"在线命令管理","type":"menu","state":{"selected":false}},{"id":86,"parent":85,"text":"查看","type":"menu","state":{"selected":false}},{"id":87,"parent":85,"text":"添加","type":"menu","state":{"selected":false}},{"id":88,"parent":85,"text":"详情","type":"menu","state":{"selected":false}},{"id":89,"parent":85,"text":"运行","type":"menu","state":{"selected":false}},{"id":90,"parent":85,"text":"删除","type":"menu","state":{"selected":false}},{"id":91,"parent":85,"text":"批量更新","type":"menu","state":{"selected":false}},{"id":92,"parent":"#","text":"测试管理","type":"menu","state":{"selected":false}},{"id":93,"parent":92,"text":"查看","type":"menu","state":{"selected":false}},{"id":94,"parent":92,"text":"添加","type":"menu","state":{"selected":false}},{"id":95,"parent":92,"text":"编辑","type":"menu","state":{"selected":false}},{"id":96,"parent":92,"text":"删除","type":"menu","state":{"selected":false}},{"id":97,"parent":92,"text":"批量更新","type":"menu","state":{"selected":false}},{"id":98,"parent":"#","text":"开发示例管理","type":"menu","state":{"selected":false}},{"id":99,"parent":98,"text":"表格完整示例","type":"menu","state":{"selected":false}},{"id":100,"parent":99,"text":"查看","type":"menu","state":{"selected":false}},{"id":101,"parent":99,"text":"详情","type":"menu","state":{"selected":false}},{"id":102,"parent":99,"text":"变更","type":"menu","state":{"selected":false}},{"id":103,"parent":99,"text":"删除","type":"menu","state":{"selected":false}},{"id":104,"parent":99,"text":"批量更新","type":"menu","state":{"selected":false}},{"id":105,"parent":98,"text":"自定义搜索","type":"menu","state":{"selected":false}},{"id":106,"parent":105,"text":"查看","type":"menu","state":{"selected":false}},{"id":107,"parent":105,"text":"删除","type":"menu","state":{"selected":false}},{"id":108,"parent":105,"text":"批量更新","type":"menu","state":{"selected":false}},{"id":109,"parent":98,"text":"彩色角标","type":"menu","state":{"selected":false}},{"id":110,"parent":109,"text":"查看","type":"menu","state":{"selected":false}},{"id":111,"parent":109,"text":"删除","type":"menu","state":{"selected":false}},{"id":112,"parent":109,"text":"批量更新","type":"menu","state":{"selected":false}},{"id":113,"parent":98,"text":"控制器间跳转","type":"menu","state":{"selected":false}},{"id":114,"parent":113,"text":"查看","type":"menu","state":{"selected":false}},{"id":115,"parent":113,"text":"删除","type":"menu","state":{"selected":false}},{"id":116,"parent":113,"text":"批量更新","type":"menu","state":{"selected":false}},{"id":117,"parent":98,"text":"多级联动","type":"menu","state":{"selected":false}},{"id":118,"parent":117,"text":"查看","type":"menu","state":{"selected":false}},{"id":119,"parent":117,"text":"删除","type":"menu","state":{"selected":false}},{"id":120,"parent":117,"text":"批量更新","type":"menu","state":{"selected":false}},{"id":121,"parent":98,"text":"多表格示例","type":"menu","state":{"selected":false}},{"id":122,"parent":121,"text":"查看","type":"menu","state":{"selected":false}},{"id":123,"parent":121,"text":"删除","type":"menu","state":{"selected":false}},{"id":124,"parent":121,"text":"批量更新","type":"menu","state":{"selected":false}},{"id":125,"parent":98,"text":"关联模型示例","type":"menu","state":{"selected":false}},{"id":126,"parent":125,"text":"查看","type":"menu","state":{"selected":false}},{"id":127,"parent":125,"text":"删除","type":"menu","state":{"selected":false}},{"id":128,"parent":125,"text":"批量更新","type":"menu","state":{"selected":false}},{"id":129,"parent":98,"text":"表格模板示例","type":"menu","state":{"selected":false}},{"id":130,"parent":129,"text":"查看","type":"menu","state":{"selected":false}},{"id":131,"parent":129,"text":"详情","type":"menu","state":{"selected":false}},{"id":132,"parent":129,"text":"删除","type":"menu","state":{"selected":false}},{"id":133,"parent":129,"text":"批量更新","type":"menu","state":{"selected":false}},{"id":134,"parent":98,"text":"百度地图示例","type":"menu","state":{"selected":false}},{"id":135,"parent":134,"text":"查看","type":"menu","state":{"selected":false}},{"id":136,"parent":134,"text":"详情","type":"menu","state":{"selected":false}},{"id":137,"parent":134,"text":"删除","type":"menu","state":{"selected":false}}]
+            "data": node_list
         }
     }
 );
+
+layui.use(['junAdmin'],function() {
+    layui.form.on('checkbox(checkall)',function(){
+        $("#treeview").jstree($(this).prop("checked") ? "check_all" : "uncheck_all");
+    });
+
+    layui.form.on('checkbox(expandall)',function(){
+        $("#treeview").jstree($(this).prop("checked") ? "open_all" : "close_all");
+    });
+});
 </script>
 {/block}

@@ -16,8 +16,7 @@ class Menu extends Backend
         parent::initialize();
         $this->model = model('auth.Menu');
         $where = $this->build_params();
-        $sort = "sort desc";
-        $data = $this->model->where($where)->order($sort)->select()->toArray();
+        $data = $this->model->where($where)->order('sort','desc')->select()->toArray();
         $menu_tree_obj = Tree::instance();
         $menu_tree_obj->init($data);
         $this->menu_list = $menu_tree_obj->getTreeList($menu_tree_obj->getTreeArray(0));
