@@ -1,0 +1,23 @@
+{extend name="admin@public/form"}
+
+{block name="form"}
+<input type="hidden" value="{$id}" id="id" name="row[id]" />
+    <div class="layui-form-item">
+        <label class="layui-form-label">父级</label>
+        <div class="layui-input-block">
+            <select id="pid" name="row[pid]">
+                <option value="0">------请选择------</option>
+                {foreach $role_list as $key=>$vo}
+                <option value="{$vo.id}" {if $vo['id']==$pid}selected="selected"{/if}>{$vo.name}</option>
+                {/foreach}
+            </select>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">角色名</label>
+        <div class="layui-input-block">
+            <input type="text" name="row[name]" value="{$name}" lay-verify="required" placeholder="请输入角色名" class="layui-input" lay-verType="tips">
+        </div>
+    </div>
+{/block}

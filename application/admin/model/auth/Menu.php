@@ -2,7 +2,7 @@
 /**
  * 后台菜单模型
  */
-namespace app\admin\model;
+namespace app\admin\model\auth;
 
 use model\Backend;
 

@@ -20,31 +20,11 @@
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
     {block name="menus"}
-    <div class="layui-header">
-        <div class="layui-logo">layTp后台管理系统</div>
-        <ul class="layui-nav layui-layout-left">
-            {foreach $first_menu as $fv}
-            <li class="layui-nav-item {if $fv['selected']}layui-bg-green{/if}"><a href="{:url($fv['rule'])}"><i class="{$fv['icon']}"></i> {$fv['name']}</a></li>
-            {/foreach}
-        </ul>
-        <ul class="layui-nav layui-layout-right">
-            <li class="layui-nav-item">
-                <a href="javascript:;">
-                    <img src="{$admin_user.avatar|getDefaultAvatar}" class="layui-nav-img">
-                    贤心
-                </a>
-                <dl class="layui-nav-child">
-                    <dd><a href="">基本资料</a></dd>
-                    <dd><a href="">安全设置</a></dd>
-                </dl>
-            </li>
-            <li class="layui-nav-item"><a href="{:url('/admin/auth.login/logout')}">退出</a></li>
-        </ul>
-    </div>
+    {include file="public/top"}
 
     <div class="layui-side layui-bg-black">
         <div class="layui-side-scroll">
-            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <!-- 左侧导航区域 -->
             <ul class="layui-nav layui-nav-tree"  lay-filter="test">
                 {foreach $left_menu as $sv}
                 <li class="layui-nav-item {if $sv['selected']}layui-nav-itemed{/if}">

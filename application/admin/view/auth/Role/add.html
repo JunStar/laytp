@@ -1,0 +1,29 @@
+{extend name="admin@public/form"}
+
+{block name="form"}
+    <div class="layui-form-item">
+        <label class="layui-form-label">父级</label>
+        <div class="layui-input-block">
+            <select id="pid" name="row[pid]">
+                <option value="0">------请选择------</option>
+                {foreach $role_list as $key=>$vo}
+                <option value="{$vo.id}">{$vo.name}</option>
+                {/foreach}
+            </select>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">角色名</label>
+        <div class="layui-input-block">
+            <input type="text" name="row[name]" lay-verify="required" placeholder="请输入角色名" class="layui-input" lay-verType="tips">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">权限设置</label>
+        <div class="layui-input-block">
+            <div id="treeview"></div>
+        </div>
+    </div>
+{/block}

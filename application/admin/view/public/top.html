@@ -1,0 +1,21 @@
+<div class="layui-header">
+    <div class="layui-logo">LayTp 1.0</div>
+    <ul class="layui-nav layui-layout-left">
+        {foreach $first_menu as $fv}
+        <li class="layui-nav-item {if $fv['selected']}layui-bg-green{/if}"><a href="{:url($fv['rule'])}"><i class="{$fv['icon']}"></i> {$fv['name']}</a></li>
+        {/foreach}
+    </ul>
+    <ul class="layui-nav layui-layout-right">
+        <li class="layui-nav-item">
+            <a href="javascript:;">
+                <img src="{$admin_user.avatar|getDefaultAvatar}" class="layui-nav-img">
+                贤心
+            </a>
+            <dl class="layui-nav-child">
+                <dd><a href="">基本资料</a></dd>
+                <dd><a href="">安全设置</a></dd>
+            </dl>
+        </li>
+        <li class="layui-nav-item"><a href="{:url('/admin/auth.login/logout')}">退出</a></li>
+    </ul>
+</div>
