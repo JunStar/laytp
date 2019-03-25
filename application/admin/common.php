@@ -83,3 +83,11 @@ function filterPostData($post){
     }
     return $post;
 }
+
+function getDefaultAvatar($avatar){
+    if(!$avatar){
+        return '/static/admin/image/default_avatar.png';
+    }else{
+        return $avatar;
+    }
+}

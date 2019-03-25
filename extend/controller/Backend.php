@@ -30,6 +30,7 @@ class Backend extends Controller
     public function auth(){
         $admin_user_id = Session::get('admin_user_id');
         $admin_user = model('auth.User')->get($admin_user_id);
+        $this->assign('admin_user', $admin_user);
     }
 
     //设置菜单
