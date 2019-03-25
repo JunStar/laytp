@@ -15,11 +15,16 @@ class User extends Backend
      * @var app\admin\model\admin\User
      */
     protected $model;
+    protected $upload_field;
 
     public function initialize()
     {
         parent::initialize();
         $this->model = new \app\admin\model\auth\User();
+
+        $this->upload_field = [
+            'avatar'=>'images'
+        ];
     }
 
     //添加

@@ -26,6 +26,7 @@ layui.use(['junAdmin'],function() {
             , cols: [[
                 {field:'id',title:'ID',fixed:'left',align:'center',width:80}
 				,{field:'name',title:'用户名',align:'center'}
+				,{field:'avatar',title:'头像',align:'center'}
 				,{field:'is_super_manage',title:'是否为超管',align:'center'}
 				,{field:'create_time',title:'创建时间',align:'center'}
 				,{field:'operation',title:'操作',align:'center',toolbar:'#operation',fixed:'right',width:200}

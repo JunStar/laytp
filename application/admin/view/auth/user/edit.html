@@ -25,26 +25,28 @@
     </div>
 
     <div class="layui-form-item">
-        <label class="layui-form-label" title="单个图片">单个图片</label>
+        <label class="layui-form-label" title="单个图片">头像</label>
         <div class="layui-input-block">
             <div class="layui-upload">
-                <div class="layui-inline" style="width: 82%;"><input type="text" class="layui-input" name="row[single_img]" id="input_single_img" value="{$single_img}" /></div>
+                <div class="layui-inline" style="width: 82%;"><input type="text" class="layui-input" name="row[avatar]" id="input_avatar" value="{$avatar}" /></div>
                 <div class="layui-inline">
                     <button type="button" class="layui-btn layui-btn-primary pull-left"
-                            id="single_img"
+                            id="avatar"
                             upload="true"
                             accept="images"
                             single_multi="single"
                     >选择上传</button>
                 </div>
                 <div class="pic-more">
-                    <ul class="pic-more-upload-list" id="preview_single_img">
+                    <ul class="pic-more-upload-list" id="preview_avatar">
+                        {if $avatar}
                         <li class="item_img">
                             <div class="operate">
-                                <i class="upload_img_close layui-icon" file_url_data="{$single_img}"></i>
+                                <i class="upload_img_close layui-icon" file_url_data="{$avatar}"></i>
                             </div>
-                            <img src="{$single_img}" class="img">
+                            <img src="{$avatar}" class="img">
                         </li>
+                        {/if}
                     </ul>
                 </div>
             </div>

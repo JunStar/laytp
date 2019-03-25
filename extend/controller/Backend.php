@@ -6,6 +6,7 @@
 namespace controller;
 
 use think\Controller;
+use think\facade\Session;
 
 class Backend extends Controller
 {
@@ -27,7 +28,7 @@ class Backend extends Controller
 
     //权限检测
     public function auth(){
-
+        $admin_user = Session::get('admin_user');
     }
 
     //设置菜单
