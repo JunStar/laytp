@@ -36,7 +36,7 @@ class Role extends Backend
     {
         if( $this->request->isAjax() && $this->request->isPost() ){
             $post = filterPostData($this->request->post("row/a"));
-            if( $this->model->insert($post) ){
+            if( $this->model->save($post) ){
                 return $this->success('操作成功');
             }else{
                 return $this->error('操作失败');
@@ -50,6 +50,37 @@ class Role extends Backend
             $node_list[] = ['id'=>$v['id'],'parent'=>$parent,'text'=>$v['name'],'type'=>'menu','state'=>['selected'=>false]];
         }
         $this->assign('node_list', $node_list);
+        return $this->fetch();
+    }
+
+    //编辑
+    public function edit(){
+        $edit_where['id'] = $this->request->param('id');
+
+        if( $this->request->isAjax() && $this->request->isPost() ){
+            $post = filterPostData($this->request->post("row/a"));
+            $update_res = $this->model->where($edit_where)->update($post);
+            if( $update_res ){
+                return $this->success('操作成功');
+            }else if( $update_res === 0 ){
+                return $this->success('未做修改');
+            }else if( $update_res === null ){
+                return $this->error('操作失败');
+            }
+        }
+
+        $assign = $this->model->where($edit_where)->find()->toArray();
+        $this->assign($assign);
+
+        $menu_list = model('auth.Menu')->field('id,pid,name')->order('sort',' desc')->select()->toArray();
+        $node_list = [];
+        $now_node_list = explode(',', $assign['menu_ids']);
+        foreach($menu_list as $k=>$v){
+            $parent = $v['pid'] ? $v['pid'] : '#';
+            $node_list[] = ['id'=>$v['id'],'parent'=>$parent,'text'=>$v['name'],'type'=>'menu','state'=>['selected'=>in_array( $v['id'], $now_node_list ) ? true : false]];
+        }
+        $this->assign('node_list', $node_list);
+
         return $this->fetch();
     }
 }

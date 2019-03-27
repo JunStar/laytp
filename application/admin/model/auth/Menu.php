@@ -9,4 +9,5 @@ use model\Backend;
 class Menu extends Backend
 {
     protected $name = 'admin_menu';
+
 }
