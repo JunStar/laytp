@@ -33,6 +33,9 @@ class User extends Backend
     {
         if( $this->request->isAjax() && $this->request->isPost() ){
             $post = filterPostData($this->request->post("row/a"));
+            if( $post['password'] != $post['re_password']){
+                return $this->error('两次密码输入不相同');
+            }
             $post['password'] = password_hash($post['password'], PASSWORD_DEFAULT);
             $post['avatar'] = $post['avatar'] ? $post['avatar'] : '/static/admin/image/default_avatar.png';
             if( $this->model->save($post) ){
@@ -59,12 +62,17 @@ class User extends Backend
 
         if( $this->request->isAjax() && $this->request->isPost() ){
             $post = filterPostData($this->request->post("row/a"));
+            if( $post['password'] != $post['re_password']){
+                return $this->error('两次密码输入不相同');
+            }
             $role_ids = explode( ',', $post['role_ids'] );
             unset($post['role_ids']);
             if($post['password']){
                 $post['password'] = password_hash($post['password'], PASSWORD_DEFAULT);
+                unset($post['re_password']);
             }else{
                 unset($post['password']);
+                unset($post['re_password']);
             }
             $update_res = $this->model->where($edit_where)->update($post);
             if( $update_res ){
