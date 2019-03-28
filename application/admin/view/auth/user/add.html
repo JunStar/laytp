@@ -25,7 +25,7 @@
     </div>
 
     <div class="layui-form-item">
-        <label class="layui-form-label" title="单个图片">单个图片</label>
+        <label class="layui-form-label" title="单个图片">头像</label>
         <div class="layui-input-block">
             <div class="layui-upload">
                 <div class="layui-inline" style="width: 82%;"><input type="text" class="layui-input" name="row[avatar]" id="input_avatar" /></div>
@@ -41,6 +41,20 @@
                     <ul class="pic-more-upload-list" id="preview_avatar"></ul>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label" title="">角色</label>
+        <div class="layui-input-block">
+            <select name="row[role_ids]" id="role_ids"
+                    xm-select="role_ids"
+                    xm-select-search="{:url('admin/auth.role/index')}"
+                    xm-select-search-field="name"
+                    xm-select-search-show-field="name"
+                    xm-select-search-condition="LIKE"
+                    xm-select-height="36px">
+            </select>
         </div>
     </div>
 {/block}

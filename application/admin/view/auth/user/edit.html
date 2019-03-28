@@ -52,4 +52,19 @@
             </div>
         </div>
     </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label" title="">角色</label>
+        <div class="layui-input-block">
+            <select name="row[role_ids]" id="role_ids"
+                    xm-select="role_ids"
+                    xm-select-search="{:url('admin/auth.role/index')}"
+                    xm-select-search-field="name"
+                    xm-select-search-show-field="name"
+                    xm-select-search-condition="LIKE"
+                    xm-select-search-selected-data="{$role_ids}"
+                    xm-select-height="36px">
+            </select>
+        </div>
+    </div>
 {/block}

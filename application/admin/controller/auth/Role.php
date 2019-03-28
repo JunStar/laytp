@@ -4,6 +4,7 @@
  */
 namespace app\admin\controller\auth;
 
+use app\admin\model\auth\RoleRelMenu;
 use controller\Backend;
 use library\Tree;
 
@@ -36,7 +37,15 @@ class Role extends Backend
     {
         if( $this->request->isAjax() && $this->request->isPost() ){
             $post = filterPostData($this->request->post("row/a"));
+            $menu_ids = explode( ',', $post['menu_ids'] );
+            unset($post['menu_ids']);
             if( $this->model->save($post) ){
+                $data = [];
+                foreach( $menu_ids as $k=>$v ){
+                    $data[] = ['menu_id' => $v, 'role_id' => $this->model->id];
+                }
+                $rel_model = new RoleRelMenu();
+                $rel_model->saveAll($data);
                 return $this->success('操作成功');
             }else{
                 return $this->error('操作失败');
@@ -59,11 +68,17 @@ class Role extends Backend
 
         if( $this->request->isAjax() && $this->request->isPost() ){
             $post = filterPostData($this->request->post("row/a"));
+            $menu_ids = explode( ',', $post['menu_ids'] );
+            unset($post['menu_ids']);
             $update_res = $this->model->where($edit_where)->update($post);
-            if( $update_res ){
+            if( $update_res || $update_res === 0 ){
+                $data = [];
+                foreach( $menu_ids as $k=>$v ){
+                    $data[] = ['menu_id' => $v, 'role_id' => $edit_where['id']];
+                }
+                $rel_model = new RoleRelMenu();
+                $rel_model->saveAll($data);
                 return $this->success('操作成功');
-            }else if( $update_res === 0 ){
-                return $this->success('未做修改');
             }else if( $update_res === null ){
                 return $this->error('操作失败');
             }
@@ -74,7 +89,7 @@ class Role extends Backend
 
         $menu_list = model('auth.Menu')->field('id,pid,name')->order('sort',' desc')->select()->toArray();
         $node_list = [];
-        $now_node_list = explode(',', $assign['menu_ids']);
+        $now_node_list = model('auth.RoleRelMenu')->where('role_id','=', $edit_where['id'])->column('menu_id');
         foreach($menu_list as $k=>$v){
             $parent = $v['pid'] ? $v['pid'] : '#';
             $node_list[] = ['id'=>$v['id'],'parent'=>$parent,'text'=>$v['name'],'type'=>'menu','state'=>['selected'=>in_array( $v['id'], $now_node_list ) ? true : false]];
