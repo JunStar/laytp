@@ -466,7 +466,11 @@ layui.define([
 
             //搜索表单进行提交时，触发的方法
             function index(data){
-                func_controller.table_render(data.field);
+                if(typeof func_controller != "undefined"){
+                    func_controller.table_render(data.field);
+                }else{
+                    do_update(data);
+                }
             }
 
             //添加和编辑的表单进行提交时触发的方法
@@ -480,7 +484,7 @@ layui.define([
                         if( res.code == 1 ){
                             $.toastr.success(res.msg);
                             // junAdmin.facade.success(res.msg);
-                            if(parent.func_controller !== undefined){
+                            if(typeof parent.func_controller != "undefined"){
                                 parent.func_controller.table_render();
                             }
                             parent.layui.layer.closeAll();

@@ -3,28 +3,29 @@
 {block name="form"}
 <fieldset class="layui-elem-field">
     <legend>角色配置</legend>
-    <div class="layui-field-box layui-form layui-form-pane">
+    <form class="layui-field-box layui-form layui-form-pane">
         <div class="layui-form-item">
             <label class="layui-form-label">开启内容权限</label>
             <div class="layui-input-inline">
-                <input type="checkbox" checked="" name="open" lay-skin="switch" lay-filter="switchTest" lay-text="ON|OFF">
+                <input type="hidden" name="row[open_content_range]" value="0">
+                <input type="checkbox" name="row[open_content_range]" {if $open_content_range}checked="checked"{/if} lay-skin="switch" lay-filter="switchTest" lay-text="开启|关闭" value="1">
             </div>
-            <div class="layui-form-mid layui-word-aux">内容权限：列表查看权限，上级角色可以看到自己和子级角色添加的数据</div>
+            <div class="layui-form-mid layui-word-aux">role.open_content_range 内容权限：列表查看权限，上级角色可以看到自己和子级角色添加的数据</div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">内容所属字段</label>
             <div class="layui-input-inline">
-                <input type="text" name="password" lay-verify="pass" placeholder="请输入密码" autocomplete="off" class="layui-input" value="admin_id">
+                <input type="text" name="row[bt_field]" placeholder="请输入字段名" autocomplete="off" class="layui-input" value="{$bt_field}">
             </div>
-            <div class="layui-form-mid layui-word-aux">字段值记录数据是由谁添加的,比如文章表article里面有一个admin_id字段，admin_id字段的值记录是哪个管理员添加的文章</div>
+            <div class="layui-form-mid layui-word-aux">role.bt_field 字段值记录数据是由谁添加的</div>
         </div>
-    </div>
-    <div class="form-footer">
-        <div class="layui-form-item">
-            <div class="layui-input-block">
-                <button class="layui-btn layui-btn-sm" lay-submit lay-filter="*">立即提交</button>
+        <div class="form-footer">
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn layui-btn-sm" lay-submit lay-filter="*">立即提交</button>
+                </div>
             </div>
         </div>
-    </div>
+    </form>
 </fieldset>
 {/block}
