@@ -4,7 +4,6 @@
  */
 namespace app\admin\controller\auth;
 
-use app\admin\model\auth\RoleRelMenu;
 use controller\Backend;
 use library\Tree;
 
@@ -44,8 +43,7 @@ class Role extends Backend
                 foreach( $menu_ids as $k=>$v ){
                     $data[] = ['menu_id' => $v, 'role_id' => $this->model->id];
                 }
-                $rel_model = new RoleRelMenu();
-                $rel_model->saveAll($data);
+                model('auth.RoleRelMenu')->saveAll($data);
                 return $this->success('操作成功');
             }else{
                 return $this->error('操作失败');
@@ -76,8 +74,7 @@ class Role extends Backend
                 foreach( $menu_ids as $k=>$v ){
                     $data[] = ['menu_id' => $v, 'role_id' => $edit_where['id']];
                 }
-                $rel_model = new RoleRelMenu();
-                $rel_model->saveAll($data);
+                model('auth.RoleRelMenu')->saveAll($data);
                 return $this->success('操作成功');
             }else if( $update_res === null ){
                 return $this->error('操作失败');

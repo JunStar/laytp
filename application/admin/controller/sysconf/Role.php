@@ -1,5 +1,5 @@
 <?php
-namespace app\admin\controller\Conf;
+namespace app\admin\controller\sysConf;
 
 use controller\Backend;
 

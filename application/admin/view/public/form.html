@@ -13,48 +13,56 @@
     {block name="style"}
     <link rel="stylesheet" href="__STATIC__/library/layui/css/layui.css" media="all">
     <link rel="stylesheet" href="__STATIC__/admin/css/base.css" media="all">
+    <link rel="stylesheet" href="__STATIC__/admin/css/form.css" media="all">
+    <link rel="stylesheet" href="__STATIC__/library/toastr/css/toastr.css" media="all">
     <link rel="stylesheet" href="__STATIC__/library/layui/css/modules/formSelects.css" media="all">
     {/block}
     {include file="public/js_global_var"}
 </head>
-<body>
-<div style="padding: 15px 50px 55px 15px;">
-<form class="layui-form layui-form-pane">
-    <!-- 表单内容部分 -->
-    {block name="form"}{/block}
-    <!-- 表单底部按钮部分 -->
-    {block name="form_footer"}
-    <style>
-        .form-footer{
-            position:fixed;
-            left:0;
-            right:0;
-            bottom:0;
-            height:44px;
-            line-height:44px;
-            padding: 0 15px;
-            background-color:#eee;
-        }
-    </style>
-    <div class="form-footer">
-        <div class="layui-form-item">
-            <div class="layui-input-block">
-                <button class="layui-btn layui-btn-sm" lay-submit lay-filter="*">立即提交</button>
-                <button type="reset" class="layui-btn layui-btn-primary layui-btn-sm">重置</button>
-            </div>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    {block name="menus"}
+    {include file="public/top"}
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域 -->
+            <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                {foreach $left_menu as $sv}
+                <li class="layui-nav-item {if $sv['selected']}layui-nav-itemed{/if}">
+                    <a class="" href="javascript:void(0);"><i class="{$sv['icon']}"></i> {$sv['name']}</a>
+                    {if $sv['child']}
+                    <dl class="layui-nav-child">
+                        {foreach $sv['child'] as $tv}
+                        <dd {if $tv['selected']}class="layui-bg-green"{/if}><a href="{:url($tv['rule'])}">&nbsp;&nbsp;<i class="{$tv['icon']}"></i> {$tv['name']}</a></dd>
+                        {/foreach}
+                    </dl>
+                    {/if}
+                </li>
+                {/foreach}
+            </ul>
         </div>
     </div>
     {/block}
-</form>
+
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div style="padding: 5px 15px 0 15px;">
+            <!-- 搜索表单部分 -->
+            {block name="form"}{/block}
+        </div>
+    </div>
+
+    <!-- 底部固定区域 -->
+    <div class="layui-footer">
+        © junadmin.phpby.com
+    </div>
 </div>
-
 {block name="script"}
-<script type="text/javascript" src="__STATIC__/library/layui/layui.js" charset="utf-8"></script>
-<script type="text/javascript" src="__STATIC__/library/layui/layui_config.js" charset="utf-8"></script>
-<script type="text/javascript" src="__STATIC__/library/ueditor/ueditor.config.js" charset="utf-8"></script>
-<script type="text/javascript" src="__STATIC__/library/ueditor/ueditor.all.js" charset="utf-8"></script>
+<script src="__STATIC__/library/layui/layui.js" charset="utf-8"></script>
+<script src="__STATIC__/library/layui/layui_config.js" charset="utf-8"></script>
 {/block}
-
 <!-- js模板部分 -->
 {block name="js_template"}{/block}
 </body>

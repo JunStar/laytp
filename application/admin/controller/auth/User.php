@@ -2,7 +2,6 @@
 
 namespace app\admin\controller\auth;
 
-use app\admin\model\auth\RoleRelUser;
 use controller\Backend;
 
 /**
@@ -44,8 +43,7 @@ class User extends Backend
                 foreach( $role_ids as $k=>$v ){
                     $data[] = ['role_id' => $v, 'admin_id' => $this->model->id];
                 }
-                $rel_model = new RoleRelUser();
-                $rel_model->saveAll($data);
+                model('auth.RoleRelUser')->saveAll($data);
                 return $this->success('操作成功');
             }else{
                 return $this->error('操作失败');
@@ -58,7 +56,7 @@ class User extends Backend
     public function edit()
     {
         $edit_where['id'] = $this->request->param('id');
-        $rel_model = new RoleRelUser();
+        $rel_model = model('auth.RoleRelUser');
 
         if( $this->request->isAjax() && $this->request->isPost() ){
             $post = filterPostData($this->request->post("row/a"));
@@ -75,15 +73,7 @@ class User extends Backend
                 unset($post['re_password']);
             }
             $update_res = $this->model->where($edit_where)->update($post);
-            if( $update_res ){
-                $rel_model->where('admin_id','=',$edit_where['id'])->delete();
-                $data = [];
-                foreach( $role_ids as $k=>$v ){
-                    $data[] = ['role_id' => $v, 'admin_id' => $edit_where['id']];
-                }
-                $rel_model->saveAll($data);
-                return $this->success('操作成功');
-            }else if( $update_res === 0 ){
+            if( $update_res || $update_res === 0 ){
                 $rel_model->where('admin_id','=',$edit_where['id'])->delete();
                 $data = [];
                 foreach( $role_ids as $k=>$v ){
