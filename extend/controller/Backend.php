@@ -82,7 +82,7 @@ class Backend extends Controller
             $now_first_menu = $now_second_menu;
         }
         //获取所有一级菜单
-        $first_menu = model('auth.Menu')->where('pid','=',0)->select()->toArray();
+        $first_menu = model('auth.Menu')->where('pid','=',0)->order('sort','desc')->select()->toArray();
         foreach($first_menu as $k=>$v){
             //设置选中的一级菜单
             if($v['id'] == $now_first_menu['id']){
@@ -93,7 +93,7 @@ class Backend extends Controller
         }
         $this->assign('first_menu', $first_menu);
         //获取当前一级菜单下的二级和三级菜单
-        $second_menu = model('auth.Menu')->where('pid','=',$now_first_menu['id'])->order('sort desc')->select()->toArray();
+        $second_menu = model('auth.Menu')->where('pid','=',$now_first_menu['id'])->order('sort','desc')->select()->toArray();
         foreach($second_menu as $sk=>$sv){
             //设置选中的二级菜单
             if($sv['id'] == $now_second_menu['id']){
@@ -101,7 +101,7 @@ class Backend extends Controller
             }else{
                 $second_menu[$sk]['selected'] = false;
             }
-            $third_menu = model('auth.Menu')->where('pid','=',$sv['id'])->order('sort desc')->select()->toArray();
+            $third_menu = model('auth.Menu')->where('pid','=',$sv['id'])->order('sort','desc')->select()->toArray();
             if( count($third_menu) ){
                 foreach($third_menu as $tk=>$tv){
                     //设置选中的三级菜单

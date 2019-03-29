@@ -84,7 +84,13 @@ class Role extends Backend
         $assign = $this->model->where($edit_where)->find()->toArray();
         $this->assign($assign);
 
-        $menu_list = model('auth.Menu')->field('id,pid,name,is_menu')->order('sort',' desc')->select()->toArray();
+        $menu_list = model('auth.Menu')->field('id,pid,name,is_menu')->order('sort','desc')->select()->toArray();
+        $menu_tree_obj = Tree::instance();
+        $menu_tree_obj->icon = ['','',''];
+        $menu_tree_obj->nbsp = '';
+        $menu_tree_obj->init($menu_list);
+        $menu_list = $menu_tree_obj->getTreeList($menu_tree_obj->getTreeArray(0));
+
         $node_list = [];
         $now_node_list = model('auth.RoleRelMenu')->where('role_id','=', $edit_where['id'])->column('menu_id');
         foreach($menu_list as $k=>$v){
