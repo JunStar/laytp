@@ -88,10 +88,10 @@ class Backend extends Controller
             $now_first_menu = $now_second_menu;
         }
         //获取所有一级菜单
-        $first_menu_where = [
-            ['pid','=',0]
-            ,['rule','in',$this->rule_list]
-        ];
+        $first_menu_where[] = ['pid','=',0];
+        if( !$this->admin_user->is_super_manager ){
+            $first_menu_where[] =['rule','in',$this->rule_list];
+        }
         $first_menu = model('auth.Menu')->where($first_menu_where)->order('sort','desc')->select()->toArray();
         foreach($first_menu as $k=>$v){
             //设置选中的一级菜单
@@ -103,10 +103,10 @@ class Backend extends Controller
         }
         $this->assign('first_menu', $first_menu);
         //获取当前一级菜单下的二级和三级菜单
-        $second_menu_where = [
-            ['pid','=',$now_first_menu['id']]
-            ,['rule','in',$this->rule_list]
-        ];
+        $second_menu_where[] = ['pid','=',$now_first_menu['id']];
+        if( !$this->admin_user->is_super_manager ){
+            $second_menu_where[] =['rule','in',$this->rule_list];
+        }
         $second_menu = model('auth.Menu')->where($second_menu_where)->order('sort','desc')->select()->toArray();
         foreach($second_menu as $sk=>$sv){
             //设置选中的二级菜单
@@ -115,10 +115,11 @@ class Backend extends Controller
             }else{
                 $second_menu[$sk]['selected'] = false;
             }
-            $third_menu_where = [
-                ['pid','=',$sv['id']]
-                ,['rule','in',$this->rule_list]
-            ];
+            $third_menu_where = [];
+            $third_menu_where[] = ['pid','=',$sv['id']];
+            if( !$this->admin_user->is_super_manager ){
+                $third_menu_where[] =['rule','in',$this->rule_list];
+            }
             $third_menu = model('auth.Menu')->where($third_menu_where)->order('sort','desc')->select()->toArray();
             if( count($third_menu) ){
                 foreach($third_menu as $tk=>$tv){
