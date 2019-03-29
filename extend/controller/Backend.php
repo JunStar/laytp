@@ -14,12 +14,15 @@ class Backend extends Controller
     public $module;
     public $controller;
     public $action;
+    public $now_node;
     public $admin_user;
+    public $rule_list;
 
     public function initialize(){
         $this->module = $this->request->module();
         $this->controller = strtolower($this->request->controller());
         $this->action = strtolower($this->request->action());
+        $this->now_node = $this->module . '/' . $this->controller . '/' . $this->action;
 
         $this->auth();
         $this->js_global_var();
@@ -40,20 +43,23 @@ class Backend extends Controller
         //当前登录用户角色
         $role_ids = model('auth.RoleRelUser')->where('admin_id','=',$admin_user_id)->column('role_id');
         $menu_ids = array_unique( model('auth.RoleRelMenu')->where('role_id','in',$role_ids)->column('menu_id') );
-        $rule_list = array_unique( model('auth.Menu')->where('id','in',$menu_ids)->column('rule') );
-        $now_node = $this->module . '/' . $this->controller . '/' . $this->action;
+        $where = [
+            ['id','in',$menu_ids]
+            ,['is_menu','=',0]
+        ];
+        $rule_list = array_unique( model('auth.Menu')->where($where)->column('rule') );
+        $this->rule_list = $rule_list;
+        $this->assign('rule_list', $this->rule_list);
 
-        if( !in_array($now_node, $rule_list) ){
-//            $this->error('无权访问');
+        if( !in_array($this->now_node, $rule_list) ){
+            $this->error('无权访问');
         }
     }
 
     //设置菜单
     public function menu(){
-        //当前节点
-        $now_node = $this->module . '/' . $this->controller . '/' . $this->action;
         //当前菜单信息
-        $now_node_where['rule'] = $now_node;
+        $now_node_where['rule'] = $this->now_node;
         $now_node_where['is_menu'] = 1;
         $now_menus = model('auth.Menu')->where($now_node_where)->order('pid desc')->select()->toArray();
         if( !$now_menus ){
@@ -82,7 +88,11 @@ class Backend extends Controller
             $now_first_menu = $now_second_menu;
         }
         //获取所有一级菜单
-        $first_menu = model('auth.Menu')->where('pid','=',0)->order('sort','desc')->select()->toArray();
+        $first_menu_where = [
+            ['pid','=',0]
+            ,['rule','in',$this->rule_list]
+        ];
+        $first_menu = model('auth.Menu')->where($first_menu_where)->order('sort','desc')->select()->toArray();
         foreach($first_menu as $k=>$v){
             //设置选中的一级菜单
             if($v['id'] == $now_first_menu['id']){
@@ -93,7 +103,11 @@ class Backend extends Controller
         }
         $this->assign('first_menu', $first_menu);
         //获取当前一级菜单下的二级和三级菜单
-        $second_menu = model('auth.Menu')->where('pid','=',$now_first_menu['id'])->order('sort','desc')->select()->toArray();
+        $second_menu_where = [
+            ['pid','=',$now_first_menu['id']]
+            ,['rule','in',$this->rule_list]
+        ];
+        $second_menu = model('auth.Menu')->where($second_menu_where)->order('sort','desc')->select()->toArray();
         foreach($second_menu as $sk=>$sv){
             //设置选中的二级菜单
             if($sv['id'] == $now_second_menu['id']){
@@ -101,11 +115,15 @@ class Backend extends Controller
             }else{
                 $second_menu[$sk]['selected'] = false;
             }
-            $third_menu = model('auth.Menu')->where('pid','=',$sv['id'])->order('sort','desc')->select()->toArray();
+            $third_menu_where = [
+                ['pid','=',$sv['id']]
+                ,['rule','in',$this->rule_list]
+            ];
+            $third_menu = model('auth.Menu')->where($third_menu_where)->order('sort','desc')->select()->toArray();
             if( count($third_menu) ){
                 foreach($third_menu as $tk=>$tv){
                     //设置选中的三级菜单
-                    if( $tv['rule'] == $now_node ){
+                    if( $tv['rule'] == $this->now_node ){
                         $third_menu[$tk]['selected'] = true;
                     }else{
                         $third_menu[$tk]['selected'] = false;
