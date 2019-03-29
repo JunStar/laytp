@@ -84,12 +84,13 @@ class Role extends Backend
         $assign = $this->model->where($edit_where)->find()->toArray();
         $this->assign($assign);
 
-        $menu_list = model('auth.Menu')->field('id,pid,name')->order('sort',' desc')->select()->toArray();
+        $menu_list = model('auth.Menu')->field('id,pid,name,is_menu')->order('sort',' desc')->select()->toArray();
         $node_list = [];
         $now_node_list = model('auth.RoleRelMenu')->where('role_id','=', $edit_where['id'])->column('menu_id');
         foreach($menu_list as $k=>$v){
             $parent = $v['pid'] ? $v['pid'] : '#';
-            $node_list[] = ['id'=>$v['id'],'parent'=>$parent,'text'=>$v['name'],'type'=>'menu','state'=>['selected'=>in_array( $v['id'], $now_node_list ) ? true : false]];
+            $state = ['selected' => $v['is_menu'] ? false : in_array($v['id'], $now_node_list)];
+            $node_list[] = ['id'=>$v['id'],'parent'=>$parent,'text'=>$v['name'],'type'=>'menu','state'=>$state];
         }
         $this->assign('node_list', $node_list);
 

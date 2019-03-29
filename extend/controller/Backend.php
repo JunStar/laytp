@@ -17,21 +17,35 @@ class Backend extends Controller
     public $admin_user;
 
     public function initialize(){
-        $this->auth();
-
         $this->module = $this->request->module();
         $this->controller = strtolower($this->request->controller());
         $this->action = strtolower($this->request->action());
 
+        $this->auth();
         $this->js_global_var();
         $this->menu();
     }
 
     //权限检测
     public function auth(){
+        //当前登录用户信息
         $admin_user_id = Session::get('admin_user_id');
         $this->admin_user = model('auth.User')->get($admin_user_id);
         $this->assign('admin_user', $this->admin_user);
+
+        if($this->admin_user->is_super_manager){
+            return true;
+        }
+
+        //当前登录用户角色
+        $role_ids = model('auth.RoleRelUser')->where('admin_id','=',$admin_user_id)->column('role_id');
+        $menu_ids = array_unique( model('auth.RoleRelMenu')->where('role_id','in',$role_ids)->column('menu_id') );
+        $rule_list = array_unique( model('auth.Menu')->where('id','in',$menu_ids)->column('rule') );
+        $now_node = $this->module . '/' . $this->controller . '/' . $this->action;
+
+        if( !in_array($now_node, $rule_list) ){
+//            $this->error('无权访问');
+        }
     }
 
     //设置菜单
@@ -40,6 +54,7 @@ class Backend extends Controller
         $now_node = $this->module . '/' . $this->controller . '/' . $this->action;
         //当前菜单信息
         $now_node_where['rule'] = $now_node;
+        $now_node_where['is_menu'] = 1;
         $now_menus = model('auth.Menu')->where($now_node_where)->order('pid desc')->select()->toArray();
         if( !$now_menus ){
             $first_menu = model('auth.Menu')->where('pid','=',0)->select()->toArray();

@@ -42,8 +42,8 @@
         <label class="layui-form-label" title="是否为超管">是否为超管</label>
         <div class="layui-input-block">
             <!-- 隐藏域设置开关未选中时需要传递的参数值 -->
-            <input type="hidden" name="row[is_super_manage]" value="0" />
-            <input type="checkbox" name="row[is_super_manage]" lay-skin="switch" lay-text="是|否" value="1" {if 1 == $is_super_manage}checked="checked"{/if} />
+            <input type="hidden" name="row[is_super_manager]" value="0" />
+            <input type="checkbox" name="row[is_super_manager]" lay-skin="switch" lay-text="是|否" value="1" {if 1 == $is_super_manager}checked="checked"{/if} />
         </div>
     </div>
 
@@ -51,7 +51,7 @@
         <label class="layui-form-label" title="单个图片">头像</label>
         <div class="layui-input-block">
             <div class="layui-upload">
-                <div class="layui-inline" style="width: 82%;"><input type="text" class="layui-input" name="row[avatar]" id="input_avatar" value="{$avatar}" /></div>
+                <div class="layui-inline" style="width: 81%;"><input type="text" class="layui-input" name="row[avatar]" id="input_avatar" value="{$avatar}" /></div>
                 <div class="layui-inline">
                     <button type="button" class="layui-btn layui-btn-primary pull-left"
                             id="avatar"

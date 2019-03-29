@@ -6,10 +6,19 @@ layui.use(['junAdmin'],function() {
     ;
 
     func_controller.table_render = function (where) {
+        let toolbar_node ='';
+        if(where == undefined){
+            where = {'is_menu':1};
+        }
+        if(where.is_menu == 'all'){
+            toolbar_node = '#menu_toolbar_is_menu';
+        }else{
+            toolbar_node = '#menu_toolbar_is_menu_all';
+        }
         layui.table.render({
             elem: '.layui-hide-sm'
             , url: window.location.href
-            , toolbar: '#menu_toolbar'
+            , toolbar: toolbar_node
             , even: true
             , where: where
             , method: 'POST'

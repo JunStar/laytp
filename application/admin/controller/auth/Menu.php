@@ -15,7 +15,11 @@ class Menu extends Backend
     public function initialize(){
         parent::initialize();
         $this->model = model('auth.Menu');
-        $where = $this->build_params();
+        $is_menu = $this->request->param('is_menu');
+        $where = [];
+        if($is_menu != 'all'){
+            $where['is_menu'] = 1;
+        }
         $data = $this->model->where($where)->order('sort','desc')->select()->toArray();
         $menu_tree_obj = Tree::instance();
         $menu_tree_obj->init($data);
@@ -37,7 +41,7 @@ class Menu extends Backend
         $field = $this->request->param('field');
         $field_val = $this->request->param('field_val');
         $save[$field] = $field_val;
-        if( model('Menu')->where($where)->update($save) ){
+        if( model('auth.Menu')->where($where)->update($save) ){
             return $this->success('操作成功');
         }else{
             return $this->error('操作失败');

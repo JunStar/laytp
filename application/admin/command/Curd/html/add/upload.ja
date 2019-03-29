@@ -1,5 +1,5 @@
 <div class="layui-upload">
-            <div class="layui-inline" style="width: 82%;"><input type="text" class="layui-input" name="row[{%field_name%}]" id="input_{%field_name%}" /></div>
+            <div class="layui-inline" style="width: 81%;"><input type="text" class="layui-input" name="row[{%field_name%}]" id="input_{%field_name%}" /></div>
             <div class="layui-inline">
                 <button type="button" class="layui-btn layui-btn-primary pull-left"
                         id="{%field_name%}"

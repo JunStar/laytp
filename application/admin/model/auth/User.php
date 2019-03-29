@@ -16,7 +16,7 @@ class User extends Model
 
     //数组常量
     public $const = [
-		'is_super_manage' => [
+		'is_super_manager' => [
 			'0'=>'否'
 			,'1'=>'是'
 		],

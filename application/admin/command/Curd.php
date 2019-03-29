@@ -437,7 +437,7 @@ EOD;
     protected function get_search_form_group($field, $content)
     {
         return <<<EOD
-    <div class="layui-inline" style="padding-left: 50px;">
+    <div class="layui-inline" style="padding-left: 35px;">
         <label class="layui-form-label" title="{$field}">{$field}</label>
         <div class="layui-input-inline">
             {$content}
@@ -449,7 +449,7 @@ EOD;
     protected function get_area_search_form_group($field, $content)
     {
         return <<<EOD
-    <div class="layui-inline" style="padding-left: 50px;">
+    <div class="layui-inline" style="padding-left: 35px;">
         <label class="layui-form-label" title="{$field}">{$field}</label>
         {$content}
     </div>

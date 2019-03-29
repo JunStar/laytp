@@ -9,7 +9,7 @@ layui.use(['junAdmin'],function() {
         layui.table.render({
             elem: '.layui-hide-sm'
             , url: window.location.href
-            , toolbar: '#menu_toolbar'
+            , toolbar: '#role_toolbar'
             , even: true
             , where: where
             , method: 'POST'

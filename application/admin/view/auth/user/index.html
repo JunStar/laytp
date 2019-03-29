@@ -3,7 +3,7 @@
 {block name="search_form"}
 <div class="layui-form layui-card-header" id="search-form" style="height:auto;padding:10px 0 0 0;display:none;">
 <form class="layui-form-item layui-form-pane">
-    <div class="layui-inline" style="padding-left: 50px;">
+    <div class="layui-inline" style="padding-left: 35px;">
         <label class="layui-form-label" title="用户名">用户名</label>
         <div class="layui-input-inline">
             <input type="text" name="search_param[name][value]" placeholder="请输入用户名" class="layui-input">
@@ -11,19 +11,19 @@
         </div>
     </div>
 
-    <div class="layui-inline" style="padding-left: 50px;">
+    <div class="layui-inline" style="padding-left: 35px;">
         <label class="layui-form-label" title="是否为超管">是否为超管</label>
         <div class="layui-input-inline">
-            <select name="search_param[is_super_manage][value]" placeholder="请输入是否为超管">
+            <select name="search_param[is_super_manager][value]" placeholder="请输入是否为超管">
 				<option value=""></option>
 				<option value="0">否</option>
 				<option value="1">是</option>
             </select>
-            <input type="hidden" name="search_param[is_super_manage][condition]" value="=">
+            <input type="hidden" name="search_param[is_super_manager][condition]" value="=">
         </div>
     </div>
 
-    <div class="layui-inline" style="padding-left: 50px;">
+    <div class="layui-inline" style="padding-left: 35px;">
         <label class="layui-form-label" title="创建时间">创建时间</label>
         <div class="layui-input-inline">
             <input type="text" class="layui-input" name="search_param[create_time][value]" id="create_time" laydate="true" laydate_type="datetime" laydate_range="true" placeholder="请选择时间">
@@ -31,7 +31,7 @@
         </div>
     </div>
 
-    <div class="layui-inline" style="padding-left: 50px;">
+    <div class="layui-inline" style="padding-left: 35px;">
         <button class="layui-btn layui-btn-primary" lay-submit lay-filter="*"><i class="layui-icon"></i> 搜 索</button>
     </div>
 </form>
@@ -45,7 +45,6 @@
 {/block}
 
 {block name="js_template"}
-{include file="public/js_tpl/search_condition_tpl"}
 {include file="public/js_tpl/toolbar_tpl"}
 {include file="public/js_tpl/operation_tpl"}
 {/block}
