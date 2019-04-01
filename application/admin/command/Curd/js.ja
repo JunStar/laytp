@@ -16,6 +16,7 @@ layui.use(['junAdmin'],function() {
     func_controller.table_render = function (where) {
         layui.table.render({
             elem: '.layui-hide-sm'
+            , id: table_id
             , url: window.location.href
             , toolbar: '#default_toolbar'
             , where: where

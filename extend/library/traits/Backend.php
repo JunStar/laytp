@@ -2,6 +2,8 @@
 
 namespace library\traits;
 
+use think\Exception;
+
 trait Backend
 {
     //查看
@@ -105,10 +107,14 @@ trait Backend
         $field = $this->request->param('field');
         $field_val = $this->request->param('field_val');
         $save[$field] = $field_val;
-        if( $this->model->where('id','in',$this->request->param('id'))->update($save) ){
-            return $this->success('操作成功');
-        }else{
-            return $this->error('操作失败');
+        try{
+            if( $this->model->where('id','in',$this->request->param('id'))->update($save) ){
+                return $this->success('操作成功');
+            }else{
+                return $this->error('操作失败');
+            }
+        }catch (Exception $e){
+            return $this->error($e->getMessage());
         }
     }
 

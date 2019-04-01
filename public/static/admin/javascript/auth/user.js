@@ -15,8 +15,8 @@ layui.use(['junAdmin'],function() {
     //表格渲染
     func_controller.table_render = function (where) {
         layui.table.render({
-            elem: '.layui-hide-sm',
-            id:table_id
+            elem: '.layui-hide-sm'
+            , id: table_id
             , url: window.location.href
             , toolbar: '#default_toolbar'
             , where: where
@@ -32,6 +32,7 @@ layui.use(['junAdmin'],function() {
 				,{field:'avatar',title:'头像',align:'center'}
 				,{field:'is_super_manager',title:'是否为超管',align:'center'}
 				,{field:'status',title:'账号状态',align:'center'}
+				,{field:'is_del',title:'在回收站',align:'center'}
 				,{field:'create_time',title:'创建时间',align:'center'}
 				,{field:'operation',title:'操作',align:'center',toolbar:'#operation',fixed:'right',width:200}
             ]]

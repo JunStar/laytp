@@ -48,7 +48,7 @@ class Curd extends Backend
                 'global' => json_encode($post_data['global'])
             ];
             if($is_exist){
-                $data['update_time'] = time();
+                $data['update_time'] = date('Y-m-d H:i:s');
                 $result = $this->field(true)->where(['table_name'=>$table_name])->update($data);
                 if( $result ){
                     $id = $this->where(['table_name'=>$table_name])->value('id');

@@ -256,13 +256,13 @@ class Curd extends Command
      */
     protected function set_js_param(){
         $tpl_name = 'js';
-        $cols = "";
-        $has_first_cols = false;//是否已经有了正常的第一行数据
+        $cols = "{type:'checkbox',fixed:'left'}\n\t\t\t\t,";
+        $has_first_cols = true;//是否已经有了正常的第一行数据
         //是否隐藏主键列
         if(!$this->curd_config['global']['hide_pk']){
             $has_first_cols = true;
             $pk = model('admin/InformationSchema')->getPkInfo($this->curd_config['table_name']);
-            $temp = "{field:'{$pk['pk']}',title:'{$pk['field_comment']}',fixed:'left',align:'center',width:80}\n";
+            $temp = "{field:'{$pk['pk']}',title:'{$pk['field_comment']}',align:'center',width:80}\n";
             $cols .= $temp;
         }else{
             $pk = model('admin/InformationSchema')->getPkInfo($this->curd_config['table_name']);
