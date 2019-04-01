@@ -265,12 +265,14 @@ layui.define([
 
         //layer提示操作成功
         success: function(text){
-            layui.layer.msg(text,{icon:1});
+            $.toastr.success(text);
+            // layui.layer.msg(text,{icon:1});
         },
 
         //layer提示操作失败
         error: function(text){
-            layui.layer.msg(text,{icon:2});
+            $.toastr.error(text);
+            // layui.layer.msg(text,{icon:2});
         },
 
         //表格点击编辑删除按钮
@@ -482,15 +484,15 @@ layui.define([
                     dataType: 'json',
                     success: function (res) {
                         if( res.code == 1 ){
-                            $.toastr.success(res.msg);
-                            // junAdmin.facade.success(res.msg);
+                            // $.toastr.success(res.msg);
+                            junAdmin.facade.success(res.msg);
                             if(typeof parent.func_controller != "undefined"){
                                 parent.func_controller.table_render();
                             }
                             parent.layui.layer.closeAll();
                         }else{
-                            // junAdmin.facade.error(res.msg);
-                            $.toastr.error(res.msg);
+                            junAdmin.facade.error(res.msg);
+                            // $.toastr.error(res.msg);
                         }
                     },
                     error: function (xhr) {
