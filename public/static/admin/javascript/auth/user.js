@@ -15,7 +15,8 @@ layui.use(['junAdmin'],function() {
     //表格渲染
     func_controller.table_render = function (where) {
         layui.table.render({
-            elem: '.layui-hide-sm'
+            elem: '.layui-hide-sm',
+            id:table_id
             , url: window.location.href
             , toolbar: '#default_toolbar'
             , where: where
@@ -24,7 +25,8 @@ layui.use(['junAdmin'],function() {
             , cellMinWidth: 80
             , page: true
             , cols: [[
-                {field:'id',title:'ID',fixed:'left',align:'center',width:80}
+                {type:'checkbox',fixed:'left'}
+                ,{field:'id',title:'ID',align:'center',width:80}
 				,{field:'username',title:'用户名',align:'center'}
 				,{field:'name',title:'姓名',align:'center'}
 				,{field:'avatar',title:'头像',align:'center'}

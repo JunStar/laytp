@@ -1,6 +1,31 @@
 <script type="text/html" id="default_toolbar">
-    <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm popup-frame" data-open="{:url($js_global_var['module'].'/'.$js_global_var['controller'].'/add')}"><i class="layui-icon">&#xe654;</i>添加</button>
-        <button class="layui-btn layui-btn-sm layui-btn-normal show-hidden-search-form"><i class="layui-icon">&#xe615;</i>筛选</button>
+    <!--<div class="layui-btn-container">-->
+        <!--<button class="layui-btn layui-btn-warm layui-btn-sm popup-frame" data-open="{:url($js_global_var['module'].'/'.$js_global_var['controller'].'/add')}"><i class="layui-icon">&#xe654;</i>添加</button>-->
+        <!--<button class="layui-btn layui-btn-sm batch-popup-frame" data-uri="{$js_global_var['module']}/{$js_global_var['controller']}/edit"><i class="layui-icon">&#xe642;</i>编辑</button>-->
+        <!--&lt;!&ndash;<button class="layui-btn layui-btn-primary layui-btn-sm">操作<i class="layui-icon">&#xe671;</i></button>&ndash;&gt;-->
+        <!--&lt;!&ndash;<button class="layui-btn layui-btn-warm layui-btn-sm"><i class="layui-icon">&#xe615;</i>放入回收站</button>&ndash;&gt;-->
+        <!--&lt;!&ndash;<button class="layui-btn layui-btn-primary layui-btn-sm"><i class="layui-icon">&#xe615;</i>恢复数据</button>&ndash;&gt;-->
+        <!--&lt;!&ndash;<button class="layui-btn layui-btn-danger layui-btn-sm"><i class="layui-icon">&#xe615;</i>彻底删除</button>&ndash;&gt;-->
+        <!--&lt;!&ndash;<button class="layui-btn layui-btn-normal layui-btn-sm show-hidden-search-form"><i class="layui-icon">&#xe615;</i>筛选</button>&ndash;&gt;-->
+        <!--<select style="width: 100px;">-->
+            <!--<option value="">字段选择</option>-->
+            <!--<option value="id">ID</option>-->
+            <!--<option value="name">标题</option>-->
+            <!--<option value="rule">规则</option>-->
+        <!--</select>-->
+    <!--</div>-->
+    <div class="default_toolbar_list">
+        <div class="layui-input-inline" style="width: 112px;">
+            <select lay-filter="batch">
+                <option>批量操作</option>
+                <option uri="{$js_global_var['module']}/{$js_global_var['controller']}/edit" switch_type="popup_frame">编辑</option>
+                <option uri="{$js_global_var['module']}/{$js_global_var['controller']}/set_status" field="is_del" field_val="1" switch_type="confirm_action">放入回收站</option>
+                <option uri="{$js_global_var['module']}/{$js_global_var['controller']}/set_status" field="is_del" field_val="0" switch_type="confirm_action">恢复数据</option>
+                <option uri="{$js_global_var['module']}/{$js_global_var['controller']}/del" switch_type="confirm_action">彻底删除</option>
+            </select>
+        </div>
+        <button class="layui-btn layui-btn-warm layui-btn-sm popup-frame" data-open="{:url($js_global_var['module'].'/'.$js_global_var['controller'].'/add')}"><i class="layui-icon">&#xe654;</i>添加</button>
+        <!--<button class="layui-btn layui-btn-sm batch-popup-frame" data-uri="{$js_global_var['module']}/{$js_global_var['controller']}/edit"><i class="layui-icon">&#xe642;</i>编辑</button>-->
+        <button class="layui-btn layui-btn-normal layui-btn-sm show-hidden-search-form"><i class="layui-icon">&#xe615;</i>筛选</button>
     </div>
 </script>

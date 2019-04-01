@@ -45,10 +45,24 @@ audio{
     z-index: 1000;
 }
 
+/**
+ * pane样式的表单，label文字宽度增加
+ */
 .layui-form-pane .layui-form-label{
     width:150px;
 }
 .layui-form-pane .layui-input-block{
     margin-left:150px;
+}
+
+/**
+ * 数据表格顶部的按钮样式
+ */
+.default_toolbar_list .layui-input{
+    height:32px;
+}
+
+.default_toolbar_list .layui-btn{
+    margin-left: 5px;
 }
 

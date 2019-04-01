@@ -100,10 +100,21 @@ trait Backend
         return $this->fetch();
     }
 
+    //设置状态
+    public function set_status(){
+        $field = $this->request->param('field');
+        $field_val = $this->request->param('field_val');
+        $save[$field] = $field_val;
+        if( $this->model->where('id','in',$this->request->param('id'))->update($save) ){
+            return $this->success('操作成功');
+        }else{
+            return $this->error('操作失败');
+        }
+    }
+
     //删除
     public function del(){
-        $del_where['id'] = $this->request->param('id');
-        if( $this->model->where($del_where)->delete() ){
+        if( $this->model->where('id','in',$this->request->param('id'))->delete() ){
             return $this->success('操作成功');
         }else{
             return $this->error('操作失败');

@@ -237,6 +237,7 @@ layui.define([
                 title : title,
                 content : url,
                 area: [width,height],
+                shade: 0.01,
                 success: function(layero, index){
                     junAdmin.facade.after_popup_frame(layero,index);
                 }
@@ -265,14 +266,14 @@ layui.define([
 
         //layer提示操作成功
         success: function(text){
-            $.toastr.success(text);
-            // layui.layer.msg(text,{icon:1});
+            // $.toastr.success(text);
+            layui.layer.msg(text,{icon:1});
         },
 
         //layer提示操作失败
         error: function(text){
-            $.toastr.error(text);
-            // layui.layer.msg(text,{icon:2});
+            // $.toastr.error(text);
+            layui.layer.msg(text,{icon:2});
         },
 
         //表格点击编辑删除按钮
@@ -382,13 +383,118 @@ layui.define([
             });
         },
 
-        //弹窗
+        /**
+         * 监听批量操作下拉框
+         */
+        batch_select_action: function(){
+            layui.form.on('select(batch)',function(data){
+                let uri = $(data.elem).find("option:selected").attr("uri");
+                if(uri == undefined){
+                    return false;
+                }
+                let field = $(data.elem).find("option:selected").attr("field");
+                let field_val = $(data.elem).find("option:selected").attr("field_val");
+                let text = $(data.elem).find("option:selected").text();
+                let switch_type = $(data.elem).find("option:selected").attr("switch_type");
+                let checkStatus = layui.table.checkStatus(table_id);
+                let checkData = checkStatus.data;
+                if(checkData.length == 0){
+                    junAdmin.facade.error('请选择数据');
+                    return false;
+                }
+                let key;
+                switch(switch_type){
+                    case 'popup_frame':
+                        for(key in checkData){
+                            url = junAdmin.facade.url(uri,{id:checkData[key].id});
+                            junAdmin.facade.popup_frame(name, url);
+                        }
+                        break;
+                    case 'confirm_action':
+                        layui.layer.confirm('确定'+text+'么?', function(index){
+                            let ids_arr = [];
+                            for(key in checkData){
+                                ids_arr.push(checkData[key].id);
+                            }
+                            let ids = ids_arr.join(',');
+                            let data = {'id':ids,'field':field,'field_val':field_val};
+                            $.ajax({
+                                type: 'POST',
+                                url: junAdmin.facade.url(uri),
+                                data: data,
+                                dataType: 'json',
+                                success: function (res) {
+                                    if( res.code == 1 ){
+                                        func_controller.table_render();
+                                    }else{
+                                        junAdmin.facade.error(res.msg);
+                                    }
+                                    layui.layer.close(index);
+                                },
+                                error: function (xhr) {
+                                    if( xhr.status == '500' ){
+                                        junAdmin.facade.error('本地网络问题或者服务器错误');
+                                    }else if( xhr.status == '404' ){
+                                        junAdmin.facade.error('请求地址不存在');
+                                    }
+                                }
+                            });
+                        });
+                        break;
+                }
+                // let field_name = $('#'+data.elem.id).data('field_name');
+                // let value = data.elem.value;
+                // func_controller.form_type_select_after(field_name, value);
+                // layui.form.render('select');
+                // return true;
+            });
+        },
+
+        /**
+         * 批量弹窗 - 使用例子：数据表格顶部的编辑按钮
+         * 所有拥有popup-frame的类名的节点，点击后都会弹窗
+         *  节点的data-name属性为弹窗标题
+         *  data-uri弹窗展示的url地址
+         *  width属性为弹窗的宽度百分比
+         *  height属性为弹窗的高度百分比
+         */
+        batch_popup_frame: function(){
+            $(document).on('click','.batch-popup-frame',function(){
+                let name = $(this).data("name") ? $(this).data("name") : '编辑';
+                let uri = $(this).data("uri");
+                let width = $(this).data("width");
+                let height = $(this).data("height");
+                if( !width ){
+                    width = default_popup_frame_width;
+                }
+                if( !height ){
+                    height = default_popup_frame_height;
+                }
+                let checkStatus = layui.table.checkStatus(table_id);
+                let checkData = checkStatus.data;
+                let key;
+                let url;
+                for(key in checkData){
+                    url = junAdmin.facade.url(uri,{id:checkData[key].id});
+                    junAdmin.facade.popup_frame(name, url, width, height);
+                }
+            });
+        },
+
+        /**
+         * 弹窗 - 使用例子：数据表格顶部的添加按钮
+         * 所有拥有popup-frame的类名的节点，点击后都会弹窗
+         *  节点的data-name属性为弹窗标题
+         *  data-open弹窗展示的url地址
+         *  width属性为弹窗的宽度百分比
+         *  height属性为弹窗的高度百分比
+         */
         popup_frame: function(){
             $(document).on('click','.popup-frame',function(){
-                var name = $(this).data("name") ? $(this).data("name") : '添加';
-                var url = $(this).data("open");
-                var width = $(this).data("width");
-                var height = $(this).data("height");
+                let name = $(this).data("name") ? $(this).data("name") : '添加';
+                let url = $(this).data("open");
+                let width = $(this).data("width");
+                let height = $(this).data("height");
                 if( !width ){
                     width = default_popup_frame_width;
                 }
@@ -484,15 +590,13 @@ layui.define([
                     dataType: 'json',
                     success: function (res) {
                         if( res.code == 1 ){
-                            // $.toastr.success(res.msg);
                             junAdmin.facade.success(res.msg);
                             if(typeof parent.func_controller != "undefined"){
                                 parent.func_controller.table_render();
+                                parent.layui.layer.closeAll();
                             }
-                            parent.layui.layer.closeAll();
                         }else{
                             junAdmin.facade.error(res.msg);
-                            // $.toastr.error(res.msg);
                         }
                     },
                     error: function (xhr) {

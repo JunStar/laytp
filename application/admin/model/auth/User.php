@@ -22,7 +22,7 @@ class User extends Model
 		],
         'status' => [
             '0'=>'禁用'
-            ,'1'=>'正常'
+            ,'1'=>'启用'
         ],
     ];
 
