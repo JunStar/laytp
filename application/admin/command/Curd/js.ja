@@ -33,6 +33,13 @@ layui.use(['junAdmin'],function() {
         layui.table.on('tool(default)', function(obj){
             if(default_table_tool.indexOf(obj.event) != -1){
                 junAdmin.facade.table_tool(obj);
+            }else{
+                //新增的其他操作按钮在这里来写
+                //switch(obj.event){
+                //    case '':
+                //
+                //        break;
+                //}
             }
         });
     }
