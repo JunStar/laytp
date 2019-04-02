@@ -55,8 +55,20 @@ class AdminLog extends Model
         $title = self::$title;
         if(!$title)
         {
-            $menus = model('auth.Menu')->where('rule','=',$now_node)->order('pid','asc')->column('name');
-            $title = implode(' - ', $menus);
+            $menus = model('auth.Menu')->where('rule','=',$now_node)->order('pid','asc')->select()->toArray();
+            for($i=1;$i<=4;$i++){
+                if($menus[0]['pid']){
+                    $new_menu = model('auth.Menu')->where('id','=',$menus[0]['pid'])->find()->toArray();
+                    array_unshift($menus, $new_menu );
+                }else{
+                    break;
+                }
+            }
+            $menu_name = [];
+            foreach($menus as $v){
+                $menu_name[] = $v['name'];
+            }
+            $title = implode(' - ', $menu_name);
         }
 
         self::create([

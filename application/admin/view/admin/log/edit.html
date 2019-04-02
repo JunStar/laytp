@@ -1,0 +1,61 @@
+{extend name="admin@public/popup_form"}
+
+{block name="form"}
+    <div class="layui-form-item">
+        <label class="layui-form-label" title="管理员ID">管理员用户名</label>
+        <div class="layui-input-block">
+            <select name="row[admin_id]" id="admin_id"
+                xm-select="admin_id"
+                xm-select-search="{:url('admin/auth.user/index')}"
+                xm-select-search-field="name"
+                xm-select-search-show-field="name"
+                xm-select-search-condition="LIKE"
+                xm-select-search-selected-data="{$admin_id}"
+                xm-select-height="36px"
+                 xm-select-radio="">
+            </select>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label" title="操作页面">操作页面</label>
+        <div class="layui-input-block">
+            <input type="text" name="row[url]" placeholder="请输入操作页面" value="{$url}" class="layui-input" lay-verify="required" lay-verType="tips">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label" title="日志标题">日志标题</label>
+        <div class="layui-input-block">
+            <input type="text" name="row[title]" placeholder="请输入日志标题" value="{$title}" class="layui-input" lay-verify="required" lay-verType="tips">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label" title="内容">内容</label>
+        <div class="layui-input-block">
+            <input type="text" name="row[content]" placeholder="请输入内容" value="{$content}" class="layui-input" lay-verify="required" lay-verType="tips">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label" title="IP">IP</label>
+        <div class="layui-input-block">
+            <input type="text" name="row[ip]" placeholder="请输入IP" value="{$ip}" class="layui-input" lay-verify="required" lay-verType="tips">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label" title="User-Agent">User-Agent</label>
+        <div class="layui-input-block">
+            <input type="text" name="row[user_agent]" placeholder="请输入User-Agent" value="{$user_agent}" class="layui-input" lay-verify="required" lay-verType="tips">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label" title="操作时间">操作时间</label>
+        <div class="layui-input-block">
+            <input type="text" class="layui-input" name="row[create_time]" id="create_time" laydate="true" laydate_type="datetime" placeholder="请选择时间" value="{$create_time}">
+        </div>
+    </div>
+{/block}
