@@ -788,7 +788,7 @@ layui.define([
                 let parent_id = $(item).attr('parent-id');
                 if(is_province=='true'){
                     $.ajax({
-                        type: 'POST',
+                        type: 'GET',
                         url: junAdmin.facade.url(ajax_url),
                         data: {parent_id:0},
                         dataType: 'json',
@@ -816,7 +816,7 @@ layui.define([
                 if(change_linkage_id){
                     layui.form.on('select('+id+')',function(data){
                         $.ajax({
-                            type: 'POST',
+                            type: 'GET',
                             url: junAdmin.facade.url(ajax_url),
                             data: {parent_id:data.value},
                             dataType: 'json',
@@ -844,7 +844,7 @@ layui.define([
 
                 if(parent_id > 0){
                     $.ajax({
-                        type: 'POST',
+                        type: 'GET',
                         url: junAdmin.facade.url(ajax_url),
                         data: {parent_id:parent_id},
                         dataType: 'json',
