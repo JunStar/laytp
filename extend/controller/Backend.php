@@ -165,7 +165,7 @@ class Backend extends Controller
      */
     public function build_params(){
         $where = [];
-        $search_param = $this->request->post('search_param');
+        $search_param = $this->request->param('search_param');
         if( $search_param ){
             foreach($search_param as $field=>$value_condition){
                 if($value_condition['value'] != ''){

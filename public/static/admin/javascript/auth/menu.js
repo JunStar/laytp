@@ -21,7 +21,7 @@ layui.use(['junAdmin'],function() {
             , toolbar: toolbar_node
             , even: true
             , where: where
-            , method: 'POST'
+            , method: 'GET'
             , cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
             // , page: true //开启分页
             , cols: [[ //表头

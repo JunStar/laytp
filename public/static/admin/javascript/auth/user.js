@@ -21,7 +21,7 @@ layui.use(['junAdmin'],function() {
             , toolbar: '#default_toolbar'
             , where: where
             , even: true
-            , method: 'POST'
+            , method: 'GET'
             , cellMinWidth: 80
             , page: true
             , cols: [[
