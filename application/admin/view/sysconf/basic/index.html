@@ -1,39 +1,37 @@
 {extend name="admin@public/form"}
 
-{block name="style"}
-{__block__}
-<style>
-    .layui-form-pane .layui-form-label{
-        width:150px;
-    }
-</style>
-{/block}
-
-{block name="search_form"}
+{block name="form"}
 <fieldset class="layui-elem-field">
-    <legend>角色配置</legend>
-    <div class="layui-field-box layui-form layui-form-pane">
+    <legend>基础配置</legend>
+    <form class="layui-field-box layui-form layui-form-pane">
         <div class="layui-form-item">
-            <label class="layui-form-label">开启内容权限</label>
+            <label class="layui-form-label">站点名称</label>
             <div class="layui-input-inline">
-                <input type="checkbox" checked="" name="open" lay-skin="switch" lay-filter="switchTest" lay-text="ON|OFF">
+                <input type="text" name="row[site_name]" placeholder="请输入站点名称" autocomplete="off" class="layui-input" value="{$site_name}" />
             </div>
-            <div class="layui-form-mid layui-word-aux">内容权限：列表查看权限，上级角色可以看到自己和子级角色添加的数据</div>
+            <div class="layui-form-mid layui-word-aux">basic.site_name</div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">内容所属字段</label>
+            <label class="layui-form-label">备案号</label>
             <div class="layui-input-inline">
-                <input type="text" name="password" lay-verify="pass" placeholder="请输入密码" autocomplete="off" class="layui-input" value="admin_id">
+                <input type="text" name="row[beian]" placeholder="请输入备案号" autocomplete="off" class="layui-input" value="{$beian}">
             </div>
-            <div class="layui-form-mid layui-word-aux">字段值记录数据是由谁添加的,比如文章表article里面有一个admin_id字段，记录是哪个管理员添加的文章</div>
+            <div class="layui-form-mid layui-word-aux">basic.beian</div>
         </div>
-    </div>
-    <div class="form-footer">
         <div class="layui-form-item">
-            <div class="layui-input-block">
-                <button class="layui-btn layui-btn-sm" lay-submit lay-filter="*">立即提交</button>
+            <label class="layui-form-label">版本号</label>
+            <div class="layui-input-inline">
+                <input type="text" name="row[version]" placeholder="请输入版本号" autocomplete="off" class="layui-input" value="{$version}">
+            </div>
+            <div class="layui-form-mid layui-word-aux">basic.version 静态文件版本号</div>
+        </div>
+        <div class="form-footer">
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn layui-btn-sm" lay-submit lay-filter="*">立即提交</button>
+                </div>
             </div>
         </div>
-    </div>
+    </form>
 </fieldset>
 {/block}
