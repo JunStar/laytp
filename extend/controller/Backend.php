@@ -6,6 +6,7 @@
 namespace controller;
 
 use think\Controller;
+use think\facade\Hook;
 use think\facade\Session;
 
 class Backend extends Controller
@@ -19,6 +20,10 @@ class Backend extends Controller
     public $rule_list;
 
     public function initialize(){
+        if( $this->request->isPost() ){
+            Hook::exec('app\\admin\\behavior\\AdminLog');
+        }
+
         $this->module = $this->request->module();
         $this->controller = strtolower($this->request->controller());
         $this->action = strtolower($this->request->action());

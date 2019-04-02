@@ -58,7 +58,6 @@ trait Backend
                                 $data['data'][$k][$field_name] = implode(' ', $temp );
                                 break;
                         }
-
                     }
                 }
             }

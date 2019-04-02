@@ -91,3 +91,12 @@ function getDefaultAvatar($avatar){
         return $avatar;
     }
 }
+
+function isLogin(){
+    $admin_user_id = Session::get('admin_user_id');
+    if($admin_user_id){
+        return $admin_user_id;
+    }else{
+        return false;
+    }
+}
