@@ -77,7 +77,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 		closed: {}
 	},
 		ajax = {
-		type: 'post',
+		type: 'get',
 		header: {},
 		first: true,
 		data: {},
