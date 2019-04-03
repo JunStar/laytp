@@ -67,11 +67,11 @@ layui.use(['junAdmin'],function(){
         //监听选择表下拉框onchange事件
         layui.form.on('select(select_table)',function(data){
             select_table_name = data.value;
-            let post_data = {'table_name':data.value};
+            let ajax_data = {'table_name':data.value};
             $.ajax({
-                type: 'POST',
+                type: 'GET',
                 url: junAdmin.facade.url('/' + module + '/' + controller + '/get_fields_by_table_name'),
-                data: post_data,
+                data: ajax_data,
                 dataType: 'json',
                 success: function (res) {
                     if( res.code == 1 ){
