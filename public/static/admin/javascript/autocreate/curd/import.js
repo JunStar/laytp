@@ -216,7 +216,7 @@ layui.use(['junAdmin'],function(){
                             layui.form.on('select(form_additional_select_page_table_'+field_name+')',function(data){
                                 let table_name = data.value;
                                 $.ajax({
-                                    type: 'POST',
+                                    type: 'GET',
                                     url: junAdmin.facade.url('admin/autocreate.curd/get_fields_by_table_name'),
                                     data: {table_name:table_name},
                                     dataType: 'json',
@@ -253,7 +253,7 @@ layui.use(['junAdmin'],function(){
                         }
                     });
                     $.ajax({
-                        type: 'POST',
+                        type: 'GET',
                         url: junAdmin.facade.url('admin/autocreate.curd/get_fields_by_table_name'),
                         data: {table_name:select_table_name},
                         dataType: 'json',
@@ -266,7 +266,7 @@ layui.use(['junAdmin'],function(){
                     break;
                 case 'city':
                     $.ajax({
-                        type: 'POST',
+                        type: 'GET',
                         url: junAdmin.facade.url('admin/autocreate.curd/get_fields_by_table_name'),
                         data: {table_name:select_table_name},
                         dataType: 'json',
@@ -280,7 +280,7 @@ layui.use(['junAdmin'],function(){
                     break;
                 case 'county':
                     $.ajax({
-                        type: 'POST',
+                        type: 'GET',
                         url: junAdmin.facade.url('admin/autocreate.curd/get_fields_by_table_name'),
                         data: {table_name:select_table_name},
                         dataType: 'json',
