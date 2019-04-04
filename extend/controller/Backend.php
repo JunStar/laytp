@@ -38,6 +38,9 @@ class Backend extends Controller
     public function auth(){
         //当前登录用户信息
         $admin_user_id = Session::get('admin_user_id');
+        if(!$admin_user_id){
+            $this->redirect(url('/admin/auth.login/index'));
+        }
         $this->admin_user = model('auth.User')->get($admin_user_id);
         $this->assign('admin_user', $this->admin_user);
 

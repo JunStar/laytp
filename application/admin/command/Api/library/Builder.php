@@ -7,6 +7,25 @@ use think\facade\View;
 
 class Builder
 {
+    /**
+     * @var \think\View
+     */
+    public $view = null;
+
+    /**
+     * parse classes
+     * @var array
+     */
+    protected $classes = [];
+
+    /**
+     * @param array $classes
+     */
+    public function __construct($classes = [])
+    {
+        $this->classes = array_merge($this->classes, $classes);
+        $this->view = new \think\View(Config::get('template'), Config::get('view_replace_str'));
+    }
 
     public function parse(){
 
@@ -24,5 +43,4 @@ class Builder
 
         return View::display(file_get_contents($template), array_merge($vars, ['docs_list' => $docs_list]));
     }
-
 }

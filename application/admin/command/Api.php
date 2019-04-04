@@ -51,7 +51,7 @@ class Api extends Command
         $template_dir = $apiDir . 'template' . DS;
         $template_file = $template_dir . $input->getOption('template');
 
-        $content = $builder->render($template_file,['config'=>$config,'lang'=>'zh']);
+        $content = $builder->render($template_file);
 
         $output_dir = Env::get('root_path') . 'public' . DS;
         $output_file = $output_dir . $input->getOption('output');
