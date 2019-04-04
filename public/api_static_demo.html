@@ -45,7 +45,7 @@
                         <a><p>短信验证</p></a>
                     </div>
                     <div class="layui-colla-content">
-                        <a><p>获取图片验证码</p></a>
+                        <a href="#tips" onclick="show('tips')"><p>获取图片验证码</p></a>
                     </div>
                 </div>
                 <div class="layui-colla-item">
@@ -66,8 +66,8 @@
             </fieldset>
             <div class="layui-collapse" lay-filter="test">
                 <div class="layui-colla-item">
-                    <h2 class="layui-colla-title">GET 获取图片验证码 /api/common/getImageCaptcha</h2>
-                    <div class="layui-colla-content">
+                    <h2 class="layui-colla-title" id="tips">GET 获取图片验证码 /api/common/getImageCaptcha</h2>
+                    <div class="layui-colla-content layui-show" id="tips_content">
                         <div class="layui-tab">
                             <ul class="layui-tab-title">
                                 <li class="layui-this">基础信息</li>
@@ -251,10 +251,14 @@
 </body>
 <script type="text/javascript" src="/static/library/layui/layui.js" charset="utf-8"></script>
 <script type="text/javascript" src="/static/library/layui/layui_config.js" charset="utf-8"></script>
+<script type="text/javascript" src="/static/library/jquery_3.3.1.js" charset="utf-8"></script>
 <script>
     layui.use('element', function(){
         var element = layui.element;
-
     });
+
+    function show(id){
+        $('#'+id+'_content').addClass('layui-show');
+    }
 </script>
 </html>

@@ -8,7 +8,7 @@ use think\console\Command;
 use think\console\Input;
 use think\console\input\Option;
 use think\console\Output;
-use think\Exception;
+use think\facade\Env;
 
 class Api extends Command
 {
@@ -30,55 +30,13 @@ class Api extends Command
 
     protected function execute(Input $input, Output $output)
     {
-        $apiDir = __DIR__ . DS . 'Api' . DS;
+        $controllerDir = Env::get('app_path') . DS . 'api' . DS . Config::get('url_controller_layer') . DS;
 
-        $force = $input->getOption('force');
-        $url = $input->getOption('url');
-        // 目标目录
-        $output_dir = './public' . DS;
-        $output_file = $output_dir . $input->getOption('output');
-        if (is_file($output_file) && !$force) {
-            throw new Exception("api index file already exists!\nIf you need to rebuild again, use the parameter --force=true ");
-        }
-        // 模板文件
-        $template_dir = $apiDir . 'template' . DS;
-        $template_file = $template_dir . $input->getOption('template');
-        if (!is_file($template_file)) {
-            throw new Exception('template file not found');
-        }
-        // 额外的类
-        $classes = $input->getOption('class');
-        // 标题
-        $title = $input->getOption('title');
-        // 作者
-        $author = $input->getOption('author');
-        // 模块
-        $module = $input->getOption('module');
-
-        $moduleDir = 'application/' . $module . DS;
-
-        if (!is_dir($moduleDir)) {
-            throw new Exception('module not found');
-        }
-
-        if (version_compare(PHP_VERSION, '7.0.0', '<')) {
-            if (extension_loaded('Zend OPcache')) {
-                $configuration = opcache_get_configuration();
-                $directives = $configuration['directives'];
-                $configName = request()->isCli() ? 'opcache.enable_cli' : 'opcache.enable';
-                if (!$directives[$configName]) {
-                    throw new Exception("Please make sure {$configName} is turned on, Get help:https://forum.fastadmin.net/d/1321");
-                }
-            } else {
-                throw new Exception("Please make sure opcache already enabled, Get help:https://forum.fastadmin.net/d/1321");
-            }
-        }
-
-        $controllerDir = $moduleDir . Config::get('url_controller_layer') . DS;
         $files = new \RecursiveIteratorIterator(
             new \RecursiveDirectoryIterator($controllerDir), \RecursiveIteratorIterator::LEAVES_ONLY
         );
 
+        $classes = [];
         foreach ($files as $name => $file) {
             if (!$file->isDir()) {
                 $filePath = $file->getRealPath();
@@ -86,19 +44,39 @@ class Api extends Command
             }
         }
 
-        $config = [
-            'title'       => $title,
-            'author'      => $author,
-            'description' => '',
-            'apiurl'      => $url,
-        ];
-        $builder = new Builder($classes);
-        $content = $builder->render($template_file, ['config' => $config]);
+        var_dump($classes);
 
+        $builder = new Builder($classes);
+        $apiDir = __DIR__ . DS . 'Api' . DS;
+        $template_dir = $apiDir . 'template' . DS;
+        $template_file = $template_dir . $input->getOption('template');
+
+        $content = $builder->render($template_file,['config'=>$config,'lang'=>'zh']);
+
+        $output_dir = Env::get('root_path') . 'public' . DS;
+        $output_file = $output_dir . $input->getOption('output');
         if (!file_put_contents($output_file, $content)) {
             throw new Exception('Cannot save the content to ' . $output_file);
         }
         $output->info("Build Successed!");
+
+//        $class_name = 'app\api\controller\Test';
+//        $oReflectionClass = new \ReflectionClass($class_name);
+//        var_dump( $oReflectionClass->getDocComment() );
+//
+//        //获取类中的方法，设置获取public,protected类型方法
+//        $methods = $oReflectionClass->getMethods(\ReflectionMethod::IS_PUBLIC + \ReflectionMethod::IS_PROTECTED + \ReflectionMethod::IS_PRIVATE);
+//        //遍历所有的方法
+//        foreach ($methods as $key => $method) {
+//            if ($class_name != $method->class) {
+//                unset($methods[$key]);
+//            }else{
+//                //获取方法的注释
+//                $doc = $method->getDocComment();
+//                //解析注释
+//                var_dump($doc);
+//            }
+//        }
     }
 
     /**
@@ -165,5 +143,4 @@ class Api extends Command
         //Build the fully-qualified class name and return it
         return $namespace ? $namespace . '\\' . $class : $class;
     }
-
 }
