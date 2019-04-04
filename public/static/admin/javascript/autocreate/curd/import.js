@@ -207,7 +207,7 @@ layui.use(['junAdmin'],function(){
             switch (value) {
                 case 'select_page':
                     $.ajax({
-                        type: 'POST',
+                        type: 'GET',
                         url: junAdmin.facade.url('admin/autocreate.curd/get_table_list'),
                         data: {},
                         dataType: 'json',

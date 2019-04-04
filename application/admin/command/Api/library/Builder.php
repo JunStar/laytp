@@ -27,7 +27,20 @@ class Builder
         $this->view = new \think\View(Config::get('template'), Config::get('view_replace_str'));
     }
 
-    public function parse(){
+    protected function extractAnnotations()
+    {
+        $st_output = [];
+        foreach ($this->classes as $class)
+        {
+            $st_output[] = Extractor::getAllClassAnnotations($class);
+        }
+        return end($st_output);
+    }
+
+    public function parse()
+    {
+        $annotations = $this->extractAnnotations();
+
 
     }
 
