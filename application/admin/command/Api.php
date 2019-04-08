@@ -44,8 +44,6 @@ class Api extends Command
             }
         }
 
-        var_dump($classes);
-
         $builder = new Builder($classes);
         $apiDir = __DIR__ . DS . 'Api' . DS;
         $template_dir = $apiDir . 'template' . DS;

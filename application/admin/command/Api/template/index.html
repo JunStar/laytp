@@ -19,6 +19,9 @@
     .layui-card{
         box-shadow:0 1px 2px 0 rgba(0,0,0,0.3)
     }
+    .layui-form-item .layui-input-inline{
+        width: 300px;
+    }
 </style>
 <body>
 <div class="layui-layout layui-layout-admin">
@@ -38,36 +41,30 @@
 <div class="layui-container">
     <div class="layui-row">
         <div class="layui-col-md2">
-            <div class="layui-collapse" lay-filter="test">
+            <div class="layui-collapse">
+                {foreach $docslist as $k=>$v}
                 <div class="layui-colla-item">
-                    <h2 class="layui-colla-title">公共接口</h2>
+                    <h2 class="layui-colla-title">{$k}</h2>
+                    {foreach $v as $api}
                     <div class="layui-colla-content">
-                        <a><p>短信验证</p></a>
+                        <a href="#{$api.id}" onclick="show('{$api.id}')"><p>{$api.title}</p></a>
                     </div>
-                    <div class="layui-colla-content">
-                        <a href="#tips" onclick="show('tips')"><p>获取图片验证码</p></a>
-                    </div>
+                    {/foreach}
                 </div>
-                <div class="layui-colla-item">
-                    <h2 class="layui-colla-title">公共接口</h2>
-                    <div class="layui-colla-content">
-                        <a><p>短信验证</p></a>
-                    </div>
-                    <div class="layui-colla-content">
-                        <a><p>图片验证码</p></a>
-                    </div>
-                </div>
+                {/foreach}
             </div>
         </div>
         <div class="layui-col-md1">&nbsp;</div>
         <div class="layui-col-md9">
+            {foreach $docslist as $k=>$v}
             <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-                <legend>公共接口</legend>
+                <legend>{$k}</legend>
             </fieldset>
-            <div class="layui-collapse" lay-filter="test">
+            {foreach $v as $ak=>$api}
+            <div class="layui-collapse">
                 <div class="layui-colla-item">
-                    <h2 class="layui-colla-title" id="tips">GET 获取图片验证码 /api/common/getImageCaptcha</h2>
-                    <div class="layui-colla-content layui-show" id="tips_content">
+                    <h2 class="layui-colla-title" id="{$api.id}">{$api.method} {$api.title} {$api.route}</h2>
+                    <div class="layui-colla-content {if $ak==0}layui-show{/if}" id="{$api.id}_content">
                         <div class="layui-tab">
                             <ul class="layui-tab-title">
                                 <li class="layui-this">基础信息</li>
@@ -78,12 +75,13 @@
                                 <div class="layui-tab-item layui-show">
                                     <div class="layui-card" style="background-color: #F2F2F2;">
                                         <div class="layui-card-body">
-                                            详细介绍
+                                            {$api.summary}
                                         </div>
                                     </div>
                                     <div class="layui-card">
                                         <div class="layui-card-header" style="background-color: #F2F2F2;">Headers</div>
                                         <div class="layui-card-body">
+                                            {if $api.headerslist}
                                             <table class="layui-table" lay-skin="line">
                                                 <colgroup>
                                                     <col width="150">
@@ -100,43 +98,25 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
+                                                {foreach $api.headerslist as $hk=>$hv}
                                                 <tr>
-                                                    <td>贤心</td>
-                                                    <td>汉族</td>
-                                                    <td>1989-10-14</td>
-                                                    <td>人生似修行</td>
+                                                    <td>{$hv.name}</td>
+                                                    <td>{$hv.type}</td>
+                                                    <td>{if $hv.required}是{else}否{/if}</td>
+                                                    <td>{$hv.description}</td>
                                                 </tr>
-                                                <tr>
-                                                    <td>张爱玲</td>
-                                                    <td>汉族</td>
-                                                    <td>1920-09-30</td>
-                                                    <td>于千万人之中遇见你所遇见的人，于千万年之中，时间的无涯的荒野里…</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Helen Keller</td>
-                                                    <td>拉丁美裔</td>
-                                                    <td>1880-06-27</td>
-                                                    <td> Life is either a daring adventure or nothing.</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>岳飞</td>
-                                                    <td>汉族</td>
-                                                    <td>1103-北宋崇宁二年</td>
-                                                    <td>教科书再滥改，也抹不去“民族英雄”的事实</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>孟子</td>
-                                                    <td>华夏族（汉族）</td>
-                                                    <td>公元前-372年</td>
-                                                    <td>猿强，则国强。国强，则猿更强！ </td>
-                                                </tr>
+                                                {/foreach}
                                                 </tbody>
                                             </table>
+                                            {else}
+                                            无
+                                            {/if}
                                         </div>
                                     </div>
                                     <div class="layui-card">
                                         <div class="layui-card-header" style="background-color: #F2F2F2;">参数</div>
                                         <div class="layui-card-body">
+                                            {if $api.paramslist}
                                             <table class="layui-table" lay-skin="line">
                                                 <colgroup>
                                                     <col width="150">
@@ -153,57 +133,32 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
+                                                {foreach $api.paramslist as $pk=>$pv}
                                                 <tr>
-                                                    <td>贤心</td>
-                                                    <td>汉族</td>
-                                                    <td>1989-10-14</td>
-                                                    <td>人生似修行</td>
+                                                    <td>{$pv.name}</td>
+                                                    <td>{$pv.type}</td>
+                                                    <td>{if $pv.required}是{else}否{/if}</td>
+                                                    <td>{$pv.description}{$pv.sample}</td>
                                                 </tr>
-                                                <tr>
-                                                    <td>张爱玲</td>
-                                                    <td>汉族</td>
-                                                    <td>1920-09-30</td>
-                                                    <td>于千万人之中遇见你所遇见的人，于千万年之中，时间的无涯的荒野里…</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Helen Keller</td>
-                                                    <td>拉丁美裔</td>
-                                                    <td>1880-06-27</td>
-                                                    <td> Life is either a daring adventure or nothing.</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>岳飞</td>
-                                                    <td>汉族</td>
-                                                    <td>1103-北宋崇宁二年</td>
-                                                    <td>教科书再滥改，也抹不去“民族英雄”的事实</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>孟子</td>
-                                                    <td>华夏族（汉族）</td>
-                                                    <td>公元前-372年</td>
-                                                    <td>猿强，则国强。国强，则猿更强！ </td>
-                                                </tr>
+                                                {/foreach}
                                                 </tbody>
                                             </table>
+                                            {else}
+                                            无
+                                            {/if}
                                         </div>
                                     </div>
                                 </div>
                                 <div class="layui-tab-item">
                                     <form class="layui-form-pane" action="" lay-filter="example">
+                                        {foreach $api.paramslist as $pk=>$pv}
                                         <div class="layui-form-item">
-                                            <label class="layui-form-label">输入框</label>
+                                            <label class="layui-form-label">{$pv.name}</label>
                                             <div class="layui-input-block">
-                                                <input type="text" name="username" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+                                                <input type="text" name="{$pv.name}" autocomplete="off" placeholder="{if $pv.sample}{$pv.description} - 例:{$pv.sample}{else}请输入{$pv.description}{/if}" class="layui-input">
                                             </div>
                                         </div>
-
-                                        <div class="layui-form-item">
-                                            <label class="layui-form-label">输入框</label>
-                                            <div class="layui-input-block">
-                                                <input type="text" name="username" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
-                                            </div>
-                                        </div>
-
+                                        {/foreach}
                                         <div class="layui-form-item">
                                             <div class="layui-input-block">
                                                 <button class="layui-btn" lay-submit="" lay-filter="demo1">提 交</button>
@@ -212,10 +167,8 @@
                                     </form>
                                 </div>
                                 <div class="layui-tab-item">
-                                    <div class="layui-card" style="background-color: #F2F2F2;">
-                                        <div class="layui-card-body">
-                                            返回示例
-                                        </div>
+                                    <div class="layui-card">
+                                        <pre class="layui-code">{$api.return}</pre>
                                     </div>
                                 </div>
                             </div>
@@ -223,28 +176,8 @@
                     </div>
                 </div>
             </div>
-            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-                <legend>公共接口</legend>
-            </fieldset>
-            <div class="layui-collapse" lay-filter="test">
-                <div class="layui-colla-item">
-                    <h2 class="layui-colla-title">GET 获取图片验证码 /api/common/getImageCaptcha</h2>
-                    <div class="layui-colla-content">
-                        <div class="layui-tab">
-                            <ul class="layui-tab-title">
-                                <li class="layui-this">基础信息</li>
-                                <li>在线测试</li>
-                                <li>返回示例</li>
-                            </ul>
-                            <div class="layui-tab-content">
-                                <div class="layui-tab-item layui-show">内容1</div>
-                                <div class="layui-tab-item">内容2</div>
-                                <div class="layui-tab-item">内容3</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {/foreach}
+            {/foreach}
         </div>
     </div>
 </div>
@@ -253,12 +186,21 @@
 <script type="text/javascript" src="/static/library/layui/layui_config.js" charset="utf-8"></script>
 <script type="text/javascript" src="/static/library/jquery_3.3.1.js" charset="utf-8"></script>
 <script>
-    layui.use('element', function(){
-        var element = layui.element;
+    layui.use(['element','code'], function(){
+        let element = layui.element;
+
+        layui.code({
+            elem:"pre",
+            title:'返回示例',
+            about:false
+        });
     });
 
     function show(id){
-        $('#'+id+'_content').addClass('layui-show');
+        let css = $('#'+id+'_content').attr('class');
+        if( css.indexOf('layui-show') == -1 ){
+            $('#'+id).click();
+        }
     }
 </script>
 </html>
