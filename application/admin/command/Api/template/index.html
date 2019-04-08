@@ -64,12 +64,12 @@
             <div class="layui-collapse">
                 <div class="layui-colla-item">
                     <h2 class="layui-colla-title" id="{$api.id}">{$api.method} {$api.title} {$api.route}</h2>
-                    <div class="layui-colla-content {if $ak==0}layui-show{/if}" id="{$api.id}_content">
+                    <div class="layui-colla-content" id="{$api.id}_content">
                         <div class="layui-tab">
                             <ul class="layui-tab-title">
                                 <li class="layui-this">基础信息</li>
                                 <li>在线测试</li>
-                                <li>返回示例</li>
+                                <li>返回说明</li>
                             </ul>
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
@@ -138,7 +138,7 @@
                                                     <td>{$pv.name}</td>
                                                     <td>{$pv.type}</td>
                                                     <td>{if $pv.required}是{else}否{/if}</td>
-                                                    <td>{$pv.description}{$pv.sample}</td>
+                                                    <td>{if $pv.sample}{$pv.description} - 例:{$pv.sample}{else}{$pv.description}{/if}</td>
                                                 </tr>
                                                 {/foreach}
                                                 </tbody>
@@ -150,7 +150,7 @@
                                     </div>
                                 </div>
                                 <div class="layui-tab-item">
-                                    <form class="layui-form-pane" action="" lay-filter="example">
+                                    <div class="layui-form layui-form-pane" action="" lay-filter="test_inline_{$api.id}">
                                         {foreach $api.paramslist as $pk=>$pv}
                                         <div class="layui-form-item">
                                             <label class="layui-form-label">{$pv.name}</label>
@@ -161,14 +161,49 @@
                                         {/foreach}
                                         <div class="layui-form-item">
                                             <div class="layui-input-block">
-                                                <button class="layui-btn" lay-submit="" lay-filter="demo1">提 交</button>
+                                                <button class="layui-btn" lay-submit="" lay-filter="test_inline_{$api.id}">提 交</button>
                                             </div>
                                         </div>
-                                    </form>
+                                    </div>
                                 </div>
                                 <div class="layui-tab-item">
                                     <div class="layui-card">
                                         <pre class="layui-code">{$api.return}</pre>
+                                    </div>
+                                    <div class="layui-card">
+                                        <div class="layui-card-header" style="background-color: #F2F2F2;">详细说明</div>
+                                        <div class="layui-card-body">
+                                            {if $api.returnparamslist}
+                                            <table class="layui-table" lay-skin="line">
+                                                <colgroup>
+                                                    <col width="150">
+                                                    <col width="150">
+                                                    <col width="200">
+                                                    <col>
+                                                </colgroup>
+                                                <thead>
+                                                <tr>
+                                                    <th>名称</th>
+                                                    <th>类型</th>
+                                                    <th>举例</th>
+                                                    <th>描述</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {foreach $api.returnparamslist as $pk=>$pv}
+                                                <tr>
+                                                    <td>{$pv.name}</td>
+                                                    <td>{$pv.type}</td>
+                                                    <td>{$pv.sample}</td>
+                                                    <td>{$pv.description}</td>
+                                                </tr>
+                                                {/foreach}
+                                                </tbody>
+                                            </table>
+                                            {else}
+                                            无
+                                            {/if}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -186,7 +221,7 @@
 <script type="text/javascript" src="/static/library/layui/layui_config.js" charset="utf-8"></script>
 <script type="text/javascript" src="/static/library/jquery_3.3.1.js" charset="utf-8"></script>
 <script>
-    layui.use(['element','code'], function(){
+    layui.use(['element','code','form'], function(){
         let element = layui.element;
 
         layui.code({
@@ -194,6 +229,11 @@
             title:'返回示例',
             about:false
         });
+
+        layui.form.on('submit(test_inline_0)', function(data){
+            console.log(data);
+        });
+
     });
 
     function show(id){

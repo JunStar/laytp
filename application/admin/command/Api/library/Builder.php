@@ -209,8 +209,7 @@ class Builder
     public function render($template, $vars = [])
     {
         $docslist = $this->parse();
-        dump($docslist['测试分组']['0']);
-//        exit();
+        dump($docslist['测试分组1'][0]);
 
         return View::display(file_get_contents($template), array_merge($vars, ['docslist' => $docslist]));
     }

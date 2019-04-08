@@ -104,13 +104,17 @@ class Extractor
             {
                 $method = new \ReflectionMethod($className, $methodName);
                 $class = new \ReflectionClass($className);
-                if (!$method->isPublic() || $method->isConstructor())
-                {
+                if($className == $method->class){
+                    if (!$method->isPublic() || $method->isConstructor())
+                    {
+                        $annotations = array();
+                    }
+                    else
+                    {
+                        $annotations = self::consolidateAnnotations($method, $class);
+                    }
+                }else{
                     $annotations = array();
-                }
-                else
-                {
-                    $annotations = self::consolidateAnnotations($method, $class);
                 }
             }
             catch (\ReflectionException $e)
