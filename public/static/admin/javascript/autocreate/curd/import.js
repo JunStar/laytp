@@ -1,8 +1,8 @@
-layui.use(['junAdmin'],function(){
+layui.use(['layTp'],function(){
     const
         func_controller = {}
-        ,junAdmin = layui.junAdmin
-        ,$ = junAdmin.$
+        ,layTp = layui.layTp
+        ,$ = layTp.$
     ;
 
     //渲染表格
@@ -70,7 +70,7 @@ layui.use(['junAdmin'],function(){
             let ajax_data = {'table_name':data.value};
             $.ajax({
                 type: 'GET',
-                url: junAdmin.facade.url('/' + module + '/' + controller + '/get_fields_by_table_name'),
+                url: layTp.facade.url('/' + module + '/' + controller + '/get_fields_by_table_name'),
                 data: ajax_data,
                 dataType: 'json',
                 success: function (res) {
@@ -91,7 +91,7 @@ layui.use(['junAdmin'],function(){
                                 let select_fields = $('input[name="select_fields"]').val();
                                 let select_fields_arr = select_fields.split(',');
                                 let table_render_data = [];
-                                let res_data_map = junAdmin.facade.array_to_map(res.data, 'field_name');
+                                let res_data_map = layTp.facade.array_to_map(res.data, 'field_name');
                                 layui.each(select_fields_arr,function (key,item) {
                                     if(typeof res_data_map[item] != "undefined"){
                                         table_render_data.push(res_data_map[item]);
@@ -111,14 +111,14 @@ layui.use(['junAdmin'],function(){
                             ,click_dd_after: function(){}
                         });
                     }else{
-                        junAdmin.facade.error(res.msg);
+                        layTp.facade.error(res.msg);
                     }
                 },
                 error: function (xhr) {
                     if( xhr.status == '500' ){
-                        junAdmin.facade.error('本地网络问题或者服务器错误');
+                        layTp.facade.error('本地网络问题或者服务器错误');
                     }else if( xhr.status == '404' ){
-                        junAdmin.facade.error('请求地址不存在');
+                        layTp.facade.error('请求地址不存在');
                     }
                 }
             });
@@ -131,11 +131,11 @@ layui.use(['junAdmin'],function(){
         let input_html =
             '<select name="form_additional_set_value_input_'+field_name+'" id="form_additional_set_value_input_'+field_name+'">' +
                 '<option value="">不限制</option>' +
-                '<option value="junAdmin_email">Email</option>' +
-                '<option value="junAdmin_phone">手机号码</option>' +
-                '<option value="junAdmin_number">数字</option>' +
-                '<option value="junAdmin_url">链接</option>' +
-                '<option value="junAdmin_identity">身份证</option>' +
+                '<option value="layTp_email">Email</option>' +
+                '<option value="layTp_phone">手机号码</option>' +
+                '<option value="layTp_number">数字</option>' +
+                '<option value="layTp_url">链接</option>' +
+                '<option value="layTp_identity">身份证</option>' +
             '</select>';
         let password_html = '';
         let set_value_html = '<input type="text" class="layui-input layui-input-inline" placeholder="value1=text1,value2=text2,default=value..." name="form_additional_set_value_input_'+field_name+'" id="form_additional_set_value_input_'+field_name+'" />';
@@ -208,7 +208,7 @@ layui.use(['junAdmin'],function(){
                 case 'select_page':
                     $.ajax({
                         type: 'GET',
-                        url: junAdmin.facade.url('admin/autocreate.curd/get_table_list'),
+                        url: layTp.facade.url('admin/autocreate.curd/get_table_list'),
                         data: {},
                         dataType: 'json',
                         success: function (res) {
@@ -217,7 +217,7 @@ layui.use(['junAdmin'],function(){
                                 let table_name = data.value;
                                 $.ajax({
                                     type: 'GET',
-                                    url: junAdmin.facade.url('admin/autocreate.curd/get_fields_by_table_name'),
+                                    url: layTp.facade.url('admin/autocreate.curd/get_fields_by_table_name'),
                                     data: {table_name:table_name},
                                     dataType: 'json',
                                     success: function (res) {
@@ -233,9 +233,9 @@ layui.use(['junAdmin'],function(){
                         },
                         error: function (xhr) {
                             if( xhr.status == '500' ){
-                                junAdmin.facade.error('本地网络问题或者服务器错误');
+                                layTp.facade.error('本地网络问题或者服务器错误');
                             }else if( xhr.status == '404' ){
-                                junAdmin.facade.error('请求地址不存在');
+                                layTp.facade.error('请求地址不存在');
                             }
                         }
                     });
@@ -243,7 +243,7 @@ layui.use(['junAdmin'],function(){
                 case 'province':
                     $.ajax({
                         type: 'POST',
-                        url: junAdmin.facade.url('admin/ajax/area'),
+                        url: layTp.facade.url('admin/ajax/area'),
                         data: {table_name:select_table_name},
                         dataType: 'json',
                         success: function (res) {
@@ -254,7 +254,7 @@ layui.use(['junAdmin'],function(){
                     });
                     $.ajax({
                         type: 'GET',
-                        url: junAdmin.facade.url('admin/autocreate.curd/get_fields_by_table_name'),
+                        url: layTp.facade.url('admin/autocreate.curd/get_fields_by_table_name'),
                         data: {table_name:select_table_name},
                         dataType: 'json',
                         success: function (res) {
@@ -267,7 +267,7 @@ layui.use(['junAdmin'],function(){
                 case 'city':
                     $.ajax({
                         type: 'GET',
-                        url: junAdmin.facade.url('admin/autocreate.curd/get_fields_by_table_name'),
+                        url: layTp.facade.url('admin/autocreate.curd/get_fields_by_table_name'),
                         data: {table_name:select_table_name},
                         dataType: 'json',
                         success: function (res) {
@@ -281,7 +281,7 @@ layui.use(['junAdmin'],function(){
                 case 'county':
                     $.ajax({
                         type: 'GET',
-                        url: junAdmin.facade.url('admin/autocreate.curd/get_fields_by_table_name'),
+                        url: layTp.facade.url('admin/autocreate.curd/get_fields_by_table_name'),
                         data: {table_name:select_table_name},
                         dataType: 'json',
                         success: function (res) {
@@ -391,7 +391,7 @@ layui.use(['junAdmin'],function(){
 
     func_controller.curd_import = function(){
         $(document).on('click','#curd_import_btn', function(){
-            let cache_count = junAdmin.facade.get_count(layui.table.cache);
+            let cache_count = layTp.facade.get_count(layui.table.cache);
             let table_data_arr = layui.table.cache[cache_count];
             let field_name
                 ,field_comment
@@ -484,18 +484,18 @@ layui.use(['junAdmin'],function(){
                 dataType: 'json',
                 success: function (res) {
                     if( res.code == 1 ){
-                        junAdmin.facade.success(res.msg);
+                        layTp.facade.success(res.msg);
                         parent.func_controller.table_render();
                         // parent.layer.closeAll();
                     }else{
-                        junAdmin.facade.error(res.msg);
+                        layTp.facade.error(res.msg);
                     }
                 },
                 error: function (xhr) {
                     if( xhr.status == '500' ){
-                        junAdmin.facade.error('本地网络问题或者服务器错误');
+                        layTp.facade.error('本地网络问题或者服务器错误');
                     }else if( xhr.status == '404' ){
-                        junAdmin.facade.error('请求地址不存在');
+                        layTp.facade.error('请求地址不存在');
                     }
                 }
             });

@@ -15,7 +15,7 @@
 * icon 这里主要有两个layer的表情，5和6，代表（哭和笑）
 -->
 <script type="text/javascript">
-    layui.use(['junAdmin'],function() {
+    layui.use(['layTp'],function() {
         var msg = '<?php echo(strip_tags($msg));?>';
         var iurl = '<?php echo($url);?>';
         var wait = '<?php echo($wait);?>';

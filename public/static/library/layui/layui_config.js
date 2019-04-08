@@ -4,7 +4,7 @@ layui.config({
     ,debug: false //用于开启调试模式，默认false，如果设为true，则JS模块的节点会保留在页面
     ,base: '/static/library/layui/extends/' //设定扩展的Layui模块的所在目录，一般用于外部模块扩展
 }).extend({
-    junAdmin : 'junAdmin'
+    layTp : 'layTp'
 });
 
-layui.use(['junAdmin']);
+layui.use(['layTp']);

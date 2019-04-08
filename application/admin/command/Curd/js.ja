@@ -1,13 +1,13 @@
-layui.use(['junAdmin'],function() {
+layui.use(['layTp'],function() {
     const
         func_controller = {}
-        ,junAdmin = layui.junAdmin
+        ,layTp = layui.layTp
         ,$ = layui.jquery
     ;
 
     //搜索表单渲染
     func_controller.search_form_render = function(){
-        junAdmin.facade.select_multi();
+        layTp.facade.select_multi();
     }
 
     func_controller.search_form_render();
@@ -32,7 +32,7 @@ layui.use(['junAdmin'],function() {
         //监听默认工具条
         layui.table.on('tool(default)', function(obj){
             if(default_table_tool.indexOf(obj.event) != -1){
-                junAdmin.facade.table_tool(obj);
+                layTp.facade.table_tool(obj);
             }else{
                 //新增的其他操作按钮在这里来写
                 //switch(obj.event){

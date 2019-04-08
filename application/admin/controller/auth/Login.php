@@ -12,8 +12,8 @@ class Login extends Controller
     //首页
     public function index()
     {
-        $session = Session::get('user');
-        if( isset( $session['id'] ) && isset( $session['name'] ) )
+        $session = Session::get('admin_user_id');
+        if( $session )
         {
             return $this->redirect(url('/admin/'));
         }

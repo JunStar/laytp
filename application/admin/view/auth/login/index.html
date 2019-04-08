@@ -15,7 +15,7 @@
 <div class="layadmin-user-login layadmin-user-display-show" id="user-login" style="display: none;">
     <div class="layadmin-user-login-main">
         <div class="layadmin-user-login-box layadmin-user-login-header">
-            <h2>JunAdmin</h2>
+            <h2>LayTp</h2>
             <p>Layui + ThinkPHP5 极速后台开发管理系统</p>
         </div>
         <div class="layadmin-user-login-box layadmin-user-login-body layui-form">
@@ -57,10 +57,10 @@
         version: false //一般用于更新模块缓存，默认不开启。设为true即让浏览器不缓存。也可以设为一个固定的值，如：201610
         ,debug: false //用于开启调试模式，默认false，如果设为true，则JS模块的节点会保留在页面
         ,base: '/static/library/layui/extends/' //设定扩展的Layui模块的所在目录，一般用于外部模块扩展
-    }).use(['junAdmin'],function(){
+    }).use(['layTp'],function(){
         let $ = layui.$
             ,form = layui.form
-            ,junAdmin = layui.junAdmin
+            ,layTp = layui.layTp
         ;
         form.render();
 
@@ -72,18 +72,18 @@
                 ,dataType: 'json'
                 ,success:function(res){
                     if(res.code == 1){
-                        junAdmin.facade.success(res.msg);
+                        layTp.facade.success(res.msg);
                         setTimeout( redirect, 1000 );
                     }else{
-                        junAdmin.facade.error(res.msg);
+                        layTp.facade.error(res.msg);
                         $('#user-get-vercode').click();
                     }
                 }
                 ,error: function (xhr) {
                     if( xhr.status == '500' ){
-                        junAdmin.facade.error('本地网络问题或者服务器错误');
+                        layTp.facade.error('本地网络问题或者服务器错误');
                     }else if( xhr.status == '404' ){
-                        junAdmin.facade.error('请求地址不存在');
+                        layTp.facade.error('请求地址不存在');
                     }
                 }
             });

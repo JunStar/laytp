@@ -1,7 +1,7 @@
-layui.use(['junAdmin'],function() {
+layui.use(['layTp'],function() {
     const
         func_controller = {}
-        ,junAdmin = layui.junAdmin
+        ,layTp = layui.layTp
         ,$ = layui.jquery
     ;
 
@@ -30,30 +30,30 @@ layui.use(['junAdmin'],function() {
                 layer.confirm('真的删除行么', function(index){
                     $.ajax({
                         type: 'POST',
-                        url: junAdmin.facade.url('admin/core.menu/del'),
+                        url: layTp.facade.url('admin/core.menu/del'),
                         data: {id:data.id},
                         dataType: 'json',
                         success: function (res) {
                             if( res.code == 1 ){
                                 obj.del();
                             }else{
-                                junAdmin.facade.error(res.msg);
+                                layTp.facade.error(res.msg);
                             }
                             layer.close(index);
                         },
                         error: function (xhr) {
                             if( xhr.status == '500' ){
-                                junAdmin.facade.error('本地网络问题或者服务器错误');
+                                layTp.facade.error('本地网络问题或者服务器错误');
                             }else if( xhr.status == '404' ){
-                                junAdmin.facade.error('请求地址不存在');
+                                layTp.facade.error('请求地址不存在');
                             }
                         }
                     });
                 });
                 //点击编辑按钮
             }else if(obj.event === 'edit'){
-                var url = junAdmin.facade.url(module + '/' + controller + '/edit',{id:data.id});
-                junAdmin.facade.popup_frame('添加', url, '800px', '500px');
+                var url = layTp.facade.url(module + '/' + controller + '/edit',{id:data.id});
+                layTp.facade.popup_frame('添加', url, '800px', '500px');
             }
         });
 
@@ -64,15 +64,15 @@ layui.use(['junAdmin'],function() {
                 if(is_menu_list[key] == obj.elem.checked){
                     var post_data = {field:this.name,field_val:key,id:this.value};
                     $.ajax({
-                        url: junAdmin.facade.url(module + '/' + controller + '/set_status/'),
+                        url: layTp.facade.url(module + '/' + controller + '/set_status/'),
                         method: 'POST',
                         data: post_data,
                         success: function(res){
                             if(res.code == 1){
-                                junAdmin.facade.success(res.msg);
+                                layTp.facade.success(res.msg);
                                 func_controller.table_render();
                             }else{
-                                junAdmin.facade.error(res.msg);
+                                layTp.facade.error(res.msg);
                                 func_controller.table_render();
                             }
                         },

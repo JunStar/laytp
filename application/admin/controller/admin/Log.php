@@ -25,7 +25,7 @@ class Log extends Backend
         
 		$this->relation = [
 			'admin_id'=> [
-				'model'=>Db::table('ja_admin_user') ,
+				'model'=>Db::table('lt_admin_user') ,
 				'show_field'=>'name',
 			],
 		];

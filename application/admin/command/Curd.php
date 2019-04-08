@@ -1,6 +1,6 @@
 <?php
 /**
- * Created by JunAdmin.
+ * Created by LayTp.
  * User: JunStar
  * Date: 18-9-20
  * Time: 下午8:56
@@ -25,7 +25,7 @@ class Curd extends Command
         $curd_config,//分析info后，主要是json_decode字段内容后，生成的配置信息
         $model_app_name,//模型所在app名称，全局模型就在common下，否则就在admin下
         $controller_model_class_name,//控制器和模型的类名
-        $mid_name,//中间名称，比如表名为ja_test_a_b那么这里的mid_name就是/test/a/B,拼接控制器和模型文件的路径和namespace都需要用到
+        $mid_name,//中间名称，比如表名为lt_test_a_b那么这里的mid_name就是/test/a/B,拼接控制器和模型文件的路径和namespace都需要用到
         $controller_array_const,//控制器层数组常量
         $controller_c_file_name,//需要生成的控制器文件的文件名
         $controller_array_upload_field,//上传控件的字段列表，controller层定义，在值输出时就可以判断输出成图片、音频、视频等控件
@@ -1141,7 +1141,7 @@ EOD;
         $data['parent_id'] = '';
         $data['options'] = '<option value="">请选择省份</option>';
 
-        $this->set_controller_relation($info['field_name'],'Db::table(\'ja_area\') ', 'name');
+        $this->set_controller_relation($info['field_name'],'Db::table(\'lt_area\') ', 'name');
 
         return $this->get_replaced_tpl($name, $data);
     }
@@ -1185,7 +1185,7 @@ EOD;
 
         $data['options'] = '<option value="">请选择城市</option>';
 
-        $this->set_controller_relation($info['field_name'],'Db::table(\'ja_area\') ', 'name');
+        $this->set_controller_relation($info['field_name'],'Db::table(\'lt_area\') ', 'name');
 
         return $this->get_replaced_tpl($name, $data);
     }
@@ -1220,7 +1220,7 @@ EOD;
         }
         $data['options'] = '<option value="">请选择区县</option>';
 
-        $this->set_controller_relation($info['field_name'],'Db::table(\'ja_area\') ', 'name');
+        $this->set_controller_relation($info['field_name'],'Db::table(\'lt_area\') ', 'name');
 
         return $this->get_replaced_tpl($name, $data);
     }

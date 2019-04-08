@@ -106,7 +106,7 @@ $('#treeview')
     }
 );
 
-layui.use(['junAdmin'],function() {
+layui.use(['layTp'],function() {
     layui.form.on('checkbox(checkall)',function(){
         $("#treeview").jstree($(this).prop("checked") ? "check_all" : "uncheck_all");
     });
