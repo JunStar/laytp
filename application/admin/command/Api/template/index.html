@@ -22,11 +22,6 @@
     .layui-form-item .layui-input-inline{
         width: 300px;
     }
-    .layui-elem-quote {
-        display: block;
-        white-space: pre;
-        margin: 1em 0;
-    }
 </style>
 <body>
 <div class="layui-layout layui-layout-admin">
@@ -166,7 +161,7 @@
                                                 <div class="layui-form-item">
                                                     <label class="layui-form-label">{$pv.name}</label>
                                                     <div class="layui-input-block">
-                                                        <input type="text" name="{$pv.name}" autocomplete="off" placeholder="{if $pv.sample}{$pv.description} - 例:{$pv.sample}{else}请输入{$pv.description}{/if}" class="layui-input">
+                                                        <input type="{if ($pv.type == 'file')}file{else}text{/if}" name="{$pv.name}" autocomplete="off" placeholder="{if $pv.sample}{$pv.description} - 例:{$pv.sample}{else}请输入{$pv.description}{/if}" class="layui-input">
                                                     </div>
                                                 </div>
                                                 {/foreach}
