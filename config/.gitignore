@@ -1,6 +1,2 @@
 *.php
-app.php
-database.php
-tags.php
-template.php
 !/demo/*.php
