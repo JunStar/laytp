@@ -209,9 +209,14 @@ class Builder
     public function render($template, $vars = [])
     {
         $docslist = $this->parse();
-        dump($docslist['测试分组1'][0]);
+        $ids = [];
+        foreach($docslist as $v){
+            foreach($v as $api){
+                $ids[] = $api['id'];
+            }
+        }
 
-        return View::display(file_get_contents($template), array_merge($vars, ['docslist' => $docslist]));
+        return View::display(file_get_contents($template), array_merge($vars, ['docslist' => $docslist,'ids'=>json_encode($ids)]));
     }
 
 }
