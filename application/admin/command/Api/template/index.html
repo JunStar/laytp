@@ -178,15 +178,11 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="layui-card" id="response_card_{$api.id}">
+                                    <div class="layui-card" style="display:none;" id="response_card_{$api.id}">
                                         <div class="layui-card-header" style="background-color: #F2F2F2;">响应输出</div>
                                         <div class="layui-card-body">
-                                            <blockquote class="layui-elem-quote" id="response_headers_{$api.id}">
-                                                响应头
-                                            </blockquote>
-                                            <pre class="layui-code" id="response_{$api.id}">
-                                                响应数据
-                                            </pre>
+                                            <pre class="layui-code" id="response_headers_{$api.id}"></pre>
+                                            <pre class="layui-code" id="response_{$api.id}"></pre>
                                         </div>
                                     </div>
                                 </div>
