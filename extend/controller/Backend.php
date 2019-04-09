@@ -18,6 +18,7 @@ class Backend extends Controller
     public $now_node;
     public $admin_user;
     public $rule_list;
+    public $menu_ids;
 
     public function initialize(){
         if( $this->request->isPost() ){
@@ -51,9 +52,21 @@ class Backend extends Controller
         //当前登录用户角色
         $role_ids = model('auth.RoleRelUser')->where('admin_id','=',$admin_user_id)->column('role_id');
         $menu_ids = array_unique( model('auth.RoleRelMenu')->where('role_id','in',$role_ids)->column('menu_id') );
+        foreach($menu_ids as $menu_id){
+            $pid = model('auth.Menu')->where('id','=',$menu_id)->value('pid');
+            if($pid){
+                for($i=1;$i<=3;$i++){
+                    $menu_info = model('auth.Menu')->where('id','=',$pid)->find();
+                    $menu_ids[] = $menu_info['id'];
+                    if(!$menu_info['pid']){break;}
+                    $pid = $menu_info['pid'];
+                }
+            }
+        }
+
+        $this->menu_ids = array_unique( $menu_ids );
         $where = [
             ['id','in',$menu_ids]
-            ,['is_menu','=',0]
         ];
         $rule_list = array_unique( model('auth.Menu')->where($where)->column('rule') );
         $this->rule_list = $rule_list;
@@ -98,7 +111,7 @@ class Backend extends Controller
         //获取所有一级菜单
         $first_menu_where[] = ['pid','=',0];
         if( !$this->admin_user->is_super_manager ){
-            $first_menu_where[] =['rule','in',$this->rule_list];
+            $first_menu_where[] =['id','in',$this->menu_ids];
         }
         $first_menu = model('auth.Menu')->where($first_menu_where)->order('sort','desc')->select()->toArray();
         foreach($first_menu as $k=>$v){
@@ -113,7 +126,7 @@ class Backend extends Controller
         //获取当前一级菜单下的二级和三级菜单
         $second_menu_where[] = ['pid','=',$now_first_menu['id']];
         if( !$this->admin_user->is_super_manager ){
-            $second_menu_where[] =['rule','in',$this->rule_list];
+            $second_menu_where[] =['id','in',$this->menu_ids];
         }
         $second_menu = model('auth.Menu')->where($second_menu_where)->order('sort','desc')->select()->toArray();
         foreach($second_menu as $sk=>$sv){
@@ -126,7 +139,7 @@ class Backend extends Controller
             $third_menu_where = [];
             $third_menu_where[] = ['pid','=',$sv['id']];
             if( !$this->admin_user->is_super_manager ){
-                $third_menu_where[] =['rule','in',$this->rule_list];
+                $third_menu_where[] =['id','in',$this->menu_ids];
             }
             $third_menu = model('auth.Menu')->where($third_menu_where)->order('sort','desc')->select()->toArray();
             if( count($third_menu) ){

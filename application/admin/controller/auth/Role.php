@@ -72,8 +72,11 @@ class Role extends Backend
             if( $update_res || $update_res === 0 ){
                 $data = [];
                 foreach( $menu_ids as $k=>$v ){
-                    $data[] = ['menu_id' => $v, 'role_id' => $edit_where['id']];
+                    if( $v != 0 ){
+                        $data[] = ['menu_id' => $v, 'role_id' => $edit_where['id']];
+                    }
                 }
+                model('auth.RoleRelMenu')->where('role_id','=',$edit_where['id'])->delete();
                 model('auth.RoleRelMenu')->saveAll($data);
                 return $this->success('操作成功');
             }else if( $update_res === null ){
