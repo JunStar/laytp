@@ -153,10 +153,7 @@
                                     <div class="layui-card">
                                         <div class="layui-card-header" style="background-color: #F2F2F2;">参数</div>
                                         <div class="layui-card-body">
-                                            <div class="layui-form layui-form-pane" action="" lay-filter="test_inline_{$api.id}">
-                                                <input type="hidden" name="ajax_method" value="{$api.method}">
-                                                <input type="hidden" name="ajax_route" value="{$api.route}">
-                                                <input type="hidden" name="ajax_id" value="{$api.id}">
+                                            <form class="layui-form-pane" method="{$api.method}" action="{$api.route}" id="test_inline_{$api.id}">
                                                 {foreach $api.paramslist as $pk=>$pv}
                                                 <div class="layui-form-item">
                                                     <label class="layui-form-label">{$pv.name}</label>
@@ -167,10 +164,10 @@
                                                 {/foreach}
                                                 <div class="layui-form-item">
                                                     <div class="layui-input-block">
-                                                        <button class="layui-btn" lay-submit="" lay-filter="test_inline_{$api.id}">提 交</button>
+                                                        <a class="layui-btn" href="javascript:void(0);" onclick="test_inline({$api.id})">提 交</a>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </form>
                                         </div>
                                     </div>
                                     <div class="layui-card" style="display:none;" id="response_card_{$api.id}">
@@ -265,7 +262,7 @@
             layui.form.on('submit(test_inline_'+ids[key]+')', function(data){
                 let id = data.field.ajax_id;
                 let method = data.field.ajax_method;
-                let url = storage.getItem('api_url') + data.field.ajax_route;
+                let url = storage.getItem('api_url') ? storage.getItem('api_url') + data.field.ajax_route : data.field.ajax_route;
                 $.ajax({
                     type: method,
                     url: url,
@@ -333,6 +330,47 @@
             }
             return '<span class="' + cls + '">' + match + '</span>';
         });
+    }
+
+    function test_inline(id){
+        let formData = new FormData();
+        $('#test_inline_'+id).find('input').each(function (i, input) {
+            if ($(input).attr('type') == 'file') {
+                formData.append($(input).attr('name'), $(input)[0].files[0]);
+            } else {
+                formData.append($(input).attr('name'), $(input).val())
+            }
+        });
+        let url = storage.getItem('api_url') ? storage.getItem('api_url') + $('#test_inline_'+id).prop('action') : $('#test_inline_'+id).prop('action');
+        $.ajax({
+            url: url,
+            data: $('#test_inline_'+id).prop('method').toLowerCase() == 'get' ? $('#test_inline_'+id).serialize() : formData,
+            type: $('#test_inline_'+id).prop('method') + '',
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            success: function (data, textStatus, xhr) {
+                if (typeof data === 'object') {
+                    var str = JSON.stringify(data, null, 2);
+                    $('#response_'+id).html(syntaxHighlight(str));
+                } else {
+                    $('#response_'+id).html(data || '');
+                }
+                $('#response_headers_'+id).html('HTTP ' + xhr.status + ' ' + xhr.statusText + '<br/><br/>' + xhr.getAllResponseHeaders());
+                $('#response_card_'+id).show();
+            },
+            error: function (xhr) {
+                try {
+                    var str = JSON.stringify($.parseJSON(xhr.responseText), null, 2);
+                } catch (e) {
+                    var str = xhr.responseText;
+                }
+                $('#response_headers_'+id).html('HTTP ' + xhr.status + ' ' + xhr.statusText + '<br/><br/>' + xhr.getAllResponseHeaders());
+                $('#response_'+id).html(syntaxHighlight(str));
+                $('#response_card_'+id).show();
+            }
+        });
+        return false;
     }
 </script>
 </html>
