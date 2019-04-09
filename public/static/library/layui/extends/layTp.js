@@ -7,7 +7,7 @@
 */
 let add_search_condition_click_num = 0;
 layui.define([
-    'jquery', 'layer', 'form', 'table', 'laytpl', 'element','laydate','upload'
+    'jquery', 'layer', 'form', 'table', 'laytpl', 'element','laydate','upload','selectPage'
     ,'select_multi'
     ,'formSelects'
 ], function(exports){

@@ -172,7 +172,7 @@ class Curd extends Command
      * @return string
      */
     protected function get_tpl_true_name($name){
-        return __DIR__ . DS . 'Curd' . DS . $name . '.ja';
+        return __DIR__ . DS . 'Curd' . DS . $name . '.lt';
     }
 
     protected function get_name_by_table($table){
