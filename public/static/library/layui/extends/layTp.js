@@ -597,7 +597,7 @@ layui.define([
                     success: function (res) {
                         if( res.code == 1 ){
                             layTp.facade.success(res.msg);
-                            if(res.data.reload){
+                            if(typeof res.data.reload === 'boolean' && res.data.reload){
                                 setTimeout(function () {
                                     location.reload();
                                 }, 1000);
