@@ -939,9 +939,9 @@ EOD;
         }
 
         if( $info['form_additional']['single_multi'] == 'single' ){
-            $data['multiple'] = 'true';
-        }else{
             $data['multiple'] = 'false';
+        }else{
+            $data['multiple'] = 'true';
         }
 
         return $this->get_replaced_tpl($name, $data);

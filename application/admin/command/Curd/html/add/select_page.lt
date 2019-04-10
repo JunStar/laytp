@@ -3,5 +3,5 @@
                 search-url="{%search_url%}"
                 show-field="{%show_field%}"
                 search-condition="LIKE"
-                multiple="{%multiple%}"
+                show-multiple="{%multiple%}"
                 {%max%}>

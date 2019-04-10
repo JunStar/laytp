@@ -891,10 +891,11 @@ layui.define([
          */
         select_page:function(){
             layui.each($(".selectPage"),function(key,item) {
+                console.log(item);
                 let showField = $(item).attr('show-field');
                 let searchField = $(item).attr('search-field');
                 let search_url = $(item).attr('search-url');
-                let multiple = $(item).attr('multiple');
+                let multiple = ( $(item).attr('show-multiple') == 'true' ) ? true : false;
                 let maxSelectLimit = $(item).attr('maxSelectLimit') ? parseInt($(item).attr('maxSelectLimit')) : 0;
                 layTp.facade.select_page($(item),{
                     showField : showField,
