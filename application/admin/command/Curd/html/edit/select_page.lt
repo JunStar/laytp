@@ -1,10 +1,7 @@
-<select name="row[{%field_name%}]" id="{%field_name%}"
-                xm-select="{%field_name%}"
-                xm-select-search="{%search_url%}"
-                xm-select-search-field="{%search_field%}"
-                xm-select-search-show-field="{%show_field%}"
-                xm-select-search-condition="LIKE"
-                xm-select-search-selected-data="{${%field_name%}}"
-                xm-select-height="36px"
-                {%max%} {%single_multi%}>
-            </select>
+<input type="text" name="row[{%field_name%}]" id="{%field_name%}" placeholder="请选择" class="layui-input selectPage"
+                search-field="{%search_field%}"
+                search-url="{%search_url%}"
+                show-field="{%show_field%}"
+                search-condition="LIKE"
+                multiple="{%multiple%}"
+                {%max%}>

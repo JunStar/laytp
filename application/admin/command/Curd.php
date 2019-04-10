@@ -347,7 +347,7 @@ class Curd extends Command
                     $area_search_html[$v['form_type']] = $this->get_search_form_item($v);
                 }else{
                     $search_item_content = $this->get_search_form_item($v);
-                    $index_search_form[] = $this->get_search_form_group($v['field_comment'], $search_item_content);
+                    $index_search_form[] = $this->get_search_form_group($v, $search_item_content);
                 }
             }
         }
@@ -434,12 +434,14 @@ EOD;
         return $this->$func($info);
     }
 
-    protected function get_search_form_group($field, $content)
+    protected function get_search_form_group($info, $content)
     {
+        $field_comment = $info['field_comment'];
+        $inline_or_block = ( $info['form_type'] == 'select_page' ) ? 'layui-input-block' : 'layui-input-inline';
         return <<<EOD
     <div class="layui-inline" style="padding-left: 35px;">
-        <label class="layui-form-label" title="{$field}">{$field}</label>
-        <div class="layui-input-inline">
+        <label class="layui-form-label" title="{$field_comment}">{$field_comment}</label>
+        <div class="{$inline_or_block}">
             {$content}
         </div>
     </div>
@@ -925,21 +927,21 @@ EOD;
 
         $search_url = substr($info['form_additional']['table_name'], strlen(Config::get('database.prefix')) );
         $search_url = str_replace('_','.', $search_url);
-        $data['search_url'] = "{:url('admin/".$search_url."/index')}";
+        $data['search_url'] = "{:url('admin/".$search_url."/select_page')}";
 
         $data['search_field'] = $info['form_additional']['search_field_name'];
         $data['show_field'] = $info['form_additional']['show_field_name'];
 
         if( intval($info['form_additional']['max']) ){
-            $data['max'] = 'xm-select-max='.intval($info['form_additional']['max']);
+            $data['max'] = 'maxSelectLimit='.intval($info['form_additional']['max']);
         }else{
             $data['max'] = '';
         }
 
         if( $info['form_additional']['single_multi'] == 'single' ){
-            $data['single_multi'] = 'xm-select-radio=""';
+            $data['multiple'] = 'true';
         }else{
-            $data['single_multi'] = '';
+            $data['multiple'] = 'false';
         }
 
         return $this->get_replaced_tpl($name, $data);
@@ -951,7 +953,7 @@ EOD;
 
         $search_url = substr($info['form_additional']['table_name'], strlen(Config::get('database.prefix')) );
         $search_url = str_replace('_','.', $search_url);
-        $data['search_url'] = "{:url('admin/".$search_url."/index')}";
+        $data['search_url'] = "{:url('admin/".$search_url."/select_page')}";
 
         $data['search_field'] = $info['form_additional']['search_field_name'];
         $data['show_field'] = $info['form_additional']['show_field_name'];

@@ -14,7 +14,7 @@
 .sp_input {
     background-color: white;
 
-    border: 1px solid #ccc;
+    /*border: 1px solid #ccc;*/
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     border-radius: 4px;
@@ -30,7 +30,7 @@
     /*height: 34px;*/
     /*line-height: 34px;*/
     min-height: 34px;
-    padding: 4px 6px;
+    /*padding: 4px 6px;*/
     vertical-align: middle;
     display: block;
     width: 100%;

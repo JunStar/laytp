@@ -125,4 +125,13 @@ trait Backend
             return $this->error('操作失败');
         }
     }
+
+    public function select_page(){
+        if( $this->request->isAjax() ) {
+            $where = $this->build_select_page_params();
+            $limit = $this->request->param('pageSize');
+            $data = $this->model->where($where)->order('id desc')->paginate($limit)->toArray();
+            return select_page_data($data);
+        }
+    }
 }

@@ -35,6 +35,19 @@ function layui_table_data($data){
     return json($json);
 }
 
+function select_page_data($data){
+    $return['list'] = $data['data'];
+    $return['totalRow'] = $data['total'];
+    return $return;
+}
+
+/**
+ * 获取某个字段的静态常量值列表
+ * @param $field_name
+ * @param $field_val
+ * @param $const
+ * @return string
+ */
 function get_const_val($field_name, $field_val, $const){
     $result = [];
     $field_val_arr = explode(',', $field_val);

@@ -14,6 +14,7 @@ layui.define([
     const MOD_NAME = 'layTp';
     let layTp = {};
     const $ = layTp.$ = layui.jquery;
+    const selectPagePlugin = layui.selectPage;
     //toastr加入layui的jquery中
     $.extend({
         toastr: {
@@ -310,6 +311,11 @@ layui.define([
             }
         },
 
+        //select_page
+        select_page:function(obj, option){
+            selectPagePlugin.selectPage(obj, option);
+        },
+
         //多选下拉框
         //layero,index有值时，说明是layer弹窗中进行渲染，添加和编辑都是layer弹窗
         //layero,index无值时，说明是非layer弹窗中进行渲染，列表页搜索表单部分使用到了
@@ -505,7 +511,7 @@ layui.define([
             });
         },
 
-        //筛选
+        //筛选按钮 - 隐藏显示搜索表单
         show_hidden_search_form:function(){
             $(document).on('click','.show-hidden-search-form',function(){
                 if($('#search-form').css("display") == 'none'){
@@ -877,6 +883,32 @@ layui.define([
             $(document).on('click','[download]',function(){
                 let file_url = $(this).attr('download');
                 window.open(layTp.facade.url('/admin/ajax/download',{'file_url':window.btoa(file_url)}));
+            });
+        },
+
+        /**
+         * selectPage插件渲染
+         */
+        select_page:function(){
+            layui.each($(".selectPage"),function(key,item) {
+                let showField = $(item).attr('show-field');
+                let searchField = $(item).attr('search-field');
+                let search_url = $(item).attr('search-url');
+                let multiple = $(item).attr('multiple');
+                let maxSelectLimit = $(item).attr('maxSelectLimit') ? parseInt($(item).attr('maxSelectLimit')) : 0;
+                layTp.facade.select_page($(item),{
+                    showField : showField,
+                    searchField : searchField,
+                    multiple : multiple,
+                    data : search_url,
+                    maxSelectLimit : maxSelectLimit,
+                    eAjaxSuccess : function(d){
+                        var result;
+                        if(d) result = d;
+                        else result = undefined;
+                        return result;
+                    }
+                });
             });
         }
     }

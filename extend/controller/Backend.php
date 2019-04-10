@@ -216,6 +216,20 @@ class Backend extends Controller
         return $whereStr;
     }
 
+    public function build_select_page_params(){
+        $where = [];
+        $q_word = $this->request->param('q_word');
+        $andOr = $this->request->param('andOr');
+        $searchField = $this->request->param('searchField');
+        $searchFieldStr = $searchField[0];
+        $searchFieldVal = $this->request->param($searchFieldStr);
+        foreach($q_word as $keyword){
+            $where[] = "{$searchFieldStr} LIKE '%{$keyword}%'";
+        }
+        $whereStr = implode(" {$andOr} ", $where);
+        return $whereStr;
+    }
+
     //重写tp基类的success方法，修改下data和url参数的位置
     public function success($msg = '', $data = '', $url = null, $wait = 3, array $header = []){
         return parent::success($msg, $url, $data, $wait, $header);

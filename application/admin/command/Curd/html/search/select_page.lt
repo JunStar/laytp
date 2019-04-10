@@ -1,10 +1,7 @@
-<select name="search_param[{%field_name%}][value]" id="{%field_name%}"
-                xm-select="search_{%field_name%}"
-                xm-select-search="{%search_url%}"
-                xm-select-search-field="{%search_field%}"
-                xm-select-search-show-field="{%show_field%}"
-                xm-select-search-condition="LIKE"
-                xm-select-height="36px"
+<input type="text" name="search_param[{%field_name%}][value]" id="{%field_name%}" placeholder="请选择" class="layui-input selectPage"
+                search-field="{%search_field%}"
+                search-url="{%search_url%}"
+                show-field="{%show_field%}"
+                multiple="true"
                 {%max%}>
-            </select>
             <input type="hidden" name="search_param[{%field_name%}][condition]" value="{%condition%}">
