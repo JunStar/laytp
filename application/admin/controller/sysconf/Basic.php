@@ -2,6 +2,7 @@
 namespace app\admin\controller\sysConf;
 
 use controller\Backend;
+use think\facade\Env;
 
 class Basic extends Backend
 {
@@ -13,6 +14,9 @@ class Basic extends Backend
             $post = filterPostData($this->request->post("row/a"));
             $update_res = model('Sysconf')->saveData($post,$where['group']);
             if( $update_res || $update_res === 0 ){
+                //写入配置文件
+                $file_name = Env::get('app_path') . DS . 'admin' . DS . 'config' . DS . $where['group'] . '.php';
+                file_put_contents($file_name,"<?php\nreturn ".var_export($post,true).';');
                 return $this->success('操作成功');
             }else if( $update_res === null ){
                 return $this->error('操作失败');
@@ -25,7 +29,6 @@ class Basic extends Backend
         }
         $assign['site_name'] = isset( $assign['site_name'] ) ? $assign['site_name'] : '';
         $assign['record'] = isset( $assign['record'] ) ? $assign['record'] : '';
-        $assign['static_version'] = isset( $assign['static_version'] ) ? $assign['static_version'] : '';
         $this->assign($assign);
         return $this->fetch();
     }

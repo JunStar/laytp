@@ -1,5 +1,5 @@
 <div class="layui-header">
-    <div class="layui-logo">LayTp 1.0</div>
+    <div class="layui-logo">{$Think.config.basic.site_name}</div>
     <ul class="layui-nav layui-layout-left">
         {foreach $first_menu as $menu}
         <li class="layui-nav-item {if $menu['selected']}layui-bg-green{/if}"><a href="{:url($menu['rule'])}"><i class="{$menu['icon']}"></i> {$menu['name']}</a></li>
