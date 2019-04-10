@@ -17,7 +17,7 @@ class Basic extends Backend
                 //写入配置文件
                 $file_name = Env::get('app_path') . DS . 'admin' . DS . 'config' . DS . $where['group'] . '.php';
                 file_put_contents($file_name,"<?php\nreturn ".var_export($post,true).';');
-                return $this->success('操作成功');
+                return $this->success('操作成功',['reload'=>true]);
             }else if( $update_res === null ){
                 return $this->error('操作失败');
             }

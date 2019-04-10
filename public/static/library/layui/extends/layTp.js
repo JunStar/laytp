@@ -597,6 +597,11 @@ layui.define([
                     success: function (res) {
                         if( res.code == 1 ){
                             layTp.facade.success(res.msg);
+                            if(res.data.reload){
+                                setTimeout(function () {
+                                    location.reload();
+                                }, 1000);
+                            }
                             if(typeof parent.func_controller != "undefined"){
                                 parent.func_controller.table_render();
                                 parent.layui.layer.closeAll();
