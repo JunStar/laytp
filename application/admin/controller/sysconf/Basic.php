@@ -24,8 +24,8 @@ class Basic extends Backend
             $assign[$v['key']] = $v['value'];
         }
         $assign['site_name'] = isset( $assign['site_name'] ) ? $assign['site_name'] : '';
-        $assign['beian'] = isset( $assign['beian'] ) ? $assign['beian'] : '';
-        $assign['version'] = isset( $assign['version'] ) ? $assign['version'] : '';
+        $assign['record'] = isset( $assign['record'] ) ? $assign['record'] : '';
+        $assign['static_version'] = isset( $assign['static_version'] ) ? $assign['static_version'] : '';
         $this->assign($assign);
         return $this->fetch();
     }

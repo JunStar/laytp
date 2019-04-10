@@ -172,6 +172,7 @@ class Backend extends Controller
         $assign['js_global_var']['js_controller'] = str_replace('.','/',$controller);
         $assign['js_global_var']['action'] = $action;
         $assign['js_global_var']['table_id'] = $module . $controller . $action;
+
         $this->assign($assign);
     }
 
