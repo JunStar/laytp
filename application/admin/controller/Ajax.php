@@ -19,7 +19,7 @@ class Ajax extends Controller
 
     //省市区接口
     public function area(){
-        $parent_id = $this->request->post('parent_id') ? $this->request->post('parent_id') : 0;
+        $parent_id = $this->request->param('parent_id') ? $this->request->param('parent_id') : 0;
         $result = model('Area')->where('pid', '=', $parent_id)->select();
         $this->success('获取成功','',$result);
     }
