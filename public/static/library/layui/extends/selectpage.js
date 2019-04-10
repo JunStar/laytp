@@ -646,7 +646,7 @@ layui.define('jquery', function (exports) { //提示：模块也可以依赖其�
             } else {//ajax data source mode to init selected item
                 $.ajax({
                     dataType: 'json',
-                    type: 'POST',
+                    type: 'GET',
                     url: p.data,
                     data: {
                         searchTable: p.dbTable,
@@ -1173,11 +1173,12 @@ layui.define('jquery', function (exports) { //提示：模块也可以依赖其�
         if (q_word.length && q_word[0] && q_word[0] !== self.prop.prev_value) which_page_num = 1;
         var _orgParams = {
             q_word: q_word,
-            pageNumber: which_page_num,
+            page: which_page_num,
             pageSize: p.pageSize,
             andOr: p.andOr,
             orderBy: p.orderBy,
-            searchTable: p.dbTable
+            searchTable: p.dbTable,
+            searchField: p.searchField
         };
         _orgParams[searchKey] = q_word[0];
         if (_paramsFunc && $.isFunction(_paramsFunc)) {
@@ -1189,7 +1190,7 @@ layui.define('jquery', function (exports) { //提示：模块也可以依赖其�
         self.prop.xhr = $.ajax({
             dataType: 'json',
             url: p.data,
-            type: 'POST',
+            type: 'GET',
             data: _params,
             success: function (returnData) {
                 if (!returnData || !$.isPlainObject(returnData)) {
