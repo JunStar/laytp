@@ -891,7 +891,6 @@ layui.define([
          */
         select_page:function(){
             layui.each($(".selectPage"),function(key,item) {
-                console.log(item);
                 let showField = $(item).attr('show-field');
                 let searchField = $(item).attr('search-field');
                 let search_url = $(item).attr('search-url');
