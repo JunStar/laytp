@@ -1,6 +1,15 @@
 <?php
 namespace think;
 
+define('APP_PATH', __DIR__ . '/../application/');
+
+// 判断是否安装LayTp
+if (!is_file(APP_PATH . 'admin/command/Install/install.lock'))
+{
+    header("location:./install.php");
+    exit;
+}
+
 if (!defined('DS')) {
     define('DS', DIRECTORY_SEPARATOR);
 }

@@ -34,7 +34,7 @@ function is_really_writable($file)
     return TRUE;
 }
 
-$sitename = "FastAdmin";
+$sitename = "LayTp";
 
 $link = array(
     'qqun'  => "https://jq.qq.com/?_wv=1027&amp;k=487PNBb",
@@ -48,7 +48,7 @@ $link = array(
 $checkDirs = [
     'thinkphp',
     'vendor',
-    'public' . DS . 'assets' . DS . 'libs'
+//    'public' . DS . 'assets' . DS . 'libs'
 ];
 //缓存目录
 $runtimeDir = APP_PATH . 'runtime';
@@ -57,7 +57,7 @@ $runtimeDir = APP_PATH . 'runtime';
 $errInfo = '';
 
 //数据库配置文件
-$dbConfigFile = APP_PATH . 'database.php';
+$dbConfigFile = ROOT_PATH . DS . 'config' . DS . 'database.php';
 
 // 锁定的文件
 $lockFile = INSTALL_PATH . 'install.lock';
