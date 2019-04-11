@@ -1,0 +1,84 @@
+
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <title>laytp - 极速后台开发框架 ThinkPHP+Layui</title>
+    <meta name="keywords" content="layui,ui,ui框架,前端框架,JS组件">
+    <meta name="description" content="layui 是一款采用自身模块规范编写的前端 UI 框架，遵循原生 HTML/CSS/JS 的书写与组织形式，门槛极低，拿来即用。其外在极简，却又不失饱满的内在，体积轻盈，组件丰盈，从核心代码到 API 的每一处细节都经过精心雕琢，非常适合界面的快速开发。">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+
+    <link rel="stylesheet" href="__STATIC__/library/layui/css/layui.css"  media="all">
+    <link rel="stylesheet" href="__STATIC__/index/css/global.css" media="all">
+</head>
+<body class="site-home" id="LAY_home" style="background-color: #eee;" data-date="4-11">
+
+<div class="layui-header header header-index">
+    <div class="layui-main">
+        <div class="layui-layout layui-layout-admin">
+            <a href="/"><div class="layui-logo">LayTp</div></a>
+        </div>
+        <div class="layui-form component" lay-filter="LAY-site-header-component"></div>
+        <ul class="layui-nav">
+            <li class="layui-nav-item ">
+                <a href="http://www.laytp.com/doc/" target="_blank">文档</a>
+            </li>
+            <li class="layui-nav-item ">
+                <a href="http://www.laytp.com/demo/" target="_blank">示例</a>
+            </li>
+            <li class="layui-nav-item layui-hide-xs" target="_blank">
+                <a href="http://www.laytp.com/community" target="_blank">社区</a>
+            </li>
+            <li class="layui-nav-item layui-hide-xs" target="_blank">
+                <a href="http://www.laytp.com/addons" target="_blank">插件市场</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+<!--[if lt IE 9]>
+<script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+<script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+<div class="site-banner">
+    <div class="site-banner-bg" style="background-image: url('__STATIC__/index/image/bj.jpg'); background-size: cover;">
+    </div>
+    <div class="site-banner-main">
+        <div class="site-zfj">
+            <i class="layui-icon" style="color: #fff; color: rgba(255,255,255,.7);">&#xe857;</i>
+        </div>
+        <div class="layui-anim site-desc">
+            <p class="web-font-desc">极速后台开发框架</p>
+            <cite>ThinkPHP + LayUI</cite>
+        </div>
+        <div class="site-download">
+            <a href="/admin" class="layui-inline site-down">
+                <cite class="layui-icon">&#xe653;</cite>
+                进入后台
+            </a>
+        </div>
+        <div class="site-banner-other">
+            <a href="https://gitee.com/junstar/laytp" target="_blank" rel="nofollow" class="site-fork">
+                码云
+            </a>
+        </div>
+    </div>
+</div>
+<div class="layui-footer footer footer-index">
+    <div class="layui-main">
+        <p>&copy; 2019 <a href="/">laytp.com</a> MIT license</p>
+        <p>
+            <a href="https://gitee.com/junstar/laytp" target="_blank" rel="nofollow">码云</a>
+        </p>
+    </div>
+</div>
+
+</body>
+</html>
