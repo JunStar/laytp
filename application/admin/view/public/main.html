@@ -20,30 +20,7 @@
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
-    {block name="menus"}
-    {include file="public/top"}
-
-    <div class="layui-side layui-bg-black">
-        <div class="layui-side-scroll">
-            <!-- 左侧导航区域 -->
-            <ul class="layui-nav layui-nav-tree"  lay-filter="test">
-                {foreach $left_menu as $sv}
-                <li class="layui-nav-item {if $sv['selected']}layui-nav-itemed{/if}">
-                    <a class="" href="javascript:void(0);"><i class="{$sv['icon']}"></i> {$sv['name']}</a>
-                    {if $sv['child']}
-                    <dl class="layui-nav-child">
-                        {foreach $sv['child'] as $tv}
-                        <dd {if $tv['selected']}class="layui-bg-green"{/if}><a href="{:url($tv['rule'])}">&nbsp;&nbsp;<i class="{$tv['icon']}"></i> {$tv['name']}</a></dd>
-                        {/foreach}
-                    </dl>
-                    {/if}
-                </li>
-                {/foreach}
-            </ul>
-        </div>
-    </div>
-    {/block}
-
+    {include file="public/menu"}
 
     <div class="layui-body">
         <!-- 内容主体区域 -->
@@ -72,6 +49,6 @@
 <script type="text/javascript" src="__STATIC__/library/jquery_3.3.1.js" charset="utf-8"></script>
 {/block}
 <!-- js模板部分 -->
-{block name="js_template"}{/block}
+{block name="js_template"} {/block}
 </body>
 </html>

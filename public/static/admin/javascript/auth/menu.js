@@ -26,12 +26,12 @@ layui.use(['layTp'],function() {
             // , page: true //开启分页
             , cols: [[ //表头
                 {field: 'id', title: 'ID', sort: true, fixed: 'left', align: 'center'}
-                , {field: 'name', title: '标题'}
+                , {field: 'name', title: '标题', width: 300}
                 , {field: 'rule', title: '规则', width: 220}
                 , {field: 'icon', title: '图标', align: 'center', templet: '#show_icon'}
                 , {field: 'sort', title: '排序', align: 'center'}
                 , {field: 'is_menu', title: '是否菜单', templet: '#switch_is_menu', align: 'center'}
-                , {field: 'operation', title: '操作', toolbar: '#operation', fixed: 'right', align: 'center'}
+                , {field: 'operation', title: '操作', toolbar: '#operation', fixed: 'right', align: 'center', width: 180}
             ]]
         });
 

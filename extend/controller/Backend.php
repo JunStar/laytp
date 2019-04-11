@@ -79,10 +79,12 @@ class Backend extends Controller
 
     //设置菜单
     public function menu(){
+
         //当前菜单信息
         $now_node_where['rule'] = $this->now_node;
         $now_node_where['is_menu'] = 1;
         $now_menus = model('auth.Menu')->where($now_node_where)->order('pid desc')->select()->toArray();
+
         if( !$now_menus ){
             $first_menu = model('auth.Menu')->where('pid','=',0)->select()->toArray();
             foreach($first_menu as $k=>$v){
@@ -94,6 +96,7 @@ class Backend extends Controller
         }else{
             $now_menu = $now_menus[0];
         }
+
         //当前二级菜单信息
         $now_second_menu = model('auth.Menu')->where('id','=',$now_menu['pid'])->find();
         if($now_second_menu && $now_second_menu['pid']){
@@ -125,6 +128,7 @@ class Backend extends Controller
         $this->assign('first_menu', $first_menu);
         //获取当前一级菜单下的二级和三级菜单
         $second_menu_where[] = ['pid','=',$now_first_menu['id']];
+        $second_menu_where[] = ['is_menu','=',1];
         if( !$this->admin_user->is_super_manager ){
             $second_menu_where[] =['id','in',$this->menu_ids];
         }
