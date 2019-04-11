@@ -1,27 +1,18 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkPHP [ WE CAN DO IT JUST THINK ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2006~2018 http://thinkphp.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: liu21st <liu21st@gmail.com>
-// +----------------------------------------------------------------------
-
+use think\facade\Env;
 return [
     // 数据库类型
-    'type'            => 'mysql',
+    'type'            => Env::get('database.type', 'mysql'),
     // 服务器地址
-    'hostname'        => 'localhost',
+    'hostname'        => Env::get('database.hostname', 'localhost'),
     // 数据库名
-    'database'        => 'laytp',
+    'database'        => Env::get('database.database', 'laytp'),
     // 用户名
-    'username'        => 'root',
+    'username'        => Env::get('database.username', 'root'),
     // 密码
-    'password'        => '123456',
+    'password'        => Env::get('database.password', '123456'),
     // 端口
-    'hostport'        => '',
+    'hostport'        => Env::get('database.hostport', ''),
     // 连接dsn
     'dsn'             => '',
     // 数据库连接参数

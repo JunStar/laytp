@@ -37,11 +37,11 @@ function is_really_writable($file)
 $sitename = "LayTp";
 
 $link = array(
-    'qqun'  => "https://jq.qq.com/?_wv=1027&amp;k=487PNBb",
-    'gitee' => 'https://gitee.com/karson/fastadmin/attach_files',
-    'home'  => 'https://www.fastadmin.net?ref=install',
-    'forum' => 'https://forum.fastadmin.net?ref=install',
-    'doc'   => 'https://doc.fastadmin.net?ref=install',
+    'qqun'  => "http://shang.qq.com/wpa/qunwpa?idkey=feb89577b675eaea3b45e4cbc86f38a1024ef759430b4b0bc2ae3d7fce110892",
+    'gitee' => 'https://gitee.com/junstar/laytp/issues',
+    'home'  => 'http://www.laytp.com',
+    'forum' => 'http://www.laytp.com',
+    'doc'   => 'http://www.laytp.com',
 );
 
 // 检测目录是否存在
@@ -68,21 +68,12 @@ if (is_file($lockFile)) {
 } else if (!extension_loaded("PDO")) {
     $errInfo = "当前未开启PDO，无法进行安装";
 } else if (!is_really_writable($dbConfigFile)) {
-    $open_basedir = ini_get('open_basedir');
-    if ($open_basedir) {
-        $dirArr = explode(PATH_SEPARATOR, $open_basedir);
-        if ($dirArr && in_array(__DIR__, $dirArr)) {
-            $errInfo = '当前服务器因配置了open_basedir，导致无法读取父目录<br><a href="https://forum.fastadmin.net/thread/1145?ref=install" target="_blank">点击查看解决办法</a>';
-        }
-    }
-    if (!$errInfo) {
-        $errInfo = '当前权限不足，无法写入配置文件application/database.php<br><a href="https://forum.fastadmin.net/thread/1145?ref=install" target="_blank">点击查看解决办法</a>';
-    }
+    $errInfo = '当前权限不足，无法写入配置文件application/database.php';
 } else {
     $dirArr = [];
     foreach ($checkDirs as $k => $v) {
         if (!is_dir(ROOT_PATH . $v)) {
-            $errInfo = '当前代码仅包含核心代码，请前往官网下载完整包或资源包覆盖后再尝试安装，<a href="https://www.fastadmin.net/download.html?ref=install" target="_blank">立即前往下载</a>';
+            $errInfo = '当前代码仅包含核心代码，请前往官网下载完整包或资源包覆盖后再尝试安装';
             break;
         }
     }
@@ -103,12 +94,11 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     $mysqlUsername = isset($_POST['mysqlUsername']) ? $_POST['mysqlUsername'] : 'root';
     $mysqlPassword = isset($_POST['mysqlPassword']) ? $_POST['mysqlPassword'] : '';
-    $mysqlDatabase = isset($_POST['mysqlDatabase']) ? $_POST['mysqlDatabase'] : 'fastadmin';
-    $mysqlPrefix = isset($_POST['mysqlPrefix']) ? $_POST['mysqlPrefix'] : 'fa_';
+    $mysqlDatabase = isset($_POST['mysqlDatabase']) ? $_POST['mysqlDatabase'] : 'laytp';
+    $mysqlPrefix = isset($_POST['mysqlPrefix']) ? $_POST['mysqlPrefix'] : 'lt_';
     $adminUsername = isset($_POST['adminUsername']) ? $_POST['adminUsername'] : 'admin';
     $adminPassword = isset($_POST['adminPassword']) ? $_POST['adminPassword'] : '123456';
     $adminPasswordConfirmation = isset($_POST['adminPasswordConfirmation']) ? $_POST['adminPasswordConfirmation'] : '123456';
-    $adminEmail = isset($_POST['adminEmail']) ? $_POST['adminEmail'] : 'admin@admin.com';
 
     if ($adminPassword !== $adminPasswordConfirmation) {
         echo "两次输入的密码不一致";
@@ -122,15 +112,15 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
     } else if (strlen($adminUsername) < 3 || strlen($adminUsername) > 12) {
         echo "用户名请输入3~12位字符";
         exit;
-    } else if (strlen($adminPassword) < 6 || strlen($adminPassword) > 16) {
-        echo "密码请输入6~16位字符";
+    } else if (strlen($adminPassword) < 5 || strlen($adminPassword) > 16) {
+        echo "密码请输入5~16位字符";
         exit;
     }
     try {
         //检测能否读取安装文件
-        $sql = @file_get_contents(INSTALL_PATH . 'fastadmin.sql');
+        $sql = @file_get_contents(INSTALL_PATH . 'laytp.sql');
         if (!$sql) {
-            throw new Exception("无法读取application/admin/command/Install/fastadmin.sql文件，请检查是否有读权限");
+            throw new Exception("无法读取application/admin/command/Install/laytp.sql文件，请检查是否有读权限");
         }
         $sql = str_replace("`fa_", "`{$mysqlPrefix}", $sql);
         $pdo = new PDO("mysql:host={$mysqlHostname};port={$mysqlHostport}", $mysqlUsername, $mysqlPassword, array(
@@ -164,6 +154,7 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
 
         //检测能否成功写入数据库配置
         $result = @file_put_contents($dbConfigFile, $config);
+
         if (!$result) {
             throw new Exception("无法写入数据库信息到application/database.php文件，请检查是否有写权限");
         }
@@ -174,9 +165,8 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
             throw new Exception("无法写入安装锁定到application/admin/command/Install/install.lock文件，请检查是否有写权限");
         }
 
-        $newSalt = substr(md5(uniqid(true)), 0, 6);
-        $newPassword = md5(md5($adminPassword) . $newSalt);
-        $pdo->query("UPDATE {$mysqlPrefix}admin SET username = '{$adminUsername}', email = '{$adminEmail}',password = '{$newPassword}', salt = '{$newSalt}' WHERE username = 'admin'");
+        $newPassword = password_hash($adminPassword, PASSWORD_DEFAULT);
+        $pdo->query("UPDATE {$mysqlPrefix}admin_user SET username = '{$adminUsername}', password = '{$newPassword}' WHERE username = 'admin'");
         echo "success";
     } catch (PDOException $e) {
         $err = $e->getMessage();
@@ -321,24 +311,14 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <body>
 <div class="container">
-    <h1>
-        <svg width="100px" height="120px" viewBox="0 0 768 830" version="1.1" xmlns="http://www.w3.org/2000/svg"
-             xmlns:xlink="http://www.w3.org/1999/xlink">
-            <g id="logo" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                <path d="M64.433651,605.899968 C20.067302,536.265612 0,469.698785 0,389.731348 C0,174.488668 171.922656,0 384,0 C596.077344,0 768,174.488668 768,389.731348 C768,469.698785 747.932698,536.265612 703.566349,605.899968 C614.4,753.480595 441.6,870.4 384,870.4 C326.4,870.4 153.6,753.480595 64.433651,605.899968 L64.433651,605.899968 Z"
-                      id="body" fill="#18BC9C"></path>
-                <path d="M429.648991,190.816 L430.160991,190.816 L429.648991,190.816 L429.648991,190.816 Z M429.648991,156 L427.088991,156 C419.408991,157.024 411.728991,160.608 404.560991,168.8 L403.024991,170.848 L206.928991,429.92 C198.736991,441.184 197.712991,453.984 204.368991,466.784 C210.512991,478.048 222.288991,485.728 235.600991,485.728 L336.464991,486.24 L304.208991,673.632 C301.648991,689.504 310.352991,705.376 325.200991,712.032 C329.808991,714.08 334.416991,714.592 339.536991,714.592 C349.776991,714.592 358.992991,709.472 366.160991,700.256 L561.744991,419.168 C569.936991,407.904 570.960991,395.104 564.304991,382.304 C557.648991,369.504 547.408991,363.36 533.072991,363.36 L432.208991,363.36 L463.952991,199.008 C464.464991,196.448 464.976991,193.376 464.976991,190.816 C464.976991,171.872 449.104991,156 431.184991,156 L429.648991,156 L429.648991,156 Z"
-                      id="flash" fill="#FFFFFF"></path>
-            </g>
-        </svg>
-    </h1>
     <h2>安装 <?php echo $sitename; ?></h2>
     <div>
 
-        <p>若你在安装中遇到麻烦可点击 <a href="<?php echo $link['doc']; ?>" target="_blank">安装文档</a> <a
-                href="<?php echo $link['forum']; ?>" target="_blank">交流社区</a> <a
-                href="<?php echo $link['qqun']; ?>">QQ交流群</a></p>
-        <!--<p><?php echo $sitename; ?>还支持在命令行php think install一键安装</p>-->
+        <p>若你在安装中遇到麻烦可点击
+            <a href="<?php echo $link['doc']; ?>" target="_blank">安装文档</a>
+            <a href="<?php echo $link['forum']; ?>" target="_blank">交流社区</a>
+            <a href="<?php echo $link['qqun']; ?>" target="_blank">QQ交流群</a>
+        </p>
 
         <form method="post">
             <?php if ($errInfo): ?>
@@ -357,7 +337,7 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 <div class="form-field">
                     <label>MySQL 数据库名</label>
-                    <input type="text" name="mysqlDatabase" value="fastadmin" required="">
+                    <input type="text" name="mysqlDatabase" value="laytp" required="">
                 </div>
 
                 <div class="form-field">
@@ -372,7 +352,7 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 <div class="form-field">
                     <label>MySQL 数据表前缀</label>
-                    <input type="text" name="mysqlPrefix" value="fa_">
+                    <input type="text" name="mysqlPrefix" value="lt_">
                 </div>
             </div>
 
@@ -380,11 +360,6 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="form-field">
                     <label>管理者用户名</label>
                     <input name="adminUsername" value="admin" required=""/>
-                </div>
-
-                <div class="form-field">
-                    <label>管理者Email</label>
-                    <input name="adminEmail" value="admin@admin.com" required="">
                 </div>
 
                 <div class="form-field">
@@ -420,7 +395,7 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
                             if (ret === 'success') {
                                 $('#error').hide();
                                 $("#success").text("安装成功！开始你的<?php echo $sitename; ?>之旅吧！").show();
-                                $('<a class="btn" href="./">访问首页</a> <a class="btn" href="./index.php/admin/index/login" style="background:#18bc9c">访问后台</a>').insertAfter($button);
+                                $('<a class="btn" href="./">访问首页</a> <a class="btn" href="/admin" style="background:#18bc9c">访问后台</a>').insertAfter($button);
                                 $button.remove();
                                 localStorage.setItem("fastep", "installed");
                             } else {
