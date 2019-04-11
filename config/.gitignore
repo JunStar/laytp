@@ -2,4 +2,5 @@
 !app.php
 !tags.php
 !template.php
+!database.php
 !/demo/*.php
