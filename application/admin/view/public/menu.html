@@ -28,7 +28,7 @@
                 {if $sv['child']}
                 <a href="javascript:void(0);"><i class="{$sv['icon']}"></i> {$sv['name']}</a>
                 {else}
-                <a href="{:url($sv['rule'])}"><i class="{$sv['icon']}"></i> {$sv['name']}</a>
+                <a href="{:url($sv['rule'])}" {if $sv['selected']}class="layui-this"{/if}><i class="{$sv['icon']}"></i> {$sv['name']}</a>
                 {/if}
                 {if $sv['child']}
                 <dl class="layui-nav-child">

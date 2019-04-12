@@ -35,38 +35,17 @@ layui.use(['layTp'],function() {
             ]]
         });
 
-        //监听工具条
+        //监听默认工具条
         layui.table.on('tool(default)', function(obj){
-            var data = obj.data;
-            //点击删除按钮
-            if(obj.event === 'del'){
-                layer.confirm('真的删除行么', function(index){
-                    $.ajax({
-                        type: 'POST',
-                        url: layTp.facade.url('admin/core.menu/del'),
-                        data: {id:data.id},
-                        dataType: 'json',
-                        success: function (res) {
-                            if( res.code == 1 ){
-                                obj.del();
-                            }else{
-                                layTp.facade.error(res.msg);
-                            }
-                            layer.close(index);
-                        },
-                        error: function (xhr) {
-                            if( xhr.status == '500' ){
-                                layTp.facade.error('本地网络问题或者服务器错误');
-                            }else if( xhr.status == '404' ){
-                                layTp.facade.error('请求地址不存在');
-                            }
-                        }
-                    });
-                });
-                //点击编辑按钮
-            }else if(obj.event === 'edit'){
-                var url = layTp.facade.url(module + '/' + controller + '/edit',{id:data.id});
-                layTp.facade.popup_frame('添加', url, '800px', '500px');
+            if(default_table_tool.indexOf(obj.event) != -1){
+                layTp.facade.table_tool(obj);
+            }else{
+                //新增的其他操作按钮在这里来写
+                //switch(obj.event){
+                //    case '':
+                //
+                //        break;
+                //}
             }
         });
 
