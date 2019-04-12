@@ -79,7 +79,6 @@ class Backend extends Controller
 
     //设置菜单
     public function menu(){
-
         //当前菜单信息
         $now_node_where['rule'] = $this->now_node;
         $now_node_where['is_menu'] = 1;

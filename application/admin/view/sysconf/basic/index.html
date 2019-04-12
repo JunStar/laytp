@@ -18,6 +18,14 @@
             </div>
             <div class="layui-form-mid layui-word-aux">basic.record</div>
         </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">登录验证码</label>
+            <div class="layui-input-inline">
+                <input type="hidden" name="row[login_vercode]" value="0" />
+                <input type="checkbox" name="row[login_vercode]" lay-skin="switch" lay-text="需要|不需要" value="1" {if 1 == $login_vercode}checked="checked"{/if} />
+            </div>
+            <div class="layui-form-mid layui-word-aux">basic.login_vercode</div>
+        </div>
         <div class="form-footer">
             <div class="layui-form-item">
                 <div class="layui-input-block">

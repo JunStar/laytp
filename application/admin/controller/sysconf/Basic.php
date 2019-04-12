@@ -29,6 +29,7 @@ class Basic extends Backend
         }
         $assign['site_name'] = isset( $assign['site_name'] ) ? $assign['site_name'] : '';
         $assign['record'] = isset( $assign['record'] ) ? $assign['record'] : '';
+        $assign['login_vercode'] = isset( $assign['login_vercode'] ) ? $assign['login_vercode'] : '';
         $this->assign($assign);
         return $this->fetch();
     }

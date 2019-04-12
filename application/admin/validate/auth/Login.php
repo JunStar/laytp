@@ -2,26 +2,29 @@
 namespace app\admin\validate\auth;
 
 use think\captcha\Captcha;
+use think\facade\Config;
 use think\Validate;
 
 class Login extends Validate
 {
     //数组顺序就是检测的顺序，比如这里，会先检测code验证码的正确性
     protected $rule =   [
-        'code'      =>  'require|checkCode:',
+        'code'      =>  'checkCode:',
         'username'  =>  'require',
         'password'  =>  'require|checkPassword:',
     ];
 
     //定义内置方法检验失败后返回的字符
     protected $message  =   [
-        'code.require'      => '验证码不能为空',
         'username.require'      => '用户名不能为空',
         'password.require'  => '密码不能为空',
     ];
 
     //自定义验证码检验方法
     protected function checkCode($code){
+        if( !Config::get('basic.login_vercode') ){
+            return true;
+        }
         $captcha = new Captcha();
         if( !$captcha->check($code))
         {

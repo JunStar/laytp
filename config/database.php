@@ -11,7 +11,7 @@ return [
     // 密码
     'password'        => Env::get('database.password', '123456'),
     // 端口
-    'hostport'        => Env::get('database.hostport', '3306'),
+    'hostport'        => Env::get('database.hostport', ''),
     // 连接dsn
     'dsn'             => '',
     // 数据库连接参数

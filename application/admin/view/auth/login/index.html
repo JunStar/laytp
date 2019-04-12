@@ -26,6 +26,7 @@
                 <label class="layadmin-user-login-icon layui-icon layui-icon-password" for="user-login-password"></label>
                 <input type="password" name="password" id="user-login-password" lay-verify="required" placeholder="密码" class="layui-input">
             </div>
+            {if $Think.config.basic.login_vercode}
             <div class="layui-form-item">
                 <div class="layui-row">
                     <div class="layui-col-xs7">
@@ -39,6 +40,7 @@
                     </div>
                 </div>
             </div>
+            {/if}
             <div class="layui-form-item">
                 <button class="layui-btn layui-btn-fluid" id="submitBtn" lay-submit lay-filter="user-login-submit">登 入</button>
             </div>
@@ -93,6 +95,7 @@
             location.href = "/admin/";
         }
 
+        {if $Think.config.basic.login_vercode}
         $("#code").focus(function()
         {
             $(document).on("keydown",function(event)
@@ -104,6 +107,19 @@
             });
             $("#code").unbind();
         });
+        {else}
+        $("#user-login-password").focus(function()
+        {
+            $(document).on("keydown",function(event)
+            {
+                if( event.keyCode == 13 )
+                {
+                    $('#submitBtn').click();
+                }
+            });
+            $("#user-login-password").unbind();
+        });
+        {/if}
     });
 </script>
 
