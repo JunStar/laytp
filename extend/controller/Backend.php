@@ -160,6 +160,11 @@ class Backend extends Controller
             }
         }
         $this->assign('left_menu', $second_menu);
+
+        //面包屑
+        $this->assign('now_first_menu', $now_first_menu['name']);
+        $this->assign('now_second_menu', $now_second_menu['name']);
+        $this->assign('now_third_menu', $now_menu['name']);
     }
 
     /**
