@@ -1,6 +1,7 @@
-{extend name="admin@public/form"}
+{extend name="admin@public/main"}
 
-{block name="form"}
+{block name="main_body"}
+<div class="page-body">
 <fieldset class="layui-elem-field">
     <legend>生成Api文档</legend>
     <form class="layui-field-box layui-form layui-form-pane">
@@ -56,6 +57,7 @@ class Test extends Api{
 }
     </pre>
 </fieldset>
+</div>
 {/block}
 
 {block name="javascript"}

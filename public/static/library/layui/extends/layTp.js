@@ -10,6 +10,7 @@ layui.define([
     'jquery', 'layer', 'form', 'table', 'laytpl', 'element','laydate','upload','selectPage'
     ,'select_multi'
     ,'formSelects'
+    ,'dropdown'
 ], function(exports){
     const MOD_NAME = 'layTp';
     let layTp = {};
@@ -221,7 +222,7 @@ layui.define([
 
             path = '/' + path.replace(/(^\/)|(\/$)/,'');
 
-            var url = path + params + '.html';
+            var url = path + params;
             return url;
         },
 
@@ -448,17 +449,71 @@ layui.define([
                         });
                         break;
                 }
-                // let field_name = $('#'+data.elem.id).data('field_name');
-                // let value = data.elem.value;
-                // func_controller.form_type_select_after(field_name, value);
-                // layui.form.render('select');
-                // return true;
+            });
+        },
+
+        batch_action: function(){
+            $(document).on('click','.batch-action',function(){
+                let uri = $(this).attr("uri");
+                if(uri == undefined){
+                    return false;
+                }
+                let field = $(this).attr("field");
+                let field_val = $(this).attr("field_val");
+                let text = $(this).text();
+                let switch_type = $(this).attr("switch_type");
+                let checkStatus = layui.table.checkStatus(table_id);
+                let checkData = checkStatus.data;
+                if(checkData.length == 0){
+                    layTp.facade.error('请选择数据');
+                    return false;
+                }
+                let key;
+                switch(switch_type){
+                    case 'popup_frame':
+                        for(key in checkData){
+                            url = layTp.facade.url(uri,{id:checkData[key].id});
+                            layTp.facade.popup_frame(name, url);
+                        }
+                        break;
+                    case 'confirm_action':
+                        layui.layer.confirm('确定'+text+'么?', function(index){
+                            let ids_arr = [];
+                            for(key in checkData){
+                                ids_arr.push(checkData[key].id);
+                            }
+                            let ids = ids_arr.join(',');
+                            let data = {'id':ids,'field':field,'field_val':field_val};
+                            $.ajax({
+                                type: 'POST',
+                                url: layTp.facade.url(uri),
+                                data: data,
+                                dataType: 'json',
+                                success: function (res) {
+                                    if( res.code == 1 ){
+                                        func_controller.table_render();
+                                    }else{
+                                        layTp.facade.error(res.msg);
+                                    }
+                                    layui.layer.close(index);
+                                },
+                                error: function (xhr) {
+                                    if( xhr.status == '500' ){
+                                        layTp.facade.error('本地网络问题或者服务器错误');
+                                    }else if( xhr.status == '404' ){
+                                        layTp.facade.error('请求地址不存在');
+                                    }
+                                }
+                            });
+                        });
+                        break;
+                }
             });
         },
 
         /**
          * 批量弹窗 - 使用例子：数据表格顶部的编辑按钮
-         * 所有拥有popup-frame的类名的节点，点击后都会弹窗
+         * 所有拥有batch_popup_frame的类名的节点，点击后都会弹窗
          *  节点的data-name属性为弹窗标题
          *  data-uri弹窗展示的url地址
          *  width属性为弹窗的宽度百分比

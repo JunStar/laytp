@@ -14,17 +14,26 @@
     <link rel="stylesheet" href="__STATIC__/admin/css/theme.css">
     <link rel="stylesheet" href="__STATIC__/admin/css/style.css" media="all">
     <link rel="stylesheet" href="__STATIC__/library/layui/css/modules/formSelects.css" media="all">
-    <link rel="stylesheet" href="__STATIC__/admin/css/selectPage.css" media="all">
+    <link rel="stylesheet" href="__STATIC__/library/layui/css/modules/selectPage.css" media="all">
+    <link rel="stylesheet" href="__STATIC__/library/layui/css/modules/dropdown.css" media="all">
     {/block}
     {include file="public/js_global_var"}
 </head>
-<body class="layui-layout-body hisi-theme-10">
+<body class="layui-layout-body laytp-theme-10">
 <div class="layui-layout layui-layout-admin">
     {include file="public/menu"}
 
     <div class="layui-body">
+        {block name="crumbs"}
+            <ul class="bread-crumbs">
+                <li><a href="javascript:void(0);">系统扩展</a></li>
+                <li>&gt;</li>
+                <li><a href="javascript:void(0);">本地模块</a></li>
+                <li><a href="http://v2.demo.hisiphp.com/admin.php/system/menu/quick/id/17.html" title="添加到首页快捷菜单" class="j-ajax">[+]</a></li>
+            </ul>
+        {/block}
         <!-- 内容主体区域 -->
-        <div style="padding: 5px 15px 0 15px;">
+        <div class="page-body">
             <!-- 搜索表单部分 -->
             {block name="search_form"}{/block}
 
@@ -32,8 +41,10 @@
             {block name="button_list"}{/block}
 
             <!-- 固定的layui-table -->
-            {block name="table"}
-            <table class="layui-hide-sm" lay-filter="default"></table>
+            {block name="main_body"}
+            <div class="page-tab-content">
+                <table class="layui-hide-sm" lay-filter="default"></table>
+            <div>
             {/block}
         </div>
     </div>
