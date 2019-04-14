@@ -83,29 +83,6 @@
 {include file="autocreate/curd/import/form/required_tpl" /}
 {/block}
 
-{block name="form_footer"}
-<style>
-    .form-footer{
-        position:fixed;
-        left:0;
-        right:0;
-        bottom:0;
-        height:44px;
-        line-height:44px;
-        padding: 0 15px;
-        background-color:#eee;
-    }
-</style>
-<div class="form-footer">
-    <div class="layui-form-item">
-        <div class="layui-input-block">
-            <button class="layui-btn layui-btn-sm" id="curd_import_btn">立即生成</button>
-            <button class="layui-btn layui-btn-primary layui-btn-sm" onclick="parent.layer.closeAll();">关闭</button>
-        </div>
-    </div>
-</div>
-{/block}
-
 {block name="script"}
 {__block__}
 <script src="__ADMIN_JS__/{$js_global_var.js_controller}/{$js_global_var.action}.js" charset="utf-8"></script>

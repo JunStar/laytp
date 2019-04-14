@@ -11,9 +11,12 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="format-detection" content="telephone=no">
     {block name="style"}
-    <link rel="stylesheet" href="__STATIC__/library/layui/css/layui.css" media="all">
-    <link rel="stylesheet" href="__STATIC__/admin/css/base.css" media="all">
-    <link rel="stylesheet" href="__STATIC__/admin/css/selectPage.css" media="all">
+    <link rel="stylesheet" href="__STATIC__/library/layui/css/layui.css">
+    <link rel="stylesheet" href="__STATIC__/admin/css/theme.css">
+    <link rel="stylesheet" href="__STATIC__/admin/css/style.css" media="all">
+    <link rel="stylesheet" href="__STATIC__/library/layui/css/modules/formSelects.css" media="all">
+    <link rel="stylesheet" href="__STATIC__/library/layui/css/modules/selectPage.css" media="all">
+    <link rel="stylesheet" href="__STATIC__/library/layui/css/modules/dropdown.css" media="all">
     {/block}
     {include file="public/js_global_var"}
 </head>
@@ -38,8 +41,8 @@
     <div class="form-footer">
         <div class="layui-form-item">
             <div class="layui-input-block">
-                <button class="layui-btn layui-btn-sm" lay-submit lay-filter="*">立即提交</button>
-                <button type="reset" class="layui-btn layui-btn-primary layui-btn-sm">重置</button>
+                <button class="layui-btn layui-btn-normal" lay-submit lay-filter="*">提 交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
             </div>
         </div>
     </div>
@@ -49,6 +52,8 @@
 <script type="text/javascript" src="__STATIC__/library/layui/layui.js" charset="utf-8"></script>
 <script type="text/javascript" src="__STATIC__/library/layui/layui_config.js" charset="utf-8"></script>
 <script type="text/javascript" src="__STATIC__/library/jquery_3.3.1.js" charset="utf-8"></script>
+<script type="text/javascript" src="__STATIC__/library/ueditor/ueditor.config.js" charset="utf-8"></script>
+<script type="text/javascript" src="__STATIC__/library/ueditor/ueditor.all.js" charset="utf-8"></script>
 {/block}
 </body>
 </html>
