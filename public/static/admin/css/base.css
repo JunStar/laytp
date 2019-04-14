@@ -1,3 +1,11 @@
+/*.layui-nav-tree .layui-nav-child a:hover, .layui-nav-tree .layui-nav-child .layui-this a{*/
+    /*background-color:#d1dbe5;*/
+/*}*/
+
+/*.layui-nav-tree .layui-nav-child a{*/
+    /*background-color:#d1dbe5;*/
+/*}*/
+
 /* layui的css在后台有一些需要调整的放在这里 */
 .laytp-nav{
     padding: 0;

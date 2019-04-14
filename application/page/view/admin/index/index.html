@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>本地模块 -  Powered by HisiPHP</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="__STATIC__/library/layui/css/layui.css">
+    <link rel="stylesheet" href="__STATIC__/admin/css/theme.css">
+    <link rel="stylesheet" href="__STATIC__/admin/css/style.css" media="all">
+    <style id="style-1-cropbar-clipper">
+    .en-markup-crop-options {
+        top: 18px !important;
+        left: 50% !important;
+        margin-left: -100px !important;
+        width: 200px !important;
+        border: 2px rgba(255,255,255,.38) solid !important;
+        border-radius: 4px !important;
+    }
+
+    .en-markup-crop-options div div:first-of-type {
+        margin-left: 0px !important;
+    }
+    </style>
+</head>
+<body class="layui-layout-body hisi-theme-10">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header" style="z-index:99999!important;">
+        <div class="fl header-logo">后台管理中心</div>
+        <div class="fl header-fold"><a href="javascript:;" title="打开/关闭左侧导航" class="aicon ai-shouqicaidan" id="foldSwitch"></a></div>
+        <ul class="layui-nav fl nobg main-nav">
+            <li class="layui-nav-item">
+
+                <a href="javascript:;">首页</a></li>
+            <li class="layui-nav-item layui-this">
+
+                <a href="javascript:;">系统</a></li>
+            <li class="layui-nav-item">
+
+                <a href="javascript:;">插件</a></li>
+            <li class="layui-nav-item">
+
+                <a href="javascript:;">会员</a></li>
+            <li class="layui-nav-item">
+
+                <a href="javascript:;">内容</a></li>
+            <li class="layui-nav-item">
+
+                <a href="javascript:;">接口</a></li>
+            <li class="layui-nav-item">
+
+                <a href="javascript:;">轻博客</a></li>
+            <li class="layui-nav-item">
+                <a href="http://pure.demo.hisiphp.com/" target="_blank">纯净版预览</a>
+            </li>
+            <span class="layui-nav-bar"></span></ul>
+        <ul class="layui-nav fr nobg head-info">
+            <li class="layui-nav-item">
+                <a href="http://v2.demo.hisiphp.com/" target="_blank" class="aicon ai-ai-home" title="前台"></a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="javascript:void(0);" class="aicon ai-qingchu" id="hisi-clear-cache" title="清缓存"></a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="javascript:void(0);" class="aicon ai-suo" id="lockScreen" title="锁屏"></a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="http://v2.demo.hisiphp.com/admin.php/system/user/settheme.html" id="hisi-theme-setting" class="aicon ai-theme"></a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="javascript:void(0);">超级管理员&nbsp;&nbsp;<span class="layui-nav-more"></span></a>
+                <dl class="layui-nav-child">
+                    <dd>
+                        <a data-id="00" class="admin-nav-item top-nav-item" href="http://v2.demo.hisiphp.com/admin.php/system/user/info.html">个人设置</a>
+                    </dd>
+                    <dd>
+                        <a href="http://v2.demo.hisiphp.com/admin.php/system/user/iframe.html" class="j-ajax" refresh="yes">框架布局</a>
+                    </dd>
+                    <dd><a href="http://v2.demo.hisiphp.com/admin.php/system/index/index.html?lang=zh-cn">简体中文</a></dd>
+                    <dd>
+                        <a data-id="000" class="admin-nav-item top-nav-item" href="http://v2.demo.hisiphp.com/admin.php/system/language/index.html">语言包管理</a>
+                    </dd>
+                    <dd>
+                        <a href="http://v2.demo.hisiphp.com/admin.php/system/publics/logout.html">退出登陆</a>
+                    </dd>
+                </dl>
+            </li>
+            <span class="layui-nav-bar"></span></ul>
+    </div>
+    <div class="layui-side layui-bg-black" id="switchNav">
+        <div class="layui-side-scroll">
+            <ul class="layui-nav layui-nav-tree" style="display:none;">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a href="javascript:;"><i class="aicon ai-caidan"></i>快捷菜单<span class="layui-nav-more"></span></a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <a class="admin-nav-item" data-id="0" href="http://v2.demo.hisiphp.com/admin.php/system/index/index.html"><i class="aicon ai-shouye"></i> 后台首页</a>
+                        </dd>
+                    </dl>
+                </li>
+                <span class="layui-nav-bar"></span></ul>
+            <ul class="layui-nav layui-nav-tree">
+                <li class="layui-nav-item">
+                    <a href="javascript:;"><i class="aicon ai-gongneng"></i>系统基础<span class="layui-nav-more"></span></a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <a class="admin-nav-item" data-id="10" href="http://v2.demo.hisiphp.com/admin.php/system/system/index.html"><i class="aicon ai-icon01"></i> 系统设置</a>
+                        </dd>
+                        <dd>
+                            <a class="admin-nav-item" data-id="14" href="http://v2.demo.hisiphp.com/admin.php/system/user/index.html"><i class="aicon ai-tubiao05"></i> 系统管理员</a>
+                        </dd>
+                        <dd>
+                            <a class="admin-nav-item" data-id="84" href="http://v2.demo.hisiphp.com/admin.php/system/database/index.html"><i class="aicon ai-shujukuguanli"></i> 数据库管理</a>
+                        </dd>
+                        <dd>
+                            <a class="admin-nav-item" data-id="15" href="http://v2.demo.hisiphp.com/admin.php/system/log/index.html"><i class="aicon ai-xitongrizhi-tiaoshi"></i> 系统日志</a>
+                        </dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item  layui-nav-itemed">
+                    <a href="javascript:;"><i class="aicon ai-shezhi"></i>系统扩展<span class="layui-nav-more"></span></a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <a class="admin-nav-item" data-id="114" href="http://v2.demo.hisiphp.com/admin.php/system/store/index.html"><i class="aicon ai-app-store"></i> 应用市场</a>
+                        </dd>
+                        <dd class="layui-this">
+                            <a class="admin-nav-item" data-id="17" href="http://v2.demo.hisiphp.com/admin.php/system/module/index.html"><i class="aicon ai-mokuaiguanli1"></i> 本地模块</a>
+                        </dd>
+                        <dd>
+                            <a class="admin-nav-item" data-id="18" href="http://v2.demo.hisiphp.com/admin.php/system/plugins/index.html"><i class="aicon ai-chajianguanli"></i> 本地插件</a>
+                        </dd>
+                        <dd>
+                            <a class="admin-nav-item" data-id="19" href="http://v2.demo.hisiphp.com/admin.php/system/hook/index.html"><i class="aicon ai-icon-test"></i> 插件钩子</a>
+                        </dd>
+                        <dd>
+                            <a class="admin-nav-item" data-id="80" href="http://v2.demo.hisiphp.com/admin.php/system/upgrade/index.html"><i class="aicon ai-iconfontshengji"></i> 框架升级</a>
+                        </dd>
+                    </dl>
+                </li>
+                <span class="layui-nav-bar"></span></ul>
+            <ul class="layui-nav layui-nav-tree" style="display:none;">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a href="javascript:;"><i class="aicon ai-mokuaiguanli"></i>插件列表<span class="layui-nav-more"></span></a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <a class="admin-nav-item" data-id="262" href="http://v2.demo.hisiphp.com/admin.php/system/plugins/run/_a/index/_c/index/_p/login.html"><i class="aicon ai-shezhi"></i> 第三方登录</a>
+                        </dd>
+                        <dd>
+                            <a class="admin-nav-item" data-id="141" href="http://v2.demo.hisiphp.com/admin.php/pay/index/index.html"> 在线支付</a>
+                        </dd>
+                    </dl>
+                </li>
+                <span class="layui-nav-bar"></span></ul>
+            <ul class="layui-nav layui-nav-tree" style="display:none;">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a href="javascript:;"><i class="aicon ai-huiyuanliebiao"></i>会员管理<span class="layui-nav-more"></span></a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <a class="admin-nav-item" data-id="152" href="http://v2.demo.hisiphp.com/admin.php/user/group/index.html"><i class="aicon ai-huiyuandengji"></i> 会员分组</a>
+                        </dd>
+                        <dd>
+                            <a class="admin-nav-item" data-id="157" href="http://v2.demo.hisiphp.com/admin.php/user/index/index.html"><i class="aicon ai-huiyuanliebiao"></i> 会员列表</a>
+                        </dd>
+                    </dl>
+                </li>
+                <span class="layui-nav-bar"></span></ul>
+            <ul class="layui-nav layui-nav-tree" style="display:none;">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a href="javascript:;"><i class="typcn typcn-folder"></i>内容管理<span class="layui-nav-more"></span></a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <a class="admin-nav-item" data-id="268" href="http://v2.demo.hisiphp.com/admin.php/cms/content/index.html"><i class="typcn typcn-th-menu"></i> 内容管理</a>
+                        </dd>
+                        <dd>
+                            <a class="admin-nav-item" data-id="273" href="http://v2.demo.hisiphp.com/admin.php/cms/category/index.html"><i class="typcn typcn-th-list-outline"></i> 栏目管理</a>
+                        </dd>
+                        <dd>
+                            <a class="admin-nav-item" data-id="279" href="http://v2.demo.hisiphp.com/admin.php/cms/rec/index.html"><i class="typcn typcn-thumbs-up"></i> 推荐管理</a>
+                        </dd>
+                        <dd>
+                            <a class="admin-nav-item" data-id="285" href="http://v2.demo.hisiphp.com/admin.php/cms/block/index.html"><i class="typcn typcn-th-small"></i> 碎片管理</a>
+                        </dd>
+                        <dd>
+                            <a class="admin-nav-item" data-id="289" href="http://v2.demo.hisiphp.com/admin.php/cms/tag/index.html"><i class="typcn typcn-tags"></i> 标签管理</a>
+                        </dd>
+                        <dd>
+                            <a class="admin-nav-item" data-id="291" href="http://v2.demo.hisiphp.com/admin.php/cms/model/index.html"><i class="typcn typcn-point-of-interest-outline"></i> 模型管理</a>
+                        </dd>
+                        <dd>
+                            <a class="admin-nav-item" data-id="297" href="http://v2.demo.hisiphp.com/admin.php/cms/type/index.html"><i class="typcn typcn-th-large-outline"></i> 栏目类型</a>
+                        </dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item ">
+                    <a href="javascript:;"><i class="typcn typcn-puzzle-outline"></i>扩展功能<span class="layui-nav-more"></span></a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <a class="admin-nav-item" data-id="309" href="http://v2.demo.hisiphp.com/admin.php/cms/slide/index.html"><i class="typcn typcn-image-outline"></i> 幻灯片</a>
+                        </dd>
+                        <dd>
+                            <a class="admin-nav-item" data-id="315" href="http://v2.demo.hisiphp.com/admin.php/cms/nav/index.html"><i class="typcn typcn-compass"></i> 导航管理</a>
+                        </dd>
+                        <dd>
+                            <a class="admin-nav-item" data-id="318" href="http://v2.demo.hisiphp.com/admin.php/cms/form/index.html"><i class="typcn typcn-document-text"></i> 表单管理</a>
+                        </dd>
+                        <dd>
+                            <a class="admin-nav-item" data-id="332" href="http://v2.demo.hisiphp.com/admin.php/cms/link/index.html"><i class="typcn typcn-link-outline"></i> 友情链接</a>
+                        </dd>
+                    </dl>
+                </li>
+                <span class="layui-nav-bar"></span></ul>
+            <ul class="layui-nav layui-nav-tree" style="display:none;">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a href="javascript:;"><i class="aicon ai-xitonggongneng"></i>应用管理<span class="layui-nav-more"></span></a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <a class="admin-nav-item" data-id="210" href="http://v2.demo.hisiphp.com/admin.php/api/app_group/index.html"><i class="aicon ai-shezhi"></i> 应用分组</a>
+                        </dd>
+                        <dd>
+                            <a class="admin-nav-item" data-id="215" href="http://v2.demo.hisiphp.com/admin.php/api/app/index.html"><i class="aicon ai-caidan"></i> 应用列表</a>
+                        </dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item ">
+                    <a href="javascript:;"><i class="aicon ai-icon01"></i>接口管理<span class="layui-nav-more"></span></a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <a class="admin-nav-item" data-id="222" href="http://v2.demo.hisiphp.com/admin.php/api/api_group/index.html"><i class="aicon ai-shezhi"></i> 接口分组</a>
+                        </dd>
+                        <dd>
+                            <a class="admin-nav-item" data-id="227" href="http://v2.demo.hisiphp.com/admin.php/api/api/index.html"><i class="aicon ai-caidan"></i> 接口列表</a>
+                        </dd>
+                        <dd>
+                            <a class="admin-nav-item" data-id="233" href="http://v2.demo.hisiphp.com/admin.php/api/param/index.html"><i class="aicon ai-caidan"></i> 接口参数</a>
+                        </dd>
+                        <dd>
+                            <a class="admin-nav-item" data-id="238" href="http://v2.demo.hisiphp.com/admin.php/api/error_code/index.html"><i class="aicon ai-doubleleft"></i> 错误码维护</a>
+                        </dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item ">
+                    <a href="javascript:;"><i class="aicon ai-caidan"></i>开发文档<span class="layui-nav-more"></span></a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <a class="admin-nav-item" data-id="245" href="http://v2.demo.hisiphp.com/admin.php/api/doc_category/index.html"><i class="aicon ai-shezhi"></i> 文档分类</a>
+                        </dd>
+                        <dd>
+                            <a class="admin-nav-item" data-id="251" href="http://v2.demo.hisiphp.com/admin.php/api/doc/index.html"><i class="aicon ai-caidan"></i> 文档列表</a>
+                        </dd>
+                    </dl>
+                </li>
+                <span class="layui-nav-bar"></span></ul>
+            <ul class="layui-nav layui-nav-tree" style="display:none;">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a href="javascript:;"><i class="aicon ai-shezhi"></i>内容管理<span class="layui-nav-more"></span></a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <a class="admin-nav-item" data-id="166" href="http://v2.demo.hisiphp.com/admin.php/blog/category/index.html"><i class="aicon ai-shezhi"></i> 分类列表</a>
+                        </dd>
+                        <dd>
+                            <a class="admin-nav-item" data-id="172" href="http://v2.demo.hisiphp.com/admin.php/blog/article/index.html"><i class="aicon ai-shezhi"></i> 文章列表</a>
+                        </dd>
+                        <dd>
+                            <a class="admin-nav-item" data-id="178" href="http://v2.demo.hisiphp.com/admin.php/blog/pages/index.html"><i class="aicon ai-shezhi"></i> 单页管理</a>
+                        </dd>
+                        <dd>
+                            <a class="admin-nav-item" data-id="184" href="http://v2.demo.hisiphp.com/admin.php/blog/nav/index.html"><i class="aicon ai-shezhi"></i> 导航管理</a>
+                        </dd>
+                        <dd>
+                            <a class="admin-nav-item" data-id="190" href="http://v2.demo.hisiphp.com/admin.php/blog/links/index.html"><i class="aicon ai-shezhi"></i> 友情链接</a>
+                        </dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item ">
+                    <a href="javascript:;"><i class="aicon ai-shezhi"></i>评论管理<span class="layui-nav-more"></span></a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <a class="admin-nav-item" data-id="197" href="http://v2.demo.hisiphp.com/admin.php/blog/message/index.html"><i class="aicon ai-shezhi"></i> 页面评论</a>
+                        </dd>
+                        <dd>
+                            <a class="admin-nav-item" data-id="202" href="http://v2.demo.hisiphp.com/admin.php/blog/comment/index.html"><i class="aicon ai-shezhi"></i> 文章评论</a>
+                        </dd>
+                    </dl>
+                </li>
+                <span class="layui-nav-bar"></span></ul>
+        </div>
+    </div>
+    <script type="text/html" id="hisi-theme-tpl">
+        <ul class="hisi-themes">
+            <li data-theme="0" class="hisi-theme-item-0"></li>
+            <li data-theme="1" class="hisi-theme-item-1"></li>
+            <li data-theme="2" class="hisi-theme-item-2"></li>
+            <li data-theme="3" class="hisi-theme-item-3"></li>
+            <li data-theme="4" class="hisi-theme-item-4"></li>
+            <li data-theme="5" class="hisi-theme-item-5"></li>
+            <li data-theme="6" class="hisi-theme-item-6"></li>
+            <li data-theme="7" class="hisi-theme-item-7"></li>
+            <li data-theme="8" class="hisi-theme-item-8"></li>
+            <li data-theme="9" class="hisi-theme-item-9"></li>
+            <li data-theme="10" class="hisi-theme-item-10"></li>
+        </ul>
+    </script>
+    <script type="text/html" id="hisi-clear-cache-tpl">
+        <form class="layui-form" style="padding:10px 0 0 30px;" action="/admin.php/system/index/clear.html" method="post">
+            <div class="layui-form-item">
+                <input type="checkbox" name="cache" value="1" title="数据缓存" />
+            </div>
+            <div class="layui-form-item">
+                <input type="checkbox" name="log" value="1" title="日志缓存" />
+            </div>
+            <div class="layui-form-item">
+                <input type="checkbox" name="temp" value="1" title="模板缓存" />
+            </div>
+            <div class="layui-form-item">
+                <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="formSubmit">执行删除</button>
+            </div>
+        </form>
+    </script>
+    <div class="layui-body" id="switchBody">
+        <ul class="bread-crumbs">
+            <li><a href="javascript:void(0);">系统扩展</a></li>
+            <li>&gt;</li>
+            <li><a href="javascript:void(0);">本地模块</a></li>
+            <li><a href="http://v2.demo.hisiphp.com/admin.php/system/menu/quick/id/17.html" title="添加到首页快捷菜单" class="j-ajax">[+]</a></li>
+        </ul>
+        <div style="padding:0 10px;" class="mcolor"></div>
+        <div class="page-body">
+
+            <div class="layui-card">
+                <div class="layui-tab layui-tab-brief">
+                    <ul class="layui-tab-title">
+                        <li class="layui-this">
+                            <a href="http://v2.demo.hisiphp.com/admin.php/system/module/index/status/2.html" class="" id="">已启用</a>
+                        </li>
+                        <li>
+                            <a href="http://v2.demo.hisiphp.com/admin.php/system/module/index/status/1.html" class="" id="">已停用</a>
+                        </li>
+                        <li>
+                            <a href="http://v2.demo.hisiphp.com/admin.php/system/module/index/status/0.html" class="" id="">待安装</a>
+                        </li>
+                        <li>
+                            <a href="http://v2.demo.hisiphp.com/admin.php/system/module/import.html" class="" id="">导入模块</a>
+                        </li>
+                    </ul>
+                    <div class="layui-tab-content page-tab-content">
+                        <div class="layui-tab-item layui-show">
+                            <div class="layui-form">
+                                <table class="layui-table mt10" lay-even="" lay-skin="row">
+                                    <colgroup>
+                                        <col>
+                                        <col width="100">
+                                        <col width="100">
+                                        <col width="100">
+                                        <col width="260">
+                                    </colgroup>
+                                    <thead>
+                                    <tr>
+                                        <th>模块信息</th>
+                                        <th>模块版本</th>
+                                        <th>默认模块</th>
+                                        <th>模块状态</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="module-list-info">
+                                                
+                                                <div class="txt">
+                                                    <h3>在线支付</h3>
+                                                    <p><span>服务商：</span><a href="http://v2.demo.hisiphp.com/admin.php/system/module/index/status/2.html">HisiPHP</a><br><span>简&nbsp;&nbsp;&nbsp;&nbsp;介：</span>通用支付模块，可用于管理及拓展各类支付方式</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>1.0.1</td>
+                                        <td>
+                                            <input type="checkbox" name="status" value="0" lay-skin="switch" lay-filter="switchStatus" lay-text="是|否" data-href="/admin.php/system/module/setdefault/id/4.html"><div class="layui-unselect layui-form-switch" lay-skin="_switch"><em>否</em><i></i></div>
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" name="status" checked="" value="2" lay-skin="switch" lay-filter="switchStatus" lay-text="启用|禁用" data-href="/admin.php/system/module/status/id/4.html"><div class="layui-unselect layui-form-switch layui-form-onswitch" lay-skin="_switch"><em>启用</em><i></i></div>
+                                        </td>
+                                        <td>
+                                            <div class="layui-btn-group">
+                                                <a href="http://v2.demo.hisiphp.com/admin.php/system/module/theme/id/4.html" class="layui-btn layui-btn-primary layui-btn-sm">主题</a>
+                                                <a href="http://v2.demo.hisiphp.com/admin.php/system/upgrade/lists/app_type/module/identifier/pay.1000019.module.2000018.html" class="layui-btn layui-btn-primary layui-btn-sm">更新</a>
+                                                <a href="http://v2.demo.hisiphp.com/admin.php/system/module/uninstall/id/4.html" class="layui-btn layui-btn-primary layui-btn-sm">卸载</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="module-list-info">
+                                                <!--<img src="./hisiphp_files/user.png" width="80" height="80">-->
+                                                <div class="txt">
+                                                    <h3>会员</h3>
+                                                    <p><span>服务商：</span><a href="http://v2.demo.hisiphp.com/admin.php/system/module/index/status/2.html">hisiphp</a><br><span>简&nbsp;&nbsp;&nbsp;&nbsp;介：</span></p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>1.0.1</td>
+                                        <td>
+                                            <input type="checkbox" name="status" value="0" lay-skin="switch" lay-filter="switchStatus" lay-text="是|否" data-href="/admin.php/system/module/setdefault/id/5.html"><div class="layui-unselect layui-form-switch" lay-skin="_switch"><em>否</em><i></i></div>
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" name="status" checked="" value="2" lay-skin="switch" lay-filter="switchStatus" lay-text="启用|禁用" data-href="/admin.php/system/module/status/id/5.html"><div class="layui-unselect layui-form-switch layui-form-onswitch" lay-skin="_switch"><em>启用</em><i></i></div>
+                                        </td>
+                                        <td>
+                                            <div class="layui-btn-group">
+                                                <a href="http://v2.demo.hisiphp.com/admin.php/system/module/theme/id/5.html" class="layui-btn layui-btn-primary layui-btn-sm">主题</a>
+                                                <a href="http://v2.demo.hisiphp.com/admin.php/system/upgrade/lists/app_type/module/identifier/user.1000020.module.2000019.html" class="layui-btn layui-btn-primary layui-btn-sm">更新</a>
+                                                <a href="http://v2.demo.hisiphp.com/admin.php/system/module/uninstall/id/5.html" class="layui-btn layui-btn-primary layui-btn-sm">卸载</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="module-list-info">
+                                                
+                                                <div class="txt">
+                                                    <h3>轻博客</h3>
+                                                    <p><span>服务商：</span><a href="http://v2.demo.hisiphp.com/admin.php/system/module/index/status/2.html">HisiPHP</a><br><span>简&nbsp;&nbsp;&nbsp;&nbsp;介：</span>前端基于layui的轻博客模板搭建而成的响应式轻量极简的轻博客</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>1.0.0</td>
+                                        <td>
+                                            <input type="checkbox" name="status" value="0" lay-skin="switch" lay-filter="switchStatus" lay-text="是|否" data-href="/admin.php/system/module/setdefault/id/6.html"><div class="layui-unselect layui-form-switch" lay-skin="_switch"><em>否</em><i></i></div>
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" name="status" checked="" value="2" lay-skin="switch" lay-filter="switchStatus" lay-text="启用|禁用" data-href="/admin.php/system/module/status/id/6.html"><div class="layui-unselect layui-form-switch layui-form-onswitch" lay-skin="_switch"><em>启用</em><i></i></div>
+                                        </td>
+                                        <td>
+                                            <div class="layui-btn-group">
+                                                <a href="http://v2.demo.hisiphp.com/admin.php/system/system/index/group/blog.html" class="layui-btn layui-btn-primary layui-btn-sm">配置</a>
+                                                <a href="http://v2.demo.hisiphp.com/admin.php/system/module/theme/id/6.html" class="layui-btn layui-btn-primary layui-btn-sm">主题</a>
+                                                <a href="http://v2.demo.hisiphp.com/admin.php/system/upgrade/lists/app_type/module/identifier/blog.1000021.module.2000020.html" class="layui-btn layui-btn-primary layui-btn-sm">更新</a>
+                                                <a href="http://v2.demo.hisiphp.com/admin.php/system/module/uninstall/id/6.html" class="layui-btn layui-btn-primary layui-btn-sm">卸载</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="module-list-info">
+                                                
+                                                <div class="txt">
+                                                    <h3>接口</h3>
+                                                    <p><span>服务商：</span><a href="http://v2.demo.hisiphp.com/admin.php/system/module/index/status/2.html">hisiphp</a><br><span>简&nbsp;&nbsp;&nbsp;&nbsp;介：</span>通用RESTfulAPI接口，基于TP5的资源路由功能而开发。接口文档自动生成，接口输入参数自动检查，集成Oauth授权登录、在线测试工具等。</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>1.0.1</td>
+                                        <td>
+                                            <input type="checkbox" name="status" value="0" lay-skin="switch" lay-filter="switchStatus" lay-text="是|否" data-href="/admin.php/system/module/setdefault/id/7.html"><div class="layui-unselect layui-form-switch" lay-skin="_switch"><em>否</em><i></i></div>
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" name="status" checked="" value="2" lay-skin="switch" lay-filter="switchStatus" lay-text="启用|禁用" data-href="/admin.php/system/module/status/id/7.html"><div class="layui-unselect layui-form-switch layui-form-onswitch" lay-skin="_switch"><em>启用</em><i></i></div>
+                                        </td>
+                                        <td>
+                                            <div class="layui-btn-group">
+                                                <a href="http://v2.demo.hisiphp.com/admin.php/system/system/index/group/api.html" class="layui-btn layui-btn-primary layui-btn-sm">配置</a>
+                                                <a href="http://v2.demo.hisiphp.com/admin.php/system/module/theme/id/7.html" class="layui-btn layui-btn-primary layui-btn-sm">主题</a>
+                                                <a href="http://v2.demo.hisiphp.com/admin.php/system/upgrade/lists/app_type/module/identifier/api.1000022.module.2000021.html" class="layui-btn layui-btn-primary layui-btn-sm">更新</a>
+                                                <a href="http://v2.demo.hisiphp.com/admin.php/system/module/uninstall/id/7.html" class="layui-btn layui-btn-primary layui-btn-sm">卸载</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="module-list-info">
+                                                
+                                                <div class="txt">
+                                                    <h3>内容</h3>
+                                                    <p><span>服务商：</span><a href="http://v2.demo.hisiphp.com/admin.php/system/module/index/status/2.html">hisiphp</a><br><span>简&nbsp;&nbsp;&nbsp;&nbsp;介：</span></p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>1.0.0</td>
+                                        <td>
+                                            <input type="checkbox" name="status" checked="" value="1" lay-skin="switch" lay-filter="switchStatus" lay-text="是|否" data-href="/admin.php/system/module/setdefault/id/8.html"><div class="layui-unselect layui-form-switch layui-form-onswitch" lay-skin="_switch"><em>是</em><i></i></div>
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" name="status" checked="" value="2" lay-skin="switch" lay-filter="switchStatus" lay-text="启用|禁用" data-href="/admin.php/system/module/status/id/8.html"><div class="layui-unselect layui-form-switch layui-form-onswitch" lay-skin="_switch"><em>启用</em><i></i></div>
+                                        </td>
+                                        <td>
+                                            <div class="layui-btn-group">
+                                                <a href="http://v2.demo.hisiphp.com/admin.php/system/system/index/group/cms.html" class="layui-btn layui-btn-primary layui-btn-sm">配置</a>
+                                                <a href="http://v2.demo.hisiphp.com/admin.php/system/module/theme/id/8.html" class="layui-btn layui-btn-primary layui-btn-sm">主题</a>
+                                                <a href="http://v2.demo.hisiphp.com/admin.php/system/module/uninstall/id/8.html" class="layui-btn layui-btn-primary layui-btn-sm">卸载</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-footer footer">
+        <span class="fl">Powered by <a href="http://www.hisiphp.com/" target="_blank">HisiPHP</a> v2.0.0</span>
+        <span class="fr"> © 2018-2020 <a href="http://www.hisiphp.com/" target="_blank">HisiPHP.com</a> All Rights Reserved.</span>
+    </div>
+</div><div id="cli_dialog_div"></div>
+<script src="__STATIC__/library/layui/layui.js"></script>
+<script>
+    layui.config({
+        //dir: '/static/layui/' //layui.js 所在路径（注意，如果是script单独引入layui.js，无需设定该参数。如果是使用requireJS等方式加载layui，则需要此参数），一般情况下可以无视
+        version: false //一般用于更新模块缓存，默认不开启。设为true即让浏览器不缓存。也可以设为一个固定的值，如：201610
+        ,debug: false //用于开启调试模式，默认false，如果设为true，则JS模块的节点会保留在页面
+        ,base: '/static/library/layui/extends/' //设定扩展的Layui模块的所在目录，一般用于外部模块扩展
+    }).extend({
+        layTp : 'layTp'
+    });
+
+    layui.use(['layTp']);
+</script>
+</body></html>
