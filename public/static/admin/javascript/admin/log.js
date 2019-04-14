@@ -3,6 +3,7 @@ layui.use(['layTp'],function() {
         func_controller = {}
         ,layTp = layui.layTp
         ,$ = layui.jquery
+        ,dropdown = layui.dropdown
     ;
 
     //搜索表单渲染
@@ -11,6 +12,21 @@ layui.use(['layTp'],function() {
     }
 
     func_controller.search_form_render();
+
+    //批量操作渲染
+    //批量操作渲染
+    dropdown.render({
+        elem: '.action-more',
+        options: [
+            {
+                action: 'del',
+                title: '删除'
+                ,icon: "layui-icon-delete"
+                ,uri: layTp.facade.url(module + "/" + controller + "/del")
+                ,switch_type: "confirm_action"
+            }
+        ]
+    });
 
     //表格渲染
     func_controller.table_render = function (where) {
