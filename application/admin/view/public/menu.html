@@ -1,28 +1,4 @@
-<div class="layui-header" style="z-index:99999!important;">
-    <div class="fl header-logo">{$Think.config.basic.site_name}</div>
-    <div class="fl header-fold"><a href="javascript:;" title="打开/关闭左侧导航" class="aicon ai-shouqicaidan" id="foldSwitch"></a></div>
-    <ul class="layui-nav fl nobg main-nav">
-        {foreach $first_menu as $menu}
-        <li class="layui-nav-item {if $menu['selected']}layui-this{/if}">
-            <a href="{:url($menu['rule'])}">
-                <i class="{$menu['icon']}"></i> {$menu['name']}
-            </a>
-        </li>
-        {/foreach}
-    </ul>
-    <ul class="layui-nav layui-layout-right">
-        <li class="layui-nav-item">
-            <a href="javascript:;">
-                <img src="{$admin_user.avatar|getDefaultAvatar}" class="layui-nav-img">
-                {$admin_user.name}
-            </a>
-            <dl class="layui-nav-child">
-                <dd><a href="{:url('admin/general/profile')}">个人设置</a></dd>
-                <dd><a href="{:url('admin/auth.login/logout')}">安全退出</a></dd>
-            </dl>
-        </li>
-    </ul>
-</div>
+{include file="public/top"}
 
 <div class="layui-side layui-bg-black">
     <div class="layui-side-scroll">
