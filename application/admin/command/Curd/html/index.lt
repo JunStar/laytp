@@ -1,9 +1,9 @@
 {extend name="admin@public/main"}
 
 {block name="search_form"}
-<div class="page-tab-content" id="search-form" style="display:none;">
-    <div class="layui-form" style="height:auto;padding:10px 0 0 0;">
-    <form class="layui-form-item layui-form-pane">
+<div class="search-form-page-tab-content" id="search-form" style="display:none;">
+    <div class="layui-form layui-card-header" style="height:auto;padding:10px 0 0 0;">
+    <form class="layui-form-item layui-form-pane" style="margin-bottom:0px;">
     {%searchForm%}
 
         <div class="layui-inline" style="padding-left: 35px;">
