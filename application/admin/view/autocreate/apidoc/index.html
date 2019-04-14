@@ -2,61 +2,75 @@
 
 {block name="main_body"}
 <div class="page-tab-content">
-<fieldset class="layui-elem-field">
-    <legend>生成Api文档</legend>
-    <form class="layui-field-box layui-form layui-form-pane">
-        <div class="layui-form-item">
-            <label class="layui-form-label">api文档名称</label>
-            <div class="layui-input-inline">
-                <input type="text" name="row[apidoc_name]" id="apidoc_name" placeholder="请输入api文档名称" autocomplete="off" class="layui-input" value="{$apidoc_name}" />
-            </div>
-            <div class="layui-form-mid layui-word-aux">生成的Api文档的文件名，例：默认使用api，则会在根目录下生成api.html文件</div>
-        </div>
-        <div class="form-footer">
-            <div class="layui-form-item">
-                <div class="layui-input-block">
-                    <button class="layui-btn layui-btn-sm" lay-submit lay-filter="*">立即生成</button>
-                    <a class="layui-btn layui-btn-sm layui-btn-danger" href="javascript:void(0);" onclick="showApi();">立即查看</a>
+    <div class="layui-card">
+        <div class="layui-tab layui-tab-brief">
+            <ul class="layui-tab-title">
+                <li class="layui-this"><a href="javascript:void(0);">生成文档</a></li>
+                <li><a href="javascript:void(0);">文档示例</a></li>
+            </ul>
+            <div class="layui-tab-content page-tab-content">
+                <div class="layui-tab-item layui-show">
+                    <style type="text/css">
+                        .layui-form-item .layui-form-label{width:130px;text-align:right;}
+                        .layui-form-item .layui-input-inline{max-width:80%;width:auto;min-width:260px;}
+                        .layui-form-mid{padding:0!important;}
+                        .layui-form-mid code{color:#5FB878;}
+                    </style>
+                    <form class="page-list-form layui-form">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">api文档名称</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="row[apidoc_name]" id="apidoc_name" placeholder="请输入api文档名称" autocomplete="off" class="layui-input" value="{$apidoc_name}" />
+                            </div>
+                            <div class="layui-form-mid layui-word-aux">生成的Api文档的文件名<br />默认使用api，点击生成则会在根目录下生成api.html文件</div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label"> </label>
+                            <div class="layui-input-inline">
+                                <button class="layui-btn layui-btn-normal" lay-submit lay-filter="*">生 成</button>
+                                <a class="layui-btn layui-btn-primary" href="javascript:void(0);" onclick="showApi();">查 看</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="layui-tab-item">
+            <pre class="layui-code">
+                //文件位置application/api/controller/Test.php
+                namespace app\api\controller;
+
+                use controller\Api;
+
+                /**
+                 * 测试分组
+                 */
+                class Test extends Api{
+                    /**
+                     * @ApiTitle    (测试名称)
+                     * @ApiSummary  (测试描述信息)
+                     * @ApiMethod   (POST)
+                     * @ApiRoute    (/api/test/index)
+                     * @ApiParams   (name="param1", type="integer", required=true, description="参数1")
+                     * @ApiParams   (name="param2", type="string", required=true, description="参数2")
+                     * @ApiParams   (name="param3", type="object", sample="{'id':'int','username':'string','profile':{'email':'string','age':'integer'}}", description="参数3")
+                     * @ApiReturnParams   (name="code", type="integer", required=true, sample="0")
+                     * @ApiReturnParams   (name="msg", type="string", required=true, sample="返回成功")
+                     * @ApiReturnParams   (name="data", type="object", sample="{'id':'int','username':'string','profile':{'email':'string','age':'integer'}}", description="扩展数据返回")
+                     * @ApiReturn
+                ({
+                    'code':'1',
+                    'msg':'返回成功'
+                })
+                     */
+                    public function index()
+                    {
+                        $this->success("返回成功", $this->request->request());
+                    }
+                }
+            </pre>
                 </div>
             </div>
         </div>
-    </form>
-</fieldset>
-<fieldset class="layui-elem-field">
-    <legend>Api注释规范举例 - application/api/controller/Test.php</legend>
-<pre class="layui-code">
-namespace app\api\controller;
-
-use controller\Api;
-
-/**
- * 测试分组
- */
-class Test extends Api{
-    /**
-     * @ApiTitle    (测试名称)
-     * @ApiSummary  (测试描述信息)
-     * @ApiMethod   (POST)
-     * @ApiRoute    (/api/test/index)
-     * @ApiParams   (name="id", type="integer", required=true, description="会员ID")
-     * @ApiParams   (name="name", type="string", required=true, description="用户名")
-     * @ApiParams   (name="data", type="object", sample="{'user_id':'int','user_name':'string','profile':{'email':'string','age':'integer'}}", description="扩展数据")
-     * @ApiReturnParams   (name="code", type="integer", required=true, sample="0")
-     * @ApiReturnParams   (name="msg", type="string", required=true, sample="返回成功")
-     * @ApiReturnParams   (name="data", type="object", sample="{'user_id':'int','user_name':'string','profile':{'email':'string','age':'integer'}}", description="扩展数据返回")
-     * @ApiReturn
-({
-    'code':'1',
-    'msg':'返回成功'
-})
-     */
-    public function index()
-    {
-        $this->success("返回成功", $this->request->request());
-    }
-}
-    </pre>
-</fieldset>
+    </div>
 </div>
 {/block}
 

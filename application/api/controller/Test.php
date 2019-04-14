@@ -12,12 +12,12 @@ class Test extends Api{
      * @ApiSummary  (测试描述信息)
      * @ApiMethod   (POST)
      * @ApiRoute    (/api/test/index)
-     * @ApiParams   (name="id", type="integer", required=true, description="会员ID")
-     * @ApiParams   (name="name", type="string", required=true, description="用户名")
-     * @ApiParams   (name="data", type="object", sample="{'user_id':'int','user_name':'string','profile':{'email':'string','age':'integer'}}", description="扩展数据")
+     * @ApiParams   (name="param1", type="integer", required=true, description="参数1")
+     * @ApiParams   (name="param2", type="string", required=true, description="参数2")
+     * @ApiParams   (name="param3", type="object", sample="{'id':'int','username':'string','profile':{'email':'string','age':'integer'}}", description="参数3")
      * @ApiReturnParams   (name="code", type="integer", required=true, sample="0")
      * @ApiReturnParams   (name="msg", type="string", required=true, sample="返回成功")
-     * @ApiReturnParams   (name="data", type="object", sample="{'user_id':'int','user_name':'string','profile':{'email':'string','age':'integer'}}", description="扩展数据返回")
+     * @ApiReturnParams   (name="data", type="object", sample="{'id':'int','username':'string','profile':{'email':'string','age':'integer'}}", description="扩展数据返回")
      * @ApiReturn
 ({
     'code':'1',
