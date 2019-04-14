@@ -4,7 +4,7 @@
     <ul class="layui-nav fl nobg main-nav">
         {foreach $first_menu as $menu}
         <li class="layui-nav-item {if $menu['selected']}layui-this{/if}">
-            <a href="javascript:;">
+            <a href="{:url($menu['rule'])}">
                 <i class="{$menu['icon']}"></i> {$menu['name']}
             </a>
         </li>
