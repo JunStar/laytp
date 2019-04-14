@@ -50,7 +50,7 @@ layui.use(['layTp'],function() {
 				,{field:'ip',title:'IP',align:'center'}
 				,{field:'user_agent',title:'浏览器',align:'center'}
 				,{field:'create_time',title:'操作时间',align:'center'}
-				,{field:'operation',title:'操作',align:'center',toolbar:'#operation',fixed:'right',width:200}
+				,{field:'operation',title:'操作',align:'center',toolbar:'#operation',fixed:'right',width:100}
             ]]
         });
 

@@ -314,9 +314,9 @@ class Curd extends Command
             $cols .= $temp;
         }
         if(isset($this->curd_config['global']['hide_del']) && $this->curd_config['global']['hide_del']){
-            $temp = "\t\t\t\t,{field:'operation',title:'操作',align:'center',toolbar:'#operation_only_edit',fixed:'right',width:200}";
+            $temp = "\t\t\t\t,{field:'operation',title:'操作',align:'center',toolbar:'#operation_only_edit',fixed:'right',width:100}";
         }else{
-            $temp = "\t\t\t\t,{field:'operation',title:'操作',align:'center',toolbar:'#operation',fixed:'right',width:200}";
+            $temp = "\t\t\t\t,{field:'operation',title:'操作',align:'center',toolbar:'#operation',fixed:'right',width:100}";
         }
         $cols .= $temp;
         $data['cols'] = $cols;

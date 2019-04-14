@@ -74,7 +74,7 @@ layui.use(['layTp'],function() {
 				,{field:'status',title:'账号状态',align:'center'}
 				,{field:'is_del',title:'在回收站',align:'center'}
 				,{field:'create_time',title:'创建时间',align:'center'}
-				,{field:'operation',title:'操作',align:'center',toolbar:'#operation',fixed:'right',width:200}
+				,{field:'operation',title:'操作',align:'center',toolbar:'#operation',fixed:'right',width:100}
             ]]
         });
 
