@@ -1,34 +1,36 @@
 {extend name="admin@public/main"}
 
 {block name="main_body"}
-<fieldset class="layui-elem-field">
-    <legend>个人配置</legend>
-    <form class="layui-form layui-form-pane layui-field-box">
-        <div class="layui-form-item">
-            <label class="layui-form-label">姓名</label>
-            <div class="layui-input-block">
-                <input type="text" name="row[name]" lay-verify="pass" placeholder="请输入密码" autocomplete="off" class="layui-input" value="{$admin_user.name}">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">密码</label>
-            <div class="layui-input-block">
-                <input type="password" name="row[password]" lay-verify="pass" placeholder="请输入密码，留空为不修改密码" autocomplete="off" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">重复密码</label>
-            <div class="layui-input-block">
-                <input type="password" name="row[re_password]" lay-verify="pass" placeholder="请输入密码，留空为不修改密码" autocomplete="off" class="layui-input">
-            </div>
-        </div>
-        <div class="form-footer">
+<div class="page-tab-content">
+    <fieldset class="layui-elem-field">
+        <legend>个人配置</legend>
+        <form class="layui-form layui-form-pane layui-field-box">
             <div class="layui-form-item">
+                <label class="layui-form-label">姓名</label>
                 <div class="layui-input-block">
-                    <button class="layui-btn layui-btn-sm" lay-submit lay-filter="*">立即提交</button>
+                    <input type="text" name="row[name]" lay-verify="pass" placeholder="请输入密码" autocomplete="off" class="layui-input" value="{$admin_user.name}">
                 </div>
             </div>
-        </div>
-    </form>
-</fieldset>
+            <div class="layui-form-item">
+                <label class="layui-form-label">密码</label>
+                <div class="layui-input-block">
+                    <input type="password" name="row[password]" lay-verify="pass" placeholder="请输入密码，留空为不修改密码" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">重复密码</label>
+                <div class="layui-input-block">
+                    <input type="password" name="row[re_password]" lay-verify="pass" placeholder="请输入密码，留空为不修改密码" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="form-footer">
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn layui-btn-sm" lay-submit lay-filter="*">立即提交</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </fieldset>
+</div>
 {/block}
