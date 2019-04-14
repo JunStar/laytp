@@ -25,7 +25,7 @@ layui.use(['layTp'],function() {
             , cellMinWidth: 80
             , page: true
             , cols: [[
-                {type:'checkbox',fixed:'left'}
+                {type:'checkbox'}
 				,{field:'id',title:'ID',align:'center',width:80}
 				,{field:'admin_id',title:'管理员姓名',align:'center'}
 				,{field:'url',title:'操作页面',align:'center'}

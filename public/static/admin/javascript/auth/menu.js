@@ -25,7 +25,7 @@ layui.use(['layTp'],function() {
             , cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
             // , page: true //开启分页
             , cols: [[ //表头
-                {field: 'id', title: 'ID', sort: true, fixed: 'left', align: 'center'}
+                {field: 'id', title: 'ID', sort: true, align: 'center'}
                 , {field: 'name', title: '标题', width: 300}
                 , {field: 'rule', title: '规则', width: 220}
                 , {field: 'icon', title: '图标', align: 'center', templet: '#show_icon'}

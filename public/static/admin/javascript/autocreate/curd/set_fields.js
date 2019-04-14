@@ -41,7 +41,7 @@
                 ]
                 ,[
                     //数据库字段设置
-                    {field:'operation', title:'操作', toolbar: '#operation', fixed: 'left', align: 'center', width: 200}
+                    {field:'operation', title:'操作', toolbar: '#operation', align: 'center', width: 200}
                     ,{title:'序号', type:'numbers', align: 'center'}
                     ,{field:'field_name', title:'字段名称', width:100, align: 'center', edit: 'text'}
                     ,{field:'field_comment', title:'字段注释(同时用于显示在表头和表单中的文字)', width:100, align: 'center', edit: 'text'}

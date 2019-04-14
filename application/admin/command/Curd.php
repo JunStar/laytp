@@ -256,7 +256,7 @@ class Curd extends Command
      */
     protected function set_js_param(){
         $tpl_name = 'js';
-        $cols = "{type:'checkbox',fixed:'left'}\n\t\t\t\t,";
+        $cols = "{type:'checkbox'}\n\t\t\t\t,";
         $has_first_cols = true;//是否已经有了正常的第一行数据
         //是否隐藏主键列
         if(!$this->curd_config['global']['hide_pk']){
@@ -266,16 +266,16 @@ class Curd extends Command
             $cols .= $temp;
         }else{
             $pk = model('admin/InformationSchema')->getPkInfo($this->curd_config['table_name']);
-            $temp = "//{field:'{$pk['pk']}',title:'{$pk['field_comment']}',fixed:'left',align:'center',width:80}\n";
+            $temp = "//{field:'{$pk['pk']}',title:'{$pk['field_comment']}',align:'center',width:80}\n";
             $cols .= $temp;
         }
         //是否生成序号列
         if($this->curd_config['global']['create_number']){
             if($has_first_cols){
-                $temp = "\t\t\t\t,{field:'layui_number',title:'序号',fixed:'left',align:'center',width:80,type:'numbers'}\n";
+                $temp = "\t\t\t\t,{field:'layui_number',title:'序号',align:'center',width:80,type:'numbers'}\n";
                 $cols .= $temp;
             }else{
-                $temp = "\t\t\t\t{field:'layui_number',title:'序号',fixed:'left',align:'center',width:80,type:'numbers'}\n";
+                $temp = "\t\t\t\t{field:'layui_number',title:'序号',align:'center',width:80,type:'numbers'}\n";
                 $cols .= $temp;
             }
             if(!$has_first_cols) $has_first_cols = true;

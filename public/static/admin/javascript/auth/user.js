@@ -26,7 +26,7 @@ layui.use(['layTp'],function() {
             , cellMinWidth: 80
             , page: true
             , cols: [[
-                {type:'checkbox',fixed:'left'}
+                {type:'checkbox'}
                 ,{field:'id',title:'ID',align:'center',width:80}
 				,{field:'username',title:'用户名',align:'center'}
 				,{field:'name',title:'姓名',align:'center'}
@@ -61,7 +61,7 @@ layui.use(['layTp'],function() {
                 action: 'recycle'
                 ,title: '放入回收站'
                 ,icon: "layui-icon-fonts-del"
-                ,uri: layTp.facade.url(module + '/' + controller + '/set_status1')
+                ,uri: layTp.facade.url(module + '/' + controller + '/set_status')
                 ,field: "is_del"
                 ,field_val: "1"
                 ,switch_type: "confirm_action"
