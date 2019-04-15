@@ -623,8 +623,9 @@ layui.define([
                  * 所有的表单提交都是执行ajax，ajax请求的地址都是当前的url
                  * 列表页的搜索表单要使用到layui的table控件进行ajax提交，其他表单使用jQuery的ajax提交方式
                  */
+                let form_action = $(data.form).attr('action');
                 //当前url的action值为index，搜索表单进行了提交
-                if( action == 'index' ){
+                if( action == 'index' && typeof form_action == "undefined" ){
                     index(data);
                     //当前url的action值不是index，就ajax提交到当前url
                 }else{
@@ -644,9 +645,13 @@ layui.define([
 
             //添加和编辑的表单进行提交时触发的方法
             function do_update(data){
+                let form_action = $(data.form).attr('action');
+                let form_method = $(data.form).attr('method');
+                let type = (typeof form_method == "undefined") ? "POST" : form_method;
+                let url = (typeof form_action == "undefined") ? window.location.href : form_action;
                 $.ajax({
-                    type: 'POST',
-                    url: window.location.href,
+                    type: type,
+                    url: url,
                     data: data.field,
                     dataType: 'json',
                     success: function (res) {

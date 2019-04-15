@@ -97,7 +97,7 @@
                 <div class="layui-tab-item">内容4</div>
                 <div class="layui-tab-item">内容5</div>
                 <div class="layui-tab-item">
-                    <form class="page-list-form layui-form">
+                    <form class="page-list-form layui-form" action="{:url('admin/sysconf/add')}" method="POST">
                         <div class="layui-form-item">
                             <label class="layui-form-label">类型</label>
                             <div class="layui-input-inline">
@@ -135,6 +135,13 @@
                             </div>
                         </div>
                         <div class="layui-form-item">
+                            <label class="layui-form-label">变量内容</label>
+                            <div class="layui-input-inline">
+                                <textarea name="row[content]" placeholder="变量内容" class="layui-textarea">value1|title1
+value2|title2</textarea>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
                             <label class="layui-form-label"> </label>
                             <div class="layui-input-inline">
                                 <button class="layui-btn layui-btn-normal" lay-submit lay-filter="*">提 交</button>
@@ -146,4 +153,9 @@
         </div>
     </div>
 </div>
+{/block}
+
+{block name="script"}
+{__block__}
+<script src="__ADMIN_JS__/test/sysconf.js" charset="utf-8"></script>
 {/block}
