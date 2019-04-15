@@ -101,18 +101,19 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label">类型</label>
                             <div class="layui-input-inline">
-                                <select>
-                                    <option>单行文本输入框</option>
-                                    <option>单选下拉框</option>
-                                    <option>多选下拉框</option>
-                                    <option>复选框</option>
-                                    <option>单选按钮</option>
-                                    <option>图片</option>
-                                    <option>图片（多个）</option>
-                                    <option>文件</option>
-                                    <option>文件（多个）</option>
-                                    <option>数组</option>
-                                    <option>富文本编辑器UEditor</option>
+                                <select name="row[type]">
+                                    <option>请选择一种类型</option>
+                                    <option value="input">单行文本输入框</option>
+                                    <option value="select_single">单选下拉框</option>
+                                    <option value="select_multi">多选下拉框</option>
+                                    <option value="checkbox">复选框</option>
+                                    <option value="radio">单选按钮</option>
+                                    <option value="image_single">图片</option>
+                                    <option value="image_multi">图片（多个）</option>
+                                    <option value="file_single">文件</option>
+                                    <option value="file_multi">文件（多个）</option>
+                                    <option value="array">数组</option>
+                                    <option value="ueditor">富文本编辑器UEditor</option>
                                 </select>
                             </div>
                         </div>
@@ -139,6 +140,12 @@
                             <div class="layui-input-inline">
                                 <textarea name="row[content]" placeholder="变量内容" class="layui-textarea">value1|title1
 value2|title2</textarea>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">提示信息</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="row[tip]" placeholder="请输入提示信息" autocomplete="off" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-form-item">

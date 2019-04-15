@@ -8,9 +8,9 @@ use model\Backend;
 
 class Sysconf extends Backend
 {
-    public function saveData($post,$group){
+    public function saveData($post){
         foreach($post as $k=>$v){
-            $data['group'] = $group;
+            $data['group'] = $post['group'];
             $data['key'] = $k;
             $data['value'] = $v;
             $this->insert($data,true);

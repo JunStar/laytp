@@ -89,6 +89,9 @@ function getCheckboxJsConst($array){
  * @return mixed
  */
 function filterPostData($post){
+    if(!$post){
+        return [];
+    }
     foreach($post as $k=>$v){
         if(is_array($v)){
             $post[$k] = implode(',',$v);

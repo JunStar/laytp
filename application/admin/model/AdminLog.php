@@ -56,6 +56,7 @@ class AdminLog extends Model
         if(!$title)
         {
             $menus = model('auth.Menu')->where('rule','=',$now_node)->order('pid','asc')->select()->toArray();
+            if(!$menus){ return true; }
             for($i=1;$i<=4;$i++){
                 if($menus[0]['pid']){
                     $new_menu = model('auth.Menu')->where('id','=',$menus[0]['pid'])->find()->toArray();
