@@ -10,14 +10,13 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="format-detection" content="telephone=no">
-    {block name="style"}
     <link rel="stylesheet" href="__STATIC__/library/layui/css/layui.css" media="all">
     <link rel="stylesheet" href="__STATIC__/admin/css/base.css" media="all">
     <link rel="stylesheet" href="__STATIC__/admin/css/form.css" media="all">
     <link rel="stylesheet" href="__STATIC__/library/toastr/css/toastr.css" media="all">
     <link rel="stylesheet" href="__STATIC__/library/layui/css/modules/formSelects.css" media="all">
     <link rel="stylesheet" href="__STATIC__/admin/css/selectPage.css" media="all">
-    {/block}
+    {block name="style"}{/block}
     {include file="public/js_global_var"}
 </head>
 <body class="layui-layout-body">
@@ -37,12 +36,11 @@
         © laytp.phpby.com
     </div>
 </div>
-{block name="script"}
 <script type="text/javascript" src="__STATIC__/library/layui/layui.js" charset="utf-8"></script>
 <script type="text/javascript" src="__STATIC__/library/layui/layui_config.js" charset="utf-8"></script>
 <script type="text/javascript" src="__STATIC__/library/jquery_3.3.1.js" charset="utf-8"></script>
-{/block}
+{block name="script"}{/block}
 <!-- js模板部分 -->
-{block name="javascript"}{/block}
+{block name="js_template"}{/block}
 </body>
 </html>

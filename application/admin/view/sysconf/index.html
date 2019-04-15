@@ -97,11 +97,11 @@
                 <div class="layui-tab-item">内容4</div>
                 <div class="layui-tab-item">内容5</div>
                 <div class="layui-tab-item">
-                    <form class="page-list-form layui-form" action="{:url('admin/sysconf/add')}" method="POST">
+                    <form class="page-list-form layui-form" action="{:url('admin/sysconf/set_config')}" method="POST">
                         <div class="layui-form-item">
                             <label class="layui-form-label">类型</label>
                             <div class="layui-input-inline">
-                                <select name="row[type]">
+                                <select name="row[type]" lay-filter="select_type">
                                     <option>请选择一种类型</option>
                                     <option value="input">单行文本输入框</option>
                                     <option value="select_single">单选下拉框</option>
@@ -135,11 +135,30 @@
                                 <input type="text" name="row[value]" placeholder="请输入变量值" autocomplete="off" class="layui-input">
                             </div>
                         </div>
-                        <div class="layui-form-item">
+                        <div class="layui-form-item" id="form-item-content" style="display: none;">
                             <label class="layui-form-label">变量内容</label>
                             <div class="layui-input-inline">
                                 <textarea name="row[content]" placeholder="变量内容" class="layui-textarea">value1|title1
 value2|title2</textarea>
+                            </div>
+                        </div>
+                        <div class="layui-form-item" id="form-item-upload">
+                            <label class="layui-form-label" title="上传控件">上传控件</label>
+                            <div class="layui-input-block">
+                                <div class="layui-upload">
+                                    <div class="layui-inline" style="width: 81%;"><input type="text" class="layui-input" name="row[content]" id="content" /></div>
+                                    <div class="layui-inline">
+                                        <button type="button" class="layui-btn layui-btn-primary pull-left"
+                                                id="avatar"
+                                                upload="true"
+                                                accept="images"
+                                                single_multi="single"
+                                        >选择上传</button>
+                                    </div>
+                                    <div class="pic-more">
+                                        <ul class="pic-more-upload-list" id="preview_avatar"></ul>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="layui-form-item">
@@ -163,6 +182,7 @@ value2|title2</textarea>
 {/block}
 
 {block name="script"}
-{__block__}
-<script src="__ADMIN_JS__/test/sysconf.js" charset="utf-8"></script>
+<script src="__ADMIN_JS__/sysconf.js" charset="utf-8"></script>
 {/block}
+
+{block name="js_template"}{/block}

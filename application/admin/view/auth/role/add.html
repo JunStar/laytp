@@ -1,43 +1,7 @@
 {extend name="admin@public/popup_form"}
 
 {block name="style"}
-{__block__}
 <link rel="stylesheet" href="__STATIC__/library/jstree/themes/default/style.css" media="all">
-{/block}
-
-{block name="form"}
-    <div class="layui-form-item">
-        <label class="layui-form-label">父级</label>
-        <div class="layui-input-block">
-            <select id="pid" name="row[pid]">
-                <option value="0">------请选择------</option>
-                {foreach $role_list as $key=>$vo}
-                <option value="{$vo.id}">{$vo.name}</option>
-                {/foreach}
-            </select>
-        </div>
-    </div>
-
-    <div class="layui-form-item">
-        <label class="layui-form-label">角色名</label>
-        <div class="layui-input-block">
-            <input type="text" name="row[name]" lay-verify="required" placeholder="请输入角色名" class="layui-input" lay-verType="tips">
-        </div>
-    </div>
-
-    <div class="layui-form-item">
-        <label class="layui-form-label">权限设置</label>
-        <div class="layui-input-block">
-            <input type="checkbox" title="全选" lay-filter="checkall">
-            <input type="checkbox" title="展开" lay-filter="expandall">
-
-            <div id="treeview"></div>
-            <input type="hidden" name="row[menu_ids]" id="node_list" />
-        </div>
-    </div>
-{/block}
-
-{block name="script"}
 <style>
     #treeview .jstree-container-ul .jstree-node {
         display: block;
@@ -83,7 +47,41 @@
         display: none;
     }
 </style>
-{__block__}
+{/block}
+
+{block name="form"}
+    <div class="layui-form-item">
+        <label class="layui-form-label">父级</label>
+        <div class="layui-input-block">
+            <select id="pid" name="row[pid]">
+                <option value="0">------请选择------</option>
+                {foreach $role_list as $key=>$vo}
+                <option value="{$vo.id}">{$vo.name}</option>
+                {/foreach}
+            </select>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">角色名</label>
+        <div class="layui-input-block">
+            <input type="text" name="row[name]" lay-verify="required" placeholder="请输入角色名" class="layui-input" lay-verType="tips">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">权限设置</label>
+        <div class="layui-input-block">
+            <input type="checkbox" title="全选" lay-filter="checkall">
+            <input type="checkbox" title="展开" lay-filter="expandall">
+
+            <div id="treeview"></div>
+            <input type="hidden" name="row[menu_ids]" id="node_list" />
+        </div>
+    </div>
+{/block}
+
+{block name="script"}
 <script src="__STATIC__/library/jstree/jstree.js" charset="utf-8"></script>
 <script>
 const node_list = {:json_encode($node_list)};
