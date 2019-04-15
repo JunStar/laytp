@@ -975,6 +975,13 @@ layui.define([
                     }
                 });
             });
+        },
+
+        //表格拖动排序渲染
+        tablednd:function(){
+            layui.each($(".tableDnd"),function(key,item) {
+                $(item).tableDnD({});
+            });
         }
     }
 

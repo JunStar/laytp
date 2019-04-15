@@ -5,65 +5,80 @@
     <div class="layui-card">
         <div class="layui-tab layui-tab-brief">
             <ul class="layui-tab-title">
-                <li class="layui-this"><a href="{:url('admin/sysconf/index',['group'=>'basic'])}">网站设置</a></li>
-                <li><a href="javascript:void(0);">用户管理</a></li>
-                <li><a href="javascript:void(0);">权限分配</a></li>
-                <li><a href="javascript:void(0);">商品管理</a></li>
-                <li><a href="javascript:void(0);">订单管理</a></li>
+                {foreach $Think.config.dictionary.config_group as $k=>$v}
+                <li {if $group==$k}class="layui-this"{/if}><a href="{:url('admin/sysconf/index',['group'=>$k])}">{$v}</a></li>
+                {/foreach}
                 <li class="layui-icon"><a href="javascript:void(0);">&#xe654;</a></li>
             </ul>
             <div class="layui-tab-content">
+                {foreach $Think.config.dictionary.config_group as $k=>$v}
                 <div class="layui-tab-item layui-show">
+                    {if $group==$k}
                     <style type="text/css">
                         .layui-form-item .layui-form-label{width:130px;text-align:right;}
                         .layui-form-item .layui-input-inline{max-width:80%;width:auto;min-width:260px;}
                         .layui-form-mid{padding:0!important;}
                         .layui-form-mid code{color:#5FB878;}
                     </style>
-                    <form class="page-list-form layui-form">
+                    <form class="page-list-form layui-form" action="{:url('admin/sysconf/add')}" method="POST">
+                        {foreach $config as $k=>$v}
                         <div class="layui-form-item">
-                            <label class="layui-form-label">站点名称</label>
+                            <label class="layui-form-label">{$v.name}</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="row[site_name]" placeholder="请输入站点名称" autocomplete="off" class="layui-input" />
+                                {switch ($v['type'])}
+                                {case input}
+                                <input type="text" name="row[{$v.key}]" placeholder="请输入{$v.name}" autocomplete="off" class="layui-input" value="{$v.value}" />
+                                {/case}
+                                {case radio}
+                                {if is_array($v['content'])}
+                                <!-- 隐藏域设置开关未选中时需要传递的参数值 -->
+                                <input type="hidden" name="row[{$v['key']}]" value="{$v['content_value'][0]}" />
+                                <input type="checkbox" name="row[{$v['key']}]" lay-skin="switch" lay-text="{$v['content_text'][1]}|{$v['content_text'][0]}" value="{$v['content_value'][1]}" {if $v['content_value'][1] == $v['value']}checked="checked"{/if} />
+                                {/if}
+                                {case array}
+                                {if is_array($v['content'])}
+                                <table class="layui-table tableDnd" style="margin: 0;" lay-skin="line">
+                                    <colgroup>
+                                        <col width="150">
+                                        <col width="200">
+                                        <col>
+                                    </colgroup>
+                                    <thead>
+                                    <tr class='nodrop nodrag'>
+                                        <th>键名</th>
+                                        <th>键值</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {foreach $v['content'] as $ck=>$cv}
+                                    <tr>
+                                        <td><input class="layui-input" type="text" name="row[{$v.key}]['key'][]" value="{$ck}" /></td>
+                                        <td><input class="layui-input" type="text" name="row[{$v.key}]['value'][]" value="{$cv}" /></td>
+                                        <td>
+                                            <a href="javascript:void(0);" class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-delete" title="删除"></a>
+                                        </td>
+                                    </tr>
+                                    {/foreach}
+                                    <tr class='nodrop nodrag'>
+                                        <td colspan="3"><a href="javascript:void(0);" class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-add-1" title="追加">追加</a></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                {/if}
+                                {/case}
+                                {/switch}
                             </div>
                             <div class="layui-form-mid layui-word-aux">
                                 <div class="layui-form-mid layui-word-aux">
-                                    站点名称
+                                    {$v.tip}
                                     <br />
                                     调用方式
-                                    <code>Config::get('basic.site_name')</code>
+                                    <code>Config::get('basic.{$v.key}')</code>
                                 </div>
                             </div>
                         </div>
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">备案号</label>
-                            <div class="layui-input-inline">
-                                <input type="text" name="row[record]" placeholder="请输入备案号" autocomplete="off" class="layui-input">
-                            </div>
-                            <div class="layui-form-mid layui-word-aux">
-                                <div class="layui-form-mid layui-word-aux">
-                                    备案号
-                                    <br />
-                                    调用方式
-                                    <code>Config::get('basic.record')</code>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">后台登录验证码</label>
-                            <div class="layui-input-inline">
-                                <input type="hidden" name="row[login_vercode]" value="0" />
-                                <input type="checkbox" name="row[login_vercode]" lay-skin="switch" lay-text="需要|不需要" value="1" />
-                            </div>
-                            <div class="layui-form-mid layui-word-aux">
-                                <div class="layui-form-mid layui-word-aux">
-                                    后台登录是否需要输入验证码
-                                    <br />
-                                    调用方式
-                                    <code>Config::get('basic.login_vercode')</code>
-                                </div>
-                            </div>
-                        </div>
+                        {/foreach}
                         <div class="layui-form-item">
                             <label class="layui-form-label"> </label>
                             <div class="layui-input-inline">
@@ -71,31 +86,9 @@
                             </div>
                         </div>
                     </form>
+                    {/if}
                 </div>
-                <div class="layui-tab-item">
-                    <form class="page-list-form layui-form">
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">是否可以设置超管</label>
-                            <div class="layui-input-inline">
-                                <input type="text" name="row[set_super_manager]" placeholder="请输入站点名称" autocomplete="off" class="layui-input" />
-                            </div>
-                            <div class="layui-form-mid layui-word-aux">
-                                <br />
-                                调用方式
-                                <code>Config::get('basic.set_super_manager')</code>
-                            </div>
-                        </div>
-                        <div class="layui-form-item">
-                            <label class="layui-form-label"> </label>
-                            <div class="layui-input-inline">
-                                <button class="layui-btn layui-btn-normal" lay-submit lay-filter="*">提 交</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="layui-tab-item">内容3</div>
-                <div class="layui-tab-item">内容4</div>
-                <div class="layui-tab-item">内容5</div>
+                {/foreach}
                 <div class="layui-tab-item">
                     <form class="page-list-form layui-form" action="{:url('admin/sysconf/set_config')}" method="POST">
                         <div class="layui-form-item">
@@ -119,7 +112,11 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label">所属分组</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="row[group]" placeholder="请输入分组名" autocomplete="off" class="layui-input" lay-verify="required">
+                                <select name="row[group]" lay-verify="required">
+                                    {foreach $Think.config.dictionary.config_group as $k=>$v}
+                                    <option value="{$k}">{$v}</option>
+                                    {/foreach}
+                                </select>
                             </div>
                         </div>
                         <div class="layui-form-item">
