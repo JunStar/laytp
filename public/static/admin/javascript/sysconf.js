@@ -13,4 +13,19 @@ layui.use(['layTp'],function() {
             $('#form-item-content').hide();
         }
     });
+
+    $(document).on('click','.add_array_item',function(){
+        let click_obj = $(this);
+        let config_key = click_obj.attr('config_key');
+        layui.laytpl($('#array_item_html').html()).render({
+            config_key: config_key
+        }, function(string){
+            click_obj.parent().parent().before(string);
+        });
+    });
+
+    $(document).on('click','.del_array_item',function(){
+        let click_obj = $(this);
+        click_obj.parent().parent().remove();
+    });
 });

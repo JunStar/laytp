@@ -35,6 +35,7 @@
                                 <input type="hidden" name="row[{$v['key']}]" value="{$v['content_value'][0]}" />
                                 <input type="checkbox" name="row[{$v['key']}]" lay-skin="switch" lay-text="{$v['content_text'][1]}|{$v['content_text'][0]}" value="{$v['content_value'][1]}" {if $v['content_value'][1] == $v['value']}checked="checked"{/if} />
                                 {/if}
+                                {/case}
                                 {case array}
                                 {if is_array($v['content'])}
                                 <table class="layui-table tableDnd" style="margin: 0;" lay-skin="line">
@@ -53,15 +54,17 @@
                                     <tbody>
                                     {foreach $v['content'] as $ck=>$cv}
                                     <tr>
-                                        <td><input class="layui-input" type="text" name="row[{$v.key}]['key'][]" value="{$ck}" /></td>
-                                        <td><input class="layui-input" type="text" name="row[{$v.key}]['value'][]" value="{$cv}" /></td>
-                                        <td>
-                                            <a href="javascript:void(0);" class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-delete" title="删除"></a>
+                                        <td style="padding: 4px 15px;"><input class="layui-input" type="text" name="row[{$v.key}]['key'][]" value="{$ck}" /></td>
+                                        <td style="padding: 4px 15px;"><input class="layui-input" type="text" name="row[{$v.key}]['value'][]" value="{$cv}" /></td>
+                                        <td style="padding: 4px 15px;">
+                                            <a href="javascript:void(0);" class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-delete del_array_item" title="删除"></a>
                                         </td>
                                     </tr>
                                     {/foreach}
                                     <tr class='nodrop nodrag'>
-                                        <td colspan="3"><a href="javascript:void(0);" class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-add-1" title="追加">追加</a></td>
+                                        <td colspan="3" style="padding: 4px 15px;">
+                                            <a href="javascript:void(0);" class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-add-1 add_array_item" config_key="{$v.key}" title="追加">追加</a>
+                                        </td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -166,4 +169,16 @@ value2|title2</textarea>
 
 {block name="script"}
 <script src="__ADMIN_JS__/sysconf.js" charset="utf-8"></script>
+{/block}
+
+{block name="js_template"}
+<script id="array_item_html" type="text/html">
+    <tr>
+        <td style="padding: 4px 15px;"><input class="layui-input" type="text" name="row[{{ d.config_key }}]['key'][]" /></td>
+        <td style="padding: 4px 15px;"><input class="layui-input" type="text" name="row[{{ d.config_key }}]['value'][]" /></td>
+        <td style="padding: 4px 15px;">
+            <a href="javascript:void(0);" class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-delete del_array_item" title="删除"></a>
+        </td>
+    </tr>
+</script>
 {/block}
