@@ -985,6 +985,16 @@ layui.define([
             layui.each($(".tableDnd"),function(key,item) {
                 $(item).tableDnD({});
             });
+        },
+
+        //tips渲染
+        tips:function(){
+            $(document).on('mouseover','[layer-tips]',function(){
+                layui.layer.tips($(this).attr('layer-tips'), this, {
+                    tips: [1, '#3595CC'],
+                    time: 800
+                });
+            });
         }
     }
 
