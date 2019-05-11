@@ -55,7 +55,7 @@ layui.use(['layTp'],function() {
     //表格渲染
     func_controller.table_render = function (where) {
         layui.table.render({
-            elem: '.layui-hide-sm'
+            elem: '.laytp-table'
             , id: table_id
             , url: window.location.href
             , toolbar: '#default_toolbar'

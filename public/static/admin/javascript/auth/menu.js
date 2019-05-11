@@ -5,6 +5,28 @@ layui.use(['layTp'],function() {
         ,$ = layui.jquery
     ;
 
+    //批量操作渲染
+    layui.dropdown.render({
+        elem: '.action-more',
+        options: [
+            {
+                action: "edit"
+                ,title: "编辑"
+                ,icon: "layui-icon-edit"
+                ,uri: layTp.facade.url(module + "/" + controller + "/edit")
+                ,switch_type: "popup_frame"
+            }
+            ,{
+                action: 'del',
+                title: '删除'
+                ,icon: "layui-icon-delete"
+                ,uri: layTp.facade.url(module + "/" + controller + "/del")
+                ,switch_type: "confirm_action"
+            }
+        ]
+    });
+
+    //表格渲染
     func_controller.table_render = function (where) {
         let toolbar_node ='';
         if(where == undefined){
@@ -16,7 +38,8 @@ layui.use(['layTp'],function() {
             toolbar_node = '#menu_toolbar_is_menu_all';
         }
         layui.table.render({
-            elem: '.layui-hide-sm'
+            elem: '.laytp-table'
+            , id: table_id
             , url: window.location.href
             , toolbar: toolbar_node
             , even: true
@@ -25,7 +48,8 @@ layui.use(['layTp'],function() {
             , cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
             // , page: true //开启分页
             , cols: [[ //表头
-                {field: 'id', title: 'ID', sort: true, align: 'center'}
+                {type:'checkbox'}
+                ,{field: 'id', title: 'ID', sort: true, align: 'center'}
                 , {field: 'name', title: '标题', width: 300}
                 , {field: 'rule', title: '规则', width: 220}
                 , {field: 'icon', title: '图标', align: 'center', templet: '#show_icon'}

@@ -240,6 +240,8 @@ layui.define([
                 content : url,
                 area: [width,height],
                 shade: 0.01,
+                maxmin:true,
+                skin:'myskin',
                 success: function(layero, index){
                     layTp.facade.after_popup_frame(layero,index);
                 }
@@ -474,7 +476,7 @@ layui.define([
                     case 'popup_frame':
                         for(key in checkData){
                             url = layTp.facade.url(uri,{id:checkData[key].id});
-                            layTp.facade.popup_frame(name, url);
+                            layTp.facade.popup_frame(text, url);
                         }
                         break;
                     case 'confirm_action':

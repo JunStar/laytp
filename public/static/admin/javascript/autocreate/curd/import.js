@@ -8,7 +8,7 @@ layui.use(['layTp'],function(){
     //渲染表格
     func_controller.table_render = function (data) {
         layui.table.render({
-            elem: '.layui-hide-sm'
+            elem: '.laytp-table'
             ,cellMinWidth: 100
             ,text:{none:'请选择数据表和需要显示的字段'}
             ,limit: 10000

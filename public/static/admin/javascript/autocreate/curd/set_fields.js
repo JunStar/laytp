@@ -30,7 +30,7 @@
 
     func_controller.table_render = function (data) {
         table.render({
-            elem: '.layui-hide-sm'
+            elem: '.laytp-table'
             ,url:''
             ,cellMinWidth: 100
             ,cols: [

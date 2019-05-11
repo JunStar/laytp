@@ -7,7 +7,7 @@ layui.use(['layTp'],function() {
 
     func_controller.table_render = function (where) {
         layui.table.render({
-            elem: '.layui-hide-sm'
+            elem: '.laytp-table'
             , url: window.location.href
             , toolbar: '#curd_toolbar'
             , where: where
