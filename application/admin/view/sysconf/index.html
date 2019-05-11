@@ -36,6 +36,15 @@
                                 <input type="checkbox" name="row[{$v['key']}]" lay-skin="switch" lay-text="{$v['content_text'][1]}|{$v['content_text'][0]}" value="{$v['content_value'][1]}" {if $v['content_value'][1] == $v['value']}checked="checked"{/if} />
                                 {/if}
                                 {/case}
+                                {case select_single}
+                                <select name="row[{$v['key']}]" value="{$v['content_value'][0]}">
+                                    {if is_array($v['content'])}
+                                    {foreach $v['content'] as $k=>$v}
+                                    <option value="{$k}">{$v}</option>
+                                    {/foreach}
+                                    {/if}
+                                </select>
+                                {/case}
                                 {case array}
                                 {if is_array($v['content'])}
                                 <table class="layui-table tableDnd" style="margin: 0;" lay-skin="line">
@@ -101,8 +110,7 @@
                                     <option value="input">单行文本输入框</option>
                                     <option value="select_single">单选下拉框</option>
                                     <option value="select_multi">多选下拉框</option>
-                                    <option value="checkbox">复选框</option>
-                                    <option value="radio">单选按钮</option>
+                                    <option value="radio">开关</option>
                                     <option value="image_single">图片</option>
                                     <option value="image_multi">图片（多个）</option>
                                     <option value="file_single">文件</option>
