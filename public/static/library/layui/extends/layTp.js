@@ -391,7 +391,7 @@ layui.define([
         },
 
         /**
-         * 监听批量操作下拉框
+         * 监听批量操作下拉框（已废弃）
          */
         batch_select_action: function(){
             layui.form.on('select(batch)',function(data){
@@ -452,6 +452,7 @@ layui.define([
             });
         },
 
+        //批量操作
         batch_action: function(){
             $(document).on('click','.batch-action',function(){
                 let uri = $(this).attr("uri");

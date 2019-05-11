@@ -5,9 +5,32 @@ layui.use(['layTp'],function() {
         ,$ = layui.jquery
     ;
 
+    //批量操作渲染
+    layui.dropdown.render({
+        elem: '.action-more',
+        options: [
+            {
+                action: "edit"
+                ,title: "编辑"
+                ,icon: "layui-icon-edit"
+                ,uri: layTp.facade.url(module + "/" + controller + "/edit")
+                ,switch_type: "popup_frame"
+            }
+            ,{
+                action: 'del',
+                title: '删除'
+                ,icon: "layui-icon-delete"
+                ,uri: layTp.facade.url(module + "/" + controller + "/del")
+                ,switch_type: "confirm_action"
+            }
+        ]
+    });
+
+    //表格渲染
     func_controller.table_render = function (where) {
         layui.table.render({
             elem: '.layui-hide-sm'
+            , id: table_id
             , url: window.location.href
             , toolbar: '#role_toolbar'
             , even: true
@@ -16,7 +39,8 @@ layui.use(['layTp'],function() {
             , cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
             // , page: true //开启分页
             , cols: [[ //表头
-                {field: 'id', title: 'ID', sort: true, align: 'center'}
+                {type:'checkbox'}
+                ,{field: 'id', title: 'ID', sort: true, align: 'center'}
                 , {field: 'name', title: '角色名'}
                 , {field: 'operation', title: '操作', toolbar: '#operation', fixed: 'right', align: 'center'}
             ]]
@@ -54,30 +78,6 @@ layui.use(['layTp'],function() {
             }else if(obj.event === 'edit'){
                 var url = layTp.facade.url(module + '/' + controller + '/edit',{id:data.id});
                 layTp.facade.popup_frame('添加', url, '800px', '500px');
-            }
-        });
-
-        //监听是否菜单操作
-        layui.form.on('switch(set_is_menu)', function(obj){
-            var is_menu_list = {1:true,0:false};
-            for(key in is_menu_list){
-                if(is_menu_list[key] == obj.elem.checked){
-                    var post_data = {field:this.name,field_val:key,id:this.value};
-                    $.ajax({
-                        url: layTp.facade.url(module + '/' + controller + '/set_status/'),
-                        method: 'POST',
-                        data: post_data,
-                        success: function(res){
-                            if(res.code == 1){
-                                layTp.facade.success(res.msg);
-                                func_controller.table_render();
-                            }else{
-                                layTp.facade.error(res.msg);
-                                func_controller.table_render();
-                            }
-                        },
-                    });
-                }
             }
         });
     }
