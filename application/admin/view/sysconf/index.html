@@ -26,7 +26,7 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label">{$v.name}</label>
                             <div class="layui-input-inline">
-                                {switch ($v['type'])}
+                            {switch ($v['type'])}
                                 {case input}
                                 <input type="text" name="row[{$v.key}]" placeholder="请输入{$v.name}" autocomplete="off" class="layui-input" value="{$v.value}" />
                                 {/case}
@@ -80,14 +80,14 @@
                                     </tbody>
                                 </table>
                                 {/case}
-                                {/switch}
+                            {/switch}
                             </div>
                             <div class="layui-form-mid layui-word-aux">
                                 <div class="layui-form-mid layui-word-aux">
                                     {$v.tip}
                                     <br />
                                     调用方式
-                                    <code>Config::get('basic.{$v.key}')</code>
+                                    <code>Config::get('{$group}.{$v.key}')</code>
                                 </div>
                             </div>
                         </div>

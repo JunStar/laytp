@@ -120,15 +120,15 @@ class Sysconf extends Backend
     public function update_config($group){
         try{
             //写入配置文件
-            $file_name = Env::get('app_path') . DS . 'admin' . DS . 'config' . DS . $group . '.php';
-            $group_config = model('Sysconf')->where('group','=', $group)->field('key,value,type')->select()->toArray();
+            $file_name = Env::get('root_path') .  DS . 'config' . DS . 'laytp.php';
+            $config = model('Sysconf')->field('group,key,value,type')->select()->toArray();
             $result_config = [];
-            foreach($group_config as $k=>$v){
+            foreach($config as $k=>$v){
                 if($v['value']){
                     if($v['type'] == 'array'){
-                        $result_config[$v['key']] = json_decode( $v['value'], true );
+                        $result_config[$v['group']][$v['key']] = json_decode( $v['value'], true );
                     }else{
-                        $result_config[$v['key']] = $v['value'];
+                        $result_config[$v['group']][$v['key']] = $v['value'];
                     }
                 }
             }
