@@ -2,6 +2,9 @@
 namespace app\admin\controller;
 
 use controller\Backend;
+use think\Db;
+use think\Exception;
+use think\facade\Config;
 use think\facade\Env;
 
 class Sysconf extends Backend
@@ -19,8 +22,14 @@ class Sysconf extends Backend
         $group = $group ? $group : 'basic';
         $this->assign('group', $group);
 
+        $config_gorup = Config::get('dictionary.config_group') ? Config::get('dictionary.config_group') : ['basic'=>'基础配置'];
+        $this->assign('config_gorup', $config_gorup);
+
         $config = model('Sysconf')->where('group','=',$group)->select()->toArray();
         foreach($config as $k=>$v){
+            if($v['type'] == 'array'){
+                $config[$k]['value'] = json_decode( $v['value'], true );
+            }
             $temp = json_decode( $v['content'], true );
             if(is_array($temp)){
                 $config[$k]['content'] = $temp;
@@ -34,7 +43,8 @@ class Sysconf extends Backend
         return $this->fetch();
     }
 
-    public function set_config(){
+    //添加配置属性
+    public function add(){
         if( $this->request->isAjax() && $this->request->isPost() ){
             $post = filterPostData($this->request->post("row/a"));
             $content = explode("\n", $post['content']);
@@ -47,23 +57,85 @@ class Sysconf extends Backend
             $update_res = model('Sysconf')->insert($post,true);
             if( $update_res || $update_res === 0 ){
                 //写入配置文件
-                $file_name = Env::get('app_path') . DS . 'admin' . DS . 'config' . DS . $post['group'] . '.php';
-                $group_config = model('Sysconf')->where('group','=', $post['group'])->field('key,value,type')->select()->toArray();
-                $result_config = [];
-                foreach($group_config as $k=>$v){
-                    if($v['value']){
-                        if($v['type'] == 'array'){
-                            $result_config[$v['key']] = json_decode( $v['value'], true );
-                        }else{
-                            $result_config[$v['key']] = $v['value'];
-                        }
-                    }
+                $update_config = $this->update_config($post['group']);
+                if( $update_config['code'] == 1 ){
+                    return $this->success('操作成功');
+                }else{
+                    return $this->error($update_config['msg']);
                 }
-                file_put_contents($file_name,"<?php\nreturn ".var_export($result_config,true).';');
                 return $this->success('操作成功');
             }else if( $update_res === null ){
                 return $this->error('操作失败');
             }
+        }
+        return $this->fetch();
+    }
+
+    //设置配置
+    public function set_config(){
+        if( $this->request->isAjax() && $this->request->isPost() ){
+            $post = $this->request->post("row/a");
+            $group = $post['group'];
+            unset($post['group']);
+            foreach($post as $k=>$v){
+                if(is_array($v)){
+                    $temp = [];
+                    foreach($v['key'] as $arr_k=>$arr_v){
+                        $temp[$arr_v] = $v['value'][$arr_k];
+                    }
+                    $post[$k] = json_encode($temp);
+                }
+            }
+            $result = [];
+            Db::startTrans();
+            foreach($post as $k=>$v){
+                $update = Db::table(Config::get('database.prefix').'sysconf')
+                    ->where('group','=',$group)
+                    ->where('key','=',$k)
+                    ->update(['value'=>$v]);
+                if($update !== false){
+                    $result[] = true;
+                }
+            }
+            if(checkRes($result)){
+                Db::commit();
+                $update_config = $this->update_config($group);
+                if( $update_config['code'] == 1 ){
+                    return $this->success('操作成功');
+                }else{
+                    return $this->error($update_config['msg']);
+                }
+            }else{
+                Db::rollback();
+                return $this->error('操作失败');
+            }
+        }
+    }
+
+    /**
+     * 更新配置文件
+     * @param $group
+     * @return array
+     */
+    public function update_config($group){
+        try{
+            //写入配置文件
+            $file_name = Env::get('app_path') . DS . 'admin' . DS . 'config' . DS . $group . '.php';
+            $group_config = model('Sysconf')->where('group','=', $group)->field('key,value,type')->select()->toArray();
+            $result_config = [];
+            foreach($group_config as $k=>$v){
+                if($v['value']){
+                    if($v['type'] == 'array'){
+                        $result_config[$v['key']] = json_decode( $v['value'], true );
+                    }else{
+                        $result_config[$v['key']] = $v['value'];
+                    }
+                }
+            }
+            file_put_contents($file_name,"<?php\nreturn ".var_export($result_config,true).';');
+            return ['code'=>1];
+        }catch (Exception $e){
+            return ['code'=>0,'msg'=>$e->getMessage()];
         }
     }
 }
