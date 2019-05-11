@@ -319,10 +319,16 @@ layui.define([
             selectPagePlugin.selectPage(obj, option);
         },
 
-        //多选下拉框
-        //layero,index有值时，说明是layer弹窗中进行渲染，添加和编辑都是layer弹窗
-        //layero,index无值时，说明是非layer弹窗中进行渲染，列表页搜索表单部分使用到了
+        /**
+         * 多选下拉框
+         *  layero,index有值时，说明是layer弹窗中进行渲染，添加和编辑都是layer弹窗
+         *  layero,index无值时，说明是非layer弹窗中进行渲染，列表页搜索表单部分使用到了
+         *  html示例：<div id="hobby" class="select_multi" selected_data="['0','1','2']" options='{"value1":"text1"}' max="3" name="row[hobby]" verify="required"></div>
+         * @param layero
+         * @param index
+         */
         select_multi:function(layero,index){
+            console.log('test');
             let
                 elem
                 ,name
@@ -341,7 +347,7 @@ layui.define([
                 layui.each($('.select_multi'),function(key,item){
                     elem = '#'+$(item).attr('id');
                     name = $(item).attr('name');
-                    data = eval($(item).attr('id'));
+                    data = $(item).attr('options') ? eval($(item).attr('options')) : eval($(item).attr('id'));
                     max = $(item).attr('max');
                     verify = $(item).attr('verify');
                     selected = eval($(item).attr('selected_data'));
@@ -620,7 +626,7 @@ layui.define([
          *  1.form的class值为layui-form;
          *  2.button的属性值lay-submit lay-filter="*";
          */
-        form: function(){
+        form_submit: function(){
             layui.form.on('submit(*)', function(data){
                 /**
                  * 所有的表单提交都是执行ajax，ajax请求的地址都是当前的url
@@ -685,7 +691,7 @@ layui.define([
         },
 
         /**
-         * 搜索表单，添加搜索条件绑定事件
+         * 搜索表单，添加搜索条件绑定事件(暂时废弃)
          */
         add_search_condition: function(){
             $(document).on('click','.add_search_condition',function(){
@@ -696,6 +702,13 @@ layui.define([
                     layui.form.render();
                 });
             });
+        },
+
+        /**
+         * 渲染普通多选下拉框
+         */
+        select_multi: function(){
+            layTp.facade.select_multi();
         },
 
         /**

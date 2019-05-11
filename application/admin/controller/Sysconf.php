@@ -35,9 +35,10 @@ class Sysconf extends Backend
                 $config[$k]['content'] = $temp;
                 $config[$k]['content_value'] = array_keys($temp);
                 $config[$k]['content_text'] = array_values($temp);
-
             }
         }
+//        dump($config);
+//        exit();
         $this->assign('config', $config);
 
         return $this->fetch();

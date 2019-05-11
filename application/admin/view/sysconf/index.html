@@ -38,13 +38,22 @@
                                 {/if}
                                 {/case}
                                 {case select_single}
-                                <select name="row[{$v['key']}]" value="{$v['content_value'][0]}">
+                                <select name="row[{$v['key']}]">
+                                    <option value="">请选择</option>
                                     {if is_array($v['content'])}
-                                    {foreach $v['content'] as $k=>$v}
-                                    <option value="{$k}">{$v}</option>
+                                    {foreach $v['content'] as $ck=>$cv}
+                                    <option value="{$ck}" {if $v['value'] == $ck}selected="selected"{/if}>{$cv}</option>
                                     {/foreach}
                                     {/if}
                                 </select>
+                                {/case}
+                                {case select_multi}
+                                <div class="select_multi"
+                                     id="{$v['group']}_{$v['key']}"
+                                     options='{:getSelectMultiJsConst($v["content"])}'
+                                     name="row[{$v['key']}]"
+                                     selected_data='{:json_encode(explode(',',$v['value']))}'
+                                ></div>
                                 {/case}
                                 {case array}
                                 <table class="layui-table tableDnd" style="margin: 0;" lay-skin="line">
@@ -62,10 +71,10 @@
                                     </thead>
                                     <tbody>
                                     {if is_array($v['value'])}
-                                    {foreach $v['value'] as $ck=>$cv}
+                                    {foreach $v['value'] as $vk=>$vv}
                                     <tr>
-                                        <td style="padding: 4px 15px;"><input class="layui-input" type="text" name="row[{$v.key}][key][]" value="{$ck}" /></td>
-                                        <td style="padding: 4px 15px;"><input class="layui-input" type="text" name="row[{$v.key}][value][]" value="{$cv}" /></td>
+                                        <td style="padding: 4px 15px;"><input class="layui-input" type="text" name="row[{$v.key}][key][]" value="{$vk}" /></td>
+                                        <td style="padding: 4px 15px;"><input class="layui-input" type="text" name="row[{$v.key}][value][]" value="{$vv}" /></td>
                                         <td style="padding: 4px 15px;">
                                             <a href="javascript:void(0);" class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-delete del_array_item" title="删除"></a>
                                         </td>

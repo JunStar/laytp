@@ -176,8 +176,6 @@ layui.define(['jquery', 'layer'], function(exports){
                     return false;
                 }
                 if(Object.prototype.toString.call(c.data)!='[object Array]'){
-                    console.log(Object.prototype.toString.call(c.data));
-                    console.log(c.data);
                     let data = o.getData(c.data);
                     if(data===false){
                         console.error(MOD_NAME+' hint：缺少分类数据');

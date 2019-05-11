@@ -74,6 +74,27 @@
 </style>
 <table class="laytp-table layui-hide-sm"></table>
 
+<style>
+    .form-footer{
+        position:fixed;
+        left:0;
+        right:0;
+        bottom:0;
+        height:44px;
+        line-height:44px;
+        padding: 0 15px;
+        background-color:#eee;
+    }
+</style>
+<div class="form-footer">
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-normal" id="curd_import_btn">提 交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</div>
+
 {include file="autocreate/curd/import/table/templet_tpl" /}
 {include file="autocreate/curd/import/table/width_tpl" /}
 {include file="autocreate/curd/import/table/align_tpl" /}
