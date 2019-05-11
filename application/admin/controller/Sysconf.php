@@ -22,7 +22,7 @@ class Sysconf extends Backend
         $group = $group ? $group : 'basic';
         $this->assign('group', $group);
 
-        $config_gorup = Config::get('dictionary.config_group') ? Config::get('dictionary.config_group') : ['basic'=>'基础配置'];
+        $config_gorup = Config::get('laytp.dictionary.config') ? Config::get('laytp.dictionary.config') : ['basic'=>'基础配置'];
         $this->assign('config_gorup', $config_gorup);
 
         $config = model('Sysconf')->where('group','=',$group)->select()->toArray();
@@ -57,7 +57,7 @@ class Sysconf extends Backend
             $update_res = model('Sysconf')->insert($post,true);
             if( $update_res || $update_res === 0 ){
                 //写入配置文件
-                $update_config = $this->update_config($post['group']);
+                $update_config = $this->update_config();
                 if( $update_config['code'] == 1 ){
                     return $this->success('操作成功');
                 }else{
@@ -99,7 +99,7 @@ class Sysconf extends Backend
             }
             if(checkRes($result)){
                 Db::commit();
-                $update_config = $this->update_config($group);
+                $update_config = $this->update_config();
                 if( $update_config['code'] == 1 ){
                     return $this->success('操作成功');
                 }else{
@@ -117,7 +117,7 @@ class Sysconf extends Backend
      * @param $group
      * @return array
      */
-    public function update_config($group){
+    public function update_config(){
         try{
             //写入配置文件
             $file_name = Env::get('root_path') .  DS . 'config' . DS . 'laytp.php';
