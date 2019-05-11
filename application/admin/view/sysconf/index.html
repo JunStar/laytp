@@ -6,7 +6,7 @@
         <div class="layui-tab layui-tab-brief">
             <ul class="layui-tab-title">
                 {foreach $Think.config.dictionary.config_group as $k=>$v}
-                <li {if $group==$k}class="layui-this"{/if}><a href="{:url('admin/sysconf/index',['group'=>$k])}">{$v}</a></li>
+                <li><a href="{:url('admin/sysconf/index',['group'=>$k])}" {if $group==$k}style="color:#369;"{/if}>{$v}</a></li>
                 {/foreach}
                 <li class="layui-icon"><a href="javascript:void(0);">&#xe654;</a></li>
             </ul>
