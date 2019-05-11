@@ -59,7 +59,7 @@
                                         <span class="icon icon-key margin-small"></span>
                                     </div>
                                 </div>
-                                {if $Think.config.basic.login_vercode}
+                                {if $Think.config.laytp.basic.login_vercode}
                                 <div class="form-group">
                                     <div class="field field-icon-right">
                                         <input type="text" class="input input-big" id="code" name="code" placeholder="填写右侧的验证码" lay-verify="required">
@@ -122,7 +122,7 @@
             location.href = "/admin/";
         }
 
-        {if $Think.config.basic.login_vercode}
+        {if $Think.config.laytp.basic.login_vercode}
         $("#code").focus(function()
         {
             $(document).on("keydown",function(event)
