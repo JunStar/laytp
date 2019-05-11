@@ -6,14 +6,6 @@ layui.use(['layTp'],function() {
         ,dropdown = layui.dropdown
     ;
 
-    //搜索表单渲染
-    func_controller.search_form_render = function(){
-        layTp.facade.select_multi();
-    }
-
-    func_controller.search_form_render();
-
-    //批量操作渲染
     //批量操作渲染
     dropdown.render({
         elem: '.action-more',
