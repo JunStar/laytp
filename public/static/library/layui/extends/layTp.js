@@ -241,7 +241,7 @@ layui.define([
                 area: [width,height],
                 shade: 0.01,
                 maxmin:true,
-                skin:'myskin',
+                skin:'hide-layer-box-shadow',
                 success: function(layero, index){
                     layTp.facade.after_popup_frame(layero,index);
                 }
