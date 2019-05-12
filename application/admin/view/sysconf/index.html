@@ -26,7 +26,8 @@
                             <colgroup>
                                 <col width="10%">
                                 <col width="50%">
-                                <col width="40%">
+                                <col width="35%">
+                                <col width="5%">
                             </colgroup>
                             <tbody>
                             {foreach $config as $ck=>$cv}
@@ -175,7 +176,7 @@
                                             <td style="padding: 4px 15px;"><input class="layui-input" type="text" name="row[{$cv.key}][key][]" value="{$vk}" /></td>
                                             <td style="padding: 4px 15px;"><input class="layui-input" type="text" name="row[{$cv.key}][value][]" value="{$vv}" /></td>
                                             <td style="padding: 4px 15px;">
-                                                <a href="javascript:void(0);" class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-delete del_array_item" title="删除"></a>
+                                                <a href="javascript:void(0);" class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-delete del_array_item" layer-tips="删除" title="删除"></a>
                                             </td>
                                         </tr>
                                         {/foreach}
@@ -196,6 +197,9 @@
                                         <br />
                                         调用方式<code>Config::get('{$group}.{$cv.key}')</code>
                                     </div>
+                                </td>
+                                <td style="{if in_array($cv['type'],['textarea','array','image_single','image_multi','ueditor'])}vertical-align:top;{/if}">
+                                    <a href="javascript:void(0);" data-id="{$cv.id}" class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-delete delete-item" layer-tips="删除" title="删除"></a>
                                 </td>
                             </tr>
                             {/foreach}
@@ -297,7 +301,7 @@ value2|title2</textarea>
         <td style="padding: 4px 15px;"><input class="layui-input" type="text" name="row[{{ d.config_key }}][key][]" /></td>
         <td style="padding: 4px 15px;"><input class="layui-input" type="text" name="row[{{ d.config_key }}][value][]" /></td>
         <td style="padding: 4px 15px;">
-            <a href="javascript:void(0);" class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-delete del_array_item" title="删除"></a>
+            <a href="javascript:void(0);" class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-delete del_array_item" layer-tips="删除" title="删除"></a>
         </td>
     </tr>
 </script>
