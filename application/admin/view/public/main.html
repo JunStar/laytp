@@ -9,16 +9,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <link rel="stylesheet" href="__STATIC__/library/layui/css/layui.css">
-    <link rel="stylesheet" href="__STATIC__/admin/css/theme.css">
-    <link rel="stylesheet" href="__STATIC__/admin/css/style.css" media="all">
-    <link rel="stylesheet" href="__STATIC__/admin/css/prettify.css" media="all">
-    <link rel="stylesheet" href="__STATIC__/library/layui/css/modules/formSelects.css" media="all">
-    <link rel="stylesheet" href="__STATIC__/library/layui/css/modules/selectPage.css" media="all">
-    <link rel="stylesheet" href="__STATIC__/library/layui/css/modules/dropdown.css" media="all">
+    <!-- 加载公用css文件 -->
+    {include file="public/css_file"}
+    <!-- 自定义样式 -->
     {block name="style"}{/block}
+    <!-- 加载全局js常量 -->
     {include file="public/js_global_var"}
-
 </head>
 <body class="layui-layout-body laytp-theme-10">
 <div class="layui-layout layui-layout-admin">
@@ -56,10 +52,9 @@
         © laytp.phpby.com
     </div>
 </div>
-<script type="text/javascript" src="__STATIC__/library/layui/layui.js" charset="utf-8"></script>
-<script type="text/javascript" src="__STATIC__/library/layui/layui_config.js" charset="utf-8"></script>
-<script type="text/javascript" src="__STATIC__/library/jquery_3.3.1.js" charset="utf-8"></script>
-<script type="text/javascript" src="__STATIC__/library/jquery.tablednd.js" charset="utf-8"></script>
+<!-- 加载公用js文件 -->
+{include file="public/js_file"}
+<!-- 自定义js内容 -->
 {block name="script"}{/block}
 <!-- js模板部分 -->
 {block name="js_template"}{/block}

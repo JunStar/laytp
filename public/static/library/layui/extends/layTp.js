@@ -328,7 +328,6 @@ layui.define([
          * @param index
          */
         select_multi:function(layero,index){
-            console.log('test');
             let
                 elem
                 ,name

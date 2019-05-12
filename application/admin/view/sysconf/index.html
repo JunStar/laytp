@@ -6,101 +6,202 @@
         <div class="layui-tab layui-tab-brief">
             <ul class="layui-tab-title">
                 {foreach $config_gorup as $k=>$v}
-                <li><a href="{:url('admin/sysconf/index',['group'=>$k])}" {if $group==$k}style="color:#369;"{/if}>{$v}</a></li>
+                <li onclick="location.href='{:url('admin/sysconf/index',['group'=>$k])}'"><span {if $group==$k}style="color:#369;"{/if}>{$v}</span></li>
                 {/foreach}
                 <li class="layui-icon"><a href="javascript:void(0);">&#xe654;</a></li>
             </ul>
             <div class="layui-tab-content">
-                {foreach $config_gorup as $k=>$v}
+                {foreach $config_gorup as $gk=>$gv}
                 <div class="layui-tab-item layui-show">
-                    {if $group==$k}
+                    {if $group==$gk}
                     <style type="text/css">
-                        .layui-form-item .layui-form-label{width:130px;text-align:right;}
-                        .layui-form-item .layui-input-inline{max-width:80%;width:auto;min-width:260px;}
                         .layui-form-mid{padding:0!important;}
                         .layui-form-mid code{color:#5FB878;}
+                        .layui-table{color: #333!important}
+                        .layui-form-switch{margin-top: 0px;}
                     </style>
                     <form class="page-list-form layui-form" action="{:url('admin/sysconf/set_config')}" method="POST">
                         <input type="hidden" name="row[group]" value="{$group}" />
-                        {foreach $config as $k=>$v}
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">{$v.name}</label>
-                            <div class="layui-input-inline">
-                            {switch ($v['type'])}
-                                {case input}
-                                <input type="text" name="row[{$v.key}]" placeholder="请输入{$v.name}" autocomplete="off" class="layui-input" value="{$v.value}" />
-                                {/case}
-                                {case radio}
-                                {if is_array($v['content'])}
-                                <!-- 隐藏域设置开关未选中时需要传递的参数值 -->
-                                <input type="hidden" name="row[{$v['key']}]" value="{$v['content_value'][0]}" />
-                                <input type="checkbox" name="row[{$v['key']}]" lay-skin="switch" lay-text="{$v['content_text'][1]}|{$v['content_text'][0]}" value="{$v['content_value'][1]}" {if $v['content_value'][1] == $v['value']}checked="checked"{/if} />
-                                {/if}
-                                {/case}
-                                {case select_single}
-                                <select name="row[{$v['key']}]">
-                                    <option value="">请选择</option>
-                                    {if is_array($v['content'])}
-                                    {foreach $v['content'] as $ck=>$cv}
-                                    <option value="{$ck}" {if $v['value'] == $ck}selected="selected"{/if}>{$cv}</option>
-                                    {/foreach}
+                        <table class="layui-table" style="margin: 0;" lay-skin="nob">
+                            <colgroup>
+                                <col width="10%">
+                                <col width="50%">
+                                <col width="40%">
+                            </colgroup>
+                            <tbody>
+                            {foreach $config as $ck=>$cv}
+                            <tr>
+                                <td style="text-align:right;
+                                    {if in_array($cv['type'],['textarea','array','image_single','image_multi','ueditor'])}vertical-align:top;{/if}
+                                    {if in_array($cv['type'],['textarea','image_single','image_multi'])}padding-top:18px;{/if}
+                                ">
+                                    {$cv.name}
+                                </td>
+                                <td>
+                                    {switch ($cv['type'])}
+                                    {case input}
+                                    <input type="text" name="row[{$cv.key}]" class="layui-input" value="{$cv.value}" />
+                                    {/case}
+                                    {case textarea}
+                                    <textarea name="row[{$cv.key}]" class="layui-textarea">{$cv.value}</textarea>
+                                    {/case}
+                                    {case select_single}
+                                    <select name="row[{$cv['key']}]">
+                                        <option value="">请选择</option>
+                                        {if is_array($cv['content'])}
+                                        {foreach $cv['content'] as $content_k=>$content_v}
+                                        <option value="{$ck}" {if $cv['value'] == $content_k}selected="selected"{/if}>{$content_v}</option>
+                                        {/foreach}
+                                        {/if}
+                                    </select>
+                                    {/case}
+                                    {case select_multi}
+                                    <div class="select_multi"
+                                         id="{$cv['group']}_{$cv['key']}"
+                                         options='{:getSelectMultiJsConst($cv["content"])}'
+                                         name="row[{$cv['key']}]"
+                                         selected_data='{:json_encode(explode(",",$cv["value"]))}'
+                                    ></div>
+                                    {/case}
+                                    {case radio}
+                                    {if is_array($cv['content'])}
+                                    <!-- 隐藏域设置开关未选中时需要传递的参数值 -->
+                                    <input type="hidden" name="row[{$cv['key']}]" value="{$cv['content_value'][0]}" />
+                                    <input type="checkbox" name="row[{$cv['key']}]" lay-skin="switch"
+                                           lay-text="{$cv['content_text'][1]}|{$cv['content_text'][0]}"
+                                           value="{$cv['content_value'][1]}"
+                                           {if $cv['content_value'][1] == $cv['value']}checked="checked"{/if} />
                                     {/if}
-                                </select>
-                                {/case}
-                                {case select_multi}
-                                <div class="select_multi"
-                                     id="{$v['group']}_{$v['key']}"
-                                     options='{:getSelectMultiJsConst($v["content"])}'
-                                     name="row[{$v['key']}]"
-                                     selected_data='{:json_encode(explode(',',$v['value']))}'
-                                ></div>
-                                {/case}
-                                {case array}
-                                <table class="layui-table tableDnd" style="margin: 0;" lay-skin="line">
-                                    <colgroup>
-                                        <col width="150">
-                                        <col width="200">
-                                        <col>
-                                    </colgroup>
-                                    <thead>
-                                    <tr class='nodrop nodrag'>
-                                        <th>键名</th>
-                                        <th>键值</th>
-                                        <th></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {if is_array($v['value'])}
-                                    {foreach $v['value'] as $vk=>$vv}
-                                    <tr>
-                                        <td style="padding: 4px 15px;"><input class="layui-input" type="text" name="row[{$v.key}][key][]" value="{$vk}" /></td>
-                                        <td style="padding: 4px 15px;"><input class="layui-input" type="text" name="row[{$v.key}][value][]" value="{$vv}" /></td>
-                                        <td style="padding: 4px 15px;">
-                                            <a href="javascript:void(0);" class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-delete del_array_item" title="删除"></a>
-                                        </td>
-                                    </tr>
-                                    {/foreach}
-                                    {/if}
-                                    <tr class='nodrop nodrag'>
-                                        <td colspan="3" style="padding: 4px 15px;">
-                                            <a href="javascript:void(0);" class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-add-1 add_array_item" config_key="{$v.key}" title="追加">追加</a>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                                {/case}
-                            {/switch}
-                            </div>
-                            <div class="layui-form-mid layui-word-aux">
-                                <div class="layui-form-mid layui-word-aux">
-                                    {$v.tip}
-                                    <br />
-                                    调用方式
-                                    <code>Config::get('{$group}.{$v.key}')</code>
-                                </div>
-                            </div>
-                        </div>
-                        {/foreach}
+                                    {/case}
+                                    {case image_single}
+                                    <div class="layui-upload">
+                                        <div class="layui-inline" style="width: 81%;"><input type="text" class="layui-input" name="row[{$cv['key']}]" id="input_{$cv['group']}_{$cv['key']}" value="{$cv['value']}" /></div>
+                                        <div class="layui-inline">
+                                            <button type="button" class="layui-btn layui-btn-primary pull-left"
+                                                    id="{$cv['group']}_{$cv['key']}"
+                                                    upload="true"
+                                                    accept="images"
+                                                    single_multi="single"
+                                            >选择上传</button>
+                                        </div>
+                                        <div class="pic-more">
+                                            <ul class="pic-more-upload-list" id="preview_{$cv['group']}_{$cv['key']}">
+                                                {if $cv['value']}
+                                                <li class="item_img">
+                                                    <div class="operate">
+                                                        <i class="upload_img_close layui-icon" file_url_data="{$cv['value']}" node="{$cv['key']}"></i>
+                                                    </div>
+                                                    <img src="{$cv['value']}" class="img">
+                                                </li>
+                                                {/if}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    {/case}
+                                    {case image_multi}
+                                    <div class="layui-upload">
+                                        <div class="layui-inline" style="width: 81%;"><input type="text" class="layui-input" name="row[{$cv['key']}]" id="input_{$cv['group']}_{$cv['key']}" value="{$cv['value']}" /></div>
+                                        <div class="layui-inline">
+                                            <button type="button" class="layui-btn layui-btn-primary pull-left"
+                                                    id="{$cv['group']}_{$cv['key']}"
+                                                    upload="true"
+                                                    accept="images"
+                                                    single_multi="multi"
+                                            >选择上传</button>
+                                        </div>
+                                        <div class="pic-more">
+                                            <ul class="pic-more-upload-list" id="preview_{$cv['group']}_{$cv['key']}">
+                                                {if $cv['value']}
+                                                {foreach :explode(",",$cv['value']) as $key=>$vo}
+                                                <li class="item_img">
+                                                    <div class="operate">
+                                                        <i class="upload_img_close layui-icon" file_url_data="{$vo}" node="multi_img"></i>
+                                                    </div>
+                                                    <img src="{$vo}" class="img">
+                                                </li>
+                                                {/foreach}
+                                                {/if}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    {/case}
+                                    {case file_single}
+                                    <div class="layui-upload">
+                                        <div class="layui-inline" style="width: 81%;"><input type="text" class="layui-input" name="row[{$cv['key']}]" id="input_{$cv['group']}_{$cv['key']}" value="{$cv['value']}" /></div>
+                                        <div class="layui-inline">
+                                            <button type="button" class="layui-btn layui-btn-primary pull-left"
+                                                    id="{$cv['group']}_{$cv['key']}"
+                                                    upload="true"
+                                                    accept="file"
+                                                    single_multi="single"
+                                            >选择上传</button>
+                                        </div>
+                                    </div>
+                                    {/case}
+                                    {case file_multi}
+                                    <div class="layui-upload">
+                                        <div class="layui-inline" style="width: 81%;"><input type="text" class="layui-input" name="row[{$cv['key']}]" id="input_{$cv['group']}_{$cv['key']}" value="{$cv['value']}" /></div>
+                                        <div class="layui-inline">
+                                            <button type="button" class="layui-btn layui-btn-primary pull-left"
+                                                    id="{$cv['group']}_{$cv['key']}"
+                                                    upload="true"
+                                                    accept="file"
+                                                    single_multi="multi"
+                                            >选择上传</button>
+                                        </div>
+                                    </div>
+                                    {/case}
+                                    {case ueditor}
+                                    <script editor="true" type="ueditor" id="{$cv['key']}" name="row[{$cv['key']}]" type="text/plain">{$cv['value']}</script>
+                                    {/case}
+                                    {case array}
+                                    <table class="layui-table tableDnd" style="margin: 0;" lay-skin="line">
+                                        <colgroup>
+                                            <col width="25%">
+                                            <col width="70%">
+                                            <col>
+                                        </colgroup>
+                                        <thead>
+                                        <tr class='nodrop nodrag'>
+                                            <th>键名</th>
+                                            <th>键值</th>
+                                            <th></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {if is_array($cv['value'])}
+                                        {foreach $cv['value'] as $vk=>$vv}
+                                        <tr>
+                                            <td style="padding: 4px 15px;"><input class="layui-input" type="text" name="row[{$cv.key}][key][]" value="{$vk}" /></td>
+                                            <td style="padding: 4px 15px;"><input class="layui-input" type="text" name="row[{$cv.key}][value][]" value="{$vv}" /></td>
+                                            <td style="padding: 4px 15px;">
+                                                <a href="javascript:void(0);" class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-delete del_array_item" title="删除"></a>
+                                            </td>
+                                        </tr>
+                                        {/foreach}
+                                        {/if}
+                                        <tr class='nodrop nodrag'>
+                                            <td colspan="3" style="padding: 4px 15px;">
+                                                <a href="javascript:void(0);" class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-add-1 add_array_item" config_key="{$cv.key}" title="追加">追加</a>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    {/case}
+                                    {/switch}
+                                </td>
+                                <td style="{if in_array($cv['type'],['textarea','array','image_single','image_multi','ueditor'])}vertical-align:top;{/if}">
+                                    <div class="layui-form-mid layui-word-aux">
+                                        {$cv.tip}
+                                        <br />
+                                        调用方式<code>Config::get('{$group}.{$cv.key}')</code>
+                                    </div>
+                                </td>
+                            </tr>
+                            {/foreach}
+                            </tbody>
+                        </table>
+                        <div class="layui-form-item"></div>
                         <div class="layui-form-item">
                             <label class="layui-form-label"> </label>
                             <div class="layui-input-inline">
@@ -118,6 +219,7 @@
                             <div class="layui-input-inline">
                                 <select name="row[type]" lay-filter="select_type" lay-verify="required">
                                     <option value="input">单行文本输入框</option>
+                                    <option value="textarea">文本域</option>
                                     <option value="select_single">单选下拉框</option>
                                     <option value="select_multi">多选下拉框</option>
                                     <option value="radio">开关</option>
