@@ -51,7 +51,7 @@
                                         <option value="">请选择</option>
                                         {if is_array($cv['content'])}
                                         {foreach $cv['content'] as $content_k=>$content_v}
-                                        <option value="{$ck}" {if $cv['value'] == $content_k}selected="selected"{/if}>{$content_v}</option>
+                                        <option value="{$content_k}" {if $cv['value'] == $content_k}selected="selected"{/if}>{$content_v}</option>
                                         {/foreach}
                                         {/if}
                                     </select>
@@ -153,7 +153,7 @@
                                     </div>
                                     {/case}
                                     {case ueditor}
-                                    <script editor="true" type="ueditor" id="{$cv['key']}" name="row[{$cv['key']}]" type="text/plain">{$cv['value']}</script>
+                                    <script editor="true" type="ueditor" id="{$cv['key']}" name="row[{$cv['key']}]" type="text/plain">{$cv['value']|raw}</script>
                                     {/case}
                                     {case array}
                                     <table class="layui-table tableDnd" style="margin: 0;" lay-skin="line">

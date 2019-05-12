@@ -37,8 +37,6 @@ class Sysconf extends Backend
                 $config[$k]['content_text'] = array_values($temp);
             }
         }
-//        dump($config);
-//        exit();
         $this->assign('config', $config);
 
         return $this->fetch();
@@ -48,6 +46,11 @@ class Sysconf extends Backend
     public function add(){
         if( $this->request->isAjax() && $this->request->isPost() ){
             $post = filterPostData($this->request->post("row/a"));
+            //检测group,key是否存在
+            $exist = model('Sysconf')->where(['group'=>$post['group'],'key'=>$post['key']])->find();
+            if($exist){
+                return $this->error($post['key'].'已存在');
+            }
             $content = explode("\n", $post['content']);
             $return = [];
             foreach($content as $v){
@@ -55,8 +58,8 @@ class Sysconf extends Backend
                 $return[$temp[0]] = $temp[1];
             }
             $post['content'] = json_encode($return);
-            $update_res = model('Sysconf')->insert($post,true);
-            if( $update_res || $update_res === 0 ){
+            $update_res = model('Sysconf')->insert($post);
+            if( $update_res ){
                 //写入配置文件
                 $update_config = $this->update_config();
                 if( $update_config['code'] == 1 ){
