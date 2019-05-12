@@ -18,11 +18,18 @@
                     </style>
                     <form class="page-list-form layui-form">
                         <div class="layui-form-item">
-                            <label class="layui-form-label">api文档名称</label>
+                            <label class="layui-form-label">api文档文件名称</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="row[apidoc_name]" id="apidoc_name" placeholder="请输入api文档名称" autocomplete="off" class="layui-input" value="{$apidoc_name}" />
+                                <input type="text" name="row[apidoc_file_name]" id="apidoc_file_name" placeholder="请输入api文档文件名称" class="layui-input" value="{$apidoc_file_name}" />
                             </div>
                             <div class="layui-form-mid layui-word-aux">生成的Api文档的文件名<br />默认使用api，点击生成则会在根目录下生成api.html文件</div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">api文档标题</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="row[apidoc_title]" id="apidoc_title" placeholder="请输入api文档标题" class="layui-input" value="{$apidoc_title}" />
+                            </div>
+                            <div class="layui-form-mid layui-word-aux">生成的Api文档的标题</div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label"> </label>
@@ -78,7 +85,7 @@ class Test extends Api{
 {block name="script"}
 <script type="text/javascript">
     function showApi(){
-        window.open('/' + $('#apidoc_name').val() + '.html');
+        window.open('/' + $('#apidoc_file_name').val() + '.html');
     }
 </script>
 {/block}
