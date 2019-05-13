@@ -2,9 +2,9 @@
 
 namespace app\admin\model;
 
-use think\Model;
+use model\Backend;
 
-class AdminLog extends Model
+class AdminLog extends Backend
 {
 
     // 开启自动写入时间戳字段

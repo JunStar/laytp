@@ -4,9 +4,9 @@
  */
 namespace {%modelNamespace%};
 
-use think\Model;
+use model\Backend;
 
-class {%modelClassName%} extends Model
+class {%modelClassName%} extends Backend
 {
     //模型名
     protected $name = '{%modelName%}';
