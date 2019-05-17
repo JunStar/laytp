@@ -11,6 +11,8 @@ class Curd extends Backend
 {
     public $model;
 
+    protected $special_fields = ['id','createtime','updatetime','deletetime'];
+
     public function initialize(){
         parent::initialize();
         $this->model = model('autocreate.Curd');
@@ -90,7 +92,7 @@ class Curd extends Backend
         $comment_map = arr_to_map($comment,'COLUMN_NAME');
         $i = 0;
         foreach($fields as $k=>$v){
-            if( $v != $pk ){
+            if( !in_array($v, array_merge([$pk],$this->special_fields)) ){
                 $result[$i]['field_name'] = $v;
                 $result[$i]['field_comment'] = $comment_map[$v]['COLUMN_COMMENT'];
                 $result[$i]['table_width'] = '自适应';

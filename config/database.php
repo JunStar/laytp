@@ -13,7 +13,7 @@ return [
     // 端口
     'hostport'        => Env::get('database.hostport', ''),
     // 连接dsn
-    'dsn'             => '',
+    'dsn'             => "",
     // 数据库连接参数
     'params'          => [],
     // 数据库编码默认采用utf8

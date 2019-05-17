@@ -156,6 +156,16 @@ layui.use(['layTp'],function(){
             '<option value="">显示的字段</option>' +
             '</select>';
         // let time_html = '<input class="layui-input layui-input-inline" placeholder="输入时间格式，比如，Y-m-d H:i:s" value="Y-m-d H:i:s" name="form_additional_time_\'+field_name+\'" id="form_additional_time_\'+field_name+\'" />';
+        let select_relation_html = '<input type="text" class="layui-input layui-input-inline" placeholder="分组名，例：地区设置" name="form_additional_group_name_'+field_name+'" id="form_additional_group_name_'+field_name+'" /><br/>' +
+            '<select name="form_additional_select_relation_table_'+field_name+'" id="form_additional_select_relation_table_'+field_name+'" lay-filter="form_additional_select_relation_table_'+field_name+'">' +
+            '<option value="">搜索的表名,例:lt_area</option>' +
+            '</select>' +
+            '<select name="form_additional_select_relation_left_field_'+field_name+'" id="form_additional_select_relation_left_field_'+field_name+'">' +
+            '<option value="">左关联字段,默认不选,表示第一个下拉框</option>' +
+            '</select>' +
+            '<select name="form_additional_select_relation_right_field_'+field_name+'" id="form_additional_select_relation_right_field_'+field_name+'">' +
+            '<option value="">右联动的字段,例:city_id</option>' +
+            '</select>';
         let time_html =
             '<select name="form_additional_set_value_input_'+field_name+'" id="form_additional_set_value_input_'+field_name+'">' +
                 '<option value="datetime">年-月-日 时:分:秒</option>' +
@@ -198,7 +208,7 @@ layui.use(['layTp'],function(){
             '<select name="form_additional_set_value_input_'+field_name+'" id="form_additional_set_value_input_'+field_name+'" lay-filter="form_additional_set_value_input_'+field_name+'">' +
                 '<option value="ueditor">UEditor</option>' +
             '</select>';
-        let type_arr = ['input','password','select','select_page','time','province','city','county','upload','textarea','editor'];
+        let type_arr = ['input','password','select','select_page','select_relation','time','province','city','county','upload','textarea','editor'];
         let set_value_input_type = ['radio','checkbox'];
         if(set_value_input_type.indexOf(value) != -1){
             $('#form_additional_' + field_name).html(set_value_html);
@@ -237,6 +247,38 @@ layui.use(['layTp'],function(){
                             }else if( xhr.status == '404' ){
                                 layTp.facade.error('请求地址不存在');
                             }
+                        }
+                    });
+                    break;
+                case 'select_relation':
+                    $.ajax({
+                        type: 'GET',
+                        url: layTp.facade.url('admin/autocreate.curd/get_table_list'),
+                        data: {},
+                        dataType: 'json',
+                        success: function (res) {
+                            func_controller.set_select_relation_table_name(field_name, res.data);
+
+                            layui.form.render('select');
+                        },
+                        error: function (xhr) {
+                            if( xhr.status == '500' ){
+                                layTp.facade.error('本地网络问题或者服务器错误');
+                            }else if( xhr.status == '404' ){
+                                layTp.facade.error('请求地址不存在');
+                            }
+                        }
+                    });
+                    $.ajax({
+                        type: 'GET',
+                        url: layTp.facade.url('admin/autocreate.curd/get_fields_by_table_name'),
+                        data: {table_name:select_table_name},
+                        dataType: 'json',
+                        success: function (res) {
+                            func_controller.set_select_relation_left_field_name(field_name, res.data);
+                            func_controller.set_select_relation_right_field_name(field_name, res.data);
+
+                            layui.form.render('select');
                         }
                     });
                     break;
@@ -321,6 +363,33 @@ layui.use(['layTp'],function(){
         for(key in data){
             option_html = '<option value="'+data[key]['field_name']+'">'+data[key]['field_name']+'</option>';
             $('#form_additional_select_page_show_field_'+field_name).append(option_html);
+        }
+    }
+
+    //设置联动下拉框待搜索的表名
+    func_controller.set_select_relation_table_name = function(field_name, data){
+        let option_html;
+        for(key in data){
+            option_html = '<option value="'+data[key]['TABLE_NAME']+'">'+data[key]['TABLE_NAME']+'</option>';
+            $('#form_additional_select_relation_table_'+field_name).append(option_html);
+        }
+    }
+
+    //设置联动下拉框左关联字段
+    func_controller.set_select_relation_left_field_name = function(field_name, data){
+        let option_html;
+        for(key in data){
+            option_html = '<option value="'+data[key]['field_name']+'">'+data[key]['field_name']+'</option>';
+            $('#form_additional_select_relation_left_field_'+field_name).append(option_html);
+        }
+    }
+
+    //设置联动下拉框右关联字段
+    func_controller.set_select_relation_right_field_name = function(field_name, data){
+        let option_html;
+        for(key in data){
+            option_html = '<option value="'+data[key]['field_name']+'">'+data[key]['field_name']+'</option>';
+            $('#form_additional_select_relation_right_field_'+field_name).append(option_html);
         }
     }
 

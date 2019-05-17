@@ -15,17 +15,18 @@
                         {/foreach}
                     </select>
                 </div>
-                <label class="layui-form-label" style="display:none;">显示字段</label>
-                <div class="layui-input-inline" style="display:none;">
+                <label class="layui-form-label">显示字段</label>
+                <div class="layui-input-inline">
                     <div id="select_fields"></div>
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">模式选择</label>
-                <div class="layui-input-inline">
+                <div class="layui-input-block">
                     <input type="checkbox" id="common_model" title="全局模型" lay-filter="common_model" value="1">
+                    <input type="checkbox" id="relation_model" title="关联模型" lay-filter="relation_model" value="1">
                 </div>
-                <div class="layui-form-mid layui-word-aux">选中全局模型，model层文件将生成在application/common/model目录下，反之，则生成在application/admin/model目录下</div>
+                <!--<div class="layui-form-mid layui-word-aux">选中全局模型，model层文件将生成在application/common/model目录下，反之，则生成在application/admin/model目录下</div>-->
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">表格列表</label>
@@ -37,15 +38,15 @@
                 </div>
             </div>
             <div class="layui-form-item">
-                <label class="layui-form-label">搜索模式</label>
-                <div class="layui-input-inline">
+                <label class="layui-form-label" style="display:none;">搜索模式</label>
+                <div class="layui-input-inline" style="display:none;">
                     <select name="search_mode" id="search_mode" lay-filter="search_mode">
                         <option value="all_show">全显模式</option>
                         <!--<option value="down">下拉模式</option>-->
                     </select>
                 </div>
-                <label class="layui-form-label">搜索字段</label>
-                <div class="layui-input-inline">
+                <label class="layui-form-label" style="display:none;">搜索字段</label>
+                <div class="layui-input-inline" style="display:none;">
                     <div id="search_fields"></div>
                 </div>
                 <label class="layui-form-label">最小列宽</label>
