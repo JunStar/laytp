@@ -2,8 +2,10 @@
 namespace app\admin\controller;
 
 use think\Controller;
+use think\Db;
 use think\Exception;
 
+//集成controller，不走权限控制
 class Ajax extends Controller
 {
     //上传接口
@@ -21,6 +23,19 @@ class Ajax extends Controller
     public function area(){
         $parent_id = $this->request->param('parent_id') ? $this->request->param('parent_id') : 0;
         $result = model('Area')->where('pid', '=', $parent_id)->select();
+        $this->success('获取成功','',$result);
+    }
+
+    /**
+     * 联动下拉框接口
+     *  数据库pid记录上级ID，name记录名称
+     */
+    public function linkage(){
+        $table_name = $this->request->param('table_name');
+        $search_field = $this->request->param('search_field');
+        $search_field_val = $this->request->param('search_field_val');
+        $show_field = $this->request->param('show_field');
+        $result = Db::table($table_name)->where($search_field, '=', $search_field_val)->field('id,'.$show_field)->select();
         $this->success('获取成功','',$result);
     }
 

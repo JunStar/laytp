@@ -1240,4 +1240,26 @@ EOD;
 
         return $this->get_replaced_tpl($name, $data);
     }
+
+    //联动下拉框
+    protected function get_select_relation_html($info,$type){
+        $name = 'html' . DS . $type . DS . 'area';
+        $data['field_name'] = $info['field_name'];
+        $data['verify'] = $info['form_empty'] ? '' : 'required';
+        $data['field_comment'] = $info['field_comment'];
+        $data['selected_id'] = '';
+        $data['change_linkage_id'] = '';
+        $data['selected_id'] = ($type == 'edit') ?'{$'.$info['field_name'].'}' : '';
+        $data['is_province'] = 'false';
+        if($type == 'edit'){
+            $data['parent_id'] = isset($info['form_additional']) ? '{$'.$info['form_additional'].'}' : '';
+        }else{
+            $data['parent_id'] = '';
+        }
+        $data['options'] = '<option value="">请选择区县</option>';
+
+        $this->set_controller_relation($info['field_name'],'Db::table(\'lt_area\') ', 'name');
+
+        return $this->get_replaced_tpl($name, $data);
+    }
 }

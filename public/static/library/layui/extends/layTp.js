@@ -862,21 +862,27 @@ layui.define([
         },
 
         /**
-         * 省市区联动下拉框渲染
+         * 联动下拉框
          */
-        area_render: function(){
-            layui.each($("select[linkage_area='true']"),function(key,item) {
-                let id = $(item).attr('id');
-                let is_province = $(item).attr('is-province');
-                let ajax_url = $(item).attr('ajax-url');
-                let selected_id = $(item).attr('selected-id');
-                let change_linkage_id = $(item).attr('change-linkage-id');
-                let parent_id = $(item).attr('parent-id');
-                if(is_province=='true'){
+        linkage: function(){
+            layui.each($("select[linkage='true']"),function(key,item) {
+                let id = $(item).attr('id');//id属性，必须
+                let table_name = $(item).attr('table_name');//要搜索的表名，必须
+                let search_field = $(item).attr('search_field');//搜索的字段，默认是pid
+                search_field = ( search_field  == "" || search_field == undefined ) ? 'pid' : search_field;//当搜索的字段没有设置值，或者属性不存在时，设置默认值为pid
+                let show_field = $(item).attr('show_field');//显示的字段，默认是name
+                show_field = ( show_field  == "" || show_field == undefined ) ? 'pid' : show_field;//当显示的字段没有设置值，或者属性不存在时，设置默认值为name
+                let selected_val = $(item).attr('selected_val');//选中的值，非必填
+                let search_field_val = $(item).attr('search_field_val');//搜索字段的值，默认0,如果只想选某个省下面的城市和地区可以设置这个值
+                let left_field = $(item).attr('left_field');//左关联字段，为空或者不设置时，表示第一个下拉框
+                let right_field = $(item).attr('right_field');//右关联字段，为空或者不设置时，表示最后一个下拉框
+                let ajax_url = 'admin/ajax/linkage';
+                //填充联动的第一个下拉框数据
+                if(left_field == "" || left_field == undefined){
                     $.ajax({
                         type: 'GET',
                         url: layTp.facade.url(ajax_url),
-                        data: {parent_id:0},
+                        data: {table_name:table_name,search_field:search_field,search_field_val:search_field_val,show_field:show_field},
                         dataType: 'json',
                         success: function (res) {
                             let option_1 = $(item).children().first().prop("outerHTML");
@@ -885,7 +891,7 @@ layui.define([
                             let option_html;
                             let key;
                             for(key in res.data){
-                                if(selected_id == res.data[key]['id']){
+                                if(selected_val == res.data[key]['id']){
                                     option_html = '<option value="'+res.data[key]['id']+'" selected="selected">'+res.data[key]['name']+'</option>';
                                 }else{
                                     option_html = '<option value="'+res.data[key]['id']+'">'+res.data[key]['name']+'</option>';
@@ -898,60 +904,66 @@ layui.define([
                         }
                     });
                 }
-
-                if(change_linkage_id){
+                //监听所有下拉框onchange事件
+                if(right_field){
                     layui.form.on('select('+id+')',function(data){
                         $.ajax({
                             type: 'GET',
                             url: layTp.facade.url(ajax_url),
-                            data: {parent_id:data.value},
+                            data: {table_name:table_name,search_field:search_field,search_field_val:data.value,show_field:show_field},
                             dataType: 'json',
                             success: function (res) {
-                                let option_1 = $('#'+change_linkage_id).children().first().prop("outerHTML");
-                                $('#'+change_linkage_id).empty();
-                                $('#'+change_linkage_id).append(option_1);
+                                let option_1 = $('#'+right_field).children().first().prop("outerHTML");
+                                $('#'+right_field).empty();
+                                $('#'+right_field).append(option_1);
                                 let option_html;
                                 let key;
                                 for(key in res.data){
                                     option_html = '<option value="'+res.data[key]['id']+'">'+res.data[key]['name']+'</option>';
-                                    $('#'+change_linkage_id).append(option_html);
+                                    $('#'+right_field).append(option_html);
                                 }
-                                let city_change_linkage_id = $('#'+change_linkage_id).attr('change-linkage-id');
-                                if( city_change_linkage_id ){
-                                    let county_option_1 = $('#'+city_change_linkage_id).children().first().prop("outerHTML");
-                                    $('#'+city_change_linkage_id).empty();
-                                    $('#'+city_change_linkage_id).append(county_option_1);
+
+                                let next_right_field = $('#'+right_field).attr('right_field');
+                                let next_option_1 = "";
+                                while(next_right_field != "" && next_right_field != undefined){
+                                    next_option_1 = $('#'+next_right_field).children().first().prop("outerHTML");
+                                    $('#'+next_right_field).empty();
+                                    $('#'+next_right_field).append(next_option_1);
+                                    next_right_field = $('#'+next_right_field).attr('right_field');
                                 }
                                 layui.form.render('select');
                             }
                         });
                     });
                 }
+                //如果有选中值，就请求渲染右侧下拉框
+                if(selected_val != "" && selected_val != undefined){
+                    if(right_field != "" && right_field != undefined){
+                        $.ajax({
+                            type: 'GET',
+                            url: layTp.facade.url(ajax_url),
+                            data: {table_name:table_name,search_field:search_field,search_field_val:selected_val,show_field:show_field},
+                            dataType: 'json',
+                            success: function (res) {
+                                let option_1 = $('#'+right_field).children().first().prop("outerHTML");
+                                $('#'+right_field).empty();
+                                $('#'+right_field).append(option_1);
+                                let option_html;
+                                let key;
+                                let right_selected_val = $('#'+right_field).attr('selected_val');
+                                for(key in res.data){
+                                    if(right_selected_val == res.data[key]['id']){
+                                        option_html = '<option value="'+res.data[key]['id']+'" selected="selected">'+res.data[key]['name']+'</option>';
+                                    }else{
+                                        option_html = '<option value="'+res.data[key]['id']+'">'+res.data[key]['name']+'</option>';
+                                    }
 
-                if(parent_id > 0){
-                    $.ajax({
-                        type: 'GET',
-                        url: layTp.facade.url(ajax_url),
-                        data: {parent_id:parent_id},
-                        dataType: 'json',
-                        success: function (res) {
-                            let option_1 = $(item).children().first().prop("outerHTML");
-                            $(item).empty();
-                            $(item).append(option_1);
-                            let option_html;
-                            let key;
-                            for(key in res.data){
-                                if(selected_id == res.data[key]['id']){
-                                    option_html = '<option value="'+res.data[key]['id']+'" selected="selected">'+res.data[key]['name']+'</option>';
-                                }else{
-                                    option_html = '<option value="'+res.data[key]['id']+'">'+res.data[key]['name']+'</option>';
+                                    $('#'+right_field).append(option_html);
                                 }
-
-                                $(item).append(option_html);
+                                layui.form.render('select');
                             }
-                            layui.form.render('select');
-                        }
-                    });
+                        });
+                    }
                 }
             });
         },

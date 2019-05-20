@@ -554,8 +554,10 @@ layui.use(['layTp'],function(){
                 success: function (res) {
                     if( res.code == 1 ){
                         layTp.facade.success(res.msg);
-                        parent.func_controller.table_render();
-                        // parent.layer.closeAll();
+                        if(parent.window.location.href.indexOf('import.html') == -1){
+                            parent.func_controller.table_render();
+                            parent.layui.layer.closeAll();
+                        }
                     }else{
                         layTp.facade.error(res.msg);
                     }
