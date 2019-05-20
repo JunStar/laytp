@@ -339,12 +339,12 @@ class Curd extends Command
 
         $index_search_form = [];
         $search_fields = explode(',', $this->curd_config['global']['search_fields']);
-        $area_search_html = [];
+        $select_relation_search_html = [];
         $un_search_type = ['password','upload'];
         foreach($this->curd_config['field_list'] as $k=>$v){
             if(in_array($v['field_name'], $search_fields) && !in_array( $v['form_type'], $un_search_type )){
-                if( in_array( $v['form_type'], ['province','city','county'] ) ){
-                    $area_search_html[$v['form_type']] = $this->get_search_form_item($v);
+                if( in_array( $v['form_type'], ['select_relation'] ) ){
+                    $select_relation_search_html[$v['form_type']][$v['form_additional']['group_name']][] = $this->get_search_form_item($v);
                 }else{
                     $search_item_content = $this->get_search_form_item($v);
                     $index_search_form[] = $this->get_search_form_group($v, $search_item_content);
@@ -352,13 +352,12 @@ class Curd extends Command
             }
         }
 
-        if(count($area_search_html)){
-            $search_area_item_content[0] = isset( $area_search_html['province'] ) ?
-                $area_search_html['province'] : ( isset( $area_search_html['city'] ) ? $area_search_html['city'] : $area_search_html['county'] );
-            $search_area_item_content[1] = isset( $area_search_html['city'] ) ? $area_search_html['city'] : $area_search_html['county'];
-            $search_area_item_content[2] = isset( $area_search_html['county'] ) ? $area_search_html['county'] : '';
-            $search_area_item_contents = join("\n\t\t\t", $search_area_item_content);
-            $index_search_form[] = $this->get_area_search_form_group('地区设置', $search_area_item_contents);
+        if(count($select_relation_search_html)){
+            foreach($select_relation_search_html as $form_type=>$group_list){
+                foreach($group_list as $group_name=>$item){
+                    $index_search_form[] = $this->get_select_relation_search_form_group($group_name, join("\n\t\t\t", $item));
+                }
+            }
         }
 
         $index_data['searchForm'] = implode("\n\n", $index_search_form);
@@ -366,12 +365,12 @@ class Curd extends Command
 
         $add_data = [];
         $edit_data = [];
-        $area_add_html = [];
-        $area_edit_html = [];
+        $select_relation_add_html = [];
+        $select_relation_edit_html = [];
         foreach($this->curd_config['field_list'] as $k=>$v){
-            if( in_array( $v['form_type'], ['province','city','county'] ) ){
-                $area_add_html[$v['form_type']] = $this->get_form_item($v,'add');
-                $area_edit_html[$v['form_type']] = $this->get_form_item($v,'edit');
+            if( in_array( $v['form_type'], ['select_relation'] ) ){
+                $select_relation_add_html[$v['form_type']][$v['form_additional']['group_name']][] = $this->get_form_item($v,'add');
+                $select_relation_edit_html[$v['form_type']][$v['form_additional']['group_name']][] = $this->get_form_item($v,'edit');
             }else{
                 $add_item_content = $this->get_form_item($v,'add');
                 $edit_item_content = $this->get_form_item($v,'edit');
@@ -380,21 +379,13 @@ class Curd extends Command
             }
         }
 
-        if(count($area_add_html)){
-            $add_area_item_content[0] = isset( $area_add_html['province'] ) ?
-                $area_add_html['province'] : ( isset( $area_add_html['city'] ) ? $area_add_html['city'] : $area_add_html['county'] );
-            $add_area_item_content[1] = isset( $area_add_html['city'] ) ? $area_add_html['city'] : $area_add_html['county'];
-            $add_area_item_content[2] = isset( $area_add_html['county'] ) ? $area_add_html['county'] : '';
-            $add_area_item_contents = join("\n\t\t\t", $add_area_item_content);
-
-            $edit_area_item_content[0] = isset( $area_edit_html['province'] ) ?
-                $area_edit_html['province'] : ( isset( $area_edit_html['city'] ) ? $area_edit_html['city'] : $area_edit_html['county'] );
-            $edit_area_item_content[1] = isset( $area_edit_html['city'] ) ? $area_edit_html['city'] : $area_edit_html['county'];
-            $edit_area_item_content[2] = isset( $area_edit_html['county'] ) ? $area_edit_html['county'] : '';
-            $edit_area_item_contents = join("\n\t\t\t", $edit_area_item_content);
-
-            $add_data[] = $this->get_form_group('地区设置', $add_area_item_contents);
-            $edit_data[] = $this->get_form_group('地区设置', $edit_area_item_contents);
+        if(count($select_relation_add_html)){
+            foreach($select_relation_add_html as $form_type=>$group_list){
+                foreach($group_list as $group_name=>$item){
+                    $add_data[] = $this->get_form_group($group_name, join("\n\t\t\t", $item));
+                    $edit_data[] = $this->get_form_group($group_name, join("\n\t\t\t", $select_relation_edit_html[$form_type][$group_name]));
+                }
+            }
         }
 
         $add_tpl_name = 'html' . DS . 'add';
@@ -448,7 +439,7 @@ EOD;
 EOD;
     }
 
-    protected function get_area_search_form_group($field, $content)
+    protected function get_select_relation_search_form_group($field, $content)
     {
         return <<<EOD
     <div class="layui-inline" style="padding-left: 35px;">
@@ -1243,22 +1234,31 @@ EOD;
 
     //联动下拉框
     protected function get_select_relation_html($info,$type){
-        $name = 'html' . DS . $type . DS . 'area';
+        $name = 'html' . DS . $type . DS . 'select_relation';
         $data['field_name'] = $info['field_name'];
         $data['verify'] = $info['form_empty'] ? '' : 'required';
         $data['field_comment'] = $info['field_comment'];
-        $data['selected_id'] = '';
-        $data['change_linkage_id'] = '';
-        $data['selected_id'] = ($type == 'edit') ?'{$'.$info['field_name'].'}' : '';
-        $data['is_province'] = 'false';
+        $data['table_name'] = $info['form_additional']['table_name'];
+        $data['left_field'] = $info['form_additional']['left_field'];
+        $data['right_field'] = $info['form_additional']['right_field'];
         if($type == 'edit'){
-            $data['parent_id'] = isset($info['form_additional']) ? '{$'.$info['form_additional'].'}' : '';
+            $data['selected_val'] = isset($info['form_additional']) ? '{$'.$info['field_name'].'}' : '';
         }else{
-            $data['parent_id'] = '';
+            $data['selected_val'] = '';
         }
-        $data['options'] = '<option value="">请选择区县</option>';
 
-        $this->set_controller_relation($info['field_name'],'Db::table(\'lt_area\') ', 'name');
+        return $this->get_replaced_tpl($name, $data);
+    }
+
+    protected function get_search_select_relation_html($info){
+        $name = 'html' . DS . 'search' . DS . 'select_relation';
+        $data['field_name'] = $info['field_name'];
+        $data['verify'] = $info['form_empty'] ? '' : 'required';
+        $data['field_comment'] = $info['field_comment'];
+        $data['table_name'] = $info['form_additional']['table_name'];
+        $data['left_field'] = $info['form_additional']['left_field'];
+        $data['right_field'] = $info['form_additional']['right_field'];
+        $data['selected_val'] = '';
 
         return $this->get_replaced_tpl($name, $data);
     }

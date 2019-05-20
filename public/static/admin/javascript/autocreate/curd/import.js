@@ -161,10 +161,10 @@ layui.use(['layTp'],function(){
             '<option value="">搜索的表名,例:lt_area</option>' +
             '</select>' +
             '<select name="form_additional_select_relation_left_field_'+field_name+'" id="form_additional_select_relation_left_field_'+field_name+'">' +
-            '<option value="">左关联字段,默认不选,表示第一个下拉框</option>' +
+            '<option value="">左关联字段,例:province_id,不选表示第一个下拉框</option>' +
             '</select>' +
             '<select name="form_additional_select_relation_right_field_'+field_name+'" id="form_additional_select_relation_right_field_'+field_name+'">' +
-            '<option value="">右联动的字段,例:city_id</option>' +
+            '<option value="">右联动的字段,例:city_id,不选表示最后一个下拉框</option>' +
             '</select>';
         let time_html =
             '<select name="form_additional_set_value_input_'+field_name+'" id="form_additional_set_value_input_'+field_name+'">' +
@@ -173,24 +173,6 @@ layui.use(['layTp'],function(){
                 '<option value="year">年</option>' +
                 '<option value="Y-m-d">年-月-日</option>' +
                 '<option value="time">时:分:秒</option>' +
-            '</select>';
-        let province_html =
-            '<select name="form_additional_default_province_id_'+field_name+'" id="form_additional_default_province_id_'+field_name+'">' +
-                '<option value="">请选择默认省份</option>' +
-            '</select>' +
-            '<select name="form_additional_linkage_city_field_'+field_name+'" id="form_additional_linkage_city_field_'+field_name+'">' +
-                '<option value="">请选择联动城市字段</option>' +
-            '</select>';
-        let city_html =
-            '<select name="form_additional_city_linkage_province_field_'+field_name+'" id="form_additional_city_linkage_province_field_'+field_name+'">' +
-                '<option value="">请选择联动省份字段</option>' +
-            '</select>' +
-            '<select name="form_additional_city_linkage_county_field_'+field_name+'" id="form_additional_city_linkage_county_field_'+field_name+'">' +
-                '<option value="">请选择联动区县字段</option>' +
-            '</select>';
-        let county_html =
-            '<select name="form_additional_set_value_input_'+field_name+'" id="form_additional_set_value_input_'+field_name+'">' +
-                '<option value="">请选择联动城市字段</option>' +
             '</select>';
         let upload_html =
             '<select name="form_additional_upload_single_multi_'+field_name+'" id="form_additional_upload_single_multi_'+field_name+'" lay-filter="form_additional_upload_single_multi_'+field_name+'">' +
@@ -282,57 +264,6 @@ layui.use(['layTp'],function(){
                         }
                     });
                     break;
-                case 'province':
-                    $.ajax({
-                        type: 'POST',
-                        url: layTp.facade.url('admin/ajax/area'),
-                        data: {table_name:select_table_name},
-                        dataType: 'json',
-                        success: function (res) {
-                            func_controller.set_default_province_list(field_name, res.data);
-
-                            layui.form.render('select');
-                        }
-                    });
-                    $.ajax({
-                        type: 'GET',
-                        url: layTp.facade.url('admin/autocreate.curd/get_fields_by_table_name'),
-                        data: {table_name:select_table_name},
-                        dataType: 'json',
-                        success: function (res) {
-                            func_controller.set_province_linkage_city_field(field_name, res.data);
-
-                            layui.form.render('select');
-                        }
-                    });
-                    break;
-                case 'city':
-                    $.ajax({
-                        type: 'GET',
-                        url: layTp.facade.url('admin/autocreate.curd/get_fields_by_table_name'),
-                        data: {table_name:select_table_name},
-                        dataType: 'json',
-                        success: function (res) {
-                            func_controller.set_city_linkage_province_field(field_name, res.data);
-                            func_controller.set_city_linkage_county_field(field_name, res.data);
-
-                            layui.form.render('select');
-                        }
-                    });
-                    break;
-                case 'county':
-                    $.ajax({
-                        type: 'GET',
-                        url: layTp.facade.url('admin/autocreate.curd/get_fields_by_table_name'),
-                        data: {table_name:select_table_name},
-                        dataType: 'json',
-                        success: function (res) {
-                            func_controller.set_county_linkage_city_field(field_name, res.data);
-
-                            layui.form.render('select');
-                        }
-                    });
-                    break;
             }
         }
     }
@@ -390,71 +321,6 @@ layui.use(['layTp'],function(){
         for(key in data){
             option_html = '<option value="'+data[key]['field_name']+'">'+data[key]['field_name']+'</option>';
             $('#form_additional_select_relation_right_field_'+field_name).append(option_html);
-        }
-    }
-
-    //设置默认省份待选列表
-    func_controller.set_default_province_list = function(field_name, data){
-        $('#form_additional_default_province_id_'+field_name).empty();
-        let option_1 = '<option value="">请选择默认省份</option>';
-        $('#form_additional_default_province_id_'+field_name).append(option_1);
-        let option_html;
-        let key;
-        for(key in data){
-            option_html = '<option value="'+data[key]['id']+'">'+data[key]['name']+'</option>';
-            $('#form_additional_default_province_id_'+field_name).append(option_html);
-        }
-    }
-
-    //设置省份联动的城市字段
-    func_controller.set_province_linkage_city_field = function(field_name, data){
-        $('#form_additional_linkage_city_field_'+field_name).empty();
-        let option_1 = '<option value="">请选择联动城市字段</option>';
-        $('#form_additional_linkage_city_field_'+field_name).append(option_1);
-        let option_html;
-        let key;
-        for(key in data){
-            option_html = '<option value="'+data[key]['field_name']+'">'+data[key]['field_name']+'</option>';
-            $('#form_additional_linkage_city_field_'+field_name).append(option_html);
-        }
-    }
-
-    //设置城市联动的省份字段
-    func_controller.set_city_linkage_province_field = function(field_name, data){
-        $('#form_additional_city_linkage_province_field_'+field_name).empty();
-        let option_1 = '<option value="">请选择联动省份字段</option>';
-        $('#form_additional_city_linkage_province_field_'+field_name).append(option_1);
-        let option_html;
-        let key;
-        for(key in data){
-            option_html = '<option value="'+data[key]['field_name']+'">'+data[key]['field_name']+'</option>';
-            $('#form_additional_city_linkage_province_field_'+field_name).append(option_html);
-        }
-    }
-
-    //设置城市联动的区县字段
-    func_controller.set_city_linkage_county_field = function(field_name, data){
-        $('#form_additional_city_linkage_county_field_'+field_name).empty();
-        let option_1 = '<option value="">请选择联动区县字段</option>';
-        $('#form_additional_city_linkage_county_field_'+field_name).append(option_1);
-        let option_html;
-        let key;
-        for(key in data){
-            option_html = '<option value="'+data[key]['field_name']+'">'+data[key]['field_name']+'</option>';
-            $('#form_additional_city_linkage_county_field_'+field_name).append(option_html);
-        }
-    }
-
-    //设置区县联动的城市字段
-    func_controller.set_county_linkage_city_field = function(field_name, data){
-        $('#form_additional_set_value_input_'+field_name).empty();
-        let option_1 = '<option value="">请选择联动城市字段</option>';
-        $('#form_additional_set_value_input_'+field_name).append(option_1);
-        let option_html;
-        let key;
-        for(key in data){
-            option_html = '<option value="'+data[key]['field_name']+'">'+data[key]['field_name']+'</option>';
-            $('#form_additional_set_value_input_'+field_name).append(option_html);
         }
     }
 
@@ -574,7 +440,7 @@ layui.use(['layTp'],function(){
 
         function get_form_additional_val(field_name,form_type){
             let no_form_additionnal_arr = ['textarea'];
-            let type_arr = ['select','select_page','province','city','upload','editor'];
+            let type_arr = ['select','select_page','select_relation','upload','editor'];
             let set_value_input_type = ['input','time','radio','county','checkbox','editor'];
             if(set_value_input_type.indexOf(form_type) != -1){
                 return $('#form_additional_set_value_input_' + field_name).val();
@@ -602,16 +468,12 @@ layui.use(['layTp'],function(){
                             'accept' : $('#form_additional_upload_accept_' + field_name).val()
                         };
                         break;
-                    case 'province':
+                    case 'select_relation':
                         return {
-                            'default_province_id' : $('#form_additional_default_province_id_' + field_name).val(),
-                            'change_linkage_id' : $('#form_additional_linkage_city_field_' + field_name).val()
-                        };
-                        break;
-                    case 'city':
-                        return {
-                            'linkage_province_field' : $('#form_additional_city_linkage_province_field_' + field_name).val(),
-                            'linkage_county_field' : $('#form_additional_city_linkage_county_field_' + field_name).val()
+                            'group_name' : $('#form_additional_group_name_' + field_name).val(),
+                            'table_name' : $('#form_additional_select_relation_table_' + field_name).val(),
+                            'left_field' : $('#form_additional_select_relation_left_field_' + field_name).val(),
+                            'right_field' : $('#form_additional_select_relation_right_field_' + field_name).val()
                         };
                         break;
                     default:
