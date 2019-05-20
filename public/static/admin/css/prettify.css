@@ -54,3 +54,10 @@ body .hide-layer-box-shadow{
  /*background-color: transparent;!*背景透明*!*/
  box-shadow: 0 0 0 rgba(0,0,0,0);/*前景无阴影*/
 }
+
+/**
+ * 搜索表单，行高去掉
+ */
+.layui-card-header{
+    line-height: 0px;
+}
