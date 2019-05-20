@@ -355,7 +355,7 @@ class Curd extends Command
         if(count($select_relation_search_html)){
             foreach($select_relation_search_html as $form_type=>$group_list){
                 foreach($group_list as $group_name=>$item){
-                    $index_search_form[] = $this->get_select_relation_search_form_group($group_name, join("\n\t\t\t", $item));
+                    $index_search_form[] = $this->get_select_relation_search_form_group($group_name, join("\n\t\t", $item));
                 }
             }
         }
