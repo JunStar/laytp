@@ -428,11 +428,10 @@ EOD;
     protected function get_search_form_group($info, $content)
     {
         $field_comment = $info['field_comment'];
-        $inline_or_block = ( $info['form_type'] == 'select_page' ) ? 'layui-input-block' : 'layui-input-inline';
         return <<<EOD
     <div class="layui-inline" style="padding-left: 35px;">
         <label class="layui-form-label" title="{$field_comment}">{$field_comment}</label>
-        <div class="{$inline_or_block}">
+        <div class="layui-input-inline">
             {$content}
         </div>
     </div>

@@ -61,3 +61,11 @@ body .hide-layer-box-shadow{
 .layui-card-header{
     line-height: 0px;
 }
+
+/**
+ * select_page插件样式美化
+ */
+.sp_container_combo{
+    height:38px;
+    overflow:hidden;
+}
