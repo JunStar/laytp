@@ -68,6 +68,9 @@ layui.use(['layTp'],function(){
         layui.form.on('select(select_table)',function(data){
             select_table_name = data.value;
             let ajax_data = {'table_name':data.value};
+            if(!data.value){
+                return true;
+            }
             $.ajax({
                 type: 'GET',
                 url: layTp.facade.url('/' + module + '/' + controller + '/get_fields_by_table_name'),
@@ -207,6 +210,9 @@ layui.use(['layTp'],function(){
                             func_controller.set_select_page_table_name(field_name, res.data);
                             layui.form.on('select(form_additional_select_page_table_'+field_name+')',function(data){
                                 let table_name = data.value;
+                                if(!table_name){
+                                    return true;
+                                }
                                 $.ajax({
                                     type: 'GET',
                                     url: layTp.facade.url('admin/autocreate.curd/get_fields_by_table_name'),

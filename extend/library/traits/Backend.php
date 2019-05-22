@@ -126,6 +126,7 @@ trait Backend
         }
     }
 
+    //前端select_page的js插件调用的ajax方法
     public function select_page(){
         if( $this->request->isAjax() ) {
             $where = $this->build_select_page_params();

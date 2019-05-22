@@ -6,14 +6,16 @@ namespace app\admin\controller\autocreate;
 
 use controller\Backend;
 use think\Db;
+use think\facade\Config;
 
 class Curd extends Backend
 {
     public $model;
 
-    protected $special_fields = ['id','createtime','updatetime','deletetime'];
+    protected $special_fields;
 
     public function initialize(){
+        $this->special_fields = Config::get('curd.special_fields');
         parent::initialize();
         $this->model = model('autocreate.Curd');
     }
@@ -66,6 +68,7 @@ class Curd extends Backend
                 }
             }
         }
+
         //获取所有的表名称
         $assign['table_list'] = model('InformationSchema')->getTableList();
         $this->assign($assign);
@@ -82,8 +85,9 @@ class Curd extends Backend
     public function get_fields_by_table_name(){
         $table = $this->request->param('table_name');
         if(!$table){
-            $this->success('获取成功',[]);
+            $this->error('请选择表名',[]);
         }
+
         $model = Db::table($table);
         $fields = $model->getTableFields();
         $pk = $model->getPk();

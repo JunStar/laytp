@@ -16,11 +16,24 @@ class InformationSchema extends Backend
         'database'    => 'information_schema',
     ];
 
-    //获取所有表名
-    public function getTableList(){
-        $where['table_schema'] = Config::get('database.database');
-        $where['table_type'] = 'base table';
-        $list = $this->table('tables')->where($where)->select();
+    /**
+     * 获取表名列表
+     * @param bool $can_curd 是否可以生成curd，默认只取能自动生成curd的表名列表
+     * @return array|\PDOStatement|string|\think\Collection
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function getTableList($can_curd=true){
+        $where[] = ['table_schema','=',Config::get('database.database')];
+        $where[] = ['table_type','=','base table'];
+        if($can_curd)
+            $where[] = ['table_name','not in',Config::get('curd.system_tables')];
+
+        $list = $this
+            ->table('tables')
+            ->where($where)
+            ->select();
         return $list;
     }
 
