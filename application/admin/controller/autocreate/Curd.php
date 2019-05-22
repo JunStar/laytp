@@ -88,23 +88,49 @@ class Curd extends Backend
             $this->error('请选择表名',[]);
         }
 
+        //查找是否已经生成过，生成过用生成过的数据渲染默认的详细设置，没有生成过使用数据库配置渲染详细设置
+        $curd_info = $this->model->where('table_name','=',$table)->find();
         $model = Db::table($table);
-        $fields = $model->getTableFields();
         $pk = $model->getPk();
-        $result = [];
+        $fields = $model->getTableFields();
         $comment = model('InformationSchema')->getFieldsComment($table)->toArray();
         $comment_map = arr_to_map($comment,'COLUMN_NAME');
-        $i = 0;
-        foreach($fields as $k=>$v){
-            if( !in_array($v, array_merge([$pk],$this->special_fields)) ){
-                $result[$i]['field_name'] = $v;
-                $result[$i]['field_comment'] = $comment_map[$v]['COLUMN_COMMENT'];
-                $result[$i]['table_width'] = '自适应';
-                $result[$i]['table_min_width'] = '使用全局配置';
-                $i++;
+        //生成过用生成过的数据渲染默认的详细设置
+        if($curd_info){
+//            $result = [];
+            $result['selected_list'] = json_decode($curd_info['field_list'], true);
+            $selected_list = arr_to_map(json_decode($curd_info['field_list'], true), 'field_name');
+            foreach($fields as $k=>$v){
+                if( !in_array($v, array_merge([$pk],$this->special_fields)) ) {
+                    if(isset($selected_list[$v])){
+                        $result['all_fields'][] = $selected_list[$v];
+                    }else{
+                        $result['all_fields'][] = [
+                            'field_name' => $v
+                            ,'field_comment' => $comment_map[$v]['COLUMN_COMMENT']
+                            ,'table_width' => '自适应'
+                            ,'table_min_width' => '使用全局配置'
+                        ];
+                    }
+                }
             }
+            $this->success('获取成功', $result);
+            //没有生成过使用数据库配置渲染详细设置
+        }else{
+            $result = [];
+            $i = 0;
+            foreach($fields as $k=>$v){
+                if( !in_array($v, array_merge([$pk],$this->special_fields)) ){
+                    $result['all_fields'][$i]['field_name'] = $v;
+                    $result['all_fields'][$i]['field_comment'] = $comment_map[$v]['COLUMN_COMMENT'];
+                    $result['all_fields'][$i]['table_width'] = '自适应';
+                    $result['all_fields'][$i]['table_min_width'] = '使用全局配置';
+                    $i++;
+                }
+            }
+            $result['selected_list'] = $result['all_fields'];
+            $this->success('获取成功', $result);
         }
-        $this->success('获取成功', $result);
     }
 
     //重新生成Curd

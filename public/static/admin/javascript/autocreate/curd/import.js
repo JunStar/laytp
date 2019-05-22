@@ -31,7 +31,7 @@ layui.use(['layTp'],function(){
                     //列表设置
                     ,{field:'table_width', title:'绝对列宽(数字或者百分比)', align: 'center', edit: 'text'}
                     ,{field:'table_min_width', title:'最小列宽(数字或者百分比)', align: 'center', edit: 'text', width: 120}
-                    ,{field:'table_templet', title:'列类型', templet: '#table_templet', align: 'center', width: 140}
+                    // ,{field:'table_templet', title:'列类型', templet: '#table_templet', align: 'center', width: 140}
                     ,{field:'table_align', title:'排列方式', templet: '#table_align', align: 'center', width: 120}
                     ,{field:'table_additional', title:'附加选项', templet: "#table_additional", align: 'center', width: 400}
                 ]
@@ -41,8 +41,8 @@ layui.use(['layTp'],function(){
         //监听表单元素下拉框onchange事件
         layui.form.on('select(form_type)',function(data){
             let field_name = $('#'+data.elem.id).data('field_name');
-            let value = data.elem.value;
-            func_controller.form_type_select_after(field_name, value);
+            let form_type = data.elem.value;
+            func_controller.form_type_select_after(field_name, form_type, '');
             layui.form.render('select');
             return true;
         });
@@ -79,35 +79,46 @@ layui.use(['layTp'],function(){
                 success: function (res) {
                     if( res.code == 1 ){
                         let selected_data = [];
-                        layui.each(res.data,function(k,i){
+                        layui.each(res.data.selected_list,function(k,i){
                             selected_data.push(i['field_name']);
                         });
                         //重新渲染多选下拉框
                         layui.select_multi.render({
                             elem: '#select_fields'
-                            ,data: res.data
-                            ,max: res.data.length
+                            ,data: res.data.all_fields
+                            ,max: res.data.all_fields.length
                             ,verify: 'required'
                             ,field: {idName:'field_name',titleName:'field_name'}
                             ,selected: selected_data
                             ,click_dd_after: function(){
                                 let select_fields = $('input[name="select_fields"]').val();
+                                console.log(select_fields);
                                 let select_fields_arr = select_fields.split(',');
                                 let table_render_data = [];
-                                let res_data_map = layTp.facade.array_to_map(res.data, 'field_name');
+                                let res_data_map = layTp.facade.array_to_map(res.data.all_fields, 'field_name');
                                 layui.each(select_fields_arr,function (key,item) {
                                     if(typeof res_data_map[item] != "undefined"){
                                         table_render_data.push(res_data_map[item]);
                                     }
                                 });
                                 func_controller.table_render(table_render_data);
+
+                                layui.each(select_fields_arr,function (key,item) {
+                                    if(typeof res_data_map[item] != "undefined"){
+                                        let field_name = res_data_map[item].field_name;
+                                        let form_type = res_data_map[item].form_type;
+                                        let form_additional = res_data_map[item].form_additional;
+                                        func_controller.form_type_select_after(field_name, form_type, form_additional);
+                                    }
+                                });
+                                layui.form.render('select');
                             }
                         });
                         //重新渲染多选下拉框
                         layui.select_multi.render({
                             elem: '#search_fields'
-                            ,data: res.data
-                            ,max: res.data.length
+                            ,data: res.data.all_fields
+                            ,max: res.data.all_fields.length
                             ,verify: 'required'
                             ,field: {idName:'field_name',titleName:'field_name'}
                             ,selected: selected_data
@@ -130,25 +141,25 @@ layui.use(['layTp'],function(){
 
     func_controller.init();
 
-    func_controller.form_type_select_after = function(field_name, value){
+    func_controller.form_type_select_after = function(field_name, value, form_additional){
         let input_html =
             '<select name="form_additional_set_value_input_'+field_name+'" id="form_additional_set_value_input_'+field_name+'">' +
                 '<option value="">不限制</option>' +
-                '<option value="layTp_email">Email</option>' +
-                '<option value="layTp_phone">手机号码</option>' +
-                '<option value="layTp_number">数字</option>' +
-                '<option value="layTp_url">链接</option>' +
-                '<option value="layTp_identity">身份证</option>' +
+                '<option value="layTp_email" ' + ((form_additional == "layTp_email") ? 'selected="selected"' : '') + '>Email</option>' +
+                '<option value="layTp_phone" ' + ((form_additional == "layTp_phone") ? 'selected="selected"' : '') + '>手机号码</option>' +
+                '<option value="layTp_number" ' + ((form_additional == "layTp_number") ? 'selected="selected"' : '') + '>数字</option>' +
+                '<option value="layTp_url" ' + ((form_additional == "layTp_url") ? 'selected="selected"' : '') + '>链接</option>' +
+                '<option value="layTp_identity" ' + ((form_additional == "layTp_identity") ? 'selected="selected"' : '') + '>身份证</option>' +
             '</select>';
         let password_html = '';
-        let set_value_html = '<input type="text" class="layui-input layui-input-inline" placeholder="value1=text1,value2=text2,default=value..." name="form_additional_set_value_input_'+field_name+'" id="form_additional_set_value_input_'+field_name+'" />';
+        let set_value_html = '<input type="text" class="layui-input layui-input-inline" value="'+((typeof form_additional == 'object')?form_additional['values']:form_additional)+'" placeholder="value1=text1,value2=text2,default=value..." name="form_additional_set_value_input_'+field_name+'" id="form_additional_set_value_input_'+field_name+'" />';
         let select_single_multi =
             '<select name="form_additional_select_single_multi_'+field_name+'" id="form_additional_select_single_multi_'+field_name+'">' +
-                '<option value="single">单选</option>' +
-                '<option value="multi">多选</option>' +
+                '<option value="single" ' + (((typeof form_additional == 'object') && (form_additional['single_multi'] == "single")) ? 'selected="selected"' : '') + '>单选</option>' +
+                '<option value="multi" ' + (((typeof form_additional == 'object') && (form_additional['single_multi'] == "multi")) ? 'selected="selected"' : '') + '>多选</option>' +
             '</select>';
-        let select_html =  select_single_multi + '<input type="text" class="layui-input layui-input-inline" placeholder="最多可选个数，多选才有效，默认不限制" name="form_additional_select_max_'+field_name+'" id="form_additional_select_max_'+field_name+'" /><br/>' + set_value_html;
-        let select_page_html = select_single_multi + '<input type="text" class="layui-input layui-input-inline" placeholder="最多可选个数，多选才有效，默认不限制" name="form_additional_select_max_'+field_name+'" id="form_additional_select_max_'+field_name+'" /><br/>' +
+        let select_html =  select_single_multi + '<input type="text" class="layui-input layui-input-inline" value="'+((typeof form_additional == 'object')?form_additional['max']:form_additional)+'" placeholder="最多可选个数，多选才有效，默认不限制" name="form_additional_select_max_'+field_name+'" id="form_additional_select_max_'+field_name+'" /><br/>' + set_value_html;
+        let select_page_html = select_single_multi + '<input type="text" class="layui-input layui-input-inline" value="'+((typeof form_additional == 'object')?form_additional['max']:form_additional)+'" placeholder="最多可选个数，多选才有效，默认不限制" name="form_additional_select_max_'+field_name+'" id="form_additional_select_max_'+field_name+'" /><br/>' +
             '<select name="form_additional_select_page_table_'+field_name+'" id="form_additional_select_page_table_'+field_name+'" lay-filter="form_additional_select_page_table_'+field_name+'">' +
             '<option value="">搜索的表名</option>' +
             '</select>' +
@@ -159,7 +170,7 @@ layui.use(['layTp'],function(){
             '<option value="">显示的字段</option>' +
             '</select>';
         // let time_html = '<input class="layui-input layui-input-inline" placeholder="输入时间格式，比如，Y-m-d H:i:s" value="Y-m-d H:i:s" name="form_additional_time_\'+field_name+\'" id="form_additional_time_\'+field_name+\'" />';
-        let select_relation_html = '<input type="text" class="layui-input layui-input-inline" placeholder="分组名，例：地区设置" name="form_additional_group_name_'+field_name+'" id="form_additional_group_name_'+field_name+'" /><br/>' +
+        let select_relation_html = '<input type="text" class="layui-input layui-input-inline" value="'+((typeof form_additional == 'object')?form_additional['group_name']:form_additional)+'" placeholder="分组名，例：地区设置" name="form_additional_group_name_'+field_name+'" id="form_additional_group_name_'+field_name+'" /><br/>' +
             '<select name="form_additional_select_relation_table_'+field_name+'" id="form_additional_select_relation_table_'+field_name+'" lay-filter="form_additional_select_relation_table_'+field_name+'">' +
             '<option value="">搜索的表名,例:lt_area</option>' +
             '</select>' +
@@ -171,27 +182,27 @@ layui.use(['layTp'],function(){
             '</select>';
         let time_html =
             '<select name="form_additional_set_value_input_'+field_name+'" id="form_additional_set_value_input_'+field_name+'">' +
-                '<option value="datetime">年-月-日 时:分:秒</option>' +
-                '<option value="month">年-月</option>' +
-                '<option value="year">年</option>' +
-                '<option value="Y-m-d">年-月-日</option>' +
-                '<option value="time">时:分:秒</option>' +
+                '<option value="datetime" ' + ((form_additional == "datetime") ? 'selected="selected"' : '') + '>年-月-日 时:分:秒</option>' +
+                '<option value="month" ' + ((form_additional == "month") ? 'selected="selected"' : '') + '>年-月</option>' +
+                '<option value="year" ' + ((form_additional == "year") ? 'selected="selected"' : '') + '>年</option>' +
+                '<option value="date" ' + ((form_additional == "date") ? 'selected="selected"' : '') + '>年-月-日</option>' +
+                '<option value="time" ' + ((form_additional == "time") ? 'selected="selected"' : '') + '>时:分:秒</option>' +
             '</select>';
         let upload_html =
             '<select name="form_additional_upload_single_multi_'+field_name+'" id="form_additional_upload_single_multi_'+field_name+'" lay-filter="form_additional_upload_single_multi_'+field_name+'">' +
-                '<option value="single">单个文件</option>' +
-                '<option value="multi">多个文件</option>' +
+                '<option value="single" ' + (((typeof form_additional == 'object') && form_additional['single_multi'] == "single") ? 'selected="selected"' : '') + '>单个文件</option>' +
+                '<option value="multi" ' + (((typeof form_additional == 'object') && form_additional['single_multi'] == "multi") ? 'selected="selected"' : '') + '>多个文件</option>' +
             '</select>' +
             '<select name="form_additional_upload_accept_'+field_name+'" id="form_additional_upload_accept_'+field_name+'" lay-filter="form_additional_upload_accept_'+field_name+'">' +
-                '<option value="images">图片</option>' +
-                '<option value="video">视频</option>' +
-                '<option value="audio">音频</option>' +
-                '<option value="file">所有文件类型</option>' +
+                '<option value="images" ' + (((typeof form_additional == 'object') && form_additional['accept'] == "images") ? 'selected="selected"' : '') + '>图片</option>' +
+                '<option value="video" ' + (((typeof form_additional == 'object') && form_additional['accept'] == "video") ? 'selected="selected"' : '') + '>视频</option>' +
+                '<option value="audio" ' + (((typeof form_additional == 'object') && form_additional['accept'] == "audio") ? 'selected="selected"' : '') + '>音频</option>' +
+                '<option value="file" ' + (((typeof form_additional == 'object') && form_additional['accept'] == "file") ? 'selected="selected"' : '') + '>所有文件类型</option>' +
             '</select>';
         let textarea_html = '';
         let editor_html =
             '<select name="form_additional_set_value_input_'+field_name+'" id="form_additional_set_value_input_'+field_name+'" lay-filter="form_additional_set_value_input_'+field_name+'">' +
-                '<option value="ueditor">UEditor</option>' +
+                '<option value="ueditor" ' + ((form_additional == "ueditor") ? 'selected="selected"' : '') + '>UEditor</option>' +
             '</select>';
         let type_arr = ['input','password','select','select_page','select_relation','time','province','city','county','upload','textarea','editor'];
         let set_value_input_type = ['radio','checkbox'];
@@ -201,13 +212,14 @@ layui.use(['layTp'],function(){
             $('#form_additional_' + field_name).html(eval(value+'_html'));
             switch (value) {
                 case 'select_page':
+                    let selected_table = (typeof form_additional == 'object') ? form_additional['table_name'] : "";
                     $.ajax({
                         type: 'GET',
                         url: layTp.facade.url('admin/autocreate.curd/get_table_list'),
                         data: {},
                         dataType: 'json',
                         success: function (res) {
-                            func_controller.set_select_page_table_name(field_name, res.data);
+                            func_controller.set_select_page_table_name(field_name, res.data, selected_table);
                             layui.form.on('select(form_additional_select_page_table_'+field_name+')',function(data){
                                 let table_name = data.value;
                                 if(!table_name){
@@ -219,8 +231,8 @@ layui.use(['layTp'],function(){
                                     data: {table_name:table_name},
                                     dataType: 'json',
                                     success: function (res) {
-                                        func_controller.set_select_page_search_field_name(field_name, res.data);
-                                        func_controller.set_select_page_show_field_name(field_name, res.data);
+                                        func_controller.set_select_page_search_field_name(field_name, res.data.all_fields);
+                                        func_controller.set_select_page_show_field_name(field_name, res.data.all_fields);
 
                                         layui.form.render('select');
                                     }
@@ -237,6 +249,22 @@ layui.use(['layTp'],function(){
                             }
                         }
                     });
+                    let search_field_name = (typeof form_additional == 'object') ? form_additional['search_field_name'] : "";
+                    let show_field_name = (typeof form_additional == 'object') ? form_additional['show_field_name'] : "";
+                    if(selected_table != ""){
+                        $.ajax({
+                            type: 'GET',
+                            url: layTp.facade.url('admin/autocreate.curd/get_fields_by_table_name'),
+                            data: {table_name:selected_table},
+                            dataType: 'json',
+                            success: function (res) {
+                                func_controller.set_select_page_search_field_name(field_name, res.data.all_fields,search_field_name);
+                                func_controller.set_select_page_show_field_name(field_name, res.data.all_fields,show_field_name);
+
+                                layui.form.render('select');
+                            }
+                        });
+                    }
                     break;
                 case 'select_relation':
                     $.ajax({
@@ -245,7 +273,7 @@ layui.use(['layTp'],function(){
                         data: {},
                         dataType: 'json',
                         success: function (res) {
-                            func_controller.set_select_relation_table_name(field_name, res.data);
+                            func_controller.set_select_relation_table_name(field_name, res.data, select_table_name);
 
                             layui.form.render('select');
                         },
@@ -257,14 +285,16 @@ layui.use(['layTp'],function(){
                             }
                         }
                     });
+                    let left_field = (typeof form_additional == 'object') ? form_additional['left_field'] : "";
+                    let right_field = (typeof form_additional == 'object') ? form_additional['right_field'] : "";
                     $.ajax({
                         type: 'GET',
                         url: layTp.facade.url('admin/autocreate.curd/get_fields_by_table_name'),
                         data: {table_name:select_table_name},
                         dataType: 'json',
                         success: function (res) {
-                            func_controller.set_select_relation_left_field_name(field_name, res.data);
-                            func_controller.set_select_relation_right_field_name(field_name, res.data);
+                            func_controller.set_select_relation_left_field_name(field_name, res.data.all_fields, left_field);
+                            func_controller.set_select_relation_right_field_name(field_name, res.data.all_fields, right_field);
 
                             layui.form.render('select');
                         }
@@ -275,57 +305,57 @@ layui.use(['layTp'],function(){
     }
 
     //设置搜索下拉框待搜索表名
-    func_controller.set_select_page_table_name = function(field_name, data){
+    func_controller.set_select_page_table_name = function(field_name, data, selected_value){
         let option_html;
         for(key in data){
-            option_html = '<option value="'+data[key]['TABLE_NAME']+'">'+data[key]['TABLE_NAME']+'</option>';
+            option_html = '<option value="'+data[key]['TABLE_NAME']+'"' + ((selected_value == data[key]['TABLE_NAME']) ? "selected='selected'" : "")+'>'+data[key]['TABLE_NAME']+'</option>';
             $('#form_additional_select_page_table_'+field_name).append(option_html);
         }
     }
 
     //设置搜索下拉框待搜索的字段
-    func_controller.set_select_page_search_field_name = function(field_name, data){
+    func_controller.set_select_page_search_field_name = function(field_name, data, selected_value){
         $('#form_additional_select_page_search_field_'+field_name).empty();
         let option_html;
         for(key in data){
-            option_html = '<option value="'+data[key]['field_name']+'">'+data[key]['field_name']+'</option>';
+            option_html = '<option value="'+data[key]['field_name']+'"' + ((selected_value == data[key]['field_name']) ? "selected='selected'" : "")+'>'+data[key]['field_name']+'</option>';
             $('#form_additional_select_page_search_field_'+field_name).append(option_html);
         }
     }
 
     //设置搜索下拉框显示的字段
-    func_controller.set_select_page_show_field_name = function(field_name, data){
+    func_controller.set_select_page_show_field_name = function(field_name, data, selected_value){
         $('#form_additional_select_page_show_field_'+field_name).empty();
         let option_html;
         for(key in data){
-            option_html = '<option value="'+data[key]['field_name']+'">'+data[key]['field_name']+'</option>';
+            option_html = '<option value="'+data[key]['field_name']+'"' + ((selected_value == data[key]['field_name']) ? "selected='selected'" : "")+'>'+data[key]['field_name']+'</option>';
             $('#form_additional_select_page_show_field_'+field_name).append(option_html);
         }
     }
 
     //设置联动下拉框待搜索的表名
-    func_controller.set_select_relation_table_name = function(field_name, data){
+    func_controller.set_select_relation_table_name = function(field_name, data, selected_value){
         let option_html;
         for(key in data){
-            option_html = '<option value="'+data[key]['TABLE_NAME']+'">'+data[key]['TABLE_NAME']+'</option>';
+            option_html = '<option value="'+data[key]['TABLE_NAME']+'" ' + ((selected_value == data[key]['TABLE_NAME']) ? "selected='selected'" : "")+'>'+data[key]['TABLE_NAME']+'</option>';
             $('#form_additional_select_relation_table_'+field_name).append(option_html);
         }
     }
 
     //设置联动下拉框左关联字段
-    func_controller.set_select_relation_left_field_name = function(field_name, data){
+    func_controller.set_select_relation_left_field_name = function(field_name, data, selected_value){
         let option_html;
         for(key in data){
-            option_html = '<option value="'+data[key]['field_name']+'">'+data[key]['field_name']+'</option>';
+            option_html = '<option value="'+data[key]['field_name']+'" ' + ((selected_value == data[key]['field_name']) ? "selected='selected'" : "")+'>'+data[key]['field_name']+'</option>';
             $('#form_additional_select_relation_left_field_'+field_name).append(option_html);
         }
     }
 
     //设置联动下拉框右关联字段
-    func_controller.set_select_relation_right_field_name = function(field_name, data){
+    func_controller.set_select_relation_right_field_name = function(field_name, data, selected_value){
         let option_html;
         for(key in data){
-            option_html = '<option value="'+data[key]['field_name']+'">'+data[key]['field_name']+'</option>';
+            option_html = '<option value="'+data[key]['field_name']+'" ' + ((selected_value == data[key]['field_name']) ? "selected='selected'" : "")+'>'+data[key]['field_name']+'</option>';
             $('#form_additional_select_relation_right_field_'+field_name).append(option_html);
         }
     }
@@ -341,7 +371,7 @@ layui.use(['layTp'],function(){
                 ,form_empty
                 ,table_width
                 ,table_min_width
-                ,table_templet
+                // ,table_templet
                 ,table_align
                 ,table_additional_unresize
                 ,table_additional_sort
@@ -357,7 +387,7 @@ layui.use(['layTp'],function(){
                 form_empty = (typeof form_empty == "undefined") ? 0 : form_empty;
                 table_width = table_data_arr[key]['table_width'];
                 table_min_width = table_data_arr[key]['table_min_width'];
-                table_templet = $('#table_templet_'+field_name).val();
+                // table_templet = $('#table_templet_'+field_name).val();
                 table_align = $('#table_align_'+field_name).val();
                 table_additional_unresize = $('#table_additional_unresize_'+field_name+':checked').val();
                 table_additional_unresize = (typeof table_additional_unresize == "undefined") ? 0 : table_additional_unresize;
@@ -373,7 +403,7 @@ layui.use(['layTp'],function(){
                     ,'form_empty':form_empty
                     ,'table_width':table_width
                     ,'table_min_width':table_min_width
-                    ,'table_templet':table_templet
+                    // ,'table_templet':table_templet
                     ,'table_align':table_align
                     ,'table_additional_unresize':table_additional_unresize
                     ,'table_additional_sort':table_additional_sort

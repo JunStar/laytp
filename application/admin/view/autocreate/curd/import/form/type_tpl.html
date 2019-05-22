@@ -1,15 +1,15 @@
 <script type="text/html" id="form_type">
     <select name="form_type_{{ d.field_name }}" id="form_type_{{ d.field_name }}" data-field_name="{{ d.field_name }}" lay-verify="required" lay-filter="form_type">
-        <option value="input">单行文本输入框</option>
-        <option value="password">密码输入框</option>
-        <option value="textarea">普通文本域</option>
-        <option value="radio">单选按钮</option>
-        <option value="checkbox">复选框</option>
-        <option value="select">下拉框</option>
-        <option value="select_page">搜索下拉框</option>
-        <option value="select_relation">联动下拉框</option>
-        <option value="time">时间选择器</option>
-        <option value="upload">上传控件</option>
-        <option value="editor">富文本编辑器</option>
+        <option value="input" {{ d.form_type == "input" ? "selected='selected'" : "" }}>单行文本输入框</option>
+        <option value="password" {{ d.form_type == "password" ? "selected='selected'" : "" }}>密码输入框</option>
+        <option value="textarea" {{ d.form_type == "textarea" ? "selected='selected'" : "" }}>普通文本域</option>
+        <option value="radio" {{ d.form_type == "radio" ? "selected='selected'" : "" }}>单选按钮</option>
+        <option value="checkbox" {{ d.form_type == "checkbox" ? "selected='selected'" : "" }}>复选框</option>
+        <option value="select" {{ d.form_type == "select" ? "selected='selected'" : "" }}>下拉框</option>
+        <option value="select_page" {{ d.form_type == "select_page" ? "selected='selected'" : "" }}>搜索下拉框</option>
+        <option value="select_relation" {{ d.form_type == "select_relation" ? "selected='selected'" : "" }}>联动下拉框</option>
+        <option value="time" {{ d.form_type == "time" ? "selected='selected'" : "" }}>时间选择器</option>
+        <option value="upload" {{ d.form_type == "upload" ? "selected='selected'" : "" }}>上传控件</option>
+        <option value="editor" {{ d.form_type == "editor" ? "selected='selected'" : "" }}>富文本编辑器</option>
     </select>
 </script>
