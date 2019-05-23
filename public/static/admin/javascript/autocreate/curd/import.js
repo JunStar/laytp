@@ -92,7 +92,6 @@ layui.use(['layTp'],function(){
                             ,selected: selected_data
                             ,click_dd_after: function(){
                                 let select_fields = $('input[name="select_fields"]').val();
-                                console.log(select_fields);
                                 let select_fields_arr = select_fields.split(',');
                                 let table_render_data = [];
                                 let res_data_map = layTp.facade.array_to_map(res.data.all_fields, 'field_name');
