@@ -82,7 +82,7 @@ class Curd extends Backend
     }
 
     //根据表名获取字段列表
-    public function get_fields_by_table_name(){
+    public function get_curd_info(){
         $table = $this->request->param('table_name');
         if(!$table){
             $this->error('请选择表名',[]);
@@ -99,6 +99,14 @@ class Curd extends Backend
         if($curd_info){
 //            $result = [];
             $result['selected_list'] = json_decode($curd_info['field_list'], true);
+            $result['fields_list'][$table] = $fields;
+            foreach($result['selected_list'] as $k=>$v){
+                if($v['form_type'] == 'select_page'){
+                    if(!isset($result['fields_list'][$v['form_additional']['table_name']])){
+                        $result['fields_list'][$v['form_additional']['table_name']] = Db::table($table)->getTableFields($v['form_additional']['table_name']);
+                    }
+                }
+            }
             $selected_list = arr_to_map(json_decode($curd_info['field_list'], true), 'field_name');
             foreach($fields as $k=>$v){
                 if( !in_array($v, array_merge([$pk],$this->special_fields)) ) {
@@ -131,6 +139,16 @@ class Curd extends Backend
             $result['selected_list'] = $result['all_fields'];
             $this->success('获取成功', $result);
         }
+    }
+
+    public function get_fields_by_table_name(){
+        $table = $this->request->param('table_name');
+        if(!$table){
+            $this->error('请选择表名',[]);
+        }
+        $model = Db::table($table);
+        $fields = $model->getTableFields();
+        $this->success('获取成功', $fields);
     }
 
     //重新生成Curd

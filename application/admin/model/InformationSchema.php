@@ -33,6 +33,7 @@ class InformationSchema extends Backend
         $list = $this
             ->table('tables')
             ->where($where)
+            ->field('TABLE_NAME')
             ->select();
         return $list;
     }

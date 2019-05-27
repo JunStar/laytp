@@ -49,6 +49,7 @@ layui.use(['layTp'],function(){
     }
 
     let select_table_name = '';
+    let fields_list = '';
     //初始化方法，页面加载完毕立即执行的内容
     func_controller.init = function(){
         //渲染空表格
@@ -64,7 +65,7 @@ layui.use(['layTp'],function(){
             elem: '#search_fields',data: []
         });
 
-        //监听选择表下拉框onchange事件
+        //监听[选择表]下拉框onchange事件
         layui.form.on('select(select_table)',function(data){
             select_table_name = data.value;
             let ajax_data = {'table_name':data.value};
@@ -73,10 +74,11 @@ layui.use(['layTp'],function(){
             }
             $.ajax({
                 type: 'GET',
-                url: layTp.facade.url('/' + module + '/' + controller + '/get_fields_by_table_name'),
+                url: layTp.facade.url('/' + module + '/' + controller + '/get_curd_info'),
                 data: ajax_data,
                 dataType: 'json',
                 success: function (res) {
+                    fields_list = res.data.fields_list;
                     if( res.code == 1 ){
                         let selected_data = [];
                         layui.each(res.data.selected_list,function(k,i){
@@ -212,92 +214,49 @@ layui.use(['layTp'],function(){
             switch (value) {
                 case 'select_page':
                     let selected_table = (typeof form_additional == 'object') ? form_additional['table_name'] : "";
-                    $.ajax({
-                        type: 'GET',
-                        url: layTp.facade.url('admin/autocreate.curd/get_table_list'),
-                        data: {},
-                        dataType: 'json',
-                        success: function (res) {
-                            func_controller.set_select_page_table_name(field_name, res.data, selected_table);
-                            layui.form.on('select(form_additional_select_page_table_'+field_name+')',function(data){
-                                let table_name = data.value;
-                                if(!table_name){
-                                    return true;
-                                }
-                                $.ajax({
-                                    type: 'GET',
-                                    url: layTp.facade.url('admin/autocreate.curd/get_fields_by_table_name'),
-                                    data: {table_name:table_name},
-                                    dataType: 'json',
-                                    success: function (res) {
-                                        func_controller.set_select_page_search_field_name(field_name, res.data.all_fields);
-                                        func_controller.set_select_page_show_field_name(field_name, res.data.all_fields);
-
-                                        layui.form.render('select');
-                                    }
-                                });
-                            });
-
-                            layui.form.render('select');
-                        },
-                        error: function (xhr) {
-                            if( xhr.status == '500' ){
-                                layTp.facade.error('本地网络问题或者服务器错误');
-                            }else if( xhr.status == '404' ){
-                                layTp.facade.error('请求地址不存在');
-                            }
+                    func_controller.set_select_page_table_name(field_name, table_list, selected_table);
+                    layui.form.on('select(form_additional_select_page_table_'+field_name+')',function(data){
+                        let table_name = data.value;
+                        if(!table_name){
+                            return true;
                         }
-                    });
-                    let search_field_name = (typeof form_additional == 'object') ? form_additional['search_field_name'] : "";
-                    let show_field_name = (typeof form_additional == 'object') ? form_additional['show_field_name'] : "";
-                    if(selected_table != ""){
                         $.ajax({
                             type: 'GET',
                             url: layTp.facade.url('admin/autocreate.curd/get_fields_by_table_name'),
-                            data: {table_name:selected_table},
+                            data: {table_name:table_name},
                             dataType: 'json',
                             success: function (res) {
-                                func_controller.set_select_page_search_field_name(field_name, res.data.all_fields,search_field_name);
-                                func_controller.set_select_page_show_field_name(field_name, res.data.all_fields,show_field_name);
+                                func_controller.set_select_page_search_field_name(field_name, res.data);
+                                func_controller.set_select_page_show_field_name(field_name, res.data);
 
                                 layui.form.render('select');
                             }
                         });
+                    });
+
+                    let search_field_name = (typeof form_additional == 'object') ? form_additional['search_field_name'] : "";
+                    let show_field_name = (typeof form_additional == 'object') ? form_additional['show_field_name'] : "";
+                    if(selected_table != ""){
+                        for(key in fields_list){
+                            if(key == selected_table){
+                                let temp_fields_list = fields_list[key];
+                                func_controller.set_select_page_search_field_name(field_name, temp_fields_list,search_field_name);
+                                func_controller.set_select_page_show_field_name(field_name, temp_fields_list,show_field_name);
+                            }
+                        }
                     }
                     break;
                 case 'select_relation':
-                    $.ajax({
-                        type: 'GET',
-                        url: layTp.facade.url('admin/autocreate.curd/get_table_list'),
-                        data: {},
-                        dataType: 'json',
-                        success: function (res) {
-                            func_controller.set_select_relation_table_name(field_name, res.data, select_table_name);
-
-                            layui.form.render('select');
-                        },
-                        error: function (xhr) {
-                            if( xhr.status == '500' ){
-                                layTp.facade.error('本地网络问题或者服务器错误');
-                            }else if( xhr.status == '404' ){
-                                layTp.facade.error('请求地址不存在');
-                            }
-                        }
-                    });
+                    func_controller.set_select_relation_table_name(field_name, table_list, form_additional['table_name']);
                     let left_field = (typeof form_additional == 'object') ? form_additional['left_field'] : "";
                     let right_field = (typeof form_additional == 'object') ? form_additional['right_field'] : "";
-                    $.ajax({
-                        type: 'GET',
-                        url: layTp.facade.url('admin/autocreate.curd/get_fields_by_table_name'),
-                        data: {table_name:select_table_name},
-                        dataType: 'json',
-                        success: function (res) {
-                            func_controller.set_select_relation_left_field_name(field_name, res.data.all_fields, left_field);
-                            func_controller.set_select_relation_right_field_name(field_name, res.data.all_fields, right_field);
-
-                            layui.form.render('select');
+                    for(key in fields_list){
+                        if(key == select_table_name){
+                            let temp_fields_list = fields_list[key];
+                            func_controller.set_select_relation_left_field_name(field_name, temp_fields_list, left_field);
+                            func_controller.set_select_relation_right_field_name(field_name, temp_fields_list, right_field);
                         }
-                    });
+                    }
                     break;
             }
         }
@@ -317,7 +276,7 @@ layui.use(['layTp'],function(){
         $('#form_additional_select_page_search_field_'+field_name).empty();
         let option_html;
         for(key in data){
-            option_html = '<option value="'+data[key]['field_name']+'"' + ((selected_value == data[key]['field_name']) ? "selected='selected'" : "")+'>'+data[key]['field_name']+'</option>';
+            option_html = '<option value="'+data[key]+'"' + ((selected_value == data[key]) ? "selected='selected'" : "")+'>'+data[key]+'</option>';
             $('#form_additional_select_page_search_field_'+field_name).append(option_html);
         }
     }
@@ -327,7 +286,7 @@ layui.use(['layTp'],function(){
         $('#form_additional_select_page_show_field_'+field_name).empty();
         let option_html;
         for(key in data){
-            option_html = '<option value="'+data[key]['field_name']+'"' + ((selected_value == data[key]['field_name']) ? "selected='selected'" : "")+'>'+data[key]['field_name']+'</option>';
+            option_html = '<option value="'+data[key]+'"' + ((selected_value == data[key]) ? "selected='selected'" : "")+'>'+data[key]+'</option>';
             $('#form_additional_select_page_show_field_'+field_name).append(option_html);
         }
     }
@@ -345,7 +304,7 @@ layui.use(['layTp'],function(){
     func_controller.set_select_relation_left_field_name = function(field_name, data, selected_value){
         let option_html;
         for(key in data){
-            option_html = '<option value="'+data[key]['field_name']+'" ' + ((selected_value == data[key]['field_name']) ? "selected='selected'" : "")+'>'+data[key]['field_name']+'</option>';
+            option_html = '<option value="'+data[key]+'" ' + ((selected_value == data[key]) ? "selected='selected'" : "")+'>'+data[key]+'</option>';
             $('#form_additional_select_relation_left_field_'+field_name).append(option_html);
         }
     }
@@ -354,7 +313,7 @@ layui.use(['layTp'],function(){
     func_controller.set_select_relation_right_field_name = function(field_name, data, selected_value){
         let option_html;
         for(key in data){
-            option_html = '<option value="'+data[key]['field_name']+'" ' + ((selected_value == data[key]['field_name']) ? "selected='selected'" : "")+'>'+data[key]['field_name']+'</option>';
+            option_html = '<option value="'+data[key]+'" ' + ((selected_value == data[key]) ? "selected='selected'" : "")+'>'+data[key]+'</option>';
             $('#form_additional_select_relation_right_field_'+field_name).append(option_html);
         }
     }
