@@ -25,7 +25,7 @@ trait Backend
                                 $temp = '';
                                 if($data['data'][$k][$field_name]){
                                     foreach(explode(',', $data['data'][$k][$field_name] ) as $kk=>$vv ){
-                                        $temp .= '<a target="_blank" href="'.$vv.'" layer-tips="点击查看原图"><img src="'.$vv.'" style="width:30px;height:30px;" /></a> ';
+                                        $temp .= '<a target="_blank" href="'.$vv.'"><img src="'.$vv.'" style="width:30px;height:30px;" /></a> ';
                                     }
                                 }
                                 $data['data'][$k][$field_name] = $temp;
@@ -33,9 +33,11 @@ trait Backend
                             case 'video':
                                 $temp = '';
                                 if($data['data'][$k][$field_name]) {
+                                    $i = 1;
                                     foreach (explode(',', $data['data'][$k][$field_name]) as $kk => $vv) {
 //                                        $temp .= '<video src="' . $vv . '" width="30px" height="30px" controls="controls"></video>';
-                                        $temp .= '点击查看';
+                                        $temp .= '<a href="javascript:void(0);" class="popup-frame" data-name="查看视频" data-open="'.url('admin/ajax/show_video',['path'=>base64_encode($vv)]).'">视频'.$i.'</a> ';
+                                        $i++;
                                     }
                                 }
                                 $data['data'][$k][$field_name] = $temp;

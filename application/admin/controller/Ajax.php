@@ -19,13 +19,6 @@ class Ajax extends Controller
         }
     }
 
-    //省市区接口
-    public function area(){
-        $parent_id = $this->request->param('parent_id') ? $this->request->param('parent_id') : 0;
-        $result = model('Area')->where('pid', '=', $parent_id)->select();
-        $this->success('获取成功','',$result);
-    }
-
     /**
      * 联动下拉框接口
      *  数据库pid记录上级ID，name记录名称
@@ -44,5 +37,12 @@ class Ajax extends Controller
         $file_url = base64_decode( $this->request->param('file_url') );
         $pathinfo = pathinfo($file_url);
         return download('.'.$file_url,'download.'.$pathinfo['extension']);
+    }
+
+    //弹窗展示视频
+    public function show_video(){
+        $assign['video_path'] = base64_decode( $this->request->param('path') );
+        $this->assign($assign);
+        return $this->fetch();
     }
 }

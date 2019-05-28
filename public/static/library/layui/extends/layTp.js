@@ -555,8 +555,8 @@ layui.define([
          * 所有拥有popup-frame的类名的节点，点击后都会弹窗
          *  节点的data-name属性为弹窗标题
          *  data-open弹窗展示的url地址
-         *  width属性为弹窗的宽度百分比
-         *  height属性为弹窗的高度百分比
+         *  data-width属性为弹窗的宽度百分比
+         *  data-height属性为弹窗的高度百分比
          */
         popup_frame: function(){
             $(document).on('click','.popup-frame',function(){
