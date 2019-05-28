@@ -35,7 +35,6 @@ trait Backend
                                 if($data['data'][$k][$field_name]) {
                                     $i = 1;
                                     foreach (explode(',', $data['data'][$k][$field_name]) as $kk => $vv) {
-//                                        $temp .= '<video src="' . $vv . '" width="30px" height="30px" controls="controls"></video>';
                                         $temp .= '<a href="javascript:void(0);" class="popup-frame" data-name="查看视频" data-open="'.url('admin/ajax/show_video',['path'=>base64_encode($vv)]).'">视频'.$i.'</a> ';
                                         $i++;
                                     }
@@ -54,8 +53,10 @@ trait Backend
                             case 'file':
                                 $temp = [];
                                 if($data['data'][$k][$field_name]) {
+                                    $i = 1;
                                     foreach (explode(',', $data['data'][$k][$field_name]) as $kk => $vv) {
-                                        $temp[] = '<a src="javascript:void(0);" download="' . $vv . '" title="点击下载">' . $vv . '</a>';
+                                        $temp[] = '<a href="javascript:void(0);" download="' . $vv . '" title="点击下载">下载文件'.$i.'</a> ';
+                                        $i++;
                                     }
                                 }
                                 $data['data'][$k][$field_name] = implode(' ', $temp );
