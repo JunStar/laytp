@@ -42,7 +42,7 @@ class Curd extends Command
         $htmlIndexParam,//生成html首页文件的参数,是一个数组['tpl_name'=>使用到的模板名称,'data'=>模板中需要替换的数据,'c_file_name'=>需要生成的文件名称]
         $htmlAddParam,//生成html添加页面文件的参数,是一个数组['tpl_name'=>使用到的模板名称,'data'=>模板中需要替换的数据,'c_file_name'=>需要生成的文件名称]
         $htmlEditParam,//生成html编辑页面文件的参数,是一个数组['tpl_name'=>使用到的模板名称,'data'=>模板中需要替换的数据,'c_file_name'=>需要生成的文件名称]
-        $controller_relation//控制器中需要设置的关联数组
+        $relation_model//关联模型
     ;
     protected function configure(){
         $this->setName('curd')
@@ -471,7 +471,7 @@ EOD;
      * @param $model
      * @param $show_field
      */
-    protected function set_controller_relation($field_name, $model, $show_field){
+    protected function set_relation_model($field_name, $model, $show_field){
         $this->controller_relation[$field_name] = [
             'model' => $model,
             'show_field' => $show_field
@@ -488,28 +488,28 @@ EOD;
             $this->controllerParam['data']['arrayConstAssign'] = '';
         }
 
-        if( is_array($this->controller_relation) && count($this->controller_relation) ){
-            $relation[] = "\n\t\t".'$this->relation = [';
-            foreach($this->controller_relation as $field_name=>$val){
-                $temp = "\n\t\t\t".'\'' . $field_name . '\'=> [';
-                foreach($val as $key=>$v){
-                    if($key == 'model'){
-                        $temp .= "\n\t\t\t\t".'\'' . $key . '\'=>'. $v . ',';
-                    }elseif($key == 'show_field'){
-                        $temp .= "\n\t\t\t\t".'\'' . $key . '\'=>\''. $v . '\',';
-                    }
-                }
-                $temp .= "\n\t\t\t".'],';
-                $relation[] = $temp;
-            }
-            $relation[] = "\n\t\t".'];';
-            $this->controllerParam['data']['relation'] = implode("",$relation);
-            $this->controllerParam['data']['relation_def'] = "\n\t".'protected $relation;';
-        }else{
+//        if( is_array($this->controller_relation) && count($this->controller_relation) ){
+//            $relation[] = "\n\t\t".'$this->relation = [';
+//            foreach($this->controller_relation as $field_name=>$val){
+//                $temp = "\n\t\t\t".'\'' . $field_name . '\'=> [';
+//                foreach($val as $key=>$v){
+//                    if($key == 'model'){
+//                        $temp .= "\n\t\t\t\t".'\'' . $key . '\'=>'. $v . ',';
+//                    }elseif($key == 'show_field'){
+//                        $temp .= "\n\t\t\t\t".'\'' . $key . '\'=>\''. $v . '\',';
+//                    }
+//                }
+//                $temp .= "\n\t\t\t".'],';
+//                $relation[] = $temp;
+//            }
+//            $relation[] = "\n\t\t".'];';
+//            $this->controllerParam['data']['relation'] = implode("",$relation);
+//            $this->controllerParam['data']['relation_def'] = "\n\t".'protected $relation;';
+//        }else{
             $this->controllerParam['data']['useModel'] = '';
             $this->controllerParam['data']['relation'] = '';
             $this->controllerParam['data']['relation_def'] = '';
-        }
+//        }
 
         if( is_array($this->controller_array_upload_field) && count($this->controller_array_upload_field) ){
             $upload_field[] = "\n\t\t".'$this->upload_field = [';
@@ -955,7 +955,7 @@ EOD;
         }else{
             $data['condition'] = 'FIND_IN_SET';
         }
-        $this->set_controller_relation($info['field_name'],'Db::table(\''.$info['form_additional']['table_name'].'\') ', $info['form_additional']['show_field_name']);
+//        $this->set_controller_relation($info['field_name'],'Db::table(\''.$info['form_additional']['table_name'].'\') ', $info['form_additional']['show_field_name']);
 
         return $this->get_replaced_tpl($name, $data);
     }

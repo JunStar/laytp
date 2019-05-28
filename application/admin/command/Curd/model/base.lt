@@ -19,6 +19,8 @@ class {%modelClassName%} extends Backend
 {%arrayConst%}
     ];
 
+    //关联模型
+
     //获取数组常量的函数
     {%getArrayConstListFunction%}
 }

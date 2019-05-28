@@ -17,8 +17,6 @@ trait Backend
                 foreach($v as $field_name => $field_val){
                     if(isset($this->model->const[$field_name])){
                         $data['data'][$k][$field_name] = get_const_val($field_name, $field_val, $this->model->const);
-                    }elseif (isset($this->relation[$field_name]) && $field_val){
-                        $data['data'][$k][$field_name] = join(',', $this->relation[$field_name]['model']->where('id in ('. $field_val .')')->column($this->relation[$field_name]['show_field']));
                     }elseif (isset($this->upload_field) && in_array( $field_name, array_keys($this->upload_field) )){
                         switch ($this->upload_field[$field_name]){
                             case 'images':
@@ -55,7 +53,7 @@ trait Backend
                                 if($data['data'][$k][$field_name]) {
                                     $i = 1;
                                     foreach (explode(',', $data['data'][$k][$field_name]) as $kk => $vv) {
-                                        $temp[] = '<a href="javascript:void(0);" download="' . $vv . '" title="点击下载">下载文件'.$i.'</a> ';
+                                        $temp[] = '<a href="javascript:void(0);" download="' . $vv . '" title="点击下载">文件'.$i.'</a> ';
                                         $i++;
                                     }
                                 }
