@@ -158,8 +158,8 @@ layui.define([
         },
         layTp_number:function(value){
             if(value.length > 0){
-                if(!layui.form.config.verify.number[0].test(value)){
-                    return layui.form.config.verify.number[1];
+                if(!value||isNaN(value)){
+                    return"只能填写数字";
                 }
             }
         },
@@ -990,6 +990,7 @@ layui.define([
                 let maxSelectLimit = $(item).attr('maxSelectLimit') ? parseInt($(item).attr('maxSelectLimit')) : 0;
                 layTp.facade.select_page($(item),{
                     showField : showField,
+                    keyField: 'id',
                     searchField : searchField,
                     multiple : multiple,
                     data : search_url,

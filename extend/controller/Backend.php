@@ -225,15 +225,25 @@ class Backend extends Controller
         return $whereStr;
     }
 
+    /**
+     * selectPage插件ajax请求时组合的查询条件
+     * @return string
+     */
     public function build_select_page_params(){
         $where = [];
         $q_word = $this->request->param('q_word');
         $andOr = $this->request->param('andOr');
         $searchField = $this->request->param('searchField');
         $searchFieldStr = $searchField[0];
-        $searchFieldVal = $this->request->param($searchFieldStr);
-        foreach($q_word as $keyword){
-            $where[] = "{$searchFieldStr} LIKE '%{$keyword}%'";
+        if(is_array($q_word) && count($q_word)){
+            foreach($q_word as $keyword){
+                $where[] = "{$searchFieldStr} LIKE '%{$keyword}%'";
+            }
+        }
+        $searchKey = $this->request->param('searchKey');
+        $searchValue = $this->request->param('searchValue');
+        if($searchKey && $searchValue){
+            $where[] = "{$searchKey} in ({$searchValue})";
         }
         $whereStr = implode(" {$andOr} ", $where);
         return $whereStr;

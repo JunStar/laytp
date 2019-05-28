@@ -150,6 +150,7 @@ layui.define(['jquery', 'layer'], function(exports){
                 }
                 //ajax方式获取候选数据
                 this.getData = function(url){
+                    return false;
                     let d;
                     $.ajax({
                         url:url,
@@ -178,7 +179,7 @@ layui.define(['jquery', 'layer'], function(exports){
                 if(Object.prototype.toString.call(c.data)!='[object Array]'){
                     let data = o.getData(c.data);
                     if(data===false){
-                        console.error(MOD_NAME+' hint：缺少分类数据');
+                        // console.error(MOD_NAME+' hint：缺少分类数据');
                         return false;
                     }
                     o.config.data =  data;
