@@ -17,7 +17,7 @@ layui.use(['layTp'],function(){
                 [
                     {title:'数据库字段查看', width:100, align: 'center', colspan: 3}
                     ,{title:'表单设置,影响添加编辑表单', align: 'center', colspan: 3}
-                    ,{title:'列表设置', align: 'center', colspan: 5}
+                    ,{title:'列表设置', align: 'center', colspan: 3}
                 ]
                 ,[
                     //数据库字段设置
@@ -31,8 +31,6 @@ layui.use(['layTp'],function(){
                     //列表设置
                     ,{field:'table_width', title:'绝对列宽(数字或者百分比)', align: 'center', edit: 'text'}
                     ,{field:'table_min_width', title:'最小列宽(数字或者百分比)', align: 'center', edit: 'text', width: 120}
-                    // ,{field:'table_templet', title:'列类型', templet: '#table_templet', align: 'center', width: 140}
-                    ,{field:'table_align', title:'排列方式', templet: '#table_align', align: 'center', width: 120}
                     ,{field:'table_additional', title:'附加选项', templet: "#table_additional", align: 'center', width: 400}
                 ]
             ]

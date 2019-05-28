@@ -299,7 +299,7 @@ class Curd extends Command
                 if($fields_list[$v['field_name']]['table_min_width'] !== '使用全局配置' && $fields_list[$v['field_name']]['table_min_width']){
                     $temp .= ",minWidth:".$fields_list[$v['field_name']]['table_min_width'];
                 }
-                $temp .= ",align:'".$fields_list[$v['field_name']]['table_align']."'";
+                $temp .= ",align:'center'";
                 if($fields_list[$v['field_name']]['table_additional_unresize']){
                     $temp .= ",unresize:true";
                 }
@@ -314,9 +314,9 @@ class Curd extends Command
             $cols .= $temp;
         }
         if(isset($this->curd_config['global']['hide_del']) && $this->curd_config['global']['hide_del']){
-            $temp = "\t\t\t\t,{field:'operation',title:'操作',align:'center',toolbar:'#operation_only_edit',fixed:'right',width:100}";
+            $temp = "\t\t\t\t,{field:'operation',title:'操作',align:'center',toolbar:'#operation_only_edit',width:100}";
         }else{
-            $temp = "\t\t\t\t,{field:'operation',title:'操作',align:'center',toolbar:'#operation',fixed:'right',width:100}";
+            $temp = "\t\t\t\t,{field:'operation',title:'操作',align:'center',toolbar:'#operation',width:100}";
         }
         $cols .= $temp;
         $data['cols'] = $cols;

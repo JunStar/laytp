@@ -25,7 +25,7 @@ trait Backend
                                 $temp = '';
                                 if($data['data'][$k][$field_name]){
                                     foreach(explode(',', $data['data'][$k][$field_name] ) as $kk=>$vv ){
-                                        $temp .= '<img src="'.$vv.'" style="width:30px;height:30px;" /> ';
+                                        $temp .= '<a target="_blank" href="'.$vv.'" layer-tips="点击查看原图"><img src="'.$vv.'" style="width:30px;height:30px;" /></a> ';
                                     }
                                 }
                                 $data['data'][$k][$field_name] = $temp;
@@ -34,7 +34,8 @@ trait Backend
                                 $temp = '';
                                 if($data['data'][$k][$field_name]) {
                                     foreach (explode(',', $data['data'][$k][$field_name]) as $kk => $vv) {
-                                        $temp .= '<video src="' . $vv . '" width="200px" controls="controls"></video>';
+//                                        $temp .= '<video src="' . $vv . '" width="30px" height="30px" controls="controls"></video>';
+                                        $temp .= '点击查看';
                                     }
                                 }
                                 $data['data'][$k][$field_name] = $temp;
@@ -43,7 +44,7 @@ trait Backend
                                 $temp = '';
                                 if($data['data'][$k][$field_name]) {
                                     foreach (explode(',', $data['data'][$k][$field_name]) as $kk => $vv) {
-                                        $temp .= '<audio src="' . $vv . '" controls="controls"></audio>';
+                                        $temp .= '<audio src="' . $vv . '" width="200px" height="30px" controls="controls"></audio>';
                                     }
                                 }
                                 $data['data'][$k][$field_name] = $temp;
