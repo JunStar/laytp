@@ -30,7 +30,7 @@
                     <input type="checkbox" id="common_model" title="全局模型" lay-filter="common_model" value="1">
                     <input type="checkbox" id="relation_model" title="关联模型" lay-filter="relation_model" value="1">
                 </div>
-                <!--<div class="layui-form-mid layui-word-aux">选中全局模型，model层文件将生成在application/common/model目录下，反之，则生成在application/admin/model目录下</div>-->
+<!--                <div class="layui-form-mid layui-word-aux">选中全局模型，model层文件将生成在application/common/model目录下，反之，则生成在application/admin/model目录下</div>-->
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">表格列表</label>
@@ -55,6 +55,40 @@
                 </div>
             </div>
         </div>
+    </div>
+</fieldset>
+
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;display:none;" id="relation_model_fieldset">
+    <legend>关联模型</legend>
+    <div class="layui-field-box">
+        <table class="layui-table layui-form" style="margin: 0;" lay-skin="line">
+            <colgroup>
+                <col width="200">
+                <col width="200">
+                <col width="200">
+                <col width="200">
+                <col width="200">
+                <col>
+            </colgroup>
+            <thead>
+            <tr>
+                <th>关联表</th>
+                <th>关联方式</th>
+                <th>外键</th>
+                <th>主键</th>
+                <th>显示的字段</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody id="relation_list">
+            <tr class='nodrop nodrag'>
+                <td colspan="6" style="padding: 4px 15px;">
+                    <a href="javascript:void(0);" class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-add-1 add_relation_model" title="追加关联模型">追加关联模型</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        </form>
     </div>
 </fieldset>
 
@@ -103,6 +137,7 @@
 {include file="autocreate/curd/import/form/additional_tpl" /}
 {include file="autocreate/curd/import/form/type_tpl" /}
 {include file="autocreate/curd/import/form/required_tpl" /}
+{include file="autocreate/curd/import/relation/model_tpl" /}
 {/block}
 
 {block name="script"}

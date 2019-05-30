@@ -5,6 +5,80 @@ layui.use(['layTp'],function(){
         ,$ = layTp.$
     ;
 
+    //关联模型复选框绑定点击事件
+    layui.form.on('checkbox(relation_model)',function(data){
+        if(!data.elem.checked){
+            $('#relation_model_fieldset').hide();
+        }else{
+            $('#relation_model_fieldset').show();
+        }
+    });
+
+    //追加关联模型
+    let relation_model_num = 0;
+    $(document).on('click','.add_relation_model',function(){
+        if(!select_table_name){
+            layTp.facade.error('请选择表');
+            return false;
+        }
+        let click_obj = $(this);
+        layui.laytpl($('#relation_model_item').html()).render({
+            select_table_fields: select_table_fields,
+            relation_model_num:relation_model_num
+        }, function(string){
+            click_obj.parent().parent().before(string);
+            layui.form.render('select');
+        });
+        relation_model_num += 1;
+    });
+
+    //删除关联模型的一行
+    $(document).on('click','.del_relation_model',function(){
+        $(this).parent().parent().remove();
+    });
+
+    //选择关联数据表下拉框的onchange事件
+    let select_relation_table = '';
+    layui.form.on('select(select_relation_table)',function(data){
+        if(select_relation_table == data.elem.value){
+            return false;
+        }
+        let num = $(data.elem).attr('num');
+
+        select_relation_table = data.elem.value;
+
+        //显示的字段
+        $.ajax({
+            type: 'GET',
+            url: layTp.facade.url('admin/autocreate.curd/get_fields_by_table_name'),
+            data: {table_name:select_relation_table},
+            dataType: 'json',
+            success: function (res) {
+                //主键
+                let html = '<select name="select_relation_primary_key[]" lay-filter="select_relation_primary_key">';
+                let selected_relation_data = [];
+                for(key in res.data){
+                    selected_relation_data.push({'field_name':res.data[key]});
+                    html += '<option value="'+res.data[key]+'">'+res.data[key]+'</option>';
+                }
+                html += '</select>';
+                data.othis.parent().parent().find('td:eq(3)').html(html);
+                layui.form.render('select');
+
+                //关联模型显示的字段
+                layui.select_multi.render({
+                    elem: '#relation_show_field_'+num
+                    ,data: selected_relation_data
+                    ,max: selected_relation_data.length
+                    ,verify: 'required'
+                    ,field: {idName:'field_name',titleName:'field_name'}
+                    ,selected: res.data
+                    ,click_dd_after: function(){}
+                });
+            }
+        });
+    });
+
     //渲染表格
     func_controller.table_render = function (data) {
         layui.table.render({
@@ -48,6 +122,7 @@ layui.use(['layTp'],function(){
 
     let select_table_name = '';
     let fields_list = '';
+    let select_table_fields = '';
     //初始化方法，页面加载完毕立即执行的内容
     func_controller.init = function(){
         //渲染空表格
@@ -65,11 +140,26 @@ layui.use(['layTp'],function(){
 
         //监听[选择表]下拉框onchange事件
         layui.form.on('select(select_table)',function(data){
-            select_table_name = data.value;
             let ajax_data = {'table_name':data.value};
             if(!data.value){
                 return true;
             }
+            select_table_name = data.value;
+
+            $.ajax({
+                type: 'GET',
+                url: layTp.facade.url('/' + module + '/' + controller + '/get_fields_by_table_name'),
+                data: {table_name:select_table_name},
+                dataType: 'json',
+                success: function(res){
+                    select_table_fields = res.data;
+                }
+            });
+
+            //将关联属性设置置空
+            let add_item_td = $("#relation_list tr:last").prop("outerHTML");
+            $("#relation_list").html(add_item_td);
+
             $.ajax({
                 type: 'GET',
                 url: layTp.facade.url('/' + module + '/' + controller + '/get_curd_info'),
@@ -82,7 +172,7 @@ layui.use(['layTp'],function(){
                         layui.each(res.data.selected_list,function(k,i){
                             selected_data.push(i['field_name']);
                         });
-                        //重新渲染多选下拉框
+                        //重新渲染多选下拉框，显示字段
                         layui.select_multi.render({
                             elem: '#select_fields'
                             ,data: res.data.all_fields
@@ -113,7 +203,7 @@ layui.use(['layTp'],function(){
                                 layui.form.render('select');
                             }
                         });
-                        //重新渲染多选下拉框
+                        //重新渲染多选下拉框，搜索字段
                         layui.select_multi.render({
                             elem: '#search_fields'
                             ,data: res.data.all_fields
