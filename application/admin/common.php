@@ -100,6 +100,11 @@ function filterPostData($post){
     return $post;
 }
 
+/**
+ * 获取默认头像
+ * @param $avatar
+ * @return string
+ */
 function getDefaultAvatar($avatar){
     if(!$avatar){
         return '/static/admin/image/default_avatar.png';
@@ -108,11 +113,59 @@ function getDefaultAvatar($avatar){
     }
 }
 
+/**
+ * 判断是否登录状态
+ * @return bool
+ */
 function isLogin(){
     $admin_user_id = Session::get('admin_user_id');
     if($admin_user_id){
         return $admin_user_id;
     }else{
         return false;
+    }
+}
+
+/**
+ * 美化列表
+ */
+function prettifyList($type, $value){
+    switch ($type){
+        case 'images':
+            $temp = '';
+            if($value){
+                foreach(explode(',', $value ) as $kk=>$vv ){
+                    $temp .= '<a target="_blank" href="'.$vv.'"><img src="'.$vv.'" style="width:30px;height:30px;" /></a> ';
+                }
+            }
+            return $temp;
+        case 'video':
+            $temp = '';
+            if($value) {
+                $i = 1;
+                foreach (explode(',', $value) as $kk => $vv) {
+                    $temp .= '<a href="javascript:void(0);" class="popup-frame" data-name="查看视频" data-open="'.url('admin/ajax/show_video',['path'=>base64_encode($vv)]).'">视频'.$i.'</a> ';
+                    $i++;
+                }
+            }
+            return $temp;
+        case 'audio':
+            $temp = '';
+            if($value) {
+                foreach (explode(',', $value) as $kk => $vv) {
+                    $temp .= '<audio src="' . $vv . '" width="200px" height="30px" controls="controls"></audio>';
+                }
+            }
+            return $temp;
+        case 'file':
+            $temp = [];
+            if($value) {
+                $i = 1;
+                foreach (explode(',', $value) as $kk => $vv) {
+                    $temp[] = '<a href="javascript:void(0);" download="' . $vv . '" title="点击下载">文件'.$i.'</a> ';
+                    $i++;
+                }
+            }
+            return implode(' ', $temp );
     }
 }

@@ -6,12 +6,6 @@ use model\Backend;
 
 class AdminLog extends Backend
 {
-
-    // 开启自动写入时间戳字段
-    protected $autoWriteTimestamp = 'datetime';
-    // 定义时间戳字段名
-    protected $createTime = 'create_time';
-    protected $updateTime = '';
     //自定义日志标题
     protected static $title = '';
     //自定义日志内容

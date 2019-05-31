@@ -13,5 +13,5 @@ return [
     ],
 
     //特殊字段，自动生成不需要详细设置的字段
-    'special_fields' => ['id','createtime','updatetime','deletetime'],
+    'special_fields' => ['id','create_time','update_time','delete_time'],
 ];
