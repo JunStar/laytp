@@ -894,8 +894,10 @@ layui.define([
         //tips渲染
         tips:function(){
             $(document).on('mouseover','[layer-tips]',function(){
+                let obj = $(this);
+                let colour = (typeof obj.attr('colour') != 'undefined') ? obj.attr('colour') : '#3595CC';
                 layui.layer.tips($(this).attr('layer-tips'), this, {
-                    tips: [1, '#3595CC'],
+                    tips: [1, colour],
                     time: 800
                 });
             });

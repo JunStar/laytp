@@ -72,7 +72,6 @@ layui.use(['layTp'],function(){
                     ,max: selected_relation_data.length
                     ,verify: 'required'
                     ,field: {idName:'field_name',titleName:'field_name'}
-                    ,selected: res.data
                     ,click_dd_after: function(){}
                 });
             }
