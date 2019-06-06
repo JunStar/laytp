@@ -2,7 +2,7 @@
 
 namespace {%controllerNamespace%};
 
-use controller\Backend;{%useModel%}
+use controller\Backend;
 
 /**
  * {%tableComment%}
@@ -14,7 +14,7 @@ class {%controllerClassName%} extends Backend
      * {%modelName%}模型对象
      * @var {%modelNamespace%}\{%modelClassName%}
      */
-    protected $model;{%relation_def%}{%upload_field_def%}
+    protected $model;{%upload_field_def%}
 
     public function initialize()
     {
@@ -23,4 +23,6 @@ class {%controllerClassName%} extends Backend
         {%upload_field%}
         {%arrayConstAssign%}
     }
+
+    {%indexFunction%}
 }

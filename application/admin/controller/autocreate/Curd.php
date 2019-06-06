@@ -97,13 +97,20 @@ class Curd extends Backend
         $comment_map = arr_to_map($comment,'COLUMN_NAME');
         //生成过用生成过的数据渲染默认的详细设置
         if($curd_info){
-//            $result = [];
             $result['selected_list'] = json_decode($curd_info['field_list'], true);
+            $result['relation_model'] = json_decode($curd_info['relation_model'], true);
+            if($result['relation_model']){
+                foreach($result['relation_model'] as $k=>$v){
+                    if(!isset($result['fields_list'][$v['table_name']])) {
+                        $result['fields_list'][$v['table_name']] = Db::table($v['table_name'])->getTableFields($v['table_name']);
+                    }
+                }
+            }
             $result['fields_list'][$table] = $fields;
             foreach($result['selected_list'] as $k=>$v){
                 if($v['form_type'] == 'select_page'){
                     if(!isset($result['fields_list'][$v['form_additional']['table_name']])){
-                        $result['fields_list'][$v['form_additional']['table_name']] = Db::table($table)->getTableFields($v['form_additional']['table_name']);
+                        $result['fields_list'][$v['form_additional']['table_name']] = Db::table($v['form_additional']['table_name'])->getTableFields($v['form_additional']['table_name']);
                     }
                 }
             }

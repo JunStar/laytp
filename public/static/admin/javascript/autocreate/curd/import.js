@@ -5,79 +5,6 @@ layui.use(['layTp'],function(){
         ,$ = layTp.$
     ;
 
-    //关联模型复选框绑定点击事件
-    layui.form.on('checkbox(relation_model)',function(data){
-        if(!data.elem.checked){
-            $('#relation_model_fieldset').hide();
-        }else{
-            $('#relation_model_fieldset').show();
-        }
-    });
-
-    //追加关联模型
-    let relation_model_num = 0;
-    $(document).on('click','.add_relation_model',function(){
-        if(!select_table_name){
-            layTp.facade.error('请选择表');
-            return false;
-        }
-        let click_obj = $(this);
-        layui.laytpl($('#relation_model_item').html()).render({
-            select_table_fields: select_table_fields,
-            relation_model_num:relation_model_num
-        }, function(string){
-            click_obj.parent().parent().before(string);
-            layui.form.render('select');
-        });
-        relation_model_num += 1;
-    });
-
-    //删除关联模型的一行
-    $(document).on('click','.del_relation_model',function(){
-        $(this).parent().parent().remove();
-    });
-
-    //选择关联数据表下拉框的onchange事件
-    let select_relation_table = '';
-    layui.form.on('select(select_relation_table)',function(data){
-        if(select_relation_table == data.elem.value){
-            return false;
-        }
-        let num = $(data.elem).attr('num');
-
-        select_relation_table = data.elem.value;
-
-        //显示的字段
-        $.ajax({
-            type: 'GET',
-            url: layTp.facade.url('admin/autocreate.curd/get_fields_by_table_name'),
-            data: {table_name:select_relation_table},
-            dataType: 'json',
-            success: function (res) {
-                //主键
-                let html = '<select name="select_relation_primary_key[]" lay-filter="select_relation_primary_key">';
-                let selected_relation_data = [];
-                for(key in res.data){
-                    selected_relation_data.push({'field_name':res.data[key]});
-                    html += '<option value="'+res.data[key]+'">'+res.data[key]+'</option>';
-                }
-                html += '</select>';
-                data.othis.parent().parent().find('td:eq(3)').html(html);
-                layui.form.render('select');
-
-                //关联模型显示的字段
-                layui.select_multi.render({
-                    elem: '#relation_show_field_'+num
-                    ,data: selected_relation_data
-                    ,max: selected_relation_data.length
-                    ,verify: 'required'
-                    ,field: {idName:'field_name',titleName:'field_name'}
-                    ,click_dd_after: function(){}
-                });
-            }
-        });
-    });
-
     //渲染表格
     func_controller.table_render = function (data) {
         layui.table.render({
@@ -122,6 +49,7 @@ layui.use(['layTp'],function(){
     let select_table_name = '';
     let fields_list = '';
     let select_table_fields = '';
+    let relation_model_num = 0;
     //初始化方法，页面加载完毕立即执行的内容
     func_controller.init = function(){
         //渲染空表格
@@ -139,6 +67,18 @@ layui.use(['layTp'],function(){
 
         //监听[选择表]下拉框onchange事件
         layui.form.on('select(select_table)',function(data){
+            //关联模型设为非选中状态
+            $('#relation_model').attr('checked',false);
+
+            //将关联属性设置置空
+            let add_item_td = $("#relation_list tr:last").prop("outerHTML");
+            $("#relation_list").html(add_item_td);
+
+            layui.form.render('checkbox');
+
+            //隐藏关联模型设置fieldset
+            $("#relation_model_fieldset").hide();
+
             let ajax_data = {'table_name':data.value};
             if(!data.value){
                 return true;
@@ -154,10 +94,6 @@ layui.use(['layTp'],function(){
                     select_table_fields = res.data;
                 }
             });
-
-            //将关联属性设置置空
-            let add_item_td = $("#relation_list tr:last").prop("outerHTML");
-            $("#relation_list").html(add_item_td);
 
             $.ajax({
                 type: 'GET',
@@ -212,6 +148,45 @@ layui.use(['layTp'],function(){
                             ,selected: selected_data
                             ,click_dd_after: function(){}
                         });
+                        //关联模型相关渲染
+                        let relation_model = res.data.relation_model;
+                        if(relation_model){
+                            $('#relation_model').attr('checked',true);
+                            layui.form.render('checkbox');
+
+                            $('#relation_model_fieldset').show();
+                            let show_fields_relation = [];
+                            for(key in relation_model){
+                                layui.laytpl($('#relation_model_item').html()).render({
+                                    selected_table:relation_model[key].table_name,
+                                    select_table_fields: select_table_fields,
+                                    select_relation_primary_key: fields_list[relation_model[key].table_name],
+                                    selected_relation_primary_key: relation_model[key].primary_key,
+                                    selected_relation_foreign_key: relation_model[key].foreign_key,
+                                    relation_model_num:relation_model_num,
+                                    relation_function_name:(typeof relation_model[key].relation_function_name != "undefined") ? relation_model[key].relation_function_name : ""
+                                }, function(string){
+                                    $('#relation_list').prepend(string);
+                                });
+                                show_fields_relation = [];
+                                for(k in fields_list[relation_model[key].table_name]){
+                                    show_fields_relation.push({'field_name':fields_list[relation_model[key].table_name][k]});
+                                }
+                                //关联模型显示的字段
+                                layui.select_multi.render({
+                                    elem: '#relation_show_field_'+relation_model_num
+                                    ,data: show_fields_relation
+                                    ,max: show_fields_relation.length
+                                    ,verify: 'required'
+                                    ,field: {idName:'field_name',titleName:'field_name'}
+                                    ,selected: relation_model[key].show_field.split(',')
+                                    ,click_dd_after: function(){}
+                                });
+
+                                relation_model_num += 1;
+                            }
+                            layui.form.render('select');
+                        }
                     }else{
                         layTp.facade.error(res.msg);
                     }
@@ -222,6 +197,76 @@ layui.use(['layTp'],function(){
                     }else if( xhr.status == '404' ){
                         layTp.facade.error('请求地址不存在');
                     }
+                }
+            });
+        });
+
+        //关联模型复选框绑定点击事件
+        layui.form.on('checkbox(relation_model)',function(data){
+            if(!data.elem.checked){
+                $('#relation_model_fieldset').hide();
+            }else{
+                $('#relation_model_fieldset').show();
+            }
+        });
+
+        //追加关联模型
+        $(document).on('click','.add_relation_model',function(){
+            if(!select_table_name){
+                layTp.facade.error('请选择表');
+                return false;
+            }
+            let click_obj = $(this);
+            layui.laytpl($('#relation_model_item').html()).render({
+                select_table_fields: select_table_fields,
+                relation_model_num:relation_model_num,
+                relation_function_name:""
+            }, function(string){
+                click_obj.parent().parent().before(string);
+                layui.form.render('select');
+            });
+            relation_model_num += 1;
+        });
+
+        //删除关联模型的一行
+        $(document).on('click','.del_relation_model',function(){
+            $(this).parent().parent().remove();
+        });
+
+        //选择关联数据表下拉框的onchange事件
+        let select_relation_table = '';
+        layui.form.on('select(select_relation_table)',function(data){
+            let num = $(data.elem).attr('num');
+
+            select_relation_table = data.elem.value;
+
+            //显示的字段
+            $.ajax({
+                type: 'GET',
+                url: layTp.facade.url('admin/autocreate.curd/get_fields_by_table_name'),
+                data: {table_name:select_relation_table},
+                dataType: 'json',
+                success: function (res) {
+                    //主键
+                    let html = '<select name="select_relation_primary_key[]" lay-filter="select_relation_primary_key">';
+                    let selected_relation_data = [];
+                    for(key in res.data){
+                        selected_relation_data.push({'field_name':res.data[key]});
+                        html += '<option value="'+res.data[key]+'">'+res.data[key]+'</option>';
+                    }
+                    html += '</select>';
+                    data.othis.parent().parent().find('td:eq(3)').html(html);
+                    layui.form.render('select');
+
+                    //关联模型显示的字段
+                    layui.select_multi.render({
+                        elem: '#relation_show_field_'+num
+                        ,data: selected_relation_data
+                        ,max: selected_relation_data.length
+                        ,verify: 'required'
+                        ,field: {idName:'field_name',titleName:'field_name'}
+                        ,click_dd_after: function(){}
+                    });
                 }
             });
         });
@@ -493,6 +538,24 @@ layui.use(['layTp'],function(){
                 ,'search_fields':search_fields
                 ,'cell_min_width':cell_min_width
             };
+
+            //关联模型需要提交的数据
+            let temp_relation_model = {};
+            post_data['relation_model'] = [];
+            layui.each($('#relation_list tr'),function(i,item){
+                if(i < $('#relation_list tr').length - 1){
+                    temp_relation_model = {
+                        'table_name' : $(item).find('select:eq(0)').val(),
+                        'relation_way' : $(item).find('select:eq(1)').val(),
+                        'foreign_key' : $(item).find('select:eq(2)').val(),
+                        'primary_key' : $(item).find('select:eq(3)').val(),
+                        'show_field' : $('input[name="'+$(item).find('td:eq(4)').attr('id')+'"]').val(),
+                        'relation_function_name' : $(item).find('input:eq(5)').val(),
+                    }
+                    post_data['relation_model'].push(temp_relation_model);
+                }
+            });
+
             $.ajax({
                 type: 'POST',
                 url: window.location.href,

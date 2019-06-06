@@ -42,10 +42,12 @@ class Curd extends Backend
                 }
             }
             $post_data['global']['all_fields'] = $all_fields;
+            $post_data['relation_model'] = isset($post_data['relation_model']) ? $post_data['relation_model'] : [];
 
             $data = [
                 'field_list' => json_encode($post_data['field_list']),
-                'global' => json_encode($post_data['global'])
+                'global' => json_encode($post_data['global']),
+                'relation_model' => json_encode($post_data['relation_model'])
             ];
             if($is_exist){
                 $data['update_time'] = date('Y-m-d H:i:s');

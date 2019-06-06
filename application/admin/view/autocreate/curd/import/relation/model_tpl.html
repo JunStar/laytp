@@ -4,32 +4,38 @@
             <select name="select_relation_table[]" num="{{ d.relation_model_num }}" lay-filter="select_relation_table">
                 <option></option>
                 {foreach $table_list as $k=>$v}
-                <option value="{$v.TABLE_NAME}">{$v.TABLE_NAME}</option>
+                <option value="{$v.TABLE_NAME}" {{#  if(d.selected_table == '{$v.TABLE_NAME}'){ }}selected="selected"{{#  } }}>{$v.TABLE_NAME}</option>
                 {/foreach}
             </select>
         </td>
         <td>
             <select name="select_table[]">
                 <option value="belongsTo">belongsTo</option>
-                <option value="hasone">hasone</option>
+                <option value="hasone">hasOne</option>
             </select>
         </td>
         <td>
             <select name="select_relation_primary_key[]" lay-filter="select_relation_primary_key">
                 {{#  layui.each(d.select_table_fields, function(index, item){ }}
-                <option value="{{ item }}">{{ item }}</option>
+                <option value="{{ item }}" {{#  if(d.selected_relation_foreign_key == item){ }}selected="selected"{{#  } }}>{{ item }}</option>
                 {{#  }); }}
             </select>
         </td>
         <td>
             <select name="select_relation_primary_key[]" lay-filter="select_relation_primary_key">
                 <option></option>
+                {{#  layui.each(d.select_relation_primary_key, function(index, item){ }}
+                <option value="{{ item }}" {{#  if(d.selected_relation_primary_key == item){ }}selected="selected"{{#  } }}>{{ item }}</option>
+                {{#  }); }}
             </select>
         </td>
         <td id="relation_show_field_{{ d.relation_model_num }}">
             <select name="select_relation_show_field[]" lay-filter="select_relation_show_field">
                 <option></option>
             </select>
+        </td>
+        <td>
+            <input class="layui-input" type="text" value="{{ d.relation_function_name }}" />
         </td>
         <td>
             <a href="javascript:void(0);" class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-delete del_relation_model" layer-tips="移除" colour="#f51c1c" title="移除"></a>

@@ -20,6 +20,7 @@ class {%modelClassName%} extends Backend
     ];
 
     //关联模型
+    {%relationModel%}
 
     //获取数组常量的函数
     {%getArrayConstListFunction%}

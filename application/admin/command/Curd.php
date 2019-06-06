@@ -85,6 +85,7 @@ class Curd extends Command
         $curd_config['table_comment'] = $this->info['table_comment'];
         $curd_config['field_list'] = $field_list;
         $curd_config['global'] = $global;
+        $curd_config['relation_model'] = json_decode($this->info['relation_model'], true);
         return $curd_config;
     }
 
@@ -177,7 +178,15 @@ class Curd extends Command
 
     protected function get_name_by_table($table){
         $arr_table = explode('_', $table);
+        $basename = ucfirst($arr_table[count($arr_table)-1]);
         array_shift($arr_table);//del_db_prefix
+        array_pop($arr_table);
+        if(count($arr_table)){
+            $str_table = implode(DS, $arr_table) . '\\' . $basename;
+        }else{
+            $str_table = $basename;
+        }
+        return $str_table;
     }
 
     protected function set_mid_file_name(){
@@ -220,7 +229,23 @@ class Curd extends Command
         $data['modelClassName'] = $this->controller_model_class_name;
         $data['modelNamespace'] = str_replace('/','\\',dirname( 'app/'.$this->model_app_name.'/model/'.$this->mid_name ));
         $data['controllerClassName'] = $this->controller_model_class_name;
+        $data['indexFunction'] = $this->set_relation_index_function_html();
         $this->controllerParam = ['tpl_name'=>$tpl_name,'data'=>$data,'c_file_name'=>$this->controller_c_file_name];
+    }
+
+    //有关联模型，index方法要写上with查询关联数据
+    protected function set_relation_index_function_html(){
+        $relation_model = $this->curd_config['relation_model'];
+        $relation_index_function_lt = 'controller' . DS . 'index';
+        $with = [];
+        if(is_array($relation_model) && count($relation_model)){
+            foreach($relation_model as $k=>$item){
+                $with[] = $item['relation_function_name'];
+            }
+        }
+        $data['with_relation'] = "->with(['".implode("','",$with)."'])";
+        $relation_controller_index_function_html = $this->get_replaced_tpl($relation_index_function_lt,$data);
+        return $relation_controller_index_function_html;
     }
 
     /**
@@ -243,7 +268,30 @@ class Curd extends Command
         $data['modelName'] = strtolower( str_replace('/','_',$this->mid_name) );
         $data['modelClassName'] = $this->controller_model_class_name;
         $data['modelNamespace'] = str_replace('/','\\',dirname( 'app/'.$this->model_app_name.'/model/'.$this->mid_name ));
+        $data['relationModel'] = $this->set_relation_model();
         $this->modelParam = ['tpl_name'=>$tpl_name,'data'=>$data,'c_file_name'=>$this->model_c_file_name];
+    }
+
+    /**
+     * 设置关联属性
+     * @return string
+     */
+    protected function set_relation_model(){
+        $relation_model = $this->curd_config['relation_model'];
+        $relation_model_function_lt = 'model' . DS . 'relation_model_function';
+        $array_relation_model_html = [];
+        if(is_array($relation_model) && count($relation_model)){
+            foreach($relation_model as $k=>$item){
+                $data['relation_function_name'] = $item['relation_function_name'];
+                $data['relation_way'] = $item['relation_way'];
+                $data['relation_model_name'] = 'app\admin\model\\'.$this->get_name_by_table($item['table_name']);
+                $data['foreign_key'] = $item['foreign_key'];
+                $data['local_key'] = $item['primary_key'];
+                $array_relation_model_html[] = $this->get_replaced_tpl($relation_model_function_lt,$data);
+            }
+        }
+        $relation_model_html = implode("\n\n\t", $array_relation_model_html);
+        return $relation_model_html;
     }
 
     /**
@@ -309,6 +357,14 @@ class Curd extends Command
                 if($fields_list[$v['field_name']]['table_additional_edit']){
                     $temp .= ",edit:'text'";
                 }
+                if($relation_info = $this->is_relation_key($v['field_name'])){
+                    $relation_show_field = explode(',',$relation_info['show_field']);
+                    $templet = [];
+                    foreach($relation_show_field as $field){
+                        $templet[] = "{{d.".$relation_info['relation_function_name'].".".$field."}}";
+                    }
+                    $temp .= ",templet:'<div>".implode(',',$templet)."</div>'";
+                }
                 $temp .= "}\n";
             }
             $cols .= $temp;
@@ -323,6 +379,18 @@ class Curd extends Command
         $data['close_page'] = $this->curd_config['global']['close_page'] ? '//' : '';
         $data['cellMinWidth'] = $this->curd_config['global']['cell_min_width'] ?: 80;
         $this->jsParam = ['tpl_name'=>$tpl_name,'data'=>$data,'c_file_name'=>$this->js_c_file_name];
+    }
+
+    public function is_relation_key($field_name){
+        $relation_model = $this->curd_config['relation_model'];
+        if(is_array($relation_model) && count($relation_model)){
+            foreach($relation_model as $k=>$item){
+                if($item['foreign_key'] == $field_name){
+                    return $item;
+                }
+            }
+        }
+        return false;
     }
 
     /**
@@ -465,20 +533,6 @@ EOD;
         }
     }
 
-    /**
-     * 设置关联属性
-     * @param $field_name
-     * @param $model
-     * @param $show_field
-     */
-    protected function set_relation_model($field_name, $model, $show_field){
-        $this->controller_relation[$field_name] = [
-            'model' => $model,
-            'show_field' => $show_field
-        ];
-        $this->controllerParam['data']['useModel'] = "\n".'use think\Db;';
-    }
-
     //生成controller层
     protected function c_controller(){
         if(!empty($this->controller_array_const)){
@@ -487,29 +541,6 @@ EOD;
         }else{
             $this->controllerParam['data']['arrayConstAssign'] = '';
         }
-
-//        if( is_array($this->controller_relation) && count($this->controller_relation) ){
-//            $relation[] = "\n\t\t".'$this->relation = [';
-//            foreach($this->controller_relation as $field_name=>$val){
-//                $temp = "\n\t\t\t".'\'' . $field_name . '\'=> [';
-//                foreach($val as $key=>$v){
-//                    if($key == 'model'){
-//                        $temp .= "\n\t\t\t\t".'\'' . $key . '\'=>'. $v . ',';
-//                    }elseif($key == 'show_field'){
-//                        $temp .= "\n\t\t\t\t".'\'' . $key . '\'=>\''. $v . '\',';
-//                    }
-//                }
-//                $temp .= "\n\t\t\t".'],';
-//                $relation[] = $temp;
-//            }
-//            $relation[] = "\n\t\t".'];';
-//            $this->controllerParam['data']['relation'] = implode("",$relation);
-//            $this->controllerParam['data']['relation_def'] = "\n\t".'protected $relation;';
-//        }else{
-            $this->controllerParam['data']['useModel'] = '';
-            $this->controllerParam['data']['relation'] = '';
-            $this->controllerParam['data']['relation_def'] = '';
-//        }
 
         if( is_array($this->controller_array_upload_field) && count($this->controller_array_upload_field) ){
             $upload_field[] = "\n\t\t".'$this->upload_field = [';
@@ -559,8 +590,8 @@ EOD;
         }
         //设置获取常量的函数
         if(!empty($this->model_array_const)){
-            $array_const_function_ja = 'model' . DS . 'array_const_function';
-            $this->modelParam['data']['getArrayConstListFunction'] = $this->get_replaced_tpl($array_const_function_ja);
+            $array_const_function_lt = 'model' . DS . 'array_const_function';
+            $this->modelParam['data']['getArrayConstListFunction'] = $this->get_replaced_tpl($array_const_function_lt);
         }else{
             $this->modelParam['data']['getArrayConstListFunction'] = '';
         }
@@ -955,7 +986,6 @@ EOD;
         }else{
             $data['condition'] = 'FIND_IN_SET';
         }
-//        $this->set_controller_relation($info['field_name'],'Db::table(\''.$info['form_additional']['table_name'].'\') ', $info['form_additional']['show_field_name']);
 
         return $this->get_replaced_tpl($name, $data);
     }
