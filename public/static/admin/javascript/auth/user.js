@@ -18,24 +18,6 @@ layui.use(['layTp'],function() {
                 ,switch_type: "popup_frame"
             }
             ,{
-                action: 'recycle'
-                ,title: '放入回收站'
-                ,icon: "layui-icon-fonts-del"
-                ,uri: layTp.facade.url(module + '/' + controller + '/set_status')
-                ,field: "is_del"
-                ,field_val: "1"
-                ,switch_type: "confirm_action"
-            }
-            ,{
-                action: 'renew',
-                title: '恢复数据'
-                ,icon: "layui-icon-list"
-                ,uri: layTp.facade.url(module + '/' + controller + '/set_status')
-                ,field: "is_del"
-                ,field_val: "0"
-                ,switch_type: "confirm_action"
-            }
-            ,{
                 action: 'del',
                 title: '删除'
                 ,icon: "layui-icon-delete"

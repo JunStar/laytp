@@ -16,13 +16,7 @@ layui.use(['layTp'],function() {
                 ,uri: layTp.facade.url(module + "/" + controller + "/edit")
                 ,switch_type: "popup_frame"
             }
-            ,{
-                action: 'del',
-                title: '删除'
-                ,icon: "layui-icon-delete"
-                ,uri: layTp.facade.url(module + "/" + controller + "/del")
-                ,switch_type: "confirm_action"
-            }
+            {%batch_del%}
         ]
     });
 

@@ -333,14 +333,15 @@ class Curd extends Command
         $all_fields = $this->curd_config['global']['all_fields'];
         $fields_list = arr_to_map($this->curd_config['field_list'], 'field_name');
         foreach($all_fields as $k=>$v){
+            $title = isset($fields_list[$v['field_name']]['field_comment']) ? $fields_list[$v['field_name']]['field_comment'] : $v['field_comment'];
             if( !in_array($v['field_name'], $show_fields) ){
-                $temp = "\t\t\t\t//,{field:'{$v['field_name']}',title:'{$fields_list[$v['field_name']]['field_comment']}',align:'center'}\n";
+                $temp = "\t\t\t\t//,{field:'{$v['field_name']}',title:'{$title}',align:'center'}\n";
             }else{
                 if(!$has_first_cols){
                     $has_first_cols = true;
-                    $temp = "\t\t\t\t{field:'{$v['field_name']}',title:'{$fields_list[$v['field_name']]['field_comment']}'";
+                    $temp = "\t\t\t\t{field:'{$v['field_name']}',title:'{$title}'";
                 }else{
-                    $temp = "\t\t\t\t,{field:'{$v['field_name']}',title:'{$fields_list[$v['field_name']]['field_comment']}'";
+                    $temp = "\t\t\t\t,{field:'{$v['field_name']}',title:'{$title}'";
                 }
                 if($fields_list[$v['field_name']]['table_width'] !== '自适应' && $fields_list[$v['field_name']]['table_width']){
                     $temp .= ",width:".$fields_list[$v['field_name']]['table_width'];
@@ -372,8 +373,16 @@ class Curd extends Command
         }
         if(isset($this->curd_config['global']['hide_del']) && $this->curd_config['global']['hide_del']){
             $temp = "\t\t\t\t,{field:'operation',title:'操作',align:'center',toolbar:'#operation_only_edit',width:100}";
+            $data['batch_del'] = "";
         }else{
             $temp = "\t\t\t\t,{field:'operation',title:'操作',align:'center',toolbar:'#operation',width:100}";
+            $data['batch_del'] = ",{
+                action: 'del',
+                title: '删除'
+                ,icon: \"layui-icon-delete\"
+                ,uri: layTp.facade.url(module + \"/\" + controller + \"/del\")
+                ,switch_type: \"confirm_action\"
+            }";
         }
         $cols .= $temp;
         $data['cols'] = $cols;
