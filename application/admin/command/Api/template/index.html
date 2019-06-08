@@ -24,7 +24,7 @@
     }
 </style>
 <body>
-<div class="layui-layout layui-layout-admin">
+<div class="layui-layout layui-layout-admin" style="position:fixed;width: 1440px;min-height:50px;margin-bottom:20px;z-index: 9999">
     <div class="layui-header" style="margin-bottom: 20px">
         <div class="layui-logo">{$title}</div>
         <div class="layui-nav layui-layout-right layui-form layui-inline">
@@ -38,9 +38,9 @@
         </div>
     </div>
 </div>
-<div class="layui-container">
+<div class="layui-container" style="top: 80px;">
     <div class="layui-row">
-        <div class="layui-col-md2">
+        <div class="layui-col-md2" style="position:fixed;max-height:285px;">
             <div class="layui-collapse">
                 {foreach $docslist as $k=>$v}
                 <div class="layui-colla-item">
@@ -54,6 +54,7 @@
                 {/foreach}
             </div>
         </div>
+        <div class="layui-col-md2">&nbsp;</div>
         <div class="layui-col-md1">&nbsp;</div>
         <div class="layui-col-md9">
             {foreach $docslist as $k=>$v}

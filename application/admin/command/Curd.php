@@ -235,16 +235,17 @@ class Curd extends Command
 
     //有关联模型，index方法要写上with查询关联数据
     protected function set_relation_index_function_html(){
+        $relation_controller_index_function_html = '';
         $relation_model = $this->curd_config['relation_model'];
-        $relation_index_function_lt = 'controller' . DS . 'index';
-        $with = [];
         if(is_array($relation_model) && count($relation_model)){
+            $relation_index_function_lt = 'controller' . DS . 'index';
+            $with = [];
             foreach($relation_model as $k=>$item){
                 $with[] = $item['relation_function_name'];
             }
+            $data['with_relation'] = "->with(['".implode("','",$with)."'])";
+            $relation_controller_index_function_html = $this->get_replaced_tpl($relation_index_function_lt,$data);
         }
-        $data['with_relation'] = "->with(['".implode("','",$with)."'])";
-        $relation_controller_index_function_html = $this->get_replaced_tpl($relation_index_function_lt,$data);
         return $relation_controller_index_function_html;
     }
 
@@ -333,13 +334,13 @@ class Curd extends Command
         $fields_list = arr_to_map($this->curd_config['field_list'], 'field_name');
         foreach($all_fields as $k=>$v){
             if( !in_array($v['field_name'], $show_fields) ){
-                $temp = "\t\t\t\t//,{field:'{$v['field_name']}',title:'{$v['field_comment']}',align:'center'}\n";
+                $temp = "\t\t\t\t//,{field:'{$v['field_name']}',title:'{$fields_list[$v['field_name']]['field_comment']}',align:'center'}\n";
             }else{
                 if(!$has_first_cols){
                     $has_first_cols = true;
-                    $temp = "\t\t\t\t{field:'{$v['field_name']}',title:'{$v['field_comment']}'";
+                    $temp = "\t\t\t\t{field:'{$v['field_name']}',title:'{$fields_list[$v['field_name']]['field_comment']}'";
                 }else{
-                    $temp = "\t\t\t\t,{field:'{$v['field_name']}',title:'{$v['field_comment']}'";
+                    $temp = "\t\t\t\t,{field:'{$v['field_name']}',title:'{$fields_list[$v['field_name']]['field_comment']}'";
                 }
                 if($fields_list[$v['field_name']]['table_width'] !== '自适应' && $fields_list[$v['field_name']]['table_width']){
                     $temp .= ",width:".$fields_list[$v['field_name']]['table_width'];
