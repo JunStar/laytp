@@ -1,22 +1,21 @@
-{extend name="admin@public/main"}
+{extend name="admin@public/layout/main"}
 
 {block name="search_form"}
 <div class="search-form-page-tab-content" id="search-form" style="display:none;">
     <div class="layui-form layui-card-header" style="height:auto;padding:10px 0 0 0;">
-    <form class="layui-form-item layui-form-pane" style="margin-bottom:0px;">
-    {%searchForm%}
+        <form class="layui-form-item layui-form-pane" style="margin-bottom:0px;">
+        {%searchForm%}
 
         <div class="layui-inline" style="padding-left: 35px;">
             <button class="layui-btn layui-btn-primary" lay-submit lay-filter="*"><i class="layui-icon"></i> 搜 索</button>
         </div>
-    </form>
+        </form>
     </div>
 </div>
 {/block}
 
 {block name="script"}
 <script src="__ADMIN_JS__/{%jsFileName%}.js" charset="utf-8"></script>
-{%jsParam%}
 {/block}
 
 {block name="js_template"}

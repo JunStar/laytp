@@ -1,20 +1,20 @@
 <div class="layui-input-inline">
-            <select
-                linkage="true"
-                lay-filter="{%field_name%}"
-                lay-verType="tips"
-                placeholder="请选择{%field_comment%}"
-                name="search_param[{%field_name%}][value]"
-                id="{%field_name%}"
-                table_name="{%table_name%}"
-                search_field="pid"
-                search_field_val=""
-                selected_val=""
-                show_field="name"
-                left_field="{%left_field%}"
-                right_field="{%right_field%}"
-            >
-                <option value="">请选择{%field_comment%}</option>
-            </select>
-            <input type="hidden" name="search_param[{%field_name%}][condition]" value="=">
-        </div>
+                    <select
+                        linkage="true"
+                        lay-filter="{%field_name%}"
+                        lay-verType="tips"
+                        placeholder="请选择{%field_comment%}"
+                        name="search_param[{%field_name%}][value]"
+                        id="{%field_name%}"
+                        table_name="{%table_name%}"
+                        search_field="pid"
+                        search_field_val=""
+                        selected_val=""
+                        show_field="name"
+                        left_field="{%left_field%}"
+                        right_field="{%right_field%}"
+                    >
+                        <option value="">请选择{%field_comment%}</option>
+                    </select>
+                    <input type="hidden" name="search_param[{%field_name%}][condition]" value="=">
+                </div>

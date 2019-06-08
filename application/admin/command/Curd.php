@@ -32,7 +32,6 @@ class Curd extends Command
         $model_array_const,//模型层数组常量
         $model_c_file_name,//需要生成的模型层文件的文件名
         $js_c_file_name,//需要生成的js文件的文件名
-        $html_array_const_js_param,//数组常量渲染成js常量
         $html_index_c_file_name,//需要生成的html首页文件的文件名
         $html_add_c_file_name,//需要生成的html添加页面文件的文件名
         $html_edit_c_file_name,//需要生成的html编辑页面文件的文件名
@@ -432,12 +431,12 @@ class Curd extends Command
         if(count($select_relation_search_html)){
             foreach($select_relation_search_html as $form_type=>$group_list){
                 foreach($group_list as $group_name=>$item){
-                    $index_search_form[] = $this->get_select_relation_search_form_group($group_name, join("\n\t\t", $item));
+                    $index_search_form[] = $this->get_select_relation_search_form_group($group_name, join("\n\t\t\t\t", $item));
                 }
             }
         }
 
-        $index_data['searchForm'] = implode("\n\n", $index_search_form);
+        $index_data['searchForm'] = implode("\n\n\t\t", $index_search_form);
         $this->htmlIndexParam = ['tpl_name'=>$index_tpl_name,'data'=>$index_data,'c_file_name'=>$this->html_index_c_file_name];
 
         $add_data = [];
@@ -507,11 +506,11 @@ EOD;
         $field_comment = $info['field_comment'];
         return <<<EOD
     <div class="layui-inline" style="padding-left: 35px;">
-        <label class="layui-form-label" title="{$field_comment}">{$field_comment}</label>
-        <div class="layui-input-inline">
-            {$content}
-        </div>
-    </div>
+                <label class="layui-form-label" title="{$field_comment}">{$field_comment}</label>
+                <div class="layui-input-inline">
+                    {$content}
+                </div>
+            </div>
 EOD;
     }
 
@@ -519,9 +518,9 @@ EOD;
     {
         return <<<EOD
     <div class="layui-inline" style="padding-left: 35px;">
-        <label class="layui-form-label" title="{$field}">{$field}</label>
-        {$content}
-    </div>
+                <label class="layui-form-label" title="{$field}">{$field}</label>
+                {$content}
+            </div>
 EOD;
     }
 
@@ -636,15 +635,8 @@ EOD;
         $this->write_to_file($this->jsParam['tpl_name'], $this->jsParam['data'], $this->jsParam['c_file_name']);
     }
 
-    protected function set_html_array_const_js_param($field_name, $str){
-        $this->html_array_const_js_param[$field_name] = $str;
-    }
-
     //生成html模板文件
     protected function c_html(){
-        if(!empty($this->html_array_const_js_param)){
-            $this->htmlIndexParam['data']['jsParam'] = '<script>'.implode("\n", $this->html_array_const_js_param).'</script>';
-        }
         $this->write_to_file($this->htmlIndexParam['tpl_name'], $this->htmlIndexParam['data'], $this->htmlIndexParam['c_file_name']);
         $this->write_to_file($this->htmlAddParam['tpl_name'], $this->htmlAddParam['data'], $this->htmlAddParam['c_file_name']);
         $this->write_to_file($this->htmlEditParam['tpl_name'], $this->htmlEditParam['data'], $this->htmlEditParam['c_file_name']);
@@ -792,7 +784,7 @@ EOD;
         }
         $options = '';
         foreach($option_items as $k=>$v){
-            $options .= "\t\t\t\t".'<option value="'.$v['value'].'">'.$v['text'].'</option>'."\n";
+            $options .= "\t\t\t\t\t\t".'<option value="'.$v['value'].'">'.$v['text'].'</option>'."\n";
         }
         $options = "\t\t\t\t".'<option value=""></option>' . "\n" . rtrim($options,"\n");
         $data['options'] = $options;
@@ -850,7 +842,6 @@ EOD;
             $model_array_const[(string)$temp[0]] = $temp[1];
         }
         $this->set_controller_array_const($info['field_name'], $model_array_const);
-        $this->set_html_array_const_js_param($info['field_name'], 'const '.$info['field_name'].' = {:getSelectMultiJsConst($'.$info['field_name'].')};');
         return $this->get_replaced_tpl($name, $data);
     }
 
@@ -923,7 +914,7 @@ EOD;
         }
         $options = '';
         foreach($option_items as $k=>$v){
-            $options .= "\t\t\t\t".'<option value="'.$v['value'].'">'.$v['text'].'</option>'."\n";
+            $options .= "\t\t\t\t\t\t".'<option value="'.$v['value'].'">'.$v['text'].'</option>'."\n";
         }
         $options = "\t\t\t\t".'<option value=""></option>' . "\n" . rtrim($options,"\n");
         $data['options'] = $options;
@@ -954,7 +945,6 @@ EOD;
         $data['verify'] = $info['form_empty'] ? '' : 'required';
         $this->set_model_array_const($info['field_name'], $model_array_const);
         $this->set_controller_array_const($info['field_name'], $model_array_const);
-        $this->set_html_array_const_js_param($info['field_name'], 'const '.$info['field_name'].' = {:getSelectMultiJsConst($'.$info['field_name'].')};');
         return $this->get_replaced_tpl($name, $data);
     }
 
@@ -971,7 +961,6 @@ EOD;
             $model_array_const[(string)$temp[0]] = $temp[1];
         }
         $this->set_controller_array_const($info['field_name'], $model_array_const);
-        $this->set_html_array_const_js_param($info['field_name'], 'const '.$info['field_name'].' = {:getSelectMultiJsConst($'.$info['field_name'].')};');
         return $this->get_replaced_tpl($name, $data);
     }
 

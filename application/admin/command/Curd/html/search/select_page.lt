@@ -1,7 +1,7 @@
 <input type="text" name="search_param[{%field_name%}][value]" id="{%field_name%}" placeholder="请选择" class="layui-input selectPage"
-                search-field="{%search_field%}"
-                search-url="{%search_url%}"
-                show-field="{%show_field%}"
-                show-multiple="true"
-                {%max%}>
-            <input type="hidden" name="search_param[{%field_name%}][condition]" value="{%condition%}">
+                    search-field="{%search_field%}"
+                    search-url="{%search_url%}"
+                    show-field="{%show_field%}"
+                    show-multiple="true"
+                    {%max%}>
+                    <input type="hidden" name="search_param[{%field_name%}][condition]" value="{%condition%}">

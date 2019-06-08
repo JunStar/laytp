@@ -1,2 +1,2 @@
-<div id="{%field_name%}" class="select_multi" max="{%max%}" name="search_param[{%field_name%}][value]"></div>
-            <input type="hidden" name="search_param[{%field_name%}][condition]" value="FIND_IN_SET">
+<div id="{%field_name%}" class="select_multi" max="{%max%}" name="search_param[{%field_name%}][value]" options='{:getSelectMultiJsConst(${%field_name%})}'></div>
+                    <input type="hidden" name="search_param[{%field_name%}][condition]" value="FIND_IN_SET">
