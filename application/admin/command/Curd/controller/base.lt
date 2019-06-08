@@ -22,6 +22,8 @@ class {%controllerClassName%} extends Backend
         $this->model = new \{%modelNamespace%}\{%modelClassName%}();
         {%upload_field%}
         {%arrayConstAssign%}
+        {%has_del%}
+        {%has_soft_del%}
     }
 
     {%indexFunction%}

@@ -4,10 +4,10 @@
  */
 namespace {%modelNamespace%};
 
-use model\Backend;
+use model\Backend;{%soft_del_package%}
 
 class {%modelClassName%} extends Backend
-{
+{{%use_soft_del%}
     //模型名
     protected $name = '{%modelName%}';
 

@@ -1,9 +1,8 @@
 <script type="text/html" id="operation">
     <div class="layui-btn-group">
         <a class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-edit" lay-event="edit" title="编辑" layer-tips="编辑"> </a>
+        {if $has_del}
         <a class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-delete" lay-event="del" title="删除" layer-tips="删除" colour="#f51c1c"> </a>
+        {/if}
     </div>
-</script>
-<script type="text/html" id="operation_only_edit">
-    <a class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-edit" lay-event="edit" title="编辑" layer-tips="编辑"> </a>
 </script>

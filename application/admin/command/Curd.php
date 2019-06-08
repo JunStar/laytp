@@ -371,11 +371,11 @@ class Curd extends Command
             }
             $cols .= $temp;
         }
+        $temp = "\t\t\t\t,{field:'operation',title:'操作',align:'center',toolbar:'#operation',width:100}";
+        $cols .= $temp;
         if(isset($this->curd_config['global']['hide_del']) && $this->curd_config['global']['hide_del']){
-            $temp = "\t\t\t\t,{field:'operation',title:'操作',align:'center',toolbar:'#operation_only_edit',width:100}";
             $data['batch_del'] = "";
         }else{
-            $temp = "\t\t\t\t,{field:'operation',title:'操作',align:'center',toolbar:'#operation',width:100}";
             $data['batch_del'] = ",{
                 action: 'del',
                 title: '删除'
@@ -384,7 +384,6 @@ class Curd extends Command
                 ,switch_type: \"confirm_action\"
             }";
         }
-        $cols .= $temp;
         $data['cols'] = $cols;
         $data['close_page'] = $this->curd_config['global']['close_page'] ? '//' : '';
         $data['cellMinWidth'] = $this->curd_config['global']['cell_min_width'] ?: 80;
@@ -565,6 +564,20 @@ EOD;
             $this->controllerParam['data']['upload_field'] = '';
             $this->controllerParam['data']['upload_field_def'] = '';
         }
+        //是否拥有删除功能
+        if(isset($this->curd_config['global']['hide_del']) && $this->curd_config['global']['hide_del']){
+            $this->controllerParam['data']['has_del'] = "\$this->assign('has_del',0);//是否拥有删除功能";
+        }else{
+            $this->controllerParam['data']['has_del'] = "\$this->assign('has_del',1);//是否拥有删除功能";
+        }
+        //是否拥有软删除功能
+        $this->controllerParam['data']['has_soft_del'] = "\$this->assign('has_soft_del',0);//是否拥有软删除功能";
+        foreach($this->curd_config['global']['all_fields'] as $k=>$v){
+            if($v['field_name'] == 'delete_time'){
+                $this->controllerParam['data']['has_soft_del'] = "\$this->assign('has_soft_del',1);//是否拥有软删除功能";
+                break;
+            }
+        }
 
         $this->write_to_file($this->controllerParam['tpl_name'], $this->controllerParam['data'], $this->controllerParam['c_file_name']);
     }
@@ -604,6 +617,16 @@ EOD;
             $this->modelParam['data']['getArrayConstListFunction'] = $this->get_replaced_tpl($array_const_function_lt);
         }else{
             $this->modelParam['data']['getArrayConstListFunction'] = '';
+        }
+        //是否拥有软删除功能
+        $this->modelParam['data']['soft_del_package'] = "";
+        $this->modelParam['data']['use_soft_del'] = "";
+        foreach($this->curd_config['global']['all_fields'] as $k=>$v){
+            if($v['field_name'] == 'delete_time'){
+                $this->modelParam['data']['soft_del_package'] = "\nuse think\model\concern\SoftDelete;";
+                $this->modelParam['data']['use_soft_del'] = "\n\tuse SoftDelete;";
+                break;
+            }
         }
         $this->write_to_file($this->modelParam['tpl_name'], $this->modelParam['data'], $this->modelParam['c_file_name']);
     }

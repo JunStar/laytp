@@ -24,6 +24,9 @@ class User extends Backend
         $this->upload_field = [
             'avatar'=>'images'
         ];
+
+        $this->assign('has_soft_del',0);//是否拥有回收站功能
+        $this->assign('has_del',1);//是否拥有删除功能
     }
 
     //添加
