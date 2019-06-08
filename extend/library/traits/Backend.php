@@ -42,6 +42,7 @@ trait Backend
                                 }
                             }
                             $data[$k][$field_name] = $temp;
+                            break;
                         case 'video':
                             $temp = '';
                             if($field_val) {
@@ -52,6 +53,7 @@ trait Backend
                                 }
                             }
                             $data[$k][$field_name] = $temp;
+                            break;
                         case 'audio':
                             $temp = '';
                             if($field_val) {
@@ -60,6 +62,7 @@ trait Backend
                                 }
                             }
                             $data[$k][$field_name] = $temp;
+                            break;
                         case 'file':
                             $temp = [];
                             if($field_val) {
@@ -70,6 +73,7 @@ trait Backend
                                 }
                             }
                             $data[$k][$field_name] = implode(' ', $temp );
+                            break;
                     }
                 }
             }

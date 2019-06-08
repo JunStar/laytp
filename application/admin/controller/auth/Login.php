@@ -9,12 +9,10 @@ use think\facade\Session;
 
 class Login extends Controller
 {
-    //首页
-    public function index()
-    {
+    //登录界面
+    public function index(){
         $session = Session::get('admin_user_id');
-        if( $session )
-        {
+        if( $session ){
             return $this->redirect(url('/admin/'));
         }
         return $this->fetch();

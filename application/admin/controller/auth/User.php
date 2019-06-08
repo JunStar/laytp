@@ -17,8 +17,7 @@ class User extends Backend
     protected $model;
     protected $upload_field;
 
-    public function initialize()
-    {
+    public function initialize(){
         parent::initialize();
         $this->model = new \app\admin\model\auth\User();
 
@@ -28,8 +27,7 @@ class User extends Backend
     }
 
     //添加
-    public function add()
-    {
+    public function add(){
         if( $this->request->isAjax() && $this->request->isPost() ){
             $post = filterPostData($this->request->post("row/a"));
             if( $post['password'] != $post['re_password']){
@@ -53,8 +51,7 @@ class User extends Backend
     }
 
     //编辑
-    public function edit()
-    {
+    public function edit(){
         $edit_where['id'] = $this->request->param('id');
         $rel_model = model('auth.RoleRelUser');
 
