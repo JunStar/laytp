@@ -144,6 +144,11 @@ trait Backend
         }
     }
 
+    //回收站
+    public function recycle(){
+        return $this->fetch();
+    }
+
     //前端select_page的js插件调用的ajax方法
     public function select_page(){
         if( $this->request->isAjax() ) {

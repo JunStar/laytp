@@ -1,4 +1,12 @@
-{extend name="admin@public/detail"}
+{extend name="admin@public/layout/popup"}
+
+{block name="style"}
+<style>
+    .layui-table td{
+        word-break:break-all;
+    }
+</style>
+{/block}
 
 {block name="body"}
 <table class="layui-table" lay-even="" lay-skin="row">

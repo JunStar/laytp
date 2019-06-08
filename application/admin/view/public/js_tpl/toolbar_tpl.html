@@ -5,7 +5,9 @@
             <a href="javascript:void(0);" class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-add-circle-fine popup-frame" data-open="{:url($js_global_var['module'].'/'.$js_global_var['controller'].'/add')}">&nbsp;添加</a>
             <a href="javascript:void(0);" class="layui-btn layui-btn-primary layui-btn-sm show-hidden-search-form layui-icon layui-icon-search">&nbsp;筛选</a>
             {if $has_soft_del}
-            <a href="javascript:void(0);" class="layui-btn layui-btn-primary layui-btn-sm show-hidden-search-form layui-icon layui-icon-delete">&nbsp;回收站</a>
+            <a href="javascript:void(0);" class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-delete popup-frame"
+            data-name="回收站"
+            data-open="{:url($js_global_var['module'].'/'.$js_global_var['controller'].'/recycle')}">&nbsp;回收站</a>
             {/if}
         </div>
     </div>
