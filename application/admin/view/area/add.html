@@ -1,0 +1,88 @@
+{extend name="admin@public/popup_form"}
+
+{block name="form"}
+    <div class="layui-form-item">
+        <label class="layui-form-label" title="所属地区">所属地区</label>
+        <div class="layui-input-block">
+            <input type="text" name="row[pid]" id="pid" placeholder="请选择" class="layui-input selectPage"
+                search-field="name"
+                search-url="{:url('admin/area/select_page')}"
+                show-field="name"
+                search-condition="LIKE"
+                show-multiple="false"
+                >
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label" title="简称">简称</label>
+        <div class="layui-input-block">
+            <input type="text" name="row[short_name]" placeholder="请输入简称" class="layui-input" lay-verify="required" lay-verType="tips">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label" title="名称">名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="row[name]" placeholder="请输入名称" class="layui-input" lay-verify="required" lay-verType="tips">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label" title="全称">全称</label>
+        <div class="layui-input-block">
+            <input type="text" name="row[merge_name]" placeholder="请输入全称" class="layui-input" lay-verify="required" lay-verType="tips">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label" title="层级">层级</label>
+        <div class="layui-input-block">
+            <input type="radio" name="row[level]" value="1" title="省" checked="checked" />
+			<input type="radio" name="row[level]" value="2" title="市"  />
+			<input type="radio" name="row[level]" value="3" title="区县"  />
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label" title="拼音">拼音</label>
+        <div class="layui-input-block">
+            <input type="text" name="row[pinyin]" placeholder="请输入拼音" class="layui-input" lay-verify="required" lay-verType="tips">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label" title="长途区号">长途区号</label>
+        <div class="layui-input-block">
+            <input type="text" name="row[code]" placeholder="请输入长途区号" class="layui-input" lay-verify="required" lay-verType="tips">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label" title="邮编">邮编</label>
+        <div class="layui-input-block">
+            <input type="text" name="row[zip]" placeholder="请输入邮编" class="layui-input" lay-verify="required" lay-verType="tips">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label" title="首字母">首字母</label>
+        <div class="layui-input-block">
+            <input type="text" name="row[first]" placeholder="请输入首字母" class="layui-input" lay-verify="required" lay-verType="tips">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label" title="经度">经度</label>
+        <div class="layui-input-block">
+            <input type="text" name="row[lng]" placeholder="请输入经度" class="layui-input" lay-verify="required" lay-verType="tips">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label" title="纬度">纬度</label>
+        <div class="layui-input-block">
+            <input type="text" name="row[lat]" placeholder="请输入纬度" class="layui-input" lay-verify="required" lay-verType="tips">
+        </div>
+    </div>
+{/block}
