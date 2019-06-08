@@ -11,8 +11,12 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="format-detection" content="telephone=no">
     <link rel="stylesheet" href="/static/library/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="/static/admin/css/style.css" media="all">
 </head>
 <style>
+    body{
+        background-color:#fff
+    }
     .layui-tab-content{
         padding: 10px 0 10px 0;
     }
@@ -24,21 +28,21 @@
     }
 </style>
 <body>
-<div class="layui-layout layui-layout-admin" style="position:fixed;width: 1440px;min-height:50px;margin-bottom:20px;z-index: 9999">
+<div class="layui-layout layui-layout-admin laytp-theme-10" style="position:fixed;width: 1440px;min-height:50px;margin-bottom:20px;z-index: 9999">
     <div class="layui-header" style="margin-bottom: 20px">
-        <div class="layui-logo">{$title}</div>
+        <div class="fl header-logo">{$title}</div>
         <div class="layui-nav layui-layout-right layui-form layui-inline">
             <div class="layui-form-item" style="margin-top: 10px;">
-                <label class="layui-form-label">ApiUrl:</label>
+                <label class="layui-form-label" style="color: #ffffff!important;">ApiUrl:</label>
                 <div class="layui-input-inline">
                     <input type="text" name="api_url" id="api_url" lay-verify="api_url" autocomplete="off" placeholder="http://www.domain.com/" class="layui-input">
                 </div>
-                <button class="layui-btn" lay-submit="" lay-filter="api_url">保存</button>
+                <button class="layui-btn layui-btn-primary" lay-submit="" lay-filter="api_url">保存</button>
             </div>
         </div>
     </div>
 </div>
-<div class="layui-container" style="top: 80px;">
+<div class="layui-container laytp-theme-10" style="top: 80px;">
     <div class="layui-row">
         <div class="layui-col-md2" style="position:fixed;max-height:285px;">
             <div class="layui-collapse">
@@ -165,7 +169,7 @@
                                                 {/foreach}
                                                 <div class="layui-form-item">
                                                     <div class="layui-input-block">
-                                                        <a class="layui-btn" href="javascript:void(0);" onclick="test_inline({$api.id})">提 交</a>
+                                                        <a class="layui-btn layui-btn-normal" href="javascript:void(0);" onclick="test_inline({$api.id})">提 交</a>
                                                     </div>
                                                 </div>
                                             </form>

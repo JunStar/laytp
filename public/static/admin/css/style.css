@@ -177,6 +177,7 @@ body{background-color:#f5f5f5;margin:0;padding:0;}
 .layui-laypage .layui-laypage-curr .layui-laypage-em {background-color:var(--laytp-layui-laypage-em)}
 .layui-form .layui-form-label{color:#333!important;}
 .layui-table-view .layui-table{width:100%!important;}
+.layui-tab-brief>.layui-tab-title .layui-this{color:var(--laytp-head-bg)}
 .page-body>.page-tab-content>.layui-card>.layui-tab-brief>.layui-tab-title .layui-this:after{border-color:var(--laytp-head-bg)!important;}
 .tooltip {display:inline-block;width:14px;height:14px;background:url(../image/tooltip.png) no-repeat;position:relative;cursor:pointer}
 .ai-tishi {color:#1e91cf!important;position:relative;cursor:pointer}

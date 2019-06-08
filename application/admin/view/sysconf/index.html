@@ -8,7 +8,7 @@
                 {foreach $config_gorup as $k=>$v}
                 <li onclick="location.href='{:url('admin/sysconf/index',['group'=>$k])}'"><span {if $group==$k}style="color:#369;"{/if}>{$v}</span></li>
                 {/foreach}
-                <li class="layui-icon"><a href="javascript:void(0);">&#xe654;</a></li>
+                <li class="layui-icon">&#xe654;</li>
             </ul>
             <div class="layui-tab-content">
                 {foreach $config_gorup as $gk=>$gv}
