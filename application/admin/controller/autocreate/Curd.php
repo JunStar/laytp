@@ -99,6 +99,7 @@ class Curd extends Backend
         if($curd_info){
             $result['selected_list'] = json_decode($curd_info['field_list'], true);
             $result['relation_model'] = json_decode($curd_info['relation_model'], true);
+            $result['global'] = json_decode($curd_info['global'], true);
             if($result['relation_model']){
                 foreach($result['relation_model'] as $k=>$v){
                     if(!isset($result['fields_list'][$v['table_name']])) {

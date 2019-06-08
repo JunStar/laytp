@@ -67,6 +67,13 @@ layui.use(['layTp'],function(){
 
         //监听[选择表]下拉框onchange事件
         layui.form.on('select(select_table)',function(data){
+            //全局模型，隐藏主键列等渲染成非选中状态
+            $('#common_model').attr('checked',false);
+            $('#hide_pk').attr('checked',false);
+            $('#create_number').attr('checked',false);
+            $('#close_page').attr('checked',false);
+            $('#hide_del').attr('checked',false);
+
             //关联模型设为非选中状态
             $('#relation_model').attr('checked',false);
 
@@ -150,9 +157,8 @@ layui.use(['layTp'],function(){
                         });
                         //关联模型相关渲染
                         let relation_model = res.data.relation_model;
-                        if(relation_model){
+                        if(relation_model && relation_model.length>0){
                             $('#relation_model').attr('checked',true);
-                            layui.form.render('checkbox');
 
                             $('#relation_model_fieldset').show();
                             let show_fields_relation = [];
@@ -187,6 +193,25 @@ layui.use(['layTp'],function(){
                             }
                             layui.form.render('select');
                         }
+                        //全局模型，隐藏主键列等渲染是否选中
+                        let global = res.data.global;
+                        console.log(global.hide_del);
+                        if(global.common_model == 1){
+                            $('#common_model').attr('checked',true);
+                        }
+                        if(global.hide_pk == 1){
+                            $('#hide_pk').attr('checked',true);
+                        }
+                        if(global.create_number == 1){
+                            $('#create_number').attr('checked',true);
+                        }
+                        if(global.close_page == 1){
+                            $('#close_page').attr('checked',true);
+                        }
+                        if(global.hide_del == 1){
+                            $('#hide_del').attr('checked',true);
+                        }
+                        layui.form.render('checkbox');
                     }else{
                         layTp.facade.error(res.msg);
                     }
