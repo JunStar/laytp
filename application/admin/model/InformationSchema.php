@@ -41,7 +41,7 @@ class InformationSchema extends Backend
     public function getFieldsComment($table_name){
         $where['table_schema'] = Config::get('database.database');
         $where['table_name'] = $table_name;
-        $field = 'COLUMN_NAME,COLUMN_COMMENT';
+        $field = 'COLUMN_NAME,COLUMN_COMMENT,COLUMN_DEFAULT';
         $list = $this->table('columns')->where($where)->field($field)->select();
         return $list;
     }

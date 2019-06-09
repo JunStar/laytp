@@ -145,6 +145,7 @@ class Curd extends Backend
                 }
             }
             $result['selected_list'] = $result['all_fields'];
+            $result['fields_list'][$table] = $fields;
             $this->success('获取成功', $result);
         }
     }

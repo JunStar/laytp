@@ -620,10 +620,14 @@ EOD;
         //是否拥有软删除功能
         $this->modelParam['data']['soft_del_package'] = "";
         $this->modelParam['data']['use_soft_del'] = "";
+        $this->modelParam['data']['defaultSoftDelete'] = "";
         foreach($this->curd_config['global']['all_fields'] as $k=>$v){
             if($v['field_name'] == 'delete_time'){
                 $this->modelParam['data']['soft_del_package'] = "\nuse think\model\concern\SoftDelete;";
                 $this->modelParam['data']['use_soft_del'] = "\n\tuse SoftDelete;";
+                if($v['column_default'] !== null){
+                    $this->modelParam['data']['defaultSoftDelete'] = "\n\tprotected \$defaultSoftDelete='{$v['column_default']}';";
+                }
                 break;
             }
         }

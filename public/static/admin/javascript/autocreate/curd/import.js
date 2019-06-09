@@ -195,21 +195,22 @@ layui.use(['layTp'],function(){
                         }
                         //全局模型，隐藏主键列等渲染是否选中
                         let global = res.data.global;
-                        console.log(global.hide_del);
-                        if(global.common_model == 1){
-                            $('#common_model').attr('checked',true);
-                        }
-                        if(global.hide_pk == 1){
-                            $('#hide_pk').attr('checked',true);
-                        }
-                        if(global.create_number == 1){
-                            $('#create_number').attr('checked',true);
-                        }
-                        if(global.close_page == 1){
-                            $('#close_page').attr('checked',true);
-                        }
-                        if(global.hide_del == 1){
-                            $('#hide_del').attr('checked',true);
+                        if(typeof global != "undefined"){
+                            if(global.common_model == 1){
+                                $('#common_model').attr('checked',true);
+                            }
+                            if(global.hide_pk == 1){
+                                $('#hide_pk').attr('checked',true);
+                            }
+                            if(global.create_number == 1){
+                                $('#create_number').attr('checked',true);
+                            }
+                            if(global.close_page == 1){
+                                $('#close_page').attr('checked',true);
+                            }
+                            if(global.hide_del == 1){
+                                $('#hide_del').attr('checked',true);
+                            }
                         }
                         layui.form.render('checkbox');
                     }else{
@@ -407,9 +408,11 @@ layui.use(['layTp'],function(){
                     func_controller.set_select_relation_table_name(field_name, table_list, form_additional['table_name']);
                     let left_field = (typeof form_additional == 'object') ? form_additional['left_field'] : "";
                     let right_field = (typeof form_additional == 'object') ? form_additional['right_field'] : "";
+                    console.log(fields_list);
                     for(key in fields_list){
                         if(key == select_table_name){
                             let temp_fields_list = fields_list[key];
+                            console.log(temp_fields_list);
                             func_controller.set_select_relation_left_field_name(field_name, temp_fields_list, left_field);
                             func_controller.set_select_relation_right_field_name(field_name, temp_fields_list, right_field);
                         }

@@ -38,6 +38,7 @@ class Curd extends Backend
                 if( $v != $pk ){
                     $temp['field_name'] = $v;
                     $temp['field_comment'] = $comment_map[$v]['COLUMN_COMMENT'];
+                    $temp['column_default'] = $comment_map[$v]['COLUMN_DEFAULT'];
                     $all_fields[] = $temp;
                 }
             }
