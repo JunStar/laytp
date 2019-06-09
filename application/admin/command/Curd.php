@@ -363,22 +363,10 @@ class Curd extends Command
                 }else{
                     $temp = "\t\t\t\t,{field:'{$v['field_name']}',title:'{$title}'";
                 }
-                if($fields_list[$v['field_name']]['table_width'] !== '自适应' && $fields_list[$v['field_name']]['table_width']){
-                    $temp .= ",width:".$fields_list[$v['field_name']]['table_width'];
-                }
-                if($fields_list[$v['field_name']]['table_min_width'] !== '使用全局配置' && $fields_list[$v['field_name']]['table_min_width']){
-                    $temp .= ",minWidth:".$fields_list[$v['field_name']]['table_min_width'];
-                }
                 $temp .= ",align:'center'";
-                if($fields_list[$v['field_name']]['table_additional_unresize']){
-                    $temp .= ",unresize:true";
-                }
-                if($fields_list[$v['field_name']]['table_additional_sort']){
-                    $temp .= ",sort:true";
-                }
-                if($fields_list[$v['field_name']]['table_additional_edit']){
-                    $temp .= ",edit:'text'";
-                }
+//                if($fields_list[$v['field_name']]['table_additional_edit']){
+//                    $temp .= ",edit:'text'";
+//                }
                 if($relation_info = $this->is_relation_key($v['field_name'])){
                     $relation_show_field = explode(',',$relation_info['show_field']);
                     $templet = [];

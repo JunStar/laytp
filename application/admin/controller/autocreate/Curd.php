@@ -124,8 +124,6 @@ class Curd extends Backend
                         $result['all_fields'][] = [
                             'field_name' => $v
                             ,'field_comment' => $comment_map[$v]['COLUMN_COMMENT']
-                            ,'table_width' => '自适应'
-                            ,'table_min_width' => '使用全局配置'
                         ];
                     }
                 }
@@ -139,8 +137,6 @@ class Curd extends Backend
                 if( !in_array($v, array_merge([$pk],$this->special_fields)) ){
                     $result['all_fields'][$i]['field_name'] = $v;
                     $result['all_fields'][$i]['field_comment'] = $comment_map[$v]['COLUMN_COMMENT'];
-                    $result['all_fields'][$i]['table_width'] = '自适应';
-                    $result['all_fields'][$i]['table_min_width'] = '使用全局配置';
                     $i++;
                 }
             }

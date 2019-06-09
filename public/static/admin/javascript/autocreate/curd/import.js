@@ -15,23 +15,19 @@ layui.use(['layTp'],function(){
             ,data:data
             ,cols: [
                 [
-                    {title:'数据库字段查看', width:100, align: 'center', colspan: 3}
+                    {title:'数据库字段查看', align: 'center', colspan: 3}
                     ,{title:'表单设置,影响添加编辑表单', align: 'center', colspan: 3}
-                    ,{title:'列表设置', align: 'center', colspan: 3}
+                    // ,{title:'列表设置', align: 'center',rowspan:2, templet: "#table_additional", align: 'center', width:150}
                 ]
                 ,[
                     //数据库字段设置
                     {title:'序号', type:'numbers', align: 'center'}
-                    ,{field:'field_name', title:'字段名称', width:100, align: 'center', edit: 'text'}
-                    ,{field:'field_comment', title:'字段注释(表头和表单中显示的文字)', width:100, align: 'center', edit: 'text'}
+                    ,{field:'field_name', title:'字段名称', align: 'center', edit: 'text', width:120}
+                    ,{field:'field_comment', title:'字段注释', align: 'center', edit: 'text', width:150}
                     //表单设置
-                    ,{field:'form_type', title:'表单元素', templet: "#form_type", align: 'center', width: 190}
-                    ,{field:'form_additional', title:'附加设置', templet: "#form_additional", align: 'center', width: 220}
-                    ,{field:'form_empty', title:'允许为空', templet: "#form_empty", align: 'center', width: 140}
-                    //列表设置
-                    ,{field:'table_width', title:'绝对列宽(数字或者百分比)', align: 'center', edit: 'text'}
-                    ,{field:'table_min_width', title:'最小列宽(数字或者百分比)', align: 'center', edit: 'text', width: 120}
-                    ,{field:'table_additional', title:'附加选项', templet: "#table_additional", align: 'center', width: 400}
+                    ,{field:'form_type', title:'表单元素', templet: "#form_type", align: 'center', width:180}
+                    ,{field:'form_additional', title:'附加设置', templet: "#form_additional", align: 'center'}
+                    ,{field:'form_empty', title:'允许为空', templet: "#form_empty", align: 'center', width:150}
                 ]
             ]
         });

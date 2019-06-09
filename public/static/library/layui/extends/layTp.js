@@ -3,9 +3,8 @@
 * @Author:  JunStar
 * @Date:    2018年09月20日11:47:00
 * @Last Modified by:   JunStar
-* @Last Modified time: 2018年09月20日11:47:00
+* @Last Modified time: 2019年06月09日23:23:09
 */
-let add_search_condition_click_num = 0;
 layui.define([
     'jquery', 'layer', 'form', 'table', 'laytpl', 'element','laydate','upload','selectPage'
     ,'select_multi'
