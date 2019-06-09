@@ -35,12 +35,15 @@ class Curd extends Command
         $html_index_c_file_name,//需要生成的html首页文件的文件名
         $html_add_c_file_name,//需要生成的html添加页面文件的文件名
         $html_edit_c_file_name,//需要生成的html编辑页面文件的文件名
+        $html_recycle_c_file_name,//需要生成的html回收站页面文件的文件名
+        $recycle_cols,//回收站需要的js字段列表
         $controllerParam,//生成控制器文件的参数,是一个数组['tpl_name'=>使用到的模板名称,'data'=>模板中需要替换的数据,'c_file_name'=>需要生成的文件名称]
         $modelParam,//生成模型层文件的参数,是一个数组['tpl_name'=>使用到的模板名称,'data'=>模板中需要替换的数据,'c_file_name'=>需要生成的文件名称]
         $jsParam,//生成js文件的参数,是一个数组['tpl_name'=>使用到的模板名称,'data'=>模板中需要替换的数据,'c_file_name'=>需要生成的文件名称]
         $htmlIndexParam,//生成html首页文件的参数,是一个数组['tpl_name'=>使用到的模板名称,'data'=>模板中需要替换的数据,'c_file_name'=>需要生成的文件名称]
         $htmlAddParam,//生成html添加页面文件的参数,是一个数组['tpl_name'=>使用到的模板名称,'data'=>模板中需要替换的数据,'c_file_name'=>需要生成的文件名称]
         $htmlEditParam,//生成html编辑页面文件的参数,是一个数组['tpl_name'=>使用到的模板名称,'data'=>模板中需要替换的数据,'c_file_name'=>需要生成的文件名称]
+        $htmlRecycleParam,//生成html编辑页面文件的参数,是一个数组['tpl_name'=>使用到的模板名称,'data'=>模板中需要替换的数据,'c_file_name'=>需要生成的文件名称]
         $relation_model//关联模型
     ;
     protected function configure(){
@@ -210,6 +213,7 @@ class Curd extends Command
         $this->html_index_c_file_name = app()->getAppPath() . 'admin' . DS . 'view' . DS . strtolower($this->mid_name) . DS . 'index.html';
         $this->html_add_c_file_name = app()->getAppPath() . 'admin' . DS . 'view' . DS . strtolower($this->mid_name) . DS . 'add.html';
         $this->html_edit_c_file_name = app()->getAppPath() . 'admin' . DS . 'view' . DS . strtolower($this->mid_name) . DS . 'edit.html';
+        $this->html_recycle_c_file_name = app()->getAppPath() . 'admin' . DS . 'view' . DS . strtolower($this->mid_name) . DS . 'recycle.html';
     }
 
     /**
@@ -384,6 +388,7 @@ class Curd extends Command
             }";
         }
         $data['cols'] = $cols;
+        $this->recycle_cols = $cols;
         $data['close_page'] = $this->curd_config['global']['close_page'] ? '//' : '';
         $data['cellMinWidth'] = $this->curd_config['global']['cell_min_width'] ?: 80;
         $this->jsParam = ['tpl_name'=>$tpl_name,'data'=>$data,'c_file_name'=>$this->js_c_file_name];
@@ -441,6 +446,7 @@ class Curd extends Command
 
         $add_data = [];
         $edit_data = [];
+        $recycle_data = [];
         $select_relation_add_html = [];
         $select_relation_edit_html = [];
         foreach($this->curd_config['field_list'] as $k=>$v){
@@ -471,6 +477,11 @@ class Curd extends Command
         $edit_tpl_name = 'html' . DS . 'edit';
         $edit_data['formContent'] = implode("\n\n", $edit_data);
         $this->htmlEditParam = ['tpl_name'=>$edit_tpl_name,'data'=>$edit_data,'c_file_name'=>$this->html_edit_c_file_name];
+
+        $recycle_tpl_name = 'html' . DS . 'recycle';
+        $recycle_data['searchForm'] = $index_data['searchForm'];
+        $recycle_data['cols'] = $this->recycle_cols;
+        $this->htmlRecycleParam = ['tpl_name'=>$recycle_tpl_name,'data'=>$recycle_data,'c_file_name'=>$this->html_recycle_c_file_name];
     }
 
     protected function get_form_item($info,$type='add'){
@@ -644,6 +655,7 @@ EOD;
         $this->write_to_file($this->htmlIndexParam['tpl_name'], $this->htmlIndexParam['data'], $this->htmlIndexParam['c_file_name']);
         $this->write_to_file($this->htmlAddParam['tpl_name'], $this->htmlAddParam['data'], $this->htmlAddParam['c_file_name']);
         $this->write_to_file($this->htmlEditParam['tpl_name'], $this->htmlEditParam['data'], $this->htmlEditParam['c_file_name']);
+        $this->write_to_file($this->htmlRecycleParam['tpl_name'], $this->htmlRecycleParam['data'], $this->htmlRecycleParam['c_file_name']);
     }
 
     /**

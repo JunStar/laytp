@@ -408,11 +408,9 @@ layui.use(['layTp'],function(){
                     func_controller.set_select_relation_table_name(field_name, table_list, form_additional['table_name']);
                     let left_field = (typeof form_additional == 'object') ? form_additional['left_field'] : "";
                     let right_field = (typeof form_additional == 'object') ? form_additional['right_field'] : "";
-                    console.log(fields_list);
                     for(key in fields_list){
                         if(key == select_table_name){
                             let temp_fields_list = fields_list[key];
-                            console.log(temp_fields_list);
                             func_controller.set_select_relation_left_field_name(field_name, temp_fields_list, left_field);
                             func_controller.set_select_relation_right_field_name(field_name, temp_fields_list, right_field);
                         }
