@@ -99,7 +99,6 @@ layui.define([
             }else{
                 params = '';
             }
-
             path = '/' + path.replace(/(^\/)|(\/$)/,'');
 
             var url = path + params;
@@ -314,6 +313,83 @@ layui.define([
                     });
                 });
             }
+        },
+
+        //列表格式化展示数据
+        formatter:{
+            custom:["#18bc9c","#FFB800","#0bf80b","#999999","#0bf0f8","#0b8af8","#ff0900","#0b1bf8","#7a0bf8","#f00bf8","#5FB878","#1E9FFF","#2F4056"],
+            //form_type=radio || select_single
+            status:function(field,value,data_list){
+                let custom_index = 0;
+                for(key in data_list){
+                    if(value == key){
+                        return '<span click_search="true" field="'+field+'" field_val="'+value+'" layer-tips="点击搜索 '+data_list[key]+'" colour="#393D49" style="color:'+layTp.facade.formatter.custom[custom_index]+'"><i class="layui-icon layui-icon-circle-dot"></i>'+data_list[key]+'</span>';
+                    }
+                    custom_index++;
+                }
+                return '';
+            },
+            //form_type=select_multi || checkbox
+            flag:function(value,data_list){
+                let custom_index = 0;
+                let html = '';
+                if(value){
+                    let value_arr = value.split(',');
+                    for(key in data_list){
+                        for(v in value_arr){
+                            if(value_arr[v] == key){
+                                html += '<span class="layui-btn layui-btn-sm" style="background-color: '+layTp.facade.formatter.custom[custom_index]+'">'+data_list[key]+'</span>';
+                            }
+                            custom_index++;
+                        }
+                    }
+                }
+                return html;
+            },
+            images:function(value){
+                let html = '';
+                if(value) {
+                    let value_arr = value.split(',');
+                    for(key in value_arr){
+                        html += '<a target="_blank" href="'+value_arr[key]+'"><img src="'+value_arr[key]+'" style="width:30px;height:30px;" /></a> ';
+                    }
+                }
+                return html;
+            },
+            video:function(value){
+                let html = '';
+                if(value) {
+                    let i = 1;
+                    let value_arr = value.split(',');
+                    for(key in value_arr){
+                        html += '<a href="javascript:void(0);" class="popup-frame" data-name="查看视频" data-open="'+layTp.facade.url('admin/ajax/show_video',{'path':window.btoa(value_arr[key])})+'">视频'+i+'</a> ';
+                        i++;
+                    }
+                }
+                return html;
+            },
+            audio:function(value){
+                let html = '';
+                if(value) {
+                    let value_arr = value.split(',');
+                    for(key in value_arr){
+                        html += '<audio src="'+value_arr[key]+'" width="200px" height="30px" controls="controls"></audio>';
+                    }
+                }
+                return html;
+            },
+            file:function(value){
+                let html = '';
+                if(value) {
+                    let i = 1;
+                    let value_arr = value.split(',');
+                    for(key in value_arr){
+                        html += '<a href="javascript:void(0);" download="'+value_arr[key]+'" title="点击下载">文件'+i+'</a> ';
+                        i++;
+                    }
+                }
+                return html;
+            }
         }
     }
 
@@ -497,7 +573,6 @@ layui.define([
          */
         form_submit: function(){
             layui.form.on('submit(*)', function(data){
-
                 /**
                  * 所有的表单提交都是执行ajax，ajax请求的地址都是当前的url
                  * 列表页的搜索表单要使用到layui的table控件进行ajax提交，其他表单使用jQuery的ajax提交方式
@@ -558,20 +633,6 @@ layui.define([
                     }
                 });
             }
-        },
-
-        /**
-         * 搜索表单，添加搜索条件绑定事件(暂时废弃)
-         */
-        add_search_condition: function(){
-            $(document).on('click','.add_search_condition',function(){
-                let search_condition_tpl = $('#search_condition_tpl').html();
-                add_search_condition_click_num = add_search_condition_click_num + 1;
-                layui.laytpl(search_condition_tpl).render(add_search_condition_click_num, function(html){
-                    $('form > div').append(html);
-                    layui.form.render();
-                });
-            });
         },
 
         /**
@@ -892,6 +953,17 @@ layui.define([
                     tips: [1, colour],
                     time: 800
                 });
+            });
+        },
+
+        click_search:function(){
+            $(document).on('click','[click_search]',function(){
+                let obj = $(this);
+                let field = obj.attr('field');
+                let field_val = obj.attr('field_val');
+                $('#'+field).val(field_val);
+                layui.form.render('select');
+                $('[lay-submit]').click();
             });
         }
     }

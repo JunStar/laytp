@@ -370,6 +370,40 @@ class Curd extends Command
                     }
                     $temp .= ",templet:'<div>".implode(',',$templet)."</div>'";
                 }
+                //单选按钮和单选下拉框渲染成status的模板
+                if($fields_list[$v['field_name']]['form_type'] == 'radio' || ($fields_list[$v['field_name']]['form_type'] == 'select' && $fields_list[$v['field_name']]['form_additional']['single_multi'] == 'single')){
+                    if( $fields_list[$v['field_name']]['form_type'] == 'radio' ){
+                        $json_obj = json_encode( $this->getArrayByString($fields_list[$v['field_name']]['form_additional']),JSON_UNESCAPED_UNICODE );
+                    }else{
+                        $json_obj = json_encode( $this->getArrayByString($fields_list[$v['field_name']]['form_additional']['values']),JSON_UNESCAPED_UNICODE );
+                    }
+                    $temp .= ",templet:function(d){\n\t\t\t\t\treturn layTp.facade.formatter.status('{$v['field_name']}',d.{$v['field_name']},{$json_obj});\n\t\t\t\t}";
+                }
+                //复选框和多选下拉框渲染成flag的模板
+                if($fields_list[$v['field_name']]['form_type'] == 'checkbox' || ($fields_list[$v['field_name']]['form_type'] == 'select' && $fields_list[$v['field_name']]['form_additional']['single_multi'] == 'multi')){
+                    if( $fields_list[$v['field_name']]['form_type'] == 'checkbox' ){
+                        $json_obj = json_encode( $this->getArrayByString($fields_list[$v['field_name']]['form_additional']),JSON_UNESCAPED_UNICODE );
+                    }else{
+                        $json_obj = json_encode( $this->getArrayByString($fields_list[$v['field_name']]['form_additional']['values']),JSON_UNESCAPED_UNICODE );
+                    }
+                    $temp .= ",templet:function(d){\n\t\t\t\t\treturn layTp.facade.formatter.flag(d.{$v['field_name']},{$json_obj});\n\t\t\t\t}";
+                }
+                //image模板
+                if($fields_list[$v['field_name']]['form_type'] == 'upload' && $fields_list[$v['field_name']]['form_additional']['accept'] == 'images'){
+                    $temp .= ",templet:function(d){\n\t\t\t\t\treturn layTp.facade.formatter.images(d.{$v['field_name']});\n\t\t\t\t}";
+                }
+                //video模板
+                if($fields_list[$v['field_name']]['form_type'] == 'upload' && $fields_list[$v['field_name']]['form_additional']['accept'] == 'video'){
+                    $temp .= ",templet:function(d){\n\t\t\t\t\treturn layTp.facade.formatter.video(d.{$v['field_name']});\n\t\t\t\t}";
+                }
+                //audio模板
+                if($fields_list[$v['field_name']]['form_type'] == 'upload' && $fields_list[$v['field_name']]['form_additional']['accept'] == 'audio'){
+                    $temp .= ",templet:function(d){\n\t\t\t\t\treturn layTp.facade.formatter.audio(d.{$v['field_name']});\n\t\t\t\t}";
+                }
+                //file模板
+                if($fields_list[$v['field_name']]['form_type'] == 'upload' && $fields_list[$v['field_name']]['form_additional']['accept'] == 'file'){
+                    $temp .= ",templet:function(d){\n\t\t\t\t\treturn layTp.facade.formatter.file(d.{$v['field_name']});\n\t\t\t\t}";
+                }
                 $temp .= "}\n";
             }
             $cols .= $temp;
@@ -392,6 +426,23 @@ class Curd extends Command
         $data['close_page'] = $this->curd_config['global']['close_page'] ? '//' : '';
         $data['cellMinWidth'] = $this->curd_config['global']['cell_min_width'] ?: 80;
         $this->jsParam = ['tpl_name'=>$tpl_name,'data'=>$data,'c_file_name'=>$this->js_c_file_name];
+    }
+
+    /**
+     * 获取一个数组，根据传入的参数，这个参数string的格式类似于:0=游泳,1=下棋,2=游戏,3=乒乓球,4=羽毛,5=跑步,6=爬山,7=美食,default=0;1;2
+     * @param $string
+     * @return array
+     */
+    public function getArrayByString($string){
+        $items = explode(",", $string);
+        $radio_items = [];//待选项数组
+        foreach($items as $k=>$v){
+            $temp = explode('=', $v);
+            if($temp[0]!='default'){
+                $radio_items[$temp[0]] = $temp[1];
+            }
+        }
+        return $radio_items;
     }
 
     public function is_relation_key($field_name){

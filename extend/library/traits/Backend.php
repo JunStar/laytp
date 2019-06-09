@@ -12,7 +12,7 @@ trait Backend
             $where = $this->build_params();
             $limit = $this->request->param('limit');
             $data = $this->model->where($where)->order('id desc')->paginate($limit)->toArray();
-            $data['data'] = $this->prettifyList($data['data']);
+//            $data['data'] = $this->prettifyList($data['data']);
             return layui_table_page_data($data);
         }
         return $this->fetch();

@@ -1,4 +1,4 @@
-<select name="search_param[{%field_name%}][value]" id="{%field_name%}"
+<select id="{%field_name%}" name="search_param[{%field_name%}][value]" id="{%field_name%}"
                 xm-select="search_{%field_name%}"
                 xm-select-search="{%search_url%}"
                 xm-select-search-field="{%search_field%}"
