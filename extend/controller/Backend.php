@@ -19,6 +19,8 @@ class Backend extends Controller
     public $admin_user;
     public $rule_list;
     public $menu_ids;
+    public $has_del=0;
+    public $has_soft_del=0;
 
     public function initialize(){
         if( $this->request->isPost() ){
@@ -31,7 +33,7 @@ class Backend extends Controller
         $this->now_node = $this->module . '/' . $this->controller . '/' . $this->action;
 
         $this->auth();
-        $this->js_global_var();
+        $this->init_assing_val();
         $this->menu();
     }
 
@@ -170,7 +172,7 @@ class Backend extends Controller
     /**
      * 渲染js全局变量
      */
-    public function js_global_var(){
+    public function init_assing_val(){
         $module = $this->request->module();
         $controller = strtolower($this->request->controller());
         $action = strtolower($this->request->action());
@@ -180,6 +182,9 @@ class Backend extends Controller
         $assign['js_global_var']['js_controller'] = str_replace('.','/',$controller);
         $assign['js_global_var']['action'] = $action;
         $assign['js_global_var']['table_id'] = $module . $controller . $action;
+
+        $assign['has_del'] = $this->has_del;
+        $assign['has_soft_del'] = $this->has_soft_del;
 
         $this->assign($assign);
     }

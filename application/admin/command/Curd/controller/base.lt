@@ -14,7 +14,7 @@ class {%controllerClassName%} extends Backend
      * {%modelName%}模型对象
      * @var {%modelNamespace%}\{%modelClassName%}
      */
-    protected $model;{%upload_field_def%}
+    protected $model;{%upload_field_def%}{%has_del%}{%has_soft_del%}
 
     public function initialize()
     {
@@ -22,8 +22,7 @@ class {%controllerClassName%} extends Backend
         $this->model = new \{%modelNamespace%}\{%modelClassName%}();
         {%upload_field%}
         {%arrayConstAssign%}
-        {%has_del%}
-        {%has_soft_del%}
+
     }
 
     {%indexFunction%}

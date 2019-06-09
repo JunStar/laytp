@@ -576,15 +576,14 @@ EOD;
         }
         //是否拥有删除功能
         if(isset($this->curd_config['global']['hide_del']) && $this->curd_config['global']['hide_del']){
-            $this->controllerParam['data']['has_del'] = "\$this->assign('has_del',0);//是否拥有删除功能";
+            $this->controllerParam['data']['has_del'] = "\n\tpublic \$has_del=0;//是否拥有删除功能";
         }else{
-            $this->controllerParam['data']['has_del'] = "\$this->assign('has_del',1);//是否拥有删除功能";
+            $this->controllerParam['data']['has_del'] = "\n\tpublic \$has_del=1;//是否拥有删除功能";
         }
         //是否拥有软删除功能
-        $this->controllerParam['data']['has_soft_del'] = "\$this->assign('has_soft_del',0);//是否拥有软删除功能";
         foreach($this->curd_config['global']['all_fields'] as $k=>$v){
             if($v['field_name'] == 'delete_time'){
-                $this->controllerParam['data']['has_soft_del'] = "\$this->assign('has_soft_del',1);//是否拥有软删除功能";
+                $this->controllerParam['data']['has_soft_del'] = "\n\tpublic \$has_soft_del=1;//是否拥有软删除功能";
                 break;
             }
         }
