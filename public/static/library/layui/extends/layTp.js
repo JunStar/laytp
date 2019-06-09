@@ -331,16 +331,16 @@ layui.define([
             },
             //form_type=select_multi || checkbox
             flag:function(value,data_list){
-                let custom_index = 0;
                 let html = '';
+                let custom_index = 0;
                 if(value){
                     let value_arr = value.split(',');
                     for(key in data_list){
                         for(v in value_arr){
                             if(value_arr[v] == key){
+                                custom_index = key % layTp.facade.formatter.custom.length;
                                 html += '<span class="layui-btn layui-btn-sm-1" style="background-color: '+layTp.facade.formatter.custom[custom_index]+'">'+data_list[key]+'</span>';
                             }
-                            custom_index++;
                         }
                     }
                 }
