@@ -135,9 +135,8 @@ trait Backend
 
     //删除
     public function del(){
-        $id = intval( $this->request->param('id') );
-        $info = $this->model->get($id);
-        if( $info->delete() ){
+        $ids = $this->request->param('ids');
+        if( $this->model->destroy($ids) ){
             return $this->success('操作成功');
         }else{
             return $this->error('操作失败');
@@ -146,7 +145,34 @@ trait Backend
 
     //回收站
     public function recycle(){
+        if( $this->request->isAjax() ){
+            $where = $this->build_params();
+            $limit = $this->request->param('limit');
+            $data = $this->model->onlyTrashed()->with(['province','category'])->where($where)->order('id desc')->paginate($limit)->toArray();
+            $data['data'] = $this->prettifyList($data['data']);
+            return layui_table_page_data($data);
+        }
         return $this->fetch();
+    }
+
+    //还原
+    public function renew(){
+        $where[] = ['id','in',$this->request->param('ids')];
+        if( $this->model->restore($where) ){
+            return $this->success('操作成功');
+        }else{
+            return $this->error('操作失败');
+        }
+    }
+
+    //彻底删除
+    public function true_del(){
+        $ids = $this->request->param('ids');
+        if( $this->model->destroy($ids,true) ){
+            return $this->success('操作成功');
+        }else{
+            return $this->error('操作失败');
+        }
     }
 
     //前端select_page的js插件调用的ajax方法

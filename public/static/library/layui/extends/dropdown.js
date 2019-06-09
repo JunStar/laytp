@@ -110,8 +110,12 @@ layui.define(['jquery'], function(exports) {
         if (depth == 0) {
             html += '<div class="' + CLS_ARROW + '"></div>'
         }
+        let field = "";
+        let field_val = "";
         layui.each(data.options, function(i, option) {
-            var options = option.options || []
+            var options = option.options || [];
+            field = (typeof option.field != "undefined") ? option.field : "";
+            field_val = (typeof option.field_val != "undefined") ? option.field_val : "";
             html +=
                 '<div ' +
                     'lay-action=' + option.action + ' ' +
@@ -120,6 +124,7 @@ layui.define(['jquery'], function(exports) {
                     'field="' + option.field +'"' +
                     'field_val="' + option.field_val +'"' +
                     'switch_type="' + option.switch_type +'"' +
+                    'callback="' + option.callback +'"' +
                 '>' +
                     '<p class="' + CLS_TITLE +' layui-elip">' +
                         '<span class="layui-icon ' + option.icon + '"></span>' + option.title +

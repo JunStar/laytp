@@ -17,7 +17,7 @@ layui.define([
     const $ = layTp.$ = layui.jquery;
     const selectPagePlugin = layui.selectPage;
 
-    const default_popup_frame_width = '60%';
+    const default_popup_frame_width = '63%';
     const default_popup_frame_height = '70%';
 
     //自定义表单验证器
@@ -159,7 +159,7 @@ layui.define([
             layui.layer.msg(text,{icon:2});
         },
 
-        //表格点击编辑删除按钮
+        //表格点击[编辑][删除][还原][彻底删除]按钮
         table_tool: function(obj){
             let data = obj.data;
             if(obj.event === 'del'){
@@ -167,7 +167,7 @@ layui.define([
                     $.ajax({
                         type: 'POST',
                         url: layTp.facade.url(module + '/' + controller +'/del'),
-                        data: {id:data.id},
+                        data: {ids:data.id},
                         dataType: 'json',
                         success: function (res) {
                             if( res.code == 1 ){
@@ -190,6 +190,55 @@ layui.define([
             }else if(obj.event === 'edit'){
                 let url = layTp.facade.url(module + '/' + controller + '/edit',{id:data.id});
                 layTp.facade.popup_frame('编辑', url);
+            }else if(obj.event === 'renew'){
+                layui.layer.confirm('真的还原么?', function(index){
+                    $.ajax({
+                        type: 'POST',
+                        url: layTp.facade.url(module + '/' + controller +'/renew'),
+                        data: {ids:data.id},
+                        dataType: 'json',
+                        success: function (res) {
+                            if( res.code == 1 ){
+                                obj.del();
+                                parent.func_controller.table_render();
+                            }else{
+                                layTp.facade.error(res.msg);
+                            }
+                            layui.layer.close(index);
+                        },
+                        error: function (xhr) {
+                            if( xhr.status == '500' ){
+                                layTp.facade.error('本地网络问题或者服务器错误');
+                            }else if( xhr.status == '404' ){
+                                layTp.facade.error('请求地址不存在');
+                            }
+                        }
+                    });
+                });
+            }else if(obj.event === 'true_del'){
+                layui.layer.confirm('真的彻底删除么?', function(index){
+                    $.ajax({
+                        type: 'POST',
+                        url: layTp.facade.url(module + '/' + controller +'/true_del'),
+                        data: {ids:data.id},
+                        dataType: 'json',
+                        success: function (res) {
+                            if( res.code == 1 ){
+                                obj.del();
+                            }else{
+                                layTp.facade.error(res.msg);
+                            }
+                            layui.layer.close(index);
+                        },
+                        error: function (xhr) {
+                            if( xhr.status == '500' ){
+                                layTp.facade.error('本地网络问题或者服务器错误');
+                            }else if( xhr.status == '404' ){
+                                layTp.facade.error('请求地址不存在');
+                            }
+                        }
+                    });
+                });
             }
         },
 
@@ -276,68 +325,6 @@ layui.define([
             });
         },
 
-        /**
-         * 监听批量操作下拉框（已废弃）
-         */
-        batch_select_action: function(){
-            layui.form.on('select(batch)',function(data){
-                let uri = $(data.elem).find("option:selected").attr("uri");
-                if(uri == undefined){
-                    return false;
-                }
-                let field = $(data.elem).find("option:selected").attr("field");
-                let field_val = $(data.elem).find("option:selected").attr("field_val");
-                let text = $(data.elem).find("option:selected").text();
-                let switch_type = $(data.elem).find("option:selected").attr("switch_type");
-                let checkStatus = layui.table.checkStatus(table_id);
-                let checkData = checkStatus.data;
-                if(checkData.length == 0){
-                    layTp.facade.error('请选择数据');
-                    return false;
-                }
-                let key;
-                switch(switch_type){
-                    case 'popup_frame':
-                        for(key in checkData){
-                            url = layTp.facade.url(uri,{id:checkData[key].id});
-                            layTp.facade.popup_frame(name, url);
-                        }
-                        break;
-                    case 'confirm_action':
-                        layui.layer.confirm('确定'+text+'么?', function(index){
-                            let ids_arr = [];
-                            for(key in checkData){
-                                ids_arr.push(checkData[key].id);
-                            }
-                            let ids = ids_arr.join(',');
-                            let data = {'id':ids,'field':field,'field_val':field_val};
-                            $.ajax({
-                                type: 'POST',
-                                url: layTp.facade.url(uri),
-                                data: data,
-                                dataType: 'json',
-                                success: function (res) {
-                                    if( res.code == 1 ){
-                                        func_controller.table_render();
-                                    }else{
-                                        layTp.facade.error(res.msg);
-                                    }
-                                    layui.layer.close(index);
-                                },
-                                error: function (xhr) {
-                                    if( xhr.status == '500' ){
-                                        layTp.facade.error('本地网络问题或者服务器错误');
-                                    }else if( xhr.status == '404' ){
-                                        layTp.facade.error('请求地址不存在');
-                                    }
-                                }
-                            });
-                        });
-                        break;
-                }
-            });
-        },
-
         //批量操作
         batch_action: function(){
             $(document).on('click','.batch-action',function(){
@@ -351,6 +338,7 @@ layui.define([
                 let switch_type = $(this).attr("switch_type");
                 let checkStatus = layui.table.checkStatus(table_id);
                 let checkData = checkStatus.data;
+                let callback = $(this).attr("callback");
                 if(checkData.length == 0){
                     layTp.facade.error('请选择数据');
                     return false;
@@ -370,7 +358,7 @@ layui.define([
                                 ids_arr.push(checkData[key].id);
                             }
                             let ids = ids_arr.join(',');
-                            let data = {'id':ids,'field':field,'field_val':field_val};
+                            let data = {'ids':ids,'field':field,'field_val':field_val};
                             $.ajax({
                                 type: 'POST',
                                 url: layTp.facade.url(uri),
@@ -379,6 +367,9 @@ layui.define([
                                 success: function (res) {
                                     if( res.code == 1 ){
                                         func_controller.table_render();
+                                        if(typeof parent.func_controller != "undefined"){
+                                            parent.func_controller.table_render();
+                                        }
                                     }else{
                                         layTp.facade.error(res.msg);
                                     }
@@ -506,13 +497,14 @@ layui.define([
          */
         form_submit: function(){
             layui.form.on('submit(*)', function(data){
+
                 /**
                  * 所有的表单提交都是执行ajax，ajax请求的地址都是当前的url
                  * 列表页的搜索表单要使用到layui的table控件进行ajax提交，其他表单使用jQuery的ajax提交方式
                  */
                 let form_action = $(data.form).attr('action');
                 //当前url的action值为index，搜索表单进行了提交
-                if( action == 'index' && typeof form_action == "undefined" ){
+                if( (action == 'index' || action == 'recycle') && typeof form_action == "undefined" ){
                     index(data);
                     //当前url的action值不是index，就ajax提交到当前url
                 }else{
