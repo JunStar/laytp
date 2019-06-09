@@ -317,7 +317,7 @@ layui.define([
 
         //列表格式化展示数据
         formatter:{
-            custom:["#18bc9c","#FFB800","#0bf80b","#999999","#0bf0f8","#0b8af8","#ff0900","#0b1bf8","#7a0bf8","#f00bf8","#5FB878","#1E9FFF","#2F4056"],
+            custom:["#FF5722","#FFB800","#009688","#2F4056","#1E9FFF","#393D49","#999999","#0b1bf8","#7a0bf8","#f00bf8","#5FB878","#1E9FFF","#2F4056"],
             //form_type=radio || select_single
             status:function(field,value,data_list){
                 let custom_index = 0;
@@ -338,7 +338,7 @@ layui.define([
                     for(key in data_list){
                         for(v in value_arr){
                             if(value_arr[v] == key){
-                                html += '<span class="layui-btn layui-btn-sm" style="background-color: '+layTp.facade.formatter.custom[custom_index]+'">'+data_list[key]+'</span>';
+                                html += '<span class="layui-btn layui-btn-sm-1" style="background-color: '+layTp.facade.formatter.custom[custom_index]+'">'+data_list[key]+'</span>';
                             }
                             custom_index++;
                         }

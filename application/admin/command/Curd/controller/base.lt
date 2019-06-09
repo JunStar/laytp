@@ -26,4 +26,6 @@ class {%controllerClassName%} extends Backend
     }
 
     {%indexFunction%}
+
+    {%recycleFunction%}
 }

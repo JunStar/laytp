@@ -233,6 +233,7 @@ class Curd extends Command
         $data['modelNamespace'] = str_replace('/','\\',dirname( 'app/'.$this->model_app_name.'/model/'.$this->mid_name ));
         $data['controllerClassName'] = $this->controller_model_class_name;
         $data['indexFunction'] = $this->set_relation_index_function_html();
+        $data['recycleFunction'] = $this->set_relation_recycle_function_html();
         $this->controllerParam = ['tpl_name'=>$tpl_name,'data'=>$data,'c_file_name'=>$this->controller_c_file_name];
     }
 
@@ -250,6 +251,22 @@ class Curd extends Command
             $relation_controller_index_function_html = $this->get_replaced_tpl($relation_index_function_lt,$data);
         }
         return $relation_controller_index_function_html;
+    }
+
+    //有关联模型，recycle方法要写上with查询关联数据
+    protected function set_relation_recycle_function_html(){
+        $relation_controller_recycle_function_html = '';
+        $relation_model = $this->curd_config['relation_model'];
+        if(is_array($relation_model) && count($relation_model)){
+            $relation_index_function_lt = 'controller' . DS . 'recycle';
+            $with = [];
+            foreach($relation_model as $k=>$item){
+                $with[] = $item['relation_function_name'];
+            }
+            $data['with_relation'] = "->with(['".implode("','",$with)."'])";
+            $relation_controller_recycle_function_html = $this->get_replaced_tpl($relation_index_function_lt,$data);
+        }
+        return $relation_controller_recycle_function_html;
     }
 
     /**

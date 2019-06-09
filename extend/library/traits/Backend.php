@@ -12,73 +12,9 @@ trait Backend
             $where = $this->build_params();
             $limit = $this->request->param('limit');
             $data = $this->model->where($where)->order('id desc')->paginate($limit)->toArray();
-//            $data['data'] = $this->prettifyList($data['data']);
             return layui_table_page_data($data);
         }
         return $this->fetch();
-    }
-
-    /**
-     * 美化列表
-     * @param $data
-     * @return mixed
-     */
-    public function prettifyList($data){
-        if(!count($data)){
-            return $data;
-        }
-
-        foreach($data as $k=>$v){
-            foreach($v as $field_name => $field_val){
-                if(isset($this->model->const[$field_name])){
-                    $data[$k][$field_name] = get_const_val($field_name, $field_val, $this->model->const);
-                }elseif (isset($this->upload_field) && in_array( $field_name, array_keys($this->upload_field) )){
-                    switch($this->upload_field[$field_name]){
-                        case 'images':
-                            $temp = '';
-                            if($field_val){
-                                foreach(explode(',', $field_val ) as $kk=>$vv ){
-                                    $temp .= '<a target="_blank" href="'.$vv.'"><img src="'.$vv.'" style="width:30px;height:30px;" /></a> ';
-                                }
-                            }
-                            $data[$k][$field_name] = $temp;
-                            break;
-                        case 'video':
-                            $temp = '';
-                            if($field_val) {
-                                $i = 1;
-                                foreach (explode(',', $field_val) as $kk => $vv) {
-                                    $temp .= '<a href="javascript:void(0);" class="popup-frame" data-name="查看视频" data-open="'.url('admin/ajax/show_video',['path'=>base64_encode($vv)]).'">视频'.$i.'</a> ';
-                                    $i++;
-                                }
-                            }
-                            $data[$k][$field_name] = $temp;
-                            break;
-                        case 'audio':
-                            $temp = '';
-                            if($field_val) {
-                                foreach (explode(',', $field_val) as $kk => $vv) {
-                                    $temp .= '<audio src="' . $vv . '" width="200px" height="30px" controls="controls"></audio>';
-                                }
-                            }
-                            $data[$k][$field_name] = $temp;
-                            break;
-                        case 'file':
-                            $temp = [];
-                            if($field_val) {
-                                $i = 1;
-                                foreach (explode(',', $field_val) as $kk => $vv) {
-                                    $temp[] = '<a href="javascript:void(0);" download="' . $vv . '" title="点击下载">文件'.$i.'</a> ';
-                                    $i++;
-                                }
-                            }
-                            $data[$k][$field_name] = implode(' ', $temp );
-                            break;
-                    }
-                }
-            }
-        }
-        return $data;
     }
 
     //添加
@@ -148,8 +84,7 @@ trait Backend
         if( $this->request->isAjax() ){
             $where = $this->build_params();
             $limit = $this->request->param('limit');
-            $data = $this->model->onlyTrashed()->with(['province','category'])->where($where)->order('id desc')->paginate($limit)->toArray();
-            $data['data'] = $this->prettifyList($data['data']);
+            $data = $this->model->onlyTrashed()->where($where)->order('id desc')->paginate($limit)->toArray();
             return layui_table_page_data($data);
         }
         return $this->fetch();

@@ -77,3 +77,13 @@ body .layui-layer-btn{
     height:38px;
     overflow:hidden;
 }
+
+/**
+ * 更小的按钮
+ */
+.layui-btn-sm-1{
+    height:25px;
+    line-height:25px;
+    padding:0 5px;
+    font-size:12px;
+}
