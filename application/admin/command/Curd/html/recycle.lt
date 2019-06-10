@@ -2,12 +2,12 @@
 
 {block name="body"}
 <div class="search-form-page-tab-content" id="search-form" style="display:none;">
-    <div class="layui-form layui-card-header" style="height:auto;padding:10px 0 0 0;">
+    <div class="layui-form layui-card-header" style="height:auto;padding:0;">
         <form class="layui-form-item layui-form-pane" style="margin-bottom:0px;">
         {%searchForm%}
 
-        <div class="layui-inline" style="padding-left: 35px;">
-            <button class="layui-btn layui-btn-primary" lay-submit lay-filter="*"><i class="layui-icon"></i> 搜 索</button>
+        <div class="layui-inline" style="padding-left: 25px;">
+            <button class="layui-btn layui-btn-sm layui-btn-primary" lay-submit lay-filter="*"><i class="layui-icon"></i> 搜 索</button>
         </div>
         </form>
     </div>

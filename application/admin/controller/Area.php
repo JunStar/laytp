@@ -15,6 +15,7 @@ class Area extends Backend
      * @var app\admin\model\Area
      */
     protected $model;
+	public $has_del=1;//是否拥有删除功能{%has_soft_del%}
 
     public function initialize()
     {
@@ -22,6 +23,7 @@ class Area extends Backend
         $this->model = new \app\admin\model\Area();
         
         
+
     }
 
     
@@ -33,7 +35,20 @@ class Area extends Backend
             $data = $this->model
                 ->with(['parent'])
                 ->where($where)->order('id desc')->paginate($limit)->toArray();
-            $data['data'] = $this->prettifyList($data['data']);
+            return layui_table_page_data($data);
+        }
+        return $this->fetch();
+    }
+
+    
+    //回收站
+    public function recycle(){
+        if( $this->request->isAjax() ){
+            $where = $this->build_params();
+            $limit = $this->request->param('limit');
+            $data = $this->model->onlyTrashed()
+                ->with(['parent'])
+                ->where($where)->order('id desc')->paginate($limit)->toArray();
             return layui_table_page_data($data);
         }
         return $this->fetch();

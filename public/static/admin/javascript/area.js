@@ -41,11 +41,13 @@ layui.use(['layTp'],function() {
             , cols: [[
                 {type:'checkbox'}
 				,{field:'id',title:'ID',align:'center',width:80}
-				,{field:'pid',title:'所属地区',align:'center',templet:'<div>{{d.parent.name}}</div>'}
+				,{field:'pid',title:'父id',align:'center',templet:'<div>{{# if(d.parent){ }}{{d.parent.name}}{{# }else{ }}-{{# } }}</div>'}
 				,{field:'short_name',title:'简称',align:'center'}
 				,{field:'name',title:'名称',align:'center'}
 				,{field:'merge_name',title:'全称',align:'center'}
-				,{field:'level',title:'层级',align:'center'}
+				,{field:'level',title:'层级',align:'center',templet:function(d){
+					return layTp.facade.formatter.status('level',d.level,{"1":"省","2":"市","3":"区县"});
+				}}
 				,{field:'pinyin',title:'拼音',align:'center'}
 				,{field:'code',title:'长途区号',align:'center'}
 				,{field:'zip',title:'邮编',align:'center'}

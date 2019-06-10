@@ -371,7 +371,7 @@ class Curd extends Command
                     $relation_show_field = explode(',',$relation_info['show_field']);
                     $templet = [];
                     foreach($relation_show_field as $field){
-                        $templet[] = "{{d.".$relation_info['relation_function_name'].".".$field."}}";
+                        $templet[] = "{{# if(d.".$relation_info['relation_function_name']."){ }}{{d.".$relation_info['relation_function_name'].".".$field."}}{{# }else{ }}-{{# } }}";
                     }
                     $temp .= ",templet:'<div>".implode(',',$templet)."</div>'";
                 }
@@ -572,7 +572,7 @@ EOD;
     {
         $field_comment = $info['field_comment'];
         return <<<EOD
-    <div class="layui-inline" style="padding-left: 35px;">
+    <div class="layui-inline" style="padding-left: 25px;">
                 <label class="layui-form-label" title="{$field_comment}">{$field_comment}</label>
                 <div class="layui-input-inline">
                     {$content}
@@ -584,7 +584,7 @@ EOD;
     protected function get_select_relation_search_form_group($field, $content)
     {
         return <<<EOD
-    <div class="layui-inline" style="padding-left: 35px;">
+    <div class="layui-inline" style="padding-left: 25px;">
                 <label class="layui-form-label" title="{$field}">{$field}</label>
                 {$content}
             </div>

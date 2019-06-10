@@ -61,7 +61,7 @@ body{background-color:#f5f5f5;margin:0;padding:0;}
 .bread-crumbs li a {color:#666}
 .page-body {display:block;overflow:auto;border:none!important;background-color:#f5f5f5;}
 .page-tab-content {background-color:#fff;overflow:auto;padding:0 8px;margin:8px;min-height: 500px;}
-.search-form-page-tab-content {background-color:#fff;padding:0 8px;margin:8px;}
+.search-form-page-tab-content {background-color:#fff;padding:0 8px;}
 .tool-btns {position:absolute;right:15px;top:11px;font-size:18px;color:#888}
 .tool-btns .sys-icon {color:#999;margin-left:8px}
 .fullscreen {position:fixed;top:0;right:0;bottom:0;left:0;z-index:1090;margin-bottom:0;overflow-y:auto;-webkit-overflow-scrolling:touch;-webkit-backface-visibility:hidden;backface-visibility:hidden;height:100%}
