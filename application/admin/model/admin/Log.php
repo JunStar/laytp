@@ -19,6 +19,8 @@ class Log extends Model
 
     ];
 
-    //获取数组常量的函数
+    public function admin(){
+        return $this->belongsTo('app\admin\model\auth\User','admin_id','id');
+    }
     
 }

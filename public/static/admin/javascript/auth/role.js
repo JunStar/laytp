@@ -40,9 +40,9 @@ layui.use(['layTp'],function() {
             // , page: true //开启分页
             , cols: [[ //表头
                 {type:'checkbox'}
-                ,{field: 'id', title: 'ID', sort: true, align: 'center'}
+                ,{field: 'id', title: 'ID', sort: true, align: 'center',width:80}
                 , {field: 'name', title: '角色名'}
-                , {field: 'operation', title: '操作', toolbar: '#operation', fixed: 'right', align: 'center'}
+                , {field: 'operation', title: '操作', toolbar: '#operation', fixed: 'right', align: 'center',width:100}
             ]]
         });
 

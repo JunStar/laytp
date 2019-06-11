@@ -22,13 +22,19 @@ class Log extends Backend
     {
         parent::initialize();
         $this->model = new \app\admin\model\admin\Log();
-        
-		$this->relation = [
-			'admin_id'=> [
-				'model'=>Db::table('lt_admin_user') ,
-				'show_field'=>'name',
-			],
-		];
+    }
+
+    //查看
+    public function index(){
+        if( $this->request->isAjax() ){
+            $where = $this->build_params();
+            $limit = $this->request->param('limit');
+            $data = $this->model
+                ->with('admin')
+                ->where($where)->order('id desc')->paginate($limit)->toArray();
+            return layui_table_page_data($data);
+        }
+        return $this->fetch();
     }
 
     //编辑

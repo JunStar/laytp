@@ -5,9 +5,12 @@
 namespace app\admin\model\auth;
 
 use think\Model;
+use think\model\concern\SoftDelete;
 
 class User extends Model
 {
+    use SoftDelete;
+    protected $defaultSoftDelete = '0000-00-00 00:00:00';
     //模型名
     protected $name = 'admin_user';
 

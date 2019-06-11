@@ -35,7 +35,7 @@ layui.use(['layTp'],function() {
             , cols: [[
                 {type:'checkbox'}
 				,{field:'id',title:'ID',align:'center',width:80}
-				,{field:'admin_id',title:'管理员姓名',align:'center'}
+				,{field:'admin_id',title:'管理员姓名',align:'center',templet:'<div>{{# if(d.admin){ }}{{d.admin.nickname}}{{# }else{ }}-{{# } }}</div>'}
 				,{field:'url',title:'操作页面',align:'center'}
 				,{field:'title',title:'菜单位置',align:'center'}
 				,{field:'content',title:'参数',align:'center'}

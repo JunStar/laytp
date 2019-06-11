@@ -38,6 +38,12 @@ class User extends Backend
             }
             $post['password'] = password_hash($post['password'], PASSWORD_DEFAULT);
             $post['avatar'] = $post['avatar'] ? $post['avatar'] : '/static/admin/image/default_avatar.png';
+
+            $unique_username = $this->model->withTrashed()->where('username','=',$post['username'])->find();
+            if($unique_username){
+                return $this->error('用户名:'.$post['username'].' 已存在');
+            }
+
             if( $this->model->save($post) ){
                 $role_ids = explode( ',', $post['role_ids'] );
                 $data = [];
