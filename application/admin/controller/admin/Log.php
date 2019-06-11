@@ -40,8 +40,7 @@ class Log extends Backend
     //编辑
     public function detail(){
         $where['id'] = $this->request->param('id');
-        $assign = $this->model->where($where)->find()->toArray();
-        $assign['name'] = join(',', $this->relation['admin_id']['model']->where('id in ('. $assign['admin_id'] .')')->column($this->relation['admin_id']['show_field']));
+        $assign = $this->model->with('admin')->where($where)->find()->toArray();
         $this->assign($assign);
         return $this->fetch();
     }
