@@ -17,7 +17,7 @@ layui.use(['layTp'],function(){
                 [
                     {title:'数据库字段查看', align: 'center', colspan: 3}
                     ,{title:'表单设置,影响添加编辑表单', align: 'center', colspan: 3}
-                    // ,{title:'列表设置', align: 'center',rowspan:2, templet: "#table_additional", align: 'center', width:150}
+                    ,{title:'显示设置', align: 'center',rowspan:2, templet: "#field_show", align: 'center', width:350}
                 ]
                 ,[
                     //数据库字段设置
@@ -330,10 +330,10 @@ layui.use(['layTp'],function(){
             '<option value="">搜索的表名,例:lt_area</option>' +
             '</select>' +
             '<select name="form_additional_select_relation_left_field_'+field_name+'" id="form_additional_select_relation_left_field_'+field_name+'">' +
-            '<option value="">左关联字段,例:province_id,不选表示第一个下拉框</option>' +
+            '<option value="">左关联字段,不选表示第一个下拉框</option>' +
             '</select>' +
             '<select name="form_additional_select_relation_right_field_'+field_name+'" id="form_additional_select_relation_right_field_'+field_name+'">' +
-            '<option value="">右联动的字段,例:city_id,不选表示最后一个下拉框</option>' +
+            '<option value="">右联动的字段,不选表示最后一个下拉框</option>' +
             '</select>';
         let time_html =
             '<select name="form_additional_set_value_input_'+field_name+'" id="form_additional_set_value_input_'+field_name+'">' +
@@ -481,13 +481,9 @@ layui.use(['layTp'],function(){
                 ,form_type
                 ,form_additional
                 ,form_empty
-                ,table_width
-                ,table_min_width
-                // ,table_templet
-                ,table_align
-                ,table_additional_unresize
-                ,table_additional_sort
-                ,table_additional_edit
+                ,field_show_index
+                ,field_show_add
+                ,field_show_edit
             ;
             let post_data = {'field_list':{},'global':{}};
             for(key in table_data_arr){
@@ -497,29 +493,22 @@ layui.use(['layTp'],function(){
                 form_additional = get_form_additional_val(field_name,form_type);
                 form_empty = $('#form_empty_'+field_name+':checked').val();
                 form_empty = (typeof form_empty == "undefined") ? 0 : form_empty;
-                table_width = table_data_arr[key]['table_width'];
-                table_min_width = table_data_arr[key]['table_min_width'];
-                // table_templet = $('#table_templet_'+field_name).val();
-                table_align = $('#table_align_'+field_name).val();
-                table_additional_unresize = $('#table_additional_unresize_'+field_name+':checked').val();
-                table_additional_unresize = (typeof table_additional_unresize == "undefined") ? 0 : table_additional_unresize;
-                table_additional_sort = $('#table_additional_sort_'+field_name+':checked').val();
-                table_additional_sort = (typeof table_additional_sort == "undefined") ? 0 : table_additional_sort;
-                table_additional_edit = $('#table_additional_edit_'+field_name+':checked').val();
-                table_additional_edit = (typeof table_additional_edit == "undefined") ? 0 : table_additional_edit;
+                field_show_index = $('#field_show_index_'+field_name+':checked').val();
+                field_show_index = (typeof field_show_index == "undefined") ? 0 : field_show_index;
+                field_show_add = $('#field_show_add_'+field_name+':checked').val();
+                field_show_add = (typeof field_show_add == "undefined") ? 0 : field_show_add;
+                field_show_edit = $('#field_show_edit_'+field_name+':checked').val();
+                field_show_edit = (typeof field_show_edit == "undefined") ? 0 : field_show_edit;
+
                 post_data['field_list'][key] = {
                     'field_name':field_name
                     ,'field_comment':field_comment
                     ,'form_type':form_type
                     ,'form_additional':form_additional
                     ,'form_empty':form_empty
-                    ,'table_width':table_width
-                    ,'table_min_width':table_min_width
-                    // ,'table_templet':table_templet
-                    ,'table_align':table_align
-                    ,'table_additional_unresize':table_additional_unresize
-                    ,'table_additional_sort':table_additional_sort
-                    ,'table_additional_edit':table_additional_edit
+                    ,'field_show_index':field_show_index
+                    ,'field_show_add':field_show_add
+                    ,'field_show_edit':field_show_edit
                 };
             }
             let common_model

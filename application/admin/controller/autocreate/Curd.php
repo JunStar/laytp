@@ -134,13 +134,22 @@ class Curd extends Backend
             $result = [];
             $i = 0;
             foreach($fields as $k=>$v){
-                if( !in_array($v, array_merge([$pk],$this->special_fields)) ){
+                if( $v != $pk ){
                     $result['all_fields'][$i]['field_name'] = $v;
                     $result['all_fields'][$i]['field_comment'] = $comment_map[$v]['COLUMN_COMMENT'];
+                    $result['all_fields'][$i]['field_show_index'] = 1;
+                    $result['all_fields'][$i]['field_show_add'] = 1;
+                    $result['all_fields'][$i]['field_show_edit'] = 1;
+                    if($v != 'delete_time' && $v != 'update_time'){
+                        $result['selected_list'][$i]['field_name'] = $v;
+                        $result['selected_list'][$i]['field_comment'] = $comment_map[$v]['COLUMN_COMMENT'];
+                        $result['selected_list'][$i]['field_show_index'] = 1;
+                        $result['selected_list'][$i]['field_show_add'] = 1;
+                        $result['selected_list'][$i]['field_show_edit'] = 1;
+                    }
                     $i++;
                 }
             }
-            $result['selected_list'] = $result['all_fields'];
             $result['fields_list'][$table] = $fields;
             $this->success('获取成功', $result);
         }

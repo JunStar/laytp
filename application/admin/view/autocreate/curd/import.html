@@ -15,7 +15,7 @@
                         {/foreach}
                     </select>
                 </div>
-                <label class="layui-form-label">显示字段</label>
+                <label class="layui-form-label">需设置的字段</label>
                 <div class="layui-input-inline">
                     <div id="select_fields"></div>
                 </div>
@@ -30,7 +30,6 @@
                     <input type="checkbox" id="common_model" title="全局模型" lay-filter="common_model" value="1">
                     <input type="checkbox" id="relation_model" title="关联模型" lay-filter="relation_model" value="1">
                 </div>
-<!--                <div class="layui-form-mid layui-word-aux">选中全局模型，model层文件将生成在application/common/model目录下，反之，则生成在application/admin/model目录下</div>-->
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">表格列表</label>
@@ -52,6 +51,10 @@
                 <label class="layui-form-label">最小列宽</label>
                 <div class="layui-input-inline">
                     <input type="text" class="layui-input" id="cell_min_width" title="隐藏主键列" value="80">
+                </div>
+                <label class="layui-form-label">生成选项卡字段</label>
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input" id="tabs_field" title="生成选项卡字段" placeholder="为空表示不生成选项卡" />
                 </div>
             </div>
         </div>
@@ -134,7 +137,7 @@
 {include file="autocreate/curd/import/table/templet_tpl" /}
 {include file="autocreate/curd/import/table/width_tpl" /}
 {include file="autocreate/curd/import/table/align_tpl" /}
-{include file="autocreate/curd/import/table/additional_tpl" /}
+{include file="autocreate/curd/import/table/field_show" /}
 {include file="autocreate/curd/import/form/additional_tpl" /}
 {include file="autocreate/curd/import/form/type_tpl" /}
 {include file="autocreate/curd/import/form/required_tpl" /}

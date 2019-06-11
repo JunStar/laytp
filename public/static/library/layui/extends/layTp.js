@@ -316,7 +316,7 @@ layui.define([
 
         //列表格式化展示数据
         formatter:{
-            custom:["#FF5722","#FFB800","#009688","#2F4056","#1E9FFF","#393D49","#999999","#0b1bf8","#7a0bf8","#f00bf8","#5FB878","#1E9FFF","#2F4056"],
+            custom:["#009688","#FFB800","#2F4056","#1E9FFF","#393D49","#999999","#FF5722","#0b1bf8","#7a0bf8","#f00bf8","#5FB878","#1E9FFF","#2F4056"],
             //form_type=radio || select_single
             status:function(field,value,data_list){
                 let custom_index = 0;

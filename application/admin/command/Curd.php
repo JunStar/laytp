@@ -46,12 +46,15 @@ class Curd extends Command
         $htmlRecycleParam,//生成html编辑页面文件的参数,是一个数组['tpl_name'=>使用到的模板名称,'data'=>模板中需要替换的数据,'c_file_name'=>需要生成的文件名称]
         $relation_model//关联模型
     ;
+
+    //ThinkPHP命令行配置函数
     protected function configure(){
         $this->setName('curd')
             ->addOption('id', 'i', Option::VALUE_REQUIRED, 'autocreate_curd pk value', null)
             ->setDescription('Build CURD from table');
     }
 
+    //ThinkPHP命令行执行函数
     protected function execute(Input $input, Output $output){
         $this->curdModel = model('admin/autocreate.Curd');
         $this->id = $input->getOption('id') ?: 0;
@@ -64,6 +67,7 @@ class Curd extends Command
     }
 
     /**
+     * 根据主键ID获取数据
      * @return mixed
      * @throws Exception
      */
@@ -80,6 +84,10 @@ class Curd extends Command
         return $info;
     }
 
+    /**
+     * 格式化数据库的数据
+     * @return mixed
+     */
     protected function format_info(){
         $field_list = json_decode($this->info['field_list'], true);
         $global = json_decode($this->info['global'], true);
@@ -91,6 +99,10 @@ class Curd extends Command
         return $curd_config;
     }
 
+    /**
+     * 设置参数，待生成
+     * @throws Exception
+     */
     public function set_param(){
         $this->info = $this->get_info_by_id();
         $this->curd_config = $this->format_info();
@@ -111,6 +123,9 @@ class Curd extends Command
         $this->c_model();
     }
 
+    /**
+     * 更新最后生成时间和生成次数
+     */
     public function update_exec_time(){
         //更新时间和次数
         if(!$this->info['exec_create_time']){
@@ -178,6 +193,11 @@ class Curd extends Command
         return __DIR__ . DS . 'Curd' . DS . $name . '.lt';
     }
 
+    /**
+     * 根据表名获取类路径名称
+     * @param $table
+     * @return string
+     */
     protected function get_name_by_table($table){
         $arr_table = explode('_', $table);
         $basename = ucfirst($arr_table[count($arr_table)-1]);
@@ -191,6 +211,9 @@ class Curd extends Command
         return $str_table;
     }
 
+    /**
+     * 设置当前生成的类路径名称
+     */
     protected function set_mid_file_name(){
         $arr_table = explode('_', $this->curd_config['table_name']);
         $basename = ucfirst($arr_table[count($arr_table)-1]);
@@ -353,6 +376,9 @@ class Curd extends Command
         $all_fields = $this->curd_config['global']['all_fields'];
         $fields_list = arr_to_map($this->curd_config['field_list'], 'field_name');
         foreach($all_fields as $k=>$v){
+            if(isset($fields_list[$v['field_name']]) && !$fields_list[$v['field_name']]['field_show_index']){
+                continue;
+            }
             $title = isset($fields_list[$v['field_name']]['field_comment']) ? $fields_list[$v['field_name']]['field_comment'] : $v['field_comment'];
             if( !in_array($v['field_name'], $show_fields) ){
                 $temp = "\t\t\t\t//,{field:'{$v['field_name']}',title:'{$title}',align:'center'}\n";
@@ -479,6 +505,9 @@ class Curd extends Command
         $select_relation_search_html = [];
         $un_search_type = ['password','upload'];
         foreach($this->curd_config['field_list'] as $k=>$v){
+            if(!$v['field_show_index']){
+                continue;
+            }
             if(in_array($v['field_name'], $search_fields) && !in_array( $v['form_type'], $un_search_type )){
                 if( in_array( $v['form_type'], ['select_relation'] ) ){
                     $select_relation_search_html[$v['form_type']][$v['form_additional']['group_name']][] = $this->get_search_form_item($v);
@@ -507,13 +536,21 @@ class Curd extends Command
         $select_relation_edit_html = [];
         foreach($this->curd_config['field_list'] as $k=>$v){
             if( in_array( $v['form_type'], ['select_relation'] ) ){
-                $select_relation_add_html[$v['form_type']][$v['form_additional']['group_name']][] = $this->get_form_item($v,'add');
-                $select_relation_edit_html[$v['form_type']][$v['form_additional']['group_name']][] = $this->get_form_item($v,'edit');
+                if($v['field_show_add']){
+                    $select_relation_add_html[$v['form_type']][$v['form_additional']['group_name']][] = $this->get_form_item($v,'add');
+                }
+                if($v['field_show_edit']){
+                    $select_relation_edit_html[$v['form_type']][$v['form_additional']['group_name']][] = $this->get_form_item($v,'edit');
+                }
             }else{
-                $add_item_content = $this->get_form_item($v,'add');
-                $edit_item_content = $this->get_form_item($v,'edit');
-                $add_data[] = $this->get_form_group($v['field_comment'], $add_item_content);
-                $edit_data[] = $this->get_form_group($v['field_comment'], $edit_item_content);
+                if($v['field_show_add']){
+                    $add_item_content = $this->get_form_item($v,'add');
+                    $add_data[] = $this->get_form_group($v['field_comment'], $add_item_content);
+                }
+                if($v['field_show_edit']){
+                    $edit_item_content = $this->get_form_item($v,'edit');
+                    $edit_data[] = $this->get_form_group($v['field_comment'], $edit_item_content);
+                }
             }
         }
 
@@ -521,7 +558,14 @@ class Curd extends Command
             foreach($select_relation_add_html as $form_type=>$group_list){
                 foreach($group_list as $group_name=>$item){
                     $add_data[] = $this->get_form_group($group_name, join("\n\t\t\t", $item));
-                    $edit_data[] = $this->get_form_group($group_name, join("\n\t\t\t", $select_relation_edit_html[$form_type][$group_name]));
+                }
+            }
+        }
+
+        if(count($select_relation_edit_html)){
+            foreach($select_relation_edit_html as $form_type=>$group_list){
+                foreach($group_list as $group_name=>$item){
+                    $edit_data[] = $this->get_form_group($group_name, join("\n\t\t\t", $item));
                 }
             }
         }
@@ -598,7 +642,7 @@ EOD;
 
     protected function set_controller_array_const($field_name){
         if(!isset($this->controller_array_const[$field_name])){
-            $this->controller_array_const[$field_name] = '$assign[\''.$field_name.'\'] = $this->model->getArrayConstList(\''.$field_name.'\');';
+            $this->controller_array_const[$field_name] = '$assign[\'const_'.$field_name.'\'] = $this->model->getArrayConstList(\''.$field_name.'\');';
         }
     }
 
