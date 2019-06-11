@@ -1,5 +1,7 @@
 {extend name="admin@public/layout/main"}
 
+{%tabs%}
+
 {block name="search_form"}
 <div class="search-form-page-tab-content" id="search-form" style="display:none;">
     <div class="layui-form layui-card-header" style="height:auto;padding:0;">

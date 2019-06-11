@@ -521,6 +521,7 @@ layui.use(['layTp'],function(){
                 ,search_mode
                 ,search_fields
                 ,cell_min_width
+                ,tabs_field
             ;
             common_model = $('#common_model:checked').val();
             common_model = (typeof common_model == "undefined") ? 0 : common_model;
@@ -537,6 +538,7 @@ layui.use(['layTp'],function(){
             search_mode = $('#search_mode').val();
             search_fields = $('input[name="search_fields"]').val();
             cell_min_width = $('#cell_min_width').val();
+            tabs_field = $('#tabs_field').val();
             post_data['global'] = {
                 'common_model':common_model
                 ,'hide_pk':hide_pk
@@ -545,6 +547,7 @@ layui.use(['layTp'],function(){
                 ,'table_name':table_name
                 ,'fields_name':fields_name
                 ,'close_page':close_page
+                ,'tabs_field':tabs_field
                 ,'search_mode':search_mode
                 ,'search_fields':search_fields
                 ,'cell_min_width':cell_min_width

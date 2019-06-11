@@ -527,6 +527,29 @@ class Curd extends Command
         }
 
         $index_data['searchForm'] = implode("\n\n\t\t", $index_search_form);
+
+        if($this->curd_config['global']['tabs_field']){
+            foreach($this->curd_config['field_list'] as $k=>$v){
+                if($v['field_name'] == $this->curd_config['global']['tabs_field']){
+                    $items = [];
+                    if($v['form_type'] == 'radio'){
+                        $items = $this->getArrayByString($v['form_additional']);
+                    }
+                    if($v['form_type'] == 'select' && $v['form_additional']['single_multi'] == 'single'){
+                        $items = $this->getArrayByString($v['form_additional']['values']);
+                    }
+                    $tabs_tpl_name = 'html' . DS . 'tabs';
+                    $tabs['field_name'] = $this->curd_config['global']['tabs_field'];
+                    $tab_list = [];
+                    foreach($items as $i=>$j){
+                        $tab_list[] = '<li click_search="true" field="'.$this->curd_config['global']['tabs_field'].'" field_val="'.$i.'">'.$j.'</li>';
+                    }
+                    $tabs['tab_list'] = implode("\n\t", $tab_list);
+                    $index_data['tabs'] = $this->get_replaced_tpl($tabs_tpl_name, $tabs);
+                }
+            }
+        }
+
         $this->htmlIndexParam = ['tpl_name'=>$index_tpl_name,'data'=>$index_data,'c_file_name'=>$this->html_index_c_file_name];
 
         $add_data = [];
