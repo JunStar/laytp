@@ -207,6 +207,8 @@ layui.use(['layTp'],function(){
                             if(global.hide_del == 1){
                                 $('#hide_del').attr('checked',true);
                             }
+                            $('#cell_min_width').val(global.cell_min_width);
+                            $('#tabs_field').val(global.tabs_field);
                         }
                         layui.form.render('checkbox');
                     }else{
