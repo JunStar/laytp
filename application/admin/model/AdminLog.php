@@ -27,7 +27,6 @@ class AdminLog extends Backend
         $admin_user = model('auth.User')->get($admin_user_id);
 
         $admin_id = $admin_user_id ? $admin_user->id : 0;
-        $name = $admin_user_id ? $admin_user->name : '';
         $content = self::$content;
         if (!$content)
         {
@@ -71,7 +70,6 @@ class AdminLog extends Backend
             'content'   => !is_scalar($content) ? json_encode($content) : $content,
             'url'       => request()->url(),
             'admin_id'  => $admin_id,
-            'name'      => $name,
             'user_agent' => request()->server('HTTP_USER_AGENT'),
             'ip'        => request()->ip()
         ]);

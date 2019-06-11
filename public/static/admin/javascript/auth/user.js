@@ -43,13 +43,18 @@ layui.use(['layTp'],function() {
                 {type:'checkbox'}
                 ,{field:'id',title:'ID',align:'center',width:80}
 				,{field:'username',title:'用户名',align:'center'}
-				,{field:'name',title:'姓名',align:'center'}
-				,{field:'avatar',title:'头像',align:'center'}
-				,{field:'is_super_manager',title:'是否为超管',align:'center'}
-				,{field:'status',title:'账号状态',align:'center'}
-				,{field:'is_del',title:'在回收站',align:'center'}
-				,{field:'create_time',title:'创建时间',align:'center'}
-				,{field:'operation',title:'操作',align:'center',toolbar:'#operation',fixed:'right',width:100}
+				,{field:'nickname',title:'昵称',align:'center'}
+				,{field:'avatar',title:'头像',align:'center',templet:function(d){
+                    return layTp.facade.formatter.images(d.avatar);
+                }}
+				,{field:'is_super_manager',title:'是否为超管',align:'center',templet:function(d){
+                    return layTp.facade.formatter.status('is_super_manager',d.is_super_manager,["否","是"]);
+                }}
+				,{field:'status',title:'账号状态',align:'center',templet:function(d){
+                    return layTp.facade.formatter.status('status',d.status,["冻结","正常"]);
+                }}
+				,{field:'create_time',title:'创建时间',align:'center',width:180}
+				,{field:'operation',title:'操作',align:'center',toolbar:'#operation',width:100}
             ]]
         });
 

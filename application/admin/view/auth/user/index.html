@@ -13,10 +13,10 @@
             </div>
 
             <div class="layui-inline" style="padding-left: 25px;">
-                <label class="layui-form-label" title="用户名">姓名</label>
+                <label class="layui-form-label" title="用户名">昵称</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="search_param[name][value]" placeholder="请输入姓名" class="layui-input">
-                    <input type="hidden" name="search_param[name][condition]" value="LIKE">
+                    <input type="text" name="search_param[nickname][value]" placeholder="请输入昵称" class="layui-input">
+                    <input type="hidden" name="search_param[nickname][condition]" value="LIKE">
                 </div>
             </div>
 
@@ -37,8 +37,8 @@
                 <div class="layui-input-inline">
                     <select name="search_param[status][value]" placeholder="请输入账号状态">
                         <option value=""></option>
-                        <option value="0">否</option>
-                        <option value="1">是</option>
+                        <option value="0">冻结</option>
+                        <option value="1">正常</option>
                     </select>
                     <input type="hidden" name="search_param[status][condition]" value="=">
                 </div>
