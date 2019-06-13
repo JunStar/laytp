@@ -48,10 +48,10 @@ layui.use(['layTp'],function() {
                     return layTp.facade.formatter.images(d.avatar);
                 }}
 				,{field:'is_super_manager',title:'是否为超管',align:'center',templet:function(d){
-                    return layTp.facade.formatter.status('is_super_manager',d.is_super_manager,["否","是"]);
+                    return layTp.facade.formatter.switch('is_super_manager',d,{"open":{"value":1,"text":"是"},"close":{"value":0,"text":"否"}});
                 }}
 				,{field:'status',title:'账号状态',align:'center',templet:function(d){
-                    return layTp.facade.formatter.status('status',d.status,["冻结","正常"]);
+                    return layTp.facade.formatter.switch('status',d,{"open":{"value":1,"text":"正常"},"close":{"value":0,"text":"冻结"}});
                 }}
 				,{field:'create_time',title:'创建时间',align:'center',width:180}
 				,{field:'operation',title:'操作',align:'center',toolbar:'#operation',width:100}

@@ -317,6 +317,11 @@ layui.define([
         //列表格式化展示数据
         formatter:{
             custom:["#FF5722","#009688","#FFB800","#2F4056","#1E9FFF","#393D49","#999999","#0b1bf8","#7a0bf8","#f00bf8","#5FB878","#1E9FFF","#2F4056"],
+            //form_type=radio,带选项只有两个
+            switch:function(field,d,data_list){
+                let lay_text = data_list.open.text + "|" + data_list.close.text;
+                return '<input open_value="'+data_list.open.value+'" close_value="'+data_list.close.value+'" id_val="'+d.id+'" type="checkbox" name="'+field+'" value="'+data_list.open.value+'" lay-skin="switch" lay-text="'+lay_text+'" lay-filter="laytp_switch" ' + ( (d[field]==data_list.open.value) ? 'checked="checked"' : '' ) + ' />';
+            },
             //form_type=radio || select_single
             status:function(field,value,data_list){
                 let custom_index = 0;
@@ -963,6 +968,35 @@ layui.define([
                 $('#'+field).val(field_val);
                 layui.form.render('select');
                 $('[lay-submit]').click();
+            });
+        },
+
+        laytp_switch:function(){
+            layui.form.on('switch(laytp_switch)', function(obj){
+                let open_value = obj.elem.attributes['open_value'].nodeValue;
+                let close_value = obj.elem.attributes['close_value'].nodeValue;
+                let field = obj.elem.attributes['name'].nodeValue;
+                let id_val = obj.elem.attributes['id_val'].nodeValue;
+                let post_data = {};
+                if(obj.elem.checked){
+                    post_data = {field:this.name,field_val:open_value, id: id_val};
+                }else{
+                    post_data = {field:this.name,field_val:close_value, id: id_val};
+                }
+                $.ajax({
+                    url: layTp.facade.url(module + '/' + controller + '/set_status/'),
+                    method: 'POST',
+                    data: post_data,
+                    success: function(res){
+                        if(res.code == 1){
+                            layTp.facade.success(res.msg);
+                            func_controller.table_render();
+                        }else{
+                            layTp.facade.error(res.msg);
+                            func_controller.table_render();
+                        }
+                    },
+                });
             });
         }
     }

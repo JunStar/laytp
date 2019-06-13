@@ -54,8 +54,12 @@ layui.use(['layTp'],function() {
                 , {field: 'rule', title: '规则'}
                 , {field: 'icon', title: '图标', align: 'center', templet: '#show_icon',width:80}
                 , {field: 'sort', title: '排序', align: 'center',width:80}
-                , {field: 'is_menu', title: '菜单', templet: '#switch_is_menu', align: 'center',width:80}
-                , {field: 'is_hide', title: '隐藏', templet: '#switch_is_hide', align: 'center',width:80}
+                , {field: 'is_menu', title: '菜单', align: 'center',width:80, templet: function(d){
+                    return layTp.facade.formatter.switch('is_menu',d,{"open":{"value":1,"text":"是"},"close":{"value":0,"text":"否"}});
+                }}
+                , {field: 'is_hide', title: '隐藏', align: 'center',width:80, templet: function(d){
+                    return layTp.facade.formatter.switch('is_hide',d,{"open":{"value":1,"text":"是"},"close":{"value":0,"text":"否"}});
+                }}
                 , {field: 'operation', title: '操作', toolbar: '#operation', fixed: 'right', align: 'center', width: 100}
             ]]
         });
@@ -71,30 +75,6 @@ layui.use(['layTp'],function() {
                 //
                 //        break;
                 //}
-            }
-        });
-
-        //监听是否菜单操作
-        layui.form.on('switch(set_is_menu)', function(obj){
-            var is_menu_list = {1:true,0:false};
-            for(key in is_menu_list){
-                if(is_menu_list[key] == obj.elem.checked){
-                    var post_data = {field:this.name,field_val:key,id:this.value};
-                    $.ajax({
-                        url: layTp.facade.url(module + '/' + controller + '/set_status/'),
-                        method: 'POST',
-                        data: post_data,
-                        success: function(res){
-                            if(res.code == 1){
-                                layTp.facade.success(res.msg);
-                                func_controller.table_render();
-                            }else{
-                                layTp.facade.error(res.msg);
-                                func_controller.table_render();
-                            }
-                        },
-                    });
-                }
             }
         });
     }

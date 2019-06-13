@@ -401,13 +401,32 @@ class Curd extends Command
                     }
                     $temp .= ",templet:'<div>".implode(',',$templet)."</div>'";
                 }
-                //单选按钮和单选下拉框渲染成status的模板
-                if($fields_list[$v['field_name']]['form_type'] == 'radio' || ($fields_list[$v['field_name']]['form_type'] == 'select' && $fields_list[$v['field_name']]['form_additional']['single_multi'] == 'single')){
-                    if( $fields_list[$v['field_name']]['form_type'] == 'radio' ){
+                //2个选项的单选按钮 渲染成switch模板 3个及3个以上选项单选按钮渲染成status模板
+                if($fields_list[$v['field_name']]['form_type'] == 'radio'){
+                    $arr = $this->getArrayByString($fields_list[$v['field_name']]['form_additional']);
+                    if(count($arr) > 2){
                         $json_obj = json_encode( $this->getArrayByString($fields_list[$v['field_name']]['form_additional']),JSON_UNESCAPED_UNICODE );
+                        $temp .= ",templet:function(d){\n\t\t\t\t\treturn layTp.facade.formatter.status('{$v['field_name']}',d.{$v['field_name']},{$json_obj});\n\t\t\t\t}";
                     }else{
-                        $json_obj = json_encode( $this->getArrayByString($fields_list[$v['field_name']]['form_additional']['values']),JSON_UNESCAPED_UNICODE );
+                        $arr = $this->getArrayByString($fields_list[$v['field_name']]['form_additional']);
+                        $keys_arr = array_keys($arr);
+                        $values_arr = array_values($arr);
+                        $json_arr = [
+                            'open' => ['value'=>$keys_arr[1],'text'=>$values_arr[1]],
+                            'close' => ['value'=>$keys_arr[0],'text'=>$values_arr[0]]
+                        ];
+                        $json_obj = json_encode($json_arr, JSON_UNESCAPED_UNICODE);
+                        $temp .= ",templet:function(d){\n\t\t\t\t\treturn layTp.facade.formatter.switch('{$v['field_name']}',d,{$json_obj});\n\t\t\t\t}";
                     }
+                }
+                //3个及3个以上选项单选按钮 和 单选下拉框渲染成status的模板
+                if($fields_list[$v['field_name']]['form_type'] == 'select' && $fields_list[$v['field_name']]['form_additional']['single_multi'] == 'single'){
+//                    if( $fields_list[$v['field_name']]['form_type'] == 'radio' ){
+//                        $json_obj = json_encode( $this->getArrayByString($fields_list[$v['field_name']]['form_additional']),JSON_UNESCAPED_UNICODE );
+//                    }else{
+//                        $json_obj = json_encode( $this->getArrayByString($fields_list[$v['field_name']]['form_additional']['values']),JSON_UNESCAPED_UNICODE );
+//                    }
+                    $json_obj = json_encode( $this->getArrayByString($fields_list[$v['field_name']]['form_additional']['values']),JSON_UNESCAPED_UNICODE );
                     $temp .= ",templet:function(d){\n\t\t\t\t\treturn layTp.facade.formatter.status('{$v['field_name']}',d.{$v['field_name']},{$json_obj});\n\t\t\t\t}";
                 }
                 //复选框和多选下拉框渲染成flag的模板

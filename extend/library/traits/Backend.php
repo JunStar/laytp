@@ -63,7 +63,7 @@ trait Backend
             if( $this->model->where('id','in',$this->request->param('id'))->update($save) ){
                 return $this->success('操作成功');
             }else{
-                return $this->error('操作失败');
+                return $this->error($this->model->getLastSql());
             }
         }catch (Exception $e){
             return $this->error($e->getMessage());
