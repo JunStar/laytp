@@ -90,11 +90,20 @@ class Backend extends Controller
         $now_node_where['is_hide'] = 0;
         $now_menus = model('auth.Menu')->where($now_node_where)->order('pid desc')->select()->toArray();
 
-        if(!$now_menus){
-            $this->error('路由错误');
+        if( !$now_menus ){
+            $first_menu = model('auth.Menu')->where('pid','=',0)->select()->toArray();
+            foreach($first_menu as $k=>$v){
+                $first_menu[$k]['selected'] = false;
+            }
+            $this->assign('first_menu', $first_menu);
+            $this->assign('now_first_menu', '');
+            $this->assign('now_second_menu', '');
+            $this->assign('now_third_menu', '');
+            $this->assign('left_menu', []);
+            return true;
+        }else{
+            $now_menu = $now_menus[0];
         }
-
-        $now_menu = $now_menus[0];
 
         //当前二级菜单信息
         $now_second_menu = model('auth.Menu')
