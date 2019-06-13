@@ -17,9 +17,9 @@ layui.use(['layTp'],function() {
             , page: true //开启分页
             , cols: [[ //表头
                 {field: 'id', title: 'ID', sort: true, align: 'center',width:80}
-                , {field: 'first_menu_id', title: '所属一级菜单', align: 'center'}
-                , {field: 'second_menu_id', title: '所属二级菜单', align: 'center'}
-                , {field: 'controller', title: '控制器完成路径名称', align: 'center'}
+                , {field: 'first_menu_id', title: '所属一级菜单', align: 'center',templet:'<div>{{# if(d.first_menu){ }}{{d.first_menu.name}}{{# }else{ }}-{{# } }}</div>'}
+                , {field: 'second_menu_id', title: '所属二级菜单', align: 'center',templet:'<div>{{# if(d.second_menu){ }}{{d.second_menu.name}}{{# }else{ }}-{{# } }}</div>'}
+                , {field: 'controller', title: '控制器文件名', align: 'center'}
                 , {field: 'create_time', title: '生成时间', align: 'center'}
                 , {field: 'operation', title: '操作', toolbar: '#operation', fixed: 'right', align: 'center', width: 100}
             ]]

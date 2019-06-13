@@ -15,6 +15,20 @@ class Menu extends Backend
         $this->model = model('autocreate.Menu');
     }
 
+    //查看
+    public function index(){
+        if( $this->request->isAjax() ){
+            $where = $this->build_params();
+            $select_page = $this->request->param('select_page');
+            $limit = $select_page ? $this->request->param('pageSize') : $this->request->param('limit');
+            $data = $this->model
+                ->with(['first_menu','second_menu'])
+                ->where($where)->order('id desc')->paginate($limit)->toArray();
+            return $select_page ? select_page_data($data) : layui_table_page_data($data);
+        }
+        return $this->fetch();
+    }
+
     public function import(){
         if($this->request->isAjax()){
             $post = $this->request->post("row/a");

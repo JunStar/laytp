@@ -326,7 +326,7 @@ class Curd extends Command
         $array_relation_model_html = [];
         if(is_array($relation_model) && count($relation_model)){
             foreach($relation_model as $k=>$item){
-                $data['relation_function_name'] = $item['relation_function_name'];
+                $data['relation_function_name'] = $this->convertUnderline( $item['relation_function_name'] );
                 $data['relation_way'] = $item['relation_way'];
                 $data['relation_model_name'] = 'app\admin\model\\'.$this->get_name_by_table($item['table_name']);
                 $data['foreign_key'] = $item['foreign_key'];
@@ -336,6 +336,17 @@ class Curd extends Command
         }
         $relation_model_html = implode("\n\n\t", $array_relation_model_html);
         return $relation_model_html;
+    }
+
+    /*
+     * 下划线转驼峰
+     */
+    protected function convertUnderline($str)
+    {
+        $str = preg_replace_callback('/([-_]+([a-z]{1}))/i', function ($matches) {
+            return strtoupper($matches[2]);
+        }, $str);
+        return $str;
     }
 
     /**
