@@ -184,22 +184,30 @@ function importRule($controller, $pid)
         $name = implode('/', $controllerNameArr);
     }
 
-    $rule_list = array_merge( ['index','add','edit','set_status','del'], $soft_del_rule_list );
+
 
     $menu_model = new \app\admin\model\auth\Menu();
 
     //过滤掉其它字符
     $menu_name = preg_replace(array('/^\/\*\*(.*)[\n\r\t]/u', '/[\s]+\*\//u', '/\*\s@(.*)/u', '/[\s|\*]+/u'), '', $classComment);
-    $ruleArr[] = array('id' => null, 'pid' => $pid, 'rule' => 'admin/' . $name . '/index', 'icon' => 'layui-icon layui-icon-fire', 'name' => $menu_name, 'is_menu' => 1, 'is_hide' => '0');
+    $new_menu = array( 'pid' => $pid, 'rule' => 'admin/' . $name . '/index', 'icon' => 'layui-icon layui-icon-fire', 'name' => $menu_name, 'is_menu' => 1, 'is_hide' => '0');
+
+    $new_pid = $menu_model->insertGetId($new_menu);
+
+    $look = array( 'pid' => $new_pid, 'rule' => 'admin/' . $name . '/index', 'icon' => 'layui-icon layui-icon-fire', 'name' => '查看', 'is_menu' => 0, 'is_hide' => '0');
+    $menu_model->insert($look);
 
     $name_list = ['index'=>'查看','add'=>'添加','edit'=>'编辑','del'=>'删除','set_status'=>'设置状态','recycle'=>'回收站','renew'=>'还原','true_del'=>'删除'];
 
+    $ruleArr = [];
+
+    $rule_list = array_merge( ['add','edit','set_status','del'], $soft_del_rule_list );
     foreach($rule_list as $k=>$n){
         $rule = 'admin/' . $name. '/' . $n;
         $id = $menu_model->where('rule', $rule)->value('id');
         $id = $id ? $id : null;
 
-        $ruleArr[] = array('id' => $id, 'pid' => $pid, 'rule' => $rule, 'icon' => 'layui-icon layui-icon-fire', 'name' => $name_list[$n], 'is_menu' => 0, 'is_hide' => '1');
+        $ruleArr[] = array('id' => $id, 'pid' => $new_pid, 'rule' => $rule, 'icon' => 'layui-icon layui-icon-fire', 'name' => $name_list[$n], 'is_menu' => 0, 'is_hide' => '1');
     }
 
     $menu_model->isUpdate(false)->saveAll($ruleArr);
