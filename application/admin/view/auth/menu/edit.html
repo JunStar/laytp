@@ -49,6 +49,14 @@
     </div>
 
     <div class="layui-form-item">
+        <label class="layui-form-label">隐藏</label>
+        <div class="layui-input-block">
+            <input type="radio" id="is_hide_1" name="row[is_hide]" value="1" title="是" {eq name="is_hide" value="1"}checked="checked"{/eq}>
+            <input type="radio" id="is_hide_0" name="row[is_hide]" value="0" title="否" {eq name="is_hide" value="0"}checked="checked"{/eq}>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
         <label class="layui-form-label">排序</label>
         <div class="layui-input-block">
             <input type="text" id="sort" name="row[sort]" value="{$sort}" placeholder="请输入排序，从大到小，倒序排列" class="layui-input">

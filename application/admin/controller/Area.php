@@ -15,7 +15,7 @@ class Area extends Backend
      * @var app\admin\model\Area
      */
     protected $model;
-	public $has_del=1;//是否拥有删除功能{%has_soft_del%}
+	public $has_del=1;//是否拥有删除功能
 
     public function initialize()
     {

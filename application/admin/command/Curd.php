@@ -703,6 +703,7 @@ EOD;
         }else{
             $this->controllerParam['data']['has_del'] = "\n\tpublic \$has_del=1;//是否拥有删除功能";
         }
+        $this->controllerParam['data']['has_soft_del'] = "\n\tpublic \$has_soft_del=0;//是否拥有软删除功能";
         //是否拥有软删除功能
         foreach($this->curd_config['global']['all_fields'] as $k=>$v){
             if($v['field_name'] == 'delete_time'){
@@ -1108,7 +1109,7 @@ EOD;
 
         $search_url = substr($info['form_additional']['table_name'], strlen(Config::get('database.prefix')) );
         $search_url = str_replace('_','.', $search_url);
-        $data['search_url'] = "{:url('admin/".$search_url."/select_page')}";
+        $data['search_url'] = "{:url('admin/".$search_url."/index',['select_page'=>1])}";
 
         $data['search_field'] = $info['form_additional']['search_field_name'];
         $data['show_field'] = $info['form_additional']['show_field_name'];

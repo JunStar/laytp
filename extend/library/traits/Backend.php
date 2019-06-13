@@ -10,9 +10,10 @@ trait Backend
     public function index(){
         if( $this->request->isAjax() ){
             $where = $this->build_params();
-            $limit = $this->request->param('limit');
+            $select_page = $this->request->param('select_page');
+            $limit = $select_page ? $this->request->param('pageSize') : $this->request->param('limit');
             $data = $this->model->where($where)->order('id desc')->paginate($limit)->toArray();
-            return layui_table_page_data($data);
+            return $select_page ? select_page_data($data) : layui_table_page_data($data);
         }
         return $this->fetch();
     }
@@ -107,16 +108,6 @@ trait Backend
             return $this->success('操作成功');
         }else{
             return $this->error('操作失败');
-        }
-    }
-
-    //前端select_page的js插件调用的ajax方法
-    public function select_page(){
-        if( $this->request->isAjax() ) {
-            $where = $this->build_select_page_params();
-            $limit = $this->request->param('pageSize');
-            $data = $this->model->where($where)->order('id desc')->paginate($limit)->toArray();
-            return select_page_data($data);
         }
     }
 }

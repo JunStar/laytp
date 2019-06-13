@@ -87,6 +87,7 @@ class Backend extends Controller
         //当前菜单信息
         $now_node_where['rule'] = $this->now_node;
         $now_node_where['is_menu'] = 1;
+        $now_node_where['is_hide'] = 0;
         $now_menus = model('auth.Menu')->where($now_node_where)->order('pid desc')->select()->toArray();
 
         if( !$now_menus ){
@@ -102,21 +103,33 @@ class Backend extends Controller
         }
 
         //当前二级菜单信息
-        $now_second_menu = model('auth.Menu')->where('id','=',$now_menu['pid'])->find();
+        $now_second_menu = model('auth.Menu')
+            ->where('id','=',$now_menu['pid'])
+            ->where('is_menu','=',1)
+            ->where('is_hide','=',0)
+            ->find();
         if($now_second_menu && $now_second_menu['pid']){
             $now_second_menu = $now_second_menu->toArray();
         }else{
             $now_second_menu = $now_menu;
         }
+
         //当前一级菜单信息
-        $now_first_menu = model('auth.Menu')->where('id','=',$now_second_menu['pid'])->find();
+        $now_first_menu = model('auth.Menu')
+            ->where('id','=',$now_second_menu['pid'])
+            ->where('is_menu','=',1)
+            ->where('is_hide','=',0)
+            ->find();
         if($now_first_menu){
             $now_first_menu = $now_first_menu->toArray();
         }else{
             $now_first_menu = $now_second_menu;
         }
+
         //获取所有一级菜单
         $first_menu_where[] = ['pid','=',0];
+        $first_menu_where[] = ['is_menu','=',1];
+        $first_menu_where[] = ['is_hide','=',0];
         if( !$this->admin_user->is_super_manager ){
             $first_menu_where[] =['id','in',$this->menu_ids];
         }
@@ -133,6 +146,7 @@ class Backend extends Controller
         //获取当前一级菜单下的二级和三级菜单
         $second_menu_where[] = ['pid','=',$now_first_menu['id']];
         $second_menu_where[] = ['is_menu','=',1];
+        $second_menu_where[] = ['is_hide','=',0];
         if( !$this->admin_user->is_super_manager ){
             $second_menu_where[] =['id','in',$this->menu_ids];
         }
@@ -146,6 +160,8 @@ class Backend extends Controller
             }
             $third_menu_where = [];
             $third_menu_where[] = ['pid','=',$sv['id']];
+            $third_menu_where[] = ['is_menu','=',1];
+            $third_menu_where[] = ['is_hide','=',0];
             if( !$this->admin_user->is_super_manager ){
                 $third_menu_where[] =['id','in',$this->menu_ids];
             }

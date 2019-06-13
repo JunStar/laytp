@@ -55,6 +55,7 @@ layui.use(['layTp'],function() {
                 , {field: 'icon', title: '图标', align: 'center', templet: '#show_icon',width:80}
                 , {field: 'sort', title: '排序', align: 'center',width:80}
                 , {field: 'is_menu', title: '菜单', templet: '#switch_is_menu', align: 'center',width:80}
+                , {field: 'is_hide', title: '隐藏', templet: '#switch_is_hide', align: 'center',width:80}
                 , {field: 'operation', title: '操作', toolbar: '#operation', fixed: 'right', align: 'center', width: 100}
             ]]
         });
