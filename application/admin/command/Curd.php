@@ -669,7 +669,7 @@ EOD;
     {
         $field_comment = $info['field_comment'];
         return <<<EOD
-    <div class="layui-inline" style="padding-left: 25px;">
+    <div class="layui-inline" style="padding-left: 10px;">
                 <label class="layui-form-label" title="{$field_comment}">{$field_comment}</label>
                 <div class="layui-input-inline">
                     {$content}
@@ -681,7 +681,7 @@ EOD;
     protected function get_select_relation_search_form_group($field, $content)
     {
         return <<<EOD
-    <div class="layui-inline" style="padding-left: 25px;">
+    <div class="layui-inline" style="padding-left: 10px;">
                 <label class="layui-form-label" title="{$field}">{$field}</label>
                 {$content}
             </div>

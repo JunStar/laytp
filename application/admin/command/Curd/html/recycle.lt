@@ -6,7 +6,7 @@
         <form class="layui-form-item layui-form-pane" style="margin-bottom:0px;">
         {%searchForm%}
 
-        <div class="layui-inline" style="padding-left: 25px;">
+        <div class="layui-inline" style="padding-left: 10px;">
             <button class="layui-btn layui-btn-sm layui-btn-primary" lay-submit lay-filter="*"><i class="layui-icon"></i> 搜 索</button>
         </div>
         </form>
