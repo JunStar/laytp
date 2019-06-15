@@ -1165,7 +1165,7 @@ EOD;
 
         $search_url = substr($info['form_additional']['table_name'], strlen(Config::get('database.prefix')) );
         $search_url = str_replace('_','.', $search_url);
-        $data['search_url'] = "{:url('admin/".$search_url."/select_page')}";
+        $data['search_url'] = "{:url('admin/".$search_url."/index',['select_page'=>1])}";
 
         $data['search_field'] = $info['form_additional']['search_field_name'];
         $data['show_field'] = $info['form_additional']['show_field_name'];

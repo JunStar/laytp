@@ -24,7 +24,7 @@ class Area extends Backend
     ];
 
     //关联模型
-    public function parent(){
+    public function area(){
         return $this->belongsTo('app\admin\model\Area','pid','id');
     }
 

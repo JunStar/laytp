@@ -36,12 +36,12 @@ layui.use(['layTp'],function() {
             , where: where
             , even: true
             , method: 'GET'
-            , cellMinWidth: 80
+            , cellMinWidth: 320
             , page: true
             , cols: [[
                 {type:'checkbox'}
 				,{field:'id',title:'ID',align:'center',width:80}
-				,{field:'pid',title:'父id',align:'center',templet:'<div>{{# if(d.parent){ }}{{d.parent.name}}{{# }else{ }}-{{# } }}</div>'}
+				,{field:'pid',title:'上级名称',align:'center',templet:'<div>{{# if(d.area){ }}{{d.area.name}}{{# }else{ }}-{{# } }}</div>'}
 				,{field:'short_name',title:'简称',align:'center'}
 				,{field:'name',title:'名称',align:'center'}
 				,{field:'merge_name',title:'全称',align:'center'}

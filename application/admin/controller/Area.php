@@ -16,6 +16,7 @@ class Area extends Backend
      */
     protected $model;
 	public $has_del=1;//是否拥有删除功能
+	public $has_soft_del=0;//是否拥有软删除功能
 
     public function initialize()
     {
@@ -31,11 +32,12 @@ class Area extends Backend
     public function index(){
         if( $this->request->isAjax() ){
             $where = $this->build_params();
-            $limit = $this->request->param('limit');
+            $select_page = $this->request->param('select_page');
+                        $limit = $select_page ? $this->request->param('pageSize') : $this->request->param('limit');
             $data = $this->model
-                ->with(['parent'])
+                ->with(['area'])
                 ->where($where)->order('id desc')->paginate($limit)->toArray();
-            return layui_table_page_data($data);
+            return $select_page ? select_page_data($data) : layui_table_page_data($data);
         }
         return $this->fetch();
     }
@@ -47,7 +49,7 @@ class Area extends Backend
             $where = $this->build_params();
             $limit = $this->request->param('limit');
             $data = $this->model->onlyTrashed()
-                ->with(['parent'])
+                ->with(['area'])
                 ->where($where)->order('id desc')->paginate($limit)->toArray();
             return layui_table_page_data($data);
         }

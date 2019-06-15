@@ -1,11 +1,13 @@
 {extend name="admin@public/layout/main"}
 
+{%tabs%}
+
 {block name="search_form"}
 <div class="search-form-page-tab-content" id="search-form" style="display:none;">
     <div class="layui-form layui-card-header" style="height:auto;padding:0;">
         <form class="layui-form-item layui-form-pane" style="margin-bottom:0px;">
             <div class="layui-inline" style="padding-left: 10px;">
-                <label class="layui-form-label" title="父id">父id</label>
+                <label class="layui-form-label" title="上级名称">上级名称</label>
                 <div class="layui-input-inline">
                     <input type="text" id="pid" name="search_param[pid][value]" id="pid" placeholder="请选择" class="layui-input selectPage"
                     search-field="name"
