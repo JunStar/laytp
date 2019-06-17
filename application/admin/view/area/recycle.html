@@ -1,17 +1,6 @@
-{extend name="admin@public/layout/main"}
+{extend name="admin@public/layout/popup"}
 
-{block name="tabs"}
-<div class="layui-tab layui-tab-brief">
-<ul class="layui-tab-title">
-    <li class="layui-this" click_search="true" field="level" field_val="">全部</li>
-    <li click_search="true" field="level" field_val="1">省</li>
-	<li click_search="true" field="level" field_val="2">市</li>
-	<li click_search="true" field="level" field_val="3">区县</li>
-</ul>
-</div>
-{/block}
-
-{block name="search_form"}
+{block name="body"}
 <div class="search-form-page-tab-content" id="search-form" style="display:none;">
     <div class="layui-form layui-card-header" style="height:auto;padding:0;">
         <form class="layui-form-item layui-form-pane" style="margin-bottom:0px;">
@@ -119,13 +108,107 @@
         </form>
     </div>
 </div>
+<table class="laytp-table layui-hide-sm" lay-filter="default"></table>
 {/block}
 
 {block name="script"}
-<script src="__ADMIN_JS__/area.js" charset="utf-8"></script>
+<script>
+layui.use(['layTp'],function() {
+    const
+        func_controller = {}
+        ,layTp = layui.layTp
+        ,$ = layui.jquery
+    ;
+
+    //批量操作渲染
+    layui.dropdown.render({
+        elem: '.action-more',
+        options: [
+            {
+                action: "renew"
+                ,title: "还原"
+                ,icon: "layui-icon-list"
+                ,uri: layTp.facade.url(module + "/" + controller + "/renew")
+                ,switch_type: "confirm_action"
+            }
+            ,{
+                action: 'true_del',
+                title: '彻底删除'
+                ,icon: "layui-icon-delete"
+                ,uri: layTp.facade.url(module + "/" + controller + "/true_del")
+                ,switch_type: "confirm_action"
+            }
+        ]
+    });
+
+    //表格渲染
+    func_controller.table_render = function (where) {
+        layui.table.render({
+            elem: '.layui-hide-sm'
+            , id: table_id
+            , url: window.location.href
+            , toolbar: '#default_toolbar'
+            , where: where
+            , even: true
+            , method: 'GET'
+            , cellMinWidth: 80
+            , page: true
+            , cols: [[
+                {type:'checkbox'}
+				,{field:'id',title:'ID',align:'center',width:80}
+				,{field:'pid',title:'上级名称',align:'center',templet:'<div>{{# if(d.area){ }}{{d.area.name}}{{# }else{ }}-{{# } }}</div>'}
+				,{field:'short_name',title:'简称',align:'center'}
+				,{field:'name',title:'名称',align:'center'}
+				,{field:'merge_name',title:'全称',align:'center'}
+				,{field:'level',title:'层级',align:'center',templet:function(d){
+					return layTp.facade.formatter.status('level',d.level,{"1":"省","2":"市","3":"区县"});
+				}}
+				,{field:'pinyin',title:'拼音',align:'center'}
+				,{field:'code',title:'长途区号',align:'center'}
+				,{field:'zip',title:'邮编',align:'center'}
+				,{field:'first',title:'首字母',align:'center'}
+				,{field:'lng',title:'经度',align:'center'}
+				,{field:'lat',title:'纬度',align:'center'}
+				,{field:'operation',title:'操作',align:'center',toolbar:'#operation',width:100}
+            ]]
+        });
+
+        //监听默认工具条
+        layui.table.on('tool(default)', function(obj){
+            console.log(obj);
+            if(default_table_tool.indexOf(obj.event) != -1){
+                layTp.facade.table_tool(obj);
+            }else{
+                //新增的其他操作按钮在这里来写
+                //switch(obj.event){
+                //    case '':
+                //
+                //        break;
+                //}
+            }
+        });
+    }
+
+    func_controller.table_render();
+
+    window.func_controller = func_controller;
+});
+</script>
 {/block}
 
 {block name="js_template"}
-{include file="public/js_tpl/toolbar_tpl"}
-{include file="public/js_tpl/operation_tpl"}
+<script type="text/html" id="operation">
+    <div class="layui-btn-group">
+        <a class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-list" lay-event="renew" title="还原" layer-tips="还原"> </a>
+        <a class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-delete" lay-event="true_del" title="彻底删除" layer-tips="彻底删除" colour="#f51c1c"> </a>
+    </div>
+</script>
+<script type="text/html" id="default_toolbar">
+    <div class="layui-table-tool-temp">
+        <div class="layui-btn-group fl">
+            <a href="javascript:void(0);" class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-list action-more">&nbsp;批量操作</a>
+            <a href="javascript:void(0);" class="layui-btn layui-btn-primary layui-btn-sm show-hidden-search-form layui-icon layui-icon-search">&nbsp;筛选</a>
+        </div>
+    </div>
+</script>
 {/block}

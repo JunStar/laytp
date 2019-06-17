@@ -1,6 +1,4 @@
-{extend name="admin@public/layout/main"}
-
-{%tabs%}
+{extend name="admin@public/layout/main"}{%tabs%}
 
 {block name="search_form"}
 <div class="search-form-page-tab-content" id="search-form" style="display:none;">

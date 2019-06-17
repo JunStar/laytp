@@ -575,9 +575,11 @@ class Curd extends Command
                         $tab_list[] = '<li click_search="true" field="'.$this->curd_config['global']['tabs_field'].'" field_val="'.$i.'">'.$j.'</li>';
                     }
                     $tabs['tab_list'] = implode("\n\t", $tab_list);
-                    $index_data['tabs'] = $this->get_replaced_tpl($tabs_tpl_name, $tabs);
+                    $index_data['tabs'] = "\n\n".$this->get_replaced_tpl($tabs_tpl_name, $tabs);
                 }
             }
+        }else{
+            $index_data['tabs'] = '';
         }
 
         $this->htmlIndexParam = ['tpl_name'=>$index_tpl_name,'data'=>$index_data,'c_file_name'=>$this->html_index_c_file_name];
