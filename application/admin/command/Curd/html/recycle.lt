@@ -64,7 +64,6 @@ layui.use(['layTp'],function() {
 
         //监听默认工具条
         layui.table.on('tool(default)', function(obj){
-            console.log(obj);
             if(default_table_tool.indexOf(obj.event) != -1){
                 layTp.facade.table_tool(obj);
             }else{

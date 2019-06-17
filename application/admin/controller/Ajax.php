@@ -13,7 +13,14 @@ class Ajax extends Controller
         try{
             $file = $this->request->file('file'); // 获取上传的文件
             $info = $file->move('uploads'); // 移动文件到指定目录 没有则创建
-            $this->success('上传成功','',['data'=>'/uploads/'.$info->getSaveName()]);
+            if($info->getError()){
+                $this->error('上传失败，'.$info->getError());
+            }else{
+                $add['file_type'] = $this->request->param('accept');
+                $add['file_path'] = '/uploads/'.$info->getSaveName();
+                model('Attachment')->create($add);
+                $this->success('上传成功','',['data'=>'/uploads/'.$info->getSaveName()]);
+            }
         }catch (Exception $e){
             $this->error('上传失败','',['data'=>$e->getMessage()]);
         }

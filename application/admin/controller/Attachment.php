@@ -22,12 +22,16 @@ class Attachment extends Backend
     {
         parent::initialize();
         $this->model = new \app\admin\model\Attachment();
-        
-        
-
     }
 
-    
-
-    
+    //选择图片
+    public function select(){
+        if( $this->request->isAjax() ){
+            $where = $this->build_params();
+            $limit = $this->request->param('limit');
+            $data = $this->model->where($where)->order('id desc')->paginate($limit)->toArray();
+            return layui_table_page_data($data);
+        }
+        return $this->fetch();
+    }
 }

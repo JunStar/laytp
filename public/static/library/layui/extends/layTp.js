@@ -583,6 +583,10 @@ layui.define([
                  */
                 let form_action = $(data.form).attr('action');
                 //当前url的action值为index，搜索表单进行了提交
+                if(module=='admin' && controller=='attachment' && action=='select'){
+                    index(data);
+                    return false;
+                }
                 if( (action == 'index' || action == 'recycle') && typeof form_action == "undefined" ){
                     index(data);
                     //当前url的action值不是index，就ajax提交到当前url
@@ -674,7 +678,7 @@ layui.define([
                 let accept = $(item).attr('accept');
                 layui.upload.render({
                     elem: elem,
-                    url: layTp.facade.url('/admin/ajax/upload'),
+                    url: layTp.facade.url('/admin/ajax/upload',{'accept':accept}),
                     accept: accept,
                     multiple: is_multiple,
                     before: function (obj) {
