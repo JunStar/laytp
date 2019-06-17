@@ -41,7 +41,17 @@ layui.use(['layTp'],function() {
             , cols: [[
                 {type:'checkbox'}
 				,{field:'id',title:'ID',align:'center',width:80}
-				,{field:'file_path',title:'文件路径',align:'center'}
+				,{field:'file_path',title:'文件路径',align:'center',templet:function(d){
+                    if(d.file_type == 'images'){
+                        return layTp.facade.formatter.images(d.file_path);
+                    }else if(d.file_type == 'video'){
+                        return layTp.facade.formatter.video(d.file_path);
+                    }else if(d.file_type == 'audio'){
+                        return layTp.facade.formatter.audio(d.file_path);
+                    }else{
+                        return layTp.facade.formatter.file(d.file_path);
+                    }
+                }}
 				,{field:'file_type',title:'文件类型',align:'center',templet:function(d){
 					return layTp.facade.formatter.status('file_type',d.file_type,{"images":"图片","video":"视频","audio":"音频","file":"文件"});
 				}}
