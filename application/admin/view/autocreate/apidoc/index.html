@@ -1,46 +1,46 @@
 {extend name="admin@public/layout/main"}
 
 {block name="main_body"}
-    <div class="layui-card">
-        <div class="layui-tab layui-tab-brief">
-            <ul class="layui-tab-title">
-                <li class="layui-this">生成文档</li>
-                <li>文档示例</li>
-            </ul>
-            <div class="layui-tab-content">
-                <div class="layui-tab-item layui-show">
-                    <style type="text/css">
-                        .layui-form-item .layui-form-label{width:130px;text-align:right;}
-                        .layui-form-item .layui-input-inline{max-width:80%;width:auto;min-width:260px;}
-                        .layui-form-mid{padding:0!important;}
-                        .layui-form-mid code{color:#5FB878;}
-                    </style>
-                    <form class="page-list-form layui-form">
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">api文档文件名称</label>
-                            <div class="layui-input-inline">
-                                <input type="text" name="row[apidoc_file_name]" id="apidoc_file_name" placeholder="请输入api文档文件名称" class="layui-input" value="{$apidoc_file_name}" />
-                            </div>
-                            <div class="layui-form-mid layui-word-aux">生成的Api文档的文件名<br />默认使用api，点击生成则会在根目录下生成api.html文件</div>
+<div class="layui-card">
+    <div class="layui-tab layui-tab-brief">
+        <ul class="layui-tab-title">
+            <li class="layui-this">生成文档</li>
+            <li>文档示例</li>
+        </ul>
+        <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+                <style type="text/css">
+                    .layui-form-item .layui-form-label{width:130px;text-align:right;}
+                    .layui-form-item .layui-input-inline{max-width:80%;width:auto;min-width:260px;}
+                    .layui-form-mid{padding:0!important;}
+                    .layui-form-mid code{color:#5FB878;}
+                </style>
+                <form class="page-list-form layui-form">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">api文档文件名称</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="row[apidoc_file_name]" id="apidoc_file_name" placeholder="请输入api文档文件名称" class="layui-input" value="{$apidoc_file_name}" />
                         </div>
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">api文档标题</label>
-                            <div class="layui-input-inline">
-                                <input type="text" name="row[apidoc_title]" id="apidoc_title" placeholder="请输入api文档标题" class="layui-input" value="{$apidoc_title}" />
-                            </div>
-                            <div class="layui-form-mid layui-word-aux">生成的Api文档的标题</div>
+                        <div class="layui-form-mid layui-word-aux">生成的Api文档的文件名<br />默认使用api，点击生成则会在根目录下生成api.html文件</div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">api文档标题</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="row[apidoc_title]" id="apidoc_title" placeholder="请输入api文档标题" class="layui-input" value="{$apidoc_title}" />
                         </div>
-                        <div class="layui-form-item">
-                            <label class="layui-form-label"> </label>
-                            <div class="layui-input-inline">
-                                <button class="layui-btn layui-btn-normal" lay-submit lay-filter="*">生 成</button>
-                                <a class="layui-btn layui-btn-primary" href="javascript:void(0);" onclick="showApi();">查 看</a>
-                            </div>
+                        <div class="layui-form-mid layui-word-aux">生成的Api文档的标题</div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label"> </label>
+                        <div class="layui-input-inline">
+                            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="*">生 成</button>
+                            <a class="layui-btn layui-btn-primary" href="javascript:void(0);" onclick="showApi();">查 看</a>
                         </div>
-                    </form>
-                </div>
-                <div class="layui-tab-item">
-            <pre class="layui-code">
+                    </div>
+                </form>
+            </div>
+            <div class="layui-tab-item">
+        <pre class="layui-code">
 &lt;?php
 //文件位置application/api/controller/Test.php
 namespace app\api\controller;
@@ -48,8 +48,8 @@ namespace app\api\controller;
 use controller\Api;
 
 /**
- * api分组名，一般一个文件就是一个分组
- */
+* api分组名，一般一个文件就是一个分组
+*/
 class Test extends Api{
     /**
      * @ApiTitle    (api标题)
@@ -63,21 +63,21 @@ class Test extends Api{
      * @ApiReturnParams   (name="msg", type="string", required=true, sample="返回成功")
      * @ApiReturnParams   (name="data", type="object", sample="{'id':'int','username':'string','profile':{'email':'string','age':'integer'}}", description="扩展数据返回")
      * @ApiReturn
-({
+    ({
     'code':'1',
     'msg':'返回成功'
-})
+    })
      */
     public function index()
     {
         $this->success("返回成功", $this->request->request());
     }
 }
-            </pre>
-                </div>
+        </pre>
             </div>
         </div>
     </div>
+</div>
 {/block}
 
 {block name="script"}
