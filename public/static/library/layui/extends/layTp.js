@@ -418,7 +418,6 @@ layui.define([
                 let switch_type = $(this).attr("switch_type");
                 let checkStatus = layui.table.checkStatus(table_id);
                 let checkData = checkStatus.data;
-                let callback = $(this).attr("callback");
                 if(checkData.length == 0){
                     layTp.facade.error('请选择数据');
                     return false;
@@ -585,9 +584,7 @@ layui.define([
                 //当前url的action值为index，搜索表单进行了提交
                 if(module=='admin' && controller=='attachment' && action=='select'){
                     index(data);
-                    return false;
-                }
-                if( (action == 'index' || action == 'recycle') && typeof form_action == "undefined" ){
+                }else if( (action == 'index' || action == 'recycle') && typeof form_action == "undefined" ){
                     index(data);
                     //当前url的action值不是index，就ajax提交到当前url
                 }else{
