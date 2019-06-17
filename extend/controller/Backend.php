@@ -224,7 +224,7 @@ class Backend extends Controller
                     $condition = strtoupper($value_condition['condition']);
                     switch( $condition ){
                         case '=':
-                            $where[] = "$field = {$value_condition['value']}";
+                            $where[] = "`{$field}` = '{$value_condition['value']}'";
                             break;
                         case 'FIND_IN_SET':
                             $values = explode(',', $value_condition['value']);

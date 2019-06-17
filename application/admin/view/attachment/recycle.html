@@ -1,0 +1,131 @@
+{extend name="admin@public/layout/popup"}
+
+{block name="body"}
+<div class="search-form-page-tab-content" id="search-form" style="display:none;">
+    <div class="layui-form layui-card-header" style="height:auto;padding:0;">
+        <form class="layui-form-item layui-form-pane" style="margin-bottom:0px;">
+            <div class="layui-inline" style="padding-left: 10px;">
+                <label class="layui-form-label" title="文件路径">文件路径</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="file_path" name="search_param[file_path][value]" placeholder="请输入文件路径" class="layui-input">
+                    <input type="hidden" name="search_param[file_path][condition]" value="LIKE">
+                </div>
+            </div>
+
+		    <div class="layui-inline" style="padding-left: 10px;">
+                <label class="layui-form-label" title="文件类型">文件类型</label>
+                <div class="layui-input-inline">
+                    <select id="file_type" name="search_param[file_type][value]" placeholder="请输入文件类型">
+        				<option value=""></option>
+						<option value="images">图片</option>
+						<option value="video">视频</option>
+						<option value="audio">音频</option>
+						<option value="file">文件</option>
+                    </select>
+                    <input type="hidden" name="search_param[file_type][condition]" value="=">
+                </div>
+            </div>
+
+        <div class="layui-inline" style="padding-left: 10px;">
+            <button class="layui-btn layui-btn-sm layui-btn-primary" lay-submit lay-filter="*"><i class="layui-icon"></i> 搜 索</button>
+        </div>
+        </form>
+    </div>
+</div>
+<table class="laytp-table layui-hide-sm" lay-filter="default"></table>
+{/block}
+
+{block name="script"}
+<script>
+layui.use(['layTp'],function() {
+    const
+        func_controller = {}
+        ,layTp = layui.layTp
+        ,$ = layui.jquery
+    ;
+
+    //批量操作渲染
+    layui.dropdown.render({
+        elem: '.action-more',
+        options: [
+            {
+                action: "renew"
+                ,title: "还原"
+                ,icon: "layui-icon-list"
+                ,uri: layTp.facade.url(module + "/" + controller + "/renew")
+                ,switch_type: "confirm_action"
+            }
+            ,{
+                action: 'true_del',
+                title: '彻底删除'
+                ,icon: "layui-icon-delete"
+                ,uri: layTp.facade.url(module + "/" + controller + "/true_del")
+                ,switch_type: "confirm_action"
+            }
+        ]
+    });
+
+    //表格渲染
+    func_controller.table_render = function (where) {
+        layui.table.render({
+            elem: '.layui-hide-sm'
+            , id: table_id
+            , url: window.location.href
+            , toolbar: '#default_toolbar'
+            , where: where
+            , even: true
+            , method: 'GET'
+            , cellMinWidth: 80
+            , page: true
+            , cols: [[
+                {type:'checkbox'}
+				,{field:'id',title:'ID',align:'center',width:80}
+				,{field:'file_path',title:'文件路径',align:'center'}
+				,{field:'file_type',title:'文件类型',align:'center',templet:function(d){
+					return layTp.facade.formatter.status('file_type',d.file_type,{"images":"图片","video":"视频","audio":"音频","file":"文件"});
+				}}
+				//,{field:'create_time',title:'生成时间',align:'center'}
+				//,{field:'delete_time',title:'删除时间',align:'center'}
+				,{field:'operation',title:'操作',align:'center',toolbar:'#operation',width:100}
+            ]]
+        });
+
+        //监听默认工具条
+        layui.table.on('tool(default)', function(obj){
+            console.log(obj);
+            if(default_table_tool.indexOf(obj.event) != -1){
+                layTp.facade.table_tool(obj);
+            }else{
+                //新增的其他操作按钮在这里来写
+                //switch(obj.event){
+                //    case '':
+                //
+                //        break;
+                //}
+            }
+        });
+    }
+
+    func_controller.table_render();
+
+    window.func_controller = func_controller;
+});
+</script>
+{/block}
+
+{block name="js_template"}
+<script type="text/html" id="operation">
+    <div class="layui-btn-group">
+        <a class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-list" lay-event="renew" title="还原" layer-tips="还原"> </a>
+        <a class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-delete" lay-event="true_del" title="彻底删除" layer-tips="彻底删除" colour="#f51c1c"> </a>
+    </div>
+</script>
+<script type="text/html" id="default_toolbar">
+    <div class="layui-table-tool-temp">
+        <div class="layui-btn-group fl">
+            <a href="javascript:void(0);" class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-list action-more">&nbsp;批量操作</a>
+            <a href="javascript:void(0);" class="layui-btn layui-btn-primary layui-btn-sm show-hidden-search-form layui-icon layui-icon-search">&nbsp;筛选</a>
+        </div>
+    </div>
+</script>
+{/block}

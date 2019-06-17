@@ -56,12 +56,19 @@ class Menu extends Backend
             new \RecursiveDirectoryIterator($controllerDir), \RecursiveIteratorIterator::LEAVES_ONLY
         );
         $list = [];
+        $search_name = $this->request->param('name');
         foreach ($files as $name => $file) {
             if (!$file->isDir()) {
                 $filePath = $file->getRealPath();
                 $name = str_replace($controllerDir, '', $filePath);
                 $name = str_replace(DS, "/", $name);
-                $list[] = ['id' => $name, 'name' => $name];
+                if($search_name){
+                    if(strstr($name,$search_name)){
+                        $list[] = ['id' => $name, 'name' => $name];
+                    }
+                }else{
+                    $list[] = ['id' => $name, 'name' => $name];
+                }
             }
         }
         $pageNumber = $this->request->request("page");

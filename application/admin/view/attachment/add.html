@@ -1,0 +1,20 @@
+{extend name="admin@public/layout/popup_form"}
+
+{block name="form"}
+    <div class="layui-form-item">
+        <label class="layui-form-label" title="文件路径">文件路径</label>
+        <div class="layui-input-block">
+            <input type="text" name="row[file_path]" placeholder="请输入文件路径" class="layui-input" lay-verify="required" lay-verType="tips">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label" title="文件类型">文件类型</label>
+        <div class="layui-input-block">
+            <input type="radio" name="row[file_type]" value="images" title="图片" checked="checked" />
+			<input type="radio" name="row[file_type]" value="video" title="视频"  />
+			<input type="radio" name="row[file_type]" value="audio" title="音频"  />
+			<input type="radio" name="row[file_type]" value="file" title="文件"  />
+        </div>
+    </div>
+{/block}
