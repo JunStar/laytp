@@ -59,6 +59,16 @@ abstract class Relation
     }
 
     /**
+     * 获取当前的关联模型类的实例
+     * @access public
+     * @return Query
+     */
+    public function getQuery()
+    {
+        return $this->query;
+    }
+
+    /**
      * 设置当前关联为自关联
      * @access public
      * @param  bool $self 是否自关联
@@ -130,6 +140,17 @@ abstract class Relation
     }
 
     /**
+     * 更新数据
+     * @access public
+     * @param  array $data 更新数据
+     * @return integer|string
+     */
+    public function update(array $data = [])
+    {
+        return $this->query->update($data);
+    }
+
+    /**
      * 删除记录
      * @access public
      * @param  mixed $data 表达式 true 表示强制删除
@@ -158,7 +179,7 @@ abstract class Relation
 
             $result = call_user_func_array([$this->query->getModel(), $method], $args);
 
-            return $result === $this->query ? $this : $result;
+            return $result === $this->query && !in_array(strtolower($method), ['fetchsql', 'fetchpdo']) ? $this : $result;
         } else {
             throw new Exception('method not exists:' . __CLASS__ . '->' . $method);
         }

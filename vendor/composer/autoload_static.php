@@ -20,6 +20,11 @@ class ComposerStaticInitebb6ccacfc92d5643dd3c68f4ea3aa91
         array (
             'app\\' => 4,
         ),
+        'S' => 
+        array (
+            'Symfony\\Contracts\\EventDispatcher\\' => 34,
+            'Symfony\\Component\\EventDispatcher\\' => 34,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -35,6 +40,36 @@ class ComposerStaticInitebb6ccacfc92d5643dd3c68f4ea3aa91
         array (
             0 => __DIR__ . '/../..' . '/application',
         ),
+        'Symfony\\Contracts\\EventDispatcher\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/event-dispatcher-contracts',
+        ),
+        'Symfony\\Component\\EventDispatcher\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/event-dispatcher',
+        ),
+    );
+
+    public static $prefixesPsr0 = array (
+        'G' => 
+        array (
+            'Guzzle\\Stream' => 
+            array (
+                0 => __DIR__ . '/..' . '/guzzle/stream',
+            ),
+            'Guzzle\\Parser' => 
+            array (
+                0 => __DIR__ . '/..' . '/guzzle/parser',
+            ),
+            'Guzzle\\Http' => 
+            array (
+                0 => __DIR__ . '/..' . '/guzzle/http',
+            ),
+            'Guzzle\\Common' => 
+            array (
+                0 => __DIR__ . '/..' . '/guzzle/common',
+            ),
+        ),
     );
 
     public static function getInitializer(ClassLoader $loader)
@@ -42,6 +77,7 @@ class ComposerStaticInitebb6ccacfc92d5643dd3c68f4ea3aa91
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInitebb6ccacfc92d5643dd3c68f4ea3aa91::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInitebb6ccacfc92d5643dd3c68f4ea3aa91::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInitebb6ccacfc92d5643dd3c68f4ea3aa91::$prefixesPsr0;
 
         }, null, ClassLoader::class);
     }

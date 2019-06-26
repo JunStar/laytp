@@ -59,7 +59,7 @@
 <div class="form-footer">
     <div class="layui-form-item">
         <div class="layui-input-block">
-            <a class="layui-btn layui-btn-danger" lay-submit lay-filter="select_ids">确定选择</a>
+            <a class="layui-btn layui-btn-danger" id="sureCheck">确定选择</a>
         </div>
     </div>
 </div>
@@ -67,12 +67,17 @@
 
 {block name="script"}
 <script>
+let id_val = "{$id_val}";
 layui.use(['layTp'],function() {
     const
         func_controller = {}
         ,layTp = layui.layTp
         ,$ = layui.jquery
     ;
+
+    const single_multi = '{$single_multi}';
+    const accept = '{$accept}';
+    const table_type = ( single_multi == 'single' ) ? 'radio' : 'checkbox';
 
     //表格渲染
     func_controller.table_render = function (where) {
@@ -87,7 +92,7 @@ layui.use(['layTp'],function() {
             , cellMinWidth: 80
             , page: true
             , cols: [[
-                {type:'checkbox'}
+                {type:table_type}
 				,{field:'id',title:'ID',align:'center',width:80}
 				,{field:'file_path',title:'文件路径',align:'center',templet:function(d){
                     if(d.file_type == 'images'){
@@ -109,10 +114,87 @@ layui.use(['layTp'],function() {
         });
     }
 
-    layui.form.on('submit(select_ids)', function(data){
+    $('#sureCheck').click(function(){
         let checkStatus = layui.table.checkStatus(table_id);
         let checkData = checkStatus.data;
-        console.log(checkData);
+        let file_path_arr = [];
+        for(key in checkData){
+            file_path_arr.push(checkData[key].file_path);
+        }
+        let file_path_str = file_path_arr.join(',');
+        // $("#input_"+id_val, parent.document).val(file_path_str);
+
+        if(single_multi == 'multi'){
+            //预览
+            if(accept == 'images') {
+                for(key in checkData){
+                    $('#preview_' + id_val, parent.document).append(
+                        '<li class="item_img">' +
+                        '<div class="operate">' +
+                        '<i class="upload_img_close layui-icon" file_url_data="' + checkData[key].file_path + '" node="'+id_val+'"></i>' +
+                        '</div>' +
+                        '<img src="' + checkData[key].file_path + '" class="img" >' +
+                        '</li>'
+                    );
+                }
+            }else if(accept == 'video'){
+                for(key in checkData) {
+                    $('#preview_' + id_val, parent.document).append(
+                        '<li class="item_video">' +
+                        '<video src="' + checkData[key].file_path + '" controls="controls" width="200px" height="200px"></video>' +
+                        '<button class="layui-btn layui-btn-sm layui-btn-danger upload_delete" style="display: block; width: 100%;" file_url_data="' + checkData[key].file_path + '" node="'+id_val+'"><i class="layui-icon">&#xe640;</i></button>' +
+                        '</li>'
+                    );
+                }
+            }else if(accept == 'audio'){
+                for(key in checkData) {
+                    $('#preview_' + id_val, parent.document).append(
+                        '<li class="item_audio">' +
+                        '<audio src="' + checkData[key].file_path + '" controls="controls" style="height:54px;"></audio>' +
+                        '<button class="layui-btn layui-btn-sm layui-btn-danger upload_delete" style="display: block; width: 100%;" file_url_data="' + checkData[key].file_path + '" node="'+id_val+'"><i class="layui-icon">&#xe640;</i></button>' +
+                        '</li>'
+                    );
+                }
+            }
+            //隐藏input框增加文件值
+            let input_value = $('#input_'+id_val, parent.document).val();
+            if(input_value){
+                $('#input_'+id_val, parent.document).val( input_value + ',' + file_path_str );
+            }else{
+                $('#input_'+id_val, parent.document).val( file_path_str );
+            }
+        }else{
+            //预览
+            if(accept == 'images') {
+                $('#preview_' + id_val, parent.document).html(
+                    '<li class="item_img">' +
+                    '<div class="operate">' +
+                    '<i class="upload_img_close layui-icon" file_url_data="' + file_path_str + '" node="'+id_val+'"></i>' +
+                    '</div>' +
+                    '<img src="' + file_path_str + '" class="img" >' +
+                    '</li>'
+                );
+            }else if(accept == 'video'){
+                $('#preview_' + id_val, parent.document).html(
+                    '<li class="item_video">' +
+                    '<video src="' + file_path_str + '" controls="controls" width="200px" height="200px"></video>' +
+                    '<button class="layui-btn layui-btn-sm layui-btn-danger upload_delete" style="display: block; width: 100%;" file_url_data="' + file_path_str + '" node="'+id_val+'"><i class="layui-icon">&#xe640;</i></button>' +
+                    '</li>'
+                );
+            }else if(accept == 'audio'){
+                $('#preview_' + id_val, parent.document).html(
+                    '<li class="item_audio">' +
+                    '<audio src="' + file_path_str + '" controls="controls" style="height:54px;"></audio>' +
+                    '<button class="layui-btn layui-btn-sm layui-btn-danger upload_delete" style="display: block; width: 100%;" file_url_data="' + file_path_str + '" node="'+id_val+'"><i class="layui-icon">&#xe640;</i></button>' +
+                    '</li>'
+                );
+            }
+            //隐藏input框增加文件值
+            $('#input_'+id_val, parent.document).val( file_path_str );
+        }
+
+        let index = parent.layui.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+        parent.layui.layer.close(index); //再执行关闭
     });
 
     func_controller.table_render();

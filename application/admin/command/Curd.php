@@ -1258,7 +1258,7 @@ EOD;
                     {if $' . $info['field_name'] . '}
                         <li class="item_video">
                             <video src="{$' . $info['field_name'] . '}" controls="controls" width="200px" height="200px"></video>
-                            <button class="layui-btn layui-btn-sm layui-btn-danger upload_delete" style="display: block; width: 100%;"><i class="layui-icon">&#xe640;</i></button>
+                            <button class="layui-btn layui-btn-sm layui-btn-danger upload_delete" style="display: block; width: 100%;" file_url_data="{$' . $info['field_name'] . '}" node="'.$info['field_name'].'"><i class="layui-icon">&#xe640;</i></button>
                         </li>
                     {/if}
                     </ul>
@@ -1293,7 +1293,7 @@ EOD;
                     {if $' . $info['field_name'] . '}
                         <li class="item_audio">
                             <audio src="{$' . $info['field_name'] . '}" controls="controls" style="height:54px;"></audio>
-                            <button class="layui-btn layui-btn-sm layui-btn-danger upload_delete" style="display: block; width: 100%;" file_url_data="{$vo}" node="'.$info['field_name'].'"><i class="layui-icon">&#xe640;</i></button>
+                            <button class="layui-btn layui-btn-sm layui-btn-danger upload_delete" style="display: block; width: 100%;" file_url_data="{$' . $info['field_name'] . '}" node="'.$info['field_name'].'"><i class="layui-icon">&#xe640;</i></button>
                         </li>
                     {/if}
                     </ul>

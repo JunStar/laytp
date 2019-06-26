@@ -695,7 +695,7 @@ layui.define([
                             return layer.msg(res.msg + ":" + res.data.data);
                         }
                         if(is_multiple){
-                            //预览
+                            //预览，LayUI的批量上传，其实是请求了多次上传接口
                             if(accept == 'images') {
                                 $('#preview_' + id).append(
                                     '<li class="item_img">' +

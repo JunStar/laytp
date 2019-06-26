@@ -1,11 +1,21 @@
 <div class="layui-upload">
-                <div class="layui-inline" style="width: 81%;"><input type="text" class="layui-input" name="row[{%field_name%}]" id="input_{%field_name%}" value="{${%field_name%}}" /></div>
+                <div class="layui-inline" style="width: 70%;"><input type="text" class="layui-input" name="row[{%field_name%}]" id="input_{%field_name%}" value="{${%field_name%}}" /></div>
                 <div class="layui-inline">
-                    <button type="button" class="layui-btn layui-btn-primary pull-left"
+                    <button type="button" class="layui-btn layui-btn-sm layui-btn-primary pull-left"
                             id="{%field_name%}"
                             upload="true"
                             accept="{%accept%}"
-                            single_multi="{%single_multi%}"
-                    >选择上传</button>
+                            single_multi="{%single_multi%}">
+                        <i class="layui-icon">&#xe62f;</i> 上 传
+                    </button>
+                </div>
+                <div class="layui-inline">
+                    <button type="button"
+                            class="layui-btn layui-btn-sm layui-btn-danger pull-left popup-frame"
+                            data-open="{:url('admin/attachment/select',['id_val'=>'{%field_name%}','accept'=>'{%accept%}','single_multi'=>'{%single_multi%}'])}"
+                            data-width="100%"
+                            data-height="100%">
+                        <i class="layui-icon">&#xe60a;</i> 选 择
+                    </button>
                 </div>{%preview%}
             </div>
