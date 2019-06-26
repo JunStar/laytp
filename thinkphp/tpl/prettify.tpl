@@ -80,7 +80,7 @@ $langSet == 'en' && $lang = array_combine(array_keys($lang), array_keys($lang));
         <img src="/static/admin/image/error.svg" alt="" width="120"/>
     </div>
     <div class="subheader">
-        <?=$debug?$msg:$lang['The page you are looking for is temporarily unavailable']?>
+        <?=$debug?$message:$lang['The page you are looking for is temporarily unavailable']?>
     </div>
     <div class="hr"></div>
     <div class="context">
