@@ -14,13 +14,12 @@ class {%controllerClassName%} extends Backend
      * {%modelName%}模型对象
      * @var {%modelNamespace%}\{%modelClassName%}
      */
-    protected $model;{%upload_field_def%}{%has_del%}{%has_soft_del%}
+    protected $model;{%has_del%}{%has_soft_del%}
 
     public function initialize()
     {
         parent::initialize();
         $this->model = new \{%modelNamespace%}\{%modelClassName%}();
-        {%upload_field%}
         {%arrayConstAssign%}
 
     }

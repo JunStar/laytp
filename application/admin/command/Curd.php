@@ -28,7 +28,6 @@ class Curd extends Command
         $mid_name,//中间名称，比如表名为lt_test_a_b那么这里的mid_name就是/test/a/B,拼接控制器和模型文件的路径和namespace都需要用到
         $controller_array_const,//控制器层数组常量
         $controller_c_file_name,//需要生成的控制器文件的文件名
-        $controller_array_upload_field,//上传控件的字段列表，controller层定义，在值输出时就可以判断输出成图片、音频、视频等控件
         $model_array_const,//模型层数组常量
         $model_c_file_name,//需要生成的模型层文件的文件名
         $js_c_file_name,//需要生成的js文件的文件名
@@ -701,12 +700,6 @@ EOD;
         }
     }
 
-    protected function set_controller_array_upload_field($field_name,$type){
-        if(!isset($this->controller_array_upload_field[$field_name])){
-            $this->controller_array_upload_field[$field_name] = $type;
-        }
-    }
-
     //生成controller层
     protected function c_controller(){
         if(!empty($this->controller_array_const)){
@@ -715,20 +708,7 @@ EOD;
         }else{
             $this->controllerParam['data']['arrayConstAssign'] = '';
         }
-
-        if( is_array($this->controller_array_upload_field) && count($this->controller_array_upload_field) ){
-            $upload_field[] = "\n\t\t".'$this->upload_field = [';
-            foreach($this->controller_array_upload_field as $field_name=>$val){
-                $temp = "\n\t\t\t".'\'' . $field_name . '\'=>\''.$val.'\',';
-                $upload_field[] = $temp;
-            }
-            $upload_field[] = "\n\t\t".'];';
-            $this->controllerParam['data']['upload_field'] = implode("",$upload_field);
-            $this->controllerParam['data']['upload_field_def'] = "\n\t".'protected $upload_field;';
-        }else{
-            $this->controllerParam['data']['upload_field'] = '';
-            $this->controllerParam['data']['upload_field_def'] = '';
-        }
+        
         //是否拥有删除功能
         if(isset($this->curd_config['global']['hide_del']) && $this->curd_config['global']['hide_del']){
             $this->controllerParam['data']['has_del'] = "\n\tpublic \$has_del=0;//是否拥有删除功能";
@@ -1317,8 +1297,6 @@ EOD;
         }else{
             $data['preview'] = '';
         }
-
-        $this->set_controller_array_upload_field($info['field_name'],$info['form_additional']['accept']);
 
         return $this->get_replaced_tpl($name, $data);
     }

@@ -15,15 +15,10 @@ class User extends Backend
      * @var app\admin\model\admin\User
      */
     protected $model;
-    protected $upload_field;
 
     public function initialize(){
         parent::initialize();
         $this->model = new \app\admin\model\auth\User();
-
-        $this->upload_field = [
-            'avatar'=>'images'
-        ];
 
         $this->assign('has_soft_del',1);//是否拥有回收站功能
         $this->assign('has_del',1);//是否拥有删除功能
