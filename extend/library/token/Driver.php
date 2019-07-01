@@ -1,6 +1,8 @@
 <?php
 namespace library\token;
 
+use think\facade\Config;
+
 /**
  * Token基础类
  */
@@ -65,8 +67,9 @@ abstract class Driver
      */
     protected function getEncryptedToken($token)
     {
-        $config = \think\Config::get('token');
-        return hash_hmac($config['hashalgo'], $token, $config['key']);
+        $config = Config::get();
+        $token_config = $config['token'];
+        return hash_hmac($token_config['hashalgo'], $token, $token_config['key']);
     }
 
     /**

@@ -3,9 +3,8 @@
 namespace app\api\library;
 
 use library\token\Driver;
-use think\App;
-use think\Config;
-use think\Log;
+use think\facade\Config;
+use think\facade\Log;
 
 /**
  * Token操作类
@@ -39,11 +38,11 @@ class Token
 
         if (true === $name || !isset(self::$instance[$name])) {
             $class = false === strpos($type, '\\') ?
-                '\\app\\common\\library\\token\\driver\\' . ucwords($type) :
+                'library\\token\\driver\\' . ucwords($type) :
                 $type;
 
             // 记录初始化信息
-            App::$debug && Log::record('[ TOKEN ] INIT ' . $type, 'info');
+            Config::get('app.app_debug') && Log::record('[ TOKEN ] INIT ' . $type, 'info');
 
             if (true === $name) {
                 return new $class($options);
@@ -69,7 +68,8 @@ class Token
                 // 获取默认Token配置，并连接
                 $options = Config::get('token.' . $default['type']) ?: $default;
             } elseif (empty($options)) {
-                $options = Config::get('token');
+                $config = Config::get();
+                $options = $config['token'];
             }
 
             self::$handler = self::connect($options);

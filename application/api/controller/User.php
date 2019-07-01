@@ -43,7 +43,7 @@ class User extends Api{
      * @ApiSummary  (注册会员信息)
      * @ApiMethod   (POST)
      * @ApiRoute    (/api/user/register)
-     * @ApiParams   (name="account", type="integer", required=true, description="账号")
+     * @ApiParams   (name="username", type="integer", required=true, description="账号")
      * @ApiParams   (name="password", type="string", required=true, description="密码")
      * @ApiReturnParams   (name="code", type="integer", required=true, sample="0")
      * @ApiReturnParams   (name="msg", type="string", required=true, sample="注册成功")
@@ -62,7 +62,7 @@ class User extends Api{
         }
         $ret = $this->auth->register($username, $password);
         if ($ret) {
-            $data = ['userinfo' => $this->auth->getUserinfo()];
+            $data = ['user_info' => $this->auth->getUserInfo()];
             $this->success('注册成功', $data);
         } else {
             $this->error($this->auth->getError());
