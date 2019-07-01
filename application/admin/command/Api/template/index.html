@@ -26,6 +26,10 @@
     .layui-form-item .layui-input-inline{
         width: 300px;
     }
+    .layui-form-label{
+        min-width:0px;
+        width:auto;
+    }
 </style>
 <body>
 <div class="layui-layout layui-layout-admin laytp-theme-10" style="position:fixed;width: 1440px;min-height:50px;margin-bottom:20px;z-index: 9999">
@@ -33,6 +37,10 @@
         <div class="fl header-logo">{$title}</div>
         <div class="layui-nav layui-layout-right layui-form layui-inline">
             <div class="layui-form-item" style="margin-top: 10px;">
+                <label class="layui-form-label" style="color: #ffffff!important;">Token:</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="token" id="token" lay-verify="token" autocomplete="off" class="layui-input">
+                </div>
                 <label class="layui-form-label" style="color: #ffffff!important;">ApiUrl:</label>
                 <div class="layui-input-inline">
                     <input type="text" name="api_url" id="api_url" lay-verify="api_url" autocomplete="off" placeholder="http://www.domain.com/" class="layui-input">
@@ -156,9 +164,24 @@
                                 </div>
                                 <div class="layui-tab-item">
                                     <div class="layui-card">
+                                        <div class="layui-card-header" style="background-color: #F2F2F2;">Headers</div>
+                                        <div class="layui-card-body">
+                                            <form class="layui-form-pane" method="{$api.method}" route="{$api.route}" id="test_inline_headers_{$api.id}">
+                                                {foreach $api.headerslist as $hk=>$hv}
+                                                <div class="layui-form-item">
+                                                    <label class="layui-form-label">{$hv.name}</label>
+                                                    <div class="layui-input-block">
+                                                        <input type="text" name="{$hv.name}" autocomplete="off" placeholder="{if $hv.sample}{$hv.description} - 例:{$hv.sample}{else}请输入{$hv.description}{/if}" class="layui-input">
+                                                    </div>
+                                                </div>
+                                                {/foreach}
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="layui-card">
                                         <div class="layui-card-header" style="background-color: #F2F2F2;">参数</div>
                                         <div class="layui-card-body">
-                                            <form class="layui-form-pane" method="{$api.method}" action="{$api.route}" id="test_inline_{$api.id}">
+                                            <form class="layui-form-pane" method="{$api.method}" route="{$api.route}" id="test_inline_{$api.id}">
                                                 {foreach $api.paramslist as $pk=>$pv}
                                                 <div class="layui-form-item">
                                                     <label class="layui-form-label">{$pv.name}</label>
@@ -248,6 +271,7 @@
         });
 
         if (storage) {
+            $('#token').val(storage.getItem('token'));
             $('#api_url').val(storage.getItem('api_url'));
         } else {
             alert('Your browser does not support local storage');
@@ -255,6 +279,7 @@
 
         layui.form.on('submit(api_url)', function(data){
             if (storage) {
+                storage.setItem('token', data.field.token);
                 storage.setItem('api_url', data.field.api_url);
             } else {
                 alert('Your browser does not support local storage');
@@ -346,12 +371,29 @@
                 formData.append($(input).attr('name'), $(input).val())
             }
         });
-        let url = storage.getItem('api_url') ? storage.getItem('api_url') + $('#test_inline_'+id).prop('action') : $('#test_inline_'+id).prop('action');
+        let url = storage.getItem('api_url') ? storage.getItem('api_url') + $('#test_inline_'+id).attr('route') : $('#test_inline_'+id).attr('route');
+
+        let headers = {};
+
+        let token = $('#token').val();
+        if (token.length > 0) {
+            headers['token'] = token;
+        }
+
+        $("#test_inline_headers_"+id+" input[type=text]").each(function () {
+            val = $(this).val();
+            if (val.length > 0) {
+                headers[$(this).prop('name')] = val;
+            }
+        });
+        console.log(headers);
+
         $.ajax({
             url: url,
             data: $('#test_inline_'+id).prop('method').toLowerCase() == 'get' ? $('#test_inline_'+id).serialize() : formData,
             type: $('#test_inline_'+id).prop('method') + '',
             dataType: 'json',
+            headers: headers,
             contentType: false,
             processData: false,
             success: function (data, textStatus, xhr) {

@@ -58,24 +58,6 @@ class Api extends Command
             throw new Exception('Cannot save the content to ' . $output_file);
         }
         $output->info("Build Successed!");
-
-//        $class_name = 'app\api\controller\Test';
-//        $oReflectionClass = new \ReflectionClass($class_name);
-//        var_dump( $oReflectionClass->getDocComment() );
-//
-//        //获取类中的方法，设置获取public,protected类型方法
-//        $methods = $oReflectionClass->getMethods(\ReflectionMethod::IS_PUBLIC + \ReflectionMethod::IS_PROTECTED + \ReflectionMethod::IS_PRIVATE);
-//        //遍历所有的方法
-//        foreach ($methods as $key => $method) {
-//            if ($class_name != $method->class) {
-//                unset($methods[$key]);
-//            }else{
-//                //获取方法的注释
-//                $doc = $method->getDocComment();
-//                //解析注释
-//                var_dump($doc);
-//            }
-//        }
     }
 
     /**

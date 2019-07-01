@@ -12,6 +12,7 @@ class Test extends Api{
      * @ApiSummary  (测试描述信息)
      * @ApiMethod   (POST)
      * @ApiRoute    (/api/test/index)
+     * @ApiHeaders  (name=token, type=string, required=true, description="请求的Token")
      * @ApiParams   (name="param1", type="integer", required=true, description="参数1")
      * @ApiParams   (name="param2", type="string", required=true, description="参数2")
      * @ApiParams   (name="param3", type="object", sample="{'id':'int','username':'string','profile':{'email':'string','age':'integer'}}", description="参数3")
