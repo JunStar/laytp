@@ -35,7 +35,7 @@ layui.use(['layTp'],function() {
             $.ajax({
                 type: 'POST',
                 url: layTp.facade.url('admin/sysconf/del'),
-                data: {id:click_obj.data('id')},
+                data: {ids:click_obj.data('id')},
                 dataType: 'json',
                 success: function (res) {
                     if( res.code == 1 ){

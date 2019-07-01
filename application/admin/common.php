@@ -198,7 +198,7 @@ function importRule($controller, $pid)
     $look = array( 'pid' => $new_pid, 'rule' => 'admin/' . $name . '/index', 'icon' => 'layui-icon layui-icon-fire', 'name' => '查看', 'is_menu' => 0, 'is_hide' => '0');
     $menu_model->insert($look);
 
-    $name_list = ['index'=>'查看','add'=>'添加','edit'=>'编辑','del'=>'删除','set_status'=>'设置状态','recycle'=>'回收站','renew'=>'还原','true_del'=>'删除'];
+    $name_list = ['index'=>'查看','add'=>'添加','edit'=>'编辑','del'=>'删除','set_status'=>'设置状态','recycle'=>'回收站','renew'=>'还原','true_del'=>'彻底删除'];
 
     $ruleArr = [];
 

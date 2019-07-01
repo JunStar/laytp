@@ -10,6 +10,8 @@ use think\facade\Env;
 class Sysconf extends Backend
 {
     protected $model;
+    public $has_del=1;//是否拥有删除功能
+    public $has_soft_del=0;//是否拥有软删除功能
 
     public function initialize()
     {

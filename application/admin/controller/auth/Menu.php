@@ -11,6 +11,7 @@ class Menu extends Backend
 {
     public $menu_list;
     public $model;
+    public $has_del=1;
 
     public function initialize(){
         parent::initialize();

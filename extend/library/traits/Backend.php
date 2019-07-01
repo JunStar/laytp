@@ -73,10 +73,22 @@ trait Backend
     //删除
     public function del(){
         $ids = $this->request->param('ids');
-        if( $this->model->destroy($ids) ){
-            return $this->success('操作成功');
+        if(!$this->has_del){
+            return $this->error('控制器没有删除功能');
         }else{
-            return $this->error('操作失败');
+            if($this->has_soft_del){
+                if( $this->model->destroy($ids) ){
+                    return $this->success('操作成功');
+                }else{
+                    return $this->error('操作失败');
+                }
+            }else{
+                if( $this->model->where('id','in',$ids)->delete() ){
+                    return $this->success('操作成功');
+                }else{
+                    return $this->error('操作失败1');
+                }
+            }
         }
     }
 
