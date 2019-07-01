@@ -200,6 +200,14 @@ layui.use(['layTp'],function() {
     func_controller.table_render();
 
     window.func_controller = func_controller;
+
+    let li_field_val;
+    layui.each($("li[click_search='true']"),function(key,item) {
+        li_field_val = $(item).attr('field_val');
+        if( li_field_val == accept ){
+            $(item).click();
+        }
+    });
 });
 </script>
 {/block}

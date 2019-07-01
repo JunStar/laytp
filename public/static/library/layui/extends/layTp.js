@@ -966,8 +966,26 @@ layui.define([
                 let obj = $(this);
                 let field = obj.attr('field');
                 let field_val = obj.attr('field_val');
+                //搜索框的值设置成对应值
                 $('#'+field).val(field_val);
                 layui.form.render('select');
+                //顶部如果有item选项，就选中
+                let tag_name = $(this).prop("tagName");
+                if( tag_name == 'SPAN' ){
+                    let li_field = '';
+                    let li_field_val = '';
+                    layui.each($("li[click_search='true']"),function(key,item) {
+                        li_field = $(item).attr('field');
+                        li_field_val = $(item).attr('field_val');
+                        if(li_field == field){
+                            if( li_field_val != field_val ){
+                                $(item).removeClass('layui-this');
+                            }else{
+                                $(item).addClass('layui-this');
+                            }
+                        }
+                    });
+                }
                 $('[lay-submit]').click();
             });
         },
