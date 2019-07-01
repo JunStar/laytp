@@ -1,4 +1,7 @@
 <?php
+
+use think\facade\Env;
+
 /**
  * 二维数组，外层索引替换成item内某个索引对应的值
  * @param $array
@@ -67,4 +70,28 @@ function checkRes($result){
         }
     }
     return true;
+}
+
+//删除目录
+function deldir($dir){
+    //先删除目录下的文件：
+    $dh=opendir($dir);
+    while ($file=readdir($dh)) {
+        if($file!="." && $file!="..") {
+            $fullpath=$dir."/".$file;
+            if(!is_dir($fullpath)) {
+                unlink($fullpath);
+            } else {
+                deldir($fullpath);
+            }
+        }
+    }
+
+    closedir($dh);
+    //删除当前文件夹：
+    if(rmdir($dir)) {
+        return true;
+    } else {
+        return false;
+    }
 }

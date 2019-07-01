@@ -112,17 +112,20 @@ layui.define(['jquery'], function(exports) {
         }
         let field = "";
         let field_val = "";
+        let need_data = "";
         layui.each(data.options, function(i, option) {
             var options = option.options || [];
             field = (typeof option.field != "undefined") ? option.field : "";
             field_val = (typeof option.field_val != "undefined") ? option.field_val : "";
+            need_data = (typeof option.need_data != "undefined") ? option.need_data : "true";
             html +=
                 '<div ' +
                     'lay-action=' + option.action + ' ' +
                     'class="' +CLS_OPTION +' batch-action"' +
                     'uri="' + option.uri +'"' +
-                    'field="' + option.field +'"' +
-                    'field_val="' + option.field_val +'"' +
+                    'field="' + field +'"' +
+                    'need_data="' + need_data +'"' +
+                    'field_val="' + field_val +'"' +
                     'switch_type="' + option.switch_type +'"' +
                     'callback="' + option.callback +'"' +
                 '>' +

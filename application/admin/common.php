@@ -127,6 +127,7 @@ function isLogin(){
     }
 }
 
+//导入规则
 function importRule($controller, $pid)
 {
     $controller = str_replace('\\', '/', $controller);

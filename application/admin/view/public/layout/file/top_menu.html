@@ -9,8 +9,14 @@
         </li>
         {/foreach}
     </ul>
-    <ul class="layui-nav layui-layout-right">
+    <ul class="layui-nav layui-layout-right head-info">
         <li class="layui-nav-item">
+            <a href="javascript:void(0);" class="aicon ai-qingchu" id="laytp_clear_cache" title="清缓存"></a>
+        </li>
+        <li class="layui-nav-item">
+            <a href="javascript:void(0);" class="aicon ai-suo" id="lock_screen" title="锁屏"></a>
+        </li>
+        <li class="layui-nav-item" style="padding: 0 15px">
             <a href="javascript:;">
                 <img src="{$admin_user.avatar|getDefaultAvatar}" class="layui-nav-img">
                 {$admin_user.nickname}

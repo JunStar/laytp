@@ -18,6 +18,7 @@ layui.define([
 
     const default_popup_frame_width = '63%';
     const default_popup_frame_height = '70%';
+    const default_popup_frame_shade = 0.01;
 
     //自定义表单验证器
     layui.form.verify({
@@ -105,12 +106,15 @@ layui.define([
         },
 
         //layer弹窗iFrame
-        popup_frame: function(title, url, width, height){
+        popup_frame: function(title, url, width, height, shade){
             if(width == undefined) {
                 width = default_popup_frame_width;
             }
             if(height == undefined) {
                 height = default_popup_frame_height;
+            }
+            if(shade == undefined) {
+                shade = default_popup_frame_shade;
             }
             layui.layer.open({
                 type : 2,
@@ -118,7 +122,7 @@ layui.define([
                 content : url,
                 area: [width,height],
                 btn: [],//不加这个，全屏高度不会变化
-                shade: 0.01,
+                shade: shade,
                 maxmin:true,
                 skin:'hide-layer-box-shadow',
                 success: function(layero, index){
@@ -414,30 +418,40 @@ layui.define([
                 }
                 let field = $(this).attr("field");
                 let field_val = $(this).attr("field_val");
+                let need_data = $(this).attr("need_data");
                 let text = $(this).text();
                 let switch_type = $(this).attr("switch_type");
-                let checkStatus = layui.table.checkStatus(table_id);
-                let checkData = checkStatus.data;
-                if(checkData.length == 0){
-                    layTp.facade.error('请选择数据');
-                    return false;
+                let checkStatus;
+                let checkData;
+                if( need_data == "true" ){
+                    checkStatus = layui.table.checkStatus(table_id);
+                    checkData = checkStatus.data;
+                    if(checkData.length == 0){
+                        layTp.facade.error('请选择数据');
+                        return false;
+                    }
                 }
                 let key;
                 switch(switch_type){
                     case 'popup_frame':
-                        for(key in checkData){
-                            url = layTp.facade.url(uri,{id:checkData[key].id});
-                            layTp.facade.popup_frame(text, url);
+                        if( need_data == "true" ){
+                            for(key in checkData){
+                                url = layTp.facade.url(uri,{id:checkData[key].id});
+                                layTp.facade.popup_frame(text, url);
+                            }
                         }
                         break;
                     case 'confirm_action':
                         layui.layer.confirm('确定'+text+'么?', function(index){
                             let ids_arr = [];
-                            for(key in checkData){
-                                ids_arr.push(checkData[key].id);
+                            let data = {};
+                            if( need_data == "true" ){
+                                for(key in checkData){
+                                    ids_arr.push(checkData[key].id);
+                                }
+                                let ids = ids_arr.join(',');
+                                data = {'ids':ids,'field':field,'field_val':field_val};
                             }
-                            let ids = ids_arr.join(',');
-                            let data = {'ids':ids,'field':field,'field_val':field_val};
                             $.ajax({
                                 type: 'POST',
                                 url: layTp.facade.url(uri),
@@ -445,9 +459,13 @@ layui.define([
                                 dataType: 'json',
                                 success: function (res) {
                                     if( res.code == 1 ){
-                                        func_controller.table_render();
-                                        if(typeof parent.func_controller != "undefined"){
-                                            parent.func_controller.table_render();
+                                        if( need_data == "true" ){
+                                            func_controller.table_render();
+                                            if(typeof parent.func_controller != "undefined"){
+                                                parent.func_controller.table_render();
+                                            }
+                                        }else{
+                                            layTp.facade.success(res.msg);
                                         }
                                     }else{
                                         layTp.facade.error(res.msg);
@@ -1017,6 +1035,57 @@ layui.define([
                     },
                 });
             });
+        },
+
+        //清除缓存列表操作
+        clear_cache: function(){
+            //批量操作渲染
+            layui.dropdown.render({
+                elem: '#laytp_clear_cache',
+                options: [
+                    {
+                        action: "edit"
+                        ,title: "一键清除缓存"
+                        ,icon: ""
+                        ,uri: layTp.facade.url("admin/ajax/clear_cache")
+                        ,switch_type: "confirm_action"
+                        ,need_data:false
+                    }
+                ]
+            });
+        },
+
+        //锁屏
+        lock_screen: function(){
+            $(document).on('click','#lock_screen',function(){
+                localStorage.setItem("laytp_lock_screen", "locked");
+                layui.layer.open({
+                    type : 2,
+                    title : '锁屏',
+                    content : layTp.facade.url("admin/ajax/lock_screen"),
+                    area: ['50%','25%'],
+                    btn: [],//不加这个，全屏高度不会变化
+                    shade: 1,
+                    maxmin:true,
+                    skin:'hide-layer-box-shadow',
+                    closeBtn:0
+                });
+            });
+
+            let lock_screen_status = localStorage.getItem("laytp_lock_screen");
+            if( lock_screen_status == "locked" ){
+                layui.layer.open({
+                    type : 2,
+                    title : '锁屏',
+                    content : layTp.facade.url("admin/ajax/lock_screen"),
+                    area: ['50%','25%'],
+                    btn: [],//不加这个，全屏高度不会变化
+                    shade: 1,
+                    maxmin:true,
+                    skin:'hide-layer-box-shadow',
+                    closeBtn:0
+                });
+            }
         }
     }
 

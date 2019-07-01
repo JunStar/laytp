@@ -4,6 +4,8 @@ namespace app\admin\controller;
 use think\Controller;
 use think\Db;
 use think\Exception;
+use think\facade\Env;
+use think\facade\Session;
 
 //集成controller，不走权限控制
 class Ajax extends Controller
@@ -50,6 +52,36 @@ class Ajax extends Controller
     public function show_video(){
         $assign['video_path'] = base64_decode( $this->request->param('path') );
         $this->assign($assign);
+        return $this->fetch();
+    }
+
+    //清除缓存
+    public function clear_cache(){
+        $dir_cache = Env::get("root_path"). 'runtime' . DS . 'cache';
+        $dir_log = Env::get("root_path"). 'runtime' . DS . 'log';
+        $dir_temp = Env::get("root_path"). 'runtime' . DS . 'temp';
+        if( deldir($dir_cache) && deldir($dir_log) && deldir($dir_temp) ){
+            $this->success('操作成功');
+        }else{
+            $this->error('操作失败');
+        }
+    }
+
+    //锁屏
+    public function lock_screen(){
+        if($this->request->isAjax()){
+            $password = $this->request->param('password');
+            $admin_user_id = Session::get('admin_user_id');
+            $password_hash = model('auth.User')->where('id','=',$admin_user_id)->value('password');
+            if( !password_verify( $password, $password_hash ) )
+            {
+                $this->error('密码错误');
+            }
+            else
+            {
+                $this->success('密码正确');
+            }
+        }
         return $this->fetch();
     }
 }

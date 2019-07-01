@@ -397,7 +397,7 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
                                 $("#success").text("安装成功！开始你的<?php echo $sitename; ?>之旅吧！").show();
                                 $('<a class="btn" href="./">访问首页</a> <a class="btn" href="/admin" style="background:#18bc9c">访问后台</a>').insertAfter($button);
                                 $button.remove();
-                                localStorage.setItem("fastep", "installed");
+                                localStorage.setItem("laytp", "installed");
                             } else {
                                 $('#error').show().text(ret);
                                 $button.prop('disabled', false).text('点击安装');
