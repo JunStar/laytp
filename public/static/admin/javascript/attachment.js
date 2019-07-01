@@ -42,20 +42,20 @@ layui.use(['layTp'],function() {
                 {type:'checkbox'}
 				,{field:'id',title:'ID',align:'center',width:80}
 				,{field:'file_path',title:'文件',align:'center',templet:function(d){
-                    if(d.file_type == 'images'){
-                        return layTp.facade.formatter.images(d.file_path);
-                    }else if(d.file_type == 'video'){
-                        return layTp.facade.formatter.video(d.file_path);
-                    }else if(d.file_type == 'audio'){
-                        return layTp.facade.formatter.audio(d.file_path);
-                    }else{
-                        return layTp.facade.formatter.file(d.file_path);
-                    }
-                }}
-				,{field:'file_type',title:'文件类型',width:280,align:'center',templet:function(d){
+                        if(d.file_type == 'images'){
+                            return layTp.facade.formatter.images(d.file_path);
+                        }else if(d.file_type == 'video'){
+                            return layTp.facade.formatter.video(d.file_path);
+                        }else if(d.file_type == 'audio'){
+                            return layTp.facade.formatter.audio(d.file_path);
+                        }else{
+                            return layTp.facade.formatter.file(d.file_path);
+                        }
+                    }}
+				,{field:'file_type',title:'文件类型',align:'center',templet:function(d){
 					return layTp.facade.formatter.status('file_type',d.file_type,{"images":"图片","video":"视频","audio":"音频","file":"文件"});
 				}}
-				,{field:'create_time',title:'创建时间',align:'center'}
+				//,{field:'create_time',title:'生成时间',align:'center'}
 				//,{field:'delete_time',title:'删除时间',align:'center'}
 				,{field:'operation',title:'操作',align:'center',toolbar:'#operation',width:100}
             ]]

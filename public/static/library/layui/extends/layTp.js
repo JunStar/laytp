@@ -568,14 +568,14 @@ layui.define([
         /**
          * 表单提交按钮绑定事件，包括添加表单、编辑表单和搜索表单
          * <form class="layui-form">
-         *  <button class="layui-btn layui-btn-sm" lay-submit lay-filter="*">立即提交</button>
+         *  <button class="layui-btn layui-btn-sm" lay-submit lay-filter="laytp">立即提交</button>
          * </form>
          * 重要的是
          *  1.form的class值为layui-form;
-         *  2.button的属性值lay-submit lay-filter="*";
+         *  2.button的属性值lay-submit lay-filter="laytp";
          */
         form_submit: function(){
-            layui.form.on('submit(*)', function(data){
+            layui.form.on('submit(laytp)', function(data){
                 /**
                  * 所有的表单提交都是执行ajax，ajax请求的地址都是当前的url
                  * 列表页的搜索表单要使用到layui的table控件进行ajax提交，其他表单使用jQuery的ajax提交方式

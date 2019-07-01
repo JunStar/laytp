@@ -5,14 +5,6 @@
     <div class="layui-form layui-card-header" style="height:auto;padding:0;">
         <form class="layui-form-item layui-form-pane" style="margin-bottom:0px;">
             <div class="layui-inline" style="padding-left: 10px;">
-                <label class="layui-form-label" title="文件路径">文件路径</label>
-                <div class="layui-input-inline">
-                    <input type="text" id="file_path" name="search_param[file_path][value]" placeholder="请输入文件路径" class="layui-input">
-                    <input type="hidden" name="search_param[file_path][condition]" value="LIKE">
-                </div>
-            </div>
-
-		    <div class="layui-inline" style="padding-left: 10px;">
                 <label class="layui-form-label" title="文件类型">文件类型</label>
                 <div class="layui-input-inline">
                     <select id="file_type" name="search_param[file_type][value]" placeholder="请输入文件类型">
@@ -27,7 +19,7 @@
             </div>
 
         <div class="layui-inline" style="padding-left: 10px;">
-            <button class="layui-btn layui-btn-sm layui-btn-primary" lay-submit lay-filter="*"><i class="layui-icon"></i> 搜 索</button>
+            <button class="layui-btn layui-btn-sm layui-btn-primary" lay-submit lay-filter="laytp"><i class="layui-icon"></i> 搜 索</button>
         </div>
         </form>
     </div>
@@ -80,7 +72,9 @@ layui.use(['layTp'],function() {
             , cols: [[
                 {type:'checkbox'}
 				,{field:'id',title:'ID',align:'center',width:80}
-				,{field:'file_path',title:'文件路径',align:'center'}
+				,{field:'file_path',title:'文件路径',align:'center',templet:function(d){
+					return layTp.facade.formatter.file(d.file_path);
+				}}
 				,{field:'file_type',title:'文件类型',align:'center',templet:function(d){
 					return layTp.facade.formatter.status('file_type',d.file_type,{"images":"图片","video":"视频","audio":"音频","file":"文件"});
 				}}

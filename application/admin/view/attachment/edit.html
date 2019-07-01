@@ -4,7 +4,18 @@
     <div class="layui-form-item">
         <label class="layui-form-label" title="文件路径">文件路径</label>
         <div class="layui-input-block">
-            <input type="text" name="row[file_path]" placeholder="请输入文件路径" value="{$file_path}" class="layui-input" lay-verify="required" lay-verType="tips">
+            <div class="layui-upload">
+                <div class="layui-inline" style="width: 81%;"><input type="text" class="layui-input" name="row[file_path]" id="input_file_path" value="{$file_path}" /></div>
+                <div class="layui-inline">
+                    <button type="button" class="layui-btn layui-btn-primary pull-left"
+                            id="file_path"
+                            upload="true"
+                            accept="file"
+                            single_multi="single">
+                        <i class="layui-icon">&#xe62f;</i> 上 传
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 

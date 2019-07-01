@@ -22,6 +22,8 @@ class Attachment extends Backend
     {
         parent::initialize();
         $this->model = new \app\admin\model\Attachment();
+        
+
     }
 
     //弹框选择已经上传的文件
