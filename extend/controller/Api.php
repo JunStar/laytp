@@ -7,8 +7,10 @@ namespace controller;
 
 use app\api\library\Auth;
 use think\Controller;
+use think\exception\HttpResponseException;
 use think\facade\Cookie;
 use think\Request;
+use think\Response;
 
 class Api extends Controller
 {
@@ -56,11 +58,25 @@ class Api extends Controller
 
     //重写tp基类的success方法，修改下data和url参数的位置
     public function success($msg = '', $data = '', $url = null, $wait = 3, array $header = []){
-        return parent::success($msg, $url, $data, $wait, $header);
+        $result = [
+            'code' => 1,
+            'msg'  => $msg,
+            'time' => $this->request->server('REQUEST_TIME'),
+            'data' => $data,
+        ];
+        $response = Response::create($result, 'json');
+        throw new HttpResponseException($response);
     }
 
     //重写tp基类的error方法，修改下data和url参数的位置
     public function error($msg = '', $data = '', $url = null, $wait = 3, array $header = []){
-        return parent::error($msg, $url, $data, $wait, $header);
+        $result = [
+            'code' => 0,
+            'msg'  => $msg,
+            'time' => $this->request->server('REQUEST_TIME'),
+            'data' => $data,
+        ];
+        $response = Response::create($result, 'json');
+        throw new HttpResponseException($response);
     }
 }

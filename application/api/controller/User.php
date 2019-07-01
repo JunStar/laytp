@@ -58,14 +58,14 @@ class User extends Api{
         $username = $this->request->request('username');
         $password = $this->request->request('password');
         if (!$username || !$password) {
-            $this->error('用户名或密码为空');
+            return $this->error('用户名或密码为空');
         }
         $ret = $this->auth->register($username, $password);
         if ($ret) {
             $data = ['user_info' => $this->auth->getUserInfo()];
-            $this->success('注册成功', $data);
+            return $this->success('注册成功', $data);
         } else {
-            $this->error($this->auth->getError());
+            return $this->error($this->auth->getError());
         }
     }
 
