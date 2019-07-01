@@ -24,7 +24,7 @@ class Sysconf extends Backend
         $group = $group ? $group : 'basic';
         $this->assign('group', $group);
 
-        $config_gorup = Config::get('laytp.dictionary.config') ? Config::get('laytp.dictionary.config') : ['basic'=>'基础配置'];
+        $config_gorup = Config::get('laytp.dictionary.config') ? Config::get('laytp.dictionary.config') : ['basic'=>'基础配置','dictionary'=>'分组配置'];
         $this->assign('config_gorup', $config_gorup);
 
         $config = model('Sysconf')->where('group','=',$group)->select()->toArray();
@@ -115,6 +115,17 @@ class Sysconf extends Backend
                 Db::rollback();
                 return $this->error('操作失败');
             }
+        }
+    }
+
+    //删除
+    public function del(){
+        $ids = $this->request->param('ids');
+        if( $this->model->where('id','in',$ids)->delete() ){
+            $this->update_config();
+            return $this->success('操作成功');
+        }else{
+            return $this->error('操作失败1');
         }
     }
 
