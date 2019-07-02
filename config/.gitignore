@@ -4,4 +4,5 @@
 !template.php
 !database.php
 !laytp.php
+!token.php
 !/demo/*.php
