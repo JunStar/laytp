@@ -1,3 +1,19 @@
+/*
+ Navicat Premium Data Transfer
+
+ Source Server         : localhost
+ Source Server Type    : MySQL
+ Source Server Version : 50640
+ Source Host           : localhost
+ Source Database       : laytp
+
+ Target Server Type    : MySQL
+ Target Server Version : 50640
+ File Encoding         : utf-8
+
+ Date: 07/02/2019 13:19:25 PM
+*/
+
 SET NAMES utf8;
 SET FOREIGN_KEY_CHECKS = 0;
 
@@ -26,17 +42,18 @@ CREATE TABLE `lt_admin_menu` (
   `name` varchar(255) DEFAULT NULL COMMENT '标题',
   `rule` varchar(255) DEFAULT NULL COMMENT '规则',
   `is_menu` tinyint(4) DEFAULT NULL COMMENT '菜单',
-  `sort` int(11) DEFAULT NULL COMMENT '排序',
+  `sort` int(11) DEFAULT '0' COMMENT '排序',
   `pid` int(11) DEFAULT NULL COMMENT '父级',
+  `is_hide` tinyint(4) DEFAULT '0' COMMENT '是否隐藏。0，正常；1，隐藏；',
   `icon` varchar(45) DEFAULT NULL COMMENT '图标',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=178 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 --  Records of `lt_admin_menu`
 -- ----------------------------
 BEGIN;
-INSERT INTO `lt_admin_menu` VALUES ('1', '控制台', 'admin/index/index', '1', '0', '0', 'layui-icon layui-icon-home'), ('17', '系统核心', 'admin/auth.user/index', '1', '0', '0', 'layui-icon layui-icon-rate-solid'), ('18', '权限管理', 'admin/auth.user/index', '1', '2', '17', 'layui-icon layui-icon-align-left'), ('19', '菜单和权限节点管理', 'admin/auth.menu/index', '1', '4', '18', 'layui-icon layui-icon-templeate-1'), ('20', '一键生成', 'admin/autocreate.curd/index', '1', '1', '17', 'layui-icon layui-icon-share'), ('21', 'Curd', 'admin/autocreate.curd/index', '1', '0', '20', 'layui-icon layui-icon-star-fill'), ('22', '应用', 'admin/test/index', '1', '0', '0', 'layui-icon layui-icon-template-1'), ('23', '测试生成', 'admin/test/index', '1', '0', '22', 'layui-icon layui-icon-survey'), ('24', '测试模型', 'admin/test/index', '1', '0', '23', 'layui-icon layui-icon-flag'), ('25', '测试分类', 'admin/test.category/index', '1', '0', '23', 'layui-icon layui-icon-snowflake'), ('26', '管理员管理', 'admin/auth.user/index', '1', '100', '18', 'layui-icon layui-icon-user'), ('27', '角色管理', 'admin/auth.role/index', '1', '99', '18', 'layui-icon layui-icon-group'), ('28', '系统配置', 'admin/sysconf/index', '1', '0', '17', 'layui-icon layui-icon-set-sm'), ('29', '基础配置', 'admin/sysconf.basic/index', '1', '0', '28', 'layui-icon layui-icon-friends'), ('30', '常规管理', 'admin/general/profile', '1', '0', '17', 'layui-icon layui-icon-face-smile-b'), ('31', '个人设置', 'admin/general/profile', '1', '0', '30', 'layui-icon layui-icon-friends'), ('32', '查看', 'admin/auth.user/index', '0', '0', '26', 'layui-icon layui-icon-align-left'), ('33', '添加', 'admin/auth.user/add', '0', '0', '26', 'layui-icon layui-icon-add-circle'), ('34', '编辑', 'admin/auth.user/edit', '0', '0', '26', 'layui-icon layui-icon-util'), ('35', '查看', 'admin/index/index', '0', '0', '1', 'layui-icon layui-icon-search'), ('36', '删除', 'admin/auth.user/del', '0', '0', '26', 'layui-icon layui-icon-delete'), ('37', '查看', 'admin/auth.role/index', '0', '0', '27', 'layui-icon layui-icon-search'), ('38', '编辑', 'admin/auth.role/edit', '0', '0', '27', 'layui-icon layui-icon-util'), ('39', '添加', 'admin/auth.role/add', '0', '0', '27', 'layui-icon layui-icon-add-circle-fine'), ('40', '删除', 'admin/auth.role/del', '0', '0', '27', 'layui-icon layui-icon-delete'), ('41', '查看', 'admin/auth.menu/index', '0', '0', '19', 'layui-icon layui-icon-search'), ('42', '添加', 'admin/auth.menu/add', '0', '0', '19', 'layui-icon layui-icon-add-circle-fine'), ('43', '编辑', 'admin/auth.menu/edit', '0', '0', '19', 'layui-icon layui-icon-util'), ('44', '删除', 'admin/auth.menu/del', '0', '0', '19', 'layui-icon layui-icon-delete'), ('45', '导入', 'admin/autocreate.curd/import', '0', '0', '21', 'layui-icon layui-icon-find-fill'), ('46', '编辑', 'admin/sysconf.role/index', '0', '0', '29', 'layui-icon layui-icon-util'), ('47', '编辑', 'admin/general/profile', '0', '0', '31', 'layui-icon layui-icon-util'), ('48', '查看', 'admin/test/index', '0', '0', '24', 'layui-icon layui-icon-search'), ('49', '添加', 'admin/test/add', '0', '0', '24', 'layui-icon layui-icon-add-circle-fine'), ('50', '编辑', 'admin/test/edit', '0', '0', '24', 'layui-icon layui-icon-util'), ('51', '删除', 'admin/test/del', '0', '0', '24', 'layui-icon layui-icon-delete'), ('52', '查看', 'admin/test.category/index', '0', '0', '25', 'layui-icon layui-icon-search'), ('53', '编辑', 'admin/test.category/edit', '0', '0', '25', 'layui-icon layui-icon-util'), ('54', '添加', 'admin/test.category/add', '0', '0', '25', 'layui-icon layui-icon-add-circle-fine'), ('55', '删除', 'admin/test.category/del', '0', '0', '25', 'layui-icon layui-icon-delete'), ('56', '操作日志', 'admin/admin.log/index', '1', '0', '18', 'layui-icon layui-icon-form'), ('57', '查看', 'admin/admin.log/index', '0', '0', '56', 'layui-icon layui-icon-list'), ('58', '删除', 'admin/admin.log/del', '0', '0', '56', 'layui-icon layui-icon-date'), ('59', 'Api文档', 'admin/autocreate.apidoc/index', '1', '0', '20', 'layui-icon layui-icon-tabs'), ('60', '插件市场', 'admin/addons/index', '1', '0', '17', 'layui-icon layui-icon-cart-simple'), ('61', '设置是否为菜单', 'admin/auth.menu/set_status', '0', '0', '19', 'layui-icon layui-icon-template-1'), ('62', '批量操作', 'admin/auth.user/set_status', '0', '0', '26', 'layui-icon layui-icon-template-1'), ('63', '批量操作', 'admin/admin.log/set_status', '0', '0', '56', 'layui-icon layui-icon-template-1'), ('64', '批量操作', 'admin/test/set_status', '0', '0', '24', 'layui-icon layui-icon-template-1'), ('65', '批量操作', 'admin/test.category/set_status', '0', '0', '25', 'layui-icon layui-icon-template-1');
+INSERT INTO `lt_admin_menu` VALUES ('1', '控制台', 'admin/index/index', '1', '0', '0', '0', 'layui-icon layui-icon-console'), ('17', '系统核心', 'admin/auth.user/index', '1', '0', '0', '0', 'layui-icon layui-icon-rate-solid'), ('18', '权限管理', 'admin/auth.user/index', '1', '2', '17', '0', 'layui-icon layui-icon-align-left'), ('19', '菜单和权限节点管理', 'admin/auth.menu/index', '1', '4', '18', '0', 'layui-icon layui-icon-templeate-1'), ('20', '一键生成', 'admin/autocreate.curd/index', '1', '1', '17', '0', 'layui-icon layui-icon-share'), ('21', 'Curd', 'admin/autocreate.curd/index', '1', '3', '20', '0', 'layui-icon layui-icon-star-fill'), ('26', '管理员管理', 'admin/auth.user/index', '1', '100', '18', '0', 'layui-icon layui-icon-user'), ('27', '角色管理', 'admin/auth.role/index', '1', '99', '18', '0', 'layui-icon layui-icon-group'), ('30', '常规管理', 'admin/general/profile', '1', '0', '17', '0', 'layui-icon layui-icon-face-smile-b'), ('31', '个人设置', 'admin/general/profile', '1', '1', '30', '0', 'layui-icon layui-icon-friends'), ('32', '查看', 'admin/auth.user/index', '0', '0', '26', '0', 'layui-icon layui-icon-align-left'), ('33', '添加', 'admin/auth.user/add', '0', '0', '26', '0', 'layui-icon layui-icon-add-circle'), ('34', '编辑', 'admin/auth.user/edit', '0', '0', '26', '0', 'layui-icon layui-icon-util'), ('35', '后台首页', 'admin/index/index', '1', '0', '67', '0', 'layui-icon layui-icon-home'), ('36', '删除', 'admin/auth.user/del', '0', '0', '26', '0', 'layui-icon layui-icon-delete'), ('37', '查看', 'admin/auth.role/index', '0', '0', '27', '0', 'layui-icon layui-icon-search'), ('38', '编辑', 'admin/auth.role/edit', '0', '0', '27', '0', 'layui-icon layui-icon-util'), ('39', '添加', 'admin/auth.role/add', '0', '0', '27', '0', 'layui-icon layui-icon-add-circle-fine'), ('40', '删除', 'admin/auth.role/del', '0', '0', '27', '0', 'layui-icon layui-icon-delete'), ('41', '查看', 'admin/auth.menu/index', '0', '0', '19', '0', 'layui-icon layui-icon-search'), ('42', '添加', 'admin/auth.menu/add', '0', '0', '19', '0', 'layui-icon layui-icon-add-circle-fine'), ('43', '编辑', 'admin/auth.menu/edit', '0', '0', '19', '0', 'layui-icon layui-icon-util'), ('44', '删除', 'admin/auth.menu/del', '0', '0', '19', '0', 'layui-icon layui-icon-delete'), ('45', '导入', 'admin/autocreate.curd/import', '0', '0', '21', '0', 'layui-icon layui-icon-find-fill'), ('56', '操作日志', 'admin/admin.log/index', '1', '0', '18', '0', 'layui-icon layui-icon-form'), ('57', '列表查看', 'admin/admin.log/index', '0', '0', '56', '1', 'layui-icon layui-icon-list'), ('58', '删除', 'admin/admin.log/del', '0', '0', '56', '0', 'layui-icon layui-icon-date'), ('59', 'Api文档', 'admin/autocreate.apidoc/index', '1', '0', '20', '0', 'layui-icon layui-icon-tabs'), ('60', '插件市场', 'admin/addons/index', '1', '0', '17', '0', 'layui-icon layui-icon-cart-simple'), ('61', '列表设置状态', 'admin/auth.menu/set_status', '0', '0', '19', '1', 'layui-icon layui-icon-template-1'), ('66', '系统配置', 'admin/sysconf/index', '1', '2', '30', '0', 'layui-icon layui-icon-set'), ('67', '快捷菜单', 'admin/index/index', '1', '0', '1', '0', 'layui-icon layui-icon-release'), ('68', '查看', 'admin/index/index', '0', '0', '35', '0', 'layui-icon layui-icon-search'), ('69', '设置', 'admin/sysconf/set_config', '0', '0', '66', '0', 'layui-icon layui-icon-set-fill'), ('70', '添加', 'admin/sysconf/add', '0', '0', '66', '0', 'layui-icon layui-icon-add-circle-fine'), ('72', '菜单', 'admin/autocreate.menu/index', '1', '2', '20', '0', 'layui-icon layui-icon-templeate-1'), ('125', '地区管理', 'admin/area/index', '1', '0', '30', '0', 'layui-icon layui-icon-find-fill'), ('126', '查看', 'admin/area/index', '0', '0', '125', '0', 'layui-icon layui-icon-fire'), ('127', '添加', 'admin/area/add', '0', '0', '125', '1', 'layui-icon layui-icon-fire'), ('128', '编辑', 'admin/area/edit', '0', '0', '125', '1', 'layui-icon layui-icon-fire'), ('129', '设置状态', 'admin/area/set_status', '0', '0', '125', '1', 'layui-icon layui-icon-fire'), ('130', '删除', 'admin/area/del', '0', '0', '125', '1', 'layui-icon layui-icon-fire'), ('153', '附件管理', 'admin/attachment/index', '1', '0', '30', '0', 'layui-icon layui-icon-fire'), ('154', '查看', 'admin/attachment/index', '0', '0', '153', '0', 'layui-icon layui-icon-fire'), ('155', '添加', 'admin/attachment/add', '0', '0', '153', '1', 'layui-icon layui-icon-fire'), ('156', '编辑', 'admin/attachment/edit', '0', '0', '153', '1', 'layui-icon layui-icon-fire'), ('157', '设置状态', 'admin/attachment/set_status', '0', '0', '153', '1', 'layui-icon layui-icon-fire'), ('158', '删除', 'admin/attachment/del', '0', '0', '153', '1', 'layui-icon layui-icon-fire'), ('159', '回收站', 'admin/attachment/recycle', '0', '0', '153', '1', 'layui-icon layui-icon-fire'), ('160', '还原', 'admin/attachment/renew', '0', '0', '153', '1', 'layui-icon layui-icon-fire'), ('161', '彻底删除', 'admin/attachment/true_del', '0', '0', '153', '1', 'layui-icon layui-icon-fire'), ('162', '导入', 'admin/autocreate.menu/add', '0', '0', '72', '1', 'layui-icon layui-icon-add-circle-fine'), ('163', '删除', 'admin/autocreate.menu/del', '0', '0', '72', '1', 'layui-icon layui-icon-close'), ('164', '删除', 'admin/autocreate.curd/del', '0', '0', '21', '1', 'layui-icon layui-icon-close'), ('165', '回收站', 'admin/auth.user/recycle', '0', '0', '26', '1', 'layui-icon layui-icon-delete'), ('166', '查看详情', 'admin/admin.log/detail', '0', '0', '56', '1', 'layui-icon layui-icon-note'), ('167', '删除', 'admin/sysconf/del', '0', '0', '66', '1', 'layui-icon layui-icon-close');
 COMMIT;
 
 -- ----------------------------
@@ -81,22 +98,23 @@ DROP TABLE IF EXISTS `lt_admin_user`;
 CREATE TABLE `lt_admin_user` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `username` varchar(255) DEFAULT NULL COMMENT '用户名',
-  `name` varchar(255) DEFAULT NULL COMMENT '姓名',
+  `nickname` varchar(255) DEFAULT NULL COMMENT '昵称',
   `password` varchar(255) DEFAULT NULL COMMENT '密码',
   `avatar` varchar(255) DEFAULT NULL COMMENT '头像地址',
   `is_super_manager` tinyint(4) DEFAULT '0' COMMENT '是否为超级管理员。0.不是;1.是;',
   `status` tinyint(4) DEFAULT NULL COMMENT '状态。0.禁用;1.正常',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `is_del` tinyint(4) DEFAULT '0' COMMENT '是否进入回收站.0.没有;1.在回收站中',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `delete_time` datetime DEFAULT '0000-00-00 00:00:00' COMMENT '删除时间',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `unique_name` (`name`) USING BTREE
+  UNIQUE KEY `unique_name` (`username`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='后台管理员表';
 
 -- ----------------------------
 --  Records of `lt_admin_user`
 -- ----------------------------
 BEGIN;
-INSERT INTO `lt_admin_user` VALUES ('1', 'admin', 'admin姓名', '$2y$10$XwaWkqRHvJUFA6zvhUaEJO4Y3JEnShUEk6.00ZQe3uMZRE5NV/yQu', '/uploads/20190325/520360075fa098bbf33b54dd0338a07d.jpg', '1', '1', '2019-03-20 00:33:25', '0');
+INSERT INTO `lt_admin_user` VALUES ('1', 'admin', 'admin', '$2y$10$KVTpHBl/M3ueSMCeLGoR..bwLqdXyByZHYRjGSdQ36U7JmNsMwlbC', '/static/admin/image/default_avatar.png', '1', '1', '2019-03-20 00:33:25', '2019-03-20 00:33:25', '0000-00-00 00:00:00');
 COMMIT;
 
 -- ----------------------------
@@ -106,10 +124,10 @@ DROP TABLE IF EXISTS `lt_area`;
 CREATE TABLE `lt_area` (
   `id` int(10) NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `pid` int(10) DEFAULT NULL COMMENT '父id',
-  `shortname` varchar(100) DEFAULT NULL COMMENT '简称',
+  `short_name` varchar(100) DEFAULT NULL COMMENT '简称',
   `name` varchar(100) DEFAULT NULL COMMENT '名称',
-  `mergename` varchar(255) DEFAULT NULL COMMENT '全称',
-  `level` tinyint(4) DEFAULT NULL COMMENT '层级 0 1 2 省市区县',
+  `merge_name` varchar(255) DEFAULT NULL COMMENT '全称',
+  `level` tinyint(4) DEFAULT NULL COMMENT '层级 1 2 3 省市区县',
   `pinyin` varchar(100) DEFAULT NULL COMMENT '拼音',
   `code` varchar(100) DEFAULT NULL COMMENT '长途区号',
   `zip` varchar(100) DEFAULT NULL COMMENT '邮编',
@@ -134,6 +152,19 @@ INSERT INTO `lt_area` VALUES ('3472', '3461', '汐止', '汐止区', '中国,台
 COMMIT;
 
 -- ----------------------------
+--  Table structure for `lt_attachment`
+-- ----------------------------
+DROP TABLE IF EXISTS `lt_attachment`;
+CREATE TABLE `lt_attachment` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `file_path` text COMMENT '文件路径',
+  `file_type` enum('images','video','audio','file') DEFAULT 'images' COMMENT '文件类型。images=图片,video=视频,audio=音频,file=文件',
+  `create_time` datetime DEFAULT NULL COMMENT '生成时间',
+  `delete_time` datetime DEFAULT NULL COMMENT '删除时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='附件管理';
+
+-- ----------------------------
 --  Table structure for `lt_autocreate_curd`
 -- ----------------------------
 DROP TABLE IF EXISTS `lt_autocreate_curd`;
@@ -143,13 +174,35 @@ CREATE TABLE `lt_autocreate_curd` (
   `table_comment` varchar(255) DEFAULT NULL COMMENT '表注释',
   `field_list` text COMMENT '字段列表，详细设置',
   `global` text COMMENT '全局设置',
+  `relation_model` text COMMENT '关联模型相关数据',
   `create_time` datetime DEFAULT NULL COMMENT '数据创建时间',
   `update_time` datetime DEFAULT NULL COMMENT '数据更新时间',
   `exec_create_time` datetime DEFAULT NULL COMMENT '首次执行时间',
   `exec_update_time` datetime DEFAULT NULL COMMENT '最近一次执行时间',
   `exec_count` int(11) DEFAULT '1' COMMENT '总共生成的次数',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='curd自动生成';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='curd自动生成';
+
+-- ----------------------------
+--  Records of `lt_autocreate_curd`
+-- ----------------------------
+BEGIN;
+INSERT INTO `lt_autocreate_curd` VALUES ('1', 'lt_test', '一键生成CURD测试表', '[{\"field_name\":\"title\",\"field_comment\":\"\\u6807\\u9898\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"0\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"grade\",\"field_comment\":\"\\u5e74\\u7ea7\",\"form_type\":\"radio\",\"form_additional\":\"1=\\u4e00\\u5e74\\u7ea7,2=\\u4e8c\\u5e74\\u7ea7,3=\\u4e09\\u5e74\\u7ea7\",\"form_empty\":\"0\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"status\",\"field_comment\":\"\\u72b6\\u6001\",\"form_type\":\"radio\",\"form_additional\":\"0=\\u5173\\u95ed,1=\\u6253\\u5f00\",\"form_empty\":\"0\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"hero\",\"field_comment\":\"\\u82f1\\u96c4\",\"form_type\":\"select\",\"form_additional\":{\"single_multi\":\"single\",\"max\":\"\",\"values\":\"0=\\u79c0\\u9017\\u9b54\\u6cd5\\u5e08,1=\\u53d7\\u6298\\u78e8\\u7684\\u7075\\u9b42,2=\\u8239\\u957f,3=\\u865a\\u7a7a\\u5047\\u9762,4=\\u5e7b\\u5f71\\u523a\\u5ba2,5=\\u8c1c\\u56e2,6=\\u5168\\u80fd\\u9a91\\u58eb,7=\\u654c\\u6cd5\\u5e08\"},\"form_empty\":\"0\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"hobby\",\"field_comment\":\"\\u7231\\u597d\",\"form_type\":\"select\",\"form_additional\":{\"single_multi\":\"multi\",\"max\":\"\",\"values\":\"0=\\u6e38\\u6cf3,1=\\u4e0b\\u68cb,2=\\u6e38\\u620f,3=\\u4e52\\u4e53\\u7403,4=\\u7fbd\\u6bdb,5=\\u8dd1\\u6b65,6=\\u722c\\u5c71,7=\\u7f8e\\u98df,default=0;1;2\"},\"form_empty\":\"0\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"sign\",\"field_comment\":\"\\u6807\\u5fd7\",\"form_type\":\"checkbox\",\"form_additional\":\"0=\\u70ed\\u95e8,1=\\u9996\\u9875,2=\\u9876\\u7ea7\\u5206\\u7c7b\\u63a8\\u8350,3=\\u4e8c\\u7ea7\\u5206\\u7c7b\\u63a8\\u8350,4=\\u7279\\u5b9a\\u5206\\u7c7b\\u63a8\\u8350,5=\\u8f6e\\u64ad\\u56fe,6=\\u7f6e\\u9876,7=\\u65b0\\u95fb,default=1;2\",\"form_empty\":\"0\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"description\",\"field_comment\":\"\\u63cf\\u8ff0\",\"form_type\":\"textarea\",\"form_additional\":\"\",\"form_empty\":\"0\",\"field_show_index\":\"0\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"category_id\",\"field_comment\":\"\\u6240\\u5c5e\\u5206\\u7c7b\\uff08\\u5355\\u9009\\uff09\",\"form_type\":\"select_page\",\"form_additional\":{\"single_multi\":\"single\",\"max\":\"\",\"table_name\":\"lt_test_category\",\"search_field_name\":\"name\",\"show_field_name\":\"name\"},\"form_empty\":\"0\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"category_ids\",\"field_comment\":\"\\u6240\\u5c5e\\u5206\\u7c7b\\uff08\\u591a\\u9009\\uff09\",\"form_type\":\"select_page\",\"form_additional\":{\"single_multi\":\"multi\",\"max\":\"\",\"table_name\":\"lt_test_category\",\"search_field_name\":\"name\",\"show_field_name\":\"name\"},\"form_empty\":\"0\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"single_img\",\"field_comment\":\"\\u5355\\u4e2a\\u56fe\\u7247\",\"form_type\":\"upload\",\"form_additional\":{\"single_multi\":\"single\",\"accept\":\"images\"},\"form_empty\":\"0\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"multi_img\",\"field_comment\":\"\\u591a\\u4e2a\\u56fe\\u7247\",\"form_type\":\"upload\",\"form_additional\":{\"single_multi\":\"multi\",\"accept\":\"images\"},\"form_empty\":\"0\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"video\",\"field_comment\":\"\\u89c6\\u9891\\u6587\\u4ef6\\u5730\\u5740\",\"form_type\":\"upload\",\"form_additional\":{\"single_multi\":\"single\",\"accept\":\"video\"},\"form_empty\":\"0\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"audio\",\"field_comment\":\"\\u97f3\\u9891\\u6587\\u4ef6\\u5730\\u5740\",\"form_type\":\"upload\",\"form_additional\":{\"single_multi\":\"single\",\"accept\":\"audio\"},\"form_empty\":\"0\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"file\",\"field_comment\":\"\\u4efb\\u610f\\u6587\\u4ef6\\u5730\\u5740\",\"form_type\":\"upload\",\"form_additional\":{\"single_multi\":\"single\",\"accept\":\"file\"},\"form_empty\":\"0\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"content\",\"field_comment\":\"\\u6587\\u7ae0\\u5185\\u5bb9\",\"form_type\":\"editor\",\"form_additional\":\"ueditor\",\"form_empty\":\"0\",\"field_show_index\":\"0\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"province_id\",\"field_comment\":\"\\u7701\\u4efd\",\"form_type\":\"select_relation\",\"form_additional\":{\"group_name\":\"\\u5730\\u533a\\u8bbe\\u7f6e\",\"table_name\":\"lt_area\",\"left_field\":\"\",\"right_field\":\"city_id\"},\"form_empty\":\"0\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"0\"},{\"field_name\":\"city_id\",\"field_comment\":\"\\u57ce\\u5e02\",\"form_type\":\"select_relation\",\"form_additional\":{\"group_name\":\"\\u5730\\u533a\\u8bbe\\u7f6e\",\"table_name\":\"lt_area\",\"left_field\":\"province_id\",\"right_field\":\"area_id\"},\"form_empty\":\"0\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"0\"},{\"field_name\":\"area_id\",\"field_comment\":\"\\u5730\\u533a\",\"form_type\":\"select_relation\",\"form_additional\":{\"group_name\":\"\\u5730\\u533a\\u8bbe\\u7f6e\",\"table_name\":\"lt_area\",\"left_field\":\"city_id\",\"right_field\":\"\"},\"form_empty\":\"0\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"0\"},{\"field_name\":\"create_time\",\"field_comment\":\"\\u521b\\u5efa\\u65f6\\u95f4\",\"form_type\":\"time\",\"form_additional\":\"datetime\",\"form_empty\":\"0\",\"field_show_index\":\"1\",\"field_show_add\":\"0\",\"field_show_edit\":\"1\"}]', '{\"common_model\":\"0\",\"hide_pk\":\"0\",\"hide_del\":\"0\",\"create_number\":\"0\",\"table_name\":\"lt_test\",\"fields_name\":\"title,grade,status,hero,hobby,sign,description,category_id,category_ids,single_img,multi_img,video,audio,file,content,province_id,city_id,area_id,create_time\",\"close_page\":\"0\",\"tabs_field\":\"status\",\"search_mode\":\"all_show\",\"search_fields\":\"title,grade,status,hero,hobby,sign,description,category_id,category_ids,single_img,multi_img,video,audio,file,content,province_id,city_id,area_id,create_time\",\"cell_min_width\":\"320\",\"show_fields\":\"title,grade,status,hero,hobby,sign,description,category_id,category_ids,single_img,multi_img,video,audio,file,content,province_id,city_id,area_id,create_time\",\"all_fields\":[{\"field_name\":\"update_time\",\"field_comment\":\"\\u66f4\\u65b0\\u65f6\\u95f4\",\"column_default\":null},{\"field_name\":\"delete_time\",\"field_comment\":\"\\u5220\\u9664\\u65f6\\u95f4\",\"column_default\":\"0000-00-00 00:00:00\"},{\"field_name\":\"title\",\"field_comment\":\"\\u6807\\u9898\",\"column_default\":null},{\"field_name\":\"grade\",\"field_comment\":\"\\u5e74\\u7ea7\",\"column_default\":null},{\"field_name\":\"status\",\"field_comment\":\"\\u72b6\\u6001\",\"column_default\":null},{\"field_name\":\"hero\",\"field_comment\":\"\\u82f1\\u96c4\",\"column_default\":null},{\"field_name\":\"hobby\",\"field_comment\":\"\\u7231\\u597d\",\"column_default\":null},{\"field_name\":\"sign\",\"field_comment\":\"\\u6807\\u5fd7\",\"column_default\":null},{\"field_name\":\"description\",\"field_comment\":\"\\u63cf\\u8ff0\",\"column_default\":null},{\"field_name\":\"category_id\",\"field_comment\":\"\\u6240\\u5c5e\\u5206\\u7c7b\\uff08\\u5355\\u9009\\uff09\",\"column_default\":null},{\"field_name\":\"category_ids\",\"field_comment\":\"\\u6240\\u5c5e\\u5206\\u7c7b\\uff08\\u591a\\u9009\\uff09\",\"column_default\":null},{\"field_name\":\"single_img\",\"field_comment\":\"\\u5355\\u4e2a\\u56fe\\u7247\",\"column_default\":null},{\"field_name\":\"multi_img\",\"field_comment\":\"\\u591a\\u4e2a\\u56fe\\u7247\",\"column_default\":null},{\"field_name\":\"video\",\"field_comment\":\"\\u89c6\\u9891\\u6587\\u4ef6\\u5730\\u5740\",\"column_default\":null},{\"field_name\":\"audio\",\"field_comment\":\"\\u97f3\\u9891\\u6587\\u4ef6\\u5730\\u5740\",\"column_default\":null},{\"field_name\":\"file\",\"field_comment\":\"\\u4efb\\u610f\\u6587\\u4ef6\\u5730\\u5740\",\"column_default\":null},{\"field_name\":\"content\",\"field_comment\":\"\\u6587\\u7ae0\\u5185\\u5bb9\",\"column_default\":null},{\"field_name\":\"province_id\",\"field_comment\":\"\\u7701\\u4efd\",\"column_default\":null},{\"field_name\":\"city_id\",\"field_comment\":\"\\u57ce\\u5e02\",\"column_default\":null},{\"field_name\":\"area_id\",\"field_comment\":\"\\u5730\\u533a\",\"column_default\":null},{\"field_name\":\"create_time\",\"field_comment\":\"\\u521b\\u5efa\\u65f6\\u95f4\",\"column_default\":null}]}', '[{\"table_name\":\"lt_test_category\",\"relation_way\":\"belongsTo\",\"foreign_key\":\"category_id\",\"primary_key\":\"id\",\"show_field\":\"name\",\"relation_function_name\":\"category_id\"},{\"table_name\":\"lt_area\",\"relation_way\":\"belongsTo\",\"foreign_key\":\"area_id\",\"primary_key\":\"id\",\"show_field\":\"name\",\"relation_function_name\":\"area\"},{\"table_name\":\"lt_area\",\"relation_way\":\"belongsTo\",\"foreign_key\":\"city_id\",\"primary_key\":\"id\",\"show_field\":\"name\",\"relation_function_name\":\"city\"},{\"table_name\":\"lt_area\",\"relation_way\":\"belongsTo\",\"foreign_key\":\"province_id\",\"primary_key\":\"id\",\"show_field\":\"name\",\"relation_function_name\":\"province\"}]', '2019-06-10 13:26:12', '2019-07-01 16:16:40', '2019-06-10 13:26:12', '2019-07-01 16:16:40', '35');
+COMMIT;
+
+-- ----------------------------
+--  Table structure for `lt_autocreate_menu`
+-- ----------------------------
+DROP TABLE IF EXISTS `lt_autocreate_menu`;
+CREATE TABLE `lt_autocreate_menu` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `controller` text COMMENT '控制器完整路径名称',
+  `first_menu_id` int(11) DEFAULT '0' COMMENT '所属一级菜单ID',
+  `second_menu_id` int(11) DEFAULT '0' COMMENT '所属二级菜单ID',
+  `create_time` datetime DEFAULT NULL COMMENT '生成时间',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='自动生成菜单';
 
 -- ----------------------------
 --  Table structure for `lt_sysconf`
@@ -159,16 +212,20 @@ CREATE TABLE `lt_sysconf` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `group` varchar(255) DEFAULT NULL COMMENT '分组名',
   `key` varchar(255) DEFAULT NULL COMMENT 'key',
-  `value` varchar(255) DEFAULT NULL COMMENT 'value',
+  `name` varchar(255) DEFAULT NULL COMMENT '变量标题',
+  `value` text COMMENT 'value',
+  `type` varchar(255) DEFAULT NULL COMMENT '类型。{''input'':''单行文本输入框'',''single_select'':''单选下拉框'',''multi_select'':''多选下拉框'',''checkbox'':''复选框'',''radio'':''单选按钮'',''single_image'':''图片'',''multi_image'':''图片(多个)'',''single_file'':''文件'',''multi'':}',
+  `tip` varchar(255) DEFAULT NULL COMMENT '变量描述',
+  `content` text COMMENT '变量字典数据',
   PRIMARY KEY (`id`),
   UNIQUE KEY `unique_group_key` (`group`,`key`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=222 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Records of `lt_sysconf`
 -- ----------------------------
 BEGIN;
-INSERT INTO `lt_sysconf` VALUES ('57', 'basic', 'site_name', 'LayTp 1.0'), ('58', 'basic', 'record', '');
+INSERT INTO `lt_sysconf` VALUES ('65', 'basic', 'site_name', '站点名称', 'LayTp后台管理', 'input', '站点名称', 'value1|title1\nvalue2|title2'), ('66', 'basic', 'record', '备案号', '备案', 'input', '备案号', null), ('69', 'dictionary', 'config', '字典配置', '{\"basic\":\"\\u57fa\\u7840\\u914d\\u7f6e\",\"dictionary\":\"\\u5206\\u7ec4\\u914d\\u7f6e\"}', 'array', '系统配置的tab切换', ''), ('135', 'basic', 'login_vercode', '登录验证码', '0', 'radio', '后台登录是否需要输入验证码', '{\"0\":\"不需要\",\"1\":\"需要\"}'), ('220', 'apidoc', 'apidoc_file_name', null, 'api', null, null, null), ('221', 'apidoc', 'apidoc_title', null, 'LayTp - api文档', null, null, null);
 COMMIT;
 
 -- ----------------------------
@@ -177,6 +234,8 @@ COMMIT;
 DROP TABLE IF EXISTS `lt_test`;
 CREATE TABLE `lt_test` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `delete_time` datetime DEFAULT '0000-00-00 00:00:00' COMMENT '删除时间',
   `title` varchar(255) DEFAULT NULL COMMENT '标题',
   `grade` tinyint(4) DEFAULT NULL COMMENT '年级',
   `status` tinyint(4) DEFAULT NULL COMMENT '状态',
@@ -186,7 +245,6 @@ CREATE TABLE `lt_test` (
   `description` varchar(255) DEFAULT NULL COMMENT '描述',
   `category_id` int(11) DEFAULT NULL COMMENT '所属分类（单选）',
   `category_ids` varchar(255) DEFAULT NULL COMMENT '所属分类（多选）',
-  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `single_img` varchar(255) DEFAULT NULL COMMENT '单个图片',
   `multi_img` varchar(1000) DEFAULT NULL COMMENT '多个图片',
   `video` varchar(255) DEFAULT NULL COMMENT '视频文件地址',
@@ -196,6 +254,7 @@ CREATE TABLE `lt_test` (
   `province_id` int(11) DEFAULT NULL COMMENT '省份',
   `city_id` int(11) DEFAULT NULL COMMENT '城市',
   `area_id` int(11) DEFAULT NULL COMMENT '地区',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='一键生成CURD测试表';
 
@@ -208,5 +267,34 @@ CREATE TABLE `lt_test_category` (
   `name` varchar(255) DEFAULT NULL COMMENT '分类名称',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='一键生成Curd测试分类模型';
+
+-- ----------------------------
+--  Table structure for `lt_user`
+-- ----------------------------
+DROP TABLE IF EXISTS `lt_user`;
+CREATE TABLE `lt_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `username` varchar(255) DEFAULT NULL COMMENT '用户名',
+  `password` varchar(255) DEFAULT NULL COMMENT '密码',
+  `nickname` varchar(255) DEFAULT NULL COMMENT '昵称',
+  `login_time` datetime DEFAULT NULL COMMENT '注册时间',
+  `login_ip` varchar(255) DEFAULT NULL COMMENT '登录IP',
+  `successions` int(11) unsigned DEFAULT '0' COMMENT '连续登录天数',
+  `maxsuccessions` int(11) unsigned DEFAULT '0' COMMENT '最大连续登录天数',
+  `status` set('normal','locked') DEFAULT 'normal' COMMENT '账号状态。normal:正常;locked:锁定',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户表';
+
+-- ----------------------------
+--  Table structure for `lt_user_token`
+-- ----------------------------
+DROP TABLE IF EXISTS `lt_user_token`;
+CREATE TABLE `lt_user_token` (
+  `token` varchar(50) NOT NULL COMMENT 'Token',
+  `user_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '会员ID',
+  `createtime` int(10) DEFAULT NULL COMMENT '创建时间',
+  `expiretime` int(10) DEFAULT NULL COMMENT '过期时间',
+  PRIMARY KEY (`token`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='会员Token表';
 
 SET FOREIGN_KEY_CHECKS = 1;
