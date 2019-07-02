@@ -20,7 +20,7 @@ class User extends Api{
      * @ApiReturnParams   (name="code", type="integer", required=true, sample="0")
      * @ApiReturnParams   (name="msg", type="string", required=true, sample="登录成功")
      * @ApiReturn
-    ({
+({
     'code':'1',
     'msg':'登录成功'
 })
@@ -51,7 +51,7 @@ class User extends Api{
      * @ApiReturnParams   (name="code", type="integer", required=true, sample="0")
      * @ApiReturnParams   (name="msg", type="string", required=true, sample="注册成功")
      * @ApiReturn
-    ({
+({
     'code':'1',
     'msg':'注册成功'
 })
@@ -81,7 +81,7 @@ class User extends Api{
      * @ApiReturnParams   (name="code", type="integer", required=true, sample="0")
      * @ApiReturnParams   (name="msg", type="string", required=true, sample="注销成功")
      * @ApiReturn
-    ({
+({
     'code':'1',
     'msg':'注销成功'
 })

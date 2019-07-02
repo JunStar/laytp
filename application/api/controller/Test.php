@@ -7,6 +7,9 @@ use controller\Api;
  * 测试分组
  */
 class Test extends Api{
+
+    public $no_need_login = ['index'];
+
     /**
      * @ApiTitle    (测试名称)
      * @ApiSummary  (测试描述信息)

@@ -7,6 +7,9 @@ use controller\Api;
  * 测试文件上传
  */
 class File extends Api{
+
+    public $no_need_login = ['index'];
+
     /**
      * @ApiTitle    (测试文件上传)
      * @ApiSummary  (测试文件上传)
