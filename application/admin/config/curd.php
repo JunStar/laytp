@@ -11,6 +11,7 @@ return [
         'lt_autocreate_curd',
         'lt_sysconf',
         'lt_autocreate_menu',
+        'lt_user_token',
     ],
 
     //特殊字段，自动生成不需要详细设置的字段
