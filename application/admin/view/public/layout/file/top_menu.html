@@ -10,9 +10,11 @@
         {/foreach}
     </ul>
     <ul class="layui-nav layui-layout-right head-info">
+        {if $admin_user['is_super_manager']}
         <li class="layui-nav-item">
             <a href="javascript:void(0);" class="aicon ai-qingchu" id="laytp_clear_cache" title="清缓存"></a>
         </li>
+        {/if}
         <li class="layui-nav-item">
             <a href="javascript:void(0);" class="aicon ai-suo" id="lock_screen" title="锁屏"></a>
         </li>
