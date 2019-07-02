@@ -35,7 +35,7 @@ class Api extends Controller
      * 默认响应输出类型,支持json/xml
      * @var string
      */
-    protected $responseType = 'json';
+    protected $response_type = 'json';
 
     /**
      * 构造方法
@@ -52,31 +52,34 @@ class Api extends Controller
 
     public function _initialize(){
         $this->auth = Auth::instance();
-        // token
-        $token = $this->request->server('HTTP_TOKEN', $this->request->request('token', Cookie::get('token')));
+        if ($this->auth->is_need_login($this->no_need_login)) {
+            $token = $this->request->server('HTTP_TOKEN', $this->request->request('token', Cookie::get('token')));
+            $this->auth->init($token);
+            if (!$this->auth->isLogin()) {
+                $this->error('请先登录', null, 401);
+            }
+        }
     }
 
-    //重写tp基类的success方法，修改下data和url参数的位置
-    public function success($msg = '', $data = '', $url = null, $wait = 3, array $header = []){
+    public function success($msg = '', $data = null, $status_code = 200, $code = 1,  array $header = []){
         $result = [
-            'code' => 1,
+            'code' => $code,
             'msg'  => $msg,
             'time' => $this->request->server('REQUEST_TIME'),
             'data' => $data,
         ];
-        $response = Response::create($result, 'json');
+        $response = Response::create($result, $this->response_type, $status_code)->header($header);
         throw new HttpResponseException($response);
     }
 
-    //重写tp基类的error方法，修改下data和url参数的位置
-    public function error($msg = '', $data = '', $url = null, $wait = 3, array $header = []){
+    public function error($msg = '', $data = null, $status_code = 200, $code = 0, array $header = []){
         $result = [
-            'code' => 0,
+            'code' => $code,
             'msg'  => $msg,
             'time' => $this->request->server('REQUEST_TIME'),
             'data' => $data,
         ];
-        $response = Response::create($result, 'json');
+        $response = Response::create($result, $this->response_type, $status_code)->header($header);
         throw new HttpResponseException($response);
     }
 }

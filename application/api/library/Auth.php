@@ -3,15 +3,19 @@
 namespace app\api\library;
 
 use app\api\model\User;
+use library\Date;
 use library\Random;
 use think\Db;
 use think\Exception;
 use think\facade\Hook;
+use think\facade\Request;
+use think\facade\Validate;
 
 class Auth
 {
     protected static $instance = null;
     protected $_error = '';
+    protected $_logined = false;//登录状态
     protected $_user = null;
     protected $_token = '';
     //Token默认有效时长,单位秒，30分钟
@@ -38,6 +42,49 @@ class Auth
         }
 
         return self::$instance;
+    }
+
+    /**
+     * 根据Token初始化，其实就是有Token就设置登录状态和登录信息
+     *
+     * @param string $token Token
+     * @return boolean
+     */
+    public function init($token)
+    {
+        if ($this->_logined) {
+            return true;
+        }
+        if ($this->_error) {
+            return false;
+        }
+        $data = Token::get($token);
+        if (!$data) {
+            return false;
+        }
+        $user_id = intval($data['user_id']);
+        if ($user_id > 0) {
+            $user = User::get($user_id);
+            if (!$user) {
+                $this->setError('账号不存在');
+                return false;
+            }
+            if ($user['status'] != 'normal') {
+                $this->setError('账号被锁定');
+                return false;
+            }
+            $this->_user = $user;
+            $this->_logined = true;
+            $this->_token = $token;
+
+            //初始化成功的事件
+            Hook::listen("user_init_success", $this->_user);
+
+            return true;
+        } else {
+            $this->setError('你没有登录');
+            return false;
+        }
     }
 
     /**
@@ -89,6 +136,126 @@ class Auth
             Db::rollback();
             return false;
         }
+        return true;
+    }
+
+    /**
+     * 用户登录
+     *
+     * @param string $account  用户名、邮箱、手机号
+     * @param string $password 密码
+     * @return boolean
+     */
+    public function login($account, $password)
+    {
+        $field = Validate::is($account, 'email') ? 'email' : (Validate::regex($account, '/^1\d{10}$/') ? 'mobile' : 'username');
+        $user = User::get([$field => $account]);
+        if (!$user) {
+            $this->setError('账号不正确');
+            return false;
+        }
+
+        if ($user->status != 'normal') {
+            $this->setError('账号被锁定');
+            return false;
+        }
+        if (!password_verify($password,$user->password)) {
+            $this->setError('密码错误');
+            return false;
+        }
+
+        //直接登录会员
+        $this->direct($user->id);
+
+        return true;
+    }
+
+    /**
+     * 直接登录账号
+     * @param int $user_id
+     * @return boolean
+     */
+    public function direct($user_id)
+    {
+        $user = User::get($user_id);
+        if ($user) {
+            Db::startTrans();
+            try {
+                $ip = request()->ip();
+
+                //判断连续登录和最大连续登录
+                if ($user->login_time < Date::unixtime('day')) {
+                    $user->successions = $user->login_time < Date::unixtime('day', -1) ? 1 : $user->successions + 1;
+                    $user->maxsuccessions = max($user->successions, $user->maxsuccessions);
+                }
+
+                //记录本次登录的IP和时间
+                $user->login_ip = $ip;
+                $user->login_time = date('Y-m-d H:i:s');
+
+                $user->save();
+
+                $this->_user = $user;
+
+                $this->_token = Random::uuid();
+                Token::set($this->_token, $user->id, $this->keep_time);
+
+                $this->_logined = true;
+
+                //登录成功的事件
+                Hook::listen("user_login_success", $this->_user);
+                Db::commit();
+            } catch (Exception $e) {
+                Db::rollback();
+                $this->setError($e->getMessage());
+                return false;
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * 注销
+     *
+     * @return boolean
+     */
+    public function logout()
+    {
+        if (!$this->_logined) {
+            $this->setError('你没有登录');
+            return false;
+        }
+        //设置登录标识
+        $this->_logined = false;
+        //删除Token
+        Token::delete($this->_token);
+        //注销成功的事件
+        Hook::listen("user_logout_success", $this->_user);
+        return true;
+    }
+
+    /**
+     * 检测是否需要登录
+     *
+     * @param array $no_need_login 需要验证权限的数组
+     * @return boolean
+     */
+    public function is_need_login($no_need_login = [])
+    {
+        $no_need_login = is_array($no_need_login) ? $no_need_login : explode(',', $no_need_login);
+        if (!$no_need_login) {
+            return true;
+        }
+        $no_need_login = array_map('strtolower', $no_need_login);
+        $request = Request::instance();
+        // 是否存在
+        if (in_array(strtolower($request->action()), $no_need_login) || in_array('*', $no_need_login)) {
+            return false;
+        }
+
+        // 没找到匹配
         return true;
     }
 
@@ -150,5 +317,17 @@ class Auth
     public function getAllowFields()
     {
         return $this->allowFields;
+    }
+
+    /**
+     * 判断是否登录
+     * @return boolean
+     */
+    public function isLogin()
+    {
+        if ($this->_logined) {
+            return true;
+        }
+        return false;
     }
 }

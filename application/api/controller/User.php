@@ -7,6 +7,9 @@ use controller\Api;
  * 会员相关
  */
 class User extends Api{
+
+    public $no_need_login = ['login','register'];
+
     /**
      * @ApiTitle    (会员登录)
      * @ApiSummary  (会员登录信息)
@@ -31,7 +34,7 @@ class User extends Api{
         }
         $res = $this->auth->login($account, $password);
         if ($res) {
-            $data = ['userinfo' => $this->auth->getUserinfo()];
+            $data = ['user_info' => $this->auth->getUserInfo()];
             $this->success('登录成功', $data);
         } else {
             $this->error($this->auth->getError());
@@ -85,7 +88,10 @@ class User extends Api{
      */
     public function logout()
     {
-        $this->auth->logout();
-        $this->success('注销成功');
+        if( $this->auth->logout() ){
+            $this->success('注销成功');
+        }else{
+            $this->error($this->auth->getError());
+        }
     }
 }
