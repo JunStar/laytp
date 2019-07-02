@@ -9,7 +9,8 @@ use controller\Backend;
  */
 class User extends Backend
 {
-
+    public $has_del=1;
+    public $has_soft_del=1;
     /**
      * admin_user模型对象
      * @var app\admin\model\admin\User

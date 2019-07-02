@@ -49,7 +49,7 @@ legend{padding:0;border:0;}
 optgroup{font-weight:bold;}
 table{border-spacing:0;border-collapse:collapse;}
 td,th{padding:0;}
-.button{border:solid 0px #3CC5D1;background:transparent;border-radius:4px;font-size:14px;padding:6px 15px;margin:0;display:inline-block;line-height:20px;transition:all 1s cubic-bezier(0.175, 0.885, 0.32, 1) 0s;}
+.button{border:solid 0px #369;background:transparent;border-radius:4px;font-size:14px;padding:6px 15px;margin:0;display:inline-block;line-height:20px;transition:all 1s cubic-bezier(0.175, 0.885, 0.32, 1) 0s;}
 .button[disabled]{pointer-events:none;cursor:not-allowed;webkit-box-shadow:none;box-shadow:none;filter:alpha(opacity=50);opacity:.5;}
 .button:active{background-image:none;outline:0;transition:all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1) 0s;}
 .button:hover{transition:all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1) 0s;}
@@ -296,7 +296,7 @@ td,th{padding:0;}
 .label label{font-weight:bold;}
 .input-file{display:inline-block;position:relative;overflow:hidden;text-align:center;width:auto;color:#333;}
 .input-file input[type="file"]{position:absolute;top:0;right:0;font-size:14px;background-color:#fff;transform:translate(-300px, 0px) scale(4);height:40px;opacity:0;filter:alpha(opacity=0);}
-.input:focus{border-color:#0ae;transition:all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1) 0s;}
+.input:focus{border-color:#369;transition:all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1) 0s;}
 .input-auto{width:auto;display:inline-block;}
 input[disabled],input[readonly],textarea[disabled],textarea[readonly],select[disabled],select[readonly]{cursor:not-allowed;background:#eee;}/*IE6无效*/
 textarea.input{height:auto;}
@@ -957,7 +957,7 @@ a.text-black:hover{color:#666;}
 .text-yellow, a.text-yellow:link, a.text-yellow:visited,.button.border-yellow,.button.bg-yellow-light,blockquote.border-yellow strong,.pager.border-yellow a,.pager-prev.border-yellow,.pager-next.border-yellow,.badge.bg-yellow-light,.alert-yellow,.check-warning
 {color:#f60;}
 .text-blue, a.text-blue:link, a.text-blue:visited,.button.border-blue,.button.bg-blue-light,blockquote.border-blue strong,.pager.border-blue a,.pager-prev.border-blue,.pager-next.border-blue,.badge.bg-blue-light,.alert-blue
-{color:#0ae;}
+{color:#369;}
 .text-green, a.text-green:link, a.text-green:visited,.button.border-green,.button.bg-green-light,blockquote.border-green strong,.pager.border-green a,.pager-prev.border-green,.pager-next.border-green,.badge.bg-green-light,.alert-green,.check-success
 {color:#2c7;}
 .text-red-light, a.text-red-light:link, a.text-red-light:visited,.button.border-red-light,blockquote.border-red-light strong,.pager.border-red-light a
@@ -983,7 +983,7 @@ a.text-white:hover, .bg-inverse a:hover{color:#ddd;}
 .bg-yellow,.border-yellow .button.active,.pointer.border-yellow .active,.nav-pills.border-yellow .active a,.nav-main.border-yellow .nav-head,.pagination.border-yellow .active
 {background-color:#f60;}
 .bg-blue,.border-blue .button.active,.pointer.border-blue active,.nav-pills.border-blue .active a,.nav-main.border-blue .nav-head,.pagination.border-blue .active
-{background-color:#0ae;}
+{background-color:#369;}
 .bg-green,.border-green .button.active,.pointer.border-green .active,.nav-pills.border-green .active a,.pagination.border-green .active
 {background-color:#2c7;}
 .bg-red-light,.table .red, .table .red td, .table .red th,.alert-red,.border-red-light .button.active,.pointer.border-red-light .active,.nav-pills.border-red-light .active a,.nav-main.border-red-light .nav-head,.pagination.border-red-light .active
@@ -1010,7 +1010,7 @@ a.text-white:hover, .bg-inverse a:hover{color:#ddd;}
 .border-yellow,.border-yellow .button,.border-yellow .tab-nav li a,.border-yellow .tab-body,.button.bg-yellow,.selected.border-yellow,.pointer.border-yellow li,.check-warning .input,.nav.border-yellow .active a,.nav.nav-tabs.border-yellow,.nav-main.border-yellow a, .nav-main.border-yellow .nav-head,.pagination.border-yellow li,.pager.border-yellow a
 {border-color:#f60;}
 .border-blue,.border-blue .button,.border-blue .tab-nav li a,.border-blue .tab-body,.button.bg-blue,.selected.border-blue,.pointer.border-blue li,.nav.border-blue .active a,.nav.nav-tabs.border-blue,.nav-main.border-blue a, .nav-main.border-blue .nav-head,.pagination.border-blue li,.pager.border-blue a
-{border-color:#0ae;}
+{border-color:#369;}
 .border-green,.border-green .button,.border-green .tab-nav li a,.border-green .tab-body,.button.bg-green,.selected.border-green,.pointer.border-green li,.check-success .input,.nav.border-green .active a,.nav.nav-tabs.border-green,.nav-main.border-green a, .nav-main.border-green .nav-head,.pagination.border-green li,.pager.border-green a
 {border-color:#2c7;}
 .border-red-light,.border-red-light .button,.border-red-light .tab-nav li a,.border-red-light .tab-body,.button.bg-red-light,.selected.border-red-light,.alert-red,.pointer.border-red-light li,.nav.border-red-light .active a,.nav.nav-tabs.border-red-light,.nav-main.border-red-light a, .nav-main.border-red-light .nav-head,.pagination.border-red-light li,.pager.border-red-light a
@@ -1031,7 +1031,7 @@ a.text-white:hover, .bg-inverse a:hover{color:#ddd;}
 .button.border-green:hover,.button.border-green:focus,.button.bg-green:hover,.button.bg-green:focus{color:#fff;border-color:#5d8;background-color:#5d8;}
 .button.border-red-light:hover,.button.border-red-light:focus,.button.bg-red-light:hover,.button.bg-red-light:focus,.alert-red:hover{color:#e33;border-color:#fdc;background-color:#fdc;}
 .button.border-yellow-light:hover,.button.border-yellow-light:focus,.button.bg-yellow-light:hover,.button.bg-yellow-light:focus,.alert-yellow:hover{color:#f60;border-color:#fec;background-color:#fec;}
-.button.border-blue-light:hover,.button.border-blue-light:focus,.button.bg-blue-light:hover,.button.bg-blue-light:focus,.alert-blue:hover{color:#0ae;border-color:#def;background-color:#def;}
+.button.border-blue-light:hover,.button.border-blue-light:focus,.button.bg-blue-light:hover,.button.bg-blue-light:focus,.alert-blue:hover{color:#369;border-color:#def;background-color:#def;}
 .button.border-green-light:hover,.button.border-green-light:focus,.button.bg-green-light:hover,.button.bg-green-light:focus,.alert-green:hover{color:#2c7;border-color:#cfa;background-color:#cfa;}
 
 
@@ -1039,10 +1039,10 @@ a.text-white:hover, .bg-inverse a:hover{color:#ddd;}
 
 /*--------自定义链接颜色(可选)--------*/
 a{color:#333;text-decoration:none;} /*链接-颜色*/
-a:focus,a:hover{color:#0ae;} /*链接-悬浮颜色*/
+a:focus,a:hover{color:#369;} /*链接-悬浮颜色*/
 /*--------自定义文本颜色--------*/
 .text-main, a.text-main:link, a.text-main:visited,.button.border-main,blockquote.border-main strong,.pager.border-main a,.pager-prev.border-main,.pager-next.border-main,.nav a:hover,.nav-menu.nav-pills .active ul a:hover,.bg-inverse .nav-menu ul a:hover,.bg-inverse .nav.nav-menu.nav-tabs ul a:hover,.bg-inverse .nav.nav-menu.nav-tabs .active ul a:hover,.bg-inverse .nav.nav-menu.nav-pills ul a:hover,.bg-inverse .nav.nav-menu.nav-pills .active ul a:hover
-{color:#0ae;} /*文本-主色*/
+{color:#369;} /*文本-主色*/
 .text-sub, a.text-sub:link, a.text-sub:visited,.button.border-sub,blockquote.border-sub strong,.pager.border-sub a,.pager-prev.border-sub,.pager-next.border-sub
 {color:#2c7;} /*文本-辅色*/
 .text-back, a.text-back:link, a.text-back:visited,.button.border-back,blockquote.border-back,.pager.border-back a,.pager-prev.border-back,.pager-next.border-back
@@ -1053,7 +1053,7 @@ a:focus,a:hover{color:#0ae;} /*链接-悬浮颜色*/
 {color:#f60;}/*文本-点缀色*/
 /*--------自定义背景色--------*/
 .bg-main,.border-main .button.active,.pointer.border-main .active,.nav-pills.border-main .active a,.nav-main.border-main .nav-head,.pagination.border-main .active
-{background-color:#3CC5D1;} /*背景-主色*/
+{background-color:#369;} /*背景-主色*/
 .bg-sub,.border-sub .button.active,.pointer.border-sub .active,.nav-pills.border-sub .active a,.nav-main.border-sub .nav-head,.pagination.border-sub .active
 {background-color:#2c7;} /*背景-辅色*/
 .bg-back,.border-back .button.active,.pointer.border-back .active,.nav-pills.border-back .active a,.nav-main.border-back .nav-head,.pagination.border-back .active
@@ -1064,7 +1064,7 @@ a:focus,a:hover{color:#0ae;} /*链接-悬浮颜色*/
 {background-color:#f60;} /*背景-点缀色*/
 /*--------自定义边框色--------*/
 .border-main,.border-main .button,.border-main .tab-nav li a,.border-main .tab-body,.button.bg-main,.selected.border-main,.pointer.border-main li,.nav.border-main .active a,.nav.nav-tabs.border-main,.nav-main.border-main a, .nav-main.border-main .nav-head,.pagination.border-main li,.pager.border-main a
-{border-color:#0ae;} /*边框-主色*/
+{border-color:#369;} /*边框-主色*/
 .border-sub,.border-sub .button,.border-sub .tab-nav li a,.border-sub .tab-body,.button.bg-sub,.selected.border-sub,.pointer.border-sub li,.nav.border-sub .active a,.nav.nav-tabs.border-sub,.nav-main.border-sub a, .nav-main.border-sub .nav-head,.pagination.border-sub li,.pager.border-sub a
 {border-color:#2c7;}/*边框-辅色*/
 .border-back,.border-back .button,.border-back .tab-nav li a,.border-back .tab-body,.button.bg-back,.selected.border-back,.pointer.border-back li,.nav.border-back .active a,.nav.nav-tabs.border-back,.nav-main.border-back a, .nav-main.border-back .nav-head,.pagination.border-back li,.pager.border-back a
@@ -1075,9 +1075,9 @@ a:focus,a:hover{color:#0ae;} /*链接-悬浮颜色*/
 {border-color:#f60;} /*边框-点缀色*/
 /*--------自定义按钮悬浮文本、边框及背景色--------*/
 .button.border-main:hover,.button.border-main:focus,.button.bg-main:hover,.button.bg-main:focus
-{color:#fff;border-color:#3CC5D1;background-color:#3CC5D1;} /*主色-文本-边框-背景*/
+{color:#fff;border-color:#369;background-color:#369;} /*主色-文本-边框-背景*/
 .button.border-sub:hover,.button.border-sub:focus,.button.bg-sub:hover,.button.bg-sub:focus
-{color:#fff;border-color:#3CC5D1;background-color:#3CC5D1;} /*配色-文本-边框-背景*/
+{color:#fff;border-color:#369;background-color:#369;} /*配色-文本-边框-背景*/
 .button.border-back:hover,.button.border-back:focus,.button.bg-back:hover,.button.bg-back:focus
 {color:#333;border-color:#def;background-color:#def;} /*背景色-文本-边框-背景*/
 .button.border-mix:hover,.button.border-mix:focus,.button.bg-mix:hover,.button.bg-mix:focus

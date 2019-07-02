@@ -19,7 +19,7 @@ class Backend extends Controller
     public $admin_user;
     public $rule_list;
     public $menu_ids;
-    public $has_del=0;
+    public $has_del=1;
     public $has_soft_del=0;
 
     public function initialize(){
@@ -78,7 +78,7 @@ class Backend extends Controller
         $this->assign('rule_list', $this->rule_list);
 
         if( !in_array($this->now_node, $rule_list) ){
-            $this->error('无权访问');
+            $this->error('无权限访问，请联系管理员');
         }
     }
 

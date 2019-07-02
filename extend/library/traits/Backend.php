@@ -2,6 +2,7 @@
 
 namespace library\traits;
 
+use app\admin\model\auth\User;
 use think\Exception;
 
 trait Backend
@@ -86,7 +87,7 @@ trait Backend
                 if( $this->model->where('id','in',$ids)->delete() ){
                     return $this->success('操作成功');
                 }else{
-                    return $this->error('操作失败1');
+                    return $this->error('操作失败2');
                 }
             }
         }
@@ -116,10 +117,10 @@ trait Backend
     //彻底删除
     public function true_del(){
         $ids = $this->request->param('ids');
-        if( $this->model->destroy($ids,true) ){
-            return $this->success('操作成功');
-        }else{
-            return $this->error('操作失败');
+        $res = $this->model->onlyTrashed()->where('id','in',$ids)->all();
+        foreach($res as $key=>$item){
+            $item->delete(true);
         }
+        return $this->success('操作成功');
     }
 }
