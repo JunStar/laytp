@@ -182,10 +182,8 @@ function importRule($controller, $pid)
         foreach ($controllerNameArr as &$val) {
             $val = basename(strtolower(trim(preg_replace("/[A-Z]/", "_\\0", $val), "_")),'.php');
         }
-        $name = implode('/', $controllerNameArr);
+        $name = implode('.', $controllerNameArr);
     }
-
-
 
     $menu_model = new \app\admin\model\auth\Menu();
 
