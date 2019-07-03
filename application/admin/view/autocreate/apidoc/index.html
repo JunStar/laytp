@@ -17,16 +17,16 @@
                 </style>
                 <form class="page-list-form layui-form">
                     <div class="layui-form-item">
-                        <label class="layui-form-label">api文档文件名称</label>
+                        <label class="layui-form-label">api文档文件名称 <text title="必填项" style="color:red;">*</text></label>
                         <div class="layui-input-inline">
-                            <input type="text" name="row[apidoc_file_name]" id="apidoc_file_name" placeholder="请输入api文档文件名称" class="layui-input" value="{$apidoc_file_name}" />
+                            <input type="text" name="row[apidoc_file_name]" lay-verify="required" id="apidoc_file_name" placeholder="请输入api文档文件名称" class="layui-input" value="{$apidoc_file_name}" />
                         </div>
                         <div class="layui-form-mid layui-word-aux">生成的Api文档的文件名<br />默认使用api，点击生成则会在根目录下生成api.html文件</div>
                     </div>
                     <div class="layui-form-item">
-                        <label class="layui-form-label">api文档标题</label>
+                        <label class="layui-form-label">api文档标题 <text title="必填项" style="color:red;">*</text></label>
                         <div class="layui-input-inline">
-                            <input type="text" name="row[apidoc_title]" id="apidoc_title" placeholder="请输入api文档标题" class="layui-input" value="{$apidoc_title}" />
+                            <input type="text" name="row[apidoc_title]" lay-verify="required" id="apidoc_title" placeholder="请输入api文档标题" class="layui-input" value="{$apidoc_title}" />
                         </div>
                         <div class="layui-form-mid layui-word-aux">生成的Api文档的标题</div>
                     </div>

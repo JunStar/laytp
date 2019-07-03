@@ -2,10 +2,10 @@
 
 {block name="form"}
     <div class="layui-form-item">
-        <label class="layui-form-label" title="文件路径">文件路径</label>
+        <label class="layui-form-label" title="文件路径">文件路径 <text title="必填项" style="color:red;">*</text></label>
         <div class="layui-input-block">
             <div class="layui-upload">
-                <div class="layui-inline" style="width: 81%;"><input type="text" class="layui-input" name="row[file_path]" id="input_file_path" value="{$file_path}" /></div>
+                <div class="layui-inline" style="width: 81%;"><input type="text" lay-verify="required" class="layui-input" name="row[file_path]" id="input_file_path" value="{$file_path}" /></div>
                 <div class="layui-inline">
                     <button type="button" class="layui-btn layui-btn-primary pull-left"
                             id="file_path"

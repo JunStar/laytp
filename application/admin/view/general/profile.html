@@ -10,21 +10,21 @@
     </style>
     <form class="page-list-form layui-form" style="margin-top: 10px;">
         <div class="layui-form-item">
-            <label class="layui-form-label">昵称</label>
+            <label class="layui-form-label">昵称 <text title="必填项" style="color:red;">*</text></label>
             <div class="layui-input-inline">
-                <input type="text" name="row[nickname]" lay-verify="pass" placeholder="请输入昵称" autocomplete="off" class="layui-input" value="{$admin_user.nickname}">
+                <input type="text" name="row[nickname]" lay-verify="required" lay-verify="pass" placeholder="请输入昵称" autocomplete="off" class="layui-input" value="{$admin_user.nickname}">
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">密码</label>
+            <label class="layui-form-label">密码 <text title="必填项" style="color:red;">*</text></label>
             <div class="layui-input-inline">
-                <input type="password" name="row[password]" lay-verify="pass" placeholder="请输入密码，留空为不修改密码" autocomplete="off" class="layui-input">
+                <input type="password" name="row[password]" lay-verify="required" lay-verify="pass" placeholder="请输入密码，留空为不修改密码" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">重复密码</label>
+            <label class="layui-form-label">重复密码 <text title="必填项" style="color:red;">*</text></label>
             <div class="layui-input-inline">
-                <input type="password" name="row[re_password]" lay-verify="pass" placeholder="请输入密码，留空为不修改密码" autocomplete="off" class="layui-input">
+                <input type="password" name="row[re_password]" lay-verify="required" lay-verify="pass" placeholder="请输入密码，留空为不修改密码" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
