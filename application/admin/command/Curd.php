@@ -599,11 +599,11 @@ class Curd extends Command
             }else{
                 if($v['field_show_add']){
                     $add_item_content = $this->get_form_item($v,'add');
-                    $add_data[] = $this->get_form_group($v['field_comment'], $add_item_content);
+                    $add_data[] = $this->get_form_group($v['field_comment'], $add_item_content, $v['form_empty']);
                 }
                 if($v['field_show_edit']){
                     $edit_item_content = $this->get_form_item($v,'edit');
-                    $edit_data[] = $this->get_form_group($v['field_comment'], $edit_item_content);
+                    $edit_data[] = $this->get_form_group($v['field_comment'], $edit_item_content, $v['form_empty']);
                 }
             }
         }
@@ -647,13 +647,19 @@ class Curd extends Command
      * 获取表单分组数据
      * @param string $field
      * @param string $content
+     * @param boolean $form_empty
      * @return string
      */
-    protected function get_form_group($field, $content)
+    protected function get_form_group($field, $content, $form_empty=false)
     {
+        if(!$form_empty){
+            $required_html = " <text title=\"必填项\" style=\"color:red;\">*</text>";
+        }else{
+            $required_html = "";
+        }
         return <<<EOD
     <div class="layui-form-item">
-        <label class="layui-form-label" title="{$field}">{$field}</label>
+        <label class="layui-form-label" title="{$field}">{$field}{$required_html}</label>
         <div class="layui-input-block">
             {$content}
         </div>
@@ -1185,6 +1191,7 @@ EOD;
 
         $data['accept'] = $info['form_additional']['accept'];
         $data['single_multi'] = $info['form_additional']['single_multi'];
+        $data['verify'] = $info['form_empty'] ? '' : 'required';
         if($info['form_additional']['accept'] == 'images'){
             if($type == 'add'){
                 $data['preview'] = "\n\t\t\t\t".
