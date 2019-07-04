@@ -688,25 +688,34 @@ layui.define('jquery', function (exports) { //提示：模块也可以依赖其�
             return text;
         };
 
+        let el = self.elem;
+        let key = el.hidden.val() ? el.hidden.val() : p.initRecord;
         if (p.multiple) {
             self.prop.init_set = true;
             self.clearAll(self);
+            let arr_key = key.split(',');
             $.each(data, function (i, row) {
-                var item = {text: getText(row), value: row[p.keyField]};
-                if (!self.isAlreadySelected(self, item)) self.addNewTag(self, item);
+                if(arr_key.indexOf(row[p.keyField].toString()) > -1){
+                    var item = {text: getText(row), value: row[p.keyField]};
+                    if (!self.isAlreadySelected(self, item)) self.addNewTag(self, item);
+                }
             });
             self.tagValuesSet(self);
             self.inputResize(self);
             self.prop.init_set = false;
         } else {
-            var row = data[0];
-            self.elem.combo_input.val(getText(row));
-            self.elem.hidden.val(row[p.keyField]);
-            self.prop.prev_value = getText(row);
-            self.prop.selected_text = getText(row);
-            if (p.selectOnly) {
-                self.elem.combo_input.attr('title', self.message.select_ok).removeClass(css.select_ng).addClass(css.select_ok);
-            }
+            $.each(data, function (i, row) {
+                if(row[p.keyField] == key){
+                    self.elem.combo_input.val(getText(row));
+                    self.elem.hidden.val(row[p.keyField]);
+                    self.prop.prev_value = getText(row);
+                    self.prop.selected_text = getText(row);
+                    if (p.selectOnly) {
+                        self.elem.combo_input.attr('title', self.message.select_ok).removeClass(css.select_ng).addClass(css.select_ok);
+                    }
+                }
+            });
+
             self.putClearButton();
         }
     };
