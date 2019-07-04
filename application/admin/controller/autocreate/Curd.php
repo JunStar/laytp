@@ -124,6 +124,7 @@ class Curd extends Backend
                         $result['all_fields'][] = [
                             'field_name' => $v
                             ,'field_comment' => $comment_map[$v]['COLUMN_COMMENT']
+                            ,'form_empty' => ( $comment_map[$v]['IS_NULLABLE'] == 'NO' ) ? 0 : 1
                         ];
                     }
                 }
@@ -137,6 +138,7 @@ class Curd extends Backend
                 if( $v != $pk ){
                     $result['all_fields'][$i]['field_name'] = $v;
                     $result['all_fields'][$i]['field_comment'] = $comment_map[$v]['COLUMN_COMMENT'];
+                    $result['all_fields'][$i]['form_empty'] = ( $comment_map[$v]['IS_NULLABLE'] == 'NO' ) ? 0 : 1;
                     $result['all_fields'][$i]['field_show_index'] = 1;
                     $result['all_fields'][$i]['field_show_add'] = 1;
                     $result['all_fields'][$i]['field_show_edit'] = 1;
