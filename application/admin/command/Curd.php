@@ -905,13 +905,10 @@ EOD;
         if(count($radio_items) == 2){
             $name = 'html' . DS . $type . DS . 'radio_switch';
             $data['field_name'] = $info['field_name'];
-            $data['default_value'] = $default_value;
-            $data['checked_value'] = ($radio_items[0]['value'] == $default_value) ? $radio_items[1]['value'] : $radio_items[0]['value'];
-            if(($radio_items[0]['value'] == $default_value)) {
-                $data['lay_text'] = $radio_items[1]['text'] . '|' . $radio_items[0]['text'];
-            }else{
-                $data['lay_text'] = $radio_items[0]['text'] . '|' . $radio_items[1]['text'];
-            }
+            $data['un_checked_value'] = $radio_items[0]['value'];
+            $data['checked_value'] = $radio_items[1]['value'];
+            $data['checked_status'] = ($data['checked_value'] == $default_value) ? 'checked="checked"' : '';
+            $data['lay_text'] = $radio_items[1]['text'] . '|' . $radio_items[0]['text'];
             $this->set_model_array_const($info['field_name'], $model_array_const);
             return $this->get_replaced_tpl($name, $data);
         }else if(count($radio_items) > 2){
