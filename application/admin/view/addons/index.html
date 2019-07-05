@@ -40,6 +40,26 @@
 {/block}
 
 {block name="js_template"}
-{include file="public/js_tpl/toolbar_tpl"}
-{include file="public/js_tpl/operation_tpl"}
+<script type="text/html" id="default_toolbar">
+    <div class="layui-table-tool-temp">
+        <div class="layui-btn-group fl">
+            <a href="javascript:void(0);" class="layui-btn layui-btn-danger layui-btn-sm layui-icon layui-icon-download-circle">&nbsp;离线安装</a>
+        </div>
+        <div class="layui-btn-group fl">
+            <a href="javascript:void(0);" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-list active">&nbsp;全部</a>
+            <a href="javascript:void(0);" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-more-vertical">&nbsp;免费</a>
+            <a href="javascript:void(0);" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-rmb">&nbsp;付费</a>
+            <a href="javascript:void(0);" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-home">&nbsp;本地插件</a>
+        </div>
+        <div class="layui-btn-group fl">
+            <a href="javascript:void(0);" class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-username">&nbsp;会员信息</a>
+        </div>
+    </div>
+</script>
+
+<script type="text/html" id="operation">
+    <div class="layui-btn-group">
+        <a class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-edit" lay-event="edit" title="编辑" layer-tips="查看"> </a>
+    </div>
+</script>
 {/block}

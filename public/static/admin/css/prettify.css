@@ -91,3 +91,10 @@ body .layui-layer-btn{
 .layui-tab-title .layui-this{
     color: #369;
 }
+
+.layui-btn:active, .layui-btn.active{
+    color: #fff;
+    background-color:#217dbb;
+    border-color:#2077b2;
+    box-shadow:inset 0 3px 5px rgba(0,0,0,0.125)
+}
