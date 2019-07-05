@@ -935,7 +935,9 @@ EOD;
         $option_items = [];
         foreach($items as $k=>$v){
             $temp = explode('=', $v);
-            $option_items[] = ['value'=>$temp[0], 'text'=>$temp[1]];
+            if($temp[0] != 'default'){
+                $option_items[] = ['value'=>$temp[0], 'text'=>$temp[1]];
+            }
         }
         $options = '';
         foreach($option_items as $k=>$v){
