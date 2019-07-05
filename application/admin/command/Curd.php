@@ -401,9 +401,6 @@ class Curd extends Command
                     $temp = "\t\t\t\t,{field:'{$v['field_name']}',title:'{$title}'";
                 }
                 $temp .= ",align:'center'";
-//                if($fields_list[$v['field_name']]['table_additional_edit']){
-//                    $temp .= ",edit:'text'";
-//                }
                 if($relation_info = $this->is_relation_key($v['field_name'])){
                     $relation_show_field = explode(',',$relation_info['show_field']);
                     $templet = [];
@@ -432,11 +429,6 @@ class Curd extends Command
                 }
                 //3个及3个以上选项单选按钮 和 单选下拉框渲染成status的模板
                 if($fields_list[$v['field_name']]['form_type'] == 'select' && $fields_list[$v['field_name']]['form_additional']['single_multi'] == 'single'){
-//                    if( $fields_list[$v['field_name']]['form_type'] == 'radio' ){
-//                        $json_obj = json_encode( $this->getArrayByString($fields_list[$v['field_name']]['form_additional']),JSON_UNESCAPED_UNICODE );
-//                    }else{
-//                        $json_obj = json_encode( $this->getArrayByString($fields_list[$v['field_name']]['form_additional']['values']),JSON_UNESCAPED_UNICODE );
-//                    }
                     $json_obj = json_encode( $this->getArrayByString($fields_list[$v['field_name']]['form_additional']['values']),JSON_UNESCAPED_UNICODE );
                     $temp .= ",templet:function(d){\n\t\t\t\t\treturn layTp.facade.formatter.status('{$v['field_name']}',d.{$v['field_name']},{$json_obj});\n\t\t\t\t}";
                 }
