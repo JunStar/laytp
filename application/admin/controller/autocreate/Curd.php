@@ -127,6 +127,9 @@ class Curd extends Backend
                             'field_name' => $v
                             ,'field_comment' => $comment_map[$v]['COLUMN_COMMENT']
                             ,'form_empty' => ( $comment_map[$v]['IS_NULLABLE'] == 'NO' ) ? 0 : 1
+                            ,'field_show_add' => 1
+                            ,'field_show_edit' => 1
+                            ,'field_show_index' => 1
                         ];
                     }
                 }
