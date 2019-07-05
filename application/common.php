@@ -95,3 +95,26 @@ function deldir($dir){
         return false;
     }
 }
+
+/**
+ * curl方式请求远程地址
+ * @param $url url地址
+ * @param bool $data post的数据
+ * @return bool|string
+ */
+function request_by_curl( $url, $data=FALSE )
+{
+    $ch = curl_init();
+    curl_setopt ( $ch, CURLOPT_URL, $url );
+    curl_setopt ( $ch, CURLOPT_HEADER, 0 );
+    curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, 1 );
+    curl_setopt ( $ch, CURLOPT_CONNECTTIMEOUT, 1);
+    if( is_array( $data ) && count( $data ) > 0 )
+    {
+        curl_setopt ( $ch, CURLOPT_POST, 1 );
+        curl_setopt ( $ch, CURLOPT_POSTFIELDS, $data );
+    }
+    $contents = curl_exec ( $ch );
+    curl_close ( $ch );
+    return $contents;
+}

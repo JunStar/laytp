@@ -1,1 +1,45 @@
 {extend name="admin@public/layout/main"}
+
+{block name="tabs"}
+<div class="layui-tab layui-tab-brief">
+    <ul class="layui-tab-title">
+        <li class="layui-this" click_search="true" field="category_id" field_val="">全部</li>
+        {foreach $category as $k=>$v}
+        <li click_search="true" field="category_id" field_val="{$v['id']}">{$v['name']}</li>
+        {/foreach}
+    </ul>
+</div>
+{/block}
+
+{block name="search_form"}
+<div class="search-form-page-tab-content" id="search-form" style="display:none;">
+    <div class="layui-form layui-card-header" style="height:auto;padding:0;">
+        <form class="layui-form-item layui-form-pane" style="margin-bottom:0px;">
+            <div class="layui-inline" style="padding-left: 10px;">
+                <label class="layui-form-label" title="年级">分类</label>
+                <div class="layui-input-inline">
+                    <select id="category_id" name="category_id" placeholder="请选择分类">
+                        <option value=""></option>
+                        {foreach $category as $k=>$v}
+                        <option value="{$v['id']}">{$v['name']}</option>
+                        {/foreach}
+                    </select>
+                </div>
+            </div>
+
+            <div class="layui-inline" style="padding-left: 10px;">
+                <button class="layui-btn layui-btn-sm layui-btn-primary" lay-submit lay-filter="laytp"><i class="layui-icon"></i> 搜 索</button>
+            </div>
+        </form>
+    </div>
+</div>
+{/block}
+
+{block name="script"}
+<script src="__ADMIN_JS__/addons.js" charset="utf-8"></script>
+{/block}
+
+{block name="js_template"}
+{include file="public/js_tpl/toolbar_tpl"}
+{include file="public/js_tpl/operation_tpl"}
+{/block}
