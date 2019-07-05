@@ -327,7 +327,8 @@ class Curd extends Command
             foreach($relation_model as $k=>$item){
                 $data['relation_function_name'] = $this->convertUnderline( $item['relation_function_name'] );
                 $data['relation_way'] = $item['relation_way'];
-                $data['relation_model_name'] = 'app\admin\model\\'.$this->get_name_by_table($item['table_name']);
+                //本身在common下，使用的关联模型就在common
+                $data['relation_model_name'] = 'app\\'.$this->model_app_name.'\\model\\'.$this->get_name_by_table($item['table_name']);
                 $data['foreign_key'] = $item['foreign_key'];
                 $data['local_key'] = $item['primary_key'];
                 $array_relation_model_html[] = $this->get_replaced_tpl($relation_model_function_lt,$data);
