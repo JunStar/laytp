@@ -44,4 +44,26 @@ layui.use(['layTp'],function() {
 
     window.func_controller = func_controller;
 
+    $(document).on('click','.charge_status',function(){
+        let obj = $(this);
+        let field = obj.attr('field');
+        let field_val = obj.attr('field_val');
+        let click_field_val = parseInt( field_val );
+        if( isNaN(click_field_val) ){
+            click_field_val = "";
+        }
+        let data = {"charge_status":click_field_val};
+        layui.laytpl($('#template_default_toolbar').html()).render(data, function(html){
+            $('#default_toolbar').html(html);
+            //搜索框的值设置成对应值
+            $('#'+field).val(field_val);
+            layui.form.render('select');
+            $('[lay-submit]').click();
+        });
+        // layui.each($(".charge_status"),function(key,item){
+        //     let field_val = $(item).attr('field_val');
+        //     console.log(field_val);
+        // });
+        // func_controller.table_render();
+    });
 });

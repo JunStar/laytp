@@ -28,15 +28,22 @@
             </div>
 
             <div class="layui-inline" style="padding-left: 10px;">
+                <label class="layui-form-label" title="年级">付费状态</label>
+                <div class="layui-input-inline">
+                    <select id="charge_status" name="charge_status" placeholder="请选择付费状态">
+                        <option value=""></option>
+                        <option value="0">免费</option>
+                        <option value="1">付费</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="layui-inline" style="padding-left: 10px;">
                 <button class="layui-btn layui-btn-sm layui-btn-primary" lay-submit lay-filter="laytp"><i class="layui-icon"></i> 搜 索</button>
             </div>
         </form>
     </div>
 </div>
-{/block}
-
-{block name="script"}
-<script src="__ADMIN_JS__/addons.js" charset="utf-8"></script>
 {/block}
 
 {block name="js_template"}
@@ -46,9 +53,26 @@
             <a href="javascript:void(0);" class="layui-btn layui-btn-danger layui-btn-sm layui-icon layui-icon-download-circle">&nbsp;离线安装</a>
         </div>
         <div class="layui-btn-group fl">
-            <a href="javascript:void(0);" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-list active">&nbsp;全部</a>
-            <a href="javascript:void(0);" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-more-vertical">&nbsp;免费</a>
-            <a href="javascript:void(0);" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-rmb">&nbsp;付费</a>
+            <a href="javascript:void(0);" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-list active charge_status" click_search="true" field="charge_status" field_val="">&nbsp;全部</a>
+            <a id="charge_status_all" href="javascript:void(0);" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-more-vertical charge_status" click_search="true" field="charge_status" field_val="0">&nbsp;免费</a>
+            <a href="javascript:void(0);" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-rmb charge_status" click_search="true" field="charge_status" field_val="1">&nbsp;付费</a>
+            <a href="javascript:void(0);" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-home">&nbsp;本地插件</a>
+        </div>
+        <div class="layui-btn-group fl">
+            <a href="javascript:void(0);" class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-username">&nbsp;会员信息</a>
+        </div>
+    </div>
+</script>
+
+<script type="text/html" id="template_default_toolbar">
+    <div class="layui-table-tool-temp">
+        <div class="layui-btn-group fl">
+            <a href="javascript:void(0);" class="layui-btn layui-btn-danger layui-btn-sm layui-icon layui-icon-download-circle">&nbsp;离线安装</a>
+        </div>
+        <div class="layui-btn-group fl">
+            <a href="javascript:void(0);" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-list {{#  if(d.charge_status === ''){ }}active{{#  } }} charge_status" field="charge_status" field_val="">&nbsp;全部</a>
+            <a href="javascript:void(0);" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-more-vertical {{#  if(d.charge_status === 0){ }}active{{#  } }} charge_status" field="charge_status" field_val="0">&nbsp;免费</a>
+            <a href="javascript:void(0);" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-rmb {{#  if(d.charge_status === 1){ }}active{{#  } }} charge_status" field="charge_status" field_val="1">&nbsp;付费</a>
             <a href="javascript:void(0);" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-home">&nbsp;本地插件</a>
         </div>
         <div class="layui-btn-group fl">
@@ -62,4 +86,8 @@
         <a class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-edit" lay-event="edit" title="编辑" layer-tips="查看"> </a>
     </div>
 </script>
+{/block}
+
+{block name="script"}
+<script src="__ADMIN_JS__/addons.js" charset="utf-8"></script>
 {/block}
