@@ -83,7 +83,14 @@
 
 <script type="text/html" id="operation">
     <div class="layui-btn-group">
-        <a class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-edit" lay-event="edit" title="编辑" layer-tips="查看"> </a>
+        <a class="layui-btn layui-btn-sm layui-icon layui-icon-download-circle" lay-event="install" title="安装最新版本" layer-tips="安装最新版本"> 安装最新版本</a>
+        <a class="layui-btn layui-btn-sm layui-icon layui-icon-triangle-d" lay-event="version_list" title="查看版本列表" layer-tips="查看版本列表"> </a>
+
+        <a class="layui-btn layui-btn-sm layui-btn-normal layui-icon layui-icon-set" lay-event="config" title="配置" layer-tips="配置"> 配置</a>
+    </div>
+    <div class="layui-btn-group">
+        <a class="layui-btn layui-btn-primary layui-btn-sm" lay-event="demo" title="演示" layer-tips="演示"> 演示</a>
+        <a class="layui-btn layui-btn-danger layui-btn-sm layui-icon layui-icon-close-fill" lay-event="demo" title="卸载" layer-tips="卸载"> 卸载</a>
     </div>
 </script>
 {/block}

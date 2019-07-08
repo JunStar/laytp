@@ -58,13 +58,18 @@ class Ajax extends Controller
     //清除缓存
     public function clear_cache(){
         $dir_cache = Env::get("root_path"). 'runtime' . DS . 'cache';
-        $dir_log = Env::get("root_path"). 'runtime' . DS . 'log';
-        $dir_temp = Env::get("root_path"). 'runtime' . DS . 'temp';
-        if( deldir($dir_cache) && deldir($dir_log) && deldir($dir_temp) ){
-            $this->success('操作成功');
-        }else{
-            $this->error('操作失败');
+        if(is_dir($dir_cache)){
+            deldir($dir_cache);
         }
+        $dir_log = Env::get("root_path"). 'runtime' . DS . 'log';
+        if(is_dir($dir_log)){
+            deldir($dir_log);
+        }
+        $dir_temp = Env::get("root_path"). 'runtime' . DS . 'temp';
+        if(is_dir($dir_temp)){
+            deldir($dir_temp);
+        }
+        $this->success('操作成功');
     }
 
     //锁屏

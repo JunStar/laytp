@@ -23,12 +23,23 @@ layui.use(['layTp'],function() {
             , where: where
             , even: true
             , method: 'GET'
-            , cellMinWidth: 320
+            // , cellMinWidth: 180
             , page: true
             , cols: [[
-                {field:'name',title:'插件名称',align:'center'}
-                ,{field:'description',title:'简介',align:'center'}
-                ,{field:'operation',title:'操作',align:'center',toolbar:'#operation',width:100}
+                {field:'name',title:'插件名称',align:'center',width:180}
+                ,{field:'description',title:'简介',align:'center',width:180}
+                ,{field:'author',title:'作者',align:'center',width:100}
+                ,{field:'price',title:'价格',align:'center',width:100,templet:function(d){
+                    if(d.charge_status == 1){
+                        return '<text style="color: red;">￥' + d.price + '</text>';
+                    }else{
+                        return '<text style="color: green">免费</text>';
+                    }
+                }}
+                ,{field:'download_num',title:'下载',align:'center',width:100}
+                ,{field:'latest_version',title:'最新版本',align:'center',width:100}
+                ,{field:'status',title:'状态',align:'center',width:100}
+                ,{field:'operation',title:'操作',align:'center',toolbar:'#operation',width:380}
             ]]
         });
 
@@ -60,10 +71,5 @@ layui.use(['layTp'],function() {
             layui.form.render('select');
             $('[lay-submit]').click();
         });
-        // layui.each($(".charge_status"),function(key,item){
-        //     let field_val = $(item).attr('field_val');
-        //     console.log(field_val);
-        // });
-        // func_controller.table_render();
     });
 });
