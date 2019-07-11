@@ -1,3 +1,3 @@
-<select name="row[{%field_name%}]" lay-verify="{%verify%}" lay-verType="tips" placeholder="请选择{%field_comment%}">
+<select name="row[{%field_name%}]" id="{%field_name%}" lay-verify="{%verify%}" lay-verType="tips" placeholder="请选择{%field_comment%}">
 {%options%}
             </select>

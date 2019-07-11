@@ -1,6 +1,7 @@
 <?php
 namespace app\admin\controller;
 
+use library\DirFile;
 use think\Controller;
 use think\Db;
 use think\Exception;
@@ -59,15 +60,15 @@ class Ajax extends Controller
     public function clear_cache(){
         $dir_cache = Env::get("root_path"). 'runtime' . DS . 'cache';
         if(is_dir($dir_cache)){
-            deldir($dir_cache);
+            DirFile::deldir($dir_cache);
         }
         $dir_log = Env::get("root_path"). 'runtime' . DS . 'log';
         if(is_dir($dir_log)){
-            deldir($dir_log);
+            DirFile::deldir($dir_log);
         }
         $dir_temp = Env::get("root_path"). 'runtime' . DS . 'temp';
         if(is_dir($dir_temp)){
-            deldir($dir_temp);
+            DirFile::deldir($dir_temp);
         }
         $this->success('操作成功');
     }

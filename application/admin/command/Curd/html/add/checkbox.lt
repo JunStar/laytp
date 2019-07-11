@@ -1,1 +1,1 @@
-<input type="checkbox" name="row[{%field_name%}][]" value="{%value%}" title="{%text%}" {%checked%}/>
+<input type="checkbox" name="row[{%field_name%}][]" id="{%field_name%}-{%value%}" value="{%value%}" title="{%text%}" {%checked%}/>

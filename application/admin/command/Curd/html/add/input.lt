@@ -1,1 +1,1 @@
-<input type="text" name="row[{%field_name%}]" placeholder="请输入{%field_comment%}" class="layui-input" lay-verify="{%verify%}" lay-verType="tips">
+<input type="text" name="row[{%field_name%}]" id="{%field_name%}" placeholder="请输入{%field_comment%}" class="layui-input" lay-verify="{%verify%}" lay-verType="tips">

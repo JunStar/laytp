@@ -91,9 +91,17 @@ layui.define([
 
         //组装成url
         url: function(path, params){
-            if( typeof params !== 'undefined' ){
+            let count = 0;
+            for(k in params){
+                if(params.hasOwnProperty(k)){
+                    count++;
+                }
+            }
+            path = path.replace('\.html','');
+            if( typeof params !== 'undefined' && count > 0 ){
                 params = $.param(params);
-                params = params.replace('=','/');
+                let reg = new RegExp('=','g');
+                params = params.replace(reg,'/');
                 params = params.replace('&','/');
                 params = '/' + params;
             }else{
@@ -524,6 +532,7 @@ layui.define([
          *  data-open弹窗展示的url地址
          *  data-width属性为弹窗的宽度百分比
          *  data-height属性为弹窗的高度百分比
+         *  data-current_node_val属性为当前节点名称，多个以逗号隔开，有这个值的话，会获取这些节点的值，拼接到url中
          */
         popup_frame: function(){
             $(document).on('click','.popup-frame',function(){
@@ -531,13 +540,31 @@ layui.define([
                 let url = $(this).data("open");
                 let width = $(this).data("width");
                 let height = $(this).data("height");
+                let current_node_val = $(this).data("current_node_val");
+                let params = {};
+                if(current_node_val){
+                    let label_title = '';
+                    let arr_current_node_val = current_node_val.split(',');
+                    for(key in arr_current_node_val){
+                        if(!$('#'+arr_current_node_val[key]).val()){
+                            label_title = $('#'+arr_current_node_val[key]).parent().parent().find('label').attr('title');
+                            if( !label_title ){
+                                label_title = $('#'+arr_current_node_val[key]).parent().parent().parent().find('label').attr('title');
+                            }
+                            layTp.facade.error('请输入' + label_title);
+                            return false;
+                        }else{
+                            params[arr_current_node_val[key]] = $('#'+arr_current_node_val[key]).val();
+                        }
+                    }
+                }
                 if( !width ){
                     width = default_popup_frame_width;
                 }
                 if( !height ){
                     height = default_popup_frame_height;
                 }
-                layTp.facade.popup_frame(name, url, width, height);
+                layTp.facade.popup_frame(name, layTp.facade.url(url, params), width, height);
             });
         },
 

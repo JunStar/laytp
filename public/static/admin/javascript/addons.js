@@ -26,7 +26,7 @@ layui.use(['layTp'],function() {
             // , cellMinWidth: 180
             , page: true
             , cols: [[
-                {field:'name',title:'插件名称',align:'center',width:180}
+                {field:'title',title:'插件名称',align:'center',width:180}
                 ,{field:'description',title:'简介',align:'center',width:180}
                 ,{field:'author',title:'作者',align:'center',width:100}
                 ,{field:'price',title:'价格',align:'center',width:100,templet:function(d){

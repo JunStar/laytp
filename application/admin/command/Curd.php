@@ -789,7 +789,13 @@ EOD;
         $this->write_to_file($this->htmlIndexParam['tpl_name'], $this->htmlIndexParam['data'], $this->htmlIndexParam['c_file_name']);
         $this->write_to_file($this->htmlAddParam['tpl_name'], $this->htmlAddParam['data'], $this->htmlAddParam['c_file_name']);
         $this->write_to_file($this->htmlEditParam['tpl_name'], $this->htmlEditParam['data'], $this->htmlEditParam['c_file_name']);
-        $this->write_to_file($this->htmlRecycleParam['tpl_name'], $this->htmlRecycleParam['data'], $this->htmlRecycleParam['c_file_name']);
+        //是否拥有软删除功能
+        foreach($this->curd_config['global']['all_fields'] as $k=>$v){
+            if($v['field_name'] == 'delete_time'){
+                $this->write_to_file($this->htmlRecycleParam['tpl_name'], $this->htmlRecycleParam['data'], $this->htmlRecycleParam['c_file_name']);
+                break;
+            }
+        }
     }
 
     /**
