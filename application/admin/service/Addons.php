@@ -34,7 +34,7 @@ class Addons
                 'X-REQUESTED-WITH: XMLHttpRequest'
             ]
         ];
-        $ret = Http::sendRequest(self::getServerUrl() . '/addon/download', array_merge(['name' => $name], $extend), 'GET', $options);
+        $ret = Http::sendRequest(self::getServerUrl() . '/addons/download', array_merge(['name' => $name], $extend), 'GET', $options);
         if ($ret['ret']) {
             if (substr($ret['msg'], 0, 1) == '{') {
                 $json = (array)json_decode($ret['msg'], true);

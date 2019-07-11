@@ -39,7 +39,29 @@ layui.use(['layTp'],function() {
                 ,{field:'download_num',title:'下载',align:'center',width:100}
                 ,{field:'latest_version',title:'最新版本',align:'center',width:100}
                 ,{field:'status',title:'状态',align:'center',width:100}
-                ,{field:'operation',title:'操作',align:'center',toolbar:'#operation',width:380}
+                ,{field:'operation',title:'操作',align:'center',width:380,templet:function(d){
+                    console.log(d.multi_version);
+                    let operation_html = '';
+                    layui.laytpl($('#operation').html()).render(d, function(html){
+                        operation_html = html;
+                    });
+                    let options = [];
+                    for(k in d.multi_version){
+                        options[k] = {};
+                        options[k].action = "install";
+                        options[k]['title'] = d.multi_version[k]['version_num'];
+                        options[k]['uri'] = layTp.facade.url(module + "/" + controller + "/install");
+                        options[k]['switch_type'] = "confirm_action";
+                        options[k]['need_data'] = false;
+                    }
+
+                    //批量操作渲染
+                    layui.dropdown.render({
+                        elem: '.version_list_'+d.id,
+                        options: options
+                    });
+                    return operation_html;
+                }}
             ]]
         });
 
