@@ -82,32 +82,35 @@ class Addons extends Services
      */
     public static function install($name, $force = false, $extend = [])
     {
-        $addons_path = Env::get('root_path') . DS . 'addons' . DS;
-        if (!$name || (is_dir($addons_path . $name) && !$force)) {
-            return parent::error('插件已经存在');
-        }
-
-        // 远程下载插件
-        $tmpFile = Addons::download($name, $extend);
-        if(!$tmpFile['code']){
-            return parent::error('插件下载失败');
-        }
-
-        // 解压插件
-        $addonDir = Addons::unzip($name);
-
-        // 移除临时文件
-        @unlink($tmpFile);
+//        $addons_path = Env::get('root_path') . DS . 'addons' . DS;
+//        if (!$name || (is_dir($addons_path . $name) && !$force)) {
+//            return parent::error('插件已经存在');
+//        }
+//
+//        // 远程下载插件
+//        $tmpFile = Addons::download($name, $extend);
+//        if(!$tmpFile['code']){
+//            return parent::error('插件下载失败');
+//        }
+//
+//        // 解压插件
+//        $addonDir = Addons::unzip($name);
+//
+//        // 移除临时文件
+//        @unlink($tmpFile['data']);
 
         $checkRes = Addons::check($name);
         if(!$checkRes['code']){
-            @DirFile::rmDirs($addonDir);
+//            @DirFile::rmDirs($addonDir);
             return parent::error($checkRes['msg']);
         }
 
         if (!$force) {
             Services::noconflict($name);
         }
+
+
+        $addonDir = Env::get('root_path') . 'addons' . DS . $name . DS;
 
         // 复制文件
         $sourceAssetsDir = self::getSourceAssetsDir($name);
@@ -131,10 +134,8 @@ class Addons extends Services
 
             // 执行安装脚本
             $class = self::get_addon_class($name);
-            dump($class);
             if (class_exists($class)) {
                 $addon = new $class();
-                dump($addon);
                 $addon->install();
             }else{
                 return parent::error("{$name}类不存在");
@@ -263,7 +264,6 @@ class Addons extends Services
         if (!$addonClass) {
             return parent::error('插件主启动程序不存在');
         }
-//        Loader::addAutoLoadDir(Env::get('root_path') . 'addons');
         include_once(Env::get('root_path') . 'addons' . DS . $name . DS . ucfirst($name) . '.php');
         $addon = new $addonClass();
         if (!$addon->checkInfo()) {
@@ -359,7 +359,7 @@ class Addons extends Services
      */
     public static function get_addon_class($name, $type = 'hook', $class = null)
     {
-        $class_name = "addons\\" . $name . "\\" . ucfirst($name);
+        $class_name = "addons\\" . ucfirst($name);
         return $class_name;
         $name = Loader::parseName($name);
         // 处理多级控制器情况

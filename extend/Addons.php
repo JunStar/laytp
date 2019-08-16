@@ -3,12 +3,34 @@
  * Addons基类
  */
 
-namespace controller;
-
 use think\facade\Config;
+use think\facade\Env;
 
 class Addons
 {
+    // 插件目录
+    public $addons_path = '';
+    // 插件信息作用域
+    protected $infoRange = 'addon_info';
+    // 插件配置作用域
+    protected $configRange = 'addon_config';
+
+    /**
+     * 析构函数
+     * @access public
+     */
+    public function __construct()
+    {
+        $name = $this->getName();
+        // 获取当前插件目录
+        $this->addons_path = Env::get('root_path') . 'addons' . DS . $name . DS;
+
+        // 插件初始化
+        if (method_exists($this, '_initialize')) {
+            $this->_initialize();
+        }
+    }
+
     /**
      * 检查基础配置信息是否完整
      * @return bool
@@ -35,16 +57,20 @@ class Addons
         if (empty($name)) {
             $name = $this->getName();
         }
-        $info = Config::get($name, $this->infoRange);
+        $info_key = $this->infoRange. '.' .$name;
+        $info = Config::get($info_key);
         if ($info) {
             return $info;
         }
         $info_file = $this->addons_path . 'info.ini';
+        dump($info_file);
         if (is_file($info_file)) {
-            $info = Config::parse($info_file, '', $name, $this->infoRange);
-            $info['url'] = addon_url($name);
+            $config = new \think\Config();
+            $info = $config->parse($info_file, '', $info_key);
+            dump($info);
+//            $info['url'] = addon_url($name);
         }
-        Config::set($name, $info, $this->infoRange);
+        Config::set($info_key, $info);
 
         return $info ? $info : [];
     }
