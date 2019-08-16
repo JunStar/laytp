@@ -48,18 +48,20 @@ audio{
 }
 
 /**
- * layer美化
- * 隐藏layer的阴影
+layer美化，laytp-layer
  */
-body .hide-layer-box-shadow{
+/**
+ * laytp-layer 隐藏layer的阴影
+ */
+body .laytp-layer{
     /*background-color: transparent;!*背景透明*!*/
     box-shadow: 0 0 0 rgba(0,0,0,0);/*前景无阴影*/
 }
 
 /**
- * layui-layer-btn
+ * laytp-layer layui-layer-btn
  */
-body .layui-layer-btn{
+body .laytp-layer .layui-layer-btn{
     padding: 0 0 0 0;
 }
 

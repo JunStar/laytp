@@ -24,19 +24,19 @@
         </div>
         <div class="layui-form-item">
             <div class="layui-input-block">
-                <a class="layui-btn layui-btn-normal" id="submit_btn">确 定</a>
-                <text style="color:red;display: none;" id="status">密码错误</text>
+                <a class="layui-btn layui-btn-normal" lay-submit lay-filter="unlock_screen" id="unlock_screen">确 定</a>
             </div>
         </div>
     </form>
 </div>
-<script type="text/javascript" src="__STATIC__/library/jquery_3.3.1.js" charset="utf-8"></script>
+<script type="text/javascript" src="__STATIC__/library/layui/layui.js" charset="utf-8"></script>
 <script>
-    $(document).ready(function(){
-        $(document).on('click','#submit_btn',function(){
+    layui.use(['jquery','form'],function(){
+        const $ = layui.jquery;
+        layui.form.on('submit(unlock_screen)', function(data){
             let password = $('#password').val();
             if(!password){
-                $('#status').show();
+                layui.layer.msg('密码不能为空',{icon:2});
                 return false;
             }
             $.post('',{password:password},function(res){
@@ -44,10 +44,19 @@
                     localStorage.removeItem('laytp_lock_screen');
                     parent.location.reload();
                 }else{
-                    $('#status').show();
+                    layui.layer.msg(res.msg,{icon:2});
                 }
             });
+            return false;
         });
+
+        document.onkeydown = function (e) {
+            e = e ? e : event;// 兼容FF
+            if (e.keyCode == 13) {
+                $("#unlock_screen").click();//提交按钮的id
+                return false;//防止页面跳转刷新掉
+            }
+        }
     });
 </script>
 </body>

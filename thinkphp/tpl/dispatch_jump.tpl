@@ -77,7 +77,14 @@ $langSet == 'en' && $lang = array_combine(array_keys($lang), array_keys($lang));
 <body class="error-page-wrapper">
 <div class="content-container">
     <div class="head-line">
-        <img src="/static/admin/image/error.svg" alt="" width="120"/>
+        <?php switch ($code) {?>
+        <?php case 1:?>
+        <p class="success"><img src="/static/admin/image/success.svg" alt="" width="120"/></p>
+        <?php break;?>
+        <?php case 0:?>
+        <p class="error"><img src="/static/admin/image/error.svg" alt="" width="120"/></p>
+        <?php break;?>
+        <?php } ?>
     </div>
     <div class="subheader">
         <?=$debug?$msg:$lang['The page you are looking for is temporarily unavailable']?>

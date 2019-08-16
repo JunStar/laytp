@@ -20,8 +20,13 @@ class Addons extends Backend
             throw new HttpResponseException($response);
         }
         $res = json_decode( request_by_curl($get_data_ajax_url), true );
-        $assign['category'] = $res['data']['category'];
-        $assign['list'] = $res['data']['list'];
+        if(!$res['code']){
+            $assign['category'] = [];
+            $assign['list'] = [];
+        }else{
+            $assign['category'] = $res['data']['category'];
+            $assign['list'] = $res['data']['list'];
+        }
         $this->assign($assign);
         return $this->fetch();
     }
@@ -31,29 +36,31 @@ class Addons extends Backend
      */
     public function install()
     {
-        $name = $this->request->post("name");
-        $force = (int)$this->request->post("force");
+        $name = $this->request->param("name");
+        $force = (int)$this->request->param("force");
         if (!$name) {
-            $this->error(__('Parameter %s can not be empty', 'name'));
+            $this->error('参数name不能为空');
         }
         try {
-            $uid = $this->request->post("uid");
-            $token = $this->request->post("token");
-            $version = $this->request->post("version");
+            $uid = $this->request->param("uid");
+            $token = $this->request->param("token");
+            $version = $this->request->param("version");
             $extend = [
                 'uid'       => $uid,
                 'token'     => $token,
                 'version'   => $version
             ];
-            \app\admin\service\Addons::install($name, $force, $extend);
-            $info = get_addon_info($name);
-            $info['config'] = get_addon_config($name) ? 1 : 0;
-            $info['state'] = 1;
-            $this->success('安装成功', null, ['addon' => $info]);
-        } catch (AddonException $e) {
-            $this->result($e->getData(), $e->getCode(), __($e->getMessage()));
+            $installRes = \app\admin\services\Addons::install($name, $force, $extend);
+            if($installRes['code']){
+                $info = \app\admin\services\Addons::get_addon_info($name);
+                $info['config'] = \app\admin\services\Addons::get_addon_config($name) ? 1 : 0;
+                $info['state'] = 1;
+                $this->success('安装成功', ['addon' => $info]);
+            }else{
+                $this->error($installRes['msg']);
+            }
         } catch (Exception $e) {
-            $this->error(__($e->getMessage()), $e->getCode());
+            $this->error($e->getMessage(), $e->getCode());
         }
     }
 }

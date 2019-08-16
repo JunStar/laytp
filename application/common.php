@@ -63,7 +63,7 @@ function exec_command($command_class_name, $argv=[]){
  * @param $result
  * @return bool
  */
-function checkRes($result){
+function check_res($result){
     foreach($result as $v){
         if(!$v){
             return false;

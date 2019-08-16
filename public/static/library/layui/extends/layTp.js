@@ -132,7 +132,7 @@ layui.define([
                 btn: [],//不加这个，全屏高度不会变化
                 shade: shade,
                 maxmin:true,
-                skin:'hide-layer-box-shadow',
+                skin:'laytp-layer',
                 success: function(layero, index){
                     layTp.facade.after_popup_frame(layero,index);
                 }

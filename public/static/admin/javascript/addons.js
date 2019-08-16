@@ -40,7 +40,6 @@ layui.use(['layTp'],function() {
                 ,{field:'latest_version',title:'最新版本',align:'center',width:100}
                 ,{field:'status',title:'状态',align:'center',width:100}
                 ,{field:'operation',title:'操作',align:'center',width:380,templet:function(d){
-                    console.log(d.multi_version);
                     let operation_html = '';
                     layui.laytpl($('#operation').html()).render(d, function(html){
                         operation_html = html;
@@ -49,10 +48,11 @@ layui.use(['layTp'],function() {
                     for(k in d.multi_version){
                         options[k] = {};
                         options[k].action = "install";
-                        options[k]['title'] = d.multi_version[k]['version_num'];
-                        options[k]['uri'] = layTp.facade.url(module + "/" + controller + "/install");
-                        options[k]['switch_type'] = "confirm_action";
-                        options[k]['need_data'] = false;
+                        options[k].title = '安装' + d.multi_version[k]['version_num'];
+                        options[k].switch_type = "confirm_action";
+                        options[k].need_data = false;
+                        options[k].uri = layTp.facade.url(module + "/" + controller + "/install",{"version":d.multi_version[k]['version_num'],"name":d.name});
+                        // options[k].switch_type = "confirm_action";
                     }
 
                     //批量操作渲染

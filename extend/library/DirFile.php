@@ -4,6 +4,8 @@ namespace library;
 
 use DateTime;
 use DateTimeZone;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
 
 /**
  * 文件夹和文件处理类
@@ -97,30 +99,55 @@ class DirFile{
     }
 
     /**
-     * 删除目录
-     * @param $dir
-     * @return bool
+     * 删除文件夹
+     * @param string $dirname  目录
+     * @param bool   $withself 是否删除自身
+     * @return boolean
      */
-    public static function delDir($dir){
-        //先删除目录下的文件：
-        $dh=opendir($dir);
-        while ($file=readdir($dh)) {
-            if($file!="." && $file!="..") {
-                $fullpath=$dir."/".$file;
-                if(!is_dir($fullpath)) {
-                    unlink($fullpath);
-                } else {
-                    delDir($fullpath);
-                }
-            }
-        }
-
-        closedir($dh);
-        //删除当前文件夹：
-        if(rmdir($dir)) {
-            return true;
-        } else {
+    public static function rmDirs($dirname, $withself = true)
+    {
+        if (!is_dir($dirname)) {
             return false;
+        }
+        $files = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($dirname, RecursiveDirectoryIterator::SKIP_DOTS),
+            RecursiveIteratorIterator::CHILD_FIRST
+        );
+
+        foreach ($files as $fileinfo) {
+            $todo = ($fileinfo->isDir() ? 'rmdir' : 'unlink');
+            $todo($fileinfo->getRealPath());
+        }
+        if ($withself) {
+            @rmdir($dirname);
+        }
+        return true;
+    }
+
+    /**
+     * 复制文件夹
+     * @param string $source 源文件夹
+     * @param string $dest   目标文件夹
+     */
+    public static function copyDirs($source, $dest)
+    {
+        if (!is_dir($dest)) {
+            mkdir($dest, 0755, true);
+        }
+        foreach (
+            $iterator = new RecursiveIteratorIterator(
+                new RecursiveDirectoryIterator($source, RecursiveDirectoryIterator::SKIP_DOTS),
+                RecursiveIteratorIterator::SELF_FIRST
+            ) as $item
+        ) {
+            if ($item->isDir()) {
+                $sontDir = $dest . DS . $iterator->getSubPathName();
+                if (!is_dir($sontDir)) {
+                    mkdir($sontDir, 0755, true);
+                }
+            } else {
+                copy($item, $dest . DS . $iterator->getSubPathName());
+            }
         }
     }
 }

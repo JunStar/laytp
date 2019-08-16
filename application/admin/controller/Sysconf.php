@@ -103,7 +103,7 @@ class Sysconf extends Backend
                     $result[] = true;
                 }
             }
-            if(checkRes($result)){
+            if(check_res($result)){
                 Db::commit();
                 $update_config = $this->update_config();
                 if( $update_config['code'] == 1 ){
