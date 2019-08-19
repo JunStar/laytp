@@ -1,10 +1,8 @@
 <?php
 /**
- * FastAdmin安装程序
+ * LayTp安装程序
  *
  * 安装完成后建议删除此文件
- * @author Karson
- * @website https://www.fastadmin.net
  */
 // error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 // ini_set('display_errors', '1');
@@ -122,7 +120,7 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
         if (!$sql) {
             throw new Exception("无法读取application/admin/command/Install/laytp.sql文件，请检查是否有读权限");
         }
-        $sql = str_replace("`fa_", "`{$mysqlPrefix}", $sql);
+        $sql = str_replace("`lt_", "`{$mysqlPrefix}", $sql);
         $pdo = new PDO("mysql:host={$mysqlHostname};port={$mysqlHostport}", $mysqlUsername, $mysqlPassword, array(
             PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
             PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"
