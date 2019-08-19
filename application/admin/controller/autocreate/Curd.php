@@ -14,6 +14,8 @@ class Curd extends Backend
 
     protected $special_fields;
 
+    public $no_need_auth = ['get_table_list','get_curd_info','get_fields_by_table_name','get_fields_with_pk_by_table_name'];
+
     public function initialize(){
         $this->special_fields = Config::get('curd.special_fields');
         parent::initialize();
@@ -31,20 +33,6 @@ class Curd extends Backend
                 ->paginate($limit)
                 ->toArray();
             return layui_table_page_data($data);
-        }
-        return $this->fetch();
-    }
-
-    //添加
-    public function add()
-    {
-        if( $this->request->isAjax() && $this->request->isPost() ){
-            $post = $this->request->post("row/a");
-            if( $this->model->addData($post) ){
-                return $this->success('操作成功');
-            }else{
-                return $this->error('操作失败');
-            }
         }
         return $this->fetch();
     }
@@ -170,32 +158,18 @@ class Curd extends Backend
         $model = Db::table($table);
         $fields = $model->getTableFields();
         $pk = $model->getPk();
-        $fields = array_diff($fields, [$pk]);
+        $fields = array_diff($fields,[$pk]);
         $this->success('获取成功', $fields);
     }
 
-    //重新生成Curd
-    public function re_create(){
-        $id = $this->request->param('id');
-        $exec_res = exec_command('app\admin\command\Curd',['--id='.$id]);
-        if($exec_res['code']){
-            $this->success($exec_res['msg']);
-        }else{
-            $this->error($exec_res['msg']);
+    public function get_fields_with_pk_by_table_name(){
+        $table = $this->request->param('table_name');
+        if(!$table){
+            $this->error('请选择表名',[]);
         }
-    }
-
-    //设置字段信息
-    public function set_fields(){
-        if( $this->request->isAjax() && $this->request->isPost() ){
-            $post = $this->request->post("row/a");
-            if( $this->model->setFields($post) ){
-                return $this->success('操作成功');
-            }else{
-                return $this->error('操作失败');
-            }
-        }
-        return $this->fetch();
+        $model = Db::table($table);
+        $fields = $model->getTableFields();
+        $this->success('获取成功', $fields);
     }
 
     //删除

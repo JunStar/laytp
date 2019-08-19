@@ -38,7 +38,9 @@ layui.use(['layTp'],function() {
                 }}
                 ,{field:'download_num',title:'下载',align:'center',width:100}
                 ,{field:'latest_version',title:'最新版本',align:'center',width:100}
-                ,{field:'status',title:'状态',align:'center',width:100}
+                ,{field:'status',title:'状态',align:'center',width:100,templet:function(d){
+                    return layTp.facade.formatter.switch('status',d,{"open":{"value":1,"text":"开启"},"close":{"value":0,"text":"关闭"}});
+                }}
                 ,{field:'operation',title:'操作',align:'center',width:380,templet:function(d){
                     let operation_html = '';
                     layui.laytpl($('#operation').html()).render(d, function(html){
@@ -52,7 +54,6 @@ layui.use(['layTp'],function() {
                         options[k].switch_type = "confirm_action";
                         options[k].need_data = false;
                         options[k].uri = layTp.facade.url(module + "/" + controller + "/install",{"version":d.multi_version[k]['version_num'],"name":d.name});
-                        // options[k].switch_type = "confirm_action";
                     }
 
                     //批量操作渲染

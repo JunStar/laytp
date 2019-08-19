@@ -106,34 +106,29 @@ class Addons extends Services
         }
 
         if (!$force) {
-            Services::noconflict($name);
+//            Services::noconflict($name);
         }
 
 
         $addonDir = Env::get('root_path') . 'addons' . DS . $name . DS;
 
         // 复制文件
-        $sourceAssetsDir = self::getSourceAssetsDir($name);
-        $destAssetsDir = self::getDestAssetsDir($name);
-        if (is_dir($sourceAssetsDir)) {
-            DirFile::copyDirs($sourceAssetsDir, $destAssetsDir);
-        }
         foreach (self::getCheckDirs() as $k => $dir) {
             if (is_dir($addonDir . $dir)) {
-                DirFile::copyDirs($addonDir . $dir, ROOT_PATH . $dir);
+                DirFile::copyDirs($addonDir . $dir, Env::get('root_path') . $dir);
             }
         }
 
         try {
             // 默认启用该插件
-            $info = self::get_addon_info($name);
+            $info = self::getAddonInfo($name);
             if (!$info['state']) {
                 $info['state'] = 1;
-                self::set_addon_info($name, $info);
+                self::setAddonInfo($name, $info);
             }
 
             // 执行安装脚本
-            $class = self::get_addon_class($name);
+            $class = self::getAddonClass($name);
             if (class_exists($class)) {
                 $addon = new $class();
                 $addon->install();
@@ -144,10 +139,10 @@ class Addons extends Services
             return parent::error($e->getMessage());
         }
 
-        // 导入
-        Services::importsql($name);
+        // 导入sql文件
+        Services::importSql($name);
 
-        // 刷新
+        // 刷新插件列表
         Services::refresh();
         return parent::success('成功');
     }
@@ -158,7 +153,8 @@ class Addons extends Services
      */
     protected static function getServerUrl()
     {
-        return config('addons.api_url');
+
+        return Config::get('addons.api_url');
     }
 
     /**
@@ -168,7 +164,7 @@ class Addons extends Services
      * @return  boolean
      * @throws  AddonException
      */
-    public static function noconflict($name)
+    public static function noConflict($name)
     {
         // 检测冲突文件
         $list = self::getGlobalFiles($name, true);
@@ -260,7 +256,7 @@ class Addons extends Services
         if (!$name || !is_dir(Env::get('root_path') . 'addons' . DS . $name)) {
             return parent::error('插件不存在');
         }
-        $addonClass = Addons::get_addon_class($name);
+        $addonClass = Addons::getAddonClass($name);
         if (!$addonClass) {
             return parent::error('插件主启动程序不存在');
         }
@@ -289,9 +285,9 @@ class Addons extends Services
      * @param string $name 插件名
      * @return array
      */
-    public static function get_addon_info($name)
+    public static function getAddonInfo($name)
     {
-        $addon = self::get_addon_instance($name);
+        $addon = self::getAddonInstance($name);
         if (!$addon) {
             return [];
         }
@@ -305,10 +301,10 @@ class Addons extends Services
      * @return boolean
      * @throws Exception
      */
-    public static function set_addon_info($name, $array)
+    public static function setAddonInfo($name, $array)
     {
         $file = ADDON_PATH . $name . DIRECTORY_SEPARATOR . 'info.ini';
-        $addon = self::get_addon_instance($name);
+        $addon = self::getAddonInstance($name);
         $array = $addon->setInfo($name, $array);
         $res = array();
         foreach ($array as $key => $val) {
@@ -335,13 +331,13 @@ class Addons extends Services
      * @param $name
      * @return mixed|null
      */
-    public static function get_addon_instance($name)
+    public static function getAddonInstance($name)
     {
         static $_addons = [];
         if (isset($_addons[$name])) {
             return $_addons[$name];
         }
-        $class = self::get_addon_class($name);
+        $class = self::getAddonClass($name);
         if (class_exists($class)) {
             $_addons[$name] = new $class();
             return $_addons[$name];
@@ -357,7 +353,7 @@ class Addons extends Services
      * @param string $class 当前类名
      * @return string
      */
-    public static function get_addon_class($name, $type = 'hook', $class = null)
+    public static function getAddonClass($name, $type = 'hook', $class = null)
     {
         $class_name = "addons\\" . ucfirst($name);
         return $class_name;
@@ -378,7 +374,6 @@ class Addons extends Services
             default:
                 $namespace = "addons\\" . $name . "\\" . $class;
         }
-        dump($namespace);
         return class_exists($namespace) ? $namespace : '';
     }
 
@@ -387,9 +382,9 @@ class Addons extends Services
      * @param string $name 插件名
      * @return array
      */
-    public static function get_addon_config($name)
+    public static function getAddonConfig($name)
     {
-        $addon = self::get_addon_instance($name);
+        $addon = self::getAddonInstance($name);
         if (!$addon) {
             return [];
         }

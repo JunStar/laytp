@@ -63,11 +63,9 @@ class Addons
             return $info;
         }
         $info_file = $this->addons_path . 'info.ini';
-        dump($info_file);
         if (is_file($info_file)) {
             $config = new \think\Config();
             $info = $config->parse($info_file, '', $info_key);
-            dump($info);
 //            $info['url'] = addon_url($name);
         }
         Config::set($info_key, $info);

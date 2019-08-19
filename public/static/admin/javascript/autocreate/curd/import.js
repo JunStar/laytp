@@ -119,6 +119,7 @@ layui.use(['layTp'],function(){
                             ,field: {idName:'field_name',titleName:'field_name'}
                             ,selected: selected_data
                             ,click_dd_after: function(){
+                                //选中和取消选中字段绑定的事件
                                 let select_fields = $('input[name="select_fields"]').val();
                                 let select_fields_arr = select_fields.split(',');
                                 let table_render_data = [];
@@ -267,7 +268,7 @@ layui.use(['layTp'],function(){
             //显示的字段
             $.ajax({
                 type: 'GET',
-                url: layTp.facade.url('admin/autocreate.curd/get_fields_by_table_name'),
+                url: layTp.facade.url('admin/autocreate.curd/get_fields_with_pk_by_table_name'),
                 data: {table_name:select_relation_table},
                 dataType: 'json',
                 success: function (res) {

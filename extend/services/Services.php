@@ -7,7 +7,9 @@ namespace services;
 
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
+use think\Db;
 use think\Exception;
+use think\facade\Config;
 use think\facade\Env;
 
 class Services
@@ -100,5 +102,37 @@ class Services
             'application',
             'public'
         ];
+    }
+
+    /**
+     * 导入SQL
+     *
+     * @param   string $name 插件名称
+     * @return  boolean
+     */
+    public static function importSql($name)
+    {
+        $sqlFile = Env::get('root_path') . DS . 'addons' . DS . $name . DS . 'install.sql';
+        if (is_file($sqlFile)) {
+            $lines = file($sqlFile);
+            $templine = '';
+            foreach ($lines as $line) {
+                if (substr($line, 0, 2) == '--' || $line == '' || substr($line, 0, 2) == '/*')
+                    continue;
+
+                $templine .= $line;
+                if (substr(trim($line), -1, 1) == ';') {
+                    $templine = str_ireplace('__PREFIX__', Config::get('database.prefix'), $templine);
+                    $templine = str_ireplace('INSERT INTO ', 'INSERT IGNORE INTO ', $templine);
+                    try {
+                        Db::execute($templine);
+                    } catch (\PDOException $e) {
+//                        $e->getMessage();
+                    }
+                    $templine = '';
+                }
+            }
+        }
+        return true;
     }
 }
