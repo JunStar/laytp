@@ -11,11 +11,11 @@
         <td>
             <select name="select_table[]">
                 <option value="belongsTo">belongsTo</option>
-                <option value="hasone">hasOne</option>
+                <option value="hasOne">hasOne</option>
             </select>
         </td>
         <td>
-            <select name="select_relation_primary_key[]" lay-filter="select_relation_primary_key">
+            <select name="select_relation_foreign_key[]" lay-filter="select_relation_foreign_key">
                 {{#  layui.each(d.select_table_fields, function(index, item){ }}
                 <option value="{{ item }}" {{#  if(d.selected_relation_foreign_key == item){ }}selected="selected"{{#  } }}>{{ item }}</option>
                 {{#  }); }}

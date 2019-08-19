@@ -203,7 +203,13 @@ class Curd extends Command
         array_shift($arr_table);//del_db_prefix
         array_pop($arr_table);
         if(count($arr_table)){
-            $str_table = implode(DS, $arr_table) . '\\' . $basename;
+            //auth.user模型特殊处理
+            $str_table_temp = implode('',$arr_table);
+            if($str_table_temp == 'admin' && $basename == 'User'){
+                $str_table = 'auth\\'.$basename;
+            }else{
+                $str_table = implode(DS, $arr_table) . '\\' . $basename;
+            }
         }else{
             $str_table = $basename;
         }
@@ -589,6 +595,8 @@ class Curd extends Command
                 if($v['field_show_edit']){
                     $select_relation_edit_html[$v['form_type']][$v['form_additional']['group_name']][] = $this->get_form_item($v,'edit');
                 }
+            }else if( in_array( $v['form_type'], ['admin_id'] ) ){
+                $add_data[] = $this->get_form_item($v,'add');
             }else{
                 if($v['field_show_add']){
                     $add_item_content = $this->get_form_item($v,'add');
@@ -707,7 +715,7 @@ EOD;
         }else{
             $this->controllerParam['data']['arrayConstAssign'] = '';
         }
-        
+
         //是否拥有删除功能
         if(isset($this->curd_config['global']['hide_del']) && $this->curd_config['global']['hide_del']){
             $this->controllerParam['data']['has_del'] = "\n\tpublic \$has_del=0;//是否拥有删除功能";
@@ -802,6 +810,33 @@ EOD;
      * 接下来是html的各种控件模板内容生成，比如input、select、upload等等
      */
 
+    /**
+     * admin_id类型模板
+     * @param $info
+     * @param $type
+     * @return string
+     */
+    protected function get_admin_id_html($info,$type){
+        $name = 'html' . DS . $type . DS . 'admin_id';
+        $data['field_name'] = $info['field_name'];
+        $data['field_comment'] = $info['field_comment'];
+        if(!$info['form_empty']){
+            $data['verify'] = $data['verify'] ? 'required|'.$data['verify'] : 'required';
+        }
+        return $this->get_replaced_tpl($name, $data);
+    }
+
+    /**
+     * admin_id类型模板
+     * @param $info
+     * @return string
+     */
+    protected function get_search_admin_id_html($info){
+        $name = 'html' . DS . 'search' . DS . 'admin_id';
+        $data['field_name'] = $info['field_name'];
+        $data['field_comment'] = $info['field_comment'];
+        return $this->get_replaced_tpl($name, $data);
+    }
 
     /**
      * 获取input需要生成的html，在生成add和edit表单的时候可以用到
@@ -1193,7 +1228,7 @@ EOD;
         if($info['form_additional']['accept'] == 'images'){
             if($type == 'add'){
                 $data['preview'] = "\n\t\t\t\t".
-                '<div class="pic-more">
+                    '<div class="pic-more">
                     <ul class="pic-more-upload-list" id="preview_'.$info['field_name'].'"></ul>
                 </div>';
             }else{
