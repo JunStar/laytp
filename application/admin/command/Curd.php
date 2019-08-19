@@ -467,7 +467,7 @@ class Curd extends Command
             }
             $cols .= $temp;
         }
-        $temp = "\t\t\t\t,{field:'operation',title:'操作',align:'center',toolbar:'#operation',width:100}";
+        $temp = "\t\t\t\t,{field:'operation',title:'操作',align:'center',toolbar:'#operation',width:100,fixed:'right'}";
         $cols .= $temp;
         if(isset($this->curd_config['global']['hide_del']) && $this->curd_config['global']['hide_del']){
             $data['batch_del'] = "";
