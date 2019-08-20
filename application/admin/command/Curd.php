@@ -529,7 +529,7 @@ class Curd extends Command
         $index_data['jsFileName'] = strtolower(strtolower($this->mid_name));
 
         $index_search_form = [];
-        $search_fields = explode(',', $this->curd_config['global']['search_fields']);
+        $search_fields = explode(',', $this->curd_config['global']['show_fields']);
         $select_relation_search_html = [];
         $un_search_type = ['password','upload'];
         foreach($this->curd_config['field_list'] as $k=>$v){
