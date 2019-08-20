@@ -29,6 +29,7 @@
                 <div class="layui-input-block">
                     <input type="checkbox" id="common_model" title="全局模型" lay-filter="common_model" value="1">
                     <input type="checkbox" id="relation_model" title="关联模型" lay-filter="relation_model" value="1">
+                    <input type="checkbox" id="role_content_model" title="角色内容范围" lay-filter="role_content_model" value="1">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -58,6 +59,56 @@
                 </div>
             </div>
         </div>
+    </div>
+</fieldset>
+
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;" id="role_content_model_fieldset">
+    <legend>角色内容范围</legend>
+    <div class="layui-field-box">
+        <table class="layui-table layui-form" style="margin: 0;" lay-skin="line">
+            <colgroup>
+                <col width="600">
+                <col width="400">
+                <col width="300">
+                <col>
+            </colgroup>
+            <thead>
+            <tr>
+                <th>选择角色</th>
+                <th>内容范围</th>
+                <th>子级层级</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody id="role_content_list">
+            <tr>
+                <td>
+                    <select name="select_relation_foreign_key[]" lay-filter="select_relation_foreign_key">
+                        {{#  layui.each(d.select_table_fields, function(index, item){ }}
+                        <option value="{{ item }}" {{#  if(d.selected_relation_foreign_key == item){ }}selected="selected"{{#  } }}>{{ item }}</option>
+                        {{#  }); }}
+                    </select>
+                </td>
+                <td>
+                    <input type="radio" name="sex" value="1" title="自己 + 子级" checked="checked">
+                    <input type="radio" name="sex" value="2" title="仅自己">
+                    <input type="radio" name="sex" value="3" title="仅子级">
+                </td>
+                <td>
+                    <input type="text" name="title" lay-verify="required|number" placeholder="请输入层级" autocomplete="off" class="layui-input" />
+                </td>
+                <td>
+                    <a href="javascript:void(0);" class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-delete del_relation_model" layer-tips="移除" colour="#f51c1c" title="移除"></a>
+                </td>
+            </tr>
+            <tr class='nodrop nodrag'>
+                <td colspan="7" style="padding: 4px 15px;">
+                    <a href="javascript:void(0);" class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-add-1 add_role_content_model" title="追加角色内容范围">追加角色内容范围</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        </form>
     </div>
 </fieldset>
 

@@ -1180,16 +1180,20 @@ layui.define('jquery', function (exports) { //提示：模块也可以依赖其�
         var _paramsFunc = p.params, _params = {}, searchKey = p.searchField;
         //when have new query keyword, then reset page number to 1.
         if (q_word.length && q_word[0] && q_word[0] !== self.prop.prev_value) which_page_num = 1;
+        // var _orgParams = {
+        //     q_word: q_word,
+        //     page: which_page_num,
+        //     pageSize: p.pageSize,
+        //     andOr: p.andOr,
+        //     orderBy: p.orderBy,
+        //     searchTable: p.dbTable,
+        //     searchField: p.searchField
+        // };
+        // _orgParams[searchKey] = q_word[0];
         var _orgParams = {
-            q_word: q_word,
-            page: which_page_num,
-            pageSize: p.pageSize,
-            andOr: p.andOr,
-            orderBy: p.orderBy,
-            searchTable: p.dbTable,
-            searchField: p.searchField
-        };
-        _orgParams[searchKey] = q_word[0];
+            'searchValue': q_word[0],
+            'searchKey': searchKey[0]
+        }
         if (_paramsFunc && $.isFunction(_paramsFunc)) {
             var result = _paramsFunc.call(self);
             if (result && $.isPlainObject(result)) {
