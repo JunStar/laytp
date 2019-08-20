@@ -7,6 +7,16 @@ use think\Exception;
 
 trait Backend
 {
+    public function select_page(){
+        if( $this->request->isAjax() ){
+            $where = $this->select_page_build_params();
+            $limit = $this->request->param('pageSize');
+            $limit = $limit ? $limit : 20;
+            $data = $this->model->where($where)->order('id desc')->paginate($limit)->toArray();
+            return select_page_data($data);
+        }
+    }
+
     //查看
     public function index(){
         if( $this->request->isAjax() ){

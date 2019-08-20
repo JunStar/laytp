@@ -219,7 +219,6 @@ class Backend extends Controller
     public function build_params(){
         $where = [];
         $search_param = $this->request->param('search_param');
-        $select_page = $this->request->param('select_page');
         if( $search_param ){
             foreach($search_param as $field=>$value_condition){
                 if($value_condition['value'] != ''){
@@ -249,11 +248,19 @@ class Backend extends Controller
                     }
                 }
             }
-        }else if($select_page){
-            $field = $this->request->param('searchKey');
-            $name = $this->request->param('searchValue');
-            $where[] = "{$field} LIKE '%{$name}%'";
         }
+        $whereStr = implode(' AND ', $where);
+        return $whereStr;
+    }
+
+    /**
+     * selectPage插件ajax请求时组合的查询条件,修改selectPage.js后的函数
+     * @return string
+     */
+    public function select_page_build_params(){
+        $field = $this->request->param('searchKey');
+        $name = $this->request->param('searchValue');
+        $where[] = "{$field} LIKE '%{$name}%'";
         $whereStr = implode(' AND ', $where);
         return $whereStr;
     }
