@@ -54,8 +54,8 @@ layui.use(['layTp'],function() {
                 layer.confirm('真的删除行么', function(index){
                     $.ajax({
                         type: 'POST',
-                        url: layTp.facade.url('admin/core.menu/del'),
-                        data: {id:data.id},
+                        url: layTp.facade.url('admin/auth.role/del'),
+                        data: {ids:data.id},
                         dataType: 'json',
                         success: function (res) {
                             if( res.code == 1 ){
