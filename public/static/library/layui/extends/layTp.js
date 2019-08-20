@@ -667,8 +667,9 @@ layui.define([
                                 }, 1000);
                             }
                             if(typeof parent.func_controller != "undefined"){
+                                let index = parent.layer.getFrameIndex(window.name);
+                                parent.layer.close(index);
                                 parent.func_controller.table_render();
-                                parent.layui.layer.closeAll();
                             }
                         }else{
                             layTp.facade.error(res.msg);
