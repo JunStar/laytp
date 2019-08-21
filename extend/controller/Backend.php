@@ -12,15 +12,17 @@ use think\facade\Session;
 class Backend extends Controller
 {
     use \library\traits\Backend;
-    public $module;
-    public $controller;
-    public $action;
-    public $now_node;
-    public $admin_user;
-    public $rule_list;
-    public $menu_ids;
-    public $has_del=1;
-    public $has_soft_del=0;
+    public $module;//当前模型名
+    public $controller;//当前控制器名
+    public $action;//当前操作名
+    public $now_node;//当前访问节点
+    public $admin_user;//当前登录者信息
+    public $role_ids;//当前登录者拥有的角色ID
+    public $rule_list;//当前登录者拥有的权限节点列表
+    public $menu_ids;//当前登录者拥有的菜单列表
+    public $has_del=1;//当前访问的模型是否有删除功能
+    public $has_soft_del=0;//当前访问的模型是否有软删除功能
+    public $batch_action_list=['edit','del'];//批量操作下拉展示的节点函数名
 
     public function initialize(){
         if( $this->request->isPost() ){
@@ -34,6 +36,7 @@ class Backend extends Controller
 
         $this->auth();
         $this->init_assing_val();
+        $this->is_show_batch();
         $this->menu();
     }
 
@@ -52,11 +55,13 @@ class Backend extends Controller
         $this->assign('admin_user', $this->admin_user);
 
         if($this->admin_user->is_super_manager){
+            $this->assign('rule_list', []);
             return true;
         }
 
         //当前登录用户角色
         $role_ids = model('auth.RoleRelUser')->where('admin_id','=',$admin_user_id)->column('role_id');
+        $this->role_ids = $role_ids;
         $menu_ids = array_unique( model('auth.RoleRelMenu')->where('role_id','in',$role_ids)->column('menu_id') );
         foreach($menu_ids as $menu_id){
             $pid = model('auth.Menu')->where('id','=',$menu_id)->value('pid');
@@ -210,6 +215,38 @@ class Backend extends Controller
         $assign['has_soft_del'] = $this->has_soft_del;
 
         $this->assign($assign);
+    }
+
+    //批量操作列表，权限检测
+    public function is_show_batch()
+    {
+        if (!$this->admin_user->is_super_manager) {
+            $show_batch = false;
+            foreach ($this->batch_action_list as $action) {
+                if ($action == 'del') {
+                    if ($this->has_del && in_array('del', $this->batch_action_list)) {
+                        if (in_array($this->module . '/' . $this->controller . '/del', $this->rule_list)) {
+                            $show_batch = true;
+                            break;
+                        }
+                    }
+                } else {
+                    if (in_array($action, $this->batch_action_list)) {
+                        if (in_array($this->module . '/' . $this->controller . '/' . $action, $this->rule_list)) {
+                            $show_batch = true;
+                            break;
+                        }
+                    }
+                }
+            }
+        }else{
+            if(count($this->batch_action_list)){
+                $show_batch = true;
+            }else{
+                $show_batch = false;
+            }
+        }
+        $this->assign('show_batch', $show_batch);
     }
 
     /**

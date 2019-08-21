@@ -8,4 +8,6 @@
     const search_param = {};
     const default_table_tool = ['edit','del','renew','true_del'];//layui表格列表操作列默认的操作按钮
     const table_id = "{$js_global_var.table_id}";
+    const is_super_manager = ({$admin_user.is_super_manager} === 1) ? true : false;
+    const rule_list = is_super_manager ? {} : {:json_encode($rule_list)};
 </script>

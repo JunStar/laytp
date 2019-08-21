@@ -59,6 +59,7 @@ layui.define([
         },
     });
 
+    //助手函数
     layTp.facade = {
         //获取一个对象的元素个数
         get_count: function(param){
@@ -109,7 +110,7 @@ layui.define([
             }
             path = '/' + path.replace(/(^\/)|(\/$)/,'');
 
-            var url = path + params;
+            let url = path + params;
             return url;
         },
 
@@ -139,6 +140,7 @@ layui.define([
             });
         },
 
+        //成功弹窗之后
         after_popup_frame: function(layero,index){
             layTp.facade.select_multi(layero,index);
         },
@@ -196,7 +198,7 @@ layui.define([
                         }
                     });
                 });
-            //点击编辑按钮
+                //点击编辑按钮
             }else if(obj.event === 'edit'){
                 let url = layTp.facade.url(module + '/' + controller + '/edit',{id:data.id});
                 layTp.facade.popup_frame('编辑', url);
@@ -252,7 +254,7 @@ layui.define([
             }
         },
 
-        //select_page
+        //select_page插件
         select_page:function(obj, option){
             selectPagePlugin.selectPage(obj, option);
         },
@@ -301,7 +303,7 @@ layui.define([
                         ,click_dd_after: function(){}
                     });
                 });
-            //弹窗内渲染多选下拉框
+                //弹窗内渲染多选下拉框
             }else{
                 layui.each(layui.layer.getChildFrame('.select_multi', index),function(key,item){
                     elem = layui.layer.getChildFrame('#'+$(item).attr('id'), index);
@@ -323,6 +325,81 @@ layui.define([
                         ,click_dd_after: function(){}
                     });
                 });
+            }
+        },
+
+        /*
+         * 批量操作下拉展示列表设置
+         * @param options array 需要展示的列表,数据格式类似:
+         *  [
+         *      {
+                    action: "edit"//操作名称
+                    ,title: "编辑"//文字标题
+                    ,icon: "layui-icon-edit"//图标
+                    ,node: module + "/" + controller + "/edit"
+                    ,param: {}//操作节点需要传入的参数，为空可以不传
+                    ,switch_type: "popup_frame"//操作类型
+                }
+                ,{
+                    action: 'del',
+                    title: '删除'
+                    ,icon: "layui-icon-delete"
+                    ,node: module + "/" + controller + "/del"//操作节点名称
+                    ,param: {}//操作节点需要传入的参数，为空可以不传
+                    ,switch_type: "confirm_action"
+                }
+         *  ]
+         * @param elem string 渲染的document节点名称，举例：.action-more
+         * @param checkAuth boolean 是否需要检测权限,true:需要检测当前用户是否有权限，false:不需要检测权限
+         */
+        dropdown_set: function(options,checkAuth,elem){
+            console.log(options);
+            if(typeof checkAuth == "undefined" || checkAuth === '' || checkAuth === 0){
+                checkAuth = false;
+            }
+            if(typeof elem == "undefined" || (elem === '') || (elem === 0)){
+                elem = ".action-more";
+            }
+
+            if(!checkAuth){
+                layui.dropdown.render({
+                    elem: elem,
+                    options: options
+                });
+            }else{
+                if(is_super_manager){
+                    layui.dropdown.render({
+                        elem: elem,
+                        options: options
+                    });
+                }else{
+                    let hasAuthOptions = [];
+                    for(key in options){
+                        if(!options[key].hasOwnProperty("param")){
+                            options[key].param = {};
+                        }
+                        for(rk in rule_list){
+                            console.log(rule_list[rk]);
+                            console.log(options[key].node);
+                            if(rule_list[rk] === options[key].node){
+                                hasAuthOptions.push(
+                                    {
+                                        action: options[key].action
+                                        ,title: options[key].title
+                                        ,icon: options[key].icon
+                                        ,uri: layTp.facade.url(options[key].node,options[key].param)
+                                        ,switch_type: options[key].switch_type
+                                    }
+                                );
+                                break;
+                            }
+                        }
+                    }
+                    layui.dropdown.render({
+                        elem: elem,
+                        options: hasAuthOptions
+                    });
+                }
             }
         },
 
@@ -409,6 +486,7 @@ layui.define([
         }
     }
 
+    //初始化
     layTp.init = {
         //jquery ajax set
         ajaxSet: function(){
