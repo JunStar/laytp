@@ -353,7 +353,6 @@ layui.define([
          * @param checkAuth boolean 是否需要检测权限,true:需要检测当前用户是否有权限，false:不需要检测权限
          */
         dropdown_set: function(options,checkAuth,elem){
-            console.log(options);
             if(typeof checkAuth == "undefined" || checkAuth === '' || checkAuth === 0){
                 checkAuth = false;
             }
