@@ -213,6 +213,8 @@ class Backend extends Controller
 
         $assign['has_del'] = $this->has_del;
         $assign['has_soft_del'] = $this->has_soft_del;
+        $assign['role_ids'] = $this->role_ids ? $this->role_ids : [];
+        $assign['rule_list'] = $this->rule_list ? $this->rule_list : [];
 
         $this->assign($assign);
     }
