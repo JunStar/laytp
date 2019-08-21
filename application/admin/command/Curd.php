@@ -473,10 +473,10 @@ class Curd extends Command
             $data['batch_del'] = "";
         }else{
             $data['batch_del'] = ",{
-                action: 'del',
-                title: '删除'
+                action: 'del'
+                ,title: '删除'
                 ,icon: \"layui-icon-delete\"
-                ,uri: layTp.facade.url(module + \"/\" + controller + \"/del\")
+                ,node: module + \"/\" + controller + \"/del\"
                 ,switch_type: \"confirm_action\"
             }";
         }
