@@ -284,8 +284,16 @@ class Curd extends Command
     //有关联模型，recycle方法要写上with查询关联数据
     protected function set_relation_recycle_function_html(){
         $relation_controller_recycle_function_html = '';
+        $has_soft_del = 0;
+        //是否拥有软删除功能
+        foreach($this->curd_config['global']['all_fields'] as $k=>$v){
+            if($v['field_name'] == 'delete_time'){
+                $has_soft_del = 1;
+                break;
+            }
+        }
         $relation_model = $this->curd_config['relation_model'];
-        if(is_array($relation_model) && count($relation_model)){
+        if($has_soft_del && is_array($relation_model) && count($relation_model)){
             $relation_index_function_lt = 'controller' . DS . 'recycle';
             $with = [];
             foreach($relation_model as $k=>$item){
@@ -337,6 +345,7 @@ class Curd extends Command
                 $data['relation_model_name'] = 'app\\'.$this->model_app_name.'\\model\\'.$this->get_name_by_table($item['table_name']);
                 $data['foreign_key'] = $item['foreign_key'];
                 $data['local_key'] = $item['primary_key'];
+                $data['show_field'] = $item['show_field'];
                 $array_relation_model_html[] = $this->get_replaced_tpl($relation_model_function_lt,$data);
             }
         }
@@ -1160,7 +1169,7 @@ EOD;
 
         $search_url = substr($info['form_additional']['table_name'], strlen(Config::get('database.prefix')) );
         $search_url = str_replace('_','.', $search_url);
-        $data['search_url'] = "{:url('admin/".$search_url."/select_page)}";
+        $data['search_url'] = "{:url('admin/".$search_url."/select_page')}";
 
         $data['search_field'] = $info['form_additional']['search_field_name'];
         $data['show_field'] = $info['form_additional']['show_field_name'];
@@ -1186,7 +1195,7 @@ EOD;
 
         $search_url = substr($info['form_additional']['table_name'], strlen(Config::get('database.prefix')) );
         $search_url = str_replace('_','.', $search_url);
-        $data['search_url'] = "{:url('admin/".$search_url."/select_page)}";
+        $data['search_url'] = "{:url('admin/".$search_url."/select_page')}";
 
         $data['search_field'] = $info['form_additional']['search_field_name'];
         $data['show_field'] = $info['form_additional']['show_field_name'];
