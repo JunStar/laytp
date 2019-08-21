@@ -4,13 +4,13 @@
             {if $show_batch}
             <a href="javascript:void(0);" class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-list action-more">&nbsp;批量操作</a>
             {/if}
-            {if ($admin_user['is_super_manager'] || in_array($js_global_var['module'].'/'.$js_global_var['controller'].'/add', $rule_list))}
+            {if ($laytp_admin_user['is_super_manager'] || in_array($js_global_var['module'].'/'.$js_global_var['controller'].'/add', $rule_list))}
             <a href="javascript:void(0);" class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-add-circle-fine popup-frame" data-open="{:url($js_global_var['module'].'/'.$js_global_var['controller'].'/add')}">&nbsp;添加</a>
             {/if}
-            {if ($admin_user['is_super_manager'] || in_array($js_global_var['module'].'/'.$js_global_var['controller'].'/index', $rule_list))}
+            {if ($laytp_admin_user['is_super_manager'] || in_array($js_global_var['module'].'/'.$js_global_var['controller'].'/index', $rule_list))}
             <a href="javascript:void(0);" class="layui-btn layui-btn-primary layui-btn-sm show-hidden-search-form layui-icon layui-icon-search">&nbsp;筛选</a>
             {/if}
-            {if $has_soft_del && ($admin_user['is_super_manager'] || in_array($js_global_var['module'].'/'.$js_global_var['controller'].'/recycle', $rule_list))}
+            {if $has_soft_del && ($laytp_admin_user['is_super_manager'] || in_array($js_global_var['module'].'/'.$js_global_var['controller'].'/recycle', $rule_list))}
             <a href="javascript:void(0);" class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-delete popup-frame"
                data-name="回收站"
                data-open="{:url($js_global_var['module'].'/'.$js_global_var['controller'].'/recycle')}">&nbsp;回收站</a>

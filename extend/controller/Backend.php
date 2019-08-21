@@ -52,7 +52,7 @@ class Backend extends Controller
             Session::clear();
             $this->error('用户不存在');
         }
-        $this->assign('admin_user', $this->admin_user);
+        $this->assign('laytp_admin_user', $this->admin_user);
 
         if($this->admin_user->is_super_manager){
             $this->assign('rule_list', []);
