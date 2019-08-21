@@ -378,8 +378,6 @@ layui.define([
                             options[key].param = {};
                         }
                         for(rk in rule_list){
-                            console.log(rule_list[rk]);
-                            console.log(options[key].node);
                             if(rule_list[rk] === options[key].node){
                                 hasAuthOptions.push(
                                     {
