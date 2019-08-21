@@ -10,7 +10,7 @@
         {/foreach}
     </ul>
     <ul class="layui-nav layui-layout-right head-info">
-        {if $admin_user['is_super_manager']}
+        {if $laytp_admin_user['is_super_manager']}
         <li class="layui-nav-item">
             <a href="javascript:void(0);" class="aicon ai-qingchu" id="laytp_clear_cache" title="清缓存"></a>
         </li>
@@ -20,8 +20,8 @@
         </li>
         <li class="layui-nav-item" style="padding: 0 15px">
             <a href="javascript:;">
-                <img src="{$admin_user.avatar|getDefaultAvatar}" class="layui-nav-img">
-                {$admin_user.nickname}
+                <img src="{$laytp_admin_user.avatar|getDefaultAvatar}" class="layui-nav-img">
+                {$laytp_admin_user.nickname}
             </a>
             <dl class="layui-nav-child">
                 <dd><a href="{:url('admin/general/profile')}">个人设置</a></dd>
