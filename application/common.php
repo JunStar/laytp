@@ -30,6 +30,22 @@ function arr_to_map($array, $field){
 }
 
 /**
+ * 获取二维数组中某个key组成的数组
+ * @param $array
+ * @param $field
+ * @return array
+ */
+function get_arr_by_key($array, $field){
+    $result = [];
+    foreach($array as $k=>$v){
+        if(isset($v[$field])){
+            $result[] = $v[$field];
+        }
+    }
+    return $result;
+}
+
+/**
  * 执行命令行，使用此函数可以调用命令行程序，不需要application/command.php文件注册命令行
  * @param string $command_class_name 命令行完整类名
  * @param array $argv 命令行参数
