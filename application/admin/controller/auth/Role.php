@@ -66,6 +66,9 @@ class Role extends Backend
 
         if( $this->request->isAjax() && $this->request->isPost() ){
             $post = filterPostData($this->request->post("row/a"));
+            if($edit_where['id'] == $post['pid']){
+                return $this->error('不能将上级修改成自己');
+            }
             $menu_ids = explode( ',', $post['menu_ids'] );
             unset($post['menu_ids']);
             $update_res = $this->model->where($edit_where)->update($post);
