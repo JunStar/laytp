@@ -82,4 +82,31 @@ class Addons
         $data = explode('\\', get_class($this));
         return strtolower(array_pop($data));
     }
+
+    /**
+     * 获取插件的配置数组
+     * @param string $name 可选模块名
+     * @return array
+     */
+    final public function getConfig($name = '')
+    {
+        if (empty($name)) {
+            $name = $this->getName();
+        }
+        $config = Config::get($name, $this->configRange);
+        if ($config) {
+            return $config;
+        }
+        $config_file = $this->addons_path . 'config.php';
+        if (is_file($config_file)) {
+            $temp_arr = include $config_file;
+            foreach ($temp_arr as $key => $value) {
+                $config[$value['name']] = $value['value'];
+            }
+            unset($temp_arr);
+        }
+        Config::set($name, $config, $this->configRange);
+
+        return $config;
+    }
 }

@@ -43,8 +43,9 @@ class Services
         // 检测冲突文件
         $list = self::getGlobalFiles($name, true);
         if ($list) {
+            return false;
             //发现冲突文件，抛出异常
-            throw new \AddonException("发现冲突文件", -3, ['conflictlist' => $list]);
+//            throw new \AddonException("发现冲突文件", -3, ['conflictlist' => $list]);
         }
         return true;
     }
@@ -126,7 +127,7 @@ class Services
                     $templine = str_ireplace('INSERT INTO ', 'INSERT IGNORE INTO ', $templine);
                     try {
                         Db::execute($templine);
-                    } catch (\PDOException $e) {
+                    } catch (Exception $e) {
 //                        $e->getMessage();
                     }
                     $templine = '';

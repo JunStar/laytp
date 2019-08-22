@@ -82,22 +82,22 @@ class Addons extends Services
      */
     public static function install($name, $force = false, $extend = [])
     {
-//        $addons_path = Env::get('root_path') . DS . 'addons' . DS;
-//        if (!$name || (is_dir($addons_path . $name) && !$force)) {
-//            return parent::error('插件已经存在');
-//        }
-//
-//        // 远程下载插件
-//        $tmpFile = Addons::download($name, $extend);
-//        if(!$tmpFile['code']){
-//            return parent::error('插件下载失败');
-//        }
-//
-//        // 解压插件
-//        $addonDir = Addons::unzip($name);
-//
-//        // 移除临时文件
-//        @unlink($tmpFile['data']);
+        $addons_path = Env::get('root_path') . DS . 'addons' . DS;
+        if (!$name || (is_dir($addons_path . $name) && !$force)) {
+            return parent::error('插件已经存在');
+        }
+
+        // 远程下载插件
+        $tmpFile = Addons::download($name, $extend);
+        if(!$tmpFile['code']){
+            return parent::error('插件下载失败');
+        }
+
+        // 解压插件
+        $addonDir = Addons::unzip($name);
+
+        // 移除临时文件
+        @unlink($tmpFile['data']);
 
         $checkRes = Addons::check($name);
         if(!$checkRes['code']){
@@ -106,9 +106,10 @@ class Addons extends Services
         }
 
         if (!$force) {
-//            Services::noconflict($name);
+            if( !Services::noconflict($name) ){
+                return parent::error('发现冲突文件');
+            }
         }
-
 
         $addonDir = Env::get('root_path') . 'addons' . DS . $name . DS;
 
@@ -142,8 +143,6 @@ class Addons extends Services
         // 导入sql文件
         Services::importSql($name);
 
-        // 刷新插件列表
-        Services::refresh();
         return parent::success('成功');
     }
 

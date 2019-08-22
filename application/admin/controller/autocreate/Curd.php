@@ -135,7 +135,7 @@ class Curd extends Backend
                     $result['all_fields'][$i]['field_show_index'] = 1;
                     $result['all_fields'][$i]['field_show_add'] = 1;
                     $result['all_fields'][$i]['field_show_edit'] = 1;
-                    if(!in_array($v, $this->special_fields)){
+                    if($v != 'delete_time' && $v != 'update_time'){
                         $result['selected_list'][$i]['field_name'] = $v;
                         $result['selected_list'][$i]['field_comment'] = $comment_map[$v]['COLUMN_COMMENT'];
                         $result['selected_list'][$i]['field_show_index'] = 1;

@@ -52,8 +52,8 @@ class Addons extends Backend
             ];
             $installRes = \app\admin\services\Addons::install($name, $force, $extend);
             if($installRes['code']){
-                $info = \app\admin\services\Addons::get_addon_info($name);
-                $info['config'] = \app\admin\services\Addons::get_addon_config($name) ? 1 : 0;
+                $info = \app\admin\services\Addons::getAddonInfo($name);
+//                $info['config'] = \app\admin\services\Addons::getAddonConfig($name) ? 1 : 0;
                 $info['state'] = 1;
                 $this->success('安装成功', ['addon' => $info]);
             }else{
