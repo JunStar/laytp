@@ -36,6 +36,32 @@ class Menu extends Backend
         return $this->fetch();
     }
 
+    //编辑
+    public function edit(){
+        $id = $this->request->param('id');
+        $info = $this->model->get($id);
+        if( $this->request->isAjax() && $this->request->isPost() ){
+            $post = filterPostData($this->request->post("row/a"));
+            if($id == $post['pid']){
+                return $this->error('不能将上级改成自己');
+            }
+            foreach($post as $k=>$v){
+                $info->$k = $v;
+            }
+            $update_res = $info->save();
+            if( $update_res ){
+                return $this->success('操作成功');
+            }else if( $update_res === 0 ){
+                return $this->success('未做修改');
+            }else if( $update_res === null ){
+                return $this->error('操作失败');
+            }
+        }
+
+        $this->assign($info->toArray());
+        return $this->fetch();
+    }
+
     //设置状态
     public function set_status(){
         $where['id'] = $this->request->param('id');
