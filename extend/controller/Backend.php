@@ -23,6 +23,7 @@ class Backend extends Controller
     public $has_del=1;//当前访问的模型是否有删除功能
     public $has_soft_del=0;//当前访问的模型是否有软删除功能
     public $batch_action_list=['edit','del'];//批量操作下拉展示的节点函数名
+    public $is_show_search_btn = true;//是否展示筛选按钮
 
     public function initialize(){
         if( $this->request->isPost() ){
@@ -215,6 +216,7 @@ class Backend extends Controller
         $assign['has_soft_del'] = $this->has_soft_del;
         $assign['role_ids'] = $this->role_ids ? $this->role_ids : [];
         $assign['rule_list'] = $this->rule_list ? $this->rule_list : [];
+        $assign['is_show_search_btn'] = $this->is_show_search_btn;
 
         $this->assign($assign);
     }
