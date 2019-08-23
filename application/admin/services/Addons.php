@@ -80,7 +80,7 @@ class Addons extends Services
      * @throws  Exception
      * @throws  AddonException
      */
-    public static function install($name, $force = false, $extend = [])
+    public static function install($name, $force = true, $extend = [])
     {
         $addons_path = Env::get('root_path') . DS . 'addons' . DS;
         if (!$name || (is_dir($addons_path . $name) && !$force)) {
@@ -101,7 +101,7 @@ class Addons extends Services
 
         $checkRes = Addons::check($name);
         if(!$checkRes['code']){
-//            @DirFile::rmDirs($addonDir);
+            @DirFile::rmDirs($addonDir);
             return parent::error($checkRes['msg']);
         }
 
@@ -302,7 +302,7 @@ class Addons extends Services
      */
     public static function setAddonInfo($name, $array)
     {
-        $file = ADDON_PATH . $name . DIRECTORY_SEPARATOR . 'info.ini';
+        $file = Env::get('root_path') . DS . 'addons' . DS . $name . DIRECTORY_SEPARATOR . 'info.ini';
         $addon = self::getAddonInstance($name);
         $array = $addon->setInfo($name, $array);
         $res = array();
@@ -337,8 +337,8 @@ class Addons extends Services
             return $_addons[$name];
         }
         $class = self::getAddonClass($name);
-        if (class_exists($class)) {
-            $_addons[$name] = new $class();
+        if ($class) {
+            $_addons[$name] = $class;
             return $_addons[$name];
         } else {
             return null;
@@ -354,7 +354,13 @@ class Addons extends Services
      */
     public static function getAddonClass($name, $type = 'hook', $class = null)
     {
-        $class_name = "addons\\" . ucfirst($name);
+        $class_file = Env::get('root_path') . 'addons' . DS . $name . DS . ucfirst($name) . '.php';
+        if(is_file($class_file)){
+            require_once $class_file;
+        }
+        $class_name = "addons\\{$name}\\" . ucfirst($name);
+        $class = new $class_name();
+        return $class;
         return $class_name;
         $name = Loader::parseName($name);
         // 处理多级控制器情况

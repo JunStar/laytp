@@ -82,16 +82,19 @@
 </script>
 
 <script type="text/html" id="operation">
+    {{# if(!d.addon_exist){ }}
     <div class="layui-btn-group">
         <a class="layui-btn layui-btn-sm layui-icon layui-icon-triangle-d version_list_{{ d.id }}" lay-event="version_list" title="查看版本列表" layer-tips="查看版本列表" colour="#009688"> </a>
         <a class="layui-btn layui-btn-sm layui-icon layui-icon-download-circle" lay-event="install" title="安装最新版本" layer-tips="安装最新版本" colour="#009688"> 安装最新版本</a>
-
-        <a class="layui-btn layui-btn-sm layui-btn-normal layui-icon layui-icon-set" lay-event="config" title="配置" layer-tips="配置" colour="#369"> 配置</a>
+<!--        <a class="layui-btn layui-btn-sm layui-btn-normal layui-icon layui-icon-set" lay-event="config" title="配置" layer-tips="配置" colour="#369"> 配置</a>-->
     </div>
+    {{# } }}
+    {{# if(d.addon_exist){ }}
     <div class="layui-btn-group">
-        <a class="layui-btn layui-btn-primary layui-btn-sm" lay-event="demo" title="演示" layer-tips="演示"> 演示</a>
+<!--        <a class="layui-btn layui-btn-primary layui-btn-sm" lay-event="demo" title="演示" layer-tips="演示"> 演示</a>-->
         <a class="layui-btn layui-btn-danger layui-btn-sm layui-icon layui-icon-close-fill" lay-event="demo" title="卸载" layer-tips="卸载" colour="#f51c1c"> 卸载</a>
     </div>
+    {{# } }}
 </script>
 {/block}
 

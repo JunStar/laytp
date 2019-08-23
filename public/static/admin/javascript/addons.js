@@ -38,10 +38,13 @@ layui.use(['layTp'],function() {
                 }}
                 ,{field:'download_num',title:'下载',align:'center',width:100}
                 ,{field:'latest_version',title:'最新版本',align:'center',width:100}
-                ,{field:'status',title:'状态',align:'center',width:100,templet:function(d){
-                    return layTp.facade.formatter.switch('status',d,{"open":{"value":1,"text":"开启"},"close":{"value":0,"text":"关闭"}});
+                ,{field:'local_state',title:'状态',align:'center',width:100,templet:function(d){
+                    let data_list = {"open":{"value":1,"text":"开启"},"close":{"value":0,"text":"关闭"}};
+                    let lay_text = data_list.open.text + "|" + data_list.close.text;
+                    return '<input open_value="'+data_list.open.value+'" close_value="'+data_list.close.value+'" name_val="'+d.name+'" type="checkbox" name="local_state" value="'+data_list.open.value+'" lay-skin="switch" lay-text="'+lay_text+'" lay-filter="addon_switch" ' + ( (d['local_state']==data_list.open.value) ? 'checked="checked"' : '' ) + ' />';
+                    // return layTp.facade.formatter.switch('local_state',d,{"open":{"value":1,"text":"开启"},"close":{"value":0,"text":"关闭"}});
                 }}
-                ,{field:'operation',title:'操作',align:'center',width:380,templet:function(d){
+                ,{field:'operation',title:'操作',align:'center',width:180,templet:function(d){
                     let operation_html = '';
                     layui.laytpl($('#operation').html()).render(d, function(html){
                         operation_html = html;
@@ -71,6 +74,33 @@ layui.use(['layTp'],function() {
             if(default_table_tool.indexOf(obj.event) != -1){
                 layTp.facade.table_tool(obj);
             }
+        });
+
+        layui.form.on('switch(addon_switch)', function(obj){
+            let open_value = obj.elem.attributes['open_value'].nodeValue;
+            let close_value = obj.elem.attributes['close_value'].nodeValue;
+            let field = obj.elem.attributes['name'].nodeValue;
+            let name_val = obj.elem.attributes['name_val'].nodeValue;
+            let post_data = {};
+            if(obj.elem.checked){
+                post_data = {field:this.name,field_val:open_value, name: name_val};
+            }else{
+                post_data = {field:this.name,field_val:close_value, name: name_val};
+            }
+            $.ajax({
+                url: layTp.facade.url(module + '/' + controller + '/set_status/'),
+                method: 'POST',
+                data: post_data,
+                success: function(res){
+                    if(res.code == 1){
+                        layTp.facade.success(res.msg);
+                        func_controller.table_render();
+                    }else{
+                        layTp.facade.error(res.msg);
+                        func_controller.table_render();
+                    }
+                },
+            });
         });
     }
 

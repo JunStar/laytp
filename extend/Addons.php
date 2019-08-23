@@ -62,7 +62,7 @@ class Addons
         if ($info) {
             return $info;
         }
-        $info_file = $this->addons_path . 'info.ini';
+        $info_file = Env::get('root_path') . 'addons' . DS . $name . DS . 'info.ini';
         if (is_file($info_file)) {
             $config = new \think\Config();
             $info = $config->parse($info_file, '', $info_key);
@@ -108,5 +108,22 @@ class Addons
         Config::set($name, $config, $this->configRange);
 
         return $config;
+    }
+
+    /**
+     * 设置插件信息数据
+     * @param $name
+     * @param array $value
+     * @return array
+     */
+    final public function setInfo($name = '', $value = [])
+    {
+        if (empty($name)) {
+            $name = $this->getName();
+        }
+        $info = $this->getInfo($name);
+        $info = array_merge($info, $value);
+        Config::set($name, $info, $this->infoRange);
+        return $info;
     }
 }
