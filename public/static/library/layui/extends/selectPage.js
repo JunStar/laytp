@@ -1192,7 +1192,9 @@ layui.define('jquery', function (exports) { //提示：模块也可以依赖其�
         // _orgParams[searchKey] = q_word[0];
         var _orgParams = {
             'searchValue': q_word[0],
-            'searchKey': searchKey[0]
+            'searchKey': searchKey[0],
+            pageSize: p.pageSize,
+            page: which_page_num,
         }
         if (_paramsFunc && $.isFunction(_paramsFunc)) {
             var result = _paramsFunc.call(self);
