@@ -1168,6 +1168,9 @@ EOD;
         $data['field_name'] = $info['field_name'];
 
         $search_url = substr($info['form_additional']['table_name'], strlen(Config::get('database.prefix')) );
+        if($search_url == 'admin_user'){
+            $search_url = 'auth_user';
+        }
         $search_url = str_replace('_','.', $search_url);
         $data['search_url'] = "{:url('admin/".$search_url."/select_page')}";
 
@@ -1194,6 +1197,9 @@ EOD;
         $data['field_name'] = $info['field_name'];
 
         $search_url = substr($info['form_additional']['table_name'], strlen(Config::get('database.prefix')) );
+        if($search_url == 'admin_user'){
+            $search_url = 'auth_user';
+        }
         $search_url = str_replace('_','.', $search_url);
         $data['search_url'] = "{:url('admin/".$search_url."/select_page')}";
 
