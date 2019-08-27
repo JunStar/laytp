@@ -643,6 +643,40 @@ layui.define([
             });
         },
 
+        //layer弹窗confirm
+        popup_confirm: function(text,url){
+            layui.layer.confirm('确定'+text+'么?', function(index){
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    data: data,
+                    dataType: 'json',
+                    success: function (res) {
+                        if( res.code == 1 ){
+                            if( need_data == "true" ){
+                                func_controller.table_render();
+                                if(typeof parent.func_controller != "undefined"){
+                                    parent.func_controller.table_render();
+                                }
+                            }else{
+                                layTp.facade.success(res.msg);
+                            }
+                        }else{
+                            layTp.facade.error(res.msg);
+                        }
+                        layui.layer.close(index);
+                    },
+                    error: function (xhr) {
+                        if( xhr.status == '500' ){
+                            layTp.facade.error('本地网络问题或者服务器错误');
+                        }else if( xhr.status == '404' ){
+                            layTp.facade.error('请求地址不存在');
+                        }
+                    }
+                });
+            });
+        },
+
         //筛选按钮 - 隐藏显示搜索表单
         show_hidden_search_form:function(){
             $(document).on('click','.show-hidden-search-form',function(){
