@@ -649,22 +649,15 @@ layui.define([
                 $.ajax({
                     type: 'POST',
                     url: url,
-                    data: data,
+                    // data: data,
                     dataType: 'json',
                     success: function (res) {
                         if( res.code == 1 ){
-                            if( need_data == "true" ){
-                                func_controller.table_render();
-                                if(typeof parent.func_controller != "undefined"){
-                                    parent.func_controller.table_render();
-                                }
-                            }else{
-                                layTp.facade.success(res.msg);
-                            }
+                            layTp.facade.success(res.msg);
+                            func_controller.table_render();
                         }else{
                             layTp.facade.error(res.msg);
                         }
-                        layui.layer.close(index);
                     },
                     error: function (xhr) {
                         if( xhr.status == '500' ){
