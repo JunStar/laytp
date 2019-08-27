@@ -430,7 +430,7 @@ class Curd extends Command
                     if(count($arr) > 2){
                         $json_obj = json_encode( $this->getArrayByString($fields_list[$v['field_name']]['form_additional']),JSON_UNESCAPED_UNICODE );
                         $temp .= ",templet:function(d){\n\t\t\t\t\treturn layTp.facade.formatter.status('{$v['field_name']}',d.{$v['field_name']},{$json_obj});\n\t\t\t\t}";
-                    }else{
+                    }else if(count($arr) == 2){
                         $arr = $this->getArrayByString($fields_list[$v['field_name']]['form_additional']);
                         $keys_arr = array_keys($arr);
                         $values_arr = array_values($arr);
