@@ -140,6 +140,33 @@ layui.define([
             });
         },
 
+        //layer弹窗confirm
+        popup_confirm: function(text,url){
+            layui.layer.confirm('确定'+text+'么?', function(index){
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    // data: data,
+                    dataType: 'json',
+                    success: function (res) {
+                        if( res.code == 1 ){
+                            layTp.facade.success(res.msg);
+                            func_controller.table_render();
+                        }else{
+                            layTp.facade.error(res.msg);
+                        }
+                    },
+                    error: function (xhr) {
+                        if( xhr.status == '500' ){
+                            layTp.facade.error('本地网络问题或者服务器错误');
+                        }else if( xhr.status == '404' ){
+                            layTp.facade.error('请求地址不存在');
+                        }
+                    }
+                });
+            });
+        },
+
         //成功弹窗之后
         after_popup_frame: function(layero,index){
             layTp.facade.select_multi(layero,index);
@@ -640,33 +667,6 @@ layui.define([
                     height = default_popup_frame_height;
                 }
                 layTp.facade.popup_frame(name, layTp.facade.url(url, params), width, height);
-            });
-        },
-
-        //layer弹窗confirm
-        popup_confirm: function(text,url){
-            layui.layer.confirm('确定'+text+'么?', function(index){
-                $.ajax({
-                    type: 'POST',
-                    url: url,
-                    // data: data,
-                    dataType: 'json',
-                    success: function (res) {
-                        if( res.code == 1 ){
-                            layTp.facade.success(res.msg);
-                            func_controller.table_render();
-                        }else{
-                            layTp.facade.error(res.msg);
-                        }
-                    },
-                    error: function (xhr) {
-                        if( xhr.status == '500' ){
-                            layTp.facade.error('本地网络问题或者服务器错误');
-                        }else if( xhr.status == '404' ){
-                            layTp.facade.error('请求地址不存在');
-                        }
-                    }
-                });
             });
         },
 
