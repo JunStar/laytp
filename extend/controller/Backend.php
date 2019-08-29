@@ -24,6 +24,7 @@ class Backend extends Controller
     public $has_soft_del=0;//当前访问的模型是否有软删除功能
     public $batch_action_list=['edit','del'];//批量操作下拉展示的节点函数名
     public $is_show_search_btn = true;//是否展示筛选按钮
+    public $no_need_login=['select_page'];//无需登录的方法名（无需登录就不需要鉴权了）
 
     public function initialize(){
         if( $this->request->isPost() ){
@@ -56,7 +57,6 @@ class Backend extends Controller
         $this->assign('laytp_admin_user', $this->admin_user);
 
         if($this->admin_user->is_super_manager){
-            $this->assign('rule_list', []);
             return true;
         }
 
@@ -82,9 +82,8 @@ class Backend extends Controller
         ];
         $rule_list = array_unique( model('auth.Menu')->where($where)->column('rule') );
         $this->rule_list = $rule_list;
-        $this->assign('rule_list', $this->rule_list);
 
-        if( !in_array($this->now_node, $rule_list) ){
+        if( !in_array($this->now_node, $rule_list) && !in_array($this->action, $this->no_need_login) ){
             $this->error('无权限访问，请联系管理员');
         }
     }
