@@ -18,7 +18,7 @@ layui.define([
 
     const default_popup_frame_width = '63%';
     const default_popup_frame_height = '70%';
-    const default_popup_frame_shade = 0.01;
+    const default_popup_frame_shade = 0.1;
 
     //自定义表单验证器
     layui.form.verify({
