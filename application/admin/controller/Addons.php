@@ -115,28 +115,28 @@ class Addons extends Backend
     public function uninstall(){
         $name = $this->request->param("name");
         if (!$name) {
-            $this->error('参数name不能为空');
+            return $this->error('参数name不能为空');
         }
         try {
             $info = \app\admin\services\Addons::getAddonInfo($name);
             if(!$info){
-                $this->error('插件不存在');
+                return $this->error('插件不存在');
             }
             if($info['state'] == 1){
-                $this->error('请先关闭插件');
+                return $this->error('请先关闭插件');
             }
             $installRes = \app\admin\services\Addons::uninstall($name);
             if($installRes['code']){
-                $this->success('卸载成功');
+                return $this->success('卸载成功');
             }else{
-                $this->error($installRes['msg']);
+                return $this->error($installRes['msg']);
             }
         } catch (Exception $e) {
             $data['file'] = $e->getFile();
             $data['msg'] = $e->getMessage();
             $data['line'] = $e->getLine();
             $data['code'] = $e->getCode();
-            $this->error('卸载失败', $data);
+            return $this->error('卸载失败', $data);
         }
     }
 }

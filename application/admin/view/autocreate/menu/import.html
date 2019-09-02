@@ -2,7 +2,7 @@
 
 {block name="form"}
 <div class="layui-form-item">
-    <label class="layui-form-label" title="控制器">所属一级菜单 <text title="必填项" style="color:red;">*</text></label>
+    <label class="layui-form-label" title="控制器">所属一级菜单</label>
     <div class="layui-input-block">
         <select
             linkage="true"
@@ -12,7 +12,7 @@
             placeholder="请选择一级菜单，必选项"
             name="row[first_menu_id]"
             id="first_menu_id"
-            table_name="{:config('database.prefix')}admin_menu"
+            table_name="lt_admin_menu"
             search_field="pid"
             search_field_val="0"
             selected_val=""
@@ -35,7 +35,7 @@
             placeholder="请选择二级菜单"
             name="row[second_menu_id]"
             id="second_menu_id"
-            table_name="{:config('database.prefix')}admin_menu"
+            table_name="lt_admin_menu"
             search_field="pid"
             search_field_val="0"
             selected_val=""
@@ -49,7 +49,7 @@
 </div>
 
 <div class="layui-form-item">
-    <label class="layui-form-label" title="控制器">控制器 <text title="必填项" style="color:red;">*</text></label>
+    <label class="layui-form-label" title="控制器">控制器</label>
     <div class="layui-input-block">
         <input type="text" name="row[controller]" id="controller" placeholder="请选择" class="layui-input selectPage"
             search-field="name"

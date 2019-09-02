@@ -113,11 +113,13 @@ layui.define(['jquery'], function(exports) {
         let field = "";
         let field_val = "";
         let need_data = "";
+        let need_refresh = "";
         layui.each(data.options, function(i, option) {
             var options = option.options || [];
             field = (typeof option.field != "undefined") ? option.field : "";
             field_val = (typeof option.field_val != "undefined") ? option.field_val : "";
             need_data = (typeof option.need_data != "undefined") ? option.need_data : "true";
+            need_refresh = (typeof option.need_refresh != "undefined") ? option.need_refresh : "false";
             html +=
                 '<div ' +
                     'lay-action=' + option.action + ' ' +
@@ -125,6 +127,7 @@ layui.define(['jquery'], function(exports) {
                     'uri="' + option.uri +'"' +
                     'field="' + field +'"' +
                     'need_data="' + need_data +'"' +
+                    'need_refresh="' + need_refresh +'"' +
                     'field_val="' + field_val +'"' +
                     'switch_type="' + option.switch_type +'"' +
                     'callback="' + option.callback +'"' +

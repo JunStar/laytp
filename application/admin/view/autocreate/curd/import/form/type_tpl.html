@@ -1,6 +1,7 @@
 <script type="text/html" id="form_type">
     <select name="form_type_{{ d.field_name }}" id="form_type_{{ d.field_name }}" data-field_name="{{ d.field_name }}" lay-verify="required" lay-filter="form_type">
         <option value="input" {{ d.form_type == "input" ? "selected='selected'" : "" }}>单行文本输入框</option>
+        <option value="admin_id" {{ d.form_type == "admin_id" ? "selected='selected'" : "" }}>当前登录者ID</option>
         <option value="password" {{ d.form_type == "password" ? "selected='selected'" : "" }}>密码输入框</option>
         <option value="textarea" {{ d.form_type == "textarea" ? "selected='selected'" : "" }}>普通文本域</option>
         <option value="radio" {{ d.form_type == "radio" ? "selected='selected'" : "" }}>单选按钮</option>

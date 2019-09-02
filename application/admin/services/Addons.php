@@ -107,7 +107,7 @@ class Addons extends Services
 
         if (!$force) {
             if( !Services::noconflict($name) ){
-                return parent::error('发现冲突文件');
+//                return parent::error('发现冲突文件');
             }
         }
 
@@ -130,9 +130,9 @@ class Addons extends Services
 
             // 执行安装脚本
             $class = self::getAddonClass($name);
-            if (class_exists($class)) {
-                $addon = new $class();
-                $addon->install();
+            if ($class) {
+                $class->install();
+                return parent::success("安装成功");
             }else{
                 return parent::error("{$name}类不存在");
             }
@@ -154,6 +154,7 @@ class Addons extends Services
             $addon->uninstall();
             //删除掉插件文件
             DirFile::rmDirs(Env::get('root_path') . 'addons' . DS . $name);
+            return parent::success("卸载成功");
         }else{
             return parent::error("{$name}类不存在");
         }
@@ -372,7 +373,7 @@ class Addons extends Services
         }else{
             return false;
         }
-        $class_name = "addons\\{$name}\\" . ucfirst($name);
+        $class_name = "addons\\" . ucfirst($name);
         $class = new $class_name();
         return $class;
         return $class_name;

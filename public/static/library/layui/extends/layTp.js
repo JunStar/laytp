@@ -529,6 +529,7 @@ layui.define([
                 let field = $(this).attr("field");
                 let field_val = $(this).attr("field_val");
                 let need_data = $(this).attr("need_data");
+                let need_refresh = $(this).attr("need_refresh");
                 let text = $(this).text();
                 let switch_type = $(this).attr("switch_type");
                 let checkStatus;
@@ -569,14 +570,14 @@ layui.define([
                                 dataType: 'json',
                                 success: function (res) {
                                     if( res.code == 1 ){
-                                        if( need_data == "true" ){
-                                            func_controller.table_render();
+                                        if( need_data == "true" || need_refresh == "true" ){
                                             if(typeof parent.func_controller != "undefined"){
                                                 parent.func_controller.table_render();
+                                            }else if(typeof func_controller != "undefined"){
+                                                func_controller.table_render();
                                             }
-                                        }else{
-                                            layTp.facade.success(res.msg);
                                         }
+                                        layTp.facade.success(res.msg);
                                     }else{
                                         layTp.facade.error(res.msg);
                                     }
