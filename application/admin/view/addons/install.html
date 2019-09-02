@@ -1,0 +1,12 @@
+{extend name="admin@public/layout/popup_form"}
+
+{block name="form"}
+<input type="hidden" name="name" value="{$name}" />
+<input type="hidden" name="version" value="{$version}" />
+<div class="layui-form-item">
+    <label class="layui-form-label" title="层级">覆盖安装</label>
+    <div class="layui-input-block">
+        <input type="checkbox" name="force" value="1" title="覆盖安装" checked="checked" />
+    </div>
+</div>
+{/block}

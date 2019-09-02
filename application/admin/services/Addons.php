@@ -82,6 +82,7 @@ class Addons extends Services
      */
     public static function install($name, $force = true, $extend = [])
     {
+
         $addons_path = Env::get('root_path') . DS . 'addons' . DS;
         if (!$name || (is_dir($addons_path . $name) && !$force)) {
             return parent::error('插件已经存在');
@@ -107,7 +108,7 @@ class Addons extends Services
 
         if (!$force) {
             if( !Services::noconflict($name) ){
-//                return parent::error('发现冲突文件');
+                return parent::error('发现冲突文件');
             }
         }
 

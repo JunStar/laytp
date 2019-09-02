@@ -54,7 +54,7 @@ layui.use(['layTp'],function() {
                         options[k] = {};
                         options[k].action = "install";
                         options[k].title = '安装' + d.multi_version[k]['version_num'];
-                        options[k].switch_type = "confirm_action";
+                        options[k].switch_type = "popup_frame";
                         options[k].need_data = false;
                         options[k].need_refresh = true;
                         options[k].uri = layTp.facade.url(module + "/" + controller + "/install",{"version":d.multi_version[k]['version_num'],"name":d.name});

@@ -67,32 +67,38 @@ class Addons extends Backend
      */
     public function install()
     {
-        $name = $this->request->param("name");
-        $force = (int)$this->request->param("force");
-        if (!$name) {
-            $this->error('参数name不能为空');
-        }
-        try {
-            $uid = $this->request->param("uid");
-            $token = $this->request->param("token");
-            $version = $this->request->param("version");
-            $extend = [
-                'uid'       => $uid,
-                'token'     => $token,
-                'version'   => $version
-            ];
-            $installRes = \app\admin\services\Addons::install($name, $force, $extend);
-            if($installRes['code']){
-                $info = \app\admin\services\Addons::getAddonInfo($name);
-//                $info['config'] = \app\admin\services\Addons::getAddonConfig($name) ? 1 : 0;
-                $info['state'] = 1;
-                $this->success('安装成功', ['addon' => $info]);
-            }else{
-                $this->error($installRes['msg']);
+        if($this->request->isAjax()){
+            $name = $this->request->param("name");
+            $force = (int)$this->request->param("force");
+            if (!$name) {
+                $this->error('参数name不能为空');
             }
-        } catch (Exception $e) {
-            $this->error($e->getMessage(), $e->getCode());
+            try {
+                $uid = $this->request->param("uid");
+                $token = $this->request->param("token");
+                $version = $this->request->param("version");
+                $extend = [
+                    'uid'       => $uid,
+                    'token'     => $token,
+                    'version'   => $version
+                ];
+                $installRes = \app\admin\services\Addons::install($name, $force, $extend);
+                if($installRes['code']){
+                    $info = \app\admin\services\Addons::getAddonInfo($name);
+//                $info['config'] = \app\admin\services\Addons::getAddonConfig($name) ? 1 : 0;
+                    $info['state'] = 1;
+                    $this->success('安装成功', ['addon' => $info]);
+                }else{
+                    $this->error($installRes['msg']);
+                }
+            } catch (Exception $e) {
+                $this->error($e->getMessage(), $e->getCode());
+            }
         }
+        $assign['name'] = $this->request->param("name");
+        $assign['version'] = $this->request->param("version");
+        $this->assign($assign);
+        return $this->fetch();
     }
 
     //设置状态

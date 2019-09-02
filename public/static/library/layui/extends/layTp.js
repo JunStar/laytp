@@ -550,6 +550,8 @@ layui.define([
                                 url = layTp.facade.url(uri,{id:checkData[key].id});
                                 layTp.facade.popup_frame(text, url);
                             }
+                        }else{
+                            layTp.facade.popup_frame(text, uri);
                         }
                         break;
                     case 'confirm_action':
