@@ -146,13 +146,25 @@ class Addons extends Services
         return parent::success('成功');
     }
 
+    //卸载插件
+    public static function uninstall($name)
+    {
+        $addon = self::getAddonClass($name);
+        if (is_object($addon)) {
+            $addon->uninstall();
+            //删除掉插件文件
+            DirFile::rmDirs(Env::get('root_path') . 'addons' . DS . $name);
+        }else{
+            return parent::error("{$name}类不存在");
+        }
+    }
+
     /**
      * 获取远程服务器
      * @return  string
      */
     protected static function getServerUrl()
     {
-
         return Config::get('addons.api_url');
     }
 
@@ -357,6 +369,8 @@ class Addons extends Services
         $class_file = Env::get('root_path') . 'addons' . DS . $name . DS . ucfirst($name) . '.php';
         if(is_file($class_file)){
             require_once $class_file;
+        }else{
+            return false;
         }
         $class_name = "addons\\{$name}\\" . ucfirst($name);
         $class = new $class_name();

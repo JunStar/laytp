@@ -24,10 +24,11 @@ class Addons extends Backend
                 $info = \app\admin\services\Addons::getAddonInfo($v['name']);
                 if(!$info){
                     $arr_res['data']['list']['data'][$k]['addon_exist'] = false;
+                    $arr_res['data']['list']['data'][$k]['local_state'] = 0;
                 }else{
                     $arr_res['data']['list']['data'][$k]['addon_exist'] = true;
+                    $arr_res['data']['list']['data'][$k]['local_state'] = $info['state'];
                 }
-                $arr_res['data']['list']['data'][$k]['local_state'] = $info['state'];
             }
 
             $res = json_encode($arr_res);
@@ -47,10 +48,11 @@ class Addons extends Backend
                 $info = \app\admin\services\Addons::getAddonInfo($v['name']);
                 if(!$info){
                     $arr_res['data']['list']['data'][$k]['addon_exist'] = false;
+                    $res['data']['list'][$k]['local_state'] = 0;
                 }else{
                     $arr_res['data']['list']['data'][$k]['addon_exist'] = true;
+                    $res['data']['list'][$k]['local_state'] = $info['state'];
                 }
-                $res['data']['list'][$k]['local_state'] = $info['state'];
             }
 
             $assign['list'] = $res['data']['list'];
@@ -106,6 +108,35 @@ class Addons extends Backend
             }
         }catch (Exception $e){
             return $this->error($e->getMessage());
+        }
+    }
+
+    //卸载
+    public function uninstall(){
+        $name = $this->request->param("name");
+        if (!$name) {
+            $this->error('参数name不能为空');
+        }
+        try {
+            $info = \app\admin\services\Addons::getAddonInfo($name);
+            if(!$info){
+                $this->error('插件不存在');
+            }
+            if($info['state'] == 1){
+                $this->error('请先关闭插件');
+            }
+            $installRes = \app\admin\services\Addons::uninstall($name);
+            if($installRes['code']){
+                $this->success('卸载成功');
+            }else{
+                $this->error($installRes['msg']);
+            }
+        } catch (Exception $e) {
+            $data['file'] = $e->getFile();
+            $data['msg'] = $e->getMessage();
+            $data['line'] = $e->getLine();
+            $data['code'] = $e->getCode();
+            $this->error('卸载失败', $data);
         }
     }
 }

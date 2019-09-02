@@ -73,6 +73,13 @@ layui.use(['layTp'],function() {
         layui.table.on('tool(default)', function(obj){
             if(default_table_tool.indexOf(obj.event) != -1){
                 layTp.facade.table_tool(obj);
+            }else{
+                //新增的其他操作按钮在这里来写
+                switch(obj.event){
+                    case 'uninstall':
+                        layTp.facade.popup_confirm("卸载",layTp.facade.url(module + "/" + controller + "/uninstall",{name:obj.data.name}));
+                        break;
+                }
             }
         });
 
@@ -102,7 +109,7 @@ layui.use(['layTp'],function() {
                 },
             });
         });
-    }
+    };
 
     func_controller.table_render();
 

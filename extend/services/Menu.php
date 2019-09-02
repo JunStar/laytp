@@ -17,7 +17,9 @@ class Menu extends Services
     //创建菜单
     public function create($menus,$pid=0){
         foreach($menus as $menu){
-            $id = \app\admin\model\auth\Menu::where('rule','=',$menu['rule'])->value('id');
+            $id = \app\admin\model\auth\Menu::where('rule','=',$menu['rule'])
+                ->where('name','=',$menu['name'])
+                ->value('id');
             if(!$id){
                 $add_menu = [
                     'name' => $menu['name'],
@@ -37,8 +39,23 @@ class Menu extends Services
     }
 
     //删除菜单
-    public function delete(){
+    public function delete($menus){
+        foreach($menus as $menu){
+            $info = \app\admin\model\auth\Menu::where('rule','=',$menu['rule'])
+                ->where('name','=',$menu['name'])
+                ->find();
+            if($info) {
+                if ($menu['delete_status'] == 1 && !$info->is_hide) {
+                    $info->is_hide = 1;
+                    $info->save();
+                }
+            }
 
+            if(isset($menu['children'])){
+                self::delete($menu['children']);
+            }
+        }
+        return true;
     }
 
     //启用菜单
