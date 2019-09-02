@@ -49,35 +49,35 @@
 {block name="js_template"}
 <script type="text/html" id="default_toolbar">
     <div class="layui-table-tool-temp">
-        <div class="layui-btn-group fl">
-            <a href="javascript:void(0);" class="layui-btn layui-btn-danger layui-btn-sm layui-icon layui-icon-download-circle">&nbsp;离线安装</a>
-        </div>
+<!--        <div class="layui-btn-group fl">-->
+<!--            <a href="javascript:void(0);" class="layui-btn layui-btn-danger layui-btn-sm layui-icon layui-icon-download-circle">&nbsp;离线安装</a>-->
+<!--        </div>-->
         <div class="layui-btn-group fl">
             <a href="javascript:void(0);" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-list active charge_status" click_search="true" field="charge_status" field_val="">&nbsp;全部</a>
             <a id="charge_status_all" href="javascript:void(0);" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-more-vertical charge_status" click_search="true" field="charge_status" field_val="0">&nbsp;免费</a>
             <a href="javascript:void(0);" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-rmb charge_status" click_search="true" field="charge_status" field_val="1">&nbsp;付费</a>
-            <a href="javascript:void(0);" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-home">&nbsp;本地插件</a>
+<!--            <a href="javascript:void(0);" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-home">&nbsp;本地插件</a>-->
         </div>
-        <div class="layui-btn-group fl">
-            <a href="javascript:void(0);" class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-username">&nbsp;会员信息</a>
-        </div>
+<!--        <div class="layui-btn-group fl">-->
+<!--            <a href="javascript:void(0);" class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-username">&nbsp;会员信息</a>-->
+<!--        </div>-->
     </div>
 </script>
 
 <script type="text/html" id="template_default_toolbar">
     <div class="layui-table-tool-temp">
-        <div class="layui-btn-group fl">
-            <a href="javascript:void(0);" class="layui-btn layui-btn-danger layui-btn-sm layui-icon layui-icon-download-circle">&nbsp;离线安装</a>
-        </div>
+<!--        <div class="layui-btn-group fl">-->
+<!--            <a href="javascript:void(0);" class="layui-btn layui-btn-danger layui-btn-sm layui-icon layui-icon-download-circle">&nbsp;离线安装</a>-->
+<!--        </div>-->
         <div class="layui-btn-group fl">
             <a href="javascript:void(0);" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-list {{#  if(d.charge_status === ''){ }}active{{#  } }} charge_status" field="charge_status" field_val="">&nbsp;全部</a>
             <a href="javascript:void(0);" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-more-vertical {{#  if(d.charge_status === 0){ }}active{{#  } }} charge_status" field="charge_status" field_val="0">&nbsp;免费</a>
             <a href="javascript:void(0);" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-rmb {{#  if(d.charge_status === 1){ }}active{{#  } }} charge_status" field="charge_status" field_val="1">&nbsp;付费</a>
-            <a href="javascript:void(0);" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-home">&nbsp;本地插件</a>
+<!--            <a href="javascript:void(0);" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-home">&nbsp;本地插件</a>-->
         </div>
-        <div class="layui-btn-group fl">
-            <a href="javascript:void(0);" class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-username">&nbsp;会员信息</a>
-        </div>
+<!--        <div class="layui-btn-group fl">-->
+<!--            <a href="javascript:void(0);" class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-username">&nbsp;会员信息</a>-->
+<!--        </div>-->
     </div>
 </script>
 
