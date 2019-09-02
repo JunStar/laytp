@@ -29,6 +29,8 @@ class Menu extends Services
                     'icon' => isset($menu['icon']) ? $menu['icon'] : $this->default_icon
                 ];
                 $id = $this->menu_model->insertGetId($add_menu);
+            }else{
+                $this->menu_model->where('id','=',$id)->update(['is_hide'=>0]);
             }
 
             if(isset($menu['children'])){
@@ -59,12 +61,42 @@ class Menu extends Services
     }
 
     //启用菜单
-    public function enable(){
+    public function enable($menus){
+        foreach($menus as $menu){
+            $info = \app\admin\model\auth\Menu::where('rule','=',$menu['rule'])
+                ->where('name','=',$menu['name'])
+                ->find();
+            if(is_object($info)){
+                if($info->is_hide) {
+                    $info->is_hide = 0;
+                    $info->save();
+                }
+            }
 
+            if(isset($menu['children'])){
+                self::enable($menu['children']);
+            }
+        }
+        return true;
     }
 
     //禁用菜单
-    public function disable(){
+    public function disable($menus){
+        foreach($menus as $menu){
+            $info = \app\admin\model\auth\Menu::where('rule','=',$menu['rule'])
+                ->where('name','=',$menu['name'])
+                ->find();
+            if($info) {
+                if ($menu['delete_status'] == 1 && !$info->is_hide) {
+                    $info->is_hide = 1;
+                    $info->save();
+                }
+            }
 
+            if(isset($menu['children'])){
+                self::disable($menu['children']);
+            }
+        }
+        return true;
     }
 }

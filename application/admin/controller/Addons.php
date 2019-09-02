@@ -98,10 +98,19 @@ class Addons extends Backend
     //设置状态
     public function set_status(){
         $field_val = $this->request->param('field_val');
+        $field = $this->request->param('field');
         $name = $this->request->param('name');
         try{
             $info['state'] = $field_val;
             if( \app\admin\services\Addons::setAddonInfo($name, $info) ){
+                $addon = \app\admin\services\Addons::getAddonInstance($name);
+                if($field == 'local_state'){
+                    if($field_val == 1){
+                        $addon->enable();
+                    }else{
+                        $addon->disable();
+                    }
+                }
                 return $this->success('操作成功');
             }else{
                 return $this->error('操作失败');

@@ -317,6 +317,9 @@ class Addons extends Services
     {
         $file = Env::get('root_path') . DS . 'addons' . DS . $name . DIRECTORY_SEPARATOR . 'info.ini';
         $addon = self::getAddonInstance($name);
+        if(!$addon){
+            return false;
+        }
         $array = $addon->setInfo($name, $array);
         $res = array();
         foreach ($array as $key => $val) {
