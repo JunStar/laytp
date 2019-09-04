@@ -1,7 +1,4 @@
 <?php
-
-use think\facade\Env;
-
 /**
  * 二维数组，外层索引替换成item内某个索引对应的值
  * @param $array

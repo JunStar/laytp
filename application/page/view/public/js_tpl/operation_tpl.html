@@ -1,0 +1,10 @@
+<script type="text/html" id="operation">
+    <div class="layui-btn-group">
+        {if ($laytp_admin_user['is_super_manager'] || in_array($js_global_var['module'].'/'.$js_global_var['controller'].'/edit', $rule_list))}
+        <a class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-edit" lay-event="edit" title="编辑" layer-tips="编辑"> </a>
+        {/if}
+        {if $has_del && ($laytp_admin_user['is_super_manager'] || in_array($js_global_var['module'].'/'.$js_global_var['controller'].'/del', $rule_list))}
+        <a class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-delete" lay-event="del" title="删除" layer-tips="删除" colour="#f51c1c"> </a>
+        {/if}
+    </div>
+</script>

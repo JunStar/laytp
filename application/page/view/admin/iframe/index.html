@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>{$Think.config.laytp.basic.site_name}</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <!-- 加载公用css文件 -->
+    {include file="public/layout/file/css_file"}
+    <!-- 自定义样式 -->
+    {block name="style"}{/block}
+    <!-- 加载全局js常量 -->
+    {include file="public/layout/file/js_global_var"}
+    {include file="public/layout/file/js_file"}
+</head>
+<body class="layui-layout-body laytp-theme-11">
+<div class="layui-layout layui-layout-admin">
+    {include file="public/layout/file/top_menu"}
+    <iframe id="layTpIframe" name="layTpIframe" scrolling="yes" src="" width="100%" height="100%" frameborder="0" noresize> </iframe>
+    <!-- 底部固定区域 -->
+    <div class="layui-footer">
+        © laytp.phpby.com
+    </div>
+</div>
+<script>
+    document.addEventListener("click",clickHidden);//所有组件添加点击事件
+
+    function clickHidden(e){
+        if( e.target.id!="laytp_clear_cache" ){
+            $('.layui-dropdown').hide();
+            $('#laytp_clear_cache').parent('li').removeClass('layui-this');
+
+        }
+    }
+
+    window.onload = function(){
+        var ifrs = document.getElementsByTagName('iframe');
+        for (var i = 0; i < ifrs.length; i++) {
+            try {
+                ifrs[i].contentWindow.document.onclick = (function (ifr) {
+                    return function () {
+                        $('.layui-dropdown').hide();
+                        $('#laytp_clear_cache').parent('li').removeClass('layui-this');
+                    }
+                })(ifrs[i]);
+            }
+            catch (ex) { }
+        }
+    }
+</script>
+</body>
+</html>

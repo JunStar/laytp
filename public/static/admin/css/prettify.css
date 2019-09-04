@@ -94,9 +94,79 @@ body .laytp-layer .layui-layer-btn{
     color: #369;
 }
 
+/*.layui-nav-tree .layui-nav-child dd.layui-this, .layui-nav-tree .layui-nav-child dd.layui-this a, .layui-nav-tree .layui-this, .layui-nav-tree .layui-this>a, .layui-nav-tree .layui-this>a:hover{*/
+/*    background-color:var(--laytp-layui-nav-child-a-bg);*/
+/*}*/
+
+/*.layui-nav-tree .layui-nav-child dd.layui-this, .layui-nav-tree .layui-nav-child dd.layui-this a, .layui-nav-tree .layui-this, .layui-nav-tree .layui-this>a, .layui-nav-tree .layui-this>a:hover{*/
+/*    background-color:var(--laytp-layui-nav-child-a-bg);*/
+/*}*/
+
 .layui-btn:active, .layui-btn.active{
     color: #fff;
     background-color:#217dbb;
     border-color:#2077b2;
     box-shadow:inset 0 3px 5px rgba(0,0,0,0.125)
+}
+
+/* 导航相关 */
+.layui-nav *{
+    font-size:13px;
+}
+
+.layui-nav .layui-nav-item{
+    line-height:30px;
+}
+
+.layui-nav .layui-this:after{
+    width:0;
+}
+
+.layui-header .layui-nav .layui-nav-item:hover{
+    background:rgba(0,0,0,0.1);
+}
+
+.layui-header .layui-nav .layui-nav-item > a{
+    color:#fff;
+}
+
+.layui-nav-bar{
+    height:0;
+}
+
+.layui-header .layui-nav .layui-this{
+    background:rgba(0,0,0,0.1);
+}
+
+.layui-layout-admin .layui-side{
+    top:50px;
+}
+
+.layui-layout-admin .layui-side{
+    width: 230px;
+    height:690px;
+}
+
+.layui-side-scroll{
+    width: 100%;
+    min-height:100%;
+}
+
+.layui-nav-tree{
+    width: 100%;
+}
+
+.main-nav .layui-nav-item a{
+    height:50px;
+    line-height: 50px;
+}
+
+.layui-layout-right .layui-nav-item a{
+    height:50px;
+    line-height: 50px;
+}
+
+.layui-side-scroll .layui-nav-tree .layui-nav-item a{
+    height:42px;
+    line-height: 42px;
 }
