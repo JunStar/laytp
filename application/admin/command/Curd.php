@@ -830,7 +830,7 @@ EOD;
         $data['field_name'] = $info['field_name'];
         $data['field_comment'] = $info['field_comment'];
         if(!$info['form_empty']){
-            $data['verify'] = $data['verify'] ? 'required|'.$data['verify'] : 'required';
+            $data['verify'] = isset($data['verify']) ? 'required|'.$data['verify'] : 'required';
         }
         return $this->get_replaced_tpl($name, $data);
     }
