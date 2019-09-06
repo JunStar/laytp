@@ -53,7 +53,10 @@ class AdminLog extends Backend
             for($i=1;$i<=4;$i++){
                 if($menus[0]['pid']){
                     $new_menu = model('auth.Menu')->where('id','=',$menus[0]['pid'])->find()->toArray();
-                    array_unshift($menus, $new_menu );
+                    if($new_menu){
+                        $new_menu = $new_menu->toArray();
+                        array_unshift($menus, $new_menu );
+                    }
                 }else{
                     break;
                 }
