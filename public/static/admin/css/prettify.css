@@ -161,7 +161,7 @@ body .laytp-layer .layui-layer-btn{
     line-height: 50px;
 }
 
-.layui-layout-right .layui-nav-item a{
+.layui-layout-right .layui-nav-item>a{
     height:50px;
     line-height: 50px;
 }
@@ -169,4 +169,30 @@ body .laytp-layer .layui-layer-btn{
 .layui-side-scroll .layui-nav-tree .layui-nav-item a{
     height:42px;
     line-height: 42px;
+}
+
+layui-nav-child dd.layui-this, .layui-nav-tree .layui-nav-child dd.layui-this a{
+    background: var(--laytp-layui-nav-child-a-bg)!important;
+}
+
+.layui-nav .layui-nav-child dd.layui-this a, .layui-nav-child dd.layui-this{
+    background: var(--laytp-layui-nav-child-a-bg)!important;
+}
+
+.layui-layout-right .layui-nav-mored, .layui-nav-itemed>a .layui-nav-more{
+    margin-top: -9px;
+}
+
+.layui-nav-tree .layui-nav-mored, .layui-nav-itemed>a .layui-nav-more{
+    margin-top: -3px;
+}
+
+.layui-nav{
+    background-color:#009688;
+}
+
+.layui-nav-tree li.layui-nav-itemed>a{
+    /*background:#1e282c!important;*/
+    color:var(--laytp-layui-side-layui-this-a)!important;
+    margin-left: 5px;
 }

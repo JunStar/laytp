@@ -43,10 +43,10 @@
 
 <script>
     // 导航菜单的间隔像素
-    let menuCell = 5;
+    let menuCell = 20;
 
-    layui.use('element', function(){
-        let element = layui.element;
+    layui.use(['layTp'], function(){
+        let element = layui.laytp_element;
         let $ = layui.jquery;
 
         let data= '[{"name":"主页","url":"www.sys.com","childMenus":null},{"name":"系统设置","url":"www.sys.com","childMenus":[{"name":"权限模块","url":"www.sys.com","childMenus":null}]},{"name":"业务系统","url":"www.manager.com","childMenus":[{"name":"销售系统","url":"www.child01.com","childMenus":[{"name":"订单系统","url":"www.order.com","childMenus":[{"name":"未完成订单","url":"www.undo.com","childMenus":[{"name":"服装部订单","url":"www.clothes.com","childMenus":[{"name":"成人部分","url":"www.clothes.com","childMenus":null},{"name":"儿童部分","url":"www.clothes.com","childMenus":null}]},{"name":"玩具部订单","url":"www.clothes.com","childMenus":[{"name":"成人部分","url":"www.clothes.com","childMenus":null},{"name":"儿童部分","url":"www.clothes.com","childMenus":null}]}]}]},{"name":"结算系统","url":"www.order.com","childMenus":null}]},{"name":"公关系统","url":"www.child02.com","childMenus":null}]}]';
@@ -64,7 +64,7 @@
                 }
                 liStr+="</dl></li>";
             }else{
-                liStr+="<li class=\"layui-nav-item\"><a class=\"\" href=\"javascript:;\"><i class='layui-icon' >&#xe66c;</i> "+data[i].name+"</a></li>";
+                liStr+="<li class=\"layui-nav-item\"><a href=\"javascript:;\"><i class='layui-icon' >&#xe66c;</i> "+data[i].name+"</a></li>";
             }
         };
         $("#navBarId").html("<ul class=\"layui-nav layui-nav-tree\"  lay-filter=\"test\">\n" +liStr+"</ul>");
@@ -89,30 +89,7 @@
         return subStr;
     }
 
-    layui.use('table', function(){
-        let table = layui.table;
-
-        table.render({
-            elem: '#test'
-            ,url:'common/userList'
-            ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
-            ,cols: [[
-                {field:'id', width:80, title: 'id', sort: true}
-                ,{field:'lngCm', width:80, title: 'lngCm'}
-                ,{field:'username', width:80, title: 'username', sort: true}
-            ]]
-            ,request:{
-                pageName: 'curr' //页码的参数名称，默认：page
-                ,limitName: 'nums' //每页数据量的参数名，默认：limit
-            }
-            //用于对返回的数据格式的自定义，如：
-            ,response: {
-                statusName: 'succ' //数据状态的字段名称，默认：code
-                ,statusCode: 0 //成功的状态码，默认：0
-                ,msgName: 'msg' //状态信息的字段名称，默认：msg
-                ,countName: 'totalSize' //数据总数的字段名称，默认：count
-                ,dataName: 'list' //数据列表的字段名称，默认：data
-            }
-        });
-    });
+    function repeat(str , n){
+        return new Array(n+1).join(str);
+    }
 </script>
