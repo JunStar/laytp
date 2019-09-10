@@ -196,3 +196,7 @@ layui-nav-child dd.layui-this, .layui-nav-tree .layui-nav-child dd.layui-this a{
     color:var(--laytp-layui-side-layui-this-a)!important;
     margin-left: 5px;
 }
+
+.layui-layout-admin .layui-footer{
+    left:230px;
+}
