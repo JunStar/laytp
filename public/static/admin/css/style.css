@@ -48,7 +48,7 @@ body{
 .head-info .layui-nav-child {top:60px}
 .head-info .layui-nav-item a {padding:0 10px}
 .main-nav {padding:0}
-.main-nav .layui-nav-item a {padding:0;margin:0 15px}
+/*.main-nav .layui-nav-item a {padding:0;margin:0 15px}*/
 .footer {line-height:44px;padding:0 10px;color:#666}
 .footer a {color:#5c90d2}
 #switchNav {position:fixed;left:0;top:60px;z-index:99999}
@@ -163,7 +163,7 @@ body{
 .laytp-theme-item-10 {background-color:#369}
 .laytp-theme-10 {--laytp-head-bg:#369;--laytp-side-bg:#eef1f5;--laytp-layui-form-checked:#369;--laytp-layui-nav-bar:#369;--laytp-layui-nav-item-a-bg:#eff2f6;--laytp-layui-nav-item-a-c:#48576a;--laytp-layui-nav-child-a-bg:#e5e9f2;--laytp-layui-nav-child-a-c:#48576a;--laytp-layui-nav-child-a-c-hover:#d1dbe5;--laytp-layui-side-i:#48566a;--laytp-layui-side-layui-this-a:#369;--laytp-side-layui-nav-more:#48566a;--laytp-layui-tab-title:#f9f9f9;--laytp-layui-nav-bar:#369;--laytp-layui-btn-normal:#369;--laytp-layui-btn-primary:#fff;--laytp-layui-btn-primary-hover:#369;--laytp-layui-form-radio-hover:#369;--laytp-layui-laypage-em:#369;--laytp-border-color:#369;--laytp-layui-form-label:#666}
 .laytp-theme-11 {
-	--laytp-head-logo-bg:#15a589;
+	--laytp-head-logo-bg:#18bc9c;
 	--laytp-head-bg:#18bc9c;
 	--laytp-side-bg:#222d32;
 	--laytp-layui-form-checked:#369;
