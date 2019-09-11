@@ -82,21 +82,20 @@
                 liStr+="<li class=\"layui-nav-item\"><a class=\"\" href=\"javascript:;\"><i class='layui-icon' >&#xe653;</i> "+data[i].name+"</a>\n"+
                     "<dl class=\"layui-nav-child\">\n";
                 // 遍历获取子菜单
-                for( let k = 0; k <data[i].childMenus.length; k++){
+                for( let k = 0; k < data[i].childMenus.length; k++){
                     liStr+=getChildMenu(data[i].childMenus[k],0);
                 }
                 liStr+="</dl></li>";
             }else{
                 liStr+="<li class=\"layui-nav-item\"><a href=\"javascript:;\"><i class='layui-icon' >&#xe66c;</i> "+data[i].name+"</a></li>";
             }
-        };
+        }
         $("#navBarId").html("<ul class=\"layui-nav layui-nav-tree\"  lay-filter=\"test\">\n" +liStr+"</ul>");
         element.init();
     });
 
     // 递归生成子菜单
     function getChildMenu(subMenu,num) {
-        // console.log("num: "+num);
         num++;
         let subStr = "";
         if(subMenu.childMenus!=null&&subMenu.childMenus.length>0){
