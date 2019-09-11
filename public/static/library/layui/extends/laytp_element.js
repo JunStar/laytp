@@ -144,25 +144,29 @@ layui.define("jquery", function (t) {
                 //三级及以下的等级菜单
                 }else{
                     //点击已选中菜单
-
+                    if( s.hasClass('layui-nav-itemed') || s.hasClass('layui-this') ){
+                        s.removeClass('layui-nav-itemed');
+                        s.removeClass('layui-this');
                     //点击未选中菜单
-                    let parents = [];
-                    layui.each(s.parents(),function(key,item){
-                        if($(item).hasClass('layui-nav-itemed')){
-                            parents.push(item);
-                        }
-                    });
-                    $('.layui-nav-tree').find('li').removeClass('layui-nav-itemed');
-                    $('.layui-nav-tree').find('li').removeClass('layui-this');
-                    $('.layui-nav-tree').find('dd').removeClass('layui-this');
-                    layui.each(parents,function(key,item){
-                        $(item).addClass('layui-nav-itemed');
-                    });
+                    }else{
+                        let parents = [];
+                        layui.each(s.parents(),function(key,item){
+                            if($(item).hasClass('layui-nav-itemed')){
+                                parents.push(item);
+                            }
+                        });
+                        $('.layui-nav-tree').find('li').removeClass('layui-nav-itemed');
+                        $('.layui-nav-tree').find('li').removeClass('layui-this');
+                        $('.layui-nav-tree').find('dd').removeClass('layui-this');
+                        layui.each(parents,function(key,item){
+                            $(item).addClass('layui-nav-itemed');
+                        });
 
-                    if (s.find('dl').attr('class') == 'layui-nav-child') {
-                        s.addClass('layui-nav-itemed');
-                    } else {
-                        s.addClass('layui-this');
+                        if (s.find('dl').attr('class') == 'layui-nav-child') {
+                            s.addClass('layui-nav-itemed');
+                        } else {
+                            s.addClass('layui-this');
+                        }
                     }
                 }
             }, collapse: function () {
