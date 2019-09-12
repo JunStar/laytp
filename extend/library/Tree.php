@@ -282,7 +282,7 @@ class Tree
 
      * 树型结构UL
      * @param int $myid 表示获得这个ID下的所有子级
-     * @param string $itemtpl 条目模板 如："<li value=@id @selected @disabled>@name @child_list</li>"
+     * @param string $itemtpl 条目模板 如："<li value=@id @selected @disabled>@name @childMenus</li>"
      * @param string $selectedids 选中的ID
      * @param string $disabledids 禁用的ID
      * @param string $wraptag 子列表包裹标签
@@ -307,8 +307,8 @@ class Tree
                 }, array_keys($value)), $value);
                 $nstr = strtr($itemtpl, $value);
                 $childdata = $this->getTreeUl($id, $itemtpl, $selectedids, $disabledids, $wraptag, $wrapattr);
-                $child_list = $childdata ? "<{$wraptag} {$wrapattr}>" . $childdata . "</{$wraptag}>" : "";
-                $str .= strtr($nstr, array('@child_list' => $child_list));
+                $childMenus = $childdata ? "<{$wraptag} {$wrapattr}>" . $childdata . "</{$wraptag}>" : "";
+                $str .= strtr($nstr, array('@childMenus' => $childMenus));
             }
         }
         return $str;
@@ -346,10 +346,10 @@ class Tree
                 $nstr = strtr($itemtpl, $value);
                 $value = array_merge($value, $bakvalue);
                 $childdata = $this->getTreeMenu($id, $itemtpl, $selectedids, $disabledids, $wraptag, $wrapattr, $deeplevel + 1);
-                $child_list = $childdata ? "<{$wraptag} {$wrapattr}>" . $childdata . "</{$wraptag}>" : "";
-                $child_list = strtr($child_list, array('@class' => $childdata ? 'last' : ''));
+                $childMenus = $childdata ? "<{$wraptag} {$wrapattr}>" . $childdata . "</{$wraptag}>" : "";
+                $childMenus = strtr($childMenus, array('@class' => $childdata ? 'last' : ''));
                 $value = array(
-                    '@child_list' => $child_list,
+                    '@childMenus' => $childMenus,
                     '@url'       => $childdata || !isset($value['@url']) ? "javascript:;" : url($value['@url']),
                     '@addtabs'   => $childdata || !isset($value['@url']) ? "" : (stripos($value['@url'], "?") !== false ? "&" : "?") . "ref=addtabs",
                     '@caret'     => ($childdata && (!isset($value['@badge']) || !$value['@badge']) ? '<i class="fa fa-angle-left"></i>' : ''),
@@ -442,7 +442,7 @@ class Tree
                 $spacer = $itemprefix ? $itemprefix . $j : '';
                 $value['spacer'] = $spacer;
                 $data[$n] = $value;
-                $data[$n]['child_list'] = $this->getTreeArray($id, $itemprefix . $k . $this->nbsp);
+                $data[$n]['childMenus'] = $this->getTreeArray($id, $itemprefix . $k . $this->nbsp);
                 $n++;
                 $number++;
             }
@@ -460,15 +460,15 @@ class Tree
         $arr = [];
         foreach ($data as $k => $v)
         {
-            $child_list = isset($v['child_list']) ? $v['child_list'] : [];
-            unset($v['child_list']);
+            $childMenus = isset($v['childMenus']) ? $v['childMenus'] : [];
+            unset($v['childMenus']);
             $v[$field] = $v['spacer'] . ' ' . $v[$field];
-            $v['has_child'] = $child_list ? 1 : 0;
+            $v['has_child'] = $childMenus ? 1 : 0;
             if ($v['id'])
                 $arr[] = $v;
-            if ($child_list)
+            if ($childMenus)
             {
-                $arr = array_merge($arr, $this->getTreeList($child_list, $field));
+                $arr = array_merge($arr, $this->getTreeList($childMenus, $field));
             }
         }
         return $arr;

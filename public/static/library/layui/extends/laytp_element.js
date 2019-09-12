@@ -116,7 +116,7 @@ layui.define("jquery", function (t) {
 
                 //点击顶级菜单
                 if( s.parent().hasClass('main-nav') ) {
-                    console.log('test');
+                    console.log(menu_json);
                 //点击二级菜单
                 }else if(s.parent().parent().attr('id') == 'navBarId'){
                     //点击已经选中的菜单

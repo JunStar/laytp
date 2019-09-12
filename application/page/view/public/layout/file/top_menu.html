@@ -2,9 +2,9 @@
     <div class="fl header-logo">{$Think.config.laytp.basic.site_name}</div>
     <ul class="layui-nav fl nobg main-nav">
         {foreach $first_menu as $k=>$menu}
-        <li class="layui-nav-item">
+        <li class="layui-nav-item {if $k==0}layui-this{/if}">
             <a href="javascript:;">
-                <i class="{$menu['icon']}"></i> {$menu['name']}
+                <i class="{$menu.icon}"></i> {$menu.name}
             </a>
         </li>
         {/foreach}
@@ -44,53 +44,41 @@
 <script>
     // 导航菜单的间隔像素
     let menuCell = 20;
-
+    let menu_tree = '{:json_encode($menu_tree,JSON_UNESCAPED_UNICODE)}';
+    const menu_json = JSON.parse(menu_tree);
+    let itemed;
+    let athis;
+    let k_val = 0;
+    let default_menu;
     layui.use(['layTp'], function(){
         let element = layui.laytp_element;
         let $ = layui.jquery;
-
-        let data= '[' +
-            '{"name":"主页","url":"www.sys.com","childMenus":null},' +
-            '{"name":"系统设置","url":"www.sys.com","childMenus":[' +
-                '{"name":"权限模块","url":"www.sys.com","childMenus":null}' +
-            ']},' +
-            '{"name":"业务系统","url":"www.manager.com","childMenus":[' +
-                '{"name":"销售系统","url":"www.child01.com","childMenus":[' +
-                    '{"name":"订单系统","url":"www.order.com","childMenus":[' +
-                        '{"name":"未完成订单","url":"www.undo.com","childMenus":[' +
-                            '{"name":"服装部订单","url":"www.clothes.com","childMenus":[' +
-                                '{"name":"成人部分","url":"www.clothes.com","childMenus":null},' +
-                                '{"name":"儿童部分","url":"www.clothes.com","childMenus":null}' +
-                            ']},' +
-                            '{"name":"玩具部订单","url":"www.clothes.com","childMenus":[' +
-                                '{"name":"成人部分","url":"www.clothes.com","childMenus":null},' +
-                                '{"name":"儿童部分","url":"www.clothes.com","childMenus":null}' +
-                            ']}' +
-                        ']}' +
-                    ']},' +
-                    '{"name":"结算系统","url":"www.order.com","childMenus":null}' +
-                ']},' +
-                '{"name":"公关系统","url":"www.child02.com","childMenus":null}' +
-            ']}' +
-        ']';
-        data = JSON.parse(data);
+        //取出一级菜单
+        let data = menu_json[0].childMenus;
         let liStr= "";
         // 遍历生成主菜单
         for( let i = 0; i <data.length; i++){
+            itemed = (i==0) ? ' layui-nav-itemed' : '';
+            athis = (i==0) ? ' layui-this' : '';
             // 判断是否存在子菜单
-            if(data[i].childMenus!=null&&data[i].childMenus.length>0){
-                liStr+="<li class=\"layui-nav-item\"><a class=\"\" href=\"javascript:;\"><i class='layui-icon' >&#xe653;</i> "+data[i].name+"</a>\n"+
+            if(data[i].childMenus!=null && data[i].childMenus.length>0){
+                liStr+="<li class=\"layui-nav-item"+itemed+"\"><a href=\"javascript:;\"><i class='layui-icon'>&#xe653;</i> "+data[i].name+"</a>\n"+
                     "<dl class=\"layui-nav-child\">\n";
                 // 遍历获取子菜单
-                for( let k = 0; k < data[i].childMenus.length; k++){
+                for( let k = 0; k < data[i].childMenus.length; k++ ){
+                    k_val = k_val + k;
+                    if(k_val == 0){
+                        default_menu = data[i].childMenus[k];
+                    }
                     liStr+=getChildMenu(data[i].childMenus[k],0);
                 }
                 liStr+="</dl></li>";
             }else{
-                liStr+="<li class=\"layui-nav-item\"><a href=\"javascript:;\"><i class='layui-icon' >&#xe66c;</i> "+data[i].name+"</a></li>";
+                liStr+="<li class=\"layui-nav-item"+athis+"\"><a href=\"javascript:;\"><i class='layui-icon'>&#xe66c;</i> "+data[i].name+"</a></li>";
             }
         }
-        $("#navBarId").html("<ul class=\"layui-nav layui-nav-tree\"  lay-filter=\"test\">\n" +liStr+"</ul>");
+        $("#navBarId").html("<ul class=\"layui-nav layui-nav-tree\" lay-filter=\"test\">\n"+liStr+"</ul>");
+        $('#layTpIframe').attr('src',default_menu.rule);
         element.init();
     });
 
@@ -98,15 +86,21 @@
     function getChildMenu(subMenu,num) {
         num++;
         let subStr = "";
-        if(subMenu.childMenus!=null&&subMenu.childMenus.length>0){
-            subStr+="<dd><ul><li class=\"layui-nav-item\" ><a style=\"margin-Left:"+num*menuCell+"px\" class=\"\" href=\"javascript:;\"><i class='layui-icon' >&#xe653;</i> "+subMenu.name+"</a>" +
+        itemed = (k_val==0) ? ' layui-nav-itemed' : '';
+        athis = (k_val==0) ? ' layui-this' : '';
+        if(subMenu.childMenus!=null && subMenu.childMenus.length>0){
+            subStr+="<dd><ul><li class=\"layui-nav-item"+itemed+"\" ><a style=\"margin-Left:"+num*menuCell+"px\" class=\"\" href=\"javascript:;\"><i class='layui-icon' >&#xe653;</i> "+subMenu.name+"</a>" +
                 "<dl class=\"layui-nav-child\">\n";
             for( let j = 0; j <subMenu.childMenus.length; j++){
+                k_val = k_val + j;
+                if(k_val == 0){
+                    default_menu = data[i].childMenus[k];
+                }
                 subStr+=getChildMenu(subMenu.childMenus[j],num);
             }
             subStr+="</dl></li></ul></dd>";
         }else{
-            subStr+="<dd><a style=\"margin-Left:"+num*menuCell+"px\" href=\"javascript:;\"><i class='layui-icon' >&#xe66c;</i> "+subMenu.name+"</a></dd>";
+            subStr+="<dd class='"+athis+"'><a style=\"margin-Left:"+num*menuCell+"px\" href=\"javascript:;\"><i class='layui-icon' >&#xe66c;</i> "+subMenu.name+"</a></dd>";
         }
         return subStr;
     }

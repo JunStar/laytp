@@ -96,16 +96,19 @@ class Newbackend extends Controller
         $menus = model('admin/auth.Menu')->where($menus_where)->order(['pid'=>'asc','sort'=>'desc'])->select()->toArray();
         $menu_tree_obj = Tree::instance();
         $menu_tree_obj->init($menus);
+        $tree = $menu_tree_obj->getTreeArray(0);
+        $assign['menu_tree'] = $tree;
+
         foreach($menus as $k=>$v){
             if($v['pid'] == 0){
                 $menus_list_arr[] = $v;
                 $first_menu[] = $v;
             }
         }
-        foreach($menus_list_arr as $k=>$v){
-            $menus_list_arr[$k]['child_list'] = $menu_tree_obj->getTreeArray($v['id']);
-        }
-
+//        foreach($menus_list_arr as $k=>$v){
+//            $menus_list_arr[$k]['child_list'] = $menu_tree_obj->getTreeArray($v['id']);
+//        }
+//
         $assign['first_menu'] = $first_menu;
         $this->assign($assign);
     }

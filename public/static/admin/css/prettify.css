@@ -200,3 +200,7 @@ layui-nav-child dd.layui-this, .layui-nav-tree .layui-nav-child dd.layui-this a{
 .layui-layout-admin .layui-footer{
     left:230px;
 }
+
+.layui-body{
+    left:230px;
+}

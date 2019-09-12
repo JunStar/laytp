@@ -189,7 +189,7 @@ body{
 }
 .layui-header {z-index:900;background-color:var(--laytp-head-bg)!important}
 .header-logo {background-color:var(--laytp-head-logo-bg);color:#fff;}
-.layui-side {z-index:900;background-color:var(--laytp-side-bg)!important}
+.layui-side {z-index:900;background-color:var(--laytp-side-bg)!important;}
 .layui-header .layui-nav .layui-this:after,.layui-header .layui-nav-bar {background-color:var(--laytp-layui-nav-bar)!important}
 .layui-nav-tree .layui-nav-item a {background-color:var(--laytp-layui-nav-item-a-bg)!important;color:var(--laytp-layui-nav-item-a-c)!important}
 .layui-nav-tree .layui-nav-child a {background-color:var(--laytp-layui-nav-child-a-bg)!important;color:var(--laytp-layui-nav-child-a-c)!important}
