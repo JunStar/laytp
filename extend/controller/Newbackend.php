@@ -41,6 +41,10 @@ class Newbackend extends Controller
         $this->init_assing_val();
         $this->is_show_batch();
         $this->menu();
+        $ref = $this->request->param('ref');
+        if($ref){
+            exit($this->fetch('admin/iframe/index'));
+        }
     }
 
     //权限检测
@@ -105,10 +109,7 @@ class Newbackend extends Controller
                 $first_menu[] = $v;
             }
         }
-//        foreach($menus_list_arr as $k=>$v){
-//            $menus_list_arr[$k]['child_list'] = $menu_tree_obj->getTreeArray($v['id']);
-//        }
-//
+
         $assign['first_menu'] = $first_menu;
         $this->assign($assign);
     }
@@ -132,6 +133,9 @@ class Newbackend extends Controller
         $assign['role_ids'] = $this->role_ids ? $this->role_ids : [];
         $assign['rule_list'] = $this->rule_list ? $this->rule_list : [];
         $assign['is_show_search_btn'] = $this->is_show_search_btn;
+
+        $assign['un_show_menus'] = $this->request->param('un_show_menus');
+        $assign['target_url'] = $this->module . '/' . $this->controller . '/' . $this->action;
 
         $this->assign($assign);
     }

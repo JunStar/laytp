@@ -9,4 +9,8 @@ class Iframe extends Newbackend
     {
         return $this->fetch();
     }
+
+    public function test(){
+        echo 'test';
+    }
 }

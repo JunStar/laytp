@@ -78,9 +78,22 @@
             }
         }
         $("#navBarId").html("<ul class=\"layui-nav layui-nav-tree\" lay-filter=\"test\">\n"+liStr+"</ul>");
-        $('#layTpIframe').attr('src',default_menu.rule);
+        if(default_menu.rule != targer_url){
+            $('#layTpIframe').attr('src',__URL__ + targer_url);
+            editHistory(default_menu.name,__URL__ + targer_url + '?ref=1');
+        }else{
+            $('#layTpIframe').attr('src',__URL__ + default_menu.rule);
+            editHistory(default_menu.name,__URL__ + default_menu.rule + '?ref=1');
+        }
         element.init();
     });
+
+    function editHistory(title,url){
+        var stateObject = {};
+        var title = title;
+        var newUrl = url;
+        history.pushState(stateObject,title,newUrl);
+    }
 
     // 递归生成子菜单
     function getChildMenu(subMenu,num) {
