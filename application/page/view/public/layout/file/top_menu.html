@@ -1,7 +1,7 @@
 <div class="layui-header" style="z-index:99999!important;">
     <div class="fl header-logo">{$Think.config.laytp.basic.site_name}</div>
     <ul class="layui-nav fl nobg main-nav">
-        {foreach $first_menu as $k=>$menu}
+        {foreach $first_menus as $k=>$menu}
         <li class="layui-nav-item {if $k==0}layui-this{/if}">
             <a href="javascript:;">
                 <i class="{$menu.icon}"></i> {$menu.name}
@@ -50,6 +50,7 @@
     let athis;
     let k_val = 0;
     let default_menu;
+    let ref = {$ref};
     layui.use(['layTp'], function(){
         let element = layui.laytp_element;
         let $ = layui.jquery;
@@ -78,13 +79,21 @@
             }
         }
         $("#navBarId").html("<ul class=\"layui-nav layui-nav-tree\" lay-filter=\"test\">\n"+liStr+"</ul>");
-        if(default_menu.rule != targer_url){
-            $('#layTpIframe').attr('src',__URL__ + targer_url);
-            editHistory(default_menu.name,__URL__ + targer_url + '?ref=1');
+        console.log(default_menu);
+        console.log(targer_url);
+        if(ref == 1){
+            if(default_menu.rule != targer_url){
+                $('#layTpIframe').attr('src',__URL__ + targer_url);
+                editHistory(default_menu.name,__URL__ + targer_url + '?ref=1');
+            }else{
+                $('#layTpIframe').attr('src',__URL__ + default_menu.rule);
+                editHistory(default_menu.name,__URL__ + default_menu.rule + '?ref=1');
+            }
         }else{
             $('#layTpIframe').attr('src',__URL__ + default_menu.rule);
             editHistory(default_menu.name,__URL__ + default_menu.rule + '?ref=1');
         }
+
         element.init();
     });
 
@@ -92,7 +101,8 @@
         var stateObject = {};
         var title = title;
         var newUrl = url;
-        history.pushState(stateObject,title,newUrl);
+        // history.pushState(stateObject,title,newUrl);
+        history.replaceState(stateObject,title,newUrl);
     }
 
     // 递归生成子菜单

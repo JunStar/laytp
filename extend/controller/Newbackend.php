@@ -26,6 +26,7 @@ class Newbackend extends Controller
     public $batch_action_list=['edit','del'];//批量操作下拉展示的节点函数名
     public $is_show_search_btn = true;//是否展示筛选按钮
     public $no_need_login=['select_page'];//无需登录的方法名（无需登录就不需要鉴权了）
+    public $ref;//前端直接访问带ref=1参数的链接地址就直接渲染菜单页，并且前端js把iframe的地址跳转到当前地址
 
     public function initialize(){
         if( $this->request->isPost() ){
@@ -41,8 +42,7 @@ class Newbackend extends Controller
         $this->init_assing_val();
         $this->is_show_batch();
         $this->menu();
-        $ref = $this->request->param('ref');
-        if($ref){
+        if($this->ref){
             exit($this->fetch('admin/iframe/index'));
         }
     }
@@ -103,14 +103,15 @@ class Newbackend extends Controller
         $tree = $menu_tree_obj->getTreeArray(0);
         $assign['menu_tree'] = $tree;
 
+        $first_menus = [];
         foreach($menus as $k=>$v){
             if($v['pid'] == 0){
                 $menus_list_arr[] = $v;
-                $first_menu[] = $v;
+                $first_menus[] = $v;
             }
         }
 
-        $assign['first_menu'] = $first_menu;
+        $assign['first_menus'] = $first_menus;
         $this->assign($assign);
     }
 
@@ -135,6 +136,9 @@ class Newbackend extends Controller
         $assign['is_show_search_btn'] = $this->is_show_search_btn;
 
         $assign['un_show_menus'] = $this->request->param('un_show_menus');
+
+        $assign['ref'] = intval( $this->request->param('ref') );
+        $this->ref = $assign['ref'];
         $assign['target_url'] = $this->module . '/' . $this->controller . '/' . $this->action;
 
         $this->assign($assign);
