@@ -2,6 +2,7 @@ audio{
     height: 30px;
 }
 
+
 .layui-table-tips-main{
     max-height: 400px;
 }
@@ -36,7 +37,14 @@ audio{
  */
 .layui-form-pane .layui-form-label{
     width:150px;
+    padding:6px 15px;
+    height:34px;
 }
+
+.layui-input, .layui-select, .layui-textarea{
+    height:34px;
+}
+
 .layui-form-pane .layui-input-block{
     margin-left:150px;
 }
@@ -76,7 +84,7 @@ body .laytp-layer .layui-layer-btn{
  * select_page插件样式美化
  */
 .sp_container_combo{
-    height:38px;
+    /*height:38px;*/
     overflow:hidden;
 }
 
@@ -93,14 +101,6 @@ body .laytp-layer .layui-layer-btn{
 .layui-tab-title .layui-this{
     color: #369;
 }
-
-/*.layui-nav-tree .layui-nav-child dd.layui-this, .layui-nav-tree .layui-nav-child dd.layui-this a, .layui-nav-tree .layui-this, .layui-nav-tree .layui-this>a, .layui-nav-tree .layui-this>a:hover{*/
-/*    background-color:var(--laytp-layui-nav-child-a-bg);*/
-/*}*/
-
-/*.layui-nav-tree .layui-nav-child dd.layui-this, .layui-nav-tree .layui-nav-child dd.layui-this a, .layui-nav-tree .layui-this, .layui-nav-tree .layui-this>a, .layui-nav-tree .layui-this>a:hover{*/
-/*    background-color:var(--laytp-layui-nav-child-a-bg);*/
-/*}*/
 
 .layui-btn:active, .layui-btn.active{
     color: #fff;
@@ -212,4 +212,8 @@ layui-nav-child dd.layui-this, .layui-nav-tree .layui-nav-child dd.layui-this a{
 
 .layui-table td, .layui-table th{
     font-size: 13px;
+}
+
+.layui-card-header{
+    font-size: 12px;
 }
