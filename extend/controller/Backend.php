@@ -5,6 +5,7 @@
 
 namespace controller;
 
+use library\Tree;
 use think\Controller;
 use think\facade\Hook;
 use think\facade\Session;
@@ -25,6 +26,7 @@ class Backend extends Controller
     public $batch_action_list=['edit','del'];//批量操作下拉展示的节点函数名
     public $is_show_search_btn = true;//是否展示筛选按钮
     public $no_need_login=['select_page'];//无需登录的方法名（无需登录就不需要鉴权了）
+    public $ref;//前端直接访问带ref=1参数的链接地址就直接渲染菜单页，并且前端js把iframe的地址跳转到当前地址
 
     public function initialize(){
         if( $this->request->isPost() ){
@@ -40,6 +42,9 @@ class Backend extends Controller
         $this->init_assing_val();
         $this->is_show_batch();
         $this->menu();
+        if($this->ref){
+            exit($this->fetch('ltiframe/index'));
+        }
     }
 
     //权限检测
@@ -49,7 +54,7 @@ class Backend extends Controller
         if(!$admin_user_id){
             $this->redirect(url('/admin/auth.login/index'));
         }
-        $this->admin_user = model('auth.User')->get($admin_user_id);
+        $this->admin_user = model('admin/auth.User')->get($admin_user_id);
         if(!$this->admin_user){
             Session::clear();
             $this->error('用户不存在');
@@ -61,14 +66,14 @@ class Backend extends Controller
         }
 
         //当前登录用户角色
-        $role_ids = model('auth.RoleRelUser')->where('admin_id','=',$admin_user_id)->column('role_id');
+        $role_ids = model('admin/auth.RoleRelUser')->where('admin_id','=',$admin_user_id)->column('role_id');
         $this->role_ids = $role_ids;
-        $menu_ids = array_unique( model('auth.RoleRelMenu')->where('role_id','in',$role_ids)->column('menu_id') );
+        $menu_ids = array_unique( model('admin/auth.RoleRelMenu')->where('role_id','in',$role_ids)->column('menu_id') );
         foreach($menu_ids as $menu_id){
-            $pid = model('auth.Menu')->where('id','=',$menu_id)->value('pid');
+            $pid = model('admin/auth.Menu')->where('id','=',$menu_id)->value('pid');
             if($pid){
                 for($i=1;$i<=3;$i++){
-                    $menu_info = model('auth.Menu')->where('id','=',$pid)->find();
+                    $menu_info = model('admin/auth.Menu')->where('id','=',$pid)->find();
                     $menu_ids[] = $menu_info['id'];
                     if(!$menu_info['pid']){break;}
                     $pid = $menu_info['pid'];
@@ -80,7 +85,7 @@ class Backend extends Controller
         $where = [
             ['id','in',$menu_ids]
         ];
-        $rule_list = array_unique( model('auth.Menu')->where($where)->column('rule') );
+        $rule_list = array_unique( model('admin/admin/auth.Menu')->where($where)->column('rule') );
         $this->rule_list = $rule_list;
 
         if( !in_array($this->now_node, $rule_list) && !in_array($this->action, $this->no_need_login) ){
@@ -90,111 +95,24 @@ class Backend extends Controller
 
     //设置菜单
     public function menu(){
-        //当前菜单信息
-        $now_node_where['rule'] = $this->now_node;
-        $now_node_where['is_menu'] = 1;
-        $now_node_where['is_hide'] = 0;
-        $now_menus = model('auth.Menu')->where($now_node_where)->order('pid desc')->select()->toArray();
+        $menus_where['is_menu'] = 1;
+        $menus_where['is_hide'] = 0;
+        $menus = model('admin/auth.Menu')->where($menus_where)->order(['pid'=>'asc','sort'=>'desc'])->select()->toArray();
+        $menu_tree_obj = Tree::instance();
+        $menu_tree_obj->init($menus);
+        $tree = $menu_tree_obj->getTreeArray(0);
+        $assign['menu_tree'] = $tree;
 
-        if( !$now_menus ){
-            $first_menu = model('auth.Menu')->where('pid','=',0)->select()->toArray();
-            foreach($first_menu as $k=>$v){
-                $first_menu[$k]['selected'] = false;
-            }
-            $this->assign('first_menu', $first_menu);
-            $this->assign('now_first_menu', '');
-            $this->assign('now_second_menu', '');
-            $this->assign('now_third_menu', '');
-            $this->assign('left_menu', []);
-            return true;
-        }else{
-            $now_menu = $now_menus[0];
-        }
-
-        //当前二级菜单信息
-        $now_second_menu = model('auth.Menu')
-            ->where('id','=',$now_menu['pid'])
-            ->where('is_menu','=',1)
-            ->where('is_hide','=',0)
-            ->find();
-        if($now_second_menu && $now_second_menu['pid']){
-            $now_second_menu = $now_second_menu->toArray();
-        }else{
-            $now_second_menu = $now_menu;
-        }
-
-        //当前一级菜单信息
-        $now_first_menu = model('auth.Menu')
-            ->where('id','=',$now_second_menu['pid'])
-            ->where('is_menu','=',1)
-            ->where('is_hide','=',0)
-            ->find();
-        if($now_first_menu){
-            $now_first_menu = $now_first_menu->toArray();
-        }else{
-            $now_first_menu = $now_second_menu;
-        }
-
-        //获取所有一级菜单
-        $first_menu_where[] = ['pid','=',0];
-        $first_menu_where[] = ['is_menu','=',1];
-        $first_menu_where[] = ['is_hide','=',0];
-        if( !$this->admin_user->is_super_manager ){
-            $first_menu_where[] =['id','in',$this->menu_ids];
-        }
-        $first_menu = model('auth.Menu')->where($first_menu_where)->order('sort','desc')->select()->toArray();
-        foreach($first_menu as $k=>$v){
-            //设置选中的一级菜单
-            if($v['id'] == $now_first_menu['id']){
-                $first_menu[$k]['selected'] = true;
-            }else{
-                $first_menu[$k]['selected'] = false;
+        $first_menus = [];
+        foreach($menus as $k=>$v){
+            if($v['pid'] == 0){
+                $menus_list_arr[] = $v;
+                $first_menus[] = $v;
             }
         }
-        $this->assign('first_menu', $first_menu);
-        //获取当前一级菜单下的二级和三级菜单
-        $second_menu_where[] = ['pid','=',$now_first_menu['id']];
-        $second_menu_where[] = ['is_menu','=',1];
-        $second_menu_where[] = ['is_hide','=',0];
-        if( !$this->admin_user->is_super_manager ){
-            $second_menu_where[] =['id','in',$this->menu_ids];
-        }
-        $second_menu = model('auth.Menu')->where($second_menu_where)->order('sort','desc')->select()->toArray();
-        foreach($second_menu as $sk=>$sv){
-            //设置选中的二级菜单
-            if($sv['id'] == $now_second_menu['id']){
-                $second_menu[$sk]['selected'] = true;
-            }else{
-                $second_menu[$sk]['selected'] = false;
-            }
-            $third_menu_where = [];
-            $third_menu_where[] = ['pid','=',$sv['id']];
-            $third_menu_where[] = ['is_menu','=',1];
-            $third_menu_where[] = ['is_hide','=',0];
-            if( !$this->admin_user->is_super_manager ){
-                $third_menu_where[] =['id','in',$this->menu_ids];
-            }
-            $third_menu = model('auth.Menu')->where($third_menu_where)->order('sort','desc')->select()->toArray();
-            if( count($third_menu) ){
-                foreach($third_menu as $tk=>$tv){
-                    //设置选中的三级菜单
-                    if( $tv['rule'] == $this->now_node ){
-                        $third_menu[$tk]['selected'] = true;
-                    }else{
-                        $third_menu[$tk]['selected'] = false;
-                    }
-                }
-                $second_menu[$sk]['child'] = $third_menu;
-            }else{
-                $second_menu[$sk]['child'] = [];
-            }
-        }
-        $this->assign('left_menu', $second_menu);
 
-        //面包屑
-        $this->assign('now_first_menu', $now_first_menu['name']);
-        $this->assign('now_second_menu', $now_second_menu['name']);
-        $this->assign('now_third_menu', $now_menu['name']);
+        $assign['first_menus'] = $first_menus;
+        $this->assign($assign);
     }
 
     /**
@@ -216,6 +134,12 @@ class Backend extends Controller
         $assign['role_ids'] = $this->role_ids ? $this->role_ids : [];
         $assign['rule_list'] = $this->rule_list ? $this->rule_list : [];
         $assign['is_show_search_btn'] = $this->is_show_search_btn;
+
+        $assign['un_show_menus'] = $this->request->param('un_show_menus');
+
+        $assign['ref'] = intval( $this->request->param('ref') );
+        $this->ref = $assign['ref'];
+        $assign['target_url'] = $this->module . '/' . $this->controller . '/' . $this->action;
 
         $this->assign($assign);
     }

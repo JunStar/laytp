@@ -63,7 +63,7 @@ body{
 #switchNav i.aicon {margin-right:2px}
 #switchNav.close i.aicon{margin-right:7px;} 
 #switchNav img {border-radius:5px;margin:-2px 5px 0 0}
-.bread-crumbs {display:block;background-color:#fff;padding:10px 0 0 10px;height:45px;line-height:45px;overflow:hidden;box-sizing:border-box;box-shadow:0 1px 2px 0 rgba(0,0,0,.1)}
+.bread-crumbs {display:block;background-color:#fff;padding:5px 0 0 10px;height:40px;line-height:40px;overflow:hidden;box-sizing:border-box;box-shadow:0 1px 2px 0 rgba(0,0,0,.1)}
 .bread-crumbs li {float:left;margin:0 5px;color:#666;height:30px;line-height:30px}
 .bread-crumbs li a {color:#666}
 .page-body {display:block;overflow:auto;border:none!important;background-color:#f5f5f5;}
@@ -132,6 +132,7 @@ body{
 .hook-plugins-sort {margin:10px 0 20px 0;border-top:1px dotted #eee;border-left:1px dotted #eee;border-right:1px dotted #eee;float:left;overflow:hidden}
 .hook-plugins-sort li {float:left;width:100%;padding:5px 10px;border-bottom:1px dotted #eee;overflow:hidden}
 .hook-plugins-sort li span {float:left;margin-right:20px;width:150px;height:20px;line-height:22px}
+.layui-layout-admin .layui-body{top:50px;}
 .layui-layout-admin {min-width:1000px}
 .layui-form-label {min-width:90px}
 .layui-tab-title li {padding:0 10px}

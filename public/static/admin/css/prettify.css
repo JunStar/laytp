@@ -204,3 +204,7 @@ layui-nav-child dd.layui-this, .layui-nav-tree .layui-nav-child dd.layui-this a{
 .layui-body{
     left:230px;
 }
+
+.layui-table td, .layui-table th{
+    font-size: 13px;
+}

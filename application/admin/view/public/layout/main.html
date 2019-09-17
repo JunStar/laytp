@@ -18,16 +18,15 @@
 </head>
 <body class="layui-layout-body laytp-theme-10">
 <div class="layui-layout layui-layout-admin">
-    {include file="public/layout/file/top_menu"}
 
-    <div class="layui-body">
+<!--    <div class="layui-body">-->
         {block name="crumbs"}
             <ul class="bread-crumbs">
-                <li><a href="javascript:void(0);">{$now_first_menu}</a></li>
+                <li><a href="javascript:void(0);">面包屑一</a></li>
                 <li>&gt;</li>
-                <li><a href="javascript:void(0);">{$now_second_menu}</a></li>
+                <li><a href="javascript:void(0);">面包屑二</a></li>
                 <li>&gt;</li>
-                <li><a href="javascript:void(0);">{$now_third_menu}</a></li>
+                <li><a href="javascript:void(0);">面包屑三</a></li>
             </ul>
         {/block}
         <!-- 内容主体区域 -->
@@ -48,12 +47,7 @@
             {/block}
             </div>
         </div>
-    </div>
-
-    <!-- 底部固定区域 -->
-    <div class="layui-footer">
-        © laytp.phpby.com
-    </div>
+<!--    </div>-->
 </div>
 <!-- 加载公用js文件 -->
 {include file="public/layout/file/js_file"}
