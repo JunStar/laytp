@@ -71,7 +71,7 @@
                     if(k_val == 0){
                         default_menu = data[i].childMenus[k];
                     }
-                    liStr+=getChildMenu(data[i].childMenus[k],0);
+                    liStr+=getChildMenu(data[i].childMenus[k],0,true);
                 }
                 liStr+="</dl></li>";
             }else{
@@ -79,8 +79,6 @@
             }
         }
         $("#navBarId").html("<ul class=\"layui-nav layui-nav-tree\" lay-filter=\"test\">\n"+liStr+"</ul>");
-        console.log(default_menu);
-        console.log(targer_url);
         if(ref == 1){
             if(default_menu.rule != targer_url){
                 $('#layTpIframe').attr('src',__URL__ + targer_url);
@@ -105,8 +103,13 @@
         history.replaceState(stateObject,title,newUrl);
     }
 
+    function createMenu(top_menu){
+
+    }
+
     // 递归生成子菜单
-    function getChildMenu(subMenu,num) {
+    function getChildMenu(subMenu,num,unchecked) {
+        let sel_menu = (unchecked == undefined) ? false : true;
         num++;
         let subStr = "";
         itemed = (k_val==0) ? ' layui-nav-itemed' : '';
@@ -123,7 +126,11 @@
             }
             subStr+="</dl></li></ul></dd>";
         }else{
-            subStr+="<dd class='"+athis+"'><a style=\"margin-Left:"+num*menuCell+"px\" href=\"javascript:;\"><i class='layui-icon' >&#xe66c;</i> "+subMenu.name+"</a></dd>";
+            if(sel_menu){
+                subStr+="<dd class='"+athis+"'><a style=\"margin-Left:"+num*menuCell+"px\" href=\"javascript:;\" rule=\""+subMenu.rule+"\"><i class='layui-icon' >&#xe66c;</i> "+subMenu.name+"</a></dd>";
+            }else{
+                subStr+="<dd><a style=\"margin-Left:"+num*menuCell+"px\" href=\"javascript:;\" rule=\""+subMenu.rule+"\"><i class='layui-icon' >&#xe66c;</i> "+subMenu.name+"</a></dd>";
+            }
         }
         return subStr;
     }
