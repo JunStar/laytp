@@ -1,0 +1,56 @@
+<div id="laytp-header" class="layui-header" style="z-index:99999!important;">
+    <div class="fl header-logo">{$Think.config.laytp.basic.site_name}</div>
+    <ul class="layui-nav fl nobg main-nav">
+        {foreach $first_menu as $menu}
+        <li class="layui-nav-item {if $menu['selected']}layui-this{/if}">
+            <a href="{:url($menu['rule'])}">
+                <i class="{$menu['icon']}"></i> {$menu['name']}
+            </a>
+        </li>
+        {/foreach}
+    </ul>
+    <ul class="layui-nav layui-layout-right head-info">
+        {if $laytp_admin_user['is_super_manager']}
+        <li class="layui-nav-item">
+            <a href="javascript:void(0);" class="aicon ai-qingchu" id="laytp_clear_cache" title="清缓存"></a>
+        </li>
+        {/if}
+        <li class="layui-nav-item">
+            <a href="javascript:void(0);" class="aicon ai-suo" id="lock_screen" title="锁屏"></a>
+        </li>
+        <li class="layui-nav-item" style="padding: 0 15px">
+            <a href="javascript:;">
+                <img src="{$laytp_admin_user.avatar|getDefaultAvatar}" class="layui-nav-img">
+                {$laytp_admin_user.nickname}
+            </a>
+            <dl class="layui-nav-child">
+                <dd><a href="{:url('admin/general/profile')}">个人设置</a></dd>
+                <dd><a href="{:url('admin/auth.login/logout')}">安全退出</a></dd>
+            </dl>
+        </li>
+    </ul>
+</div>
+
+<div class="layui-side layui-bg-black">
+    <div class="layui-side-scroll">
+        <!-- 左侧导航区域 -->
+        <ul class="layui-nav layui-nav-tree">
+            {foreach $left_menu as $sv}
+            <li class="layui-nav-item {if $sv['selected']}layui-nav-itemed layui-this{/if}">
+                {if $sv['child']}
+                <a href="javascript:void(0);"><i class="{$sv['icon']}"></i> {$sv['name']}</a>
+                {else}
+                <a href="{:url($sv['rule'])}" {if $sv['selected']}class="layui-this"{/if}><i class="{$sv['icon']}"></i> {$sv['name']}</a>
+                {/if}
+                {if $sv['child']}
+                <dl class="layui-nav-child">
+                    {foreach $sv['child'] as $tv}
+                    <dd {if $tv['selected']}class="layui-this"{/if}><a href="{:url($tv['rule'])}">&nbsp;&nbsp;<i class="{$tv['icon']}"></i> {$tv['name']}</a></dd>
+                    {/foreach}
+                </dl>
+                {/if}
+            </li>
+            {/foreach}
+        </ul>
+    </div>
+</div>

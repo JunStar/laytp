@@ -80,9 +80,9 @@
         }
         $("#navBarId").html("<ul class=\"layui-nav layui-nav-tree\" lay-filter=\"test\">\n"+liStr+"</ul>");
         if(ref == 1){
-            if(default_menu.rule != targer_url){
-                $('#layTpIframe').attr('src',__URL__ + targer_url);
-                editHistory(default_menu.name,__URL__ + targer_url + '?ref=1');
+            if(default_menu.rule != target_url){
+                $('#layTpIframe').attr('src',__URL__ + target_url);
+                editHistory(default_menu.name,__URL__ + target_url + '?ref=1');
             }else{
                 $('#layTpIframe').attr('src',__URL__ + default_menu.rule);
                 editHistory(default_menu.name,__URL__ + default_menu.rule + '?ref=1');

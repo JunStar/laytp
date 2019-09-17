@@ -43,7 +43,7 @@ class Newbackend extends Controller
         $this->is_show_batch();
         $this->menu();
         if($this->ref){
-            exit($this->fetch('admin/iframe/index'));
+            exit($this->fetch('ltiframe/index'));
         }
     }
 
