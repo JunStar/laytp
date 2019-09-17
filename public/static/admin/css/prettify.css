@@ -201,8 +201,13 @@ layui-nav-child dd.layui-this, .layui-nav-tree .layui-nav-child dd.layui-this a{
     left:230px;
 }
 
+.layui-layout-body{
+    overflow:auto;
+}
+
 .layui-body{
     left:230px;
+    overflow-y:hidden;
 }
 
 .layui-table td, .layui-table th{
