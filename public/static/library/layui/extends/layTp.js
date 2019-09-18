@@ -17,7 +17,7 @@ layui.define([
     const $ = layTp.$ = layui.jquery;
     const selectPagePlugin = layui.selectPage;
 
-    const default_popup_frame_width = '63%';
+    const default_popup_frame_width = '70%';
     const default_popup_frame_height = '70%';
     const default_popup_frame_shade = 0.1;
 
