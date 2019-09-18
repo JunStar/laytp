@@ -223,3 +223,7 @@ layui-nav-child dd.layui-this, .layui-nav-tree .layui-nav-child dd.layui-this a{
     line-height: 30px;
     font-size:12px;
 }
+
+.layui-table-tool{
+    background-color:#ffffff;
+}
