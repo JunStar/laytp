@@ -217,3 +217,9 @@ layui-nav-child dd.layui-this, .layui-nav-tree .layui-nav-child dd.layui-this a{
 .layui-card-header{
     font-size: 12px;
 }
+
+.layui-btn{
+    height: 30px;
+    line-height: 30px;
+    font-size:12px;
+}
