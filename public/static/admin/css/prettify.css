@@ -227,3 +227,8 @@ layui-nav-child dd.layui-this, .layui-nav-tree .layui-nav-child dd.layui-this a{
 .layui-table-tool{
     background-color:#ffffff;
 }
+
+.layui-layout-admin .layui-footer{
+    height: 40px;
+    line-height: 40px;
+}
