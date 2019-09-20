@@ -117,14 +117,20 @@ layui.define("jquery", function (t) {
                 //点击顶级菜单
                 if( s.parent().hasClass('main-nav') ) {
                     let data = menu_json[s.index()].childMenus;
-                    createMenu(data);
+                    createMenu(data,true);
                     layui.laytp_element.init();
                 //点击二级菜单
                 }else if(s.parent().parent().attr('id') == 'navBarId'){
                     //点击已经选中的菜单
                     if(s.hasClass('layui-nav-itemed') || s.hasClass('layui-this')){
-                        s.removeClass('layui-nav-itemed');
-                        s.removeClass('layui-this');
+                        //有子菜单的展开子菜单
+                        if (s.find('dl').attr('class') == 'layui-nav-child') {
+                            s.removeClass('layui-nav-itemed');
+                            s.removeClass('layui-this');
+                        } else {
+                            $('#layTpIframe').attr('src',__URL__ + t.attr('rule'));
+                            editHistory(default_menu.name,__URL__ + t.attr('rule') + '?ref=1');
+                        }
                     //点击未选中菜单
                     }else{
                         //1.先取消所有选中状态
@@ -149,8 +155,14 @@ layui.define("jquery", function (t) {
                 }else{
                     //点击已选中菜单
                     if( s.hasClass('layui-nav-itemed') || s.hasClass('layui-this') ){
-                        s.removeClass('layui-nav-itemed');
-                        s.removeClass('layui-this');
+                        if (s.find('dl').attr('class') == 'layui-nav-child') {
+                            s.removeClass('layui-nav-itemed');
+                            s.removeClass('layui-this');
+                        } else {
+                            //选中最低级别的菜单则需要设置iframe的src值
+                            $('#layTpIframe').attr('src',__URL__ + t.attr('rule'));
+                            editHistory(default_menu.name,__URL__ + t.attr('rule') + '?ref=1');
+                        }
                     //点击未选中菜单
                     }else{
                         let parents = [];

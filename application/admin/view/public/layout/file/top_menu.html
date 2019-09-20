@@ -56,7 +56,7 @@
         let $ = layui.jquery;
         //取出子菜单
         let data = menu_json[0].childMenus;
-        createMenu(data);
+        createMenu(data,false);
         if(ref == 1){
             if(default_menu.rule != target_url){
                 $('#layTpIframe').attr('src',__URL__ + target_url);
@@ -74,7 +74,7 @@
     });
 
     //生成菜单
-    function createMenu(data){
+    function createMenu(data,unchecked){
         let liStr= "";
         // 遍历生成菜单
         for( let i = 0; i <data.length; i++){
@@ -82,7 +82,7 @@
             athis = (i==0) ? ' layui-this' : '';
             // 判断是否存在子菜单
             if(data[i].childMenus!=null && data[i].childMenus.length>0){
-                liStr+="<li class=\"layui-nav-item"+itemed+"\"><a href=\"javascript:;\"><i class='layui-icon'>&#xe653;</i> "+data[i].name+"</a>\n"+
+                liStr+="<li class=\"layui-nav-item"+itemed+"\"><a href=\"javascript:;\"><i class='layui-icon "+data[i].icon+"'></i> "+data[i].name+"</a>\n"+
                     "<dl class=\"layui-nav-child\">\n";
                 // 遍历获取子菜单
                 for( let k = 0; k < data[i].childMenus.length; k++ ){
@@ -90,11 +90,11 @@
                     if(k_val == 0){
                         default_menu = data[i].childMenus[k];
                     }
-                    liStr+=getChildMenu(data[i].childMenus[k],0,true);
+                    liStr+=getChildMenu(data[i].childMenus[k],0,unchecked);
                 }
                 liStr+="</dl></li>";
             }else{
-                liStr+="<li class=\"layui-nav-item"+athis+"\"><a href=\"javascript:;\" rule=\""+data[i].rule+"\"><i class='layui-icon'>&#xe66c;</i> "+data[i].name+"</a></li>";
+                liStr+="<li class=\"layui-nav-item\"><a href=\"javascript:;\" rule=\""+data[i].rule+"\"><i class='layui-icon "+data[i].icon+"'></i> "+data[i].name+"</a></li>";
             }
         }
         $("#navBarId").html("<ul class=\"layui-nav layui-nav-tree\" lay-filter=\"test\">\n"+liStr+"</ul>");
@@ -111,7 +111,8 @@
 
     // 递归生成子菜单
     function getChildMenu(subMenu,num,unchecked) {
-        let sel_menu = (unchecked == undefined) ? false : true;
+        let sel_menu = unchecked ? false : true;
+        console.log(sel_menu);
         num++;
         let subStr = "";
         itemed = (k_val==0) ? ' layui-nav-itemed' : '';
@@ -129,9 +130,9 @@
             subStr+="</dl></li></ul></dd>";
         }else{
             if(sel_menu){
-                subStr+="<dd class='"+athis+"'><a style=\"margin-Left:"+num*menuCell+"px\" href=\"javascript:;\" rule=\""+subMenu.rule+"\"><i class='layui-icon' >&#xe66c;</i> "+subMenu.name+"</a></dd>";
+                subStr+="<dd class='"+athis+"'><a style=\"margin-Left:"+num*menuCell+"px\" href=\"javascript:;\" rule=\""+subMenu.rule+"\"><i class='layui-icon "+subMenu.icon+"'></i> "+subMenu.name+"</a></dd>";
             }else{
-                subStr+="<dd><a style=\"margin-Left:"+num*menuCell+"px\" href=\"javascript:;\" rule=\""+subMenu.rule+"\"><i class='layui-icon' >&#xe66c;</i> "+subMenu.name+"</a></dd>";
+                subStr+="<dd><a style=\"margin-Left:"+num*menuCell+"px\" href=\"javascript:;\" rule=\""+subMenu.rule+"\"><i class='layui-icon "+subMenu.icon+"'></i> "+subMenu.name+"</a></dd>";
             }
         }
         return subStr;
