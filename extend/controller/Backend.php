@@ -43,8 +43,27 @@ class Backend extends Controller
         $this->is_show_batch();
         $this->menu();
         if($this->ref){
+            $crumbs = $this->set_crumbs($this->ref);
+            array_shift($crumbs);
+            $this->assign('crumbs', $crumbs);
             exit($this->fetch('ltiframe/index'));
         }
+    }
+
+    //设置菜单
+    public function set_crumbs($id){
+        static $crumbs;
+        foreach($this->menus as $k=>$v){
+            if($v['id'] == $id){
+                $crumbs[] = $v['name'];
+                $crumbs[] = '>';
+                if($v['pid'] > 0){
+                    $this->set_crumbs($v['pid']);
+                }
+                break;
+            }
+        }
+        return array_reverse($crumbs);
     }
 
     //权限检测
@@ -98,6 +117,7 @@ class Backend extends Controller
         $menus_where['is_menu'] = 1;
         $menus_where['is_hide'] = 0;
         $menus = model('admin/auth.Menu')->where($menus_where)->order(['pid'=>'asc','sort'=>'desc'])->select()->toArray();
+        $this->menus = $menus;
         $menu_tree_obj = Tree::instance();
         $menu_tree_obj->init($menus);
         $tree = $menu_tree_obj->getTreeArray(0);

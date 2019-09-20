@@ -18,36 +18,24 @@
 </head>
 <body class="layui-layout-body laytp-theme-10">
 <div class="layui-layout layui-layout-admin">
-
-<!--    <div class="layui-body">-->
-        {block name="crumbs"}
-            <ul class="bread-crumbs">
-                <li><a href="javascript:void(0);">面包屑一</a></li>
-                <li>&gt;</li>
-                <li><a href="javascript:void(0);">面包屑二</a></li>
-                <li>&gt;</li>
-                <li><a href="javascript:void(0);">面包屑三</a></li>
-            </ul>
-        {/block}
-        <!-- 内容主体区域 -->
-        <div class="page-body">
-            <div class="page-tab-content" style="padding:0;">
-            {block name="main_body"}
-                <div class="layui-card" style="margin-bottom:10px;">
-                    {block name="tabs"}{/block}
-                </div>
-                <div class="layui-tab-content" style="padding: 0px 10px">
-                    <!-- 搜索表单部分 -->
-                    {block name="search_form"}{/block}
-                    {block name="table_content"}
-                    <!-- 固定的layui-table -->
-                    <table class="laytp-table layui-hide-sm" lay-filter="default"></table>
-                    {/block}
-                </div>
-            {/block}
+    <!-- 内容主体区域 -->
+    <div class="page-body">
+        <div class="page-tab-content" style="padding:0;">
+        {block name="main_body"}
+            <div class="layui-card" style="margin-bottom:10px;">
+                {block name="tabs"}{/block}
             </div>
+            <div class="layui-tab-content" style="padding: 0px 10px">
+                <!-- 搜索表单部分 -->
+                {block name="search_form"}{/block}
+                {block name="table_content"}
+                <!-- 固定的layui-table -->
+                <table class="laytp-table layui-hide-sm" lay-filter="default"></table>
+                {/block}
+            </div>
+        {/block}
         </div>
-<!--    </div>-->
+    </div>
 </div>
 <!-- 加载公用js文件 -->
 {include file="public/layout/file/js_file"}

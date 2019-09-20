@@ -1,9 +1,9 @@
 <?php
 namespace app\admin\controller;
 
-use controller\Newbackend;
+use controller\Backend;
 
-class Index extends Newbackend
+class Index extends Backend
 {
     public function index(){
         return $this->fetch();

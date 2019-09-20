@@ -129,7 +129,7 @@ layui.define("jquery", function (t) {
                             s.removeClass('layui-this');
                         } else {
                             $('#layTpIframe').attr('src',__URL__ + t.attr('rule'));
-                            editHistory(default_menu.name,__URL__ + t.attr('rule') + '?ref=1');
+                            editHistory(default_menu.name,__URL__ + t.attr('rule') + '?ref=' + t.attr('menu_id'));
                         }
                     //点击未选中菜单
                     }else{
@@ -148,7 +148,7 @@ layui.define("jquery", function (t) {
                         } else {
                             s.addClass('layui-this');
                             $('#layTpIframe').attr('src',__URL__ + t.attr('rule'));
-                            editHistory(default_menu.name,__URL__ + t.attr('rule') + '?ref=1');
+                            editHistory(default_menu.name,__URL__ + t.attr('rule') + '?ref=' + t.attr('menu_id'));
                         }
                     }
                 //三级及以下的等级菜单
@@ -161,7 +161,7 @@ layui.define("jquery", function (t) {
                         } else {
                             //选中最低级别的菜单则需要设置iframe的src值
                             $('#layTpIframe').attr('src',__URL__ + t.attr('rule'));
-                            editHistory(default_menu.name,__URL__ + t.attr('rule') + '?ref=1');
+                            editHistory(default_menu.name,__URL__ + t.attr('rule') + '?ref=' + t.attr('menu_id'));
                         }
                     //点击未选中菜单
                     }else{
@@ -184,7 +184,7 @@ layui.define("jquery", function (t) {
                             //选中最低级别的菜单则需要设置iframe的src值
                             s.addClass('layui-this');
                             $('#layTpIframe').attr('src',__URL__ + t.attr('rule'));
-                            editHistory(default_menu.name,__URL__ + t.attr('rule') + '?ref=1');
+                            editHistory(default_menu.name,__URL__ + t.attr('rule') + '?ref=' + t.attr('menu_id'));
                         }
                     }
                 }
