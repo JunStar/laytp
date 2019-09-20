@@ -54,10 +54,29 @@
     layui.use(['layTp'], function(){
         let element = layui.laytp_element;
         let $ = layui.jquery;
-        //取出一级菜单
+        //取出子菜单
         let data = menu_json[0].childMenus;
+        createMenu(data);
+        if(ref == 1){
+            if(default_menu.rule != target_url){
+                $('#layTpIframe').attr('src',__URL__ + target_url);
+                editHistory(default_menu.name,__URL__ + target_url + '?ref=1');
+            }else{
+                $('#layTpIframe').attr('src',__URL__ + default_menu.rule);
+                editHistory(default_menu.name,__URL__ + default_menu.rule + '?ref=1');
+            }
+        }else{
+            $('#layTpIframe').attr('src',__URL__ + default_menu.rule);
+            editHistory(default_menu.name,__URL__ + default_menu.rule + '?ref=1');
+        }
+
+        element.init();
+    });
+
+    //生成菜单
+    function createMenu(data){
         let liStr= "";
-        // 遍历生成主菜单
+        // 遍历生成菜单
         for( let i = 0; i <data.length; i++){
             itemed = (i==0) ? ' layui-nav-itemed' : '';
             athis = (i==0) ? ' layui-this' : '';
@@ -75,25 +94,12 @@
                 }
                 liStr+="</dl></li>";
             }else{
-                liStr+="<li class=\"layui-nav-item"+athis+"\"><a href=\"javascript:;\"><i class='layui-icon'>&#xe66c;</i> "+data[i].name+"</a></li>";
+                liStr+="<li class=\"layui-nav-item"+athis+"\"><a href=\"javascript:;\" rule=\""+data[i].rule+"\"><i class='layui-icon'>&#xe66c;</i> "+data[i].name+"</a></li>";
             }
         }
         $("#navBarId").html("<ul class=\"layui-nav layui-nav-tree\" lay-filter=\"test\">\n"+liStr+"</ul>");
-        if(ref == 1){
-            if(default_menu.rule != target_url){
-                $('#layTpIframe').attr('src',__URL__ + target_url);
-                editHistory(default_menu.name,__URL__ + target_url + '?ref=1');
-            }else{
-                $('#layTpIframe').attr('src',__URL__ + default_menu.rule);
-                editHistory(default_menu.name,__URL__ + default_menu.rule + '?ref=1');
-            }
-        }else{
-            $('#layTpIframe').attr('src',__URL__ + default_menu.rule);
-            editHistory(default_menu.name,__URL__ + default_menu.rule + '?ref=1');
-        }
-
-        element.init();
-    });
+        return true;
+    }
 
     function editHistory(title,url){
         var stateObject = {};

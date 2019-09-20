@@ -117,32 +117,7 @@ layui.define("jquery", function (t) {
                 //点击顶级菜单
                 if( s.parent().hasClass('main-nav') ) {
                     let data = menu_json[s.index()].childMenus;
-                    console.log(menu_json);
-                    console.log(s.index());
-
-                    let liStr= "";
-                    // 遍历生成主菜单
-                    for( let i = 0; i <data.length; i++){
-                        itemed = (i==0) ? ' layui-nav-itemed' : '';
-                        athis = (i==0) ? ' layui-this' : '';
-                        // 判断是否存在子菜单
-                        if(data[i].childMenus!=null && data[i].childMenus.length>0){
-                            liStr+="<li class=\"layui-nav-item"+itemed+"\"><a href=\"javascript:;\"><i class='layui-icon'>&#xe653;</i> "+data[i].name+"</a>\n"+
-                                "<dl class=\"layui-nav-child\">\n";
-                            // 遍历获取子菜单
-                            for( let k = 0; k < data[i].childMenus.length; k++ ){
-                                k_val = k_val + k;
-                                if(k_val == 0){
-                                    default_menu = data[i].childMenus[k];
-                                }
-                                liStr+=getChildMenu(data[i].childMenus[k],0);
-                            }
-                            liStr+="</dl></li>";
-                        }else{
-                            liStr+="<li class=\"layui-nav-item\"><a href=\"javascript:;\"><i class='layui-icon'>&#xe66c;</i> "+data[i].name+"</a></li>";
-                        }
-                    }
-                    $("#navBarId").html("<ul class=\"layui-nav layui-nav-tree\" lay-filter=\"test\">\n"+liStr+"</ul>");
+                    createMenu(data);
                     layui.laytp_element.init();
                 //点击二级菜单
                 }else if(s.parent().parent().attr('id') == 'navBarId'){
@@ -166,6 +141,8 @@ layui.define("jquery", function (t) {
                         //没有子菜单的，设为选中状态
                         } else {
                             s.addClass('layui-this');
+                            $('#layTpIframe').attr('src',__URL__ + t.attr('rule'));
+                            editHistory(default_menu.name,__URL__ + t.attr('rule') + '?ref=1');
                         }
                     }
                 //三级及以下的等级菜单
