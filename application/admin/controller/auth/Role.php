@@ -6,6 +6,8 @@ namespace app\admin\controller\auth;
 
 use controller\Backend;
 use library\Tree;
+use think\Db;
+use think\Exception;
 
 class Role extends Backend
 {
@@ -35,18 +37,35 @@ class Role extends Backend
     public function add()
     {
         if( $this->request->isAjax() && $this->request->isPost() ){
-            $post = filterPostData($this->request->post("row/a"));
-            $menu_ids = explode( ',', $post['menu_ids'] );
-            unset($post['menu_ids']);
-            if( $this->model->save($post) ){
+            Db::startTrans();
+            try{
+                $post = filterPostData($this->request->post("row/a"));
+                $role_info = $this->model->getByName($post['name']);
+                if($role_info){
+                    return $this->error('角色名已存在');
+                }
+                $menu_ids = explode( ',', $post['menu_ids'] );
+                unset($post['menu_ids']);
+                $result[] = $this->model->save($post);
                 $data = [];
                 foreach( $menu_ids as $k=>$v ){
-                    $data[] = ['menu_id' => $v, 'role_id' => $this->model->id];
+                    if($v){
+                        $data[] = ['menu_id' => $v, 'role_id' => $this->model->id];
+                    }
                 }
-                model('auth.RoleRelMenu')->saveAll($data);
-                return $this->success('操作成功');
-            }else{
-                return $this->error('操作失败');
+                if($data){
+                    $result[] = model('auth.RoleRelMenu')->saveAll($data);
+                }
+                if( check_res($result) ){
+                    Db::commit();
+                    return $this->success('操作成功');
+                }else{
+                    Db::rollback();
+                    return $this->error('操作失败');
+                }
+            }catch (Exception $e){
+                Db::rollback();
+                return $this->error($e->getMessage());
             }
         }
 
@@ -67,23 +86,42 @@ class Role extends Backend
         if( $this->request->isAjax() && $this->request->isPost() ){
             $post = filterPostData($this->request->post("row/a"));
             if($edit_where['id'] == $post['pid']){
-                return $this->error('不能将上级修改成自己');
+                return $this->error('父级不能是自己');
             }
-            $menu_ids = explode( ',', $post['menu_ids'] );
-            unset($post['menu_ids']);
-            $update_res = $this->model->where($edit_where)->update($post);
-            if( $update_res || $update_res === 0 ){
+
+            $role_info = $this->model->getByName($post['name']);
+            if($role_info['id'] != $edit_where['id']){
+                return $this->error('角色名已存在');
+            }
+
+            Db::startTrans();
+            try{
+                $menu_ids = explode( ',', $post['menu_ids'] );
+                unset($post['menu_ids']);
+                $update_res = $this->model->where($edit_where)->update($post);
+                if( $update_res || $update_res === 0 ){
+                    $result[] = true;
+                }else if( $update_res === null ){
+                    return $result[] = false;
+                }
                 $data = [];
                 foreach( $menu_ids as $k=>$v ){
                     if( $v != 0 ){
                         $data[] = ['menu_id' => $v, 'role_id' => $edit_where['id']];
                     }
                 }
-                model('auth.RoleRelMenu')->where('role_id','=',$edit_where['id'])->delete();
-                model('auth.RoleRelMenu')->saveAll($data);
-                return $this->success('操作成功');
-            }else if( $update_res === null ){
-                return $this->error('操作失败');
+                $result[] = model('auth.RoleRelMenu')->where('role_id','=',$edit_where['id'])->delete();
+                $result[] = model('auth.RoleRelMenu')->saveAll($data);
+                if(check_res($result)){
+                    Db::commit();
+                    return $this->success('操作成功');
+                }else{
+                    Db::rollback();
+                    return $this->error('操作失败');
+                }
+            }catch (Exception $e){
+                Db::rollback();
+                return $this->error($e->getMessage());
             }
         }
 
@@ -107,5 +145,36 @@ class Role extends Backend
         $this->assign('node_list', $node_list);
 
         return $this->fetch();
+    }
+
+    //删除
+    public function del(){
+        $ids = $this->request->param('ids');
+        Db::startTrans();
+        try{
+            $data = model('auth.Role')->order('id desc')->select()->toArray();
+            $role_tree_obj = Tree::instance();
+            $role_tree_obj->init($data);
+
+            $ids_arr = explode(',', $ids);
+            $result = [];
+            foreach($ids_arr as $k=>$v){
+                $child_ids = $role_tree_obj->getChildrenIds($v,true);
+                $delete_status = $this->model->where('id','in',$child_ids)->delete();
+                $result[] = ($delete_status === null) ? false : true;
+                $menu = model('auth.RoleRelMenu')->where('role_id','in',$child_ids)->delete();
+                $result[] = ($menu === null) ? false : true;
+            }
+            if(check_res($result)){
+                Db::commit();
+                return $this->success('操作成功');
+            }else{
+                Db::rollback();
+                return $this->error('操作失败');
+            }
+        }catch (Exception $e){
+            Db::rollback();
+            return $this->error($e->getMessage() . $e->getFile() . $e->getLine());
+        }
     }
 }

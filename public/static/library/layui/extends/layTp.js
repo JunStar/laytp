@@ -211,7 +211,9 @@ layui.define([
                         dataType: 'json',
                         success: function (res) {
                             if( res.code == 1 ){
+                                //只删除一行不够，角色管理是多级列表，删除某个顶级列表，需要重新获取所有数据
                                 obj.del();
+                                func_controller.table_render();
                             }else{
                                 layTp.facade.error(res.msg);
                             }
