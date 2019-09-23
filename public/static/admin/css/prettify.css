@@ -231,4 +231,13 @@ layui-nav-child dd.layui-this, .layui-nav-tree .layui-nav-child dd.layui-this a{
 .layui-layout-admin .layui-footer{
     height: 40px;
     line-height: 40px;
+    background-color:#e8edf0;
+}
+
+.page-body{
+    background: rgb(241, 244, 246);
+}
+
+.layui-tab-title > li{
+    margin-bottom: -1px;
 }
