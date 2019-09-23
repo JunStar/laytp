@@ -88,16 +88,6 @@ body .laytp-layer .layui-layer-btn{
     overflow:hidden;
 }
 
-/**
- * 更小的按钮
- */
-.layui-btn-sm-1{
-    height:25px;
-    line-height:25px;
-    padding:0 5px;
-    font-size:12px;
-}
-
 .layui-tab-title .layui-this{
     color: #369;
 }
@@ -221,6 +211,16 @@ layui-nav-child dd.layui-this, .layui-nav-tree .layui-nav-child dd.layui-this a{
 .layui-btn{
     height: 30px;
     line-height: 30px;
+    font-size:12px;
+}
+
+/**
+ * 更小的按钮
+ */
+.layui-btn-sm-1{
+    height:20px;
+    line-height:20px;
+    padding:0 5px;
     font-size:12px;
 }
 
