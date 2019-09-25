@@ -200,6 +200,10 @@ layui-nav-child dd.layui-this, .layui-nav-tree .layui-nav-child dd.layui-this a{
     overflow-y:hidden;
 }
 
+.layui-table{
+    color:#333333;
+}
+
 .layui-table td, .layui-table th{
     font-size: 13px;
 }
@@ -229,8 +233,8 @@ layui-nav-child dd.layui-this, .layui-nav-tree .layui-nav-child dd.layui-this a{
 }
 
 .layui-layout-admin .layui-footer{
-    height: 40px;
-    line-height: 40px;
+    height: 44px;
+    line-height: 44px;
     background-color:#e8edf0;
 }
 
@@ -240,4 +244,20 @@ layui-nav-child dd.layui-this, .layui-nav-tree .layui-nav-child dd.layui-this a{
 
 .layui-tab-title > li{
     margin-bottom: -1px;
+}
+
+.layui-tab{
+    margin:0 0;
+}
+
+.layui-table-header table thead tr, .layui-table[lay-even] tr:nth-child(even){
+    background-color:#ffffff;
+}
+
+.layui-table-header table thead tr th{
+    font-weight:bold;
+}
+
+.layui-table-body tr:nth-child(odd){
+    background-color:#f9f9f9;
 }
