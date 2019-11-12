@@ -5,10 +5,12 @@
 
 namespace controller;
 
+use app\admin\model\auth\Menu;
 use library\Tree;
 use think\Controller;
 use think\facade\Hook;
 use think\facade\Session;
+use think\model\Collection;
 
 class Backend extends Controller
 {
@@ -40,13 +42,20 @@ class Backend extends Controller
 
         $this->auth();
         $this->init_assing_val();
-        $this->is_show_batch();
+        $this->is_show_batch();//是否显示批量操作
         $this->menu();
         if($this->ref){
+            $default_menu = Menu::where('id',$this->ref)->find();
+            if(!$default_menu){
+                $this->error('菜单不存在');
+            }
+            $this->assign('default_menu', $default_menu);
             list($select_menu, $crumbs) = $this->set_crumbs($this->ref);
             array_shift($crumbs);
             $this->assign('crumbs', $crumbs);
             $this->assign('select_menu', $select_menu);
+
+
             exit($this->fetch('ltiframe/index'));
         }
     }
