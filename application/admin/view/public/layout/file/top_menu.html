@@ -77,7 +77,7 @@
     function createMenu(data,unchecked){
         let liStr= "";
         // 遍历生成菜单
-        for( let i = 0; i <data.length; i++){
+        for( let i = 0; i < data.length; i++ ){
             itemed = (i==0) ? ' layui-nav-itemed' : '';
             athis = (i==0) ? ' layui-this' : '';
             // 判断是否存在子菜单
@@ -94,6 +94,11 @@
                 }
                 liStr+="</dl></li>";
             }else{
+                if(!unchecked){
+                    // for(key in ){
+                    //
+                    // }
+                }
                 liStr+="<li class=\"layui-nav-item\"><a href=\"javascript:;\" rule=\""+data[i].rule+"\" menu_id='"+data[i].id+"'><i class='layui-icon "+data[i].icon+"'></i> "+data[i].name+"</a></li>";
             }
         }

@@ -26,7 +26,7 @@ class Backend extends Controller
     public $batch_action_list=['edit','del'];//批量操作下拉展示的节点函数名
     public $is_show_search_btn = true;//是否展示筛选按钮
     public $no_need_login=['select_page'];//无需登录的方法名（无需登录就不需要鉴权了）
-    public $ref;//前端直接访问带ref=1参数的链接地址就直接渲染菜单页，并且前端js把iframe的地址跳转到当前地址
+    public $ref;//前端直接访问带[ref=菜单id]参数的链接地址就直接渲染菜单页，并且前端js把iframe的地址跳转到当前地址
 
     public function initialize(){
         if( $this->request->isPost() ){
@@ -43,18 +43,23 @@ class Backend extends Controller
         $this->is_show_batch();
         $this->menu();
         if($this->ref){
-            $crumbs = $this->set_crumbs($this->ref);
+            list($select_menu, $crumbs) = $this->set_crumbs($this->ref);
+//            dump($select_menu);
+//            dump($crumbs);
+//            exit();
             array_shift($crumbs);
             $this->assign('crumbs', $crumbs);
+            $this->assign('select_menu', $select_menu);
             exit($this->fetch('ltiframe/index'));
         }
     }
 
     //设置菜单
     public function set_crumbs($id){
-        static $crumbs;
+        static $select_menu,$crumbs;
         foreach($this->menus as $k=>$v){
             if($v['id'] == $id){
+                $select_menu[] = $v;
                 $crumbs[] = $v['name'];
                 $crumbs[] = '>';
                 if($v['pid'] > 0){
@@ -63,7 +68,7 @@ class Backend extends Controller
                 break;
             }
         }
-        return array_reverse($crumbs);
+        return [$select_menu, array_reverse($crumbs)];
     }
 
     //权限检测
