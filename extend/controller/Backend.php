@@ -55,6 +55,8 @@ class Backend extends Controller
             $this->assign('crumbs', $crumbs);
             $this->assign('select_menu', $select_menu);
 
+            //获取顶级菜单
+            $this->assign('top_menu', $select_menu[count($select_menu)-1]);
 
             exit($this->fetch('ltiframe/index'));
         }

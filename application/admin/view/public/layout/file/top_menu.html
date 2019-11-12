@@ -2,7 +2,7 @@
     <div class="fl header-logo">{$Think.config.laytp.basic.site_name}</div>
     <ul class="layui-nav fl nobg main-nav">
         {foreach $first_menus as $k=>$menu}
-        <li class="layui-nav-item {if $k==0}layui-this{/if}">
+        <li class="layui-nav-item {if $menu['id']==$top_menu['id']}layui-this{/if}">
             <a href="javascript:;">
                 <i class="{$menu.icon}"></i> {$menu.name}
             </a>
@@ -50,13 +50,25 @@
     let athis;
     let k_val = 0;
     let default_menu = JSON.parse('{:json_encode($default_menu,JSON_UNESCAPED_UNICODE)}');
-    console.log(default_menu);
     let ref = {$ref};
+    let top_menu = JSON.parse('{:json_encode($top_menu,JSON_UNESCAPED_UNICODE)}');
+    let select_menu = JSON.parse('{:json_encode($select_menu,JSON_UNESCAPED_UNICODE)}');
+    let select_menu_ids = new Array();
+    for(let key in select_menu){
+        select_menu_ids.push(select_menu[key].id);
+    }
+
+    console.log(select_menu);
     layui.use(['layTp'], function(){
         let element = layui.laytp_element;
         let $ = layui.jquery;
         //取出子菜单
-        let data = menu_json[0].childMenus;
+        let data;
+        for(let key in menu_json){
+            if(menu_json[key].id == top_menu.id){
+                data = menu_json[key].childMenus;
+            }
+        }
         createMenu(data,false);
         if(ref == 1){
             if(default_menu.rule != target_url){
@@ -67,7 +79,6 @@
                 editHistory(default_menu.name,__URL__ + default_menu.rule + '?ref=' + default_menu.id);
             }
         }else{
-            console.log(default_menu);
             $('#layTpIframe').attr('src',__URL__ + default_menu.rule);
             editHistory(default_menu.name,__URL__ + default_menu.rule + '?ref=' + default_menu.id);
         }
@@ -77,16 +88,21 @@
 
     //生成菜单
     function createMenu(data,unchecked){
-        console.log('createMenu');
         let liStr= "";
         // 遍历生成菜单
+        let itemed = ' layui-nav-itemed';
         for( let i = 0; i < data.length; i++ ){
-            itemed = (i==0) ? ' layui-nav-itemed' : '';
-            athis = (i==0) ? ' layui-this' : '';
+
             // 判断是否存在子菜单
             if(data[i].childMenus!=null && data[i].childMenus.length>0){
-                liStr+="<li class=\"layui-nav-item"+itemed+"\"><a href=\"javascript:;\"><i class='layui-icon "+data[i].icon+"'></i> "+data[i].name+"</a>\n"+
-                    "<dl class=\"layui-nav-child\">\n";
+                if(in_array(data[i].id,select_menu_ids)){
+                    liStr+="<li class=\"layui-nav-item"+itemed+"\"><a href=\"javascript:;\"><i class='layui-icon "+data[i].icon+"'></i> "+data[i].name+"</a>\n"+
+                        "<dl class=\"layui-nav-child\">\n";
+                }else{
+                    liStr+="<li class=\"layui-nav-item\"><a href=\"javascript:;\"><i class='layui-icon "+data[i].icon+"'></i> "+data[i].name+"</a>\n"+
+                        "<dl class=\"layui-nav-child\">\n";
+                }
+
                 // 遍历获取子菜单
                 for( let k = 0; k < data[i].childMenus.length; k++ ){
                     liStr+=getChildMenu(data[i].childMenus[k],0,unchecked);
@@ -123,22 +139,60 @@
         });
     }
 
+    // // 递归生成子菜单
+    // function getChildMenu(subMenu,num,checked) {
+    //     let sel_menu = checked ? true : false;
+    //     num++;
+    //     let subStr = "";
+    //     itemed = (k_val==0) ? ' layui-nav-itemed' : '';
+    //     athis = (k_val==0) ? ' layui-this' : '';
+    //     if(subMenu.childMenus!=null && subMenu.childMenus.length>0){
+    //         subStr+="<dd><ul><li class=\"layui-nav-item"+itemed+"\" ><a style=\"margin-Left:"+num*menuCell+"px\" class=\"\" href=\"javascript:;\"><i class='layui-icon' >&#xe653;</i> "+subMenu.name+"</a>" +
+    //             "<dl class=\"layui-nav-child\">\n";
+    //         for( let j = 0; j <subMenu.childMenus.length; j++){
+    //             subStr+=getChildMenu(subMenu.childMenus[j],num,unchecked);
+    //         }
+    //         subStr+="</dl></li></ul></dd>";
+    //     }else{
+    //         if(sel_menu){
+    //             subStr+="<dd class='"+athis+"'><a style=\"margin-Left:"+num*menuCell+"px\" href=\"javascript:;\" rule=\""+subMenu.rule+"\" menu_id='"+subMenu.id+"'><i class='layui-icon "+subMenu.icon+"'></i> "+subMenu.name+"</a></dd>";
+    //         }else{
+    //             subStr+="<dd><a style=\"margin-Left:"+num*menuCell+"px\" href=\"javascript:;\" rule=\""+subMenu.rule+"\" menu_id='"+subMenu.id+"'><i class='layui-icon "+subMenu.icon+"'></i> "+subMenu.name+"</a></dd>";
+    //         }
+    //     }
+    //     return subStr;
+    // }
+
+    function in_array(value,array){
+        var index = $.inArray(value,array);
+        if(index >= 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     // 递归生成子菜单
-    function getChildMenu(subMenu,num,unchecked) {
-        let sel_menu = unchecked ? false : true;
+    function getChildMenu(subMenu,num,checked) {
+        let sel_menu = checked ? true : false;
         num++;
         let subStr = "";
         itemed = (k_val==0) ? ' layui-nav-itemed' : '';
         athis = (k_val==0) ? ' layui-this' : '';
         if(subMenu.childMenus!=null && subMenu.childMenus.length>0){
-            subStr+="<dd><ul><li class=\"layui-nav-item"+itemed+"\" ><a style=\"margin-Left:"+num*menuCell+"px\" class=\"\" href=\"javascript:;\"><i class='layui-icon' >&#xe653;</i> "+subMenu.name+"</a>" +
-                "<dl class=\"layui-nav-child\">\n";
+            if(in_array(subMenu.id,select_menu_ids)){
+                subStr+="<dd><ul><li class=\"layui-nav-item"+itemed+"\" ><a style=\"margin-Left:"+num*menuCell+"px\" class=\"\" href=\"javascript:;\"><i class='layui-icon' >&#xe653;</i> "+subMenu.name+"</a>" +
+                    "<dl class=\"layui-nav-child\">\n";
+            }else{
+                subStr+="<dd><ul><li class=\"layui-nav-item\" ><a style=\"margin-Left:"+num*menuCell+"px\" class=\"\" href=\"javascript:;\"><i class='layui-icon' >&#xe653;</i> "+subMenu.name+"</a>" +
+                    "<dl class=\"layui-nav-child\">\n";
+            }
             for( let j = 0; j <subMenu.childMenus.length; j++){
-                subStr+=getChildMenu(subMenu.childMenus[j],num);
+                subStr+=getChildMenu(subMenu.childMenus[j],num,checked);
             }
             subStr+="</dl></li></ul></dd>";
         }else{
-            if(sel_menu){
+            if(in_array(subMenu.id,select_menu_ids)){
                 subStr+="<dd class='"+athis+"'><a style=\"margin-Left:"+num*menuCell+"px\" href=\"javascript:;\" rule=\""+subMenu.rule+"\" menu_id='"+subMenu.id+"'><i class='layui-icon "+subMenu.icon+"'></i> "+subMenu.name+"</a></dd>";
             }else{
                 subStr+="<dd><a style=\"margin-Left:"+num*menuCell+"px\" href=\"javascript:;\" rule=\""+subMenu.rule+"\" menu_id='"+subMenu.id+"'><i class='layui-icon "+subMenu.icon+"'></i> "+subMenu.name+"</a></dd>";

@@ -117,7 +117,7 @@ layui.define("jquery", function (t) {
                 //点击顶级菜单
                 if( s.parent().hasClass('main-nav') ) {
                     let data = menu_json[s.index()].childMenus;
-                    createMenu(data,true);
+                    createMenu(data,0,false);
                     layui.laytp_element.init();
                 //点击二级菜单
                 }else if(s.parent().parent().attr('id') == 'navBarId'){
@@ -148,8 +148,6 @@ layui.define("jquery", function (t) {
                         //没有子菜单的，设为选中状态
                         } else {
                             s.addClass('layui-this');
-                            // $('#layTpIframe').attr('src',__URL__ + t.attr('rule'));
-                            // editHistory(default_menu.name,__URL__ + t.attr('rule') + '?ref=' + t.attr('menu_id'));
                             click_menu_redirect(t);
                         }
                     }
@@ -163,8 +161,6 @@ layui.define("jquery", function (t) {
                                 s.removeClass('layui-this');
                             } else {
                                 //选中最低级别的菜单则需要设置iframe的src值
-                                // $('#layTpIframe').attr('src', __URL__ + t.attr('rule'));
-                                // editHistory(default_menu.name, __URL__ + t.attr('rule') + '?ref=' + t.attr('menu_id'));
                                 click_menu_redirect(t);
                             }
                             //点击未选中菜单
@@ -187,8 +183,6 @@ layui.define("jquery", function (t) {
                             } else {
                                 //选中最低级别的菜单则需要设置iframe的src值
                                 s.addClass('layui-this');
-                                // $('#layTpIframe').attr('src', __URL__ + t.attr('rule'));
-                                // editHistory(default_menu.name, __URL__ + t.attr('rule') + '?ref=' + t.attr('menu_id'));
                                 click_menu_redirect(t);
                             }
                         }
