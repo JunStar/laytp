@@ -10,7 +10,7 @@ use think\model\concern\SoftDelete;
 class User extends Model
 {
     use SoftDelete;
-    protected $defaultSoftDelete = '0000-00-00 00:00:00';
+    protected $defaultSoftDelete = NULL;
     //模型名
     protected $name = 'admin_user';
 

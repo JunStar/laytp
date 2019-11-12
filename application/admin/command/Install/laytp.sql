@@ -47,7 +47,7 @@ CREATE TABLE `lt_admin_menu` (
   `is_hide` tinyint(4) DEFAULT '0' COMMENT '是否隐藏。0，正常；1，隐藏；',
   `icon` varchar(45) DEFAULT NULL COMMENT '图标',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=178 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=178 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='菜单表';
 
 -- ----------------------------
 --  Records of `lt_admin_menu`
@@ -78,7 +78,7 @@ CREATE TABLE `lt_admin_role_rel_menu` (
   `menu_id` int(11) DEFAULT NULL COMMENT '菜单ID',
   `role_id` int(11) DEFAULT NULL COMMENT '角色ID',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='后台权限角色与菜单关系表';
 
 -- ----------------------------
 --  Table structure for `lt_admin_role_rel_user`
@@ -89,7 +89,7 @@ CREATE TABLE `lt_admin_role_rel_user` (
   `role_id` int(11) DEFAULT NULL COMMENT '角色ID',
   `admin_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='后台权限角色与管理员关系表';
 
 -- ----------------------------
 --  Table structure for `lt_admin_user`
@@ -105,16 +105,16 @@ CREATE TABLE `lt_admin_user` (
   `status` tinyint(4) DEFAULT NULL COMMENT '状态。0.禁用;1.正常',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `delete_time` datetime DEFAULT '0000-00-00 00:00:00' COMMENT '删除时间',
+  `delete_time` datetime DEFAULT NULL COMMENT '删除时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `unique_name` (`username`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='后台管理员表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='后台管理员表';
 
 -- ----------------------------
 --  Records of `lt_admin_user`
 -- ----------------------------
 BEGIN;
-INSERT INTO `lt_admin_user` VALUES ('1', 'admin', 'admin', '$2y$10$KVTpHBl/M3ueSMCeLGoR..bwLqdXyByZHYRjGSdQ36U7JmNsMwlbC', '/static/admin/image/default_avatar.png', '1', '1', '2019-03-20 00:33:25', '2019-03-20 00:33:25', '0000-00-00 00:00:00');
+INSERT INTO `lt_admin_user` VALUES ('1', 'admin', 'admin', '$2y$10$KVTpHBl/M3ueSMCeLGoR..bwLqdXyByZHYRjGSdQ36U7JmNsMwlbC', '/static/admin/image/default_avatar.png', '1', '1', '2019-03-20 00:33:25', '2019-03-20 00:33:25',NULL);
 COMMIT;
 
 -- ----------------------------

@@ -134,7 +134,7 @@ body .laytp-layer .layui-layer-btn{
 
 .layui-layout-admin .layui-side{
     width: 230px;
-    height:690px;
+    height:100%;
 }
 
 .layui-side-scroll{

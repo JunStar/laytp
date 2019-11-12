@@ -13,7 +13,7 @@ class Login extends Controller
     public function index(){
         $session = Session::get('admin_user_id');
         if( $session ){
-            return $this->redirect(url('/admin/'));
+            return $this->redirect(url('/admin?ref=1'));
         }
         return $this->fetch();
     }
