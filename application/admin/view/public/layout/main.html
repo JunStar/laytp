@@ -41,5 +41,17 @@
 {block name="script"}{/block}
 <!-- js模板部分 -->
 {block name="js_template"}{/block}
+<script>
+    document.addEventListener("click",clickHidden);//所有组件添加点击事件，为了实现点击任何地方都隐藏批量操作层
+
+    function clickHidden(e){
+        if( e.target.id!="laytp_clear_cache" ){
+            $('.layui-dropdown',parent.document).hide();
+            $('#laytp_clear_cache',parent.document).parent('li').removeClass('layui-this');
+            $('.layui-dropdown').hide();
+            $('#laytp_clear_cache').parent('li').removeClass('layui-this');
+        }
+    }
+</script>
 </body>
 </html>

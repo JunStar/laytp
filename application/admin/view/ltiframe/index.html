@@ -40,6 +40,8 @@
         if( e.target.id!="laytp_clear_cache" ){
             $('.layui-dropdown').hide();
             $('#laytp_clear_cache').parent('li').removeClass('layui-this');
+            $("#layTpIframe").contents().find(".layui-dropdown").hide();
+            $("#layTpIframe").contents().find('#laytp_clear_cache').parent('li').removeClass('layui-this');
         }
     }
 
