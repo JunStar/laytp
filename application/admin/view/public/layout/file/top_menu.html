@@ -3,7 +3,7 @@
     <ul class="layui-nav fl nobg main-nav">
         {foreach $first_menus as $k=>$menu}
         <li class="layui-nav-item {if $menu['id']==$top_menu['id']}layui-this{/if}">
-            <a href="javascript:;">
+            <a href="javascript:;" rule="{$menu['default_menu']['rule']}" menu_id="{$menu['default_menu']['id']}" select_menu_ids="{$menu['select_menu_ids']}">
                 <i class="{$menu.icon}"></i> {$menu.name}
             </a>
         </li>
@@ -55,10 +55,9 @@
     let select_menu = JSON.parse('{:json_encode($select_menu,JSON_UNESCAPED_UNICODE)}');
     let select_menu_ids = new Array();
     for(let key in select_menu){
-        select_menu_ids.push(select_menu[key].id);
+        select_menu_ids.push(select_menu[key].id.toString());
     }
 
-    console.log(select_menu);
     layui.use(['layTp'], function(){
         let element = layui.laytp_element;
         let $ = layui.jquery;
@@ -88,14 +87,14 @@
 
     //生成菜单
     function createMenu(data,unchecked){
+        console.log(select_menu_ids);
         let liStr= "";
         // 遍历生成菜单
         let itemed = ' layui-nav-itemed';
         for( let i = 0; i < data.length; i++ ){
-
             // 判断是否存在子菜单
             if(data[i].childMenus!=null && data[i].childMenus.length>0){
-                if(in_array(data[i].id,select_menu_ids)){
+                if(in_array(data[i].id.toString(),select_menu_ids)){
                     liStr+="<li class=\"layui-nav-item"+itemed+"\"><a href=\"javascript:;\"><i class='layui-icon "+data[i].icon+"'></i> "+data[i].name+"</a>\n"+
                         "<dl class=\"layui-nav-child\">\n";
                 }else{
@@ -180,7 +179,7 @@
         itemed = (k_val==0) ? ' layui-nav-itemed' : '';
         athis = (k_val==0) ? ' layui-this' : '';
         if(subMenu.childMenus!=null && subMenu.childMenus.length>0){
-            if(in_array(subMenu.id,select_menu_ids)){
+            if(in_array(subMenu.id.toString(),select_menu_ids)){
                 subStr+="<dd><ul><li class=\"layui-nav-item"+itemed+"\" ><a style=\"margin-Left:"+num*menuCell+"px\" class=\"\" href=\"javascript:;\"><i class='layui-icon' >&#xe653;</i> "+subMenu.name+"</a>" +
                     "<dl class=\"layui-nav-child\">\n";
             }else{
@@ -192,7 +191,7 @@
             }
             subStr+="</dl></li></ul></dd>";
         }else{
-            if(in_array(subMenu.id,select_menu_ids)){
+            if(in_array(subMenu.id.toString(),select_menu_ids)){
                 subStr+="<dd class='"+athis+"'><a style=\"margin-Left:"+num*menuCell+"px\" href=\"javascript:;\" rule=\""+subMenu.rule+"\" menu_id='"+subMenu.id+"'><i class='layui-icon "+subMenu.icon+"'></i> "+subMenu.name+"</a></dd>";
             }else{
                 subStr+="<dd><a style=\"margin-Left:"+num*menuCell+"px\" href=\"javascript:;\" rule=\""+subMenu.rule+"\" menu_id='"+subMenu.id+"'><i class='layui-icon "+subMenu.icon+"'></i> "+subMenu.name+"</a></dd>";

@@ -9,7 +9,6 @@ use think\facade\Config;
  */
 class Tree
 {
-
     protected static $instance;
     //默认配置
     protected $config = [];
@@ -56,9 +55,7 @@ class Tree
     }
 
     /**
-
      * 初始化方法
-
      * @param array 2维数组，例如：
      * array(
      *      1 => array('id'=>'1','pid'=>0,'name'=>'一级栏目一'),
@@ -99,7 +96,6 @@ class Tree
     }
 
     /**
-
      * 读取指定节点的所有孩子节点
      * @param int $myid 节点ID
      * @param boolean $withself 是否包含自身
@@ -125,8 +121,30 @@ class Tree
         return $newarr;
     }
 
-    /**
+    public function getDefaultMenu($id){
+        $tree = $this->getTreeArray($id);
+        if(count($tree[0]['childMenus'])){
+            return $this->getDefaultMenu($tree[0]['id']);
+        }else{
+            return $tree[0];
+        }
+    }
 
+    public function getSelectMenuIds($id){
+        static $select_menu_ids;
+        $tree = $this->getTreeArray($id);
+        $select_menu_ids[] = $tree[0]['id'];
+        if(count($tree[0]['childMenus'])){
+            $this->getSelectMenuIds($tree[0]['id']);
+        }else{
+            $select_menu_ids[] = $tree[0]['id'];
+            $temp = $select_menu_ids;
+            $select_menu_ids = [];
+            return $temp;
+        }
+    }
+
+    /**
      * 读取指定节点的所有孩子节点ID
      * @param int $myid 节点ID
      * @param boolean $withself 是否包含自身
@@ -144,11 +162,9 @@ class Tree
     }
 
     /**
-
      * 得到当前位置父辈数组
      * @param int
      * @return array
-
      */
     public function getParent($myid)
     {
@@ -179,11 +195,9 @@ class Tree
     }
 
     /**
-
      * 得到当前位置所有父辈数组
      * @param int
      * @return array
-
      */
     public function getParents($myid, $withself = FALSE)
     {

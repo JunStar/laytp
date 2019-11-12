@@ -116,8 +116,11 @@ layui.define("jquery", function (t) {
 
                 //点击顶级菜单
                 if( s.parent().hasClass('main-nav') ) {
+                    click_menu_redirect(t);
                     let data = menu_json[s.index()].childMenus;
-                    createMenu(data,0,false);
+                    select_menu_ids = t.attr('select_menu_ids').split(',');
+                    // console.log(select_menu_ids);
+                    createMenu(data,0,true);
                     layui.laytp_element.init();
                 //点击二级菜单
                 }else if(s.parent().parent().attr('id') == 'navBarId'){
