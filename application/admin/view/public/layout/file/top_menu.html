@@ -107,11 +107,27 @@
         return true;
     }
 
+    //修改浏览器地址栏地址和标题栏标题
     function editHistory(title,url){
         var stateObject = {};
         var title = title;
         var newUrl = url;
         history.replaceState(stateObject,title,newUrl);
+    }
+
+    //点击菜单并且右侧iframe跳转页面
+    function click_menu_redirect(t){
+        $('#layTpIframe').attr('src',__URL__ + t.attr('rule'));
+        editHistory(default_menu.name,__URL__ + t.attr('rule') + '?ref=' + t.attr('menu_id'));
+        $.post(__URL__ + 'admin/ajax/get_crumbs',{menu_id:t.attr('menu_id')},function(res){
+            if(res.code==1){
+                let html = '';
+                for(let key in res.data){
+                    html += '<li>' + res.data[key] + '</li>';
+                }
+                $('.bread-crumbs').html(html);
+            }
+        });
     }
 
     // 递归生成子菜单

@@ -1,4 +1,24 @@
 <?php
+/**
+ * @param $menus
+ * @param $id
+ * @return array
+ */
+function get_crumbs($menus,$id){
+    static $select_menu,$crumbs;
+    foreach($menus as $k=>$v){
+        if($v['id'] == $id){
+            $select_menu[] = $v;
+            $crumbs[] = $v['name'];
+            $crumbs[] = '>';
+            if($v['pid'] > 0){
+                get_crumbs($menus,$v['pid']);
+            }
+            break;
+        }
+    }
+    return [$select_menu, array_reverse($crumbs)];
+}
 
 /**
  * 分页数据格式化成layui_table能用的数据

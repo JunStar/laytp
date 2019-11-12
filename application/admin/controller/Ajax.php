@@ -11,6 +11,17 @@ use think\facade\Session;
 //集成controller，不走权限控制
 class Ajax extends Controller
 {
+    //根据菜单ID获取面包屑
+    public function get_crumbs(){
+        $menu_id = $this->request->param('menu_id');
+        $menus_where['is_menu'] = 1;
+        $menus_where['is_hide'] = 0;
+        $menus = model('admin/auth.Menu')->where($menus_where)->order(['pid'=>'asc','sort'=>'desc'])->select()->toArray();
+        $crumbs = get_crumbs($menus, $menu_id);
+        array_shift($crumbs[1]);
+        $this->success('获取成功','',$crumbs[1]);
+    }
+
     //上传接口
     public function upload(){
         try{
