@@ -1,6 +1,7 @@
 {extend name="admin@public/layout/main"}
 
 {block name="tabs"}
+<div class="layui-card">
 <div class="layui-tab layui-tab-brief">
 <ul class="layui-tab-title">
     <li class="layui-this" click_search="true" field="file_type" field_val="">全部</li>
@@ -9,6 +10,7 @@
 	<li click_search="true" field="file_type" field_val="audio">音频</li>
 	<li click_search="true" field="file_type" field_val="file">文件</li>
 </ul>
+</div>
 </div>
 {/block}
 

@@ -1,6 +1,7 @@
 {extend name="admin@public/layout/main"}
 
 {block name="tabs"}
+<div class="layui-card">
 <div class="layui-tab layui-tab-brief">
 <ul class="layui-tab-title">
     <li class="layui-this" click_search="true" field="level" field_val="">全部</li>
@@ -8,6 +9,7 @@
 	<li click_search="true" field="level" field_val="2">市</li>
 	<li click_search="true" field="level" field_val="3">区县</li>
 </ul>
+</div>
 </div>
 {/block}
 
