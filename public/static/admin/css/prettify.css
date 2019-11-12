@@ -49,6 +49,14 @@ audio{
     margin-left:150px;
 }
 
+.layui-table, .layui-table-view{
+    margin:2px 0;
+}
+
+.layui-form-item .layui-inline{
+    margin-right:0px;
+}
+
 .popup-content{
     background-color:#fff;
     margin:8px;
@@ -73,11 +81,17 @@ body .laytp-layer .layui-layer-btn{
     padding: 0 0 0 0;
 }
 
+.layui-card{
+    margin-bottom: 0px;
+}
+
 /**
  * 搜索表单，行高去掉
  */
 .layui-card-header{
     line-height: 0px;
+    font-size: 12px;
+    border-bottom: 0px;
 }
 
 /**
@@ -206,10 +220,6 @@ layui-nav-child dd.layui-this, .layui-nav-tree .layui-nav-child dd.layui-this a{
 
 .layui-table td, .layui-table th{
     font-size: 13px;
-}
-
-.layui-card-header{
-    font-size: 12px;
 }
 
 .layui-btn{
