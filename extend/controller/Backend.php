@@ -44,9 +44,6 @@ class Backend extends Controller
         $this->menu();
         if($this->ref){
             list($select_menu, $crumbs) = $this->set_crumbs($this->ref);
-//            dump($select_menu);
-//            dump($crumbs);
-//            exit();
             array_shift($crumbs);
             $this->assign('crumbs', $crumbs);
             $this->assign('select_menu', $select_menu);

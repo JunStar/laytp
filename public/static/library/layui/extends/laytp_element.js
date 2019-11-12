@@ -153,6 +153,7 @@ layui.define("jquery", function (t) {
                     }
                 //三级及以下的等级菜单
                 }else{
+                    console.log('三级菜单');
                     //点击已选中菜单
                     if( s.hasClass('layui-nav-itemed') || s.hasClass('layui-this') ){
                         if (s.find('dl').attr('class') == 'layui-nav-child') {

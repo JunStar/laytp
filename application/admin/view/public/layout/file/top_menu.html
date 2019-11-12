@@ -19,7 +19,7 @@
             <a href="javascript:void(0);" class="aicon ai-suo" id="lock_screen" title="锁屏"></a>
         </li>
         <li class="layui-nav-item" style="padding: 0 15px">
-            <a href="javascript:;">
+            <a href="javascript:void(0);">
                 <img src="{$laytp_admin_user.avatar}" class="layui-nav-img">
                 {$laytp_admin_user.nickname}
             </a>
@@ -75,6 +75,7 @@
 
     //生成菜单
     function createMenu(data,unchecked){
+        console.log('createMenu');
         let liStr= "";
         // 遍历生成菜单
         for( let i = 0; i < data.length; i++ ){
@@ -126,7 +127,7 @@
             for( let j = 0; j <subMenu.childMenus.length; j++){
                 k_val = k_val + j;
                 if(k_val == 0){
-                    default_menu = data[i].childMenus[k];
+                    default_menu = menu_json[0].childMenus[k_val];
                 }
                 subStr+=getChildMenu(subMenu.childMenus[j],num);
             }
