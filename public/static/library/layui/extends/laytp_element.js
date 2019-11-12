@@ -152,40 +152,41 @@ layui.define("jquery", function (t) {
                         }
                     }
                 //三级及以下的等级菜单
-                }else{
-                    console.log('三级菜单');
-                    //点击已选中菜单
-                    if( s.hasClass('layui-nav-itemed') || s.hasClass('layui-this') ){
-                        if (s.find('dl').attr('class') == 'layui-nav-child') {
-                            s.removeClass('layui-nav-itemed');
-                            s.removeClass('layui-this');
-                        } else {
-                            //选中最低级别的菜单则需要设置iframe的src值
-                            $('#layTpIframe').attr('src',__URL__ + t.attr('rule'));
-                            editHistory(default_menu.name,__URL__ + t.attr('rule') + '?ref=' + t.attr('menu_id'));
-                        }
-                    //点击未选中菜单
-                    }else{
-                        let parents = [];
-                        layui.each(s.parents(),function(key,item){
-                            if($(item).hasClass('layui-nav-itemed')){
-                                parents.push(item);
+                }else {
+                    if(s.parents().hasClass('layui-side')){
+                        //点击已选中菜单
+                        if (s.hasClass('layui-nav-itemed') || s.hasClass('layui-this')) {
+                            if (s.find('dl').attr('class') == 'layui-nav-child') {
+                                s.removeClass('layui-nav-itemed');
+                                s.removeClass('layui-this');
+                            } else {
+                                //选中最低级别的菜单则需要设置iframe的src值
+                                $('#layTpIframe').attr('src', __URL__ + t.attr('rule'));
+                                editHistory(default_menu.name, __URL__ + t.attr('rule') + '?ref=' + t.attr('menu_id'));
                             }
-                        });
-                        $('.layui-nav-tree').find('li').removeClass('layui-nav-itemed');
-                        $('.layui-nav-tree').find('li').removeClass('layui-this');
-                        $('.layui-nav-tree').find('dd').removeClass('layui-this');
-                        layui.each(parents,function(key,item){
-                            $(item).addClass('layui-nav-itemed');
-                        });
-
-                        if (s.find('dl').attr('class') == 'layui-nav-child') {
-                            s.addClass('layui-nav-itemed');
+                            //点击未选中菜单
                         } else {
-                            //选中最低级别的菜单则需要设置iframe的src值
-                            s.addClass('layui-this');
-                            $('#layTpIframe').attr('src',__URL__ + t.attr('rule'));
-                            editHistory(default_menu.name,__URL__ + t.attr('rule') + '?ref=' + t.attr('menu_id'));
+                            let parents = [];
+                            layui.each(s.parents(), function (key, item) {
+                                if ($(item).hasClass('layui-nav-itemed')) {
+                                    parents.push(item);
+                                }
+                            });
+                            $('.layui-nav-tree').find('li').removeClass('layui-nav-itemed');
+                            $('.layui-nav-tree').find('li').removeClass('layui-this');
+                            $('.layui-nav-tree').find('dd').removeClass('layui-this');
+                            layui.each(parents, function (key, item) {
+                                $(item).addClass('layui-nav-itemed');
+                            });
+
+                            if (s.find('dl').attr('class') == 'layui-nav-child') {
+                                s.addClass('layui-nav-itemed');
+                            } else {
+                                //选中最低级别的菜单则需要设置iframe的src值
+                                s.addClass('layui-this');
+                                $('#layTpIframe').attr('src', __URL__ + t.attr('rule'));
+                                editHistory(default_menu.name, __URL__ + t.attr('rule') + '?ref=' + t.attr('menu_id'));
+                            }
                         }
                     }
                 }
