@@ -1,6 +1,6 @@
 <?php
 /**
- * 后台基类
+ * 后台控制器基类
  */
 
 namespace controller;
@@ -10,7 +10,6 @@ use library\Tree;
 use think\Controller;
 use think\facade\Hook;
 use think\facade\Session;
-use think\model\Collection;
 
 class Backend extends Controller
 {
