@@ -10,6 +10,7 @@ use library\Tree;
 use think\Controller;
 use think\facade\Hook;
 use think\facade\Session;
+use think\facade\Url;
 
 class Backend extends Controller
 {
@@ -43,6 +44,7 @@ class Backend extends Controller
         $this->init_assing_val();
         $this->is_show_batch();//是否显示批量操作
         $this->menu();
+//        $this->ref = $this->ref ? $this->ref : 1;
         if($this->ref){
             $default_menu = Menu::where('id',$this->ref)->find();
             if(!$default_menu){

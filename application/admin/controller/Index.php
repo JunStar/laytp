@@ -1,11 +1,11 @@
 <?php
 namespace app\admin\controller;
 
-use controller\Backend;
+use think\Controller;
 
-class Index extends Backend
+class Index extends Controller
 {
     public function index(){
-        return $this->fetch();
+        return redirect('/admin/dashboard/index/?ref=35');
     }
 }
