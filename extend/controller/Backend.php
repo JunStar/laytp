@@ -10,7 +10,6 @@ use library\Tree;
 use think\Controller;
 use think\facade\Hook;
 use think\facade\Session;
-use think\facade\Url;
 
 class Backend extends Controller
 {
