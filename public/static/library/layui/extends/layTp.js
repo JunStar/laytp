@@ -390,6 +390,10 @@ layui.define([
                 elem = ".action-more";
             }
 
+            for(options_k in options){
+                options[options_k].uri = layTp.facade.url(options[options_k].node,options[options_k].param);
+            }
+
             if(!checkAuth){
                 layui.dropdown.render({
                     elem: elem,
