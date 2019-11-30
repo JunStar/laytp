@@ -17,8 +17,8 @@ layui.define([
     const $ = layTp.$ = layui.jquery;
     const selectPagePlugin = layui.selectPage;
 
-    const default_popup_frame_width = '90%';
-    const default_popup_frame_height = '90%';
+    const default_popup_frame_width = '100%';
+    const default_popup_frame_height = '100%';
     const default_popup_frame_shade = 0.1;
 
     //自定义表单验证器
