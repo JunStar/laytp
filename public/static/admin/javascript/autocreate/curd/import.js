@@ -26,7 +26,7 @@ layui.use(['layTp'],function(){
                     ,{field:'field_comment', title:'字段注释', align: 'center', edit: 'text', width:150}
                     //表单设置
                     ,{field:'form_type', title:'表单元素', templet: "#form_type", align: 'center', width:180}
-                    ,{field:'form_additional', title:'附加设置', templet: "#form_additional", align: 'center'}
+                    ,{field:'form_additional', title:'附加设置', templet: "#form_additional", align: 'center', width:280}
                     ,{field:'form_empty', title:'允许为空', templet: "#form_empty", align: 'center', width:150}
                 ]
             ]
@@ -88,15 +88,15 @@ layui.use(['layTp'],function(){
             }
             select_table_name = data.value;
 
-            $.ajax({
-                type: 'GET',
-                url: layTp.facade.url('/' + module + '/' + controller + '/get_fields_by_table_name'),
-                data: {table_name:select_table_name},
-                dataType: 'json',
-                success: function(res){
-                    select_table_fields = res.data;
-                }
-            });
+            // $.ajax({
+            //     type: 'GET',
+            //     url: layTp.facade.url('/' + module + '/' + controller + '/get_fields_by_table_name'),
+            //     data: {table_name:select_table_name},
+            //     dataType: 'json',
+            //     success: function(res){
+            //         select_table_fields = res.data;
+            //     }
+            // });
 
             $.ajax({
                 type: 'GET',
@@ -162,7 +162,7 @@ layui.use(['layTp'],function(){
                             for(key in relation_model){
                                 layui.laytpl($('#relation_model_item').html()).render({
                                     selected_table:relation_model[key].table_name,
-                                    select_table_fields: select_table_fields,
+                                    select_table_fields: fields_list[select_table_name],
                                     select_relation_primary_key: fields_list[relation_model[key].table_name],
                                     selected_relation_primary_key: relation_model[key].primary_key,
                                     selected_relation_foreign_key: relation_model[key].foreign_key,

@@ -92,8 +92,9 @@ class Curd extends Backend
                 foreach($result['relation_model'] as $k=>$v){
                     if(!isset($result['fields_list'][$v['table_name']])) {
                         $temp_fields = Db::table($v['table_name'])->getTableFields($v['table_name']);
-                        $temp_pk = Db::table($v['table_name'])->getPk();
-                        $result['fields_list'][$v['table_name']] = array_diff( $temp_fields, [$temp_pk] );
+//                        $temp_pk = Db::table($v['table_name'])->getPk();
+//                        $result['fields_list'][$v['table_name']] = array_diff( $temp_fields, [$temp_pk] );
+                        $result['fields_list'][$v['table_name']] = $temp_fields;
                     }
                 }
             }
