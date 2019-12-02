@@ -780,8 +780,10 @@ layui.define([
                             }
                             if(typeof parent.func_controller != "undefined"){
                                 let index = parent.layer.getFrameIndex(window.name);
-                                parent.layer.close(index);
-                                parent.func_controller.table_render();
+                                setTimeout(function () {
+                                    parent.layer.close(index);
+                                    parent.func_controller.table_render();
+                                }, 1000);
                             }
                         }else{
                             layTp.facade.error(res.msg);
