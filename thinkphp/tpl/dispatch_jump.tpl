@@ -27,7 +27,7 @@ $langSet == 'en' && $lang = array_combine(array_keys($lang), array_keys($lang));
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-    <title><?=$lang['An error occurred']?></title>
+    <title>跳转提示</title>
     <meta name="robots" content="noindex,nofollow" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <link rel="shortcut icon" href="/assets/img/favicon.ico" />
@@ -51,7 +51,7 @@ $langSet == 'en' && $lang = array_combine(array_keys($lang), array_keys($lang));
         .error-page-wrapper .context p {margin:0;}
         .error-page-wrapper .context p:nth-child(n+2) {margin-top:16px;}
         .error-page-wrapper .buttons-container {margin-top:35px;overflow:hidden;}
-        .error-page-wrapper .buttons-container a {transition:text-indent .2s ease-out,color .2s linear,background-color .2s linear;text-indent:0px;font-size:14px;text-transform:uppercase;text-decoration:none;color:#fff;background-color:#369;border-radius:99px;padding:8px 0 8px;text-align:center;display:inline-block;overflow:hidden;position:relative;width:45%;}
+        .error-page-wrapper .buttons-container a {transition:text-indent .2s ease-out,color .2s linear,background-color .2s linear;text-indent:0px;font-size:14px;text-transform:uppercase;text-decoration:none;color:#fff;background-color:#009688;border-radius:99px;padding:8px 0 8px;text-align:center;display:inline-block;overflow:hidden;position:relative;width:45%;}
         .error-page-wrapper .buttons-container a:hover {text-indent:15px;}
         .error-page-wrapper .buttons-container a:nth-child(1) {float:left;}
         .error-page-wrapper .buttons-container a:nth-child(2) {float:right;}
@@ -76,23 +76,26 @@ $langSet == 'en' && $lang = array_combine(array_keys($lang), array_keys($lang));
 </head>
 <body class="error-page-wrapper">
 <div class="content-container">
+    <?php switch ($code) {?>
+    <?php case 1:?>
     <div class="head-line">
-        <?php switch ($code) {?>
-        <?php case 1:?>
-        <p class="success"><img src="/static/admin/image/success.svg" alt="" width="120"/></p>
-        <?php break;?>
-        <?php case 0:?>
-        <p class="error"><img src="/static/admin/image/error.svg" alt="" width="120"/></p>
-        <?php break;?>
-        <?php } ?>
+    <img src="/static/admin/image/success.svg" alt="" width="120"/>
     </div>
+    <?php break;?>
+    <?php case 0:?>
+    <div class="head-line">
+    <img src="/static/admin/image/error.svg" alt="" width="120"/>
+    </div>
+    <?php break;?>
+    <?php } ?>
+
     <div class="subheader">
         <?=$debug?$msg:$lang['The page you are looking for is temporarily unavailable']?>
     </div>
     <div class="hr"></div>
     <div class="context">
         <p>
-            <?=$lang['You can return to the previous page and try again']?>
+            页面自动 <a id="href" href="<?php echo($url);?>">跳转</a> 等待时间： <b id="wait"><?php echo($wait);?></b>
         </p>
     </div>
     <div class="buttons-container">
@@ -100,5 +103,18 @@ $langSet == 'en' && $lang = array_combine(array_keys($lang), array_keys($lang));
         <a href="/"><?=$lang['Feedback']?></a>
     </div>
 </div>
+<script type="text/javascript">
+    (function(){
+        var wait = document.getElementById('wait'),
+            href = document.getElementById('href').href;
+        var interval = setInterval(function(){
+            var time = --wait.innerHTML;
+            if(time <= 0) {
+                location.href = href;
+                clearInterval(interval);
+            };
+        }, 1000);
+    })();
+</script>
 </body>
 </html>

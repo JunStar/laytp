@@ -33,6 +33,7 @@ layui.use(['layTp'],function() {
                 ,title: "还原"
                 ,icon: "layui-icon-list"
                 ,uri: layTp.facade.url(module + "/" + controller + "/renew")
+                ,need_refresh:true
                 ,switch_type: "confirm_action"
             }
             ,{
@@ -40,6 +41,7 @@ layui.use(['layTp'],function() {
                 title: '彻底删除'
                 ,icon: "layui-icon-delete"
                 ,uri: layTp.facade.url(module + "/" + controller + "/true_del")
+                ,need_refresh:true
                 ,switch_type: "confirm_action"
             }
         ]
