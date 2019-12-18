@@ -34,15 +34,13 @@ layui.use(['layTp'],function() {
             , page: true
             , cols: [[
                 {type:'checkbox'}
-				,{field:'id',title:'ID',align:'center',width:80}
-				,{field:'admin_id',title:'管理员姓名',align:'center',templet:'<div>{{# if(d.admin){ }}{{d.admin.nickname}}{{# }else{ }}-{{# } }}</div>'}
-				,{field:'url',title:'操作页面',align:'center'}
-				,{field:'title',title:'菜单位置',align:'center'}
-				,{field:'content',title:'参数',align:'center'}
-				,{field:'ip',title:'IP',align:'center'}
-				,{field:'user_agent',title:'浏览器',align:'center'}
-				,{field:'create_time',title:'操作时间',align:'center'}
-				,{field:'operation',title:'操作',align:'center',toolbar:'#operation',fixed:'right',width:100}
+                ,{field:'id',title:'ID',align:'center',width:80}
+                ,{field:'admin_id',title:'管理员姓名',align:'center',width:100,templet:'<div>{{# if(d.admin){ }}{{d.admin.nickname}}{{# }else{ }}-{{# } }}</div>'}
+                ,{field:'url',title:'操作页面',align:'center'}
+                ,{field:'title',title:'菜单位置',align:'center'}
+                ,{field:'ip',title:'IP',align:'center',width:100}
+                ,{field:'create_time',title:'操作时间',align:'center',width:160}
+                ,{field:'operation',title:'操作',align:'center',toolbar:'#operation',fixed:'right',width:100}
             ]]
         });
 
