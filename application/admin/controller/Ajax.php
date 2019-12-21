@@ -34,9 +34,10 @@ class Ajax extends Controller
                 $this->error('上传失败，'.$info->getError());
             }else{
                 $add['file_type'] = $this->request->param('accept');
-                $add['file_path'] = '/uploads/'.$info->getSaveName();
+                $save_name = str_replace('\\','/',$info->getSaveName());
+                $add['file_path'] = '/uploads/'.$save_name;
                 model('Attachment')->create($add);
-                $file_name = 'uploads/'.$info->getSaveName();
+                $file_name = 'uploads/'.$save_name;
                 $upload_way = Config::get('laytp.upload.way') ? Config::get('laytp.upload.way') : 'local';
                 if($upload_way == 'local'){
                     $this->success('上传成功','',['data'=>'/'.$file_name]);
