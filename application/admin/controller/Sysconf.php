@@ -60,7 +60,7 @@ class Sysconf extends Backend
                 $temp = explode('|', $v);
                 $return[$temp[0]] = $temp[1];
             }
-            $post['content'] = json_encode($return);
+            $post['content'] = json_encode($return, JSON_UNESCAPED_UNICODE);
             $update_res = model('Sysconf')->insert($post);
             if( $update_res ){
                 //写入配置文件

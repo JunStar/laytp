@@ -4,13 +4,13 @@
 <div class="layui-card">
     <div class="layui-tab layui-tab-brief">
         <ul class="layui-tab-title">
-            {foreach $config_gorup as $k=>$v}
+            {foreach $config_group as $k=>$v}
             <li {if $group==$k}class="layui-this"{/if} onclick="location.href='{:url('admin/sysconf/index',['group'=>$k])}'"><span {if $group==$k}style="color:#369;"{/if}>{$v}</span></li>
             {/foreach}
             <li class="layui-icon">&#xe654;</li>
         </ul>
         <div class="layui-tab-content">
-            {foreach $config_gorup as $gk=>$gv}
+            {foreach $config_group as $gk=>$gv}
             <div class="layui-tab-item layui-show">
                 {if $group==$gk}
                 <style type="text/css">
@@ -239,7 +239,7 @@
                         <label class="layui-form-label">所属分组</label>
                         <div class="layui-input-inline">
                             <select name="row[group]" lay-verify="required">
-                                {foreach $config_gorup as $k=>$v}
+                                {foreach $config_group as $k=>$v}
                                 <option value="{$k}">{$v}</option>
                                 {/foreach}
                             </select>
