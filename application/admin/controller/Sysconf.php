@@ -20,17 +20,13 @@ class Sysconf extends Backend
     }
 
     public function index(){
-        $group = $this->request->param('group');
-        $group = $group ? $group : 'basic';
-        $this->assign('group', $group);
+        $dictionary = json_decode( model('Sysconf')->where('group','=','dictionary')->value('value'), true );
+        $config_group = $dictionary ? $dictionary : ['basic' => '基础配置', 'dictionary' => '分组配置', 'upload' => '上传配置'];
+        $this->assign('config_group', $config_group);
 
-        $config_gorup = Config::get('laytp.dictionary.config') ? Config::get('laytp.dictionary.config') :
-            [
-                'basic'=>'基础配置'
-                ,'dictionary'=>'分组配置'
-                ,'upload'=>'上传配置'
-            ];
-        $this->assign('config_gorup', $config_gorup);
+        $group = $this->request->param('group');
+        $group = $group ? $group : key($config_group);
+        $this->assign('group', $group);
 
         $config = model('Sysconf')->where('group','=',$group)->select()->toArray();
         foreach($config as $k=>$v){
