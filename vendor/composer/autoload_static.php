@@ -7,6 +7,7 @@ namespace Composer\Autoload;
 class ComposerStaticInitebb6ccacfc92d5643dd3c68f4ea3aa91
 {
     public static $files = array (
+        '841780ea2e1d6545ea3a253239d59c05' => __DIR__ . '/..' . '/qiniu/php-sdk/src/Qiniu/functions.php',
         '1cfd2761b63b0a29ed23657ea394cb2d' => __DIR__ . '/..' . '/topthink/think-captcha/src/helper.php',
     );
 
@@ -19,6 +20,10 @@ class ComposerStaticInitebb6ccacfc92d5643dd3c68f4ea3aa91
         'a' => 
         array (
             'app\\' => 4,
+        ),
+        'Q' => 
+        array (
+            'Qiniu\\' => 6,
         ),
     );
 
@@ -34,6 +39,10 @@ class ComposerStaticInitebb6ccacfc92d5643dd3c68f4ea3aa91
         'app\\' => 
         array (
             0 => __DIR__ . '/../..' . '/application',
+        ),
+        'Qiniu\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/qiniu/php-sdk/src/Qiniu',
         ),
     );
 
