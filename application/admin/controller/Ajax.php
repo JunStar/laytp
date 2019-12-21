@@ -2,6 +2,7 @@
 namespace app\admin\controller;
 
 use library\DirFile;
+use library\QiniuYun;
 use Qiniu\Auth;
 use Qiniu\Storage\UploadManager;
 use think\Controller;
@@ -42,18 +43,17 @@ class Ajax extends Controller
                 if($upload_way == 'local'){
                     $this->success('上传成功','',['data'=>$file_name]);
                 }else if($upload_way == 'qiniu'){
-                    $file = Env::get('root_path') . 'public' . $file_name; // 获取上传的文件
-                    $qiniu_access_key = Config::get('laytp.upload.qiniu_access_key');
-                    $qiniu_secret_key  = Config::get('laytp.upload.qiniu_secret_key');
-                    $qiniu_client = new Auth($qiniu_access_key,$qiniu_secret_key);
-                    $qiniu_bucket = Config::get('laytp.upload.qiniu_bucket');
-                    $qiniu_token = $qiniu_client->uploadToken($qiniu_bucket);
-                    $qiniu_upload_mgr = new UploadManager();
-                    list($ret, $err) = $qiniu_upload_mgr->putFile($qiniu_token,$file_name,$file);
-                    if ($err !== null) {
-                        $this->error('上传失败,'.$err,'',['ret'=>$ret,'err'=>$err]);
-                    } else {
+                    $qiniu_yun = QiniuYun::instance();
+                    if($qiniu_yun->upload(
+                        Config::get('laytp.upload.qiniu_access_key')
+                        ,Config::get('laytp.upload.qiniu_secret_key')
+                        ,Config::get('laytp.upload.qiniu_bucket')
+                        ,Env::get('root_path') . 'public' . $file_name
+                        ,$file_name
+                    )){
                         $this->success('上传成功','',['data'=>$file_name]);
+                    }else{
+                        $this->error('上传失败,'.$qiniu_yun->getMessage());
                     }
                 }
             }
