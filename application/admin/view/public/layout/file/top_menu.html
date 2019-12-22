@@ -3,7 +3,7 @@
     <ul class="layui-nav fl nobg main-nav">
         {foreach $first_menus as $k=>$menu}
         <li class="layui-nav-item {if $menu['id']==$top_menu['id']}layui-this{/if}">
-            <a href="javascript:;" rule="{$menu['default_menu']['rule']}" menu_id="{$menu['default_menu']['id']}" select_menu_ids="{$menu['select_menu_ids']}">
+            <a href="javascript:;" rule="{if isset($menu['default_menu']['rule'])}{$menu['default_menu']['rule']}{else}admin/dashboard{/if}" menu_id="{if isset($menu['default_menu']['id'])}{$menu['default_menu']['id']}{/if}" select_menu_ids="{$menu['select_menu_ids']}">
                 <i class="{$menu.icon}"></i> {$menu.name}
             </a>
         </li>

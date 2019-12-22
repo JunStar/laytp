@@ -123,6 +123,9 @@ class Tree
 
     public function getDefaultMenu($id){
         $tree = $this->getTreeArray($id);
+        if(!$tree){
+            return [];
+        }
         if(count($tree[0]['childMenus'])){
             return $this->getDefaultMenu($tree[0]['id']);
         }else{

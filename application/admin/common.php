@@ -6,11 +6,15 @@ function getSelectMenuIds($menu_tree_obj, $id, $init=false){
         $select_menu_ids = [];
     }
     $tree = $menu_tree_obj->getTreeArray($id);
-    $select_menu_ids[] = $tree[0]['id'];
-    if(count($tree[0]['childMenus'])){
-        getSelectMenuIds($menu_tree_obj,$tree[0]['id']);
+    if($tree){
+        $select_menu_ids[] = $tree[0]['id'];
+        if(count($tree[0]['childMenus'])){
+            getSelectMenuIds($menu_tree_obj,$tree[0]['id']);
+        }
+        return $select_menu_ids;
+    }else{
+        return [];
     }
-    return $select_menu_ids;
 }
 
 
