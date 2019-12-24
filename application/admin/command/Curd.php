@@ -8,6 +8,7 @@
  */
 namespace app\admin\command;
 
+use app\admin\model\InformationSchema;
 use think\console\Command;
 use think\console\Input;
 use think\console\input\Option;
@@ -44,6 +45,7 @@ class Curd extends Command
         $htmlEditParam,//生成html编辑页面文件的参数,是一个数组['tpl_name'=>使用到的模板名称,'data'=>模板中需要替换的数据,'c_file_name'=>需要生成的文件名称]
         $htmlRecycleParam,//生成html编辑页面文件的参数,是一个数组['tpl_name'=>使用到的模板名称,'data'=>模板中需要替换的数据,'c_file_name'=>需要生成的文件名称]
         $relation_model//关联模型
+    ,$field_list_map//表结构，获取数据类型
     ;
 
     //ThinkPHP命令行配置函数
@@ -105,6 +107,9 @@ class Curd extends Command
     public function set_param(){
         $this->info = $this->get_info_by_id();
         $this->curd_config = $this->format_info();
+        $information = new InformationSchema();
+        $field_list_db = $information->getFieldsComment($this->curd_config['table_name']);
+        $this->field_list_map = arr_to_map($field_list_db->toArray(),'COLUMN_NAME');
         $this->model_app_name = $this->curd_config['global']['common_model'] ? 'common' : 'admin';
 
         $this->set_mid_file_name();
@@ -326,7 +331,63 @@ class Curd extends Command
         $data['modelClassName'] = $this->controller_model_class_name;
         $data['modelNamespace'] = str_replace('/','\\',dirname( 'app/'.$this->model_app_name.'/model/'.$this->mid_name ));
         $data['relationModel'] = $this->set_relation_model();
+        $data['autoTimeFormat'] = $this->auto_time_format();
+        $data['autoCreateTime'] = $this->set_auto_write_create_time();
+        $data['autoUpdateTime'] = $this->set_auto_write_update_time();
+        $data['autoDeleteTime'] = $this->set_auto_write_delete_time();
         $this->modelParam = ['tpl_name'=>$tpl_name,'data'=>$data,'c_file_name'=>$this->model_c_file_name];
+    }
+
+    //时间选择器，int类型，自动类型转换
+    protected function auto_time_format(){
+        $time_set = [];
+        $field_list_map = $this->field_list_map;
+        foreach($this->curd_config['field_list'] as $k=>$v){
+            if($v['form_type'] == 'time' && $field_list_map[$v['field_name']]['DATA_TYPE'] == 'int'){
+                if($v['form_additional'] == 'datetime'){
+                    $time_set[] = "\n\t\t" . '\''.$v['field_name'].'\'  =>  \'timestamp:Y-m-d H:i:s\',';
+                }else if($v['form_additional'] == 'month'){
+                    $time_set[] = "\n\t\t" . '\''.$v['field_name'].'\'  =>  \'timestamp:Y-m\',';
+                }else if($v['form_additional'] == 'date'){
+                    $time_set[] = "\n\t\t" . '\''.$v['field_name'].'\'  =>  \'timestamp:Y-m-d\',';
+                }else if($v['form_additional'] == 'time'){
+                    $time_set[] = "\n\t\t" . '\''.$v['field_name'].'\'  =>  \'timestamp:H:i:s\',';
+                }
+            }
+        }
+        if($time_set){
+            return 'protected $type = [' .  implode('',$time_set) . "\n\t];";
+        }else{
+            return '';
+        }
+    }
+
+    //create_time update_time delete_time三个字段出现在添加，编辑表单里面，就需要设置不自动写入这三个字段
+    protected function set_auto_write_create_time(){
+        foreach($this->curd_config['field_list'] as $k=>$v){
+            if($v['field_name'] == 'create_time'){
+                return 'protected $createTime = false;';
+            }
+        }
+        return '';
+    }
+
+    protected function set_auto_write_update_time(){
+        foreach($this->curd_config['field_list'] as $k=>$v){
+            if($v['field_name'] == 'update_time'){
+                return 'protected $updateTime = false;';
+            }
+        }
+        return '';
+    }
+
+    protected function set_auto_write_delete_time(){
+        foreach($this->curd_config['field_list'] as $k=>$v){
+            if($v['field_name'] == 'delete_time'){
+                return 'protected $deleteTime = false;';
+            }
+        }
+        return '';
     }
 
     /**
@@ -830,7 +891,7 @@ EOD;
         $data['field_name'] = $info['field_name'];
         $data['field_comment'] = $info['field_comment'];
         if(!$info['form_empty']){
-            $data['verify'] = $data['verify'] ? 'required|'.$data['verify'] : 'required';
+            $data['verify'] = isset($data['verify']) ? 'required|'.$data['verify'] : 'required';
         }
         return $this->get_replaced_tpl($name, $data);
     }
@@ -1363,6 +1424,8 @@ EOD;
     protected function get_editor_html($info,$type){
         $name = 'html' . DS . $type . DS . 'editor' . DS . $info['form_additional'];
         $data['field_name'] = $info['field_name'];
+        $data['field_comment'] = $info['field_comment'];
+        $data['verify'] = $info['form_empty'] ? '' : 'required';
 
         return $this->get_replaced_tpl($name, $data);
     }

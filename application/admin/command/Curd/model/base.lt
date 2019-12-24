@@ -11,6 +11,15 @@ class {%modelClassName%} extends Backend
     //模型名
     protected $name = '{%modelName%}';
 
+    //时间戳字段转换
+    {%autoTimeFormat%}
+    //是否关闭create_time自动写入
+    {%autoCreateTime%}
+    //是否关闭update_time自动写入
+    {%autoUpdateTime%}
+    //是否关闭delete_time自动写入
+    {%autoDeleteTime%}
+
     //表名
     {%tableName%}
 

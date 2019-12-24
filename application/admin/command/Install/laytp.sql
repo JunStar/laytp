@@ -11,7 +11,7 @@
  Target Server Version : 50726
  File Encoding         : 65001
 
- Date: 22/12/2019 15:54:35
+ Date: 22/12/2019 15:57:00
 */
 
 SET NAMES utf8mb4;
@@ -82,7 +82,7 @@ INSERT INTO `lt_admin_menu` VALUES (59, 'Api文档', 'admin/autocreate.apidoc/in
 INSERT INTO `lt_admin_menu` VALUES (60, '插件市场', 'admin/addons/index', 1, 0, 1, 0, 'layui-icon layui-icon-cart-simple');
 INSERT INTO `lt_admin_menu` VALUES (61, '列表设置状态', 'admin/auth.menu/set_status', 0, 0, 19, 1, 'layui-icon layui-icon-template-1');
 INSERT INTO `lt_admin_menu` VALUES (66, '系统配置', 'admin/sysconf/index', 1, 2, 30, 0, 'layui-icon layui-icon-set');
-INSERT INTO `lt_admin_menu` VALUES (67, '快捷菜单', 'admin/dashboard/index', 1, 0, 1, 0, 'layui-icon layui-icon-release');
+INSERT INTO `lt_admin_menu` VALUES (67, '快捷菜单', 'admin/dashboard/index', 1, 10, 1, 0, 'layui-icon layui-icon-release');
 INSERT INTO `lt_admin_menu` VALUES (68, '查看', 'admin/index/index', 0, 0, 35, 0, 'layui-icon layui-icon-search');
 INSERT INTO `lt_admin_menu` VALUES (69, '设置', 'admin/sysconf/set_config', 0, 0, 66, 0, 'layui-icon layui-icon-set-fill');
 INSERT INTO `lt_admin_menu` VALUES (70, '添加', 'admin/sysconf/add', 0, 0, 66, 0, 'layui-icon layui-icon-add-circle-fine');
