@@ -350,8 +350,6 @@ class Curd extends Command
                     $time_set[] = "\n\t\t" . '\''.$v['field_name'].'\'  =>  \'timestamp:Y-m\',';
                 }else if($v['form_additional'] == 'date'){
                     $time_set[] = "\n\t\t" . '\''.$v['field_name'].'\'  =>  \'timestamp:Y-m-d\',';
-                }else if($v['form_additional'] == 'time'){
-                    $time_set[] = "\n\t\t" . '\''.$v['field_name'].'\'  =>  \'timestamp:H:i:s\',';
                 }
             }
         }
@@ -1288,8 +1286,17 @@ EOD;
     protected function get_search_time_html($info){
         $name = 'html' . DS . 'search' . DS . 'time';
         $data['field_name'] = $info['field_name'];
-
         $data['laydate_type'] = $info['form_additional'];
+        if( $this->field_list_map[$info['field_name']]['DATA_TYPE'] == 'int' ){
+            if(in_array($info['form_additional'],['datetime','month','date'])){
+                $data['search_type'] = 'BETWEEN_STRTOTIME';
+            }else{
+                $data['search_type'] = 'BETWEEN';
+            }
+        }else{
+            $data['search_type'] = 'BETWEEN';
+        }
+//        $data['search_type'] = $this->field_list_map[$info['field_name']]['DATA_TYPE'] == 'int' ? 'BETWEEN_STRTOTIME' : 'BETWEEN';
         return $this->get_replaced_tpl($name, $data);
     }
 

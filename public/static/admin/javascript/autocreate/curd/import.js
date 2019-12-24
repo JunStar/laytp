@@ -302,19 +302,19 @@ layui.use(['layTp'],function(){
     func_controller.form_type_select_after = function(field_name, value, form_additional){
         let input_html =
             '<select name="form_additional_set_value_input_'+field_name+'" id="form_additional_set_value_input_'+field_name+'">' +
-                '<option value="">不限制</option>' +
-                '<option value="layTp_email" ' + ((form_additional == "layTp_email") ? 'selected="selected"' : '') + '>Email</option>' +
-                '<option value="layTp_phone" ' + ((form_additional == "layTp_phone") ? 'selected="selected"' : '') + '>手机号码</option>' +
-                '<option value="layTp_number" ' + ((form_additional == "layTp_number") ? 'selected="selected"' : '') + '>数字</option>' +
-                '<option value="layTp_url" ' + ((form_additional == "layTp_url") ? 'selected="selected"' : '') + '>链接</option>' +
-                '<option value="layTp_identity" ' + ((form_additional == "layTp_identity") ? 'selected="selected"' : '') + '>身份证</option>' +
+            '<option value="">不限制</option>' +
+            '<option value="layTp_email" ' + ((form_additional == "layTp_email") ? 'selected="selected"' : '') + '>Email</option>' +
+            '<option value="layTp_phone" ' + ((form_additional == "layTp_phone") ? 'selected="selected"' : '') + '>手机号码</option>' +
+            '<option value="layTp_number" ' + ((form_additional == "layTp_number") ? 'selected="selected"' : '') + '>数字</option>' +
+            '<option value="layTp_url" ' + ((form_additional == "layTp_url") ? 'selected="selected"' : '') + '>链接</option>' +
+            '<option value="layTp_identity" ' + ((form_additional == "layTp_identity") ? 'selected="selected"' : '') + '>身份证</option>' +
             '</select>';
         let password_html = '';
         let set_value_html = '<input type="text" class="layui-input layui-input-inline" value="'+((typeof form_additional == 'object')?form_additional['values']:form_additional)+'" placeholder="value1=text1,value2=text2,default=value..." name="form_additional_set_value_input_'+field_name+'" id="form_additional_set_value_input_'+field_name+'" />';
         let select_single_multi =
             '<select name="form_additional_select_single_multi_'+field_name+'" id="form_additional_select_single_multi_'+field_name+'">' +
-                '<option value="single" ' + (((typeof form_additional == 'object') && (form_additional['single_multi'] == "single")) ? 'selected="selected"' : '') + '>单选</option>' +
-                '<option value="multi" ' + (((typeof form_additional == 'object') && (form_additional['single_multi'] == "multi")) ? 'selected="selected"' : '') + '>多选</option>' +
+            '<option value="single" ' + (((typeof form_additional == 'object') && (form_additional['single_multi'] == "single")) ? 'selected="selected"' : '') + '>单选</option>' +
+            '<option value="multi" ' + (((typeof form_additional == 'object') && (form_additional['single_multi'] == "multi")) ? 'selected="selected"' : '') + '>多选</option>' +
             '</select>';
         let select_html =  select_single_multi + '<input type="text" class="layui-input layui-input-inline" value="'+((typeof form_additional == 'object')?form_additional['max']:form_additional)+'" placeholder="最多可选个数，多选才有效，默认不限制" name="form_additional_select_max_'+field_name+'" id="form_additional_select_max_'+field_name+'" /><br/>' + set_value_html;
         let select_page_html = select_single_multi + '<input type="text" class="layui-input layui-input-inline" value="'+((typeof form_additional == 'object')?form_additional['max']:form_additional)+'" placeholder="最多可选个数，多选才有效，默认不限制" name="form_additional_select_max_'+field_name+'" id="form_additional_select_max_'+field_name+'" /><br/>' +
@@ -340,27 +340,27 @@ layui.use(['layTp'],function(){
             '</select>';
         let time_html =
             '<select name="form_additional_set_value_input_'+field_name+'" id="form_additional_set_value_input_'+field_name+'">' +
-                '<option value="datetime" ' + ((form_additional == "datetime") ? 'selected="selected"' : '') + '>年-月-日 时:分:秒</option>' +
-                '<option value="month" ' + ((form_additional == "month") ? 'selected="selected"' : '') + '>年-月</option>' +
-                '<option value="year" ' + ((form_additional == "year") ? 'selected="selected"' : '') + '>年</option>' +
-                '<option value="date" ' + ((form_additional == "date") ? 'selected="selected"' : '') + '>年-月-日</option>' +
-                '<option value="time" ' + ((form_additional == "time") ? 'selected="selected"' : '') + '>时:分:秒</option>' +
+            '<option value="datetime" ' + ((form_additional == "datetime") ? 'selected="selected"' : '') + '>年-月-日 时:分:秒</option>' +
+            '<option value="month" ' + ((form_additional == "month") ? 'selected="selected"' : '') + '>年-月</option>' +
+            '<option value="year" ' + ((form_additional == "year") ? 'selected="selected"' : '') + '>年</option>' +
+            '<option value="date" ' + ((form_additional == "date") ? 'selected="selected"' : '') + '>年-月-日</option>' +
             '</select>';
         let upload_html =
             '<select name="form_additional_upload_single_multi_'+field_name+'" id="form_additional_upload_single_multi_'+field_name+'" lay-filter="form_additional_upload_single_multi_'+field_name+'">' +
-                '<option value="single" ' + (((typeof form_additional == 'object') && form_additional['single_multi'] == "single") ? 'selected="selected"' : '') + '>单个文件</option>' +
-                '<option value="multi" ' + (((typeof form_additional == 'object') && form_additional['single_multi'] == "multi") ? 'selected="selected"' : '') + '>多个文件</option>' +
+            '<option value="single" ' + (((typeof form_additional == 'object') && form_additional['single_multi'] == "single") ? 'selected="selected"' : '') + '>单个文件</option>' +
+            '<option value="multi" ' + (((typeof form_additional == 'object') && form_additional['single_multi'] == "multi") ? 'selected="selected"' : '') + '>多个文件</option>' +
             '</select>' +
             '<select name="form_additional_upload_accept_'+field_name+'" id="form_additional_upload_accept_'+field_name+'" lay-filter="form_additional_upload_accept_'+field_name+'">' +
-                '<option value="images" ' + (((typeof form_additional == 'object') && form_additional['accept'] == "images") ? 'selected="selected"' : '') + '>图片</option>' +
-                '<option value="video" ' + (((typeof form_additional == 'object') && form_additional['accept'] == "video") ? 'selected="selected"' : '') + '>视频</option>' +
-                '<option value="audio" ' + (((typeof form_additional == 'object') && form_additional['accept'] == "audio") ? 'selected="selected"' : '') + '>音频</option>' +
-                '<option value="file" ' + (((typeof form_additional == 'object') && form_additional['accept'] == "file") ? 'selected="selected"' : '') + '>所有文件类型</option>' +
+            '<option value="images" ' + (((typeof form_additional == 'object') && form_additional['accept'] == "images") ? 'selected="selected"' : '') + '>图片</option>' +
+            '<option value="video" ' + (((typeof form_additional == 'object') && form_additional['accept'] == "video") ? 'selected="selected"' : '') + '>视频</option>' +
+            '<option value="audio" ' + (((typeof form_additional == 'object') && form_additional['accept'] == "audio") ? 'selected="selected"' : '') + '>音频</option>' +
+            '<option value="file" ' + (((typeof form_additional == 'object') && form_additional['accept'] == "file") ? 'selected="selected"' : '') + '>所有文件类型</option>' +
             '</select>';
         let textarea_html = '';
         let editor_html =
             '<select name="form_additional_set_value_input_'+field_name+'" id="form_additional_set_value_input_'+field_name+'" lay-filter="form_additional_set_value_input_'+field_name+'">' +
-                '<option value="ueditor" ' + ((form_additional == "ueditor") ? 'selected="selected"' : '') + '>UEditor</option>' +
+            '<option value="ueditor" ' + ((form_additional == "ueditor") ? 'selected="selected"' : '') + '>UEditor</option>' +
+            '<option value="layeditor" ' + ((form_additional == "layeditor") ? 'selected="selected"' : '') + '>layEditor</option>' +
             '</select>';
         let type_arr = ['input','password','select','select_page','select_relation','time','province','city','county','upload','textarea','editor'];
         let set_value_input_type = ['radio','checkbox'];

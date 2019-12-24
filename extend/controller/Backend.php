@@ -43,7 +43,6 @@ class Backend extends Controller
         $this->init_assing_val();
         $this->is_show_batch();//是否显示批量操作
         $this->menu();
-//        $this->ref = $this->ref ? $this->ref : 1;
         if($this->ref){
             $default_menu = Menu::where('id',$this->ref)->find();
             if(!$default_menu){
@@ -216,6 +215,7 @@ class Backend extends Controller
      */
     public function build_params(){
         $where = [];
+        //传递了search_param字段，就说明是进行筛选搜索
         $search_param = $this->request->param('search_param');
         if( $search_param ){
             foreach($search_param as $field=>$value_condition){
@@ -242,6 +242,12 @@ class Backend extends Controller
                         case 'BETWEEN':
                             $arr_between = explode(' - ', $value_condition['value']);
                             $where[] = "($field BETWEEN '{$arr_between[0]}' and '{$arr_between[1]}')";
+                            break;
+                        case 'BETWEEN_STRTOTIME':
+                            $arr_between = explode(' - ', $value_condition['value']);
+                            $begin_time = strtotime($arr_between[0]);
+                            $end_time = strtotime($arr_between[1]);
+                            $where[] = "($field BETWEEN {$begin_time} and {$end_time})";
                             break;
                     }
                 }
