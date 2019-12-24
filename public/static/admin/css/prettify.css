@@ -57,6 +57,10 @@ audio{
     margin-right:0px;
 }
 
+.layui-form-item .layui-input-inline{
+    width:180px;
+}
+
 .popup-content{
     background-color:#fff;
     margin:8px;
