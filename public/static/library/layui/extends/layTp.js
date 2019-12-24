@@ -508,7 +508,7 @@ layui.define([
                     let i = 1;
                     let value_arr = value.split(',');
                     for(key in value_arr){
-                        html += '<a href="javascript:void(0);" download="'+value_arr[key]+'" title="点击下载">文件'+i+'</a> ';
+                        html += '<a href="javascript:void(0);" download="'+value_arr[key]+'" title="点击下载" class="layui-table-link">文件'+i+'</a> ';
                         i++;
                     }
                 }
