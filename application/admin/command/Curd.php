@@ -552,7 +552,6 @@ class Curd extends Command
         }
         $data['cols'] = $cols;
         $this->recycle_cols = $cols;
-        $data['close_page'] = $this->curd_config['global']['close_page'] ? '//' : '';
         $data['cellMinWidth'] = $this->curd_config['global']['cell_min_width'] ?: 80;
         $this->jsParam = ['tpl_name'=>$tpl_name,'data'=>$data,'c_file_name'=>$this->js_c_file_name];
     }

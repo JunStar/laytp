@@ -30,7 +30,7 @@ layui.use(['layTp'],function() {
             , even: true
             , method: 'GET'
             , cellMinWidth: {%cellMinWidth%}
-            {%close_page%}, page: true
+            , page: true
             , cols: [[
                 {%cols%}
             ]]
