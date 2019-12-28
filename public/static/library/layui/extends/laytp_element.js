@@ -192,21 +192,21 @@ layui.define("jquery", function (t) {
                     }
                 }
             }, collapse: function () {
-                var t = a(this),
-                    i = t.find(".layui-colla-icon"),
-                    l = t.siblings(".layui-colla-content"),
-                    s = t.parents(".layui-collapse").eq(0),
-                    o = s.attr("lay-filter"),
-                    r = "none" === l.css("display");
-                if ("string" == typeof s.attr("lay-accordion")) {
-                    var c = s.children(".layui-colla-item").children("." + n);
-                    c.siblings(".layui-colla-title").children(".layui-colla-icon").html("&#xe602;"), c.removeClass(n)
-                }
-                l[r ? "addClass" : "removeClass"](n), i.html(r ? "&#xe61a;" : "&#xe602;"), layui.event.call(this, e, "collapse(" + o + ")", {
-                    title: t,
-                    content: l,
-                    show: r
-                })
+                // var t = a(this),
+                //     i = t.find(".layui-colla-icon"),
+                //     l = t.siblings(".layui-colla-content"),
+                //     s = t.parents(".layui-collapse").eq(0),
+                //     o = s.attr("lay-filter"),
+                //     r = "none" === l.css("display");
+                // if ("string" == typeof s.attr("lay-accordion")) {
+                //     var c = s.children(".layui-colla-item").children("." + n);
+                //     c.siblings(".layui-colla-title").children(".layui-colla-icon").html("&#xe602;"), c.removeClass(n)
+                // }
+                // l[r ? "addClass" : "removeClass"](n), i.html(r ? "&#xe61a;" : "&#xe602;"), layui.event.call(this, e, "collapse(" + o + ")", {
+                //     title: t,
+                //     content: l,
+                //     show: r
+                // })
             }
         };
     s.prototype.init = function (t, e) {

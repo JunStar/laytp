@@ -32,7 +32,7 @@
     }
 </style>
 <body>
-<div class="layui-layout layui-layout-admin laytp-theme-10" style="position:fixed;width: 1440px;min-height:50px;margin-bottom:20px;z-index: 9999">
+<div class="layui-layout layui-layout-admin laytp-theme-10" style="position:fixed;width: 100%;min-height:50px;margin-bottom:20px;z-index: 9999">
     <div class="layui-header" style="margin-bottom: 20px">
         <div class="fl header-logo">{$title}</div>
         <div class="layui-nav layui-layout-right layui-form layui-inline">
@@ -52,21 +52,21 @@
 </div>
 <div class="layui-container laytp-theme-10" style="top: 80px;">
     <div class="layui-row">
-        <div class="layui-col-md2" style="position:fixed;max-height:285px;">
+        <div class="layui-col-md1" style="position:fixed;max-height:285px;">
             <div class="layui-collapse">
                 {foreach $docslist as $k=>$v}
                 <div class="layui-colla-item">
                     <h2 class="layui-colla-title">{$k}</h2>
                     {foreach $v as $api}
                     <div class="layui-colla-content">
-                        <a href="#{$api.id}" onclick="show('{$api.id}')"><p>{$api.title}</p></a>
+                        <a href="#{$api.id}" onclick="api.show('{$api.id}')"><p>{$api.title}</p></a>
                     </div>
                     {/foreach}
                 </div>
                 {/foreach}
             </div>
         </div>
-        <div class="layui-col-md2">&nbsp;</div>
+        <div class="layui-col-md1">&nbsp;</div>
         <div class="layui-col-md1">&nbsp;</div>
         <div class="layui-col-md9">
             {foreach $docslist as $k=>$v}
@@ -76,7 +76,7 @@
             {foreach $v as $ak=>$api}
             <div class="layui-collapse">
                 <div class="layui-colla-item">
-                    <h2 class="layui-colla-title" id="{$api.id}"><text class="layui-bg-cyan"> {$api.method} </text> {$api.title} {$api.route}</h2>
+                    <h2 class="layui-colla-title" id="{$api.id}"><text class="layui-bg-red"> {$api.method}</text> {$api.title} {$api.route}</h2>
                     <div class="layui-colla-content" id="{$api.id}_content">
                         <div class="layui-tab">
                             <ul class="layui-tab-title">
@@ -192,7 +192,7 @@
                                                 {/foreach}
                                                 <div class="layui-form-item">
                                                     <div class="layui-input-block">
-                                                        <a class="layui-btn layui-btn-normal" href="javascript:void(0);" onclick="test_inline({$api.id})">提 交</a>
+                                                        <a class="layui-btn layui-btn-normal" href="javascript:void(0);" onclick="api.test_inline({$api.id})">提 交</a>
                                                     </div>
                                                 </div>
                                             </form>
@@ -259,16 +259,26 @@
 </body>
 <script type="text/javascript" src="/static/library/layui/layui.js" charset="utf-8"></script>
 <script type="text/javascript" src="/static/library/layui/layui_config.js" charset="utf-8"></script>
-<script type="text/javascript" src="/static/library/jquery_3.3.1.js" charset="utf-8"></script>
 <script>
     layui.use(['element','code','form'], function(){
         let element = layui.element;
+        let $ = layui.$;
 
         layui.code({
             elem:"pre",
             title:'返回示例',
             about:false
         });
+
+        var storage = (function () {
+            let storage;
+            try {
+                storage = window.localStorage
+                return storage;
+            } catch (exception) {
+                return false;
+            }
+        }());
 
         if (storage) {
             $('#token').val(storage.getItem('token'));
@@ -302,7 +312,7 @@
                     success: function (data, textStatus, xhr) {
                         if (typeof data === 'object') {
                             var str = JSON.stringify(data, null, 2);
-                            $('#response_'+id).html(syntaxHighlight(str));
+                            $('#response_'+id).html(api.syntaxHighlight(str));
                         } else {
                             $('#response_'+id).html(data || '');
                         }
@@ -316,107 +326,105 @@
                             var str = xhr.responseText;
                         }
                         $('#response_headers_'+id).html('HTTP ' + xhr.status + ' ' + xhr.statusText + '<br/><br/>' + xhr.getAllResponseHeaders());
-                        $('#response_'+id).html(syntaxHighlight(str));
+                        $('#response_'+id).html(api.syntaxHighlight(str));
                         $('#response_card_'+id).show();
                     }
                 });
             });
         }
+
+
+        var api = {};
+
+        api.show = function(id){
+            let css = $('#'+id+'_content').attr('class');
+            console.log(css);
+            if( css.indexOf('layui-show') == -1 ){
+                $('#'+id).click();
+            }
+        }
+
+        api.syntaxHighlight = function(json) {
+            if (typeof json != 'string') {
+                json = JSON.stringify(json, undefined, 2);
+            }
+            json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+                var cls = 'number';
+                if (/^"/.test(match)) {
+                    if (/:$/.test(match)) {
+                        cls = 'key';
+                    } else {
+                        cls = 'string';
+                    }
+                } else if (/true|false/.test(match)) {
+                    cls = 'boolean';
+                } else if (/null/.test(match)) {
+                    cls = 'null';
+                }
+                return '<span class="' + cls + '">' + match + '</span>';
+            });
+        }
+
+        api.test_inline = function(id){
+            let formData = new FormData();
+            $('#test_inline_'+id).find('input').each(function (i, input) {
+                if ($(input).attr('type') == 'file') {
+                    formData.append($(input).attr('name'), $(input)[0].files[0]);
+                } else {
+                    formData.append($(input).attr('name'), $(input).val())
+                }
+            });
+            let url = storage.getItem('api_url') ? storage.getItem('api_url') + $('#test_inline_'+id).attr('route') : $('#test_inline_'+id).attr('route');
+
+            let headers = {};
+
+            let token = $('#token').val();
+            if (token.length > 0) {
+                headers['token'] = token;
+            }
+
+            $("#test_inline_headers_"+id+" input[type=text]").each(function () {
+                val = $(this).val();
+                if (val.length > 0) {
+                    headers[$(this).prop('name')] = val;
+                }
+            });
+            console.log(headers);
+
+            $.ajax({
+                url: url,
+                data: $('#test_inline_'+id).prop('method').toLowerCase() == 'get' ? $('#test_inline_'+id).serialize() : formData,
+                type: $('#test_inline_'+id).prop('method') + '',
+                dataType: 'json',
+                headers: headers,
+                contentType: false,
+                processData: false,
+                success: function (data, textStatus, xhr) {
+                    if (typeof data === 'object') {
+                        var str = JSON.stringify(data, null, 2);
+                        $('#response_'+id).html(api.syntaxHighlight(str));
+                    } else {
+                        $('#response_'+id).html(data || '');
+                    }
+                    $('#response_headers_'+id).html('HTTP ' + xhr.status + ' ' + xhr.statusText + '<br/><br/>' + xhr.getAllResponseHeaders());
+                    $('#response_card_'+id).show();
+                },
+                error: function (xhr) {
+                    try {
+                        var str = JSON.stringify($.parseJSON(xhr.responseText), null, 2);
+                    } catch (e) {
+                        var str = xhr.responseText;
+                    }
+                    $('#response_headers_'+id).html('HTTP ' + xhr.status + ' ' + xhr.statusText + '<br/><br/>' + xhr.getAllResponseHeaders());
+                    $('#response_'+id).html(api.syntaxHighlight(str));
+                    $('#response_card_'+id).show();
+                }
+            });
+            return false;
+        }
+
+        window.api = api;
     });
-
-    function show(id){
-        let css = $('#'+id+'_content').attr('class');
-        if( css.indexOf('layui-show') == -1 ){
-            $('#'+id).click();
-        }
-    }
-
-    let storage = (function () {
-        let storage;
-        try {
-            storage = window.localStorage
-            return storage;
-        } catch (exception) {
-        }
-    }());
-
-    function syntaxHighlight(json) {
-        if (typeof json != 'string') {
-            json = JSON.stringify(json, undefined, 2);
-        }
-        json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-        return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
-            var cls = 'number';
-            if (/^"/.test(match)) {
-                if (/:$/.test(match)) {
-                    cls = 'key';
-                } else {
-                    cls = 'string';
-                }
-            } else if (/true|false/.test(match)) {
-                cls = 'boolean';
-            } else if (/null/.test(match)) {
-                cls = 'null';
-            }
-            return '<span class="' + cls + '">' + match + '</span>';
-        });
-    }
-
-    function test_inline(id){
-        let formData = new FormData();
-        $('#test_inline_'+id).find('input').each(function (i, input) {
-            if ($(input).attr('type') == 'file') {
-                formData.append($(input).attr('name'), $(input)[0].files[0]);
-            } else {
-                formData.append($(input).attr('name'), $(input).val())
-            }
-        });
-        let url = storage.getItem('api_url') ? storage.getItem('api_url') + $('#test_inline_'+id).attr('route') : $('#test_inline_'+id).attr('route');
-
-        let headers = {};
-
-        let token = $('#token').val();
-        if (token.length > 0) {
-            headers['token'] = token;
-        }
-
-        $("#test_inline_headers_"+id+" input[type=text]").each(function () {
-            val = $(this).val();
-            if (val.length > 0) {
-                headers[$(this).prop('name')] = val;
-            }
-        });
-
-        $.ajax({
-            url: url,
-            data: $('#test_inline_'+id).prop('method').toLowerCase() == 'get' ? $('#test_inline_'+id).serialize() : formData,
-            type: $('#test_inline_'+id).prop('method') + '',
-            dataType: 'json',
-            headers: headers,
-            contentType: false,
-            processData: false,
-            success: function (data, textStatus, xhr) {
-                if (typeof data === 'object') {
-                    var str = JSON.stringify(data, null, 2);
-                    $('#response_'+id).html(syntaxHighlight(str));
-                } else {
-                    $('#response_'+id).html(data || '');
-                }
-                $('#response_headers_'+id).html('HTTP ' + xhr.status + ' ' + xhr.statusText + '<br/><br/>' + xhr.getAllResponseHeaders());
-                $('#response_card_'+id).show();
-            },
-            error: function (xhr) {
-                try {
-                    var str = JSON.stringify($.parseJSON(xhr.responseText), null, 2);
-                } catch (e) {
-                    var str = xhr.responseText;
-                }
-                $('#response_headers_'+id).html('HTTP ' + xhr.status + ' ' + xhr.statusText + '<br/><br/>' + xhr.getAllResponseHeaders());
-                $('#response_'+id).html(syntaxHighlight(str));
-                $('#response_card_'+id).show();
-            }
-        });
-        return false;
-    }
 </script>
 </html>
