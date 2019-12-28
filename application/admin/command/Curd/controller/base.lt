@@ -21,7 +21,6 @@ class {%controllerClassName%} extends Backend
         parent::initialize();
         $this->model = new \{%modelNamespace%}\{%modelClassName%}();
         {%arrayConstAssign%}
-
     }
 
     {%indexFunction%}

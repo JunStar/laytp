@@ -263,9 +263,16 @@ class Backend extends Controller
      */
     public function select_page_build_params(){
         $field = $this->request->param('searchKey');
-        $name = $this->request->param('searchValue');
-        $where[] = "{$field} LIKE '%{$name}%'";
-        $whereStr = implode(' AND ', $where);
+        $name = explode(',', $this->request->param('searchValue'));
+        $where = [];
+        foreach($name as $k=>$v){
+            if($field != 'id'){
+                $where[] = "{$field} LIKE '%{$v}%'";
+            }else{
+                $where[] = "id={$v}";
+            }
+        }
+        $whereStr = implode(' OR ', $where);
         return $whereStr;
     }
 
