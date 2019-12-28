@@ -21,7 +21,31 @@ class Curd extends Backend
         return $this->field(true)->where($where)->update($data);
     }
 
-    //导入功能
+    //生成无限级分类curd
+    public function import_category($post_data){
+        $is_exist = $this->where(['table_name'=>$post_data['table_name']])->value('id');
+        $data['table_name'] = $post_data['table_name'];
+        $data['table_comment'] = model('admin/InformationSchema')->getTableComment($post_data['table_name']);
+        $data['field_list'] = json_encode([],JSON_UNESCAPED_UNICODE);
+        $data['global'] = json_encode($post_data,JSON_UNESCAPED_UNICODE);
+        $data['relation_model'] = json_encode([],JSON_UNESCAPED_UNICODE);
+        if($is_exist){
+            $data['update_time'] = date('Y-m-d H:i:s');
+            $result = $this->field(true)->where(['table_name'=>$post_data['table_name']])->update($data);
+            if( $result ){
+                return $this->success('更新成功',$is_exist);
+            }else{
+                return $this->error('更新失败');
+            }
+        }else{
+            $data['create_time'] = date('Y-m-d H:i:s');
+            $data['update_time'] = date('Y-m-d H:i:s');
+            $id = $this->field(true)->insertGetId($data);
+            return $this->success('添加成功',$id);
+        }
+    }
+
+    //生成常规Curd
     public function import($post_data){
         try{
             $table_name = $post_data['global']['table_name'];
@@ -46,9 +70,9 @@ class Curd extends Backend
             $post_data['relation_model'] = isset($post_data['relation_model']) ? $post_data['relation_model'] : [];
 
             $data = [
-                'field_list' => json_encode($post_data['field_list']),
-                'global' => json_encode($post_data['global']),
-                'relation_model' => json_encode($post_data['relation_model'])
+                'field_list' => json_encode($post_data['field_list'],JSON_UNESCAPED_UNICODE),
+                'global' => json_encode($post_data['global'],JSON_UNESCAPED_UNICODE),
+                'relation_model' => json_encode($post_data['relation_model'],JSON_UNESCAPED_UNICODE)
             ];
             if($is_exist){
                 $data['update_time'] = date('Y-m-d H:i:s');

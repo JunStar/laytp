@@ -1,0 +1,70 @@
+{extend name="admin@public/layout/popup"}
+
+{block name="body"}
+<fieldset class="layui-elem-field">
+    <legend>全局设置</legend>
+    <div class="layui-field-box">
+        <div class="layui-form layui-form-pane">
+            <div class="layui-form-item">
+                <label class="layui-form-label">选择表</label>
+                <div class="layui-input-inline">
+                    <select name="select_table" id="select_table" lay-filter="select_table">
+                        <option></option>
+                        {foreach $table_list as $k=>$v}
+                        <option value="{$v.TABLE_NAME}">{$v.TABLE_NAME}</option>
+                        {/foreach}
+                    </select>
+                </div>
+                <label class="layui-form-label">父级字段</label>
+                <div class="layui-input-inline">
+                    <select name="parent_field" id="parent_field" lay-filter="parent_field"></select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">分类名称字段</label>
+                <div class="layui-input-inline">
+                    <select name="name_field" id="name_field" lay-filter="name_field"></select>
+                </div>
+                <label class="layui-form-label">排序字段</label>
+                <div class="layui-input-inline">
+                    <select name="sort_field" id="sort_field" lay-filter="sort_field"></select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">模式选择</label>
+                <div class="layui-input-block">
+                    <input type="checkbox" name="common_model" id="common_model" title="全局模型" lay-filter="common_model" value="1">
+                </div>
+            </div>
+        </div>
+    </div>
+</fieldset>
+
+<style>
+    .form-footer{
+        position:fixed;
+        left:0;
+        right:0;
+        bottom:0;
+        height:44px;
+        line-height:44px;
+        padding: 0 15px;
+        background-color:#eee;
+    }
+</style>
+<div class="form-footer">
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-normal" id="curd_import_category_btn">提 交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</div>
+{/block}
+
+{block name="script"}
+<script>
+    let table_list = {:json_encode($table_list)};
+</script>
+<script src="__ADMIN_JS__/{$js_global_var.js_controller}/{$js_global_var.action}.js" charset="utf-8"></script>
+{/block}

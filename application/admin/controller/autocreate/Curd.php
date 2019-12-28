@@ -38,7 +38,33 @@ class Curd extends Backend
         return $this->fetch();
     }
 
-    //导入
+    //导入无限级分类模型
+    public function import_category(){
+        if( $this->request->isAjax() ){
+            if( $this->request->isPost() ){
+                //这里要将数据存入数据库
+                $post_data = $this->request->post();
+                $result = $this->model->import_category($post_data);
+                if( $result['code'] ){
+                    $exec_res = exec_command('app\admin\command\CurdCategory',['--id='.$result['data']]);
+                    if($exec_res['code']){
+                        $this->success($exec_res['msg']);
+                    }else{
+                        $this->error($exec_res['msg']);
+                    }
+                }else{
+                    $this->error($result['msg']);
+                }
+            }
+        }
+
+        //获取所有的表名称
+        $assign['table_list'] = model('InformationSchema')->getTableList();
+        $this->assign($assign);
+        return $this->fetch();
+    }
+
+    //导入常规模型
     public function import(){
         if( $this->request->isAjax() ){
             if( $this->request->isPost() ){
@@ -94,8 +120,8 @@ class Curd extends Backend
                     foreach($result['relation_model'] as $k=>$v){
                         if(!isset($result['fields_list'][$v['table_name']])) {
                             $temp_fields = Db::table($v['table_name'])->getTableFields($v['table_name']);
-//                        $temp_pk = Db::table($v['table_name'])->getPk();
-//                        $result['fields_list'][$v['table_name']] = array_diff( $temp_fields, [$temp_pk] );
+    //                        $temp_pk = Db::table($v['table_name'])->getPk();
+    //                        $result['fields_list'][$v['table_name']] = array_diff( $temp_fields, [$temp_pk] );
                             $result['fields_list'][$v['table_name']] = $temp_fields;
                         }
                     }
@@ -138,7 +164,7 @@ class Curd extends Backend
                         $result['all_fields'][$i]['field_show_index'] = 1;
                         $result['all_fields'][$i]['field_show_add'] = 1;
                         $result['all_fields'][$i]['field_show_edit'] = 1;
-                        if($v != 'delete_time' && $v != 'update_time'){
+                        if($v != 'create_time' && $v != 'delete_time' && $v != 'update_time'){
                             $result['selected_list'][$i]['field_name'] = $v;
                             $result['selected_list'][$i]['field_comment'] = $comment_map[$v]['COLUMN_COMMENT'];
                             $result['selected_list'][$i]['field_show_index'] = 1;
