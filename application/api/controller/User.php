@@ -1,6 +1,8 @@
 <?php
 namespace app\api\controller;
 
+use app\api\validate\user\UsernameLogin;
+use app\api\validate\user\UsernameReg;
 use controller\Api;
 
 /**
@@ -8,47 +10,17 @@ use controller\Api;
  */
 class User extends Api{
 
-    public $no_need_login = ['login','register'];
+    public $no_need_login = ['username_login','username_reg'];
 
     /**
-     * @ApiTitle    (会员登录)
-     * @ApiSummary  (会员登录信息)
+     * @ApiTitle    (用户名密码注册)
+     * @ApiSummary  (用户名密码注册)
      * @ApiMethod   (POST)
-     * @ApiRoute    (/api/user/login)
-     * @ApiParams   (name="account", type="integer", required=true, description="账号")
+     * @ApiRoute    (/api/user/username_reg)
+     * @ApiParams   (name="username", type="integer", required=true, description="用户名")
      * @ApiParams   (name="password", type="string", required=true, description="密码")
-     * @ApiReturnParams   (name="code", type="integer", required=true, sample="0")
-     * @ApiReturnParams   (name="msg", type="string", required=true, sample="登录成功")
-     * @ApiReturn
-({
-    'code':'1',
-    'msg':'登录成功'
-})
-     */
-    public function login()
-    {
-        $account = $this->request->request('account');
-        $password = $this->request->request('password');
-        if (!$account || !$password) {
-            $this->error('账号或密码为空');
-        }
-        $res = $this->auth->login($account, $password);
-        if ($res) {
-            $data = ['user_info' => $this->auth->getUserInfo()];
-            $this->success('登录成功', $data);
-        } else {
-            $this->error($this->auth->getError());
-        }
-    }
-
-    /**
-     * @ApiTitle    (注册会员)
-     * @ApiSummary  (注册会员信息)
-     * @ApiMethod   (POST)
-     * @ApiRoute    (/api/user/register)
-     * @ApiParams   (name="username", type="integer", required=true, description="账号")
-     * @ApiParams   (name="password", type="string", required=true, description="密码")
-     * @ApiReturnParams   (name="code", type="integer", required=true, sample="0")
+     * @ApiParams   (name="repassword", type="string", required=true, description="重复密码")
+     * @ApiReturnParams   (name="code", type="integer", required=true, sample="1")
      * @ApiReturnParams   (name="msg", type="string", required=true, sample="注册成功")
      * @ApiReturn
 ({
@@ -56,19 +28,61 @@ class User extends Api{
     'msg':'注册成功'
 })
      */
-    public function register()
+    public function username_reg()
     {
-        $username = $this->request->request('username');
-        $password = $this->request->request('password');
-        if (!$username || !$password) {
-            return $this->error('用户名或密码为空');
+        if(!$this->request->isPost()){
+            $this->error('请使用POST请求');
         }
-        $ret = $this->auth->register($username, $password);
-        if ($ret) {
-            $data = ['user_info' => $this->auth->getUserInfo()];
-            return $this->success('注册成功', $data);
-        } else {
-            return $this->error($this->auth->getError());
+
+        $param['username'] = $this->request->request('username');
+        $param['password'] = $this->request->request('password');
+        $param['repassword'] = $this->request->request('repassword');
+
+        $validate = new UsernameReg();
+        if($validate->check($param)){
+            if($this->service_user->usernameReg($param)){
+                $this->success('注册成功', $this->service_user->getUserInfo());
+            }else{
+                $this->error('注册失败',$this->service_user->getError());
+            }
+        }else{
+            $this->error('注册失败',$validate->getError());
+        }
+    }
+
+    /**
+     * @ApiTitle    (用户名密码登录)
+     * @ApiSummary  (用户名密码登录)
+     * @ApiMethod   (POST)
+     * @ApiRoute    (/api/user/username_login)
+     * @ApiParams   (name="username", type="string", required=true, description="用户名")
+     * @ApiParams   (name="password", type="string", required=true, description="密码")
+     * @ApiReturnParams   (name="code", type="integer", required=true, sample="0")
+     * @ApiReturnParams   (name="msg", type="string", required=true, sample="登录成功")
+     * @ApiReturn
+    ({
+    'code':'1',
+    'msg':'登录成功'
+    })
+     */
+    public function username_login()
+    {
+        if(!$this->request->isPost()){
+            $this->error('请使用POST请求');
+        }
+
+        $param['username'] = $this->request->request('username');
+        $param['password'] = $this->request->request('password');
+
+        $validate = new UsernameLogin();
+        if($validate->check($param)){
+            if($this->service_user->usernameLogin($param)){
+                $this->success('登录成功', $this->service_user->getUserInfo());
+            }else{
+                $this->error('登录失败',$this->service_user->getError());
+            }
+        }else{
+            $this->error('登录失败',$validate->getError());
         }
     }
 
@@ -88,7 +102,7 @@ class User extends Api{
      */
     public function logout()
     {
-        if( $this->auth->logout() ){
+        if( $this->service_user->logout() ){
             $this->success('注销成功');
         }else{
             $this->error($this->auth->getError());

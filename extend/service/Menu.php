@@ -1,11 +1,11 @@
 <?php
 
-namespace services;
+namespace service;
 
 /**
  * 菜单类
  */
-class Menu extends Services
+class Menu extends Service
 {
     public $default_icon = 'layui-icon layui-icon-star-fill';
     public $menu_model;

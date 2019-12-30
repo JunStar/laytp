@@ -5,16 +5,23 @@ use library\DirFile;
 use library\QiniuYun;
 use Qiniu\Auth;
 use Qiniu\Storage\UploadManager;
+use think\facade\Config;
 use think\Controller;
 use think\Db;
 use think\Exception;
-use think\facade\Config;
 use think\facade\Env;
 use think\facade\Session;
 
 //集成controller，不走权限控制
 class Ajax extends Controller
 {
+    public function initialize(){
+        $admin_user_id = Session::get('admin_user_id');
+        if(!$admin_user_id){
+            $this->error('请先登录');
+        }
+    }
+
     //根据菜单ID获取面包屑
     public function get_crumbs(){
         $menu_id = $this->request->param('menu_id');
@@ -30,7 +37,39 @@ class Ajax extends Controller
     public function upload(){
         try{
             $file = $this->request->file('file'); // 获取上传的文件
-            $info = $file->move('uploads'); // 移动文件到指定目录 没有则创建
+            if(!$file){
+                $this->error('请选择需要的上传文件');
+            }
+
+            $upload = Config::get('laytp.upload');
+            preg_match('/(\d+)(\w+)/', $upload['maxsize'], $matches);
+            $type = strtolower($matches[2]);
+            $typeDict = ['b' => 0, 'k' => 1, 'kb' => 1, 'm' => 2, 'mb' => 2, 'gb' => 3, 'g' => 3];
+            $size = (int)$upload['maxsize'] * pow(1024, isset($typeDict[$type]) ? $typeDict[$type] : 0);
+
+            $fileInfo = $file->getInfo();
+            $suffix = strtolower(pathinfo($fileInfo['name'], PATHINFO_EXTENSION));
+            $suffix = $suffix && preg_match("/^[a-zA-Z0-9]+$/", $suffix) ? $suffix : 'file';
+
+            $mimetypeArr = explode(',', strtolower($upload['mimetype']));
+            $typeArr = explode('/', $fileInfo['type']);
+
+            //禁止上传PHP和HTML文件
+            if (in_array($fileInfo['type'], ['text/x-php', 'text/html']) || in_array($suffix, ['php', 'html', 'htm'])) {
+                $this->error('文件类型被禁止上传');
+            }
+            //验证文件后缀
+            if ($upload['mimetype'] !== '*' &&
+                (
+                    !in_array($suffix, $mimetypeArr)
+                    || (stripos($typeArr[0] . '/', $upload['mimetype']) !== false && (!in_array($fileInfo['type'], $mimetypeArr) && !in_array($typeArr[0] . '/*', $mimetypeArr)))
+                )
+            ) {
+                $this->error('文件类型被禁止上传');
+            }
+
+            $info = $file->validate(['size' => $size])->move('uploads'); // 移动文件到指定目录 没有则创建
+
             if($info->getError()){
                 $this->error('上传失败，'.$info->getError());
             }else{
@@ -59,6 +98,23 @@ class Ajax extends Controller
             }
         }catch (Exception $e){
             $this->error('上传失败','',['data'=>$e->getMessage()]);
+        }
+    }
+
+    public function editor_md_upload()
+    {
+        // 获取表单上传文件 例如上传了001.jpg
+        $file = request()->file('editormd-image-file');
+
+        // 移动到框架应用根目录/public/uploads/ 目录下
+        if($file){
+            $info = $file->move('./uploads');
+            if($info){
+                return json_encode(['url'=>'/uploads/' . $info->getSaveName(),'success'=>1]);
+            }else{
+                // 上传失败获取错误信息
+                return $this->error($file->getError());
+            }
         }
     }
 

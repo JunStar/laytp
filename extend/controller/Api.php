@@ -5,7 +5,7 @@
 
 namespace controller;
 
-use app\api\library\Auth;
+use app\common\service\User;
 use think\Controller;
 use think\exception\HttpResponseException;
 use think\facade\Cookie;
@@ -26,10 +26,10 @@ class Api extends Controller
     protected $no_need_login = [];
 
     /**
-     * 权限Auth
-     * @var Auth
+     * 用户相关服务
+     * @var User
      */
-    protected $auth = null;
+    protected $service_user = null;
 
     /**
      * 默认响应输出类型,支持json/xml
@@ -38,9 +38,9 @@ class Api extends Controller
     protected $response_type = 'json';
 
     /**
-     * 构造方法
-     * @access public
-     * @param Request $request Request 对象
+     * Api constructor.
+     * @param Request|null $request
+     * @throws \think\Exception
      */
     public function __construct(Request $request = null)
     {
@@ -51,11 +51,11 @@ class Api extends Controller
     }
 
     public function _initialize(){
-        $this->auth = Auth::instance();
-        if ($this->auth->is_need_login($this->no_need_login)) {
+        $this->service_user = User::instance();
+        if ($this->service_user->is_need_login($this->no_need_login)) {
             $token = $this->request->server('HTTP_TOKEN', $this->request->request('token', Cookie::get('token')));
-            $this->auth->init($token);
-            if (!$this->auth->isLogin()) {
+            $this->service_user->init($token);
+            if (!$this->service_user->isLogin()) {
                 $this->error('请先登录', null, 401);
             }
         }

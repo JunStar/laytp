@@ -1,6 +1,6 @@
 <?php
 
-namespace app\api\library;
+namespace library;
 
 use library\token\Driver;
 use think\facade\Config;

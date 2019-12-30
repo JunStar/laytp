@@ -30,6 +30,15 @@
         min-width:0px;
         width:auto;
     }
+    .layui-container{
+        width: 90%;
+    }
+    .layui-form-pane .layui-form-label{
+        width: 200px;
+    }
+    .layui-form-pane .layui-input-block{
+        margin-left: 200px;
+    }
 </style>
 <body>
 <div class="layui-layout layui-layout-admin laytp-theme-10" style="position:fixed;width: 100%;min-height:50px;margin-bottom:20px;z-index: 9999">
@@ -52,7 +61,7 @@
 </div>
 <div class="layui-container laytp-theme-10" style="top: 80px;">
     <div class="layui-row">
-        <div class="layui-col-md1" style="position:fixed;max-height:285px;">
+        <div class="layui-col-md2" style="position:fixed;max-height:80%;overflow:auto">
             <div class="layui-collapse">
                 {foreach $docslist as $k=>$v}
                 <div class="layui-colla-item">
@@ -66,9 +75,9 @@
                 {/foreach}
             </div>
         </div>
+        <div class="layui-col-md2">&nbsp;</div>
         <div class="layui-col-md1">&nbsp;</div>
-        <div class="layui-col-md1">&nbsp;</div>
-        <div class="layui-col-md9">
+        <div class="layui-col-md8">
             {foreach $docslist as $k=>$v}
             <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
                 <legend>{$k}</legend>
@@ -80,12 +89,12 @@
                     <div class="layui-colla-content" id="{$api.id}_content">
                         <div class="layui-tab">
                             <ul class="layui-tab-title">
-                                <li class="layui-this">基础信息</li>
-                                <li>在线测试</li>
+                                <li>基础信息</li>
+                                <li class="layui-this">在线测试</li>
                                 <li>返回说明</li>
                             </ul>
                             <div class="layui-tab-content">
-                                <div class="layui-tab-item layui-show">
+                                <div class="layui-tab-item">
                                     <div class="layui-card" style="background-color: #F2F2F2;">
                                         <div class="layui-card-body">
                                             {$api.summary}
@@ -162,7 +171,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="layui-tab-item">
+                                <div class="layui-tab-item layui-show">
                                     <div class="layui-card">
                                         <div class="layui-card-header" style="background-color: #F2F2F2;">Headers</div>
                                         <div class="layui-card-body">
