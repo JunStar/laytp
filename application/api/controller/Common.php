@@ -1,8 +1,12 @@
 <?php
 namespace app\api\controller;
 
+use app\api\validate\email\CheckCode;
+use app\api\validate\email\Send;
+use app\common\service\Email;
 use controller\Api;
 use library\QiniuYun;
+use library\Random;
 use think\facade\Config;
 use think\facade\Env;
 
@@ -10,6 +14,9 @@ use think\facade\Env;
  * 公用接口
  */
 class Common extends Api{
+
+    public $no_need_login = ['send_email_code','check_email_code'];
+
     /**
      * @ApiTitle    (文件上传)
      * @ApiSummary  (文件上传)
@@ -20,10 +27,10 @@ class Common extends Api{
      * @ApiReturnParams   (name="msg", type="string", required=true, sample="返回成功")
      * @ApiReturnParams   (name="data", type="object", sample="{'user_id':'int','user_name':'string','profile':{'email':'string','age':'integer'}}", description="扩展数据返回")
      * @ApiReturn
-({
+    ({
     'code':'1',
     'msg':'返回成功'
-})
+    })
      */
     public function upload()
     {
@@ -86,6 +93,77 @@ class Common extends Api{
             }
         }catch (Exception $e){
             $this->error('上传失败',['data'=>$e->getMessage()]);
+        }
+    }
+
+    /**
+     * @ApiTitle    (发送邮箱验证码)
+     * @ApiSummary  (发送邮箱验证码)
+     * @ApiMethod   (POST)
+     * @ApiRoute    (/api/common/send_email_code)
+     * @ApiParams   (name="email", type="string", required=true, description="邮箱")
+     * @ApiParams   (name="event", type="string", required=true, sample="register",description="事件名称")
+     * @ApiReturnParams   (name="code", type="integer", required=true, sample="0")
+     * @ApiReturnParams   (name="msg", type="string", required=true, sample="返回成功")
+     * @ApiReturnParams   (name="data", type="object", sample="{'user_id':'int','user_name':'string','profile':{'email':'string','age':'integer'}}", description="扩展数据返回")
+     * @ApiReturn
+    ({
+    'code':'1',
+    'msg':'返回成功'
+    })
+     */
+    public function send_email_code(){
+        if(!$this->request->isPost()){
+            $this->error('请使用POST请求');
+        }
+
+        $params['email'] = $this->request->param('email');
+        $params['event'] = $this->request->param('event');
+
+        $validate = new Send();
+        if($validate->check($params)){
+            $email_service = new Email();
+            if($email_service->send($params['email'],$params['event'],['code'=>Random::numeric()])){
+                $this->success('发送成功');
+            }else{
+                $this->error('发送失败',$email_service->getError());
+            }
+        }else{
+            $this->error('发送失败',$validate->getError());
+        }
+    }
+
+    /**
+     * @ApiTitle    (验证邮箱验证码)
+     * @ApiSummary  (验证邮箱验证码)
+     * @ApiMethod   (POST)
+     * @ApiRoute    (/api/common/check_email_code)
+     * @ApiParams   (name="email", type="string", required=true, description="邮箱")
+     * @ApiParams   (name="event", type="string", required=true, sample="register",description="事件名称")
+     * @ApiParams   (name="code", type="string", required=true, sample="register",description="邮箱验证码")
+     * @ApiReturnParams   (name="code", type="integer", required=true, sample="0")
+     * @ApiReturnParams   (name="msg", type="string", required=true, sample="返回成功")
+     * @ApiReturnParams   (name="data", type="object", sample="{'user_id':'int','user_name':'string','profile':{'email':'string','age':'integer'}}", description="扩展数据返回")
+     * @ApiReturn
+    ({
+    'code':'1',
+    'msg':'返回成功'
+    })
+     */
+    public function check_email_code(){
+        if(!$this->request->isPost()){
+            $this->error('请使用POST请求');
+        }
+
+        $params['email'] = $this->request->param('email');
+        $params['event'] = $this->request->param('event');
+        $params['code'] = $this->request->param('code');
+
+        $email_service = new Email();
+        if($email_service->checkCode($params['email'],$params['event'],$params['code'])){
+            $this->success('验证成功');
+        }else{
+            $this->error('验证失败',$email_service->getError());
         }
     }
 }

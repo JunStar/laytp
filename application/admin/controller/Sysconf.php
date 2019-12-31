@@ -21,14 +21,14 @@ class Sysconf extends Backend
 
     public function index(){
         $dictionary = json_decode( model('Sysconf')->where('group','=','dictionary')->value('value'), true );
-        $config_group = $dictionary ? $dictionary : ['basic' => '基础配置', 'dictionary' => '分组配置', 'upload' => '上传配置'];
+        $config_group = $dictionary ? $dictionary : ['basic' => '基础配置', 'dictionary' => '分组配置', 'upload' => '上传配置', 'email'=>'邮件配置'];
         $this->assign('config_group', $config_group);
 
         $group = $this->request->param('group');
         $group = $group ? $group : key($config_group);
         $this->assign('group', $group);
 
-        $config = model('Sysconf')->where('group','=',$group)->select()->toArray();
+        $config = model('Sysconf')->where('group','=',$group)->order('id','asc')->select()->toArray();
         foreach($config as $k=>$v){
             if($v['type'] == 'array'){
                 $config[$k]['value'] = json_decode( $v['value'], true );

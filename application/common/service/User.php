@@ -1,6 +1,7 @@
 <?php
 /**
  * 用户服务
+ *  注册登录以及获取登录用户信息
  */
 namespace app\common\service;
 use library\Token;

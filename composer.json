@@ -19,7 +19,8 @@
         "php": ">=5.6.0",
         "topthink/framework": "5.1.*",
         "topthink/think-captcha": "^2.0",
-        "qiniu/php-sdk": "^7.2"
+        "qiniu/php-sdk": "^7.2",
+        "phpmailer/phpmailer": "^6.1"
     },
     "autoload": {
         "psr-4": {
