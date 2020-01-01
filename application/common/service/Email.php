@@ -40,26 +40,25 @@ class Email extends Service
 
     //验证验证码
     public function checkCode($to, $event, $code){
-        $email = \app\common\model\Email::where([['to','=',$to],['event','=',$event]])->find()->toArray();
-        if($email['status'] == 2){
-            $this->setError('验证码已使用');
-            return false;
-        }
-        if($email['status'] == 3){
-            $this->setError('验证码已过期');
-            return false;
-        }
-        if($email['expire_time'] && $email['expire_time'] < time()){
-            \app\common\model\Email::where('id','=',$email['id'])->update(['status'=>3]);
-            $this->setError('验证码已过期');
-            return false;
-        }
-        $params = json_decode($email['params'],true);
-        if(isset($params['code']) && $params['code'] != $code){
+        $email = \app\common\model\Email::where([['to','=',$to],['event','=',$event],['params','=',json_encode(['code'=>$code],JSON_UNESCAPED_UNICODE)]])->find();
+        if(!$email){
             $this->setError('验证码错误');
             return false;
         }
-        \app\common\model\Email::where('id','=',$email['id'])->update(['status'=>2]);
+        if($email->status == 2){
+            $this->setError('验证码已使用');
+            return false;
+        }
+        if($email->status == 3){
+            $this->setError('验证码已过期');
+            return false;
+        }
+        if($email->expire_time && $email->expire_time < time()){
+            \app\common\model\Email::where('id','=',$email->id)->update(['status'=>3]);
+            $this->setError('验证码已过期');
+            return false;
+        }
+        \app\common\model\Email::where('id','=',$email->id)->update(['status'=>2]);
         return true;
     }
 }
