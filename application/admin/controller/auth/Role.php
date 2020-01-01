@@ -25,6 +25,19 @@ class Role extends Backend
         $this->assign('role_list', $this->role_list);
     }
 
+    public function select_page(){
+        if( $this->request->isAjax() ){
+            $where = $this->select_page_build_params();
+            $limit = 10000;
+            $order['id'] = 'asc';
+            $data = $this->model->where($where)->order($order)->paginate($limit)->toArray();
+            $tree_obj = Tree::instance();
+            $tree_obj->init($data['data']);
+            $data['data'] = $tree_obj->getTreeList($tree_obj->getTreeArray(0));
+            return select_page_data($data);
+        }
+    }
+
     public function index()
     {
         if( $this->request->isAjax() ){
