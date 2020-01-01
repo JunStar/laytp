@@ -123,7 +123,7 @@ class Backend extends Controller
         $where = [
             ['id','in',$menu_ids]
         ];
-        $rule_list = array_unique( model('admin/admin/auth.Menu')->where($where)->column('rule') );
+        $rule_list = array_unique( model('admin/auth.Menu')->where($where)->column('rule') );
         $this->rule_list = $rule_list;
 
         if( !in_array($this->now_node, $rule_list) && !in_array($this->action, $this->no_need_login) ){
