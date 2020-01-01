@@ -133,8 +133,9 @@ class Backend extends Controller
 
     //设置菜单
     public function menu(){
-        $menus_where['is_menu'] = 1;
-        $menus_where['is_hide'] = 0;
+        $menus_where[] = ['is_menu','=',1];
+        $menus_where[] = ['is_hide','=',0];
+        if(!$this->admin_user->is_super_manager) $menus_where[] = ['id','in',$this->menu_ids];
         $menus = model('admin/auth.Menu')->where($menus_where)->order(['pid'=>'asc','sort'=>'desc'])->select()->toArray();
         $this->menus = $menus;
         $menu_tree_obj = Tree::instance();
