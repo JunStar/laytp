@@ -1,0 +1,12 @@
+{extend name="admin@public/layout/popup_form"}
+
+{block name="form"}
+{foreach $config_items['key'] as $vk=>$vv}
+<div class="layui-form-item">
+    <label class="layui-form-label" title="{$config_items['value'][$vk]}">{$config_items['value'][$vk]}</label>
+    <div class="layui-input-block">
+        <input type="text" class="layui-input" name="row[{$vv}]" id="{$vv}">
+    </div>
+</div>
+{/foreach}
+{/block}

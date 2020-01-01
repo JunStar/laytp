@@ -4,6 +4,8 @@ namespace app\admin\controller;
 use controller\Backend;
 use think\Exception;
 use think\exception\HttpResponseException;
+use think\facade\Config;
+use think\facade\Env;
 use think\facade\Response;
 
 class Addons extends Backend
@@ -152,5 +154,20 @@ class Addons extends Backend
             $data['code'] = $e->getCode();
             return $this->error('卸载失败', $data);
         }
+    }
+
+    //配置项
+    public function config(){
+        if($this->request->isAjax()){
+            $addons = Config::get('addons.');
+            $name = $this->request->param('name');
+            $config_items = $this->request->param('row');
+            $addons[$name] = $config_items;
+            $file_name = Env::get('root_path') .  DS . 'config' . DS . 'addons.php';
+            file_put_contents($file_name,"<?php\nreturn ".var_export($addons,true).';');
+            return $this->success('配置成功');
+        }
+        $this->assign('config_items', json_decode($this->request->param('config_items'),true));
+        return $this->fetch();
     }
 }

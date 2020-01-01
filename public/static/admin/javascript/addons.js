@@ -23,11 +23,11 @@ layui.use(['layTp'],function() {
             , where: where
             , even: true
             , method: 'GET'
-            // , cellMinWidth: 180
+            , cellMinWidth: 180
             , page: true
             , cols: [[
-                {field:'title',title:'插件名称',align:'center',width:180}
-                ,{field:'description',title:'简介',align:'center',width:180}
+                {field:'title',title:'插件名称'}
+                ,{field:'description',title:'简介'}
                 ,{field:'author',title:'作者',align:'center',width:100}
                 ,{field:'price',title:'价格',align:'center',width:100,templet:function(d){
                     if(d.buy_type == 2){
@@ -38,35 +38,35 @@ layui.use(['layTp'],function() {
                         return '<text style="color: green">免费</text>';
                     }
                 }}
-                ,{field:'download_num',title:'下载',align:'center',width:100}
-                ,{field:'latest_version',title:'最新版本',align:'center',width:100}
-                ,{field:'local_state',title:'状态',align:'center',width:100,templet:function(d){
+                ,{field:'download_num',title:'下载',width:100,align:'center'}
+                ,{field:'latest_version',title:'最新版本',width:100,align:'center'}
+                ,{field:'local_state',title:'状态',width:100,align:'center',templet:function(d){
                     let data_list = {"open":{"value":1,"text":"开启"},"close":{"value":0,"text":"关闭"}};
                     let lay_text = data_list.open.text + "|" + data_list.close.text;
                     return '<input open_value="'+data_list.open.value+'" close_value="'+data_list.close.value+'" name_val="'+d.name+'" type="checkbox" name="local_state" value="'+data_list.open.value+'" lay-skin="switch" lay-text="'+lay_text+'" lay-filter="addon_switch" ' + ( (d['local_state']==data_list.open.value) ? 'checked="checked"' : '' ) + ' />';
                     // return layTp.facade.formatter.switch('local_state',d,{"open":{"value":1,"text":"开启"},"close":{"value":0,"text":"关闭"}});
                 }}
-                ,{field:'operation',title:'操作',align:'center',width:180,templet:function(d){
+                ,{field:'operation',title:'操作',align:'right',templet:function(d){
                     let operation_html = '';
                     layui.laytpl($('#operation').html()).render(d, function(html){
                         operation_html = html;
                     });
-                    let options = [];
-                    for(k in d.multi_version){
-                        options[k] = {};
-                        options[k].action = "install";
-                        options[k].title = '安装' + d.multi_version[k]['version_num'];
-                        options[k].switch_type = "popup_frame";
-                        options[k].need_data = false;
-                        options[k].need_refresh = true;
-                        options[k].uri = layTp.facade.url(module + "/" + controller + "/install",{"version":d.multi_version[k]['version_num'],"name":d.name});
-                    }
-
-                    //批量操作渲染
-                    layui.dropdown.render({
-                        elem: '.version_list_'+d.id,
-                        options: options
-                    });
+                    // let options = [];
+                    // for(k in d.multi_version){
+                    //     options[k] = {};
+                    //     options[k].action = "install";
+                    //     options[k].title = '安装' + d.multi_version[k]['version_num'];
+                    //     options[k].switch_type = "popup_frame";
+                    //     options[k].need_data = false;
+                    //     options[k].need_refresh = true;
+                    //     options[k].uri = layTp.facade.url(module + "/" + controller + "/install",{"version":d.multi_version[k]['version_num'],"name":d.name});
+                    // }
+                    //
+                    // //批量操作渲染
+                    // layui.dropdown.render({
+                    //     elem: '.version_list_'+d.id,
+                    //     options: options
+                    // });
                     return operation_html;
                 }}
             ]]
@@ -81,6 +81,9 @@ layui.use(['layTp'],function() {
                 switch(obj.event){
                     case 'uninstall':
                         layTp.facade.popup_confirm("卸载",layTp.facade.url(module + "/" + controller + "/uninstall",{name:obj.data.name}));
+                        break;
+                    case 'config':
+                        layTp.facade.popup_frame("配置项",layTp.facade.url(module + "/" + controller + "/config",{config_items:obj.data.config_items,name:obj.data.name}),'50%','50%');
                         break;
                 }
             }
@@ -112,6 +115,8 @@ layui.use(['layTp'],function() {
                 },
             });
         });
+
+
     };
 
     func_controller.table_render();
