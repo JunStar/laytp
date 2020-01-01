@@ -1,68 +1,75 @@
 {extend name="admin@public/layout/popup_form"}
 
 {block name="form"}
-    <div class="layui-form-item">
-        <label class="layui-form-label">菜单</label>
-        <div class="layui-input-block">
-            <input type="radio" id="is_menu_1" name="row[is_menu]" value="1" title="是" checked="checked">
-            <input type="radio" id="is_menu_0" name="row[is_menu]" value="0" title="否">
-        </div>
+<div class="layui-form-item">
+    <label class="layui-form-label">菜单</label>
+    <div class="layui-input-block">
+        <input type="radio" id="is_menu_1" name="row[is_menu]" value="1" title="是" checked="checked">
+        <input type="radio" id="is_menu_0" name="row[is_menu]" value="0" title="否">
     </div>
+</div>
 
-    <div class="layui-form-item">
-        <label class="layui-form-label">父级</label>
-        <div class="layui-input-block">
-            <select id="pid" name="row[pid]">
-                <option value="0">------请选择------</option>
-                {foreach $menu_list as $key=>$vo}
-                <option value="{$vo.id}">{$vo.name}</option>
-                {/foreach}
-            </select>
-        </div>
+<div class="layui-form-item">
+    <label class="layui-form-label">父级</label>
+    <div class="layui-input-block">
+        <select id="pid" name="row[pid]">
+            <option value="0">------请选择------</option>
+            {foreach $menu_list as $key=>$vo}
+            <option value="{$vo.id}">{$vo.name}</option>
+            {/foreach}
+        </select>
     </div>
+</div>
 
-    <div class="layui-form-item">
-        <label class="layui-form-label">标题 <text title="必填项" style="color:red;">*</text></label>
-        <div class="layui-input-block">
-            <input type="text" name="row[name]" lay-verify="required" placeholder="请输入标题" class="layui-input" lay-verType="tips">
-        </div>
+<div class="layui-form-item">
+    <label class="layui-form-label">标题</label>
+    <div class="layui-input-block">
+        <input type="text" name="row[name]" lay-verify="required" placeholder="请输入标题" class="layui-input" lay-verType="tips" autocomplete="off">
     </div>
+</div>
 
-    <div class="layui-form-item">
-        <label class="layui-form-label">规则 <text title="必填项" style="color:red;">*</text></label>
-        <div class="layui-input-block">
-            <input type="text" name="row[rule]" lay-verify="required" placeholder="请输入规则" class="layui-input" lay-verType="tips">
-        </div>
+<div class="layui-form-item">
+    <label class="layui-form-label">描述</label>
+    <div class="layui-input-block">
+        <input type="text" name="row[des]" placeholder="请输入描述" class="layui-input" lay-verType="tips" autocomplete="off" autocomplete="off">
     </div>
+</div>
 
-    <div class="layui-form-item">
-        <label class="layui-form-label">图标 <text title="必填项" style="color:red;">*</text></label>
-        <div class="layui-input-inline" style="margin-right:0;width:59%;">
-            <input type="text" id="icon" name="row[icon]" lay-verify="required" placeholder="请输入图标" class="layui-input" lay-verType="tips">
-        </div>
-        <a class="layui-form-label popup-select" style="margin-left: -1px;"
-           data-template_id="choose_icon_tpl"
-           data-source="__ADMIN__/data/icon.json"
-           data-input_id="icon"
-        >搜索图标</a>
+<div class="layui-form-item">
+    <label class="layui-form-label">规则</label>
+    <div class="layui-input-block">
+        <input type="text" name="row[rule]" lay-verify="required" placeholder="请输入规则" class="layui-input" lay-verType="tips" autocomplete="off">
     </div>
+</div>
 
-    <div class="layui-form-item">
-        <label class="layui-form-label">隐藏</label>
-        <div class="layui-input-block">
-            <input type="radio" id="is_hide_1" name="row[is_hide]" value="1" title="是">
-            <input type="radio" id="is_hide_0" name="row[is_hide]" value="0" title="否" checked="checked">
-        </div>
+<div class="layui-form-item">
+    <label class="layui-form-label">图标</label>
+    <div class="layui-input-inline" style="margin-right:0;width:59%;">
+        <input type="text" id="icon" name="row[icon]" lay-verify="required" placeholder="请输入图标" class="layui-input" lay-verType="tips">
     </div>
+    <a class="layui-form-label popup-select" style="margin-left: -1px;"
+       data-template_id="choose_icon_tpl"
+       data-source="__ADMIN__/data/icon.json"
+       data-input_id="icon"
+    >搜索图标</a>
+</div>
 
-    <div class="layui-form-item">
-        <label class="layui-form-label">排序</label>
-        <div class="layui-input-block">
-            <input type="text" id="sort" name="row[sort]" placeholder="请输入排序，从大到小，倒序排列" class="layui-input">
-        </div>
+<div class="layui-form-item">
+    <label class="layui-form-label">隐藏</label>
+    <div class="layui-input-block">
+        <input type="radio" id="is_hide_1" name="row[is_hide]" value="1" title="是">
+        <input type="radio" id="is_hide_0" name="row[is_hide]" value="0" title="否" checked="checked">
     </div>
+</div>
+
+<div class="layui-form-item">
+    <label class="layui-form-label">排序</label>
+    <div class="layui-input-block">
+        <input type="text" id="sort" name="row[sort]" placeholder="请输入排序，从大到小，倒序排列" class="layui-input" autocomplete="off">
+    </div>
+</div>
 {/block}
 
 {block name="js_template"}
-    {include file="auth/menu/choose_icon_tpl" /}
+{include file="auth/menu/choose_icon_tpl" /}
 {/block}

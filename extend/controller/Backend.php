@@ -59,6 +59,13 @@ class Backend extends Controller
 
             exit($this->fetch('ltiframe/index'));
         }
+
+        $menu_id = $this->request->param('laytp_menu_id');
+        if($menu_id){
+            $this->assign('menu_info', Menu::get($menu_id)->toArray());
+        }else{
+            $this->assign('menu_info', ['des'=>'']);
+        }
     }
 
     //设置菜单

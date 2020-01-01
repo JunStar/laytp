@@ -275,3 +275,12 @@ layui-nav-child dd.layui-this, .layui-nav-tree .layui-nav-child dd.layui-this a{
 .layui-table-body tr:nth-child(odd){
     background-color:#f9f9f9;
 }
+
+.laytp-elem-quote{
+    padding:10px;
+    border-radius:0 2px 2px 0;
+    background-color:#f2f2f2;
+    line-height:22px;
+    font-size:13px;
+    color:#666;
+}

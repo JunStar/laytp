@@ -72,9 +72,9 @@
         if(ref == 1){
             if(default_menu.rule != target_url){
                 $('#layTpIframe').attr('src',__URL__ + target_url);
-                editHistory(default_menu.name,__URL__ + target_url + '?ref=' + default_menu.id);
+                editHistory(default_menu.name,__URL__ + target_url + '?ref=' + default_menu.id  + '/laytp_menu_id/' + default_menu.id);
             }else{
-                $('#layTpIframe').attr('src',__URL__ + default_menu.rule);
+                $('#layTpIframe').attr('src',__URL__ + default_menu.rule + '/laytp_menu_id/' + default_menu.id);
                 editHistory(default_menu.name,__URL__ + default_menu.rule + '?ref=' + default_menu.id);
             }
         }else{
@@ -124,7 +124,7 @@
 
     //点击菜单并且右侧iframe跳转页面
     function click_menu_redirect(t){
-        $('#layTpIframe').attr('src',__URL__ + t.attr('rule'));
+        $('#layTpIframe').attr('src',__URL__ + t.attr('rule') + '/laytp_menu_id/' + t.attr('menu_id'));
         editHistory(default_menu.name,__URL__ + t.attr('rule') + '?ref=' + t.attr('menu_id'));
         $.post(__URL__ + 'admin/ajax/get_crumbs',{menu_id:t.attr('menu_id')},function(res){
             if(res.code==1){
@@ -136,30 +136,6 @@
             }
         });
     }
-
-    // // 递归生成子菜单
-    // function getChildMenu(subMenu,num,checked) {
-    //     let sel_menu = checked ? true : false;
-    //     num++;
-    //     let subStr = "";
-    //     itemed = (k_val==0) ? ' layui-nav-itemed' : '';
-    //     athis = (k_val==0) ? ' layui-this' : '';
-    //     if(subMenu.childMenus!=null && subMenu.childMenus.length>0){
-    //         subStr+="<dd><ul><li class=\"layui-nav-item"+itemed+"\" ><a style=\"margin-Left:"+num*menuCell+"px\" class=\"\" href=\"javascript:;\"><i class='layui-icon' >&#xe653;</i> "+subMenu.name+"</a>" +
-    //             "<dl class=\"layui-nav-child\">\n";
-    //         for( let j = 0; j <subMenu.childMenus.length; j++){
-    //             subStr+=getChildMenu(subMenu.childMenus[j],num,unchecked);
-    //         }
-    //         subStr+="</dl></li></ul></dd>";
-    //     }else{
-    //         if(sel_menu){
-    //             subStr+="<dd class='"+athis+"'><a style=\"margin-Left:"+num*menuCell+"px\" href=\"javascript:;\" rule=\""+subMenu.rule+"\" menu_id='"+subMenu.id+"'><i class='layui-icon "+subMenu.icon+"'></i> "+subMenu.name+"</a></dd>";
-    //         }else{
-    //             subStr+="<dd><a style=\"margin-Left:"+num*menuCell+"px\" href=\"javascript:;\" rule=\""+subMenu.rule+"\" menu_id='"+subMenu.id+"'><i class='layui-icon "+subMenu.icon+"'></i> "+subMenu.name+"</a></dd>";
-    //         }
-    //     }
-    //     return subStr;
-    // }
 
     function in_array(value,array){
         var index = $.inArray(value,array);
