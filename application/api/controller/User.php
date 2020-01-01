@@ -13,6 +13,14 @@ class User extends Api{
     public $no_need_login = ['username_login','username_reg'];
 
     /**
+     * 根据token获取用户信息
+     * @ApiHeaders  (name=token, type=string, required=true, description="用户登录后得到的Token")
+     */
+    public function info(){
+        $this->success('获取成功', $this->service_user->getUserInfo());
+    }
+
+    /**
      * @ApiTitle    (用户名密码注册)
      * @ApiSummary  (用户名密码注册)
      * @ApiMethod   (POST)
@@ -91,7 +99,7 @@ class User extends Api{
      * @ApiSummary  (注销登录信息)
      * @ApiMethod   (GET)
      * @ApiRoute    (/api/user/logout)
-     * @ApiHeaders  (name=token, type=string, required=true, description="请求的Token")
+     * @ApiHeaders  (name=token, type=string, required=true, description="用户登录后得到的Token")
      * @ApiReturnParams   (name="code", type="integer", required=true, sample="0")
      * @ApiReturnParams   (name="msg", type="string", required=true, sample="注销成功")
      * @ApiReturn

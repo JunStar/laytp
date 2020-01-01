@@ -258,7 +258,7 @@ class Extractor
             list($prefix, $suffix) = explode('\\' . Config::get('url_controller_layer') . '\\', $className);
             $prefixArr = explode('\\', $prefix);
             $suffixArr = explode('\\', $suffix);
-            if ($prefixArr[0] == Config::get('app_namespace'))
+            if ($prefixArr[0] == 'app')
             {
                 $prefixArr[0] = '';
             }
