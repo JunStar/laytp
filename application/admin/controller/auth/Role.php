@@ -123,8 +123,10 @@ class Role extends Backend
                         $data[] = ['menu_id' => $v, 'role_id' => $edit_where['id']];
                     }
                 }
-                $result[] = model('auth.RoleRelMenu')->where('role_id','=',$edit_where['id'])->delete();
-                $result[] = model('auth.RoleRelMenu')->saveAll($data);
+                $res = model('auth.RoleRelMenu')->where('role_id','=',$edit_where['id'])->delete();
+                $result[] = ($res === false) ? false : true;
+                $res = model('auth.RoleRelMenu')->saveAll($data);
+                $result[] = ($res === false) ? false : true;
                 if(check_res($result)){
                     Db::commit();
                     return $this->success('操作成功');
