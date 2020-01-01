@@ -10,21 +10,49 @@
     </style>
     <form class="page-list-form layui-form" style="margin-top: 10px;">
         <div class="layui-form-item">
-            <label class="layui-form-label">昵称 <text title="必填项" style="color:red;">*</text></label>
+            <label class="layui-form-label">昵称</label>
             <div class="layui-input-inline">
-                <input type="text" name="row[nickname]" lay-verify="required" lay-verify="pass" placeholder="请输入昵称" autocomplete="off" class="layui-input" value="{$laytp_admin_user.nickname}">
+                <input type="text" name="row[nickname]" lay-verify="pass" placeholder="请输入昵称" autocomplete="off" class="layui-input" value="{$laytp_admin_user.nickname}">
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">密码 <text title="必填项" style="color:red;">*</text></label>
+            <label class="layui-form-label">密码</label>
             <div class="layui-input-inline">
-                <input type="password" name="row[password]" lay-verify="required" lay-verify="pass" placeholder="请输入密码，留空为不修改密码" autocomplete="off" class="layui-input">
+                <input type="password" name="row[password]" lay-verify="pass" placeholder="请输入密码，留空为不修改密码" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">重复密码 <text title="必填项" style="color:red;">*</text></label>
+            <label class="layui-form-label">重复密码</label>
             <div class="layui-input-inline">
-                <input type="password" name="row[re_password]" lay-verify="required" lay-verify="pass" placeholder="请输入密码，留空为不修改密码" autocomplete="off" class="layui-input">
+                <input type="password" name="row[re_password]" lay-verify="pass" placeholder="请输入密码，留空为不修改密码" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" title="单个图片">头像</label>
+            <div class="layui-input-block">
+                <div class="layui-upload">
+                    <div class="layui-inline" style="width: 260px;"><input type="text" class="layui-input" name="row[avatar]" id="input_avatar" value="{$laytp_admin_user.avatar}" /></div>
+                    <div class="layui-inline">
+                        <button type="button" class="layui-btn layui-btn-primary pull-left"
+                                id="avatar"
+                                upload="true"
+                                accept="images"
+                                single_multi="single"
+                        >选择上传</button>
+                    </div>
+                    <div class="pic-more">
+                        <ul class="pic-more-upload-list" id="preview_avatar">
+                            {if $laytp_admin_user.avatar}
+                            <li class="item_img">
+                                <div class="operate">
+                                    <i class="upload_img_close layui-icon" file_url_data="{$laytp_admin_user.avatar}"></i>
+                                </div>
+                                <img src="{$laytp_admin_user.avatar}" class="img">
+                            </li>
+                            {/if}
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="layui-form-item">
