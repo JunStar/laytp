@@ -153,9 +153,19 @@ class User extends Service
 
     /**
      * 邮箱密码登录
+     * @param $params
+     * @return bool
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
      */
-    public function emailLogin(){
-
+    public function emailLogin($params){
+        $email = $params['email'];
+        $this->_user = \app\common\model\User::where('email','=', $email)->find();
+        $this->_token = Random::uuid();
+        $this->_logined = true;
+        Token::set($this->_token, $this->_user->id, $this->token_keep_time);
+        return true;
     }
 
     /**

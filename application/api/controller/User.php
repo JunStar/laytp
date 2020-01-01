@@ -1,6 +1,7 @@
 <?php
 namespace app\api\controller;
 
+use app\api\validate\user\EmailLogin;
 use app\api\validate\user\UsernameLogin;
 use app\api\validate\user\UsernameReg;
 use controller\Api;
@@ -85,6 +86,42 @@ class User extends Api{
         $validate = new UsernameLogin();
         if($validate->check($param)){
             if($this->service_user->usernameLogin($param)){
+                $this->success('登录成功', $this->service_user->getUserInfo());
+            }else{
+                $this->error('登录失败',$this->service_user->getError());
+            }
+        }else{
+            $this->error('登录失败',$validate->getError());
+        }
+    }
+
+    /**
+     * @ApiTitle    (邮箱密码登录)
+     * @ApiSummary  (邮箱密码登录)
+     * @ApiMethod   (POST)
+     * @ApiRoute    (/api/user/email_login)
+     * @ApiParams   (name="email", type="string", required=true, description="邮箱")
+     * @ApiParams   (name="password", type="string", required=true, description="密码")
+     * @ApiReturnParams   (name="code", type="integer", required=true, sample="0")
+     * @ApiReturnParams   (name="msg", type="string", required=true, sample="登录成功")
+     * @ApiReturn
+    ({
+    'code':'1',
+    'msg':'登录成功'
+    })
+     */
+    public function email_login()
+    {
+        if(!$this->request->isPost()){
+            $this->error('请使用POST请求');
+        }
+
+        $param['email'] = $this->request->request('email');
+        $param['password'] = $this->request->request('password');
+
+        $validate = new EmailLogin();
+        if($validate->check($param)){
+            if($this->service_user->emailLogin($param)){
                 $this->success('登录成功', $this->service_user->getUserInfo());
             }else{
                 $this->error('登录失败',$this->service_user->getError());
