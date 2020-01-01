@@ -13,7 +13,7 @@ class Addons extends Backend
         $get_data_ajax_url = "http://local.laytpgw.com/api/addons/index";
         if($this->request->isAjax()){
             $post['category_id'] = $this->request->param('category_id');
-            $post['charge_status'] = $this->request->param('charge_status');
+            $post['buy_type'] = $this->request->param('buy_type');
             $post['page'] = intval($this->request->param('page'));
             $post['limit'] = intval($this->request->param('limit'));
             $res = request_by_curl($get_data_ajax_url, $post);
@@ -21,7 +21,7 @@ class Addons extends Backend
             $arr_res = json_decode($res, true);
 
             foreach($arr_res['data']['list']['data'] as $k=>$v){
-                $info = \app\admin\services\Addons::getAddonInfo($v['name']);
+                $info = \app\admin\service\Addons::getAddonInfo($v['name']);
                 if(!$info){
                     $arr_res['data']['list']['data'][$k]['addon_exist'] = false;
                     $arr_res['data']['list']['data'][$k]['local_state'] = 0;
@@ -30,7 +30,6 @@ class Addons extends Backend
                     $arr_res['data']['list']['data'][$k]['local_state'] = $info['state'];
                 }
             }
-
             $res = json_encode($arr_res);
 
             $response = Response::create($res);
@@ -45,17 +44,17 @@ class Addons extends Backend
             $assign['category'] = $res['data']['category'];
 
             foreach($res['data']['list']['data'] as $k=>$v){
-                $info = \app\admin\services\Addons::getAddonInfo($v['name']);
+                $info = \app\admin\service\Addons::getAddonInfo($v['name']);
                 if(!$info){
                     $arr_res['data']['list']['data'][$k]['addon_exist'] = false;
-                    $res['data']['list'][$k]['local_state'] = 0;
+                    $res['data']['list']['data'][$k]['local_state'] = 0;
                 }else{
                     $arr_res['data']['list']['data'][$k]['addon_exist'] = true;
-                    $res['data']['list'][$k]['local_state'] = $info['state'];
+                    $res['data']['list']['data'][$k]['local_state'] = $info['state'];
                 }
             }
 
-            $assign['list'] = $res['data']['list'];
+            $assign['list'] = $res['data']['list']['data'];
 
         }
         $this->assign($assign);
@@ -82,9 +81,9 @@ class Addons extends Backend
                     'token'     => $token,
                     'version'   => $version
                 ];
-                $installRes = \app\admin\services\Addons::install($name, $force, $extend);
+                $installRes = \app\admin\service\Addons::install($name, $force, $extend);
                 if($installRes['code']){
-                    $info = \app\admin\services\Addons::getAddonInfo($name);
+                    $info = \app\admin\service\Addons::getAddonInfo($name);
 //                $info['config'] = \app\admin\services\Addons::getAddonConfig($name) ? 1 : 0;
                     $info['state'] = 1;
                     $this->success('安装成功', ['addon' => $info]);
@@ -108,8 +107,8 @@ class Addons extends Backend
         $name = $this->request->param('name');
         try{
             $info['state'] = $field_val;
-            if( \app\admin\services\Addons::setAddonInfo($name, $info) ){
-                $addon = \app\admin\services\Addons::getAddonInstance($name);
+            if( \app\admin\service\Addons::setAddonInfo($name, $info) ){
+                $addon = \app\admin\service\Addons::getAddonInstance($name);
                 if($field == 'local_state'){
                     if($field_val == 1){
                         $addon->enable();
@@ -133,14 +132,14 @@ class Addons extends Backend
             return $this->error('参数name不能为空');
         }
         try {
-            $info = \app\admin\services\Addons::getAddonInfo($name);
+            $info = \app\admin\service\Addons::getAddonInfo($name);
             if(!$info){
                 return $this->error('插件不存在');
             }
             if($info['state'] == 1){
                 return $this->error('请先关闭插件');
             }
-            $installRes = \app\admin\services\Addons::uninstall($name);
+            $installRes = \app\admin\service\Addons::uninstall($name);
             if($installRes['code']){
                 return $this->success('卸载成功');
             }else{

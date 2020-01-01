@@ -30,8 +30,10 @@ layui.use(['layTp'],function() {
                 ,{field:'description',title:'简介',align:'center',width:180}
                 ,{field:'author',title:'作者',align:'center',width:100}
                 ,{field:'price',title:'价格',align:'center',width:100,templet:function(d){
-                    if(d.charge_status == 1){
+                    if(d.buy_type == 2){
                         return '<text style="color: red;">￥' + d.price + '</text>';
+                    }else if(d.buy_type == 3){
+                        return '<text style="color: blue;">' + parseInt(d.price) + '积分</text>';
                     }else{
                         return '<text style="color: green">免费</text>';
                     }
@@ -116,7 +118,7 @@ layui.use(['layTp'],function() {
 
     window.func_controller = func_controller;
 
-    $(document).on('click','.charge_status',function(){
+    $(document).on('click','.buy_type',function(){
         let obj = $(this);
         let field = obj.attr('field');
         let field_val = obj.attr('field_val');
@@ -124,7 +126,7 @@ layui.use(['layTp'],function() {
         if( isNaN(click_field_val) ){
             click_field_val = "";
         }
-        let data = {"charge_status":click_field_val};
+        let data = {"buy_type":click_field_val};
         layui.laytpl($('#template_default_toolbar').html()).render(data, function(html){
             $('#default_toolbar').html(html);
             //搜索框的值设置成对应值
