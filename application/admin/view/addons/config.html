@@ -5,7 +5,7 @@
 <div class="layui-form-item">
     <label class="layui-form-label" title="{$config_items['value'][$vk]}">{$config_items['value'][$vk]}</label>
     <div class="layui-input-block">
-        <input type="text" class="layui-input" name="row[{$vv}]" id="{$vv}">
+        <input type="text" class="layui-input" name="row[{$vv}]" id="{$vv}" value="{$config_values[$vv]}" autocomplete="off">
     </div>
 </div>
 {/foreach}

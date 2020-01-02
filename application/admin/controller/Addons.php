@@ -158,9 +158,9 @@ class Addons extends Backend
 
     //配置项
     public function config(){
+        $name = $this->request->param('name');
         if($this->request->isAjax()){
             $addons = Config::get('addons.');
-            $name = $this->request->param('name');
             $config_items = $this->request->param('row');
             $addons[$name] = $config_items;
             $file_name = Env::get('root_path') .  DS . 'config' . DS . 'addons.php';
@@ -168,6 +168,7 @@ class Addons extends Backend
             return $this->success('配置成功');
         }
         $this->assign('config_items', json_decode($this->request->param('config_items'),true));
+        $this->assign('config_values', Config::get('addons.'.$name));
         return $this->fetch();
     }
 }
