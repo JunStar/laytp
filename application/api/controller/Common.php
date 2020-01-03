@@ -75,7 +75,7 @@ class Common extends Api{
                 $save_name = str_replace('\\','/',$info->getSaveName());
                 $file_name = '/uploads/'.$save_name;
                 if($upload_way == 'local'){
-                    $this->success('上传成功','',['data'=>$file_name]);
+                    $this->success('上传成功',$file_name);
                 }else if($upload_way == 'qiniu'){
                     $qiniu_yun = QiniuYun::instance();
                     if($qiniu_yun->upload(
@@ -85,7 +85,7 @@ class Common extends Api{
                         ,Env::get('root_path') . 'public' . $file_name
                         ,$file_name
                     )){
-                        $this->success('上传成功',['url'=>$file_name]);
+                        $this->success('上传成功',$file_name);
                     }else{
                         $this->error('上传失败,'.$qiniu_yun->getMessage());
                     }

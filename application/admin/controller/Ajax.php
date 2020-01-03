@@ -38,7 +38,7 @@ class Ajax extends Controller
         try{
             $file = $this->request->file('file'); // 获取上传的文件
             if(!$file){
-                $this->error('请选择需要的上传文件');
+                $this->error('上传失败','','请选择需要的上传文件');
             }
 
             $upload = Config::get('laytp.upload');
@@ -56,7 +56,7 @@ class Ajax extends Controller
 
             //禁止上传PHP和HTML文件
             if (in_array($fileInfo['type'], ['text/x-php', 'text/html']) || in_array($suffix, ['php', 'html', 'htm'])) {
-                $this->error('文件类型被禁止上传');
+                $this->error('上传失败','','文件类型被禁止上传');
             }
             //验证文件后缀
             if ($upload['mimetype'] !== '*' &&
@@ -71,7 +71,7 @@ class Ajax extends Controller
             $info = $file->validate(['size' => $size])->move('uploads'); // 移动文件到指定目录 没有则创建
 
             if($info->getError()){
-                $this->error('上传失败，'.$info->getError());
+                $this->error('上传失败','',$info->getError());
             }else{
                 $add['file_type'] = $this->request->param('accept');
                 $save_name = str_replace('\\','/',$info->getSaveName());
@@ -90,14 +90,14 @@ class Ajax extends Controller
                         ,Env::get('root_path') . 'public' . $file_name
                         ,$file_name
                     )){
-                        $this->success('上传成功','',['data'=>$file_name]);
+                        $this->success('上传成功','',$file_name);
                     }else{
-                        $this->error('上传失败,'.$qiniu_yun->getMessage());
+                        $this->error('上传失败','',$qiniu_yun->getMessage());
                     }
                 }
             }
         }catch (Exception $e){
-            $this->error('上传失败','',['data'=>$e->getMessage()]);
+            $this->error('上传失败','',$e->getMessage());
         }
     }
 
