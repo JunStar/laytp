@@ -1,13 +1,15 @@
 {extend name="admin@public/layout/main"}
 
 {block name="tabs"}
-<div class="layui-tab layui-tab-brief">
-    <ul class="layui-tab-title">
-        <li class="layui-this" click_search="true" field="category_id" field_val="">全部</li>
-        {foreach $category as $k=>$v}
-        <li click_search="true" field="category_id" field_val="{$v['id']}">{$v['name']}</li>
-        {/foreach}
-    </ul>
+<div class="layui-card">
+    <div class="layui-tab layui-tab-brief">
+        <ul class="layui-tab-title">
+            <li class="layui-this" click_search="true" field="category_id" field_val="">全部</li>
+            {foreach $category as $k=>$v}
+            <li click_search="true" field="category_id" field_val="{$v['id']}">{$v['name']}</li>
+            {/foreach}
+        </ul>
+    </div>
 </div>
 {/block}
 
@@ -49,55 +51,55 @@
 
 {block name="js_template"}
 <script type="text/html" id="default_toolbar">
-    <div class="layui-table-tool-temp">
-<!--        <div class="layui-btn-group fl">-->
-<!--            <a href="javascript:void(0);" class="layui-btn layui-btn-danger layui-btn-sm layui-icon layui-icon-download-circle">&nbsp;离线安装</a>-->
-<!--        </div>-->
+        <div class="layui-btn-group fl">
+            <button href="javascript:void(0);" class="layui-btn layui-btn-danger layui-btn-sm layui-icon layui-icon-download-circle"
+                    upload="true" id="off_line_install" single_multi="single" accept="file" upload_url="{:url('admin/addons/off_line_install')}">&nbsp;离线安装</button>
+        </div>
         <div class="layui-btn-group fl">
             <a href="javascript:void(0);" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-list active buy_type" click_search="true" field="buy_type" field_val="">&nbsp;全部</a>
             <a href="javascript:void(0);" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-more-vertical buy_type" click_search="true" field="buy_type" field_val="1">&nbsp;免费</a>
             <a href="javascript:void(0);" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-rmb buy_type" click_search="true" field="buy_type" field_val="2">&nbsp;付费</a>
             <a href="javascript:void(0);" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-star buy_type" click_search="true" field="buy_type" field_val="3">&nbsp;积分</a>
-<!--            <a href="javascript:void(0);" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-home">&nbsp;本地插件</a>-->
+            <a href="javascript:void(0);" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-home">&nbsp;本地插件</a>
         </div>
-<!--        <div class="layui-btn-group fl">-->
-<!--            <a href="javascript:void(0);" class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-username">&nbsp;会员信息</a>-->
-<!--        </div>-->
-    </div>
+        <div class="layui-btn-group fl">
+            <a href="javascript:void(0);" class="layui-btn layui-btn-warm layui-btn-sm layui-icon layui-icon-username">&nbsp;会员信息</a>
+        </div>
 </script>
 
 <script type="text/html" id="template_default_toolbar">
-    <div class="layui-table-tool-temp">
-<!--        <div class="layui-btn-group fl">-->
-<!--            <a href="javascript:void(0);" class="layui-btn layui-btn-danger layui-btn-sm layui-icon layui-icon-download-circle">&nbsp;离线安装</a>-->
-<!--        </div>-->
+        <div class="layui-btn-group fl">
+            <button href="javascript:void(0);" class="layui-btn layui-btn-danger layui-btn-sm layui-icon layui-icon-download-circle"
+                    upload="true" id="off_line_install" single_multi="single" accept="file" upload_url="{:url('admin/addons/off_line_install')}">&nbsp;离线安装</button>
+        </div>
         <div class="layui-btn-group fl">
             <a href="javascript:void(0);" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-list {{#  if(d.buy_type === ''){ }}active{{#  } }} buy_type" field="buy_type" field_val="">&nbsp;全部</a>
             <a href="javascript:void(0);" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-more-vertical {{#  if(d.buy_type === 1){ }}active{{#  } }} buy_type" field="buy_type" field_val="1">&nbsp;免费</a>
             <a href="javascript:void(0);" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-rmb {{#  if(d.buy_type === 2){ }}active{{#  } }} buy_type" field="buy_type" field_val="2">&nbsp;付费</a>
             <a href="javascript:void(0);" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-star {{#  if(d.buy_type === 3){ }}active{{#  } }} buy_type" click_search="true" field="buy_type" field_val="3">&nbsp;积分</a>
-<!--            <a href="javascript:void(0);" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-home">&nbsp;本地插件</a>-->
+            <a href="javascript:void(0);" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-home">&nbsp;本地插件</a>
         </div>
-<!--        <div class="layui-btn-group fl">-->
-<!--            <a href="javascript:void(0);" class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-username">&nbsp;会员信息</a>-->
-<!--        </div>-->
-    </div>
+        <div class="layui-btn-group fl">
+            <a href="javascript:void(0);" class="layui-btn layui-btn-warm layui-btn-sm layui-icon layui-icon-username">&nbsp;会员信息</a>
+        </div>
 </script>
 
 <script type="text/html" id="operation">
     {{# if(!d.addon_exist){ }}
     <div class="layui-btn-group">
         {{# if(d.config_items){ }}
-        <a class="layui-btn layui-btn-sm layui-btn-normal layui-icon layui-icon-set" lay-event="config" title="配置" layer-tips="配置" colour="#369"> 配置</a>
+        <a class="layui-btn layui-btn-xs layui-btn-normal layui-icon layui-icon-set" lay-event="config" title="配置" layer-tips="配置" colour="#369"> 配置</a>
         {{# } }}
-        <a class="layui-btn layui-btn-sm layui-icon layui-icon-triangle-d version_list_{{ d.id }}" lay-event="version_list" title="查看版本列表" layer-tips="查看版本列表" colour="#009688"> </a>
-        <a class="layui-btn layui-btn-sm layui-icon" lay-event="install" title="安装最新版本" layer-tips="安装最新版本" colour="#009688"> 安装</a>
+    </div>
+    <div class="layui-btn-group">
+        <a class="layui-btn layui-btn-xs layui-icon layui-icon-triangle-d version_list_{{ d.id }}" lay-event="version_list" title="查看版本列表" layer-tips="查看版本列表" colour="#009688"> </a>
+        <a class="layui-btn layui-btn-xs layui-icon" lay-event="install" title="安装最新版本" layer-tips="安装最新版本" colour="#009688"> 安装</a>
     </div>
     {{# } }}
     {{# if(d.addon_exist){ }}
     <div class="layui-btn-group">
 <!--        <a class="layui-btn layui-btn-primary layui-btn-sm" lay-event="demo" title="演示" layer-tips="演示"> 演示</a>-->
-        <a class="layui-btn layui-btn-danger layui-btn-sm layui-icon layui-icon-close-fill" lay-event="uninstall" title="卸载" layer-tips="卸载" colour="#f51c1c"> 卸载</a>
+        <a class="layui-btn layui-btn-xs layui-btn-sm layui-icon layui-icon-close-fill" lay-event="uninstall" title="卸载" layer-tips="卸载" colour="#f51c1c"> 卸载</a>
     </div>
     {{# } }}
 </script>

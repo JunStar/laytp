@@ -226,11 +226,11 @@ layui-nav-child dd.layui-this, .layui-nav-tree .layui-nav-child dd.layui-this a{
     font-size: 13px;
 }
 
-.layui-btn{
-    height: 30px;
-    line-height: 30px;
-    font-size:12px;
-}
+/*.layui-btn{*/
+    /*height: 30px;*/
+    /*line-height: 30px;*/
+    /*font-size:12px;*/
+/*}*/
 
 /**
  * 更小的按钮

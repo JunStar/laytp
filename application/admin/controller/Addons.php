@@ -171,4 +171,43 @@ class Addons extends Backend
         $this->assign('config_values', Config::get('addons.'.$name));
         return $this->fetch();
     }
+
+    //离线安装
+    public function off_line_install(){
+        set_time_limit(0);
+        try{
+            $file = $this->request->file('file'); // 获取上传的文件
+            if(!$file){
+                $this->error('请选择需要的上传文件');
+            }
+
+            $upload = Config::get('laytp.upload');
+            preg_match('/(\d+)(\w+)/', $upload['maxsize'], $matches);
+            $type = strtolower($matches[2]);
+            $typeDict = ['b' => 0, 'k' => 1, 'kb' => 1, 'm' => 2, 'mb' => 2, 'gb' => 3, 'g' => 3];
+            $size = (int)$upload['maxsize'] * pow(1024, isset($typeDict[$type]) ? $typeDict[$type] : 0);
+
+            $fileInfo = $file->getInfo();
+
+            if(!strstr($fileInfo['type'],'zip')){
+                $this->error('上传失败','仅允许上传zip文件');
+            }
+
+            $info = $file->validate(['size' => $size])->move(Env::get('root_path') .'addons',false); // 移动文件到指定目录 没有则创建
+
+            if($info->getError()){
+                $this->error('上传失败',$info->getError());
+            }else{
+                $add['file_type'] = $this->request->param('accept');
+                $save_name = str_replace('\\','/',$info->getSaveName());
+                $add['file_path'] = '/uploads/'.$save_name;
+                model('Attachment')->create($add);
+                $pathinfo = pathinfo($info->getSaveName());
+                \library\Addons::off_line_install($pathinfo['filename']);
+                $this->success('安装成功');
+            }
+        }catch (Exception $e){
+            $this->error('安装失败',$e->getMessage());
+        }
+    }
 }

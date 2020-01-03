@@ -115,14 +115,13 @@ layui.use(['layTp'],function() {
                 },
             });
         });
-
-
     };
 
     func_controller.table_render();
-
+    layTp.init.upload_render();
     window.func_controller = func_controller;
 
+    //全部、免费、付费、积分、本地插件切换
     $(document).on('click','.buy_type',function(){
         let obj = $(this);
         let field = obj.attr('field');
