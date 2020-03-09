@@ -11,7 +11,7 @@
  Target Server Version : 50726
  File Encoding         : 65001
 
- Date: 22/12/2019 15:57:00
+ Date: 09/03/2020 19:22:51
 */
 
 SET NAMES utf8mb4;
@@ -31,103 +31,183 @@ CREATE TABLE `lt_admin_log`  (
   `user_agent` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT 'User-Agent',
   `create_time` datetime(0) NOT NULL COMMENT '操作时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '管理员日志表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 59 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '管理员日志表' ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of lt_admin_log
+-- ----------------------------
+INSERT INTO `lt_admin_log` VALUES (1, 1, '/admin/autocreate.curd/import', '控制台 - 一键生成 - Curd - 导入', '{\"field_list\":[{\"field_name\":\"title\",\"field_comment\":\"标题\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"grade\",\"field_comment\":\"年级\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"status\",\"field_comment\":\"状态\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"hero\",\"field_comment\":\"英雄\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"hobby\",\"field_comment\":\"爱好\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"sign\",\"field_comment\":\"标志\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"description\",\"field_comment\":\"描述\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"category_id\",\"field_comment\":\"所属分类（单选）\",\"form_type\":\"time\",\"form_additional\":\"time\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"category_ids\",\"field_comment\":\"所属分类（多选）\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"single_img\",\"field_comment\":\"单个图片\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"multi_img\",\"field_comment\":\"多个图片\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"video\",\"field_comment\":\"视频文件地址\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"audio\",\"field_comment\":\"音频文件地址\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"file\",\"field_comment\":\"任意文件地址\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"content\",\"field_comment\":\"文章内容\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"province_id\",\"field_comment\":\"省份\",\"form_type\":\"time\",\"form_additional\":\"month\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"city_id\",\"field_comment\":\"城市\",\"form_type\":\"time\",\"form_additional\":\"year\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"area_id\",\"field_comment\":\"地区\",\"form_type\":\"time\",\"form_additional\":\"date\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"create_time\",\"field_comment\":\"创建时间\",\"form_type\":\"time\",\"form_additional\":\"datetime\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"}],\"global\":{\"common_model\":\"0\",\"hide_pk\":\"0\",\"hide_del\":\"0\",\"create_number\":\"0\",\"table_name\":\"lt_test\",\"fields_name\":\"title,grade,status,hero,hobby,sign,description,category_id,category_ids,single_img,multi_img,video,audio,file,content,province_id,city_id,area_id,create_time\",\"close_page\":\"0\",\"tabs_field\":\"\",\"search_mode\":\"all_show\",\"search_fields\":\"title,grade,status,hero,hobby,sign,description,category_id,category_ids,single_img,multi_img,video,audio,file,content,province_id,city_id,area_id,create_time\",\"cell_min_width\":\"180\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', '2019-12-24 13:35:13');
+INSERT INTO `lt_admin_log` VALUES (2, 1, '/admin/test/add', '应用 - 测试 - 一键生成CURD测试表 - 添加', '{\"row\":{\"title\":\"\",\"grade\":\"\",\"status\":\"\",\"hero\":\"\",\"hobby\":\"\",\"sign\":\"\",\"description\":\"\",\"category_id\":\"13:35:24\",\"category_ids\":\"\",\"single_img\":\"\",\"multi_img\":\"\",\"video\":\"\",\"audio\":\"\",\"file\":\"\",\"content\":\"\",\"province_id\":\"2019-12\",\"city_id\":\"2019\",\"area_id\":\"2019-12-24\",\"create_time\":\"2019-12-24 13:35:33\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', '2019-12-24 13:35:34');
+INSERT INTO `lt_admin_log` VALUES (3, 1, '/admin/autocreate.curd/import', '控制台 - 一键生成 - Curd - 导入', '{\"field_list\":[{\"field_name\":\"title\",\"field_comment\":\"标题\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"grade\",\"field_comment\":\"年级\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"status\",\"field_comment\":\"状态\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"hero\",\"field_comment\":\"英雄\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"hobby\",\"field_comment\":\"爱好\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"sign\",\"field_comment\":\"标志\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"description\",\"field_comment\":\"描述\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"category_id\",\"field_comment\":\"所属分类（单选）\",\"form_type\":\"time\",\"form_additional\":\"datetime\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"category_ids\",\"field_comment\":\"所属分类（多选）\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"single_img\",\"field_comment\":\"单个图片\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"multi_img\",\"field_comment\":\"多个图片\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"video\",\"field_comment\":\"视频文件地址\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"audio\",\"field_comment\":\"音频文件地址\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"file\",\"field_comment\":\"任意文件地址\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"content\",\"field_comment\":\"文章内容\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"province_id\",\"field_comment\":\"省份\",\"form_type\":\"time\",\"form_additional\":\"month\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"city_id\",\"field_comment\":\"城市\",\"form_type\":\"time\",\"form_additional\":\"year\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"area_id\",\"field_comment\":\"地区\",\"form_type\":\"time\",\"form_additional\":\"date\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"create_time\",\"field_comment\":\"创建时间\",\"form_type\":\"time\",\"form_additional\":\"datetime\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"}],\"global\":{\"common_model\":\"0\",\"hide_pk\":\"0\",\"hide_del\":\"0\",\"create_number\":\"0\",\"table_name\":\"lt_test\",\"fields_name\":\"title,grade,status,hero,hobby,sign,description,category_id,category_ids,single_img,multi_img,video,audio,file,content,province_id,city_id,area_id,create_time\",\"close_page\":\"0\",\"tabs_field\":\"\",\"search_mode\":\"all_show\",\"search_fields\":\"title,grade,status,hero,hobby,sign,description,category_id,category_ids,single_img,multi_img,video,audio,file,content,province_id,city_id,area_id,create_time\",\"cell_min_width\":\"180\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', '2019-12-24 17:05:51');
+INSERT INTO `lt_admin_log` VALUES (4, 1, '/admin/test.category/add', '应用 - 测试 - 一键生成Curd测试分类模型 - 添加', '{\"row\":{\"pid\":\"1\",\"name\":\"分类1-1\",\"sort\":\"0\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', '2019-12-28 18:27:19');
+INSERT INTO `lt_admin_log` VALUES (5, 1, '/admin/test.category/add', '应用 - 测试 - 一键生成Curd测试分类模型 - 添加', '{\"row\":{\"pid\":\"3\",\"name\":\"分类1-1-1\",\"sort\":\"0\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', '2019-12-28 18:27:28');
+INSERT INTO `lt_admin_log` VALUES (6, 1, '/admin/test.category/edit/id/2', '应用 - 测试 - 一键生成Curd测试分类模型 - 编辑', '{\"row\":{\"pid\":\"0\",\"name\":\"分类2\",\"sort\":\"0\"},\"id\":\"2\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', '2019-12-28 18:27:47');
+INSERT INTO `lt_admin_log` VALUES (7, 1, '/admin/test.category/edit/id/1', '应用 - 测试 - 一键生成Curd测试分类模型 - 编辑', '{\"row\":{\"pid\":\"0\",\"name\":\"分类1\",\"sort\":\"0\"},\"id\":\"1\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', '2019-12-28 18:27:54');
+INSERT INTO `lt_admin_log` VALUES (8, 1, '/admin/test.category/del', '应用 - 测试 - 一键生成Curd测试分类模型 - 删除', '{\"ids\":\"3\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', '2019-12-28 18:28:03');
+INSERT INTO `lt_admin_log` VALUES (9, 1, '/admin/test.category/edit/id/4', '应用 - 测试 - 一键生成Curd测试分类模型 - 编辑', '{\"row\":{\"pid\":\"4\",\"name\":\"分类1-1-1\",\"sort\":\"0\"},\"id\":\"4\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', '2019-12-28 18:28:24');
+INSERT INTO `lt_admin_log` VALUES (10, 1, '/admin/autocreate.curd/import', '控制台 - 一键生成 - Curd - 导入', '{\"field_list\":[{\"field_name\":\"title\",\"field_comment\":\"标题\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"grade\",\"field_comment\":\"年级\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"status\",\"field_comment\":\"状态\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"hero\",\"field_comment\":\"英雄\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"hobby\",\"field_comment\":\"爱好\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"sign\",\"field_comment\":\"标志\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"description\",\"field_comment\":\"描述\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"category_id\",\"field_comment\":\"所属分类（单选）\",\"form_type\":\"select_page\",\"form_additional\":{\"single_multi\":\"single\",\"max\":\"\",\"table_name\":\"lt_test_category\",\"search_field_name\":\"name\",\"show_field_name\":\"name\"},\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"category_ids\",\"field_comment\":\"所属分类（多选）\",\"form_type\":\"select_page\",\"form_additional\":{\"single_multi\":\"multi\",\"max\":\"\",\"table_name\":\"lt_test_category\",\"search_field_name\":\"name\",\"show_field_name\":\"name\"},\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"single_img\",\"field_comment\":\"单个图片\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"multi_img\",\"field_comment\":\"多个图片\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"video\",\"field_comment\":\"视频文件地址\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"audio\",\"field_comment\":\"音频文件地址\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"file\",\"field_comment\":\"任意文件地址\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"content\",\"field_comment\":\"文章内容\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"province_id\",\"field_comment\":\"省份\",\"form_type\":\"time\",\"form_additional\":\"month\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"city_id\",\"field_comment\":\"城市\",\"form_type\":\"time\",\"form_additional\":\"year\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"area_id\",\"field_comment\":\"地区\",\"form_type\":\"time\",\"form_additional\":\"date\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"create_time\",\"field_comment\":\"创建时间\",\"form_type\":\"time\",\"form_additional\":\"datetime\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"}],\"global\":{\"common_model\":\"0\",\"hide_pk\":\"0\",\"hide_del\":\"0\",\"create_number\":\"0\",\"table_name\":\"lt_test\",\"fields_name\":\"title,grade,status,hero,hobby,sign,description,category_id,category_ids,single_img,multi_img,video,audio,file,content,province_id,city_id,area_id,create_time\",\"close_page\":\"0\",\"tabs_field\":\"\",\"search_mode\":\"all_show\",\"search_fields\":\"title,grade,status,hero,hobby,sign,description,category_id,category_ids,single_img,multi_img,video,audio,file,content,province_id,city_id,area_id,create_time\",\"cell_min_width\":\"180\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', '2019-12-28 20:07:31');
+INSERT INTO `lt_admin_log` VALUES (11, 1, '/admin/test/edit/id/1', '应用 - 测试 - 一键生成CURD测试表 - 编辑', '{\"row\":{\"title\":\"\",\"grade\":\"0\",\"status\":\"0\",\"hero\":\"0\",\"hobby\":\"\",\"sign\":\"\",\"description\":\"\",\"category_id\":\"4\",\"category_ids\":\"3,4\",\"single_img\":\"\",\"multi_img\":\"\",\"video\":\"\",\"audio\":\"\",\"file\":\"\",\"content\":\"\",\"province_id\":\"2019-12\",\"city_id\":\"2019\",\"area_id\":\"2019-12-24\",\"create_time\":\"2019-12-24 13:35:33\"},\"id\":\"1\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', '2019-12-28 20:07:46');
+INSERT INTO `lt_admin_log` VALUES (12, 1, '/admin/autocreate.apidoc/index', '控制台 - 一键生成 - Api文档', '{\"row\":{\"apidoc_file_name\":\"api1.html\",\"apidoc_title\":\"LayTp - api文档\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', '2019-12-28 21:21:28');
+INSERT INTO `lt_admin_log` VALUES (13, 1, '/admin/autocreate.apidoc/index', '控制台 - 一键生成 - Api文档', '{\"row\":{\"apidoc_file_name\":\"api1.html\",\"apidoc_title\":\"LayTp - api文档\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', '2019-12-28 22:26:55');
+INSERT INTO `lt_admin_log` VALUES (14, 1, '/admin/auth.menu/del', '控制台 - 权限管理 - 菜单管理 - 删除', '{\"ids\":\"196,197,198,199,200,201\",\"field\":\"\",\"field_val\":\"\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', '2019-12-31 01:18:00');
+INSERT INTO `lt_admin_log` VALUES (15, 1, '/admin/autocreate.apidoc/index', '控制台 - 一键生成 - Api文档', '{\"row\":{\"apidoc_file_name\":\"api1.html\",\"apidoc_title\":\"LayTp - api文档\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', '2019-12-31 01:19:14');
+INSERT INTO `lt_admin_log` VALUES (16, 1, '/admin/autocreate.apidoc/index', '控制台 - 一键生成 - Api文档', '{\"row\":{\"apidoc_file_name\":\"api.html\",\"apidoc_title\":\"LayTp - api文档\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', '2019-12-31 01:19:17');
+INSERT INTO `lt_admin_log` VALUES (17, 1, '/admin/autocreate.apidoc/index', '控制台 - 一键生成 - Api文档', '{\"row\":{\"apidoc_file_name\":\"api.html\",\"apidoc_title\":\"LayTp - api文档\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', '2019-12-31 01:42:25');
+INSERT INTO `lt_admin_log` VALUES (18, 1, '/admin/sysconf/add.html', '控制台 - 常规管理 - 系统配置 - 添加', '{\"row\":{\"type\":\"input\",\"group\":\"upload\",\"key\":\"maxsize\",\"name\":\"最大上传文件大小\",\"value\":\"10mb\",\"content\":\"value1|title1\\nvalue2|title2\",\"tip\":\"最大上传文件大小，单位自行输入kb,mb,gb\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', '2019-12-31 01:43:51');
+INSERT INTO `lt_admin_log` VALUES (19, 1, '/admin/sysconf/add.html', '控制台 - 常规管理 - 系统配置 - 添加', '{\"row\":{\"type\":\"input\",\"group\":\"upload\",\"key\":\"mimetype\",\"name\":\"允许上传的文件类型\",\"value\":\"jpg,png,bmp,jpeg,gif,zip,rar,xls,xlsx\",\"content\":\"value1|title1\\nvalue2|title2\",\"tip\":\"允许上传的文件类型，多个以英文逗号分隔，*表示不限制\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', '2019-12-31 01:44:15');
+INSERT INTO `lt_admin_log` VALUES (20, 1, '/admin/autocreate.curd/import', '控制台 - 一键生成 - Curd - 导入', '{\"field_list\":[{\"field_name\":\"title\",\"field_comment\":\"标题\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"grade\",\"field_comment\":\"年级\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"status\",\"field_comment\":\"状态\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"hero\",\"field_comment\":\"英雄\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"hobby\",\"field_comment\":\"爱好\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"sign\",\"field_comment\":\"标志\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"description\",\"field_comment\":\"描述\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"category_id\",\"field_comment\":\"所属分类（单选）\",\"form_type\":\"select_page\",\"form_additional\":{\"single_multi\":\"single\",\"max\":\"\",\"table_name\":\"lt_test_category\",\"search_field_name\":\"name\",\"show_field_name\":\"name\"},\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"category_ids\",\"field_comment\":\"所属分类（多选）\",\"form_type\":\"select_page\",\"form_additional\":{\"single_multi\":\"multi\",\"max\":\"\",\"table_name\":\"lt_test_category\",\"search_field_name\":\"name\",\"show_field_name\":\"name\"},\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"single_img\",\"field_comment\":\"单个图片\",\"form_type\":\"upload\",\"form_additional\":{\"single_multi\":\"single\",\"accept\":\"images\"},\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"multi_img\",\"field_comment\":\"多个图片\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"video\",\"field_comment\":\"视频文件地址\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"audio\",\"field_comment\":\"音频文件地址\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"file\",\"field_comment\":\"任意文件地址\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"content\",\"field_comment\":\"文章内容\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"province_id\",\"field_comment\":\"省份\",\"form_type\":\"time\",\"form_additional\":\"month\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"city_id\",\"field_comment\":\"城市\",\"form_type\":\"time\",\"form_additional\":\"year\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"area_id\",\"field_comment\":\"地区\",\"form_type\":\"time\",\"form_additional\":\"date\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"create_time\",\"field_comment\":\"创建时间\",\"form_type\":\"time\",\"form_additional\":\"datetime\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"}],\"global\":{\"common_model\":\"0\",\"hide_pk\":\"0\",\"hide_del\":\"0\",\"create_number\":\"0\",\"table_name\":\"lt_test\",\"fields_name\":\"title,grade,status,hero,hobby,sign,description,category_id,category_ids,single_img,multi_img,video,audio,file,content,province_id,city_id,area_id,create_time\",\"close_page\":\"0\",\"tabs_field\":\"\",\"search_mode\":\"all_show\",\"search_fields\":\"title,grade,status,hero,hobby,sign,description,category_id,category_ids,single_img,multi_img,video,audio,file,content,province_id,city_id,area_id,create_time\",\"cell_min_width\":\"180\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', '2019-12-31 01:45:24');
+INSERT INTO `lt_admin_log` VALUES (21, 1, '/admin/test/edit/id/1', '应用 - 测试 - 一键生成CURD测试表 - 编辑', '{\"row\":{\"title\":\"\",\"grade\":\"0\",\"status\":\"0\",\"hero\":\"0\",\"hobby\":\"\",\"sign\":\"\",\"description\":\"\",\"category_id\":\"4\",\"category_ids\":\"4,3\",\"single_img\":\"\\/uploads\\/20191231\\/569a622935f8f029cdb41722e8a7426e.jpeg\",\"multi_img\":\"\",\"video\":\"\",\"audio\":\"\",\"file\":\"\",\"content\":\"\",\"province_id\":\"2019-12\",\"city_id\":\"2019\",\"area_id\":\"2019-12-24\",\"create_time\":\"2019-12-24 13:35:33\"},\"file\":\"\",\"id\":\"1\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', '2019-12-31 01:45:32');
+INSERT INTO `lt_admin_log` VALUES (22, 1, '/admin/autocreate.curd/import', '控制台 - 一键生成 - Curd - 导入', '{\"field_list\":[{\"field_name\":\"title\",\"field_comment\":\"标题\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"grade\",\"field_comment\":\"年级\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"status\",\"field_comment\":\"状态\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"hero\",\"field_comment\":\"英雄\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"hobby\",\"field_comment\":\"爱好\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"sign\",\"field_comment\":\"标志\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"description\",\"field_comment\":\"描述\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"category_id\",\"field_comment\":\"所属分类（单选）\",\"form_type\":\"select_page\",\"form_additional\":{\"single_multi\":\"single\",\"max\":\"\",\"table_name\":\"lt_test_category\",\"search_field_name\":\"name\",\"show_field_name\":\"name\"},\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"category_ids\",\"field_comment\":\"所属分类（多选）\",\"form_type\":\"select_page\",\"form_additional\":{\"single_multi\":\"multi\",\"max\":\"\",\"table_name\":\"lt_test_category\",\"search_field_name\":\"name\",\"show_field_name\":\"name\"},\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"single_img\",\"field_comment\":\"单个图片\",\"form_type\":\"upload\",\"form_additional\":{\"single_multi\":\"single\",\"accept\":\"images\"},\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"multi_img\",\"field_comment\":\"多个图片\",\"form_type\":\"upload\",\"form_additional\":{\"single_multi\":\"multi\",\"accept\":\"images\"},\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"video\",\"field_comment\":\"视频文件地址\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"audio\",\"field_comment\":\"音频文件地址\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"file\",\"field_comment\":\"任意文件地址\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"content\",\"field_comment\":\"文章内容\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"province_id\",\"field_comment\":\"省份\",\"form_type\":\"time\",\"form_additional\":\"month\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"city_id\",\"field_comment\":\"城市\",\"form_type\":\"time\",\"form_additional\":\"year\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"area_id\",\"field_comment\":\"地区\",\"form_type\":\"time\",\"form_additional\":\"date\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"create_time\",\"field_comment\":\"创建时间\",\"form_type\":\"time\",\"form_additional\":\"datetime\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"}],\"global\":{\"common_model\":\"0\",\"hide_pk\":\"0\",\"hide_del\":\"0\",\"create_number\":\"0\",\"table_name\":\"lt_test\",\"fields_name\":\"title,grade,status,hero,hobby,sign,description,category_id,category_ids,single_img,multi_img,video,audio,file,content,province_id,city_id,area_id,create_time\",\"close_page\":\"0\",\"tabs_field\":\"\",\"search_mode\":\"all_show\",\"search_fields\":\"title,grade,status,hero,hobby,sign,description,category_id,category_ids,single_img,multi_img,video,audio,file,content,province_id,city_id,area_id,create_time\",\"cell_min_width\":\"180\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', '2019-12-31 01:48:24');
+INSERT INTO `lt_admin_log` VALUES (23, 1, '/admin/test/edit/id/1', '应用 - 测试 - 一键生成CURD测试表 - 编辑', '{\"row\":{\"title\":\"\",\"grade\":\"0\",\"status\":\"0\",\"hero\":\"0\",\"hobby\":\"\",\"sign\":\"\",\"description\":\"\",\"category_id\":\"4\",\"category_ids\":\"4,3\",\"single_img\":\"\\/uploads\\/20191231\\/569a622935f8f029cdb41722e8a7426e.jpeg\",\"multi_img\":\"\\/uploads\\/20191231\\/fb9f39920abc526ba8da63f933d83d87.jpeg,\\/uploads\\/20191231\\/cd7d518d38dc6826d565e071f1fa8452.jpeg\",\"video\":\"\",\"audio\":\"\",\"file\":\"\",\"content\":\"\",\"province_id\":\"2019-12\",\"city_id\":\"2019\",\"area_id\":\"2019-12-24\",\"create_time\":\"2019-12-24 13:35:33\"},\"file\":\"\",\"id\":\"1\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', '2019-12-31 01:48:36');
+INSERT INTO `lt_admin_log` VALUES (24, 1, '/admin/autocreate.apidoc/index', '控制台 - 一键生成 - Api文档', '{\"row\":{\"apidoc_file_name\":\"api.html\",\"apidoc_title\":\"LayTp - api文档\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', '2019-12-31 01:52:28');
+INSERT INTO `lt_admin_log` VALUES (25, 1, '/admin/autocreate.apidoc/index', '控制台 - 一键生成 - Api文档', '{\"row\":{\"apidoc_file_name\":\"api.html\",\"apidoc_title\":\"LayTp - api文档\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', '2019-12-31 01:55:28');
+INSERT INTO `lt_admin_log` VALUES (26, 1, '/admin/autocreate.apidoc/index', '控制台 - 一键生成 - Api文档', '{\"row\":{\"apidoc_file_name\":\"api.html\",\"apidoc_title\":\"LayTp - api文档\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', '2019-12-31 01:55:50');
+INSERT INTO `lt_admin_log` VALUES (27, 1, '/admin/autocreate.apidoc/index', '控制台 - 一键生成 - Api文档', '{\"row\":{\"apidoc_file_name\":\"api.html\",\"apidoc_title\":\"LayTp - api文档\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', '2019-12-31 01:56:37');
+INSERT INTO `lt_admin_log` VALUES (28, 1, '/admin/autocreate.apidoc/index', '控制台 - 一键生成 - Api文档', '{\"row\":{\"apidoc_file_name\":\"api.html\",\"apidoc_title\":\"LayTp - api文档\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', '2019-12-31 01:58:21');
+INSERT INTO `lt_admin_log` VALUES (29, 1, '/admin/auth.menu/edit/id/153', '控制台 - 权限管理 - 菜单管理 - 编辑', '{\"row\":{\"id\":\"153\",\"is_menu\":\"1\",\"pid\":\"30\",\"name\":\"后台附件管理\",\"rule\":\"admin\\/attachment\\/index\",\"icon\":\"layui-icon layui-icon-fire\",\"is_hide\":\"0\",\"sort\":\"0\"},\"id\":\"153\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', '2019-12-31 07:44:55');
+INSERT INTO `lt_admin_log` VALUES (30, 1, '/admin/autocreate.curd/import', '控制台 - 一键生成 - Curd - 导入', '{\"field_list\":[{\"field_name\":\"template_id\",\"field_comment\":\"模板ID\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"event\",\"field_comment\":\"事件名称\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"params\",\"field_comment\":\"邮件内容参数\",\"form_type\":\"textarea\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"content\",\"field_comment\":\"邮件内容\",\"form_type\":\"textarea\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"from\",\"field_comment\":\"发件人邮箱\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"to\",\"field_comment\":\"收件人邮箱\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"status\",\"field_comment\":\"状态\",\"form_type\":\"radio\",\"form_additional\":\"1=未使用,2=已使用,3=已过期\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"expire_time\",\"field_comment\":\"过期时间，0表示永不过期\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"}],\"global\":{\"common_model\":\"1\",\"hide_pk\":\"0\",\"hide_del\":\"0\",\"create_number\":\"0\",\"table_name\":\"lt_email\",\"fields_name\":\"template_id,event,params,content,from,to,status,expire_time\",\"close_page\":\"0\",\"tabs_field\":\"status\",\"search_mode\":\"all_show\",\"search_fields\":\"template_id,event,params,content,from,to,status,expire_time\",\"cell_min_width\":\"180\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', '2020-01-01 00:43:22');
+INSERT INTO `lt_admin_log` VALUES (31, 1, '/admin/autocreate.curd/import', '控制台 - 一键生成 - Curd - 导入', '{\"field_list\":[{\"field_name\":\"event\",\"field_comment\":\"事件名称\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"title\",\"field_comment\":\"模板标题\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"template\",\"field_comment\":\"模板内容，支持html标签\",\"form_type\":\"textarea\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"ishtml\",\"field_comment\":\"模板是否为html\",\"form_type\":\"radio\",\"form_additional\":\"2=不是,1=是\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"expire\",\"field_comment\":\"过期时长，单位秒，0表示永不过期\",\"form_type\":\"input\",\"form_additional\":\"layTp_number\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"}],\"global\":{\"common_model\":\"1\",\"hide_pk\":\"0\",\"hide_del\":\"0\",\"create_number\":\"0\",\"table_name\":\"lt_email_template\",\"fields_name\":\"event,title,template,ishtml,expire\",\"close_page\":\"0\",\"tabs_field\":\"\",\"search_mode\":\"all_show\",\"search_fields\":\"event,title,template,ishtml,expire\",\"cell_min_width\":\"180\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', '2020-01-01 00:44:14');
+INSERT INTO `lt_admin_log` VALUES (32, 1, '/admin/auth.menu/add', '控制台 - 权限管理 - 菜单管理 - 添加', '{\"row\":{\"is_menu\":\"1\",\"pid\":\"1\",\"name\":\"邮件管理\",\"rule\":\"admin\\/email\\/index\",\"icon\":\"layui-icon layui-icon-file-b\",\"is_hide\":\"0\",\"sort\":\"\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', '2020-01-01 00:44:47');
+INSERT INTO `lt_admin_log` VALUES (33, 1, '/admin/autocreate.apidoc/index', '控制台 - 一键生成 - Api文档', '{\"row\":{\"apidoc_file_name\":\"api.html\",\"apidoc_title\":\"LayTp - api文档\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', '2020-01-01 00:45:21');
+INSERT INTO `lt_admin_log` VALUES (34, 1, '/admin/sysconf/set_config.html', '控制台 - 常规管理 - 系统配置 - 设置', '{\"row\":{\"group\":\"email\",\"send_type\":\"smtp\",\"smtp_host\":\"smtp.qq.com\",\"smtp_port\":\"587\",\"smtp_user\":\"523723269@qq.com\",\"smtp_password\":\"grngcyndvplubhgh\",\"verify_type\":\"ssl\",\"from\":\"523723269@qq.com\",\"from_name\":\"laytp官网\",\"max_send_num\":\"3\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', '2020-01-01 00:46:28');
+INSERT INTO `lt_admin_log` VALUES (35, 1, '/admin/auth.menu/edit/id/35', '控制台 - 权限管理 - 菜单管理 - 编辑', '{\"row\":{\"id\":\"35\",\"is_menu\":\"1\",\"pid\":\"67\",\"name\":\"后台首页\",\"rule\":\"admin\\/dashboard\\/index\",\"des\":\"后台入口界面，用于展示版本信息\",\"icon\":\"layui-icon layui-icon-home\",\"is_hide\":\"0\",\"sort\":\"0\"},\"id\":\"35\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', '2020-01-01 21:30:47');
+INSERT INTO `lt_admin_log` VALUES (36, 1, '/admin/auth.menu/edit/id/26', '控制台 - 权限管理 - 菜单管理 - 编辑', '{\"row\":{\"id\":\"26\",\"is_menu\":\"1\",\"pid\":\"18\",\"name\":\"管理员管理\",\"rule\":\"admin\\/auth.user\\/index\",\"des\":\"一个管理员可以拥有多个角色\",\"icon\":\"layui-icon layui-icon-user\",\"is_hide\":\"0\",\"sort\":\"100\"},\"id\":\"26\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', '2020-01-01 21:35:31');
+INSERT INTO `lt_admin_log` VALUES (37, 1, '/admin/auth.menu/edit/id/27', '控制台 - 权限管理 - 菜单管理 - 编辑', '{\"row\":{\"id\":\"27\",\"is_menu\":\"1\",\"pid\":\"18\",\"name\":\"角色管理\",\"rule\":\"admin\\/auth.role\\/index\",\"des\":\"一个角色可以拥有多个权限\",\"icon\":\"layui-icon layui-icon-group\",\"is_hide\":\"0\",\"sort\":\"99\"},\"id\":\"27\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', '2020-01-01 21:35:48');
+INSERT INTO `lt_admin_log` VALUES (38, 1, '/admin/auth.menu/edit/id/19', '控制台 - 权限管理 - 菜单管理 - 编辑', '{\"row\":{\"id\":\"19\",\"is_menu\":\"1\",\"pid\":\"18\",\"name\":\"菜单管理\",\"rule\":\"admin\\/auth.menu\\/index\",\"des\":\"默认展示菜单，查看所有操作节点请点击按钮\",\"icon\":\"layui-icon layui-icon-templeate-1\",\"is_hide\":\"0\",\"sort\":\"4\"},\"id\":\"19\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', '2020-01-01 21:36:50');
+INSERT INTO `lt_admin_log` VALUES (39, 1, '/admin/auth.menu/edit/id/19', '控制台 - 权限管理 - 菜单管理 - 编辑', '{\"row\":{\"id\":\"19\",\"is_menu\":\"1\",\"pid\":\"18\",\"name\":\"菜单管理\",\"rule\":\"admin\\/auth.menu\\/index\",\"des\":\"默认展示菜单，查看所有操作节点请点击[显示全部]按钮\",\"icon\":\"layui-icon layui-icon-templeate-1\",\"is_hide\":\"0\",\"sort\":\"4\"},\"id\":\"19\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', '2020-01-01 21:37:06');
+INSERT INTO `lt_admin_log` VALUES (40, 1, '/admin/auth.role/edit/id/2', '控制台 - 权限管理 - 角色管理 - 编辑', '{\"row\":{\"id\":\"2\",\"pid\":\"1\",\"name\":\"商城管理员\",\"menu_ids\":\"\"},\"id\":\"2\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', '2020-01-01 21:39:50');
+INSERT INTO `lt_admin_log` VALUES (41, 1, '/admin/auth.role/edit/id/2', '控制台 - 权限管理 - 角色管理 - 编辑', '{\"row\":{\"id\":\"2\",\"pid\":\"1\",\"name\":\"商城管理员\",\"menu_ids\":\"\"},\"id\":\"2\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', '2020-01-01 21:39:57');
+INSERT INTO `lt_admin_log` VALUES (42, 1, '/admin/auth.role/edit/id/2', '控制台 - 权限管理 - 角色管理 - 编辑', '{\"row\":{\"id\":\"2\",\"pid\":\"1\",\"name\":\"商城管理员\",\"menu_ids\":\"\"},\"id\":\"2\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', '2020-01-01 21:42:02');
+INSERT INTO `lt_admin_log` VALUES (43, 1, '/admin/auth.role/edit/id/2', '控制台 - 权限管理 - 角色管理 - 编辑', '{\"row\":{\"id\":\"2\",\"pid\":\"1\",\"name\":\"商城管理员\",\"menu_ids\":\"\"},\"id\":\"2\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', '2020-01-01 21:44:03');
+INSERT INTO `lt_admin_log` VALUES (44, 1, '/admin/auth.role/edit/id/2', '控制台 - 权限管理 - 角色管理 - 编辑', '{\"row\":{\"id\":\"2\",\"pid\":\"1\",\"name\":\"商城管理员\",\"menu_ids\":\"\"},\"id\":\"2\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', '2020-01-01 21:45:21');
+INSERT INTO `lt_admin_log` VALUES (45, 1, '/admin/auth.role/edit/id/2', '控制台 - 权限管理 - 角色管理 - 编辑', '{\"row\":{\"id\":\"2\",\"pid\":\"1\",\"name\":\"商城管理员\",\"menu_ids\":\"1,18,19,20,21,26,27,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,56,57,58,59,60,61,66,67,68,69,70,72,125,126,127,128,129,130,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,210,211,212,213,214\"},\"id\":\"2\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', '2020-01-01 21:50:01');
+INSERT INTO `lt_admin_log` VALUES (46, 1, '/admin/auth.role/add', '控制台 - 权限管理 - 角色管理 - 添加', '{\"row\":{\"pid\":\"0\",\"name\":\"test\",\"menu_ids\":\"178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', '2020-01-01 21:50:18');
+INSERT INTO `lt_admin_log` VALUES (47, 1, '/admin/auth.user/add', '控制台 - 权限管理 - 管理员管理 - 添加', '{\"row\":{\"username\":\"test\",\"nickname\":\"test\",\"password\":\"123456\",\"re_password\":\"123456\",\"status\":\"1\",\"is_super_manager\":\"0\",\"avatar\":\"\",\"role_ids\":\"3\"},\"file\":\"\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', '2020-01-01 22:36:00');
+INSERT INTO `lt_admin_log` VALUES (48, 1, '/admin/auth.role/edit/id/3', '控制台 - 权限管理 - 角色管理 - 编辑', '{\"row\":{\"id\":\"3\",\"pid\":\"0\",\"name\":\"test\",\"menu_ids\":\"35,67,68,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194\"},\"id\":\"3\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', '2020-01-01 22:37:25');
+INSERT INTO `lt_admin_log` VALUES (49, 1, '/admin/auth.role/edit/id/3', '控制台 - 权限管理 - 角色管理 - 编辑', '{\"row\":{\"id\":\"3\",\"pid\":\"0\",\"name\":\"test\",\"menu_ids\":\"68,181,182,183,184,187,188,189,190,191,192,193,194,35,67,186\"},\"id\":\"3\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', '2020-01-01 22:42:00');
+INSERT INTO `lt_admin_log` VALUES (50, 1, '/admin/general/profile/laytp_menu_id/31', '控制台 - 常规管理 - 个人设置', '{\"row\":{\"nickname\":\"admin\",\"password\":\"\",\"re_password\":\"\",\"avatar\":\"\\/uploads\\/20200101\\/e7dc8d0e6113445382b7f093a78c574a.jpeg\"},\"file\":\"\",\"laytp_menu_id\":\"31\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', '2020-01-01 23:19:05');
+INSERT INTO `lt_admin_log` VALUES (51, 1, '/admin/general/profile/laytp_menu_id/31', '控制台 - 常规管理 - 个人设置', '{\"row\":{\"nickname\":\"admin\",\"password\":\"321321\",\"re_password\":\"321321\",\"avatar\":\"\\/uploads\\/20200101\\/e7dc8d0e6113445382b7f093a78c574a.jpeg\"},\"file\":\"\",\"laytp_menu_id\":\"31\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', '2020-01-01 23:19:13');
+INSERT INTO `lt_admin_log` VALUES (52, 1, '/admin/general/profile/laytp_menu_id/31', '控制台 - 常规管理 - 个人设置', '{\"row\":{\"nickname\":\"admin\",\"password\":\"123456\",\"re_password\":\"123456\",\"avatar\":\"\\/uploads\\/20200101\\/e7dc8d0e6113445382b7f093a78c574a.jpeg\"},\"file\":\"\",\"laytp_menu_id\":\"31\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', '2020-01-01 23:19:32');
+INSERT INTO `lt_admin_log` VALUES (53, 1, '/admin/autocreate.curd/import', '控制台 - 一键生成 - Curd - 导入', '{\"field_list\":[{\"field_name\":\"title\",\"field_comment\":\"标题\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"grade\",\"field_comment\":\"年级\",\"form_type\":\"radio\",\"form_additional\":\"1=一年级,2=二年级,3=三年级;default=2\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"status\",\"field_comment\":\"状态\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"hero\",\"field_comment\":\"英雄\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"hobby\",\"field_comment\":\"爱好\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"sign\",\"field_comment\":\"标志\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"description\",\"field_comment\":\"描述\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"category_id\",\"field_comment\":\"所属分类（单选）\",\"form_type\":\"select_page\",\"form_additional\":{\"single_multi\":\"single\",\"max\":\"\",\"table_name\":\"lt_test_category\",\"search_field_name\":\"name\",\"show_field_name\":\"name\"},\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"category_ids\",\"field_comment\":\"所属分类（多选）\",\"form_type\":\"select_page\",\"form_additional\":{\"single_multi\":\"multi\",\"max\":\"\",\"table_name\":\"lt_test_category\",\"search_field_name\":\"name\",\"show_field_name\":\"name\"},\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"single_img\",\"field_comment\":\"单个图片\",\"form_type\":\"upload\",\"form_additional\":{\"single_multi\":\"single\",\"accept\":\"images\"},\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"multi_img\",\"field_comment\":\"多个图片\",\"form_type\":\"upload\",\"form_additional\":{\"single_multi\":\"multi\",\"accept\":\"images\"},\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"video\",\"field_comment\":\"视频文件地址\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"audio\",\"field_comment\":\"音频文件地址\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"file\",\"field_comment\":\"任意文件地址\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"content\",\"field_comment\":\"文章内容\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"province_id\",\"field_comment\":\"省份\",\"form_type\":\"time\",\"form_additional\":\"month\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"city_id\",\"field_comment\":\"城市\",\"form_type\":\"time\",\"form_additional\":\"year\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"area_id\",\"field_comment\":\"地区\",\"form_type\":\"time\",\"form_additional\":\"date\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"create_time\",\"field_comment\":\"创建时间\",\"form_type\":\"time\",\"form_additional\":\"datetime\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"}],\"global\":{\"common_model\":\"0\",\"hide_pk\":\"0\",\"hide_del\":\"0\",\"create_number\":\"0\",\"table_name\":\"lt_test\",\"fields_name\":\"title,grade,status,hero,hobby,sign,description,category_id,category_ids,single_img,multi_img,video,audio,file,content,province_id,city_id,area_id,create_time\",\"close_page\":\"0\",\"tabs_field\":\"\",\"search_mode\":\"all_show\",\"search_fields\":\"title,grade,status,hero,hobby,sign,description,category_id,category_ids,single_img,multi_img,video,audio,file,content,province_id,city_id,area_id,create_time\",\"cell_min_width\":\"180\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', '2020-01-02 00:43:08');
+INSERT INTO `lt_admin_log` VALUES (54, 1, '/admin/autocreate.apidoc/index/laytp_menu_id/59', '控制台 - 一键生成 - Api文档', '{\"row\":{\"apidoc_file_name\":\"api.html\",\"apidoc_title\":\"LayTp - api文档\"},\"laytp_menu_id\":\"59\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', '2020-01-02 02:04:05');
+INSERT INTO `lt_admin_log` VALUES (55, 1, '/admin/autocreate.apidoc/index/laytp_menu_id/59', '控制台 - 一键生成 - Api文档', '{\"row\":{\"apidoc_file_name\":\"api.html\",\"apidoc_title\":\"LayTp - api文档\"},\"laytp_menu_id\":\"59\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', '2020-01-02 02:06:49');
+INSERT INTO `lt_admin_log` VALUES (56, 1, '/admin/test.category/edit/id/1', '应用 - 测试 - 一键生成Curd测试分类模型 - 编辑', '{\"row\":{\"pid\":\"0\",\"name\":\"分类11\",\"sort\":\"0\"},\"id\":\"1\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', '2020-01-02 03:45:28');
+INSERT INTO `lt_admin_log` VALUES (57, 1, '/admin/test.category/edit/id/1', '应用 - 测试 - 一键生成Curd测试分类模型 - 编辑', '{\"row\":{\"pid\":\"0\",\"name\":\"分类1\",\"sort\":\"0\"},\"id\":\"1\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', '2020-01-02 03:46:59');
+INSERT INTO `lt_admin_log` VALUES (58, 1, '/admin/auth.menu/edit/id/60', '控制台 - 权限管理 - 菜单管理 - 编辑', '{\"row\":{\"id\":\"60\",\"is_menu\":\"1\",\"pid\":\"1\",\"name\":\"插件市场\",\"rule\":\"admin\\/addons\\/index\",\"des\":\"可在线安装、卸载、禁用、启用插件，同时支持离线安装插件。\",\"icon\":\"layui-icon layui-icon-cart-simple\",\"is_hide\":\"0\",\"sort\":\"0\"},\"id\":\"60\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36', '2020-01-03 01:29:14');
 
 -- ----------------------------
 -- Table structure for lt_admin_menu
 -- ----------------------------
 DROP TABLE IF EXISTS `lt_admin_menu`;
-CREATE TABLE `lt_admin_menu` (
-  `id` int(11) NOT NULL COMMENT 'ID',
-  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '标题',
-  `rule` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '规则',
-  `is_menu` tinyint(4) DEFAULT NULL COMMENT '菜单',
-  `sort` int(11) DEFAULT '0' COMMENT '排序',
-  `pid` int(11) DEFAULT NULL COMMENT '父级',
-  `is_hide` tinyint(4) DEFAULT '0' COMMENT '是否隐藏。0，正常；1，隐藏；',
-  `icon` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '图标',
-  `des` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+CREATE TABLE `lt_admin_menu`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '标题',
+  `rule` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '规则',
+  `is_menu` tinyint(4) NULL DEFAULT NULL COMMENT '菜单',
+  `sort` int(11) NULL DEFAULT 0 COMMENT '排序',
+  `pid` int(11) NULL DEFAULT NULL COMMENT '父级',
+  `is_hide` tinyint(4) NULL DEFAULT 0 COMMENT '是否隐藏。0，正常；1，隐藏；',
+  `icon` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '图标',
+  `des` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '描述',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 215 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
---
--- 转存表中的数据 `lt_admin_menu`
---
-
-INSERT INTO `lt_admin_menu` (`id`, `name`, `rule`, `is_menu`, `sort`, `pid`, `is_hide`, `icon`, `des`) VALUES
-(1, '控制台', 'admin/dashboard/index', 1, 0, 0, 0, 'layui-icon layui-icon-console', '控制台管理'),
-(18, '权限管理', 'admin/auth.user/index', 1, 2, 1, 0, 'layui-icon layui-icon-align-left', ''),
-(19, '菜单管理', 'admin/auth.menu/index', 1, 4, 18, 0, 'layui-icon layui-icon-templeate-1', ''),
-(20, '一键生成', 'admin/autocreate.curd/index', 1, 1, 1, 0, 'layui-icon layui-icon-share', ''),
-(21, 'Curd', 'admin/autocreate.curd/index', 1, 3, 20, 0, 'layui-icon layui-icon-star-fill', ''),
-(26, '管理员管理', 'admin/auth.user/index', 1, 100, 18, 0, 'layui-icon layui-icon-user', ''),
-(27, '角色管理', 'admin/auth.role/index', 1, 99, 18, 0, 'layui-icon layui-icon-group', ''),
-(30, '常规管理', 'admin/general/profile', 1, 0, 1, 0, 'layui-icon layui-icon-face-smile-b', ''),
-(31, '个人设置', 'admin/general/profile', 1, 1, 30, 0, 'layui-icon layui-icon-friends', ''),
-(32, '查看', 'admin/auth.user/index', 0, 0, 26, 0, 'layui-icon layui-icon-align-left', ''),
-(33, '添加', 'admin/auth.user/add', 0, 0, 26, 0, 'layui-icon layui-icon-add-circle', ''),
-(34, '编辑', 'admin/auth.user/edit', 0, 0, 26, 0, 'layui-icon layui-icon-util', ''),
-(35, '后台首页', 'admin/dashboard/index', 1, 0, 67, 0, 'layui-icon layui-icon-home', '后台首页'),
-(36, '删除', 'admin/auth.user/del', 0, 0, 26, 0, 'layui-icon layui-icon-delete', ''),
-(37, '查看', 'admin/auth.role/index', 0, 0, 27, 0, 'layui-icon layui-icon-search', ''),
-(38, '编辑', 'admin/auth.role/edit', 0, 0, 27, 0, 'layui-icon layui-icon-util', ''),
-(39, '添加', 'admin/auth.role/add', 0, 0, 27, 0, 'layui-icon layui-icon-add-circle-fine', ''),
-(40, '删除', 'admin/auth.role/del', 0, 0, 27, 0, 'layui-icon layui-icon-delete', ''),
-(41, '查看', 'admin/auth.menu/index', 0, 0, 19, 0, 'layui-icon layui-icon-search', ''),
-(42, '添加', 'admin/auth.menu/add', 0, 0, 19, 0, 'layui-icon layui-icon-add-circle-fine', ''),
-(43, '编辑', 'admin/auth.menu/edit', 0, 0, 19, 0, 'layui-icon layui-icon-util', ''),
-(44, '删除', 'admin/auth.menu/del', 0, 0, 19, 0, 'layui-icon layui-icon-delete', ''),
-(45, '导入', 'admin/autocreate.curd/import', 0, 0, 21, 0, 'layui-icon layui-icon-find-fill', ''),
-(56, '操作日志', 'admin/admin.log/index', 1, 0, 18, 0, 'layui-icon layui-icon-form', ''),
-(57, '列表查看', 'admin/admin.log/index', 0, 0, 56, 1, 'layui-icon layui-icon-list', ''),
-(58, '删除', 'admin/admin.log/del', 0, 0, 56, 0, 'layui-icon layui-icon-date', ''),
-(59, 'Api文档', 'admin/autocreate.apidoc/index', 1, 0, 20, 0, 'layui-icon layui-icon-tabs', ''),
-(60, '插件市场', 'admin/addons/index', 1, 0, 1, 0, 'layui-icon layui-icon-cart-simple', ''),
-(61, '列表设置状态', 'admin/auth.menu/set_status', 0, 0, 19, 1, 'layui-icon layui-icon-template-1', ''),
-(66, '系统配置', 'admin/sysconf/index', 1, 2, 30, 0, 'layui-icon layui-icon-set', ''),
-(67, '快捷菜单', 'admin/dashboard/index', 1, 10, 1, 0, 'layui-icon layui-icon-release', ''),
-(68, '查看', 'admin/index/index', 0, 0, 35, 0, 'layui-icon layui-icon-search', ''),
-(69, '设置', 'admin/sysconf/set_config', 0, 0, 66, 0, 'layui-icon layui-icon-set-fill', ''),
-(70, '添加', 'admin/sysconf/add', 0, 0, 66, 0, 'layui-icon layui-icon-add-circle-fine', ''),
-(72, '菜单', 'admin/autocreate.menu/index', 1, 2, 20, 0, 'layui-icon layui-icon-templeate-1', ''),
-(125, '地区管理', 'admin/area/index', 1, 0, 30, 0, 'layui-icon layui-icon-find-fill', ''),
-(126, '查看', 'admin/area/index', 0, 0, 125, 0, 'layui-icon layui-icon-fire', ''),
-(127, '添加', 'admin/area/add', 0, 0, 125, 1, 'layui-icon layui-icon-fire', ''),
-(128, '编辑', 'admin/area/edit', 0, 0, 125, 1, 'layui-icon layui-icon-fire', ''),
-(129, '设置状态', 'admin/area/set_status', 0, 0, 125, 1, 'layui-icon layui-icon-fire', ''),
-(130, '删除', 'admin/area/del', 0, 0, 125, 1, 'layui-icon layui-icon-fire', ''),
-(153, '附件管理', 'admin/attachment/index', 1, 0, 30, 0, 'layui-icon layui-icon-fire', ''),
-(154, '查看', 'admin/attachment/index', 0, 0, 153, 0, 'layui-icon layui-icon-fire', ''),
-(155, '添加', 'admin/attachment/add', 0, 0, 153, 1, 'layui-icon layui-icon-fire', ''),
-(156, '编辑', 'admin/attachment/edit', 0, 0, 153, 1, 'layui-icon layui-icon-fire', ''),
-(157, '设置状态', 'admin/attachment/set_status', 0, 0, 153, 1, 'layui-icon layui-icon-fire', ''),
-(158, '删除', 'admin/attachment/del', 0, 0, 153, 1, 'layui-icon layui-icon-fire', ''),
-(159, '回收站', 'admin/attachment/recycle', 0, 0, 153, 1, 'layui-icon layui-icon-fire', ''),
-(160, '还原', 'admin/attachment/renew', 0, 0, 153, 1, 'layui-icon layui-icon-fire', ''),
-(161, '彻底删除', 'admin/attachment/true_del', 0, 0, 153, 1, 'layui-icon layui-icon-fire', ''),
-(162, '导入', 'admin/autocreate.menu/add', 0, 0, 72, 1, 'layui-icon layui-icon-add-circle-fine', ''),
-(163, '删除', 'admin/autocreate.menu/del', 0, 0, 72, 1, 'layui-icon layui-icon-close', ''),
-(164, '删除', 'admin/autocreate.curd/del', 0, 0, 21, 0, 'layui-icon layui-icon-close', ''),
-(165, '回收站', 'admin/auth.user/recycle', 0, 0, 26, 1, 'layui-icon layui-icon-delete', ''),
-(166, '查看详情', 'admin/admin.log/detail', 0, 0, 56, 1, 'layui-icon layui-icon-note', ''),
-(167, '删除', 'admin/sysconf/del', 0, 0, 66, 1, 'layui-icon layui-icon-close', ''),
-(178, '应用', 'admin/test/index', 1, 0, 0, 0, 'layui-icon layui-icon-fire', ''),
-(179, '测试', 'admin/test/index', 1, 0, 178, 0, 'layui-icon layui-icon-camera', ''),
-(180, '一键生成Curd测试分类模型', 'admin/test.category/index', 1, 0, 179, 0, 'layui-icon layui-icon-fire', ''),
-(181, '查看', 'admin/test.category/index', 0, 0, 180, 0, 'layui-icon layui-icon-fire', ''),
-(182, '添加', 'admin/test.category/add', 0, 0, 180, 1, 'layui-icon layui-icon-fire', ''),
-(183, '编辑', 'admin/test.category/edit', 0, 0, 180, 1, 'layui-icon layui-icon-fire', ''),
-(184, '设置状态', 'admin/test.category/set_status', 0, 0, 180, 1, 'layui-icon layui-icon-fire', ''),
-(185, '删除', 'admin/test.category/del', 0, 0, 180, 1, 'layui-icon layui-icon-fire', ''),
-(186, '一键生成CURD测试表', 'admin/test/index', 1, 0, 179, 0, 'layui-icon layui-icon-fire', ''),
-(187, '查看', 'admin/test/index', 0, 0, 186, 0, 'layui-icon layui-icon-fire', ''),
-(188, '添加', 'admin/test/add', 0, 0, 186, 1, 'layui-icon layui-icon-fire', ''),
-(189, '编辑', 'admin/test/edit', 0, 0, 186, 1, 'layui-icon layui-icon-fire', ''),
-(190, '设置状态', 'admin/test/set_status', 0, 0, 186, 1, 'layui-icon layui-icon-fire', ''),
-(191, '删除', 'admin/test/del', 0, 0, 186, 1, 'layui-icon layui-icon-fire', ''),
-(192, '回收站', 'admin/test/recycle', 0, 0, 186, 1, 'layui-icon layui-icon-fire', ''),
-(193, '还原', 'admin/test/renew', 0, 0, 186, 1, 'layui-icon layui-icon-fire', ''),
-(194, '彻底删除', 'admin/test/true_del', 0, 0, 186, 1, 'layui-icon layui-icon-fire', ''),
-(195, '查看', 'admin/autocreate.curd/index', 0, 0, 21, 0, 'layui-icon layui-icon-star-fill', '');
+-- ----------------------------
+-- Records of lt_admin_menu
+-- ----------------------------
+INSERT INTO `lt_admin_menu` VALUES (1, '控制台', 'admin/dashboard/index', 1, 0, 0, 0, 'layui-icon layui-icon-console', NULL);
+INSERT INTO `lt_admin_menu` VALUES (18, '权限管理', 'admin/auth.user/index', 1, 2, 1, 0, 'layui-icon layui-icon-align-left', NULL);
+INSERT INTO `lt_admin_menu` VALUES (19, '菜单管理', 'admin/auth.menu/index', 1, 4, 18, 0, 'layui-icon layui-icon-templeate-1', '默认展示菜单，查看所有操作节点请点击[显示全部]按钮');
+INSERT INTO `lt_admin_menu` VALUES (20, '一键生成', 'admin/autocreate.curd/index', 1, 1, 1, 0, 'layui-icon layui-icon-share', NULL);
+INSERT INTO `lt_admin_menu` VALUES (21, 'Curd', 'admin/autocreate.curd/index', 1, 3, 20, 0, 'layui-icon layui-icon-star-fill', NULL);
+INSERT INTO `lt_admin_menu` VALUES (26, '管理员管理', 'admin/auth.user/index', 1, 100, 18, 0, 'layui-icon layui-icon-user', '一个管理员可以拥有多个角色');
+INSERT INTO `lt_admin_menu` VALUES (27, '角色管理', 'admin/auth.role/index', 1, 99, 18, 0, 'layui-icon layui-icon-group', '一个角色可以拥有多个权限');
+INSERT INTO `lt_admin_menu` VALUES (30, '常规管理', 'admin/general/profile', 1, 0, 1, 0, 'layui-icon layui-icon-face-smile-b', NULL);
+INSERT INTO `lt_admin_menu` VALUES (31, '个人设置', 'admin/general/profile', 1, 1, 30, 0, 'layui-icon layui-icon-friends', NULL);
+INSERT INTO `lt_admin_menu` VALUES (32, '查看', 'admin/auth.user/index', 0, 0, 26, 0, 'layui-icon layui-icon-align-left', NULL);
+INSERT INTO `lt_admin_menu` VALUES (33, '添加', 'admin/auth.user/add', 0, 0, 26, 0, 'layui-icon layui-icon-add-circle', NULL);
+INSERT INTO `lt_admin_menu` VALUES (34, '编辑', 'admin/auth.user/edit', 0, 0, 26, 0, 'layui-icon layui-icon-util', NULL);
+INSERT INTO `lt_admin_menu` VALUES (35, '后台首页', 'admin/dashboard/index', 1, 0, 67, 0, 'layui-icon layui-icon-home', '后台入口界面，用于展示版本信息');
+INSERT INTO `lt_admin_menu` VALUES (36, '删除', 'admin/auth.user/del', 0, 0, 26, 0, 'layui-icon layui-icon-delete', NULL);
+INSERT INTO `lt_admin_menu` VALUES (37, '查看', 'admin/auth.role/index', 0, 0, 27, 0, 'layui-icon layui-icon-search', NULL);
+INSERT INTO `lt_admin_menu` VALUES (38, '编辑', 'admin/auth.role/edit', 0, 0, 27, 0, 'layui-icon layui-icon-util', NULL);
+INSERT INTO `lt_admin_menu` VALUES (39, '添加', 'admin/auth.role/add', 0, 0, 27, 0, 'layui-icon layui-icon-add-circle-fine', NULL);
+INSERT INTO `lt_admin_menu` VALUES (40, '删除', 'admin/auth.role/del', 0, 0, 27, 0, 'layui-icon layui-icon-delete', NULL);
+INSERT INTO `lt_admin_menu` VALUES (41, '查看', 'admin/auth.menu/index', 0, 0, 19, 0, 'layui-icon layui-icon-search', NULL);
+INSERT INTO `lt_admin_menu` VALUES (42, '添加', 'admin/auth.menu/add', 0, 0, 19, 0, 'layui-icon layui-icon-add-circle-fine', NULL);
+INSERT INTO `lt_admin_menu` VALUES (43, '编辑', 'admin/auth.menu/edit', 0, 0, 19, 0, 'layui-icon layui-icon-util', NULL);
+INSERT INTO `lt_admin_menu` VALUES (44, '删除', 'admin/auth.menu/del', 0, 0, 19, 0, 'layui-icon layui-icon-delete', NULL);
+INSERT INTO `lt_admin_menu` VALUES (45, '导入', 'admin/autocreate.curd/import', 0, 0, 21, 0, 'layui-icon layui-icon-find-fill', NULL);
+INSERT INTO `lt_admin_menu` VALUES (56, '操作日志', 'admin/admin.log/index', 1, 0, 18, 0, 'layui-icon layui-icon-form', NULL);
+INSERT INTO `lt_admin_menu` VALUES (57, '列表查看', 'admin/admin.log/index', 0, 0, 56, 1, 'layui-icon layui-icon-list', NULL);
+INSERT INTO `lt_admin_menu` VALUES (58, '删除', 'admin/admin.log/del', 0, 0, 56, 0, 'layui-icon layui-icon-date', NULL);
+INSERT INTO `lt_admin_menu` VALUES (59, 'Api文档', 'admin/autocreate.apidoc/index', 1, 0, 20, 0, 'layui-icon layui-icon-tabs', NULL);
+INSERT INTO `lt_admin_menu` VALUES (60, '插件市场', 'admin/addons/index', 1, 0, 1, 0, 'layui-icon layui-icon-cart-simple', '可在线安装、卸载、禁用、启用插件，同时支持离线安装插件。');
+INSERT INTO `lt_admin_menu` VALUES (61, '列表设置状态', 'admin/auth.menu/set_status', 0, 0, 19, 1, 'layui-icon layui-icon-template-1', NULL);
+INSERT INTO `lt_admin_menu` VALUES (66, '系统配置', 'admin/sysconf/index', 1, 2, 30, 0, 'layui-icon layui-icon-set', NULL);
+INSERT INTO `lt_admin_menu` VALUES (67, '快捷菜单', 'admin/dashboard/index', 1, 10, 1, 0, 'layui-icon layui-icon-release', NULL);
+INSERT INTO `lt_admin_menu` VALUES (68, '查看', 'admin/index/index', 0, 0, 35, 0, 'layui-icon layui-icon-search', NULL);
+INSERT INTO `lt_admin_menu` VALUES (69, '设置', 'admin/sysconf/set_config', 0, 0, 66, 0, 'layui-icon layui-icon-set-fill', NULL);
+INSERT INTO `lt_admin_menu` VALUES (70, '添加', 'admin/sysconf/add', 0, 0, 66, 0, 'layui-icon layui-icon-add-circle-fine', NULL);
+INSERT INTO `lt_admin_menu` VALUES (72, '菜单', 'admin/autocreate.menu/index', 1, 2, 20, 0, 'layui-icon layui-icon-templeate-1', NULL);
+INSERT INTO `lt_admin_menu` VALUES (125, '地区管理', 'admin/area/index', 1, 0, 30, 0, 'layui-icon layui-icon-find-fill', NULL);
+INSERT INTO `lt_admin_menu` VALUES (126, '查看', 'admin/area/index', 0, 0, 125, 0, 'layui-icon layui-icon-fire', NULL);
+INSERT INTO `lt_admin_menu` VALUES (127, '添加', 'admin/area/add', 0, 0, 125, 1, 'layui-icon layui-icon-fire', NULL);
+INSERT INTO `lt_admin_menu` VALUES (128, '编辑', 'admin/area/edit', 0, 0, 125, 1, 'layui-icon layui-icon-fire', NULL);
+INSERT INTO `lt_admin_menu` VALUES (129, '设置状态', 'admin/area/set_status', 0, 0, 125, 1, 'layui-icon layui-icon-fire', NULL);
+INSERT INTO `lt_admin_menu` VALUES (130, '删除', 'admin/area/del', 0, 0, 125, 1, 'layui-icon layui-icon-fire', NULL);
+INSERT INTO `lt_admin_menu` VALUES (153, '后台附件管理', 'admin/attachment/index', 1, 0, 30, 0, 'layui-icon layui-icon-fire', NULL);
+INSERT INTO `lt_admin_menu` VALUES (154, '查看', 'admin/attachment/index', 0, 0, 153, 0, 'layui-icon layui-icon-fire', NULL);
+INSERT INTO `lt_admin_menu` VALUES (155, '添加', 'admin/attachment/add', 0, 0, 153, 1, 'layui-icon layui-icon-fire', NULL);
+INSERT INTO `lt_admin_menu` VALUES (156, '编辑', 'admin/attachment/edit', 0, 0, 153, 1, 'layui-icon layui-icon-fire', NULL);
+INSERT INTO `lt_admin_menu` VALUES (157, '设置状态', 'admin/attachment/set_status', 0, 0, 153, 1, 'layui-icon layui-icon-fire', NULL);
+INSERT INTO `lt_admin_menu` VALUES (158, '删除', 'admin/attachment/del', 0, 0, 153, 1, 'layui-icon layui-icon-fire', NULL);
+INSERT INTO `lt_admin_menu` VALUES (159, '回收站', 'admin/attachment/recycle', 0, 0, 153, 1, 'layui-icon layui-icon-fire', NULL);
+INSERT INTO `lt_admin_menu` VALUES (160, '还原', 'admin/attachment/renew', 0, 0, 153, 1, 'layui-icon layui-icon-fire', NULL);
+INSERT INTO `lt_admin_menu` VALUES (161, '彻底删除', 'admin/attachment/true_del', 0, 0, 153, 1, 'layui-icon layui-icon-fire', NULL);
+INSERT INTO `lt_admin_menu` VALUES (162, '导入', 'admin/autocreate.menu/add', 0, 0, 72, 1, 'layui-icon layui-icon-add-circle-fine', NULL);
+INSERT INTO `lt_admin_menu` VALUES (163, '删除', 'admin/autocreate.menu/del', 0, 0, 72, 1, 'layui-icon layui-icon-close', NULL);
+INSERT INTO `lt_admin_menu` VALUES (164, '删除', 'admin/autocreate.curd/del', 0, 0, 21, 0, 'layui-icon layui-icon-close', NULL);
+INSERT INTO `lt_admin_menu` VALUES (165, '回收站', 'admin/auth.user/recycle', 0, 0, 26, 1, 'layui-icon layui-icon-delete', NULL);
+INSERT INTO `lt_admin_menu` VALUES (166, '查看详情', 'admin/admin.log/detail', 0, 0, 56, 1, 'layui-icon layui-icon-note', NULL);
+INSERT INTO `lt_admin_menu` VALUES (167, '删除', 'admin/sysconf/del', 0, 0, 66, 1, 'layui-icon layui-icon-close', NULL);
+INSERT INTO `lt_admin_menu` VALUES (178, '应用', 'admin/test/index', 1, 0, 0, 0, 'layui-icon layui-icon-fire', NULL);
+INSERT INTO `lt_admin_menu` VALUES (179, '测试', 'admin/test/index', 1, 0, 178, 0, 'layui-icon layui-icon-camera', NULL);
+INSERT INTO `lt_admin_menu` VALUES (180, '一键生成Curd测试分类模型', 'admin/test.category/index', 1, 0, 179, 0, 'layui-icon layui-icon-fire', NULL);
+INSERT INTO `lt_admin_menu` VALUES (181, '查看', 'admin/test.category/index', 0, 0, 180, 0, 'layui-icon layui-icon-fire', NULL);
+INSERT INTO `lt_admin_menu` VALUES (182, '添加', 'admin/test.category/add', 0, 0, 180, 1, 'layui-icon layui-icon-fire', NULL);
+INSERT INTO `lt_admin_menu` VALUES (183, '编辑', 'admin/test.category/edit', 0, 0, 180, 1, 'layui-icon layui-icon-fire', NULL);
+INSERT INTO `lt_admin_menu` VALUES (184, '设置状态', 'admin/test.category/set_status', 0, 0, 180, 1, 'layui-icon layui-icon-fire', NULL);
+INSERT INTO `lt_admin_menu` VALUES (185, '删除', 'admin/test.category/del', 0, 0, 180, 1, 'layui-icon layui-icon-fire', NULL);
+INSERT INTO `lt_admin_menu` VALUES (186, '一键生成CURD测试表', 'admin/test/index', 1, 0, 179, 0, 'layui-icon layui-icon-fire', NULL);
+INSERT INTO `lt_admin_menu` VALUES (187, '查看', 'admin/test/index', 0, 0, 186, 0, 'layui-icon layui-icon-fire', NULL);
+INSERT INTO `lt_admin_menu` VALUES (188, '添加', 'admin/test/add', 0, 0, 186, 1, 'layui-icon layui-icon-fire', NULL);
+INSERT INTO `lt_admin_menu` VALUES (189, '编辑', 'admin/test/edit', 0, 0, 186, 1, 'layui-icon layui-icon-fire', NULL);
+INSERT INTO `lt_admin_menu` VALUES (190, '设置状态', 'admin/test/set_status', 0, 0, 186, 1, 'layui-icon layui-icon-fire', NULL);
+INSERT INTO `lt_admin_menu` VALUES (191, '删除', 'admin/test/del', 0, 0, 186, 1, 'layui-icon layui-icon-fire', NULL);
+INSERT INTO `lt_admin_menu` VALUES (192, '回收站', 'admin/test/recycle', 0, 0, 186, 1, 'layui-icon layui-icon-fire', NULL);
+INSERT INTO `lt_admin_menu` VALUES (193, '还原', 'admin/test/renew', 0, 0, 186, 1, 'layui-icon layui-icon-fire', NULL);
+INSERT INTO `lt_admin_menu` VALUES (194, '彻底删除', 'admin/test/true_del', 0, 0, 186, 1, 'layui-icon layui-icon-fire', NULL);
+INSERT INTO `lt_admin_menu` VALUES (195, '查看', 'admin/autocreate.curd/index', 0, 0, 21, 0, 'layui-icon layui-icon-star-fill', NULL);
+INSERT INTO `lt_admin_menu` VALUES (196, '邮件管理', 'admin/email/index', 1, 0, 1, 0, 'layui-icon layui-icon-file-b', NULL);
+INSERT INTO `lt_admin_menu` VALUES (197, '邮件模板管理', 'admin/email.template/index', 1, 0, 196, 0, 'layui-icon layui-icon-fire', NULL);
+INSERT INTO `lt_admin_menu` VALUES (198, '查看', 'admin/email.template/index', 0, 0, 197, 0, 'layui-icon layui-icon-fire', NULL);
+INSERT INTO `lt_admin_menu` VALUES (199, '添加', 'admin/email.template/add', 0, 0, 197, 1, 'layui-icon layui-icon-fire', NULL);
+INSERT INTO `lt_admin_menu` VALUES (200, '编辑', 'admin/email.template/edit', 0, 0, 197, 1, 'layui-icon layui-icon-fire', NULL);
+INSERT INTO `lt_admin_menu` VALUES (201, '设置状态', 'admin/email.template/set_status', 0, 0, 197, 1, 'layui-icon layui-icon-fire', NULL);
+INSERT INTO `lt_admin_menu` VALUES (202, '删除', 'admin/email.template/del', 0, 0, 197, 1, 'layui-icon layui-icon-fire', NULL);
+INSERT INTO `lt_admin_menu` VALUES (203, '回收站', 'admin/email.template/recycle', 0, 0, 197, 1, 'layui-icon layui-icon-fire', NULL);
+INSERT INTO `lt_admin_menu` VALUES (204, '还原', 'admin/email.template/renew', 0, 0, 197, 1, 'layui-icon layui-icon-fire', NULL);
+INSERT INTO `lt_admin_menu` VALUES (205, '彻底删除', 'admin/email.template/true_del', 0, 0, 197, 1, 'layui-icon layui-icon-fire', NULL);
+INSERT INTO `lt_admin_menu` VALUES (206, '邮件管理', 'admin/email/index', 1, 0, 196, 0, 'layui-icon layui-icon-fire', NULL);
+INSERT INTO `lt_admin_menu` VALUES (207, '查看', 'admin/email/index', 0, 0, 206, 0, 'layui-icon layui-icon-fire', NULL);
+INSERT INTO `lt_admin_menu` VALUES (208, '添加', 'admin/email/add', 0, 0, 206, 1, 'layui-icon layui-icon-fire', NULL);
+INSERT INTO `lt_admin_menu` VALUES (209, '编辑', 'admin/email/edit', 0, 0, 206, 1, 'layui-icon layui-icon-fire', NULL);
+INSERT INTO `lt_admin_menu` VALUES (210, '设置状态', 'admin/email/set_status', 0, 0, 206, 1, 'layui-icon layui-icon-fire', NULL);
+INSERT INTO `lt_admin_menu` VALUES (211, '删除', 'admin/email/del', 0, 0, 206, 1, 'layui-icon layui-icon-fire', NULL);
+INSERT INTO `lt_admin_menu` VALUES (212, '回收站', 'admin/email/recycle', 0, 0, 206, 1, 'layui-icon layui-icon-fire', NULL);
+INSERT INTO `lt_admin_menu` VALUES (213, '还原', 'admin/email/renew', 0, 0, 206, 1, 'layui-icon layui-icon-fire', NULL);
+INSERT INTO `lt_admin_menu` VALUES (214, '彻底删除', 'admin/email/true_del', 0, 0, 206, 1, 'layui-icon layui-icon-fire', NULL);
 
 -- ----------------------------
 -- Table structure for lt_admin_role
@@ -141,13 +221,14 @@ CREATE TABLE `lt_admin_role`  (
   `update_time` datetime(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `name`(`name`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of lt_admin_role
 -- ----------------------------
 INSERT INTO `lt_admin_role` VALUES (1, '超级管理员', 0, '2019-09-23 09:39:47', '2019-09-23 09:39:47');
-INSERT INTO `lt_admin_role` VALUES (2, '商城管理员', 0, '2019-09-23 09:39:58', '2019-09-23 09:39:58');
+INSERT INTO `lt_admin_role` VALUES (2, '商城管理员', 1, '2019-09-23 09:39:58', '2019-09-23 09:39:58');
+INSERT INTO `lt_admin_role` VALUES (3, 'test', 0, '2020-01-01 21:50:18', '2020-01-01 21:50:18');
 
 -- ----------------------------
 -- Table structure for lt_admin_role_rel_menu
@@ -158,7 +239,103 @@ CREATE TABLE `lt_admin_role_rel_menu`  (
   `menu_id` int(11) NULL DEFAULT NULL COMMENT '菜单ID',
   `role_id` int(11) NULL DEFAULT NULL COMMENT '角色ID',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 130 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of lt_admin_role_rel_menu
+-- ----------------------------
+INSERT INTO `lt_admin_role_rel_menu` VALUES (1, 1, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (2, 18, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (3, 19, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (4, 20, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (5, 21, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (6, 26, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (7, 27, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (8, 30, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (9, 31, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (10, 32, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (11, 33, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (12, 34, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (13, 35, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (14, 36, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (15, 37, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (16, 38, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (17, 39, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (18, 40, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (19, 41, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (20, 42, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (21, 43, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (22, 44, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (23, 45, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (24, 56, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (25, 57, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (26, 58, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (27, 59, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (28, 60, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (29, 61, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (30, 66, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (31, 67, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (32, 68, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (33, 69, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (34, 70, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (35, 72, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (36, 125, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (37, 126, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (38, 127, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (39, 128, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (40, 129, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (41, 130, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (42, 153, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (43, 154, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (44, 155, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (45, 156, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (46, 157, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (47, 158, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (48, 159, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (49, 160, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (50, 161, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (51, 162, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (52, 163, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (53, 164, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (54, 165, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (55, 166, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (56, 167, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (57, 195, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (58, 196, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (59, 197, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (60, 198, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (61, 199, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (62, 200, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (63, 201, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (64, 202, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (65, 203, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (66, 204, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (67, 205, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (68, 206, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (69, 207, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (70, 208, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (71, 209, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (72, 210, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (73, 211, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (74, 212, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (75, 213, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (76, 214, 2);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (114, 68, 3);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (115, 181, 3);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (116, 182, 3);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (117, 183, 3);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (118, 184, 3);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (119, 187, 3);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (120, 188, 3);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (121, 189, 3);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (122, 190, 3);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (123, 191, 3);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (124, 192, 3);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (125, 193, 3);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (126, 194, 3);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (127, 35, 3);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (128, 67, 3);
+INSERT INTO `lt_admin_role_rel_menu` VALUES (129, 186, 3);
 
 -- ----------------------------
 -- Table structure for lt_admin_role_rel_user
@@ -169,7 +346,12 @@ CREATE TABLE `lt_admin_role_rel_user`  (
   `role_id` int(11) NULL DEFAULT NULL COMMENT '角色ID',
   `admin_id` int(11) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of lt_admin_role_rel_user
+-- ----------------------------
+INSERT INTO `lt_admin_role_rel_user` VALUES (1, 3, 2);
 
 -- ----------------------------
 -- Table structure for lt_admin_user
@@ -188,12 +370,13 @@ CREATE TABLE `lt_admin_user`  (
   `delete_time` datetime(0) NULL DEFAULT NULL COMMENT '删除时间',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `unique_name`(`username`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '后台管理员表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '后台管理员表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of lt_admin_user
 -- ----------------------------
-INSERT INTO `lt_admin_user` VALUES (1, 'admin', 'admin', '$2y$10$KVTpHBl/M3ueSMCeLGoR..bwLqdXyByZHYRjGSdQ36U7JmNsMwlbC', '/static/admin/image/default_avatar.png', 1, 1, '2019-03-20 00:33:25', '2019-03-20 00:33:25', NULL);
+INSERT INTO `lt_admin_user` VALUES (1, 'admin', 'admin', '$2y$10$IuNOD1BdU04B0gml8WP6OuQJHDYpNq4YLwXJdClHShL56OJEPaA1e', '/uploads/20200101/e7dc8d0e6113445382b7f093a78c574a.jpeg', 1, 1, '2019-03-20 00:33:25', '2019-03-20 00:33:25', NULL);
+INSERT INTO `lt_admin_user` VALUES (2, 'test', 'test', '$2y$10$yl3GBlR0XNsufCDkTnFM1OjOs8bOGTHdMGQT8Jj3lsg9Uoeh7tOqa', '/static/admin/image/default_avatar.png', 0, 1, '2020-01-01 22:36:00', '2020-01-01 22:36:00', NULL);
 
 -- ----------------------------
 -- Table structure for lt_area
@@ -3979,7 +4162,7 @@ CREATE TABLE `lt_attachment`  (
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '生成时间',
   `delete_time` datetime(0) NULL DEFAULT NULL COMMENT '删除时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '附件管理' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 144 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '附件管理' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of lt_attachment
@@ -3991,6 +4174,142 @@ INSERT INTO `lt_attachment` VALUES (4, '/uploads/20191222/ef94d0c4b1e4c23087ec5b
 INSERT INTO `lt_attachment` VALUES (5, '/uploads/20191222/6523fbd33573b6397448e204cc9ade4b.jpeg', 'images', '2019-12-22 15:42:22', NULL);
 INSERT INTO `lt_attachment` VALUES (6, '/uploads/20191222/4491f53917b327bb913299d86c2e5be7.jpeg', 'images', '2019-12-22 15:42:55', NULL);
 INSERT INTO `lt_attachment` VALUES (7, '/uploads/20191222/327273bfa678a8781aa47156065b765f.jpeg', 'images', '2019-12-22 15:43:09', NULL);
+INSERT INTO `lt_attachment` VALUES (8, '/uploads/20191231/569a622935f8f029cdb41722e8a7426e.jpeg', 'images', '2019-12-31 01:45:30', NULL);
+INSERT INTO `lt_attachment` VALUES (9, '/uploads/20191231/fb9f39920abc526ba8da63f933d83d87.jpeg', 'images', '2019-12-31 01:48:34', NULL);
+INSERT INTO `lt_attachment` VALUES (10, '/uploads/20191231/cd7d518d38dc6826d565e071f1fa8452.jpeg', 'images', '2019-12-31 01:48:34', NULL);
+INSERT INTO `lt_attachment` VALUES (11, '/uploads/20200101/ecf8ad77c1c65e3b6e5719c6bf1d6b4b.jpeg', 'images', '2020-01-01 23:18:35', NULL);
+INSERT INTO `lt_attachment` VALUES (12, '/uploads/20200101/e7dc8d0e6113445382b7f093a78c574a.jpeg', 'images', '2020-01-01 23:19:03', NULL);
+INSERT INTO `lt_attachment` VALUES (13, '/uploads/20200103/5f631bb84f935a240d7a05745b262b3d.zip', 'file', '2020-01-03 01:45:02', NULL);
+INSERT INTO `lt_attachment` VALUES (14, '/uploads/20200103/abcf3a0e38bc26b6315a8bc1430886af.zip', 'file', '2020-01-03 01:47:36', NULL);
+INSERT INTO `lt_attachment` VALUES (15, '/uploads/20200103/20698ae336c44f7cb283781c3421e0c5.zip', NULL, '2020-01-03 02:25:48', NULL);
+INSERT INTO `lt_attachment` VALUES (16, '/uploads/20200103/5e67bbda7a821b802b4114960c28219e.zip', NULL, '2020-01-03 02:27:19', NULL);
+INSERT INTO `lt_attachment` VALUES (17, '/uploads/testaddons.zip', NULL, '2020-01-03 02:30:02', NULL);
+INSERT INTO `lt_attachment` VALUES (18, '/uploads/testaddons.zip', NULL, '2020-01-03 02:37:29', NULL);
+INSERT INTO `lt_attachment` VALUES (19, '/uploads/testaddons.zip', NULL, '2020-01-03 02:37:48', NULL);
+INSERT INTO `lt_attachment` VALUES (20, '/uploads/testaddons.zip', NULL, '2020-01-03 02:42:13', NULL);
+INSERT INTO `lt_attachment` VALUES (21, '/uploads/testaddons.zip', NULL, '2020-01-03 02:42:55', NULL);
+INSERT INTO `lt_attachment` VALUES (22, '/uploads/testaddons.zip', NULL, '2020-01-03 02:49:15', NULL);
+INSERT INTO `lt_attachment` VALUES (23, '/uploads/testaddons.zip', NULL, '2020-01-03 02:49:33', NULL);
+INSERT INTO `lt_attachment` VALUES (24, '/uploads/testaddons.zip', NULL, '2020-01-03 02:50:08', NULL);
+INSERT INTO `lt_attachment` VALUES (25, '/uploads/testaddons.zip', NULL, '2020-01-03 02:51:26', NULL);
+INSERT INTO `lt_attachment` VALUES (26, '/uploads/testaddons.zip', NULL, '2020-01-03 02:51:58', NULL);
+INSERT INTO `lt_attachment` VALUES (27, '/uploads/testaddons.zip', NULL, '2020-01-03 02:52:46', NULL);
+INSERT INTO `lt_attachment` VALUES (28, '/uploads/testaddons.zip', NULL, '2020-01-03 02:53:04', NULL);
+INSERT INTO `lt_attachment` VALUES (29, '/uploads/testaddons.zip', NULL, '2020-01-03 02:53:36', NULL);
+INSERT INTO `lt_attachment` VALUES (30, '/uploads/testaddons.zip', NULL, '2020-01-03 02:53:52', NULL);
+INSERT INTO `lt_attachment` VALUES (31, '/uploads/testaddons.zip', NULL, '2020-01-03 02:54:01', NULL);
+INSERT INTO `lt_attachment` VALUES (32, '/uploads/testaddons.zip', NULL, '2020-01-03 02:54:47', NULL);
+INSERT INTO `lt_attachment` VALUES (33, '/uploads/testaddons.zip', NULL, '2020-01-03 02:55:25', NULL);
+INSERT INTO `lt_attachment` VALUES (34, '/uploads/testaddons.zip', NULL, '2020-01-03 02:58:25', NULL);
+INSERT INTO `lt_attachment` VALUES (35, '/uploads/testaddons.zip', NULL, '2020-01-03 03:16:51', NULL);
+INSERT INTO `lt_attachment` VALUES (36, '/uploads/testaddons.zip', NULL, '2020-01-03 04:14:38', NULL);
+INSERT INTO `lt_attachment` VALUES (37, '/uploads/testaddons.zip', NULL, '2020-01-03 04:16:59', NULL);
+INSERT INTO `lt_attachment` VALUES (38, '/uploads/testaddons.zip', NULL, '2020-01-03 04:17:34', NULL);
+INSERT INTO `lt_attachment` VALUES (39, '/uploads/testaddons.zip', NULL, '2020-01-03 04:17:48', NULL);
+INSERT INTO `lt_attachment` VALUES (40, '/uploads/testaddons.zip', NULL, '2020-01-03 04:18:04', NULL);
+INSERT INTO `lt_attachment` VALUES (41, '/uploads/testaddons.zip', NULL, '2020-01-03 04:18:36', NULL);
+INSERT INTO `lt_attachment` VALUES (42, '/uploads/testaddons.zip', NULL, '2020-01-03 04:19:07', NULL);
+INSERT INTO `lt_attachment` VALUES (43, '/uploads/testaddons.zip', NULL, '2020-01-03 04:19:54', NULL);
+INSERT INTO `lt_attachment` VALUES (44, '/uploads/testaddons.zip', NULL, '2020-01-03 04:20:14', NULL);
+INSERT INTO `lt_attachment` VALUES (45, '/uploads/testaddons.zip', NULL, '2020-01-03 04:20:23', NULL);
+INSERT INTO `lt_attachment` VALUES (46, '/uploads/testaddons.zip', NULL, '2020-01-03 04:21:00', NULL);
+INSERT INTO `lt_attachment` VALUES (47, '/uploads/testaddons.zip', NULL, '2020-01-03 04:22:09', NULL);
+INSERT INTO `lt_attachment` VALUES (48, '/uploads/testaddons.zip', NULL, '2020-01-03 04:22:20', NULL);
+INSERT INTO `lt_attachment` VALUES (49, '/uploads/testaddons.zip', NULL, '2020-01-03 04:22:28', NULL);
+INSERT INTO `lt_attachment` VALUES (50, '/uploads/testaddons.zip', NULL, '2020-01-03 04:22:47', NULL);
+INSERT INTO `lt_attachment` VALUES (51, '/uploads/testaddons.zip', NULL, '2020-01-03 04:22:56', NULL);
+INSERT INTO `lt_attachment` VALUES (52, '/uploads/testaddons.zip', NULL, '2020-01-03 04:23:52', NULL);
+INSERT INTO `lt_attachment` VALUES (53, '/uploads/testaddons.zip', NULL, '2020-01-03 04:28:27', NULL);
+INSERT INTO `lt_attachment` VALUES (54, '/uploads/testaddons.zip', NULL, '2020-01-03 04:30:28', NULL);
+INSERT INTO `lt_attachment` VALUES (55, '/uploads/testaddons.zip', NULL, '2020-01-03 04:30:41', NULL);
+INSERT INTO `lt_attachment` VALUES (56, '/uploads/testaddons.zip', NULL, '2020-01-03 04:31:44', NULL);
+INSERT INTO `lt_attachment` VALUES (57, '/uploads/testaddons.zip', NULL, '2020-01-03 05:04:41', NULL);
+INSERT INTO `lt_attachment` VALUES (58, '/uploads/testaddons.zip', NULL, '2020-01-03 05:05:01', NULL);
+INSERT INTO `lt_attachment` VALUES (59, '/uploads/testaddons.zip', NULL, '2020-01-03 05:05:54', NULL);
+INSERT INTO `lt_attachment` VALUES (60, '/uploads/testaddons.zip', NULL, '2020-01-03 05:06:32', NULL);
+INSERT INTO `lt_attachment` VALUES (61, '/uploads/testaddons.zip', NULL, '2020-01-03 05:07:24', NULL);
+INSERT INTO `lt_attachment` VALUES (62, '/uploads/testaddons.zip', NULL, '2020-01-03 05:08:42', NULL);
+INSERT INTO `lt_attachment` VALUES (63, '/uploads/testaddons.zip', NULL, '2020-01-03 05:11:09', NULL);
+INSERT INTO `lt_attachment` VALUES (64, '/uploads/testaddons.zip', NULL, '2020-01-03 05:11:41', NULL);
+INSERT INTO `lt_attachment` VALUES (65, '/uploads/testaddons.zip', NULL, '2020-01-03 05:12:49', NULL);
+INSERT INTO `lt_attachment` VALUES (66, '/uploads/testaddons.zip', NULL, '2020-01-03 05:13:17', NULL);
+INSERT INTO `lt_attachment` VALUES (67, '/uploads/testaddons.zip', NULL, '2020-01-03 05:13:34', NULL);
+INSERT INTO `lt_attachment` VALUES (68, '/uploads/testaddons.zip', NULL, '2020-01-03 05:14:18', NULL);
+INSERT INTO `lt_attachment` VALUES (69, '/uploads/testaddons.zip', NULL, '2020-01-03 05:16:20', NULL);
+INSERT INTO `lt_attachment` VALUES (70, '/uploads/testaddons.zip', NULL, '2020-01-03 05:18:34', NULL);
+INSERT INTO `lt_attachment` VALUES (71, '/uploads/testaddons.zip', NULL, '2020-01-03 06:58:24', NULL);
+INSERT INTO `lt_attachment` VALUES (72, '/uploads/testaddons.zip', NULL, '2020-01-03 06:58:37', NULL);
+INSERT INTO `lt_attachment` VALUES (73, '/uploads/testaddons.zip', NULL, '2020-01-03 06:59:32', NULL);
+INSERT INTO `lt_attachment` VALUES (74, '/uploads/testaddons.zip', NULL, '2020-01-03 07:00:13', NULL);
+INSERT INTO `lt_attachment` VALUES (75, '/uploads/testaddons.zip', NULL, '2020-01-03 07:02:13', NULL);
+INSERT INTO `lt_attachment` VALUES (76, '/uploads/testaddons.zip', NULL, '2020-01-03 07:07:52', NULL);
+INSERT INTO `lt_attachment` VALUES (77, '/uploads/testaddons.zip', NULL, '2020-01-03 07:08:19', NULL);
+INSERT INTO `lt_attachment` VALUES (78, '/uploads/testaddons.zip', NULL, '2020-01-03 07:08:50', NULL);
+INSERT INTO `lt_attachment` VALUES (79, '/uploads/testaddons.zip', NULL, '2020-01-03 07:09:05', NULL);
+INSERT INTO `lt_attachment` VALUES (80, '/uploads/testaddons.zip', NULL, '2020-01-03 07:09:21', NULL);
+INSERT INTO `lt_attachment` VALUES (81, '/uploads/testaddons.zip', NULL, '2020-01-03 07:09:36', NULL);
+INSERT INTO `lt_attachment` VALUES (82, '/uploads/testaddons.zip', NULL, '2020-01-03 07:09:54', NULL);
+INSERT INTO `lt_attachment` VALUES (83, '/uploads/testaddons.zip', NULL, '2020-01-03 07:10:35', NULL);
+INSERT INTO `lt_attachment` VALUES (84, '/uploads/testaddons.zip', NULL, '2020-01-03 07:11:16', NULL);
+INSERT INTO `lt_attachment` VALUES (85, '/uploads/testaddons.zip', NULL, '2020-01-03 07:11:56', NULL);
+INSERT INTO `lt_attachment` VALUES (86, '/uploads/testaddons.zip', NULL, '2020-01-03 07:12:32', NULL);
+INSERT INTO `lt_attachment` VALUES (87, '/uploads/testaddons.zip', NULL, '2020-01-03 07:12:46', NULL);
+INSERT INTO `lt_attachment` VALUES (88, '/uploads/testaddons.zip', NULL, '2020-01-03 07:13:29', NULL);
+INSERT INTO `lt_attachment` VALUES (89, '/uploads/testaddons.zip', NULL, '2020-01-03 07:14:08', NULL);
+INSERT INTO `lt_attachment` VALUES (90, '/uploads/testaddons.zip', NULL, '2020-01-03 07:14:53', NULL);
+INSERT INTO `lt_attachment` VALUES (91, '/uploads/testaddons.zip', NULL, '2020-01-03 07:15:33', NULL);
+INSERT INTO `lt_attachment` VALUES (92, '/uploads/testaddons.zip', NULL, '2020-01-03 07:15:43', NULL);
+INSERT INTO `lt_attachment` VALUES (93, '/uploads/testaddons.zip', NULL, '2020-01-03 07:16:10', NULL);
+INSERT INTO `lt_attachment` VALUES (94, '/uploads/testaddons.zip', NULL, '2020-01-03 07:19:37', NULL);
+INSERT INTO `lt_attachment` VALUES (95, '/uploads/testaddons.zip', NULL, '2020-01-03 07:20:32', NULL);
+INSERT INTO `lt_attachment` VALUES (96, '/uploads/testaddons.zip', NULL, '2020-01-03 07:21:45', NULL);
+INSERT INTO `lt_attachment` VALUES (97, '/uploads/testaddons.zip', NULL, '2020-01-03 07:22:00', NULL);
+INSERT INTO `lt_attachment` VALUES (98, '/uploads/testaddons.zip', NULL, '2020-01-03 07:22:10', NULL);
+INSERT INTO `lt_attachment` VALUES (99, '/uploads/testaddons.zip', NULL, '2020-01-03 07:31:54', NULL);
+INSERT INTO `lt_attachment` VALUES (100, '/uploads/testaddons.zip', NULL, '2020-01-03 07:34:36', NULL);
+INSERT INTO `lt_attachment` VALUES (101, '/uploads/testaddons.zip', NULL, '2020-01-03 07:35:10', NULL);
+INSERT INTO `lt_attachment` VALUES (102, '/uploads/testaddons.zip', NULL, '2020-01-03 07:38:03', NULL);
+INSERT INTO `lt_attachment` VALUES (103, '/uploads/testaddons.zip', NULL, '2020-01-03 07:48:42', NULL);
+INSERT INTO `lt_attachment` VALUES (104, '/uploads/testaddons.zip', NULL, '2020-01-03 07:48:51', NULL);
+INSERT INTO `lt_attachment` VALUES (105, '/uploads/testaddons.zip', NULL, '2020-01-03 07:50:47', NULL);
+INSERT INTO `lt_attachment` VALUES (106, '/uploads/testaddons.zip', NULL, '2020-01-03 07:52:09', NULL);
+INSERT INTO `lt_attachment` VALUES (107, '/uploads/testaddons.zip', NULL, '2020-01-03 07:52:26', NULL);
+INSERT INTO `lt_attachment` VALUES (108, '/uploads/testaddons.zip', NULL, '2020-01-03 07:55:10', NULL);
+INSERT INTO `lt_attachment` VALUES (109, '/uploads/testaddons.zip', NULL, '2020-01-03 07:59:38', NULL);
+INSERT INTO `lt_attachment` VALUES (110, '/uploads/testaddons.zip', NULL, '2020-01-03 08:00:07', NULL);
+INSERT INTO `lt_attachment` VALUES (111, '/uploads/testaddons.zip', NULL, '2020-01-03 08:00:26', NULL);
+INSERT INTO `lt_attachment` VALUES (112, '/uploads/testaddons.zip', NULL, '2020-01-03 08:00:57', NULL);
+INSERT INTO `lt_attachment` VALUES (113, '/uploads/testaddons.zip', NULL, '2020-01-03 08:01:21', NULL);
+INSERT INTO `lt_attachment` VALUES (114, '/uploads/testaddons.zip', NULL, '2020-01-03 08:03:57', NULL);
+INSERT INTO `lt_attachment` VALUES (115, '/uploads/testaddons.zip', NULL, '2020-01-03 08:05:11', NULL);
+INSERT INTO `lt_attachment` VALUES (116, '/uploads/testaddons.zip', NULL, '2020-01-03 08:06:05', NULL);
+INSERT INTO `lt_attachment` VALUES (117, '/uploads/testaddons.zip', NULL, '2020-01-03 08:06:20', NULL);
+INSERT INTO `lt_attachment` VALUES (118, '/uploads/testaddons.zip', NULL, '2020-01-03 08:11:32', NULL);
+INSERT INTO `lt_attachment` VALUES (119, '/uploads/testaddons.zip', NULL, '2020-01-03 08:12:19', NULL);
+INSERT INTO `lt_attachment` VALUES (120, '/uploads/testaddons.zip', NULL, '2020-01-03 08:14:10', NULL);
+INSERT INTO `lt_attachment` VALUES (121, '/uploads/testaddons.zip', NULL, '2020-01-03 21:21:19', NULL);
+INSERT INTO `lt_attachment` VALUES (122, '/uploads/testaddons.zip', NULL, '2020-01-03 21:29:13', NULL);
+INSERT INTO `lt_attachment` VALUES (123, '/uploads/testaddons.zip', NULL, '2020-01-03 21:41:15', NULL);
+INSERT INTO `lt_attachment` VALUES (124, '/uploads/testaddons.zip', NULL, '2020-01-03 21:41:38', NULL);
+INSERT INTO `lt_attachment` VALUES (125, '/uploads/testaddons.zip', NULL, '2020-01-03 21:42:08', NULL);
+INSERT INTO `lt_attachment` VALUES (126, '/uploads/testaddons.zip', NULL, '2020-01-03 21:42:16', NULL);
+INSERT INTO `lt_attachment` VALUES (127, '/uploads/testaddons.zip', NULL, '2020-01-03 21:47:54', NULL);
+INSERT INTO `lt_attachment` VALUES (128, '/uploads/testaddons.zip', NULL, '2020-01-03 21:48:27', NULL);
+INSERT INTO `lt_attachment` VALUES (129, '/uploads/testaddons.zip', NULL, '2020-01-03 21:49:00', NULL);
+INSERT INTO `lt_attachment` VALUES (130, '/uploads/testaddons.zip', NULL, '2020-01-03 21:49:12', NULL);
+INSERT INTO `lt_attachment` VALUES (131, '/uploads/testaddons.zip', NULL, '2020-01-03 21:49:31', NULL);
+INSERT INTO `lt_attachment` VALUES (132, '/uploads/testaddons.zip', NULL, '2020-01-03 21:49:44', NULL);
+INSERT INTO `lt_attachment` VALUES (133, '/uploads/testaddons.zip', NULL, '2020-01-03 22:01:17', NULL);
+INSERT INTO `lt_attachment` VALUES (134, '/uploads/testaddons.zip', NULL, '2020-01-03 22:09:19', NULL);
+INSERT INTO `lt_attachment` VALUES (135, '/uploads/testaddons.zip', NULL, '2020-01-03 22:20:54', NULL);
+INSERT INTO `lt_attachment` VALUES (136, '/uploads/testaddons.zip', NULL, '2020-01-03 22:21:06', NULL);
+INSERT INTO `lt_attachment` VALUES (137, '/uploads/testaddons.zip', NULL, '2020-01-03 22:30:35', NULL);
+INSERT INTO `lt_attachment` VALUES (138, '/uploads/testaddons.zip', NULL, '2020-01-03 22:30:46', NULL);
+INSERT INTO `lt_attachment` VALUES (139, '/uploads/testaddons.zip', NULL, '2020-01-04 01:15:46', NULL);
+INSERT INTO `lt_attachment` VALUES (140, '/uploads/testaddons.zip', NULL, '2020-01-04 01:16:47', NULL);
+INSERT INTO `lt_attachment` VALUES (141, '/uploads/testaddons.zip', NULL, '2020-01-04 01:18:30', NULL);
+INSERT INTO `lt_attachment` VALUES (142, '/uploads/testaddons.zip', NULL, '2020-01-04 01:27:59', NULL);
+INSERT INTO `lt_attachment` VALUES (143, '/uploads/testaddons.zip', NULL, '2020-01-04 01:28:42', NULL);
 
 -- ----------------------------
 -- Table structure for lt_autocreate_curd
@@ -4009,7 +4328,15 @@ CREATE TABLE `lt_autocreate_curd`  (
   `exec_update_time` datetime(0) NULL DEFAULT NULL COMMENT '最近一次执行时间',
   `exec_count` int(11) NULL DEFAULT 1 COMMENT '总共生成的次数',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'curd自动生成' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'curd自动生成' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of lt_autocreate_curd
+-- ----------------------------
+INSERT INTO `lt_autocreate_curd` VALUES (1, 'lt_test', '一键生成CURD测试表', '[{\"field_name\":\"title\",\"field_comment\":\"标题\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"grade\",\"field_comment\":\"年级\",\"form_type\":\"radio\",\"form_additional\":\"1=一年级,2=二年级,3=三年级;default=2\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"status\",\"field_comment\":\"状态\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"hero\",\"field_comment\":\"英雄\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"hobby\",\"field_comment\":\"爱好\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"sign\",\"field_comment\":\"标志\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"description\",\"field_comment\":\"描述\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"category_id\",\"field_comment\":\"所属分类（单选）\",\"form_type\":\"select_page\",\"form_additional\":{\"single_multi\":\"single\",\"max\":\"\",\"table_name\":\"lt_test_category\",\"search_field_name\":\"name\",\"show_field_name\":\"name\"},\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"category_ids\",\"field_comment\":\"所属分类（多选）\",\"form_type\":\"select_page\",\"form_additional\":{\"single_multi\":\"multi\",\"max\":\"\",\"table_name\":\"lt_test_category\",\"search_field_name\":\"name\",\"show_field_name\":\"name\"},\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"single_img\",\"field_comment\":\"单个图片\",\"form_type\":\"upload\",\"form_additional\":{\"single_multi\":\"single\",\"accept\":\"images\"},\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"multi_img\",\"field_comment\":\"多个图片\",\"form_type\":\"upload\",\"form_additional\":{\"single_multi\":\"multi\",\"accept\":\"images\"},\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"video\",\"field_comment\":\"视频文件地址\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"audio\",\"field_comment\":\"音频文件地址\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"file\",\"field_comment\":\"任意文件地址\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"content\",\"field_comment\":\"文章内容\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"province_id\",\"field_comment\":\"省份\",\"form_type\":\"time\",\"form_additional\":\"month\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"city_id\",\"field_comment\":\"城市\",\"form_type\":\"time\",\"form_additional\":\"year\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"area_id\",\"field_comment\":\"地区\",\"form_type\":\"time\",\"form_additional\":\"date\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"create_time\",\"field_comment\":\"创建时间\",\"form_type\":\"time\",\"form_additional\":\"datetime\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"}]', '{\"common_model\":\"0\",\"hide_pk\":\"0\",\"hide_del\":\"0\",\"create_number\":\"0\",\"table_name\":\"lt_test\",\"fields_name\":\"title,grade,status,hero,hobby,sign,description,category_id,category_ids,single_img,multi_img,video,audio,file,content,province_id,city_id,area_id,create_time\",\"close_page\":\"0\",\"tabs_field\":\"\",\"search_mode\":\"all_show\",\"search_fields\":\"title,grade,status,hero,hobby,sign,description,category_id,category_ids,single_img,multi_img,video,audio,file,content,province_id,city_id,area_id,create_time\",\"cell_min_width\":\"180\",\"show_fields\":\"title,grade,status,hero,hobby,sign,description,category_id,category_ids,single_img,multi_img,video,audio,file,content,province_id,city_id,area_id,create_time\",\"all_fields\":[{\"field_name\":\"update_time\",\"field_comment\":\"更新时间\",\"column_default\":null},{\"field_name\":\"delete_time\",\"field_comment\":\"删除时间\",\"column_default\":null},{\"field_name\":\"title\",\"field_comment\":\"标题\",\"column_default\":null},{\"field_name\":\"grade\",\"field_comment\":\"年级\",\"column_default\":null},{\"field_name\":\"status\",\"field_comment\":\"状态\",\"column_default\":null},{\"field_name\":\"hero\",\"field_comment\":\"英雄\",\"column_default\":null},{\"field_name\":\"hobby\",\"field_comment\":\"爱好\",\"column_default\":null},{\"field_name\":\"sign\",\"field_comment\":\"标志\",\"column_default\":null},{\"field_name\":\"description\",\"field_comment\":\"描述\",\"column_default\":null},{\"field_name\":\"category_id\",\"field_comment\":\"所属分类（单选）\",\"column_default\":null},{\"field_name\":\"category_ids\",\"field_comment\":\"所属分类（多选）\",\"column_default\":null},{\"field_name\":\"single_img\",\"field_comment\":\"单个图片\",\"column_default\":null},{\"field_name\":\"multi_img\",\"field_comment\":\"多个图片\",\"column_default\":null},{\"field_name\":\"video\",\"field_comment\":\"视频文件地址\",\"column_default\":null},{\"field_name\":\"audio\",\"field_comment\":\"音频文件地址\",\"column_default\":null},{\"field_name\":\"file\",\"field_comment\":\"任意文件地址\",\"column_default\":null},{\"field_name\":\"content\",\"field_comment\":\"文章内容\",\"column_default\":null},{\"field_name\":\"province_id\",\"field_comment\":\"省份\",\"column_default\":null},{\"field_name\":\"city_id\",\"field_comment\":\"城市\",\"column_default\":null},{\"field_name\":\"area_id\",\"field_comment\":\"地区\",\"column_default\":null},{\"field_name\":\"create_time\",\"field_comment\":\"创建时间\",\"column_default\":null}]}', '[]', '2019-12-24 13:35:13', '2020-01-02 00:43:08', '2019-12-24 13:35:13', '2020-01-02 00:43:08', 7);
+INSERT INTO `lt_autocreate_curd` VALUES (2, 'lt_test_category', '一键生成Curd测试分类模型', '[]', '{\"table_name\":\"lt_test_category\",\"parent_field\":\"pid\",\"name_field\":\"name\",\"sort_field\":\"sort\",\"common_model\":\"1\"}', '[]', '2019-12-28 18:26:34', '2019-12-28 18:26:34', '2019-12-28 18:26:34', '2019-12-28 18:26:34', 2);
+INSERT INTO `lt_autocreate_curd` VALUES (3, 'lt_email', '邮件管理', '[{\"field_name\":\"template_id\",\"field_comment\":\"模板ID\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"event\",\"field_comment\":\"事件名称\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"params\",\"field_comment\":\"邮件内容参数\",\"form_type\":\"textarea\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"content\",\"field_comment\":\"邮件内容\",\"form_type\":\"textarea\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"from\",\"field_comment\":\"发件人邮箱\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"to\",\"field_comment\":\"收件人邮箱\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"status\",\"field_comment\":\"状态\",\"form_type\":\"radio\",\"form_additional\":\"1=未使用,2=已使用,3=已过期\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"expire_time\",\"field_comment\":\"过期时间，0表示永不过期\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"}]', '{\"common_model\":\"1\",\"hide_pk\":\"0\",\"hide_del\":\"0\",\"create_number\":\"0\",\"table_name\":\"lt_email\",\"fields_name\":\"template_id,event,params,content,from,to,status,expire_time\",\"close_page\":\"0\",\"tabs_field\":\"status\",\"search_mode\":\"all_show\",\"search_fields\":\"template_id,event,params,content,from,to,status,expire_time\",\"cell_min_width\":\"180\",\"show_fields\":\"template_id,event,params,content,from,to,status,expire_time\",\"all_fields\":[{\"field_name\":\"template_id\",\"field_comment\":\"模板ID\",\"column_default\":null},{\"field_name\":\"event\",\"field_comment\":\"事件名称\",\"column_default\":null},{\"field_name\":\"params\",\"field_comment\":\"邮件内容参数\",\"column_default\":null},{\"field_name\":\"content\",\"field_comment\":\"邮件内容\",\"column_default\":null},{\"field_name\":\"from\",\"field_comment\":\"发件人邮箱\",\"column_default\":null},{\"field_name\":\"to\",\"field_comment\":\"收件人邮箱\",\"column_default\":null},{\"field_name\":\"status\",\"field_comment\":\"状态。1=未使用,2=已使用,3=已过期\",\"column_default\":\"1\"},{\"field_name\":\"expire_time\",\"field_comment\":\"过期时间，0表示永不过期\",\"column_default\":\"0\"},{\"field_name\":\"create_time\",\"field_comment\":\"创建时间\",\"column_default\":null},{\"field_name\":\"update_time\",\"field_comment\":\"更新时间\",\"column_default\":null},{\"field_name\":\"delete_time\",\"field_comment\":\"删除时间\",\"column_default\":null}]}', '[]', '2020-01-01 00:43:22', '2020-01-01 00:43:22', '2020-01-01 00:43:22', '2020-01-01 00:43:22', 2);
+INSERT INTO `lt_autocreate_curd` VALUES (4, 'lt_email_template', '邮件模板管理', '[{\"field_name\":\"event\",\"field_comment\":\"事件名称\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"title\",\"field_comment\":\"模板标题\",\"form_type\":\"input\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"template\",\"field_comment\":\"模板内容，支持html标签\",\"form_type\":\"textarea\",\"form_additional\":\"\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"ishtml\",\"field_comment\":\"模板是否为html\",\"form_type\":\"radio\",\"form_additional\":\"2=不是,1=是\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"},{\"field_name\":\"expire\",\"field_comment\":\"过期时长，单位秒，0表示永不过期\",\"form_type\":\"input\",\"form_additional\":\"layTp_number\",\"form_empty\":\"1\",\"field_show_index\":\"1\",\"field_show_add\":\"1\",\"field_show_edit\":\"1\"}]', '{\"common_model\":\"1\",\"hide_pk\":\"0\",\"hide_del\":\"0\",\"create_number\":\"0\",\"table_name\":\"lt_email_template\",\"fields_name\":\"event,title,template,ishtml,expire\",\"close_page\":\"0\",\"tabs_field\":\"\",\"search_mode\":\"all_show\",\"search_fields\":\"event,title,template,ishtml,expire\",\"cell_min_width\":\"180\",\"show_fields\":\"event,title,template,ishtml,expire\",\"all_fields\":[{\"field_name\":\"event\",\"field_comment\":\"事件名称\",\"column_default\":null},{\"field_name\":\"title\",\"field_comment\":\"模板标题\",\"column_default\":null},{\"field_name\":\"template\",\"field_comment\":\"模板内容，支持html标签\",\"column_default\":null},{\"field_name\":\"ishtml\",\"field_comment\":\"模板是否为html，1=是，2=不是。默认2\",\"column_default\":\"2\"},{\"field_name\":\"expire\",\"field_comment\":\"过期时长，单位秒，0表示永不过期\",\"column_default\":\"0\"},{\"field_name\":\"create_time\",\"field_comment\":\"创建时间\",\"column_default\":null},{\"field_name\":\"update_time\",\"field_comment\":\"更新时间\",\"column_default\":null},{\"field_name\":\"delete_time\",\"field_comment\":\"删除时间\",\"column_default\":null}]}', '[]', '2020-01-01 00:44:14', '2020-01-01 00:44:14', '2020-01-01 00:44:14', '2020-01-01 00:44:14', 2);
 
 -- ----------------------------
 -- Table structure for lt_autocreate_menu
@@ -4023,13 +4350,64 @@ CREATE TABLE `lt_autocreate_menu`  (
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '生成时间',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '自动生成菜单' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '自动生成菜单' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of lt_autocreate_menu
 -- ----------------------------
 INSERT INTO `lt_autocreate_menu` VALUES (1, 'test/Category.php', 178, 179, '2019-07-03 18:20:39', '2019-07-03 18:20:39');
 INSERT INTO `lt_autocreate_menu` VALUES (2, 'Test.php', 178, 179, '2019-07-03 18:23:50', '2019-07-03 18:23:50');
+INSERT INTO `lt_autocreate_menu` VALUES (3, 'Addons.php', 1, 0, '2019-12-31 01:17:14', '2019-12-31 01:17:14');
+INSERT INTO `lt_autocreate_menu` VALUES (4, 'email/Template.php', 1, 196, '2020-01-01 00:45:01', '2020-01-01 00:45:01');
+INSERT INTO `lt_autocreate_menu` VALUES (5, 'Email.php', 1, 196, '2020-01-01 00:45:10', '2020-01-01 00:45:10');
+
+-- ----------------------------
+-- Table structure for lt_email
+-- ----------------------------
+DROP TABLE IF EXISTS `lt_email`;
+CREATE TABLE `lt_email`  (
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `template_id` int(11) NULL DEFAULT NULL COMMENT '模板ID',
+  `event` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '事件名称',
+  `params` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '邮件内容参数',
+  `content` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '邮件内容',
+  `from` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '发件人邮箱',
+  `to` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '收件人邮箱',
+  `status` int(11) NULL DEFAULT 1 COMMENT '状态。1=未使用,2=已使用,3=已过期',
+  `expire_time` int(11) NULL DEFAULT 0 COMMENT '过期时间，0表示永不过期',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `delete_time` datetime(0) NULL DEFAULT NULL COMMENT '删除时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = MyISAM AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '邮件管理' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of lt_email
+-- ----------------------------
+INSERT INTO `lt_email` VALUES (1, 1, 'register', '{\"code\":\"2751\"}', '您的注册验证码为2751', '523723269@qq.com', 'qmsjuncd@163.com', 2, 0, '2020-01-01 00:46:32', '2020-01-01 00:46:32', NULL);
+INSERT INTO `lt_email` VALUES (2, 1, 'register', '{\"code\":\"5724\"}', '您的注册验证码为5724', '523723269@qq.com', 'qmsjuncd@163.com', 1, 0, '2020-01-01 00:51:33', '2020-01-01 00:51:33', NULL);
+
+-- ----------------------------
+-- Table structure for lt_email_template
+-- ----------------------------
+DROP TABLE IF EXISTS `lt_email_template`;
+CREATE TABLE `lt_email_template`  (
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `event` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '事件名称',
+  `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '模板标题',
+  `template` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '模板内容，支持html标签',
+  `ishtml` tinyint(4) NULL DEFAULT 2 COMMENT '模板是否为html，1=是，2=不是。默认2',
+  `expire` int(11) NULL DEFAULT 0 COMMENT '过期时长，单位秒，0表示永不过期',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `delete_time` datetime(0) NULL DEFAULT NULL COMMENT '删除时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = MyISAM AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '邮件模板管理' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of lt_email_template
+-- ----------------------------
+INSERT INTO `lt_email_template` VALUES (1, 'register', '注册验证码', '您的注册验证码为{code}', 2, 0, '2019-12-31 21:09:16', '2019-12-31 23:30:20', NULL);
 
 -- ----------------------------
 -- Table structure for lt_sysconf
@@ -4046,22 +4424,33 @@ CREATE TABLE `lt_sysconf`  (
   `content` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '变量字典数据',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `unique_group_key`(`group`, `key`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 236 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 468 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of lt_sysconf
 -- ----------------------------
 INSERT INTO `lt_sysconf` VALUES (65, 'basic', 'site_name', '站点名称', 'LayTp后台管理', 'input', '站点名称', 'value1|title1\nvalue2|title2');
 INSERT INTO `lt_sysconf` VALUES (66, 'basic', 'record', '备案号', '备案', 'input', '备案号', NULL);
-INSERT INTO `lt_sysconf` VALUES (69, 'dictionary', 'config', '字典配置', '{\"basic\":\"\\u57fa\\u7840\\u914d\\u7f6e\",\"dictionary\":\"\\u5206\\u7ec4\\u914d\\u7f6e\",\"upload\":\"\\u4e0a\\u4f20\\u914d\\u7f6e\"}', 'array', '系统配置的tab切换', '');
+INSERT INTO `lt_sysconf` VALUES (69, 'dictionary', 'config', '字典配置', '{\"basic\":\"\\u57fa\\u7840\\u914d\\u7f6e\",\"dictionary\":\"\\u5206\\u7ec4\\u914d\\u7f6e\",\"upload\":\"\\u4e0a\\u4f20\\u914d\\u7f6e\",\"email\":\"\\u90ae\\u4ef6\\u914d\\u7f6e\"}', 'array', '系统配置的tab切换', '');
 INSERT INTO `lt_sysconf` VALUES (135, 'basic', 'login_vercode', '登录验证码', '0', 'radio', '后台登录是否需要输入验证码', '{\"0\":\"不需要\",\"1\":\"需要\"}');
-INSERT INTO `lt_sysconf` VALUES (228, 'apidoc', 'apidoc_file_name', NULL, 'api1.html', NULL, NULL, NULL);
-INSERT INTO `lt_sysconf` VALUES (229, 'apidoc', 'apidoc_title', NULL, 'LayTp - api文档', NULL, NULL, NULL);
 INSERT INTO `lt_sysconf` VALUES (230, 'upload', 'qiniu_access_key', '七牛云accessKey', '5ugj2_oQG9R1XnoyNYXpoljkeQcw24SwqhHKP4xE', 'input', '七牛云accessKey', '{\"value1\":\"title1\",\"value2\":\"title2\"}');
 INSERT INTO `lt_sysconf` VALUES (231, 'upload', 'qiniu_bucket', '七牛云bucket', 'laytp-uploads', 'input', '七牛云bucket', '{\"value1\":\"title1\",\"value2\":\"title2\"}');
 INSERT INTO `lt_sysconf` VALUES (232, 'upload', 'qiniu_domain', '七牛云空间域名', 'http://laytp-uploads.s3-cn-south-1.qiniucs.com', 'input', '七牛云空间域名', '{\"value1\":\"title1\",\"value2\":\"title2\"}');
 INSERT INTO `lt_sysconf` VALUES (233, 'upload', 'qiniu_secret_key', '七牛secretKey', 'EAkOpYyl5AWKST_9-IkEeVKTZdx5XPpjjsaoTEnf', 'input', '七牛secretKey', '{\"value1\":\"title1\",\"value2\":\"title2\"}');
 INSERT INTO `lt_sysconf` VALUES (235, 'upload', 'way', '上传方式', 'qiniu', 'select_single', '上传方式配置', '{\"local\":\"本地上传\",\"qiniu\":\"本地+七牛云上传\"}');
+INSERT INTO `lt_sysconf` VALUES (246, 'upload', 'maxsize', '最大上传文件大小', '10mb', 'input', '最大上传文件大小，单位自行输入kb,mb,gb', '{\"value1\":\"title1\",\"value2\":\"title2\"}');
+INSERT INTO `lt_sysconf` VALUES (247, 'upload', 'mimetype', '允许上传的文件类型', 'jpg,png,bmp,jpeg,gif,zip,rar,xls,xlsx', 'input', '允许上传的文件类型，多个以英文逗号分隔，*表示不限制', '{\"value1\":\"title1\",\"value2\":\"title2\"}');
+INSERT INTO `lt_sysconf` VALUES (445, 'email', 'send_type', '邮件发送方式', 'smtp', 'select_single', '邮件发送方式，为空表示关闭邮件功能', '{\"smtp\":\"SMTP\",\"mail\":\"Mail\"}');
+INSERT INTO `lt_sysconf` VALUES (446, 'email', 'smtp_host', 'SMTP服务器', 'smtp.qq.com', 'input', 'SMTP服务器', '{\"value1\":\"title1\",\"value2\":\"title2\"}');
+INSERT INTO `lt_sysconf` VALUES (447, 'email', 'smtp_port', 'SMTP端口', '587', 'input', 'SMTP端口，465或者587', '{\"value1\":\"title1\",\"value2\":\"title2\"}');
+INSERT INTO `lt_sysconf` VALUES (448, 'email', 'smtp_user', 'SMTP用户名', '523723269@qq.com', 'input', 'SMTP用户名', '{\"value1\":\"title1\",\"value2\":\"title2\"}');
+INSERT INTO `lt_sysconf` VALUES (449, 'email', 'smtp_password', 'SMTP密码', 'grngcyndvplubhgh', 'input', 'SMTP密码，开启smtp服务，获取到的授权码', '{\"value1\":\"title1\",\"value2\":\"title2\"}');
+INSERT INTO `lt_sysconf` VALUES (450, 'email', 'verify_type', 'SMTP验证方式', 'ssl', 'select_single', 'SMTP验证方式', '{\"none\":\"None\",\"tls\":\"TLS\",\"ssl\":\"SSL\"}');
+INSERT INTO `lt_sysconf` VALUES (451, 'email', 'from', '发件人邮箱', '523723269@qq.com', 'input', '发件人邮箱', '{\"none\":\"None\",\"tls\":\"TLS\",\"ssl\":\"SSL\"}');
+INSERT INTO `lt_sysconf` VALUES (460, 'email', 'from_name', '发件人昵称', 'laytp官网', 'input', '发件人昵称', '{\"value1\":\"title1\",\"value2\":\"title2\"}');
+INSERT INTO `lt_sysconf` VALUES (461, 'email', 'max_send_num', '邮件数上限', '3', 'input', '一分钟内，向同一邮箱发送的邮件数量上限', '{\"value1\":\"title1\",\"value2\":\"title2\"}');
+INSERT INTO `lt_sysconf` VALUES (466, 'apidoc', 'apidoc_file_name', NULL, 'api.html', NULL, NULL, NULL);
+INSERT INTO `lt_sysconf` VALUES (467, 'apidoc', 'apidoc_title', NULL, 'LayTp - api文档', NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for lt_test
@@ -4091,7 +4480,12 @@ CREATE TABLE `lt_test`  (
   `area_id` int(11) NULL DEFAULT NULL COMMENT '地区',
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '一键生成CURD测试表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '一键生成CURD测试表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of lt_test
+-- ----------------------------
+INSERT INTO `lt_test` VALUES (1, '2019-12-31 01:48:36', NULL, '', 0, 0, 0, '', '', '', 4, '4,3', '/uploads/20191231/569a622935f8f029cdb41722e8a7426e.jpeg', '/uploads/20191231/fb9f39920abc526ba8da63f933d83d87.jpeg,/uploads/20191231/cd7d518d38dc6826d565e071f1fa8452.jpeg', '', '', '', '', 1575129600, 2019, 1577116800, '2019-12-24 13:35:33');
 
 -- ----------------------------
 -- Table structure for lt_test_category
@@ -4099,15 +4493,32 @@ CREATE TABLE `lt_test`  (
 DROP TABLE IF EXISTS `lt_test_category`;
 CREATE TABLE `lt_test_category`  (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `pid` int(11) NULL DEFAULT 0 COMMENT '父级',
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '分类名称',
+  `sort` int(255) NULL DEFAULT 0 COMMENT '排序',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '添加时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `delete_time` datetime(0) NULL DEFAULT NULL COMMENT '删除时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '一键生成Curd测试分类模型' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '一键生成Curd测试分类模型' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of lt_test_category
 -- ----------------------------
-INSERT INTO `lt_test_category` VALUES (1, '分类1');
-INSERT INTO `lt_test_category` VALUES (2, '/uploads/20191222/327273bfa678a8781aa47156065b765f.jpeg');
+INSERT INTO `lt_test_category` VALUES (1, 0, '分类1', 0, NULL, '2020-01-02 03:46:59', NULL);
+INSERT INTO `lt_test_category` VALUES (2, 0, '分类2', 0, NULL, '2019-12-28 18:27:47', NULL);
+INSERT INTO `lt_test_category` VALUES (3, 1, '分类1-1', 0, '2019-12-28 18:27:19', '2019-12-28 18:28:03', NULL);
+INSERT INTO `lt_test_category` VALUES (4, 3, '分类1-1-1', 0, '2019-12-28 18:27:28', '2019-12-28 18:27:28', NULL);
+
+-- ----------------------------
+-- Table structure for lt_testaddons
+-- ----------------------------
+DROP TABLE IF EXISTS `lt_testaddons`;
+CREATE TABLE `lt_testaddons`  (
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '名称',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for lt_user
@@ -4115,6 +4526,7 @@ INSERT INTO `lt_test_category` VALUES (2, '/uploads/20191222/327273bfa678a8781aa
 DROP TABLE IF EXISTS `lt_user`;
 CREATE TABLE `lt_user`  (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '邮箱',
   `username` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户名',
   `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '密码',
   `nickname` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '昵称',
@@ -4122,9 +4534,17 @@ CREATE TABLE `lt_user`  (
   `login_ip` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '登录IP',
   `successions` int(11) UNSIGNED NULL DEFAULT 0 COMMENT '连续登录天数',
   `maxsuccessions` int(11) UNSIGNED NULL DEFAULT 0 COMMENT '最大连续登录天数',
-  `status` set('normal','locked') CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT 'normal' COMMENT '账号状态。normal:正常;locked:锁定',
+  `status` tinyint(4) NULL DEFAULT 1 COMMENT '账号状态。1:正常;2:锁定',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `delete_time` datetime(0) NULL DEFAULT NULL COMMENT '删除时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of lt_user
+-- ----------------------------
+INSERT INTO `lt_user` VALUES (1, NULL, 'test', '$2y$10$84zGbYdWx0UvAcAGfJKgSOqHNZd39GBui0m57IStA5mz1QJlmeO92', 'test', '2019-12-31 01:21:57', '127.0.0.1', 0, 0, 1, '2019-12-31 01:21:58', '2019-12-31 01:21:58', NULL);
 
 -- ----------------------------
 -- Table structure for lt_user_token
@@ -4137,5 +4557,11 @@ CREATE TABLE `lt_user_token`  (
   `expiretime` int(10) NULL DEFAULT NULL COMMENT '过期时间',
   PRIMARY KEY (`token`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '会员Token表' ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of lt_user_token
+-- ----------------------------
+INSERT INTO `lt_user_token` VALUES ('181514c73c60f2e25f1839e7ff7ed5c208992e49', 1, 1577726537, 1580318537);
+INSERT INTO `lt_user_token` VALUES ('abd36713ba973540b8a9042020457e970240ccf5', 1, 1577901861, 1577903661);
 
 SET FOREIGN_KEY_CHECKS = 1;
