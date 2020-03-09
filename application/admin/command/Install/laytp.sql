@@ -37,95 +37,97 @@ CREATE TABLE `lt_admin_log`  (
 -- Table structure for lt_admin_menu
 -- ----------------------------
 DROP TABLE IF EXISTS `lt_admin_menu`;
-CREATE TABLE `lt_admin_menu`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '标题',
-  `rule` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '规则',
-  `is_menu` tinyint(4) NULL DEFAULT NULL COMMENT '菜单',
-  `sort` int(11) NULL DEFAULT 0 COMMENT '排序',
-  `pid` int(11) NULL DEFAULT NULL COMMENT '父级',
-  `is_hide` tinyint(4) NULL DEFAULT 0 COMMENT '是否隐藏。0，正常；1，隐藏；',
-  `icon` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '图标',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 197 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+CREATE TABLE `lt_admin_menu` (
+  `id` int(11) NOT NULL COMMENT 'ID',
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '标题',
+  `rule` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '规则',
+  `is_menu` tinyint(4) DEFAULT NULL COMMENT '菜单',
+  `sort` int(11) DEFAULT '0' COMMENT '排序',
+  `pid` int(11) DEFAULT NULL COMMENT '父级',
+  `is_hide` tinyint(4) DEFAULT '0' COMMENT '是否隐藏。0，正常；1，隐藏；',
+  `icon` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '图标',
+  `des` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
--- ----------------------------
--- Records of lt_admin_menu
--- ----------------------------
-INSERT INTO `lt_admin_menu` VALUES (1, '控制台', 'admin/dashboard/index', 1, 0, 0, 0, 'layui-icon layui-icon-console');
-INSERT INTO `lt_admin_menu` VALUES (18, '权限管理', 'admin/auth.user/index', 1, 2, 1, 0, 'layui-icon layui-icon-align-left');
-INSERT INTO `lt_admin_menu` VALUES (19, '菜单管理', 'admin/auth.menu/index', 1, 4, 18, 0, 'layui-icon layui-icon-templeate-1');
-INSERT INTO `lt_admin_menu` VALUES (20, '一键生成', 'admin/autocreate.curd/index', 1, 1, 1, 0, 'layui-icon layui-icon-share');
-INSERT INTO `lt_admin_menu` VALUES (21, 'Curd', 'admin/autocreate.curd/index', 1, 3, 20, 0, 'layui-icon layui-icon-star-fill');
-INSERT INTO `lt_admin_menu` VALUES (26, '管理员管理', 'admin/auth.user/index', 1, 100, 18, 0, 'layui-icon layui-icon-user');
-INSERT INTO `lt_admin_menu` VALUES (27, '角色管理', 'admin/auth.role/index', 1, 99, 18, 0, 'layui-icon layui-icon-group');
-INSERT INTO `lt_admin_menu` VALUES (30, '常规管理', 'admin/general/profile', 1, 0, 1, 0, 'layui-icon layui-icon-face-smile-b');
-INSERT INTO `lt_admin_menu` VALUES (31, '个人设置', 'admin/general/profile', 1, 1, 30, 0, 'layui-icon layui-icon-friends');
-INSERT INTO `lt_admin_menu` VALUES (32, '查看', 'admin/auth.user/index', 0, 0, 26, 0, 'layui-icon layui-icon-align-left');
-INSERT INTO `lt_admin_menu` VALUES (33, '添加', 'admin/auth.user/add', 0, 0, 26, 0, 'layui-icon layui-icon-add-circle');
-INSERT INTO `lt_admin_menu` VALUES (34, '编辑', 'admin/auth.user/edit', 0, 0, 26, 0, 'layui-icon layui-icon-util');
-INSERT INTO `lt_admin_menu` VALUES (35, '后台首页', 'admin/dashboard/index', 1, 0, 67, 0, 'layui-icon layui-icon-home');
-INSERT INTO `lt_admin_menu` VALUES (36, '删除', 'admin/auth.user/del', 0, 0, 26, 0, 'layui-icon layui-icon-delete');
-INSERT INTO `lt_admin_menu` VALUES (37, '查看', 'admin/auth.role/index', 0, 0, 27, 0, 'layui-icon layui-icon-search');
-INSERT INTO `lt_admin_menu` VALUES (38, '编辑', 'admin/auth.role/edit', 0, 0, 27, 0, 'layui-icon layui-icon-util');
-INSERT INTO `lt_admin_menu` VALUES (39, '添加', 'admin/auth.role/add', 0, 0, 27, 0, 'layui-icon layui-icon-add-circle-fine');
-INSERT INTO `lt_admin_menu` VALUES (40, '删除', 'admin/auth.role/del', 0, 0, 27, 0, 'layui-icon layui-icon-delete');
-INSERT INTO `lt_admin_menu` VALUES (41, '查看', 'admin/auth.menu/index', 0, 0, 19, 0, 'layui-icon layui-icon-search');
-INSERT INTO `lt_admin_menu` VALUES (42, '添加', 'admin/auth.menu/add', 0, 0, 19, 0, 'layui-icon layui-icon-add-circle-fine');
-INSERT INTO `lt_admin_menu` VALUES (43, '编辑', 'admin/auth.menu/edit', 0, 0, 19, 0, 'layui-icon layui-icon-util');
-INSERT INTO `lt_admin_menu` VALUES (44, '删除', 'admin/auth.menu/del', 0, 0, 19, 0, 'layui-icon layui-icon-delete');
-INSERT INTO `lt_admin_menu` VALUES (45, '导入', 'admin/autocreate.curd/import', 0, 0, 21, 0, 'layui-icon layui-icon-find-fill');
-INSERT INTO `lt_admin_menu` VALUES (56, '操作日志', 'admin/admin.log/index', 1, 0, 18, 0, 'layui-icon layui-icon-form');
-INSERT INTO `lt_admin_menu` VALUES (57, '列表查看', 'admin/admin.log/index', 0, 0, 56, 1, 'layui-icon layui-icon-list');
-INSERT INTO `lt_admin_menu` VALUES (58, '删除', 'admin/admin.log/del', 0, 0, 56, 0, 'layui-icon layui-icon-date');
-INSERT INTO `lt_admin_menu` VALUES (59, 'Api文档', 'admin/autocreate.apidoc/index', 1, 0, 20, 0, 'layui-icon layui-icon-tabs');
-INSERT INTO `lt_admin_menu` VALUES (60, '插件市场', 'admin/addons/index', 1, 0, 1, 0, 'layui-icon layui-icon-cart-simple');
-INSERT INTO `lt_admin_menu` VALUES (61, '列表设置状态', 'admin/auth.menu/set_status', 0, 0, 19, 1, 'layui-icon layui-icon-template-1');
-INSERT INTO `lt_admin_menu` VALUES (66, '系统配置', 'admin/sysconf/index', 1, 2, 30, 0, 'layui-icon layui-icon-set');
-INSERT INTO `lt_admin_menu` VALUES (67, '快捷菜单', 'admin/dashboard/index', 1, 10, 1, 0, 'layui-icon layui-icon-release');
-INSERT INTO `lt_admin_menu` VALUES (68, '查看', 'admin/index/index', 0, 0, 35, 0, 'layui-icon layui-icon-search');
-INSERT INTO `lt_admin_menu` VALUES (69, '设置', 'admin/sysconf/set_config', 0, 0, 66, 0, 'layui-icon layui-icon-set-fill');
-INSERT INTO `lt_admin_menu` VALUES (70, '添加', 'admin/sysconf/add', 0, 0, 66, 0, 'layui-icon layui-icon-add-circle-fine');
-INSERT INTO `lt_admin_menu` VALUES (72, '菜单', 'admin/autocreate.menu/index', 1, 2, 20, 0, 'layui-icon layui-icon-templeate-1');
-INSERT INTO `lt_admin_menu` VALUES (125, '地区管理', 'admin/area/index', 1, 0, 30, 0, 'layui-icon layui-icon-find-fill');
-INSERT INTO `lt_admin_menu` VALUES (126, '查看', 'admin/area/index', 0, 0, 125, 0, 'layui-icon layui-icon-fire');
-INSERT INTO `lt_admin_menu` VALUES (127, '添加', 'admin/area/add', 0, 0, 125, 1, 'layui-icon layui-icon-fire');
-INSERT INTO `lt_admin_menu` VALUES (128, '编辑', 'admin/area/edit', 0, 0, 125, 1, 'layui-icon layui-icon-fire');
-INSERT INTO `lt_admin_menu` VALUES (129, '设置状态', 'admin/area/set_status', 0, 0, 125, 1, 'layui-icon layui-icon-fire');
-INSERT INTO `lt_admin_menu` VALUES (130, '删除', 'admin/area/del', 0, 0, 125, 1, 'layui-icon layui-icon-fire');
-INSERT INTO `lt_admin_menu` VALUES (153, '附件管理', 'admin/attachment/index', 1, 0, 30, 0, 'layui-icon layui-icon-fire');
-INSERT INTO `lt_admin_menu` VALUES (154, '查看', 'admin/attachment/index', 0, 0, 153, 0, 'layui-icon layui-icon-fire');
-INSERT INTO `lt_admin_menu` VALUES (155, '添加', 'admin/attachment/add', 0, 0, 153, 1, 'layui-icon layui-icon-fire');
-INSERT INTO `lt_admin_menu` VALUES (156, '编辑', 'admin/attachment/edit', 0, 0, 153, 1, 'layui-icon layui-icon-fire');
-INSERT INTO `lt_admin_menu` VALUES (157, '设置状态', 'admin/attachment/set_status', 0, 0, 153, 1, 'layui-icon layui-icon-fire');
-INSERT INTO `lt_admin_menu` VALUES (158, '删除', 'admin/attachment/del', 0, 0, 153, 1, 'layui-icon layui-icon-fire');
-INSERT INTO `lt_admin_menu` VALUES (159, '回收站', 'admin/attachment/recycle', 0, 0, 153, 1, 'layui-icon layui-icon-fire');
-INSERT INTO `lt_admin_menu` VALUES (160, '还原', 'admin/attachment/renew', 0, 0, 153, 1, 'layui-icon layui-icon-fire');
-INSERT INTO `lt_admin_menu` VALUES (161, '彻底删除', 'admin/attachment/true_del', 0, 0, 153, 1, 'layui-icon layui-icon-fire');
-INSERT INTO `lt_admin_menu` VALUES (162, '导入', 'admin/autocreate.menu/add', 0, 0, 72, 1, 'layui-icon layui-icon-add-circle-fine');
-INSERT INTO `lt_admin_menu` VALUES (163, '删除', 'admin/autocreate.menu/del', 0, 0, 72, 1, 'layui-icon layui-icon-close');
-INSERT INTO `lt_admin_menu` VALUES (164, '删除', 'admin/autocreate.curd/del', 0, 0, 21, 0, 'layui-icon layui-icon-close');
-INSERT INTO `lt_admin_menu` VALUES (165, '回收站', 'admin/auth.user/recycle', 0, 0, 26, 1, 'layui-icon layui-icon-delete');
-INSERT INTO `lt_admin_menu` VALUES (166, '查看详情', 'admin/admin.log/detail', 0, 0, 56, 1, 'layui-icon layui-icon-note');
-INSERT INTO `lt_admin_menu` VALUES (167, '删除', 'admin/sysconf/del', 0, 0, 66, 1, 'layui-icon layui-icon-close');
-INSERT INTO `lt_admin_menu` VALUES (178, '应用', 'admin/test/index', 1, 0, 0, 0, 'layui-icon layui-icon-fire');
-INSERT INTO `lt_admin_menu` VALUES (179, '测试', 'admin/test/index', 1, 0, 178, 0, 'layui-icon layui-icon-camera');
-INSERT INTO `lt_admin_menu` VALUES (180, '一键生成Curd测试分类模型', 'admin/test.category/index', 1, 0, 179, 0, 'layui-icon layui-icon-fire');
-INSERT INTO `lt_admin_menu` VALUES (181, '查看', 'admin/test.category/index', 0, 0, 180, 0, 'layui-icon layui-icon-fire');
-INSERT INTO `lt_admin_menu` VALUES (182, '添加', 'admin/test.category/add', 0, 0, 180, 1, 'layui-icon layui-icon-fire');
-INSERT INTO `lt_admin_menu` VALUES (183, '编辑', 'admin/test.category/edit', 0, 0, 180, 1, 'layui-icon layui-icon-fire');
-INSERT INTO `lt_admin_menu` VALUES (184, '设置状态', 'admin/test.category/set_status', 0, 0, 180, 1, 'layui-icon layui-icon-fire');
-INSERT INTO `lt_admin_menu` VALUES (185, '删除', 'admin/test.category/del', 0, 0, 180, 1, 'layui-icon layui-icon-fire');
-INSERT INTO `lt_admin_menu` VALUES (186, '一键生成CURD测试表', 'admin/test/index', 1, 0, 179, 0, 'layui-icon layui-icon-fire');
-INSERT INTO `lt_admin_menu` VALUES (187, '查看', 'admin/test/index', 0, 0, 186, 0, 'layui-icon layui-icon-fire');
-INSERT INTO `lt_admin_menu` VALUES (188, '添加', 'admin/test/add', 0, 0, 186, 1, 'layui-icon layui-icon-fire');
-INSERT INTO `lt_admin_menu` VALUES (189, '编辑', 'admin/test/edit', 0, 0, 186, 1, 'layui-icon layui-icon-fire');
-INSERT INTO `lt_admin_menu` VALUES (190, '设置状态', 'admin/test/set_status', 0, 0, 186, 1, 'layui-icon layui-icon-fire');
-INSERT INTO `lt_admin_menu` VALUES (191, '删除', 'admin/test/del', 0, 0, 186, 1, 'layui-icon layui-icon-fire');
-INSERT INTO `lt_admin_menu` VALUES (192, '回收站', 'admin/test/recycle', 0, 0, 186, 1, 'layui-icon layui-icon-fire');
-INSERT INTO `lt_admin_menu` VALUES (193, '还原', 'admin/test/renew', 0, 0, 186, 1, 'layui-icon layui-icon-fire');
-INSERT INTO `lt_admin_menu` VALUES (194, '彻底删除', 'admin/test/true_del', 0, 0, 186, 1, 'layui-icon layui-icon-fire');
-INSERT INTO `lt_admin_menu` VALUES (195, '查看', 'admin/autocreate.curd/index', 0, 0, 21, 0, 'layui-icon layui-icon-star-fill');
+--
+-- 转存表中的数据 `lt_admin_menu`
+--
+
+INSERT INTO `lt_admin_menu` (`id`, `name`, `rule`, `is_menu`, `sort`, `pid`, `is_hide`, `icon`, `des`) VALUES
+(1, '控制台', 'admin/dashboard/index', 1, 0, 0, 0, 'layui-icon layui-icon-console', '控制台管理'),
+(18, '权限管理', 'admin/auth.user/index', 1, 2, 1, 0, 'layui-icon layui-icon-align-left', ''),
+(19, '菜单管理', 'admin/auth.menu/index', 1, 4, 18, 0, 'layui-icon layui-icon-templeate-1', ''),
+(20, '一键生成', 'admin/autocreate.curd/index', 1, 1, 1, 0, 'layui-icon layui-icon-share', ''),
+(21, 'Curd', 'admin/autocreate.curd/index', 1, 3, 20, 0, 'layui-icon layui-icon-star-fill', ''),
+(26, '管理员管理', 'admin/auth.user/index', 1, 100, 18, 0, 'layui-icon layui-icon-user', ''),
+(27, '角色管理', 'admin/auth.role/index', 1, 99, 18, 0, 'layui-icon layui-icon-group', ''),
+(30, '常规管理', 'admin/general/profile', 1, 0, 1, 0, 'layui-icon layui-icon-face-smile-b', ''),
+(31, '个人设置', 'admin/general/profile', 1, 1, 30, 0, 'layui-icon layui-icon-friends', ''),
+(32, '查看', 'admin/auth.user/index', 0, 0, 26, 0, 'layui-icon layui-icon-align-left', ''),
+(33, '添加', 'admin/auth.user/add', 0, 0, 26, 0, 'layui-icon layui-icon-add-circle', ''),
+(34, '编辑', 'admin/auth.user/edit', 0, 0, 26, 0, 'layui-icon layui-icon-util', ''),
+(35, '后台首页', 'admin/dashboard/index', 1, 0, 67, 0, 'layui-icon layui-icon-home', '后台首页'),
+(36, '删除', 'admin/auth.user/del', 0, 0, 26, 0, 'layui-icon layui-icon-delete', ''),
+(37, '查看', 'admin/auth.role/index', 0, 0, 27, 0, 'layui-icon layui-icon-search', ''),
+(38, '编辑', 'admin/auth.role/edit', 0, 0, 27, 0, 'layui-icon layui-icon-util', ''),
+(39, '添加', 'admin/auth.role/add', 0, 0, 27, 0, 'layui-icon layui-icon-add-circle-fine', ''),
+(40, '删除', 'admin/auth.role/del', 0, 0, 27, 0, 'layui-icon layui-icon-delete', ''),
+(41, '查看', 'admin/auth.menu/index', 0, 0, 19, 0, 'layui-icon layui-icon-search', ''),
+(42, '添加', 'admin/auth.menu/add', 0, 0, 19, 0, 'layui-icon layui-icon-add-circle-fine', ''),
+(43, '编辑', 'admin/auth.menu/edit', 0, 0, 19, 0, 'layui-icon layui-icon-util', ''),
+(44, '删除', 'admin/auth.menu/del', 0, 0, 19, 0, 'layui-icon layui-icon-delete', ''),
+(45, '导入', 'admin/autocreate.curd/import', 0, 0, 21, 0, 'layui-icon layui-icon-find-fill', ''),
+(56, '操作日志', 'admin/admin.log/index', 1, 0, 18, 0, 'layui-icon layui-icon-form', ''),
+(57, '列表查看', 'admin/admin.log/index', 0, 0, 56, 1, 'layui-icon layui-icon-list', ''),
+(58, '删除', 'admin/admin.log/del', 0, 0, 56, 0, 'layui-icon layui-icon-date', ''),
+(59, 'Api文档', 'admin/autocreate.apidoc/index', 1, 0, 20, 0, 'layui-icon layui-icon-tabs', ''),
+(60, '插件市场', 'admin/addons/index', 1, 0, 1, 0, 'layui-icon layui-icon-cart-simple', ''),
+(61, '列表设置状态', 'admin/auth.menu/set_status', 0, 0, 19, 1, 'layui-icon layui-icon-template-1', ''),
+(66, '系统配置', 'admin/sysconf/index', 1, 2, 30, 0, 'layui-icon layui-icon-set', ''),
+(67, '快捷菜单', 'admin/dashboard/index', 1, 10, 1, 0, 'layui-icon layui-icon-release', ''),
+(68, '查看', 'admin/index/index', 0, 0, 35, 0, 'layui-icon layui-icon-search', ''),
+(69, '设置', 'admin/sysconf/set_config', 0, 0, 66, 0, 'layui-icon layui-icon-set-fill', ''),
+(70, '添加', 'admin/sysconf/add', 0, 0, 66, 0, 'layui-icon layui-icon-add-circle-fine', ''),
+(72, '菜单', 'admin/autocreate.menu/index', 1, 2, 20, 0, 'layui-icon layui-icon-templeate-1', ''),
+(125, '地区管理', 'admin/area/index', 1, 0, 30, 0, 'layui-icon layui-icon-find-fill', ''),
+(126, '查看', 'admin/area/index', 0, 0, 125, 0, 'layui-icon layui-icon-fire', ''),
+(127, '添加', 'admin/area/add', 0, 0, 125, 1, 'layui-icon layui-icon-fire', ''),
+(128, '编辑', 'admin/area/edit', 0, 0, 125, 1, 'layui-icon layui-icon-fire', ''),
+(129, '设置状态', 'admin/area/set_status', 0, 0, 125, 1, 'layui-icon layui-icon-fire', ''),
+(130, '删除', 'admin/area/del', 0, 0, 125, 1, 'layui-icon layui-icon-fire', ''),
+(153, '附件管理', 'admin/attachment/index', 1, 0, 30, 0, 'layui-icon layui-icon-fire', ''),
+(154, '查看', 'admin/attachment/index', 0, 0, 153, 0, 'layui-icon layui-icon-fire', ''),
+(155, '添加', 'admin/attachment/add', 0, 0, 153, 1, 'layui-icon layui-icon-fire', ''),
+(156, '编辑', 'admin/attachment/edit', 0, 0, 153, 1, 'layui-icon layui-icon-fire', ''),
+(157, '设置状态', 'admin/attachment/set_status', 0, 0, 153, 1, 'layui-icon layui-icon-fire', ''),
+(158, '删除', 'admin/attachment/del', 0, 0, 153, 1, 'layui-icon layui-icon-fire', ''),
+(159, '回收站', 'admin/attachment/recycle', 0, 0, 153, 1, 'layui-icon layui-icon-fire', ''),
+(160, '还原', 'admin/attachment/renew', 0, 0, 153, 1, 'layui-icon layui-icon-fire', ''),
+(161, '彻底删除', 'admin/attachment/true_del', 0, 0, 153, 1, 'layui-icon layui-icon-fire', ''),
+(162, '导入', 'admin/autocreate.menu/add', 0, 0, 72, 1, 'layui-icon layui-icon-add-circle-fine', ''),
+(163, '删除', 'admin/autocreate.menu/del', 0, 0, 72, 1, 'layui-icon layui-icon-close', ''),
+(164, '删除', 'admin/autocreate.curd/del', 0, 0, 21, 0, 'layui-icon layui-icon-close', ''),
+(165, '回收站', 'admin/auth.user/recycle', 0, 0, 26, 1, 'layui-icon layui-icon-delete', ''),
+(166, '查看详情', 'admin/admin.log/detail', 0, 0, 56, 1, 'layui-icon layui-icon-note', ''),
+(167, '删除', 'admin/sysconf/del', 0, 0, 66, 1, 'layui-icon layui-icon-close', ''),
+(178, '应用', 'admin/test/index', 1, 0, 0, 0, 'layui-icon layui-icon-fire', ''),
+(179, '测试', 'admin/test/index', 1, 0, 178, 0, 'layui-icon layui-icon-camera', ''),
+(180, '一键生成Curd测试分类模型', 'admin/test.category/index', 1, 0, 179, 0, 'layui-icon layui-icon-fire', ''),
+(181, '查看', 'admin/test.category/index', 0, 0, 180, 0, 'layui-icon layui-icon-fire', ''),
+(182, '添加', 'admin/test.category/add', 0, 0, 180, 1, 'layui-icon layui-icon-fire', ''),
+(183, '编辑', 'admin/test.category/edit', 0, 0, 180, 1, 'layui-icon layui-icon-fire', ''),
+(184, '设置状态', 'admin/test.category/set_status', 0, 0, 180, 1, 'layui-icon layui-icon-fire', ''),
+(185, '删除', 'admin/test.category/del', 0, 0, 180, 1, 'layui-icon layui-icon-fire', ''),
+(186, '一键生成CURD测试表', 'admin/test/index', 1, 0, 179, 0, 'layui-icon layui-icon-fire', ''),
+(187, '查看', 'admin/test/index', 0, 0, 186, 0, 'layui-icon layui-icon-fire', ''),
+(188, '添加', 'admin/test/add', 0, 0, 186, 1, 'layui-icon layui-icon-fire', ''),
+(189, '编辑', 'admin/test/edit', 0, 0, 186, 1, 'layui-icon layui-icon-fire', ''),
+(190, '设置状态', 'admin/test/set_status', 0, 0, 186, 1, 'layui-icon layui-icon-fire', ''),
+(191, '删除', 'admin/test/del', 0, 0, 186, 1, 'layui-icon layui-icon-fire', ''),
+(192, '回收站', 'admin/test/recycle', 0, 0, 186, 1, 'layui-icon layui-icon-fire', ''),
+(193, '还原', 'admin/test/renew', 0, 0, 186, 1, 'layui-icon layui-icon-fire', ''),
+(194, '彻底删除', 'admin/test/true_del', 0, 0, 186, 1, 'layui-icon layui-icon-fire', ''),
+(195, '查看', 'admin/autocreate.curd/index', 0, 0, 21, 0, 'layui-icon layui-icon-star-fill', '');
 
 -- ----------------------------
 -- Table structure for lt_admin_role
