@@ -107,7 +107,11 @@
                 }
                 liStr+="</dl></li>";
             }else{
-                liStr+="<li class=\"layui-nav-item\"><a href=\"javascript:;\" rule=\""+data[i].rule+"\" menu_id='"+data[i].id+"'><i class='layui-icon "+data[i].icon+"'></i> "+data[i].name+"</a></li>";
+                if(in_array(data[i].id.toString(),select_menu_ids)){
+                    liStr+="<li class=\"layui-nav-item layui-this\"><a href=\"javascript:;\" rule=\""+data[i].rule+"\" menu_id='"+data[i].id+"'><i class='layui-icon "+data[i].icon+"'></i> "+data[i].name+"</a></li>";
+                }else{
+                    liStr+="<li class=\"layui-nav-item\"><a href=\"javascript:;\" rule=\""+data[i].rule+"\" menu_id='"+data[i].id+"'><i class='layui-icon "+data[i].icon+"'></i> "+data[i].name+"</a></li>";
+                }
             }
         }
         $("#navBarId").html("<ul class=\"layui-nav layui-nav-tree\" lay-filter=\"test\">\n"+liStr+"</ul>");
