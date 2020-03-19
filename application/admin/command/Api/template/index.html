@@ -362,6 +362,7 @@
                     if (typeof data === 'object') {
                         var str = JSON.stringify(data, null, 2);
                         $('#response_'+id).html(str);
+                        hljs.initHighlighting.called = false;
                         hljs.initHighlighting();
                     } else {
                         $('#response_'+id).html(data || '');
