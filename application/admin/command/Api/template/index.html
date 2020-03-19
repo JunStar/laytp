@@ -217,7 +217,7 @@
                                 </div>
                                 <div class="layui-tab-item">
                                     <div class="layui-card">
-                                        <pre class="layui-code">{$api.return}</pre>
+                                        <pre><code class="json">{$api.return}</code></pre>
                                     </div>
                                     <div class="layui-card">
                                         <div class="layui-card-header" style="background-color: #F2F2F2;">详细说明</div>
@@ -268,16 +268,26 @@
 </body>
 <script type="text/javascript" src="/static/library/layui/layui.js" charset="utf-8"></script>
 <script type="text/javascript" src="/static/library/layui/layui_config.js" charset="utf-8"></script>
+<script type="text/javascript" src="/static/library/jquery_3.3.1.js" charset="utf-8"></script>
+<script type="text/javascript" src="/static/library/highlight/highlight.pack.js" charset="utf-8"></script>
+<link rel="stylesheet" type="text/css" href="/static/library/highlight/styles/docco.css"/>
+<style>
+    .hljs{
+        padding:0;
+    }
+</style>
 <script>
     layui.use(['element','code','form'], function(){
         let element = layui.element;
         let $ = layui.$;
 
-        layui.code({
-            elem:"pre",
-            title:'返回示例',
-            about:false
-        });
+        // layui.code({
+        //     elem:"pre",
+        //     title:'返回示例',
+        //     about:false
+        // });
+
+        hljs.initHighlightingOnLoad();
 
         var storage = (function () {
             let storage;
