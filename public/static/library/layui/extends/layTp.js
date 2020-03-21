@@ -827,6 +827,7 @@ layui.define([
          * 渲染上传插件
          */
         upload_render: function(){
+            let multi_spe = ';';
             layui.each($("button[upload='true']"),function(key,item) {
                 let id = $(item).attr('id');
                 let elem = '#' + id;
@@ -881,10 +882,10 @@ layui.define([
                                     '</li>'
                                 );
                             }
-                            //隐藏input框增加文件值
+                            //input框增加文件值
                             let input_value = $('#input_'+id).val();
                             if(input_value){
-                                $('#input_'+id).val( input_value + ',' + res.data );
+                                $('#input_'+id).val( input_value + multi_spe + res.data );
                             }else{
                                 $('#input_'+id).val( res.data );
                             }
@@ -930,11 +931,11 @@ layui.define([
                         let input_value = $('#input_'+node).val();
                         let new_input_value = "";
                         if( input_value.indexOf(file_url_value+',') != -1 ){
-                            let reg = new RegExp(file_url_value + ',');
+                            let reg = new RegExp(file_url_value + multi_spe);
                             new_input_value = input_value.replace(reg, "");
                         }else{
-                            if( input_value.indexOf(',' + file_url_value) != -1 ){
-                                let reg = new RegExp(','+file_url_value);
+                            if( input_value.indexOf(multi_spe + file_url_value) != -1 ){
+                                let reg = new RegExp(multi_spe+file_url_value);
                                 new_input_value = input_value.replace(reg, "");
                             }else{
                                 let reg = new RegExp(file_url_value);

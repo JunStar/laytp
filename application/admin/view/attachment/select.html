@@ -115,13 +115,14 @@ layui.use(['layTp'],function() {
     }
 
     $('#sureCheck').click(function(){
+        let multi_spe = ';';
         let checkStatus = layui.table.checkStatus(table_id);
         let checkData = checkStatus.data;
         let file_path_arr = [];
         for(key in checkData){
             file_path_arr.push(checkData[key].file_path);
         }
-        let file_path_str = file_path_arr.join(',');
+        let file_path_str = file_path_arr.join(multi_spe);
         // $("#input_"+id_val, parent.document).val(file_path_str);
 
         if(single_multi == 'multi'){
@@ -159,7 +160,7 @@ layui.use(['layTp'],function() {
             //隐藏input框增加文件值
             let input_value = $('#input_'+id_val, parent.document).val();
             if(input_value){
-                $('#input_'+id_val, parent.document).val( input_value + ',' + file_path_str );
+                $('#input_'+id_val, parent.document).val( input_value + multi_spe + file_path_str );
             }else{
                 $('#input_'+id_val, parent.document).val( file_path_str );
             }
