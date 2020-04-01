@@ -15,7 +15,8 @@
 </head>
 <style>
     body{
-        background-color:#fff
+        background-color:#fff;
+        font-size: 13px;
     }
     .layui-tab-content{
         padding: 10px 0 10px 0;
@@ -362,8 +363,8 @@
                     if (typeof data === 'object') {
                         var str = JSON.stringify(data, null, 2);
                         $('#response_'+id).html(str);
-                        hljs.initHighlighting.called = false;
-                        hljs.initHighlighting();
+                        // hljs.initHighlighting.called = false;
+                        // hljs.initHighlighting();
                     } else {
                         $('#response_'+id).html(data || '');
                     }
@@ -377,7 +378,9 @@
                         var str = xhr.responseText;
                     }
                     $('#response_headers_'+id).html('HTTP ' + xhr.status + ' ' + xhr.statusText + '<br/><br/>' + xhr.getAllResponseHeaders());
-                    $('#response_'+id).html(api.syntaxHighlight(str));
+                    $('#response_'+id).html(str);
+                    // hljs.initHighlighting.called = false;
+                    // hljs.initHighlighting();
                     $('#response_card_'+id).show();
                 }
             });
