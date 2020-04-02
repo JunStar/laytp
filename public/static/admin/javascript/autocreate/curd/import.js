@@ -346,6 +346,7 @@ layui.use(['layTp'],function(){
             '<option value="date" ' + ((form_additional == "date") ? 'selected="selected"' : '') + '>年-月-日</option>' +
             '</select>';
         let upload_html =
+            '<input type="text" class="layui-input layui-input-inline" value="'+((typeof form_additional == 'object')?form_additional['upload_dir']:form_additional)+'" placeholder="上传目录名，支持使用/，设置多级目录" name="form_additional_upload_dir_'+field_name+'" id="form_additional_upload_dir_'+field_name+'" />' +
             '<select name="form_additional_upload_single_multi_'+field_name+'" id="form_additional_upload_single_multi_'+field_name+'" lay-filter="form_additional_upload_single_multi_'+field_name+'">' +
             '<option value="single" ' + (((typeof form_additional == 'object') && form_additional['single_multi'] == "single") ? 'selected="selected"' : '') + '>单个文件</option>' +
             '<option value="multi" ' + (((typeof form_additional == 'object') && form_additional['single_multi'] == "multi") ? 'selected="selected"' : '') + '>多个文件</option>' +
@@ -626,7 +627,8 @@ layui.use(['layTp'],function(){
                     case 'upload':
                         return {
                             'single_multi' : $('#form_additional_upload_single_multi_' + field_name).val(),
-                            'accept' : $('#form_additional_upload_accept_' + field_name).val()
+                            'accept' : $('#form_additional_upload_accept_' + field_name).val(),
+                            'upload_dir' : $('#form_additional_upload_dir_' + field_name).val()
                         };
                         break;
                     case 'select_relation':
