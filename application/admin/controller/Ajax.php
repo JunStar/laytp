@@ -80,7 +80,7 @@ class Ajax extends Controller
                 $file_name = '/uploads/'.$save_name;
                 $upload_way = Config::get('laytp.upload.way') ? Config::get('laytp.upload.way') : 'local';
                 if($upload_way == 'local'){
-                    $this->success('上传成功','',['data'=>$file_name]);
+                    $this->success('上传成功','',$file_name);
                 }else if($upload_way == 'qiniu'){
                     $qiniu_yun = QiniuYun::instance();
                     if($qiniu_yun->upload(
