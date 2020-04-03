@@ -37,14 +37,14 @@ class Common extends Api{
 })
      */
     public function upload(){
-        $qiniu_upload_radio = Config::get('laytp.upload.qiniu_radio');
-        $aliyun_oss_upload_radio = Config::get('laytp.upload.aliyun_radio');
-        $local_upload_radio = Config::get('laytp.upload.radio');
-        if($qiniu_upload_radio == 1 && $aliyun_oss_upload_radio == 1 && $local_upload_radio == 1){
-            $this->error('上传失败','请开启一种上传方式');
-        }
-
         try{
+            $qiniu_upload_radio = Config::get('laytp.upload.qiniu_radio');
+            $aliyun_oss_upload_radio = Config::get('laytp.upload.aliyun_radio');
+            $local_upload_radio = Config::get('laytp.upload.radio');
+            if($qiniu_upload_radio == 1 && $aliyun_oss_upload_radio == 1 && $local_upload_radio == 1){
+                $this->error('上传失败','请开启一种上传方式');
+            }
+
             $file = $this->request->file('file'); // 获取上传的文件
             if(!$file){
                 $this->error('上传失败','请选择需要的上传文件');
@@ -129,7 +129,7 @@ class Common extends Api{
 
             $this->success('上传成功',$file_url ? $file_url : $local_file_url);
         }catch (\Exception $e){
-            $this->error('上传失败','',$e->getMessage());
+            $this->error('上传失败',$e->getMessage());
         }
     }
 

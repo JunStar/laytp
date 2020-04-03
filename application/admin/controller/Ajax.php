@@ -125,7 +125,7 @@ class Ajax extends Controller
                 $add['file_path'] = $local_file_url;
                 model('Attachment')->create($add);
             }
-            return $this->success('上传成功','',$file_url);
+            return $this->success('上传成功','',$file_url ? $file_url : $local_file_url);
         }catch (Exception $e){
             $this->error('上传失败','',$e->getMessage());
         }
