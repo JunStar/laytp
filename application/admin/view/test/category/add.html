@@ -1,0 +1,29 @@
+{extend name="admin@public/layout/popup_form"}
+
+{block name="form"}
+    <div class="layui-form-item">
+        <label class="layui-form-label">父级</label>
+        <div class="layui-input-block">
+            <select id="pid" name="row[pid]">
+                <option value="0">------请选择------</option>
+                {foreach $parent_list as $key=>$vo}
+                <option value="{$vo.id}">{$vo.name}</option>
+                {/foreach}
+            </select>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">分类名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="row[name]" lay-verify="required" placeholder="请输入分类名称" class="layui-input" lay-verType="tips">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">排序</label>
+        <div class="layui-input-block">
+            <input type="text" name="row[sort]" lay-verify="number" value='0' placeholder="请输入排序值" class="layui-input" lay-verType="tips">
+        </div>
+    </div>
+{/block}

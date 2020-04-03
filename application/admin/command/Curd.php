@@ -1304,6 +1304,7 @@ EOD;
         $name = 'html' . DS . $type . DS . 'upload';
         $data['field_name'] = $info['field_name'];
 
+        $data['upload_dir'] = $info['form_additional']['upload_dir'];
         $data['accept'] = $info['form_additional']['accept'];
         $data['single_multi'] = $info['form_additional']['single_multi'];
         $data['verify'] = $info['form_empty'] ? '' : 'required';

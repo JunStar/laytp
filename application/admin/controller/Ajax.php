@@ -3,6 +3,7 @@ namespace app\admin\controller;
 
 use library\DirFile;
 use library\QiniuYun;
+use OSS\OssClient;
 use Qiniu\Auth;
 use Qiniu\Storage\UploadManager;
 use think\facade\Config;
@@ -33,8 +34,105 @@ class Ajax extends Controller
         $this->success('获取成功','',$crumbs[1]);
     }
 
-    //上传接口
+    //新上传接口
     public function upload(){
+        try{
+            $qiniu_upload_radio = Config::get('laytp.upload.qiniu_radio');
+            $aliyun_oss_upload_radio = Config::get('laytp.upload.aliyun_radio');
+            $local_upload_radio = Config::get('laytp.upload.radio');
+            if($qiniu_upload_radio == 1 && $aliyun_oss_upload_radio == 1 && $local_upload_radio == 1){
+                $this->error('上传失败','','请开启一种上传方式');
+            }
+
+            $file = $this->request->file('file'); // 获取上传的文件
+            if(!$file){
+                $this->error('上传失败','','请选择需要的上传文件');
+            }
+            $info       = $file->getInfo();
+            $path_info  = pathinfo($info['name']);
+            $file_ext   = strtolower($path_info['extension']);
+            $save_name  = date("Ymd") . "/" . md5(uniqid(mt_rand())) . ".{$file_ext}";
+            $upload_dir = $this->request->param('upload_dir');
+            $object     = $upload_dir . '/' . $save_name;//上传至阿里云或者七牛云的文件名
+
+            $upload = Config::get('laytp.upload');
+            preg_match('/(\d+)(\w+)/', $upload['maxsize'], $matches);
+            $type = strtolower($matches[2]);
+            $typeDict = ['b' => 0, 'k' => 1, 'kb' => 1, 'm' => 2, 'mb' => 2, 'gb' => 3, 'g' => 3];
+            $size = (int)$upload['maxsize'] * pow(1024, isset($typeDict[$type]) ? $typeDict[$type] : 0);
+            if ($info['size'] > (int) $size) {
+                $this->error('上传失败','','文件大小超过'.$upload['maxsize']);
+                return false;
+            }
+
+            $suffix = strtolower(pathinfo($info['name'], PATHINFO_EXTENSION));
+            $suffix = $suffix && preg_match("/^[a-zA-Z0-9]+$/", $suffix) ? $suffix : 'file';
+
+            $mimetypeArr = explode(',', strtolower($upload['mimetype']));
+            $typeArr = explode('/', $info['type']);
+
+            //禁止上传PHP和HTML文件
+            if (in_array($info['type'], ['text/x-php', 'text/html']) || in_array($suffix, ['php', 'html', 'htm'])) {
+                $this->error('上传失败','','文件类型被禁止上传');
+            }
+            //验证文件后缀
+            if ($upload['mimetype'] !== '*' &&
+                (
+                    !in_array($suffix, $mimetypeArr)
+                    || (stripos($typeArr[0] . '/', $upload['mimetype']) !== false && (!in_array($info['type'], $mimetypeArr) && !in_array($typeArr[0] . '/*', $mimetypeArr)))
+                )
+            ) {
+                $this->error('上传失败','','文件类型被禁止上传');
+            }
+
+            $file_url = '';
+            $local_file_url = '';
+            //上传至七牛云
+            if($qiniu_upload_radio == 2){
+                $qiniu_yun = QiniuYun::instance();
+                $qiniu_yun->upload(
+                    Config::get('laytp.qiniu_kodo.access_key')
+                    ,Config::get('laytp.qiniu_kodo.secret_key')
+                    ,Config::get('laytp.qiniu_kodo.bucket')
+                    ,$info['tmp_name']
+                    ,$object
+                );
+                $file_url = Config::get('laytp.qiniu_kodo.domain') . '/' . $object;
+
+                $add['file_type'] = $this->request->param('accept');
+                $add['file_path'] = $file_url;
+                model('Attachment')->create($add);
+            }
+
+            //上传至阿里云
+            if($aliyun_oss_upload_radio == 2){
+                $ossClient = new OssClient(Config::get('laytp.aliyun_oss.access_key_id'), Config::get('laytp.aliyun_oss.access_key_secret'), Config::get('laytp.aliyun_oss.endpoint'));
+                $ossClient->uploadFile(Config::get('laytp.aliyun_oss.bucket'), $object, $info['tmp_name']);
+                $file_url = Config::get('laytp.aliyun_oss.bucket_url') . '/' . $object;
+
+                $add['file_type'] = $this->request->param('accept');
+                $add['file_path'] = $file_url;
+                model('Attachment')->create($add);
+            }
+
+            //本地上传
+            if($local_upload_radio == 2){
+                $move_info = $file->move('uploads'); // 移动文件到指定目录 没有则创建
+                $save_name = str_replace('\\','/',$move_info->getSaveName());
+                $local_file_url = '/uploads/'.$save_name;
+
+                $add['file_type'] = $this->request->param('accept');
+                $add['file_path'] = $local_file_url;
+                model('Attachment')->create($add);
+            }
+            return $this->success('上传成功','',$file_url);
+        }catch (Exception $e){
+            $this->error('上传失败','',$e->getMessage());
+        }
+    }
+
+    //旧的上传接口，待遗弃
+    public function old_upload(){
         try{
             $file = $this->request->file('file'); // 获取上传的文件
             if(!$file){

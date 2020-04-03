@@ -48,6 +48,10 @@ class ComposerStaticInitebb6ccacfc92d5643dd3c68f4ea3aa91
             'Psr\\Http\\Message\\' => 17,
             'PHPMailer\\PHPMailer\\' => 20,
         ),
+        'O' => 
+        array (
+            'OSS\\' => 4,
+        ),
         'J' => 
         array (
             'JmesPath\\' => 9,
@@ -102,6 +106,10 @@ class ComposerStaticInitebb6ccacfc92d5643dd3c68f4ea3aa91
         'PHPMailer\\PHPMailer\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
+        ),
+        'OSS\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/aliyuncs/oss-sdk-php/src/OSS',
         ),
         'JmesPath\\' => 
         array (

@@ -834,7 +834,8 @@ layui.define([
                 let single_multi = $(item).attr('single_multi');
                 let is_multiple = ( single_multi == 'multi' ) ? true : false;
                 let accept = $(item).attr('accept');
-                let upload_url = $(item).attr('upload_url') ? $(item).attr('upload_url') : layTp.facade.url('/admin/ajax/upload',{'accept':accept});
+                let upload_dir = $(item).attr('upload_dir') ? $(item).attr('upload_dir') : '';
+                let upload_url = $(item).attr('upload_url') ? $(item).attr('upload_url') : layTp.facade.url('/admin/ajax/upload',{'accept':accept,'upload_dir':upload_dir});
                 layui.upload.render({
                     elem: elem,
                     url: upload_url,

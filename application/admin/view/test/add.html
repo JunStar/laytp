@@ -1,0 +1,160 @@
+{extend name="admin@public/layout/popup_form"}
+
+{block name="form"}
+    <div class="layui-form-item">
+        <label class="layui-form-label" title="标题">标题</label>
+        <div class="layui-input-block">
+            <input autocomplete="off" type="text" name="row[title]" id="title" placeholder="请输入标题" class="layui-input" lay-verify="" lay-verType="tips">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label" title="年级">年级</label>
+        <div class="layui-input-block">
+            <input autocomplete="off" type="text" name="row[grade]" id="grade" placeholder="请输入年级" class="layui-input" lay-verify="" lay-verType="tips">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label" title="状态">状态</label>
+        <div class="layui-input-block">
+            <input autocomplete="off" type="text" name="row[status]" id="status" placeholder="请输入状态" class="layui-input" lay-verify="" lay-verType="tips">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label" title="英雄">英雄</label>
+        <div class="layui-input-block">
+            <input autocomplete="off" type="text" name="row[hero]" id="hero" placeholder="请输入英雄" class="layui-input" lay-verify="" lay-verType="tips">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label" title="爱好">爱好</label>
+        <div class="layui-input-block">
+            <input autocomplete="off" type="text" name="row[hobby]" id="hobby" placeholder="请输入爱好" class="layui-input" lay-verify="" lay-verType="tips">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label" title="标志">标志</label>
+        <div class="layui-input-block">
+            <input autocomplete="off" type="text" name="row[sign]" id="sign" placeholder="请输入标志" class="layui-input" lay-verify="" lay-verType="tips">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label" title="描述">描述</label>
+        <div class="layui-input-block">
+            <input autocomplete="off" type="text" name="row[description]" id="description" placeholder="请输入描述" class="layui-input" lay-verify="" lay-verType="tips">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label" title="所属分类（单选）">所属分类（单选）</label>
+        <div class="layui-input-block">
+            <input autocomplete="off" type="text" name="row[category_id]" id="category_id" placeholder="请输入所属分类（单选）" class="layui-input" lay-verify="" lay-verType="tips">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label" title="所属分类（多选）">所属分类（多选）</label>
+        <div class="layui-input-block">
+            <input autocomplete="off" type="text" name="row[category_ids]" id="category_ids" placeholder="请输入所属分类（多选）" class="layui-input" lay-verify="" lay-verType="tips">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label" title="单个图片">单个图片</label>
+        <div class="layui-input-block">
+            <input autocomplete="off" type="text" name="row[single_img]" id="single_img" placeholder="请输入单个图片" class="layui-input" lay-verify="" lay-verType="tips">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label" title="多个图片">多个图片</label>
+        <div class="layui-input-block">
+            <div class="layui-upload">
+                <div class="layui-inline" style="width: 70%;"><input type="text" class="layui-input" name="row[multi_img]" id="input_multi_img" /></div>
+                <div class="layui-inline">
+                    <button type="button" class="layui-btn layui-btn-sm layui-btn-primary pull-left"
+                            id="multi_img"
+                            upload="true"
+                            accept="images"
+                            upload_dir="test"
+                            single_multi="multi">
+                        <i class="layui-icon">&#xe62f;</i> 上 传
+                    </button>
+                </div>
+                <div class="layui-inline">
+                    <button type="button"
+                            class="layui-btn layui-btn-sm layui-btn-danger pull-left popup-frame"
+                            data-open="{:url('admin/attachment/select',['id_val'=>'multi_img','accept'=>'images','single_multi'=>'multi'])}"
+                            data-width="100%"
+                            data-height="100%">
+                        <i class="layui-icon">&#xe60a;</i> 选 择
+                    </button>
+                </div>
+				<div class="pic-more">
+                    <ul class="pic-more-upload-list" id="preview_multi_img"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label" title="视频文件地址">视频文件地址</label>
+        <div class="layui-input-block">
+            <input autocomplete="off" type="text" name="row[video]" id="video" placeholder="请输入视频文件地址" class="layui-input" lay-verify="" lay-verType="tips">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label" title="音频文件地址">音频文件地址</label>
+        <div class="layui-input-block">
+            <input autocomplete="off" type="text" name="row[audio]" id="audio" placeholder="请输入音频文件地址" class="layui-input" lay-verify="" lay-verType="tips">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label" title="任意文件地址">任意文件地址</label>
+        <div class="layui-input-block">
+            <input autocomplete="off" type="text" name="row[file]" id="file" placeholder="请输入任意文件地址" class="layui-input" lay-verify="" lay-verType="tips">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label" title="文章内容">文章内容</label>
+        <div class="layui-input-block">
+            <input autocomplete="off" type="text" name="row[content]" id="content" placeholder="请输入文章内容" class="layui-input" lay-verify="" lay-verType="tips">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label" title="省份">省份</label>
+        <div class="layui-input-block">
+            <input autocomplete="off" type="text" name="row[province_id]" id="province_id" placeholder="请输入省份" class="layui-input" lay-verify="" lay-verType="tips">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label" title="城市">城市</label>
+        <div class="layui-input-block">
+            <input autocomplete="off" type="text" name="row[city_id]" id="city_id" placeholder="请输入城市" class="layui-input" lay-verify="" lay-verType="tips">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label" title="地区">地区</label>
+        <div class="layui-input-block">
+            <input autocomplete="off" type="text" name="row[area_id]" id="area_id" placeholder="请输入地区" class="layui-input" lay-verify="" lay-verType="tips">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label" title="创建时间">创建时间</label>
+        <div class="layui-input-block">
+            <input type="text" class="layui-input" name="row[create_time]" id="create_time" autocomplete="off" laydate="true" laydate_type="datetime" placeholder="请选择时间">
+        </div>
+    </div>
+{/block}

@@ -1,0 +1,92 @@
+{extend name="admin@public/layout/popup"}
+
+{block name="body"}
+<table class="laytp-table layui-hide-sm" lay-filter="default"></table>
+{/block}
+
+{block name="script"}
+<script>
+layui.use(['layTp'],function() {
+    const
+        func_controller = {}
+        ,layTp = layui.layTp
+        ,$ = layui.jquery
+    ;
+
+    //批量操作渲染
+    layui.dropdown.render({
+        elem: '.action-more',
+        options: [
+            {
+                action: "renew"
+                ,title: "还原"
+                ,icon: "layui-icon-list"
+                ,uri: layTp.facade.url(module + "/" + controller + "/renew")
+                ,need_refresh:true
+                ,switch_type: "confirm_action"
+            }
+            ,{
+                action: 'true_del',
+                title: '彻底删除'
+                ,icon: "layui-icon-delete"
+                ,uri: layTp.facade.url(module + "/" + controller + "/true_del")
+                ,need_refresh:true
+                ,switch_type: "confirm_action"
+            }
+        ]
+    });
+
+    //表格渲染
+    func_controller.table_render = function (where) {
+        layui.table.render({
+            elem: '.layui-hide-sm'
+            , id: table_id
+            , url: window.location.href
+            , toolbar: '#default_toolbar'
+            , where: where
+            , even: true
+            , method: 'GET'
+            , cellMinWidth: 80
+            , cols: [[
+                {type:'checkbox'}
+				,{field: 'id', title: 'ID',align:'center',width:80}				,{field: 'name', title: '分类名'}				,{field: 'sort', title: '排序',align:'center',width:100}				,{field:'operation',title:'操作',align:'center',toolbar:'#operation',width:100,fixed:'right'}
+            ]]
+        });
+
+        //监听默认工具条
+        layui.table.on('tool(default)', function(obj){
+            if(default_table_tool.indexOf(obj.event) != -1){
+                layTp.facade.table_tool(obj);
+            }else{
+                //新增的其他操作按钮在这里来写
+                //switch(obj.event){
+                //    case '':
+                //
+                //        break;
+                //}
+            }
+        });
+    }
+
+    func_controller.table_render();
+
+    window.func_controller = func_controller;
+});
+</script>
+{/block}
+
+{block name="js_template"}
+<script type="text/html" id="operation">
+    <div class="layui-btn-group">
+        <a class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-list" lay-event="renew" title="还原" layer-tips="还原"> </a>
+        <a class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-delete" lay-event="true_del" title="彻底删除" layer-tips="彻底删除" colour="#f51c1c"> </a>
+    </div>
+</script>
+<script type="text/html" id="default_toolbar">
+    <div class="layui-table-tool-temp">
+        <div class="layui-btn-group fl">
+            <a href="javascript:void(0);" class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-list action-more">&nbsp;批量操作</a>
+        </div>
+    </div>
+</script>
+{/block}

@@ -5,6 +5,7 @@
                             id="{%field_name%}"
                             upload="true"
                             accept="{%accept%}"
+                            upload_dir="{%upload_dir%}"
                             single_multi="{%single_multi%}">
                         <i class="layui-icon">&#xe62f;</i> 上 传
                     </button>
