@@ -35,7 +35,7 @@ class Ajax extends Controller
     }
 
     //新上传接口
-    public function upload($file){
+    public function upload($file=''){
         try{
             $qiniu_upload_radio = Config::get('laytp.upload.qiniu_radio');
             $aliyun_oss_upload_radio = Config::get('laytp.upload.aliyun_radio');
@@ -53,7 +53,9 @@ class Ajax extends Controller
             $file_ext   = strtolower($path_info['extension']);
             $save_name  = date("Ymd") . "/" . md5(uniqid(mt_rand())) . ".{$file_ext}";
             $upload_dir = $this->request->param('upload_dir');
-            $object     = $upload_dir . '/' . $save_name;//上传至阿里云或者七牛云的文件名
+            $upload_dir = $upload_dir ? $upload_dir . '/' : '';
+
+            $object     = $upload_dir . $save_name;//上传至阿里云或者七牛云的文件名
 
             $upload = Config::get('laytp.upload');
             preg_match('/(\d+)(\w+)/', $upload['maxsize'], $matches);
