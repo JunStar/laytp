@@ -35,7 +35,7 @@ class Ajax extends Controller
     }
 
     //新上传接口
-    public function upload(){
+    public function upload($file){
         try{
             $qiniu_upload_radio = Config::get('laytp.upload.qiniu_radio');
             $aliyun_oss_upload_radio = Config::get('laytp.upload.aliyun_radio');
@@ -44,7 +44,7 @@ class Ajax extends Controller
                 $this->error('上传失败','','请开启一种上传方式');
             }
 
-            $file = $this->request->file('file'); // 获取上传的文件
+            $file = $file ? $file : $this->request->file('file'); // 获取上传的文件
             if(!$file){
                 $this->error('上传失败','','请选择需要的上传文件');
             }
@@ -131,72 +131,11 @@ class Ajax extends Controller
         }
     }
 
-    //旧的上传接口，待遗弃
-    public function old_upload(){
-        try{
-            $file = $this->request->file('file'); // 获取上传的文件
-            if(!$file){
-                $this->error('上传失败','','请选择需要的上传文件');
-            }
+    //ueditor编辑器上传
+    public function ueditor_upload(){
+        $file = request()->file('editormd-image-file');
 
-            $upload = Config::get('laytp.upload');
-            preg_match('/(\d+)(\w+)/', $upload['maxsize'], $matches);
-            $type = strtolower($matches[2]);
-            $typeDict = ['b' => 0, 'k' => 1, 'kb' => 1, 'm' => 2, 'mb' => 2, 'gb' => 3, 'g' => 3];
-            $size = (int)$upload['maxsize'] * pow(1024, isset($typeDict[$type]) ? $typeDict[$type] : 0);
-
-            $fileInfo = $file->getInfo();
-            $suffix = strtolower(pathinfo($fileInfo['name'], PATHINFO_EXTENSION));
-            $suffix = $suffix && preg_match("/^[a-zA-Z0-9]+$/", $suffix) ? $suffix : 'file';
-
-            $mimetypeArr = explode(',', strtolower($upload['mimetype']));
-            $typeArr = explode('/', $fileInfo['type']);
-
-            //禁止上传PHP和HTML文件
-            if (in_array($fileInfo['type'], ['text/x-php', 'text/html']) || in_array($suffix, ['php', 'html', 'htm'])) {
-                $this->error('上传失败','','文件类型被禁止上传');
-            }
-            //验证文件后缀
-            if ($upload['mimetype'] !== '*' &&
-                (
-                    !in_array($suffix, $mimetypeArr)
-                    || (stripos($typeArr[0] . '/', $upload['mimetype']) !== false && (!in_array($fileInfo['type'], $mimetypeArr) && !in_array($typeArr[0] . '/*', $mimetypeArr)))
-                )
-            ) {
-                $this->error('文件类型被禁止上传');
-            }
-
-            $info = $file->validate(['size' => $size])->move('uploads'); // 移动文件到指定目录 没有则创建
-
-            if($info->getError()){
-                $this->error('上传失败','',$info->getError());
-            }else{
-                $add['file_type'] = $this->request->param('accept');
-                $save_name = str_replace('\\','/',$info->getSaveName());
-                $add['file_path'] = '/uploads/'.$save_name;
-                model('Attachment')->create($add);
-                $file_name = '/uploads/'.$save_name;
-                $upload_way = Config::get('laytp.upload.way') ? Config::get('laytp.upload.way') : 'local';
-                if($upload_way == 'local'){
-                    $this->success('上传成功','',$file_name);
-                }else if($upload_way == 'qiniu'){
-                    $qiniu_yun = QiniuYun::instance();
-                    if($qiniu_yun->upload(
-                        Config::get('laytp.upload.qiniu_access_key')
-                        ,Config::get('laytp.upload.qiniu_secret_key')
-                        ,Config::get('laytp.upload.qiniu_bucket')
-                        ,Env::get('root_path') . 'public' . $file_name
-                        ,$file_name
-                    )){
-                        $this->success('上传成功','',$file_name);
-                    }else{
-                        $this->error('上传失败','',$qiniu_yun->getMessage());
-                    }
-                }
-            }
-        }catch (Exception $e){
-            $this->error('上传失败','',$e->getMessage());
-        }
+        $this->upload($file);
     }
 
     public function editor_md_upload()
@@ -204,16 +143,7 @@ class Ajax extends Controller
         // 获取表单上传文件 例如上传了001.jpg
         $file = request()->file('editormd-image-file');
 
-        // 移动到框架应用根目录/public/uploads/ 目录下
-        if($file){
-            $info = $file->move('./uploads');
-            if($info){
-                return json_encode(['url'=>'/uploads/' . $info->getSaveName(),'success'=>1]);
-            }else{
-                // 上传失败获取错误信息
-                return $this->error($file->getError());
-            }
-        }
+        $this->upload($file);
     }
 
     /**

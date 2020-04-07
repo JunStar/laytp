@@ -1,4 +1,5 @@
 <?php
+
 //header('Access-Control-Allow-Origin: http://www.baidu.com'); //设置http://www.baidu.com允许跨域访问
 //header('Access-Control-Allow-Headers: X-Requested-With,X_Requested_With'); //设置允许的跨域header
 date_default_timezone_set("Asia/chongqing");
@@ -6,6 +7,28 @@ error_reporting(E_ERROR);
 header("Content-Type: text/html; charset=utf-8");
 
 $CONFIG = json_decode(preg_replace("/\/\*[\s\S]+?\*\//", "", file_get_contents("config.json")), true);
+
+//兼容laytp上传配置 ------ 开始
+define('ROOT_PATH', dirname(dirname(dirname(dirname(dirname(__DIR__))))) );
+$laytp_config = require_once ROOT_PATH . '/config/laytp.php';
+$laytp_upload_config = $laytp_config['upload'];
+$arr_mimetype = explode(',',$laytp_upload_config['mimetype']);
+foreach($arr_mimetype as $k=>$v){
+    $arr_mimetype[$k] = '.'.$v;
+}
+$CONFIG['imageAllowFiles'] = $arr_mimetype;
+
+$typeDict = ['b' => 0, 'k' => 1, 'kb' => 1, 'm' => 2, 'mb' => 2, 'gb' => 3, 'g' => 3];
+preg_match('/(\d+)(\w+)/', $laytp_upload_config['maxsize'], $matches);
+$type = strtolower($matches[2]);
+$size = (int)$laytp_upload_config['maxsize'] * pow(1024, isset($typeDict[$type]) ? $typeDict[$type] : 0);
+$CONFIG['imageMaxSize'] = $size;
+$CONFIG['scrawlMaxSize'] = $size;
+$CONFIG['catcherMaxSize'] = $size;
+$CONFIG['videoMaxSize'] = $size;
+$CONFIG['fileMaxSize'] = $size;
+//兼容laytp上传配置 ------ 结束
+
 $action = $_GET['action'];
 
 switch ($action) {

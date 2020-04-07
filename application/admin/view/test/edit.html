@@ -46,7 +46,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label" title="描述">描述</label>
         <div class="layui-input-block">
-            <input autocomplete="off" type="text" name="row[description]" id="description" placeholder="请输入描述" value="{$description}" class="layui-input" lay-verify="" lay-verType="tips">
+            <script editor="true" type="ueditor" id="description" name="row[description]" type="text/plain">{$description|raw}</script>
         </div>
     </div>
 
