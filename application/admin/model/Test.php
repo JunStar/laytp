@@ -27,12 +27,18 @@ class Test extends Backend
 
     //数组常量
     public $const = [
-
+		'grade' => [
+			'1'=>'一年级'
+			,'2'=>'二年级'
+			,'3'=>'三年级'
+		],
     ];
 
     //关联模型
     
 
     //获取数组常量的函数
-    
+    public function getArrayConstList($field_name){
+        return $this->const[$field_name];
+    }
 }

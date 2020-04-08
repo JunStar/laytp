@@ -15,8 +15,13 @@
 		    <div class="layui-inline" style="padding-left: 10px;">
                 <label class="layui-form-label" title="年级">年级</label>
                 <div class="layui-input-inline">
-                    <input autocomplete="off" type="text" id="grade" name="search_param[grade][value]" id="grade" placeholder="请输入年级" class="layui-input">
-                    <input type="hidden" name="search_param[grade][condition]" value="LIKE">
+                    <select id="grade" name="search_param[grade][value]" placeholder="请输入年级">
+        				<option value=""></option>
+						<option value="1">一年级</option>
+						<option value="2">二年级</option>
+						<option value="3">三年级</option>
+                    </select>
+                    <input type="hidden" name="search_param[grade][condition]" value="=">
                 </div>
             </div>
 

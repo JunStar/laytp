@@ -15,8 +15,13 @@
 		    <div class="layui-inline" style="padding-left: 10px;">
                 <label class="layui-form-label" title="年级">年级</label>
                 <div class="layui-input-inline">
-                    <input autocomplete="off" type="text" id="grade" name="search_param[grade][value]" id="grade" placeholder="请输入年级" class="layui-input">
-                    <input type="hidden" name="search_param[grade][condition]" value="LIKE">
+                    <select id="grade" name="search_param[grade][value]" placeholder="请输入年级">
+        				<option value=""></option>
+						<option value="1">一年级</option>
+						<option value="2">二年级</option>
+						<option value="3">三年级</option>
+                    </select>
+                    <input type="hidden" name="search_param[grade][condition]" value="=">
                 </div>
             </div>
 
@@ -207,7 +212,9 @@ layui.use(['layTp'],function() {
 				//,{field:'update_time',title:'更新时间',align:'center'}
 				//,{field:'delete_time',title:'删除时间',align:'center'}
 				,{field:'title',title:'标题',align:'center'}
-				,{field:'grade',title:'年级',align:'center'}
+				,{field:'grade',title:'年级',align:'center',templet:function(d){
+					return layTp.facade.formatter.status('grade',d.grade,{"1":"一年级","2":"二年级","3":"三年级"});
+				}}
 				,{field:'status',title:'状态',align:'center'}
 				,{field:'hero',title:'英雄',align:'center'}
 				,{field:'hobby',title:'爱好',align:'center'}

@@ -71,7 +71,7 @@ trait Backend
         $field_val = $this->request->param('field_val');
         $save[$field] = $field_val;
         try{
-            if( $this->model->where('id','in',$this->request->param('id'))->update($save) ){
+            if( $this->model->where('id','in',$this->request->param('ids'))->update($save) ){
                 return $this->success('操作成功');
             }else{
                 return $this->error('操作失败');

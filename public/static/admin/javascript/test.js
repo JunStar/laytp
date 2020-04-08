@@ -43,7 +43,9 @@ layui.use(['layTp'],function() {
 				//,{field:'update_time',title:'更新时间',align:'center'}
 				//,{field:'delete_time',title:'删除时间',align:'center'}
 				,{field:'title',title:'标题',align:'center'}
-				,{field:'grade',title:'年级',align:'center'}
+				,{field:'grade',title:'年级',align:'center',templet:function(d){
+					return layTp.facade.formatter.status('grade',d.grade,{"1":"一年级","2":"二年级","3":"三年级"});
+				}}
 				,{field:'status',title:'状态',align:'center'}
 				,{field:'hero',title:'英雄',align:'center'}
 				,{field:'hobby',title:'爱好',align:'center'}

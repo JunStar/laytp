@@ -1125,6 +1125,7 @@ layui.define([
             });
         },
 
+        //点击顶部Tab切换，触发搜索表单
         click_search:function(){
             $(document).on('click','[click_search]',function(){
                 let obj = $(this);
@@ -1154,6 +1155,7 @@ layui.define([
             });
         },
 
+        //laytp列表单选开关触发ajax
         laytp_switch:function(){
             layui.form.on('switch(laytp_switch)', function(obj){
                 let open_value = obj.elem.attributes['open_value'].nodeValue;
@@ -1162,9 +1164,9 @@ layui.define([
                 let id_val = obj.elem.attributes['id_val'].nodeValue;
                 let post_data = {};
                 if(obj.elem.checked){
-                    post_data = {field:this.name,field_val:open_value, id: id_val};
+                    post_data = {field:this.name,field_val:open_value, ids: id_val};
                 }else{
-                    post_data = {field:this.name,field_val:close_value, id: id_val};
+                    post_data = {field:this.name,field_val:close_value, ids: id_val};
                 }
                 $.ajax({
                     url: layTp.facade.url(module + '/' + controller + '/set_status/'),
