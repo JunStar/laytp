@@ -48,7 +48,7 @@
             ,id:'auth_node'
             ,oncheck: function(obj){
                 var ids = layui.layTp.facade.get_tree_checked_ids(tree.getChecked('auth_node'));
-                $('#node_list').val(ids.join(','));
+                $('#node_list').val(ids);
             }
         });
     });
