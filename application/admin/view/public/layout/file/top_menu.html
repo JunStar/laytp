@@ -65,7 +65,7 @@
         let data;
         for(let key in menu_json){
             if(menu_json[key].id == top_menu.id){
-                data = menu_json[key].childMenus;
+                data = menu_json[key].children;
             }
         }
         createMenu(data,false);
@@ -92,7 +92,7 @@
         let itemed = ' layui-nav-itemed';
         for( let i = 0; i < data.length; i++ ){
             // 判断是否存在子菜单
-            if(data[i].childMenus!=null && data[i].childMenus.length>0){
+            if(data[i].children!=null && data[i].children.length>0){
                 if(in_array(data[i].id.toString(),select_menu_ids)){
                     liStr+="<li class=\"layui-nav-item"+itemed+"\"><a href=\"javascript:;\"><i class='layui-icon "+data[i].icon+"'></i> "+data[i].name+"</a>\n"+
                         "<dl class=\"layui-nav-child\">\n";
@@ -102,8 +102,8 @@
                 }
 
                 // 遍历获取子菜单
-                for( let k = 0; k < data[i].childMenus.length; k++ ){
-                    liStr+=getChildMenu(data[i].childMenus[k],0,unchecked);
+                for( let k = 0; k < data[i].children.length; k++ ){
+                    liStr+=getChildMenu(data[i].children[k],0,unchecked);
                 }
                 liStr+="</dl></li>";
             }else{
@@ -157,7 +157,7 @@
         let subStr = "";
         itemed = (k_val==0) ? ' layui-nav-itemed' : '';
         athis = (k_val==0) ? ' layui-this' : '';
-        if(subMenu.childMenus!=null && subMenu.childMenus.length>0){
+        if(subMenu.children!=null && subMenu.children.length>0){
             if(in_array(subMenu.id.toString(),select_menu_ids)){
                 subStr+="<dd><ul><li class=\"layui-nav-item"+itemed+"\" ><a style=\"margin-Left:"+num*menuCell+"px\" class=\"\" href=\"javascript:;\"><i class='layui-icon' >&#xe653;</i> "+subMenu.name+"</a>" +
                     "<dl class=\"layui-nav-child\">\n";
@@ -165,8 +165,8 @@
                 subStr+="<dd><ul><li class=\"layui-nav-item\" ><a style=\"margin-Left:"+num*menuCell+"px\" class=\"\" href=\"javascript:;\"><i class='layui-icon' >&#xe653;</i> "+subMenu.name+"</a>" +
                     "<dl class=\"layui-nav-child\">\n";
             }
-            for( let j = 0; j <subMenu.childMenus.length; j++){
-                subStr+=getChildMenu(subMenu.childMenus[j],num,checked);
+            for( let j = 0; j <subMenu.children.length; j++){
+                subStr+=getChildMenu(subMenu.children[j],num,checked);
             }
             subStr+="</dl></li></ul></dd>";
         }else{

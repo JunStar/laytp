@@ -86,6 +86,24 @@ layui.define([
             return map;
         },
 
+        //获取树插件选中的项
+        get_tree_checked_ids: function (jsonObj) {
+            var id = "";
+            $.each(jsonObj, function (index, item) {
+                if (id != "") {
+                    id = id + "," + item.id;
+                }
+                else {
+                    id = item.id;
+                }
+                var i = layTp.facade.get_tree_checked_ids(item.children);
+                if (i != "") {
+                    id = id + "," + i;
+                }
+            });
+            return id;
+        },
+
         //跳转页面
         redirect: function(url){
             location.href = url;

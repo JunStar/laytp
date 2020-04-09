@@ -126,7 +126,7 @@ class Tree
         if(!$tree){
             return [];
         }
-        if(count($tree[0]['childMenus'])){
+        if(count($tree[0]['children'])){
             return $this->getDefaultMenu($tree[0]['id']);
         }else{
             return $tree[0];
@@ -137,7 +137,7 @@ class Tree
         static $select_menu_ids;
         $tree = $this->getTreeArray($id);
         $select_menu_ids[] = $tree[0]['id'];
-        if(count($tree[0]['childMenus'])){
+        if(count($tree[0]['children'])){
             $this->getSelectMenuIds($tree[0]['id']);
         }else{
             $select_menu_ids[] = $tree[0]['id'];
@@ -299,7 +299,7 @@ class Tree
 
      * 树型结构UL
      * @param int $myid 表示获得这个ID下的所有子级
-     * @param string $itemtpl 条目模板 如："<li value=@id @selected @disabled>@name @childMenus</li>"
+     * @param string $itemtpl 条目模板 如："<li value=@id @selected @disabled>@name @children</li>"
      * @param string $selectedids 选中的ID
      * @param string $disabledids 禁用的ID
      * @param string $wraptag 子列表包裹标签
@@ -324,8 +324,8 @@ class Tree
                 }, array_keys($value)), $value);
                 $nstr = strtr($itemtpl, $value);
                 $childdata = $this->getTreeUl($id, $itemtpl, $selectedids, $disabledids, $wraptag, $wrapattr);
-                $childMenus = $childdata ? "<{$wraptag} {$wrapattr}>" . $childdata . "</{$wraptag}>" : "";
-                $str .= strtr($nstr, array('@childMenus' => $childMenus));
+                $children = $childdata ? "<{$wraptag} {$wrapattr}>" . $childdata . "</{$wraptag}>" : "";
+                $str .= strtr($nstr, array('@children' => $children));
             }
         }
         return $str;
@@ -363,10 +363,10 @@ class Tree
                 $nstr = strtr($itemtpl, $value);
                 $value = array_merge($value, $bakvalue);
                 $childdata = $this->getTreeMenu($id, $itemtpl, $selectedids, $disabledids, $wraptag, $wrapattr, $deeplevel + 1);
-                $childMenus = $childdata ? "<{$wraptag} {$wrapattr}>" . $childdata . "</{$wraptag}>" : "";
-                $childMenus = strtr($childMenus, array('@class' => $childdata ? 'last' : ''));
+                $children = $childdata ? "<{$wraptag} {$wrapattr}>" . $childdata . "</{$wraptag}>" : "";
+                $children = strtr($children, array('@class' => $childdata ? 'last' : ''));
                 $value = array(
-                    '@childMenus' => $childMenus,
+                    '@children' => $children,
                     '@url'       => $childdata || !isset($value['@url']) ? "javascript:;" : url($value['@url']),
                     '@addtabs'   => $childdata || !isset($value['@url']) ? "" : (stripos($value['@url'], "?") !== false ? "&" : "?") . "ref=addtabs",
                     '@caret'     => ($childdata && (!isset($value['@badge']) || !$value['@badge']) ? '<i class="fa fa-angle-left"></i>' : ''),
@@ -459,7 +459,7 @@ class Tree
                 $spacer = $itemprefix ? $itemprefix . $j : '';
                 $value['spacer'] = $spacer;
                 $data[$n] = $value;
-                $data[$n]['childMenus'] = $this->getTreeArray($id, $itemprefix . $k . $this->nbsp);
+                $data[$n]['children'] = $this->getTreeArray($id, $itemprefix . $k . $this->nbsp);
                 $n++;
                 $number++;
             }
@@ -477,15 +477,15 @@ class Tree
         $arr = [];
         foreach ($data as $k => $v)
         {
-            $childMenus = isset($v['childMenus']) ? $v['childMenus'] : [];
-            unset($v['childMenus']);
+            $children = isset($v['children']) ? $v['children'] : [];
+            unset($v['children']);
             $v[$field] = $v['spacer'] . ' ' . $v[$field];
-            $v['has_child'] = $childMenus ? 1 : 0;
+            $v['has_child'] = $children ? 1 : 0;
             if ($v['id'])
                 $arr[] = $v;
-            if ($childMenus)
+            if ($children)
             {
-                $arr = array_merge($arr, $this->getTreeList($childMenus, $field));
+                $arr = array_merge($arr, $this->getTreeList($children, $field));
             }
         }
         return $arr;

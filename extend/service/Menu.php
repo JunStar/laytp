@@ -39,8 +39,8 @@ class Menu extends Service
                 $this->menu_model->where('id','=',$id)->update(['is_hide'=>0]);
             }
 
-            if(isset($menu['childMenus'])){
-                self::create($menu['childMenus'],$id);
+            if(isset($menu['children'])){
+                self::create($menu['children'],$id);
             }
 
             if(isset($menu['actionList'])){

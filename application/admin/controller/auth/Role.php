@@ -81,12 +81,10 @@ class Role extends Backend
             }
         }
 
-        $menu_list = model('auth.Menu')->field('id,pid,name')->order('sort',' desc')->select()->toArray();
-        $node_list = [];
-        foreach($menu_list as $k=>$v){
-            $parent = $v['pid'] ? $v['pid'] : '#';
-            $node_list[] = ['id'=>$v['id'],'parent'=>$parent,'text'=>$v['name'],'type'=>'menu','state'=>['selected'=>false]];
-        }
+        $menu_list = model('auth.Menu')->field('id,pid,name as title')->order('sort',' desc')->select()->toArray();
+        $tree_obj = Tree::instance();
+        $menu_tree_obj = $tree_obj->init($menu_list);
+        $node_list = $menu_tree_obj->getTreeArray(0);
         $this->assign('node_list', $node_list);
         return $this->fetch();
     }
@@ -142,20 +140,14 @@ class Role extends Backend
         $assign = $this->model->where($edit_where)->find()->toArray();
         $this->assign($assign);
 
-        $menu_list = model('auth.Menu')->field('id,pid,name,is_menu')->order('sort','desc')->select()->toArray();
-        $menu_tree_obj = Tree::instance();
-        $menu_tree_obj->icon = ['','',''];
-        $menu_tree_obj->nbsp = '';
-        $menu_tree_obj->init($menu_list);
-        $menu_list = $menu_tree_obj->getTreeList($menu_tree_obj->getTreeArray(0));
-
-        $node_list = [];
+        $menu_list = model('auth.Menu')->field('id,pid,name as title')->order('sort','desc')->select()->toArray();
         $now_node_list = model('auth.RoleRelMenu')->where('role_id','=', $edit_where['id'])->column('menu_id');
         foreach($menu_list as $k=>$v){
-            $parent = $v['pid'] ? $v['pid'] : '#';
-            $state = ['selected' => $v['is_menu'] ? false : in_array($v['id'], $now_node_list)];
-            $node_list[] = ['id'=>$v['id'],'parent'=>$parent,'text'=>$v['name'],'type'=>'menu','state'=>$state];
+            $menu_list[$k]['checked'] = in_array($v['id'], $now_node_list) ? true : false;
         }
+        $tree_obj = Tree::instance();
+        $menu_tree_obj = $tree_obj->init($menu_list);
+        $node_list = $menu_tree_obj->getTreeArray(0);
         $this->assign('node_list', $node_list);
 
         return $this->fetch();

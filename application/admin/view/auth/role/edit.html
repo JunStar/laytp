@@ -2,51 +2,6 @@
 
 {block name="style"}
 <link rel="stylesheet" href="__STATIC__/library/jstree/themes/default/style.css" media="all">
-<style>
-    #treeview .jstree-container-ul .jstree-node {
-        display: block;
-        clear: both;
-    }
-
-    #treeview .jstree-leaf:not(:first-child) {
-        float: left;
-        background: none;
-        margin-left: 0;
-        width: 80px;
-        clear: none;
-    }
-
-    #treeview .jstree-leaf {
-        float: left;
-        margin-left: 0;
-        padding-left: 24px;
-        /*width: 100px;*/
-        clear: none;
-        color: #777;
-    }
-
-    #treeview .jstree-leaf > .jstree-icon,#treeview .jstree-leaf .jstree-themeicon {
-        display: none;
-    }
-
-    #treeview .jstree-last {
-        background-position: -292px -4px;
-        background-repeat: repeat-y;
-    }
-
-    #treeview .jstree-children:before,#treeview .jstree-children:after {
-        content: " ";
-        display: table;
-    }
-
-    #treeview .jstree-children:after {
-        clear: both;
-    }
-
-    #treeview .jstree-themeicon {
-        display: none;
-    }
-</style>
 {/block}
 
 {block name="form"}
@@ -73,9 +28,6 @@
     <div class="layui-form-item">
         <label class="layui-form-label">权限设置</label>
         <div class="layui-input-block">
-            <input type="checkbox" title="全选" lay-filter="checkall">
-            <input type="checkbox" title="展开" lay-filter="expandall">
-
             <div id="treeview"></div>
             <input type="hidden" name="row[menu_ids]" id="node_list" />
         </div>
@@ -83,35 +35,21 @@
 {/block}
 
 {block name="script"}
-<script src="__STATIC__/library/jstree/jstree.js" charset="utf-8"></script>
 <script>
-    const node_list = {:json_encode($node_list)};
+    const node_list = {:json_encode($node_list,JSON_UNESCAPED_UNICODE)};
 
-    $('#treeview')
-        .on("changed.jstree", function (e, data) {
-            $('#node_list').val(data.selected.join(','));
-        })
-        .jstree(
-            {
-                "themes": {"stripes": true},
-                "checkbox": {
-                    "keep_selected_style": false,
-                },
-                "plugins": ["checkbox", "types"],
-                "core": {
-                    'check_callback': true,
-                    "data": node_list
-                }
+    layui.use('tree',function(){
+        var tree = layui.tree;
+        var inst1 = tree.render({
+            elem: '#treeview'
+            ,data: node_list
+            ,showCheckbox:true
+            ,accordion:true
+            ,id:'auth_node'
+            ,oncheck: function(obj){
+                var ids = layui.layTp.facade.get_tree_checked_ids(tree.getChecked('auth_node'));
+                $('#node_list').val(ids.join(','));
             }
-        );
-
-    layui.use(['layTp'],function() {
-        layui.form.on('checkbox(checkall)',function(){
-            $("#treeview").jstree($(this).prop("checked") ? "check_all" : "uncheck_all");
-        });
-
-        layui.form.on('checkbox(expandall)',function(){
-            $("#treeview").jstree($(this).prop("checked") ? "open_all" : "close_all");
         });
     });
 </script>
