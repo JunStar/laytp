@@ -152,9 +152,7 @@ class Role extends Backend
 
         $menu_list = model('auth.Menu')->field('id,pid,name as title')->order('sort','desc')->select()->toArray();
         $now_node_list = model('auth.RoleRelMenu')->where('role_id','=', $edit_where['id'])->column('menu_id');
-        foreach($menu_list as $k=>$v){
-            $menu_list[$k]['checked'] = in_array($v['id'], $now_node_list) ? true : false;
-        }
+        $this->assign('now_node_list', json_encode($now_node_list));
         $tree_obj = Tree::instance();
         $menu_tree_obj = $tree_obj->init($menu_list);
         $node_list = $menu_tree_obj->getTreeArray(0);

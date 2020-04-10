@@ -11,6 +11,7 @@ layui.define([
     ,'formSelects'
     ,'dropdown'
     ,'laytp_element'
+    ,'laytp_tree'
 ], function(exports){
     const MOD_NAME = 'layTp';
     let layTp = {};
