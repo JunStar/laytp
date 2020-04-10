@@ -60,9 +60,14 @@ class Role extends Backend
                 unset($post['menu_ids']);
                 $result[] = $this->model->save($post);
                 $data = [];
+                $menu_list = model('auth.Menu')->field('id,pid,name as title')->order('sort','desc')->select()->toArray();
+                $tree_obj = Tree::instance();
+                $menu_tree_obj = $tree_obj->init($menu_list);
                 foreach( $menu_ids as $k=>$v ){
-                    if($v){
-                        $data[] = ['menu_id' => $v, 'role_id' => $this->model->id];
+                    if( $v != 0 ){
+                        if(!$menu_tree_obj->getChildren($v)){
+                            $data[] = ['menu_id' => $v, 'role_id' => $edit_where['id']];
+                        }
                     }
                 }
                 if($data){
@@ -115,9 +120,14 @@ class Role extends Backend
                     return $result[] = false;
                 }
                 $data = [];
+                $menu_list = model('auth.Menu')->field('id,pid,name as title')->order('sort','desc')->select()->toArray();
+                $tree_obj = Tree::instance();
+                $menu_tree_obj = $tree_obj->init($menu_list);
                 foreach( $menu_ids as $k=>$v ){
                     if( $v != 0 ){
-                        $data[] = ['menu_id' => $v, 'role_id' => $edit_where['id']];
+                        if(!$menu_tree_obj->getChildren($v)){
+                            $data[] = ['menu_id' => $v, 'role_id' => $edit_where['id']];
+                        }
                     }
                 }
                 $res = model('auth.RoleRelMenu')->where('role_id','=',$edit_where['id'])->delete();
