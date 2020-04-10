@@ -66,7 +66,7 @@ class Role extends Backend
                 foreach( $menu_ids as $k=>$v ){
                     if( $v != 0 ){
                         if(!$menu_tree_obj->getChildren($v)){
-                            $data[] = ['menu_id' => $v, 'role_id' => $edit_where['id']];
+                            $data[] = ['menu_id' => $v, 'role_id' => $this->model->id];
                         }
                     }
                 }
