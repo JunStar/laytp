@@ -37,8 +37,8 @@
 <script>
     const node_list = {:json_encode($node_list,JSON_UNESCAPED_UNICODE)};
 
-    layui.use(['layTp','tree'],function(){
-        var tree = layui.tree;
+    layui.use(['layTp'],function(){
+        var tree = layui.laytp_tree;
         var inst1 = tree.render({
             elem: '#treeview'
             ,data: node_list
