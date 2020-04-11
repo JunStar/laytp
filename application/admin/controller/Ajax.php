@@ -161,11 +161,15 @@ class Ajax extends Controller
         $this->success('获取成功','',$result);
     }
 
-    //文件下载
+    //文件下载或者预览
     public function download(){
         $file_url = base64_decode( $this->request->param('file_url') );
         $pathinfo = pathinfo($file_url);
-        return download('.'.$file_url,'download.'.$pathinfo['extension']);
+        if(substr($file_url,0,4) == 'http'){
+            header('location:'.$file_url);
+        }else{
+            return download('.'.$file_url,'download.'.$pathinfo['extension']);
+        }
     }
 
     //弹窗展示视频
