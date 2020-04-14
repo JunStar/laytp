@@ -41,7 +41,7 @@ audio{
     height:34px;
 }
 
-.layui-input, .layui-select, .layui-textarea{
+.layui-input, .layui-select, .layui-textarea, .layui-input-inline, .layui-inline{
     height:34px;
 }
 

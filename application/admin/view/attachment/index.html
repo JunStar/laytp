@@ -16,27 +16,33 @@
 
 {block name="search_form"}
 <div class="search-form-page-tab-content" id="search-form" style="display:none;">
-    <div class="layui-form layui-card-header" style="height:auto;padding:0;">
-        <form class="layui-form-item layui-form-pane" style="margin-bottom:0px;">
-            <div class="layui-inline" style="padding-left: 10px;">
-                <label class="layui-form-label" title="文件类型">文件类型</label>
-                <div class="layui-input-inline">
-                    <select id="file_type" name="search_param[file_type][value]" placeholder="请输入文件类型">
-        				<option value=""></option>
-						<option value="images">图片</option>
-						<option value="video">视频</option>
-						<option value="audio">音频</option>
-						<option value="file">文件</option>
-                    </select>
-                    <input type="hidden" name="search_param[file_type][condition]" value="=">
-                </div>
+    <form class="layui-form" lay-filter="laytp_search_form" style="margin-bottom:0px;">
+        <div class="layui-form-item layui-inline">
+            <label class="layui-form-label" title="ID">ID</label>
+            <div class="layui-input-inline">
+                <input type="text" id="id" name="search_param[id][value]" placeholder="请输入ID" class="layui-input">
+                <input type="hidden" name="search_param[id][condition]" value="=">
             </div>
-
-        <div class="layui-inline" style="padding-left: 10px;">
-            <button class="layui-btn layui-btn-sm layui-btn-primary" lay-submit lay-filter="laytp"><i class="layui-icon"></i> 搜 索</button>
         </div>
-        </form>
+
+        <div class="layui-form-item layui-inline">
+            <label class="layui-form-label" title="文件类型">文件类型</label>
+            <div class="layui-input-inline">
+                <select id="file_type" name="search_param[file_type][value]" placeholder="请输入文件类型">
+                    <option value=""></option>
+                    <option value="images">图片</option>
+                    <option value="video">视频</option>
+                    <option value="audio">音频</option>
+                    <option value="file">文件</option>
+                </select>
+                <input type="hidden" name="search_param[file_type][condition]" value="=">
+            </div>
+        </div>
+
+    <div class="layui-form-item layui-inline">
+        <button class="layui-btn layui-btn-33 layui-btn-normal" lay-submit lay-filter="laytp"><i class="layui-icon"></i> 搜 索</button>
     </div>
+    </form>
 </div>
 {/block}
 

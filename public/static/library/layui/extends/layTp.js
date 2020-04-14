@@ -801,7 +801,7 @@ layui.define([
                                 let index = parent.layer.getFrameIndex(window.name);
                                 setTimeout(function () {
                                     parent.layer.close(index);
-                                    parent.func_controller.table_render();
+                                    parent.func_controller.table_render(parent.layui.form.val("laytp_search_form"),parent.$(".layui-laypage-em").next().html());
                                 }, 1000);
                             }
                         }else{
