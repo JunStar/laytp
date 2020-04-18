@@ -6,12 +6,14 @@
 * @Last Modified time: 2019年06月09日23:23:09
 */
 layui.define([
-    'jquery', 'layer', 'form', 'table', 'laytpl', 'element','laydate','upload','selectPage'
+    'jquery', 'layer', 'form', 'table', 'laytpl', 'element','laydate','upload'
+    ,'selectPage'
     ,'select_multi'
     ,'formSelects'
     ,'dropdown'
     ,'laytp_element'
     ,'laytp_tree'
+    ,'colorpicker'
 ], function(exports){
     const MOD_NAME = 'layTp';
     let layTp = {};
@@ -1253,6 +1255,34 @@ layui.define([
                     closeBtn:0
                 });
             }
+        },
+
+        //颜色选择器
+        colorpicker:function(){
+            layui.each($("input[colorpicker='true']"),function(key,item) {
+                let id = $(item).attr('id');//id属性，必须
+                let color = $(item).val() ? $(item).val() : '#1c97f5';//id属性，必须
+                layui.colorpicker.render({
+                    elem: '#' + id + '-div'
+                    ,color: color
+                    ,done: function(color){
+                        $('#'+ id).val(color);
+                    }
+                });
+            });
+        },
+
+        //监听表格排序
+        table_sort:function(){
+            layui.table.on('sort(default)', function(obj){
+                var where = layui.form.val("laytp_search_form");
+                where['order_param[field]'] = obj.field;
+                where['order_param[type]'] = obj.type;
+                layui.table.reload(table_id, {
+                    initSort: obj
+                    ,where: where
+                });
+            });
         }
     }
 
