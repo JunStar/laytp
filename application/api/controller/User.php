@@ -2,6 +2,7 @@
 namespace app\api\controller;
 
 use app\api\validate\user\EmailLogin;
+use app\api\validate\user\MobileCodeRegLogin;
 use app\api\validate\user\UsernameLogin;
 use app\api\validate\user\UsernameReg;
 use controller\Api;
@@ -19,6 +20,69 @@ class User extends Api{
      */
     public function info(){
         $this->success('获取成功', $this->service_user->getUserInfo());
+    }
+
+    /**
+     * @ApiTitle    (手机号+手机验证码 注册+登录)
+     * @ApiSummary  (手机号+手机验证码 注册+登录)
+     * @ApiMethod   (POST)
+     * @ApiRoute    (/api/user/mobile_code_reg_login)
+     * @ApiParams   (name="mobile", type="string", required=true, description="手机号")
+     * @ApiParams   (name="device_id", type="string", required=true, description="手机设备号")
+     * @ApiParams   (name="code", type="string", required=true, description="手机验证码")
+     * @ApiReturnParams   (name="code", type="integer", description="返回状态码.0=失败,1=成功")
+     * @ApiReturnParams   (name="msg", type="string", description="返回描述")
+     * @ApiReturnParams   (name="time", type="integer", description="请求时间，Unix时间戳，单位秒")
+     * @ApiReturnParams   (name="data.id", type="integer", description="用户主键ID")
+     * @ApiReturnParams   (name="data.mobile", type="string", description="手机号")
+     * @ApiReturnParams   (name="data.email", type="string", description="Email")
+     * @ApiReturnParams   (name="data.username", type="string", description="用户名")
+     * @ApiReturnParams   (name="data.nickname", type="string", description="昵称")
+     * @ApiReturnParams   (name="data.avatar", type="string", description="头像")
+     * @ApiReturnParams   (name="data.token", type="string", description="用户登录凭证,Token")
+     * @ApiReturnParams   (name="data.user_id", type="integer", description="用户主键ID")
+     * @ApiReturnParams   (name="data.createtime", type="integer", description="创建时间，Unix时间戳，单位秒")
+     * @ApiReturnParams   (name="data.expiretime", type="integer", description="Token有效至，Unix时间戳，单位秒")
+     * @ApiReturnParams   (name="data.expires_in", type="integer", description="Token有效时长，单位秒")
+     * @ApiReturn
+    ({
+    "code": 1,
+    "msg": "操作成功",
+    "time": 1584330277,
+    "data": {
+    "id": 3,
+    "mobile": "13800000000",
+    "email": null,
+    "username": null,
+    "nickname": null,
+    "avatar": null,
+    "token": "c96599f3-4708-418f-906e-b4d62f2bd323",
+    "user_id": 3,
+    "createtime": 1584330099,
+    "expiretime": 1584416499,
+    "expires_in": 86222
+    }
+    })
+     */
+    public function mobile_code_reg_login()
+    {
+        if(!$this->request->isPost()){
+            $this->error('请使用POST请求');
+        }
+
+        $param['mobile'] = $this->request->request('mobile');
+        $param['code'] = $this->request->request('code');
+
+        $validate = new MobileCodeRegLogin();
+        if($validate->check($param)){
+            if($this->service_user->mobileCodeRegLogin($param)){
+                $this->success('操作成功', $this->service_user->getUserInfo());
+            }else{
+                $this->error('操作失败,'.$this->service_user->getError());
+            }
+        }else{
+            $this->error('操作失败,'.$validate->getError());
+        }
     }
 
     /**
