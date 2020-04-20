@@ -281,11 +281,11 @@ class Backend extends Controller
      * 生成排序条件
      */
     public function build_order(){
-        $order = [];
+        $order = [['id'=>'desc']];
         //传递了search_param字段，就说明是进行筛选搜索
         $order_param = $this->request->param('order_param');
         if($order_param && $order_param['field'] && $order_param['type']){
-            $order = [$order_param['field']=>$order_param['type']];
+            $order = array_merge([$order_param['field']=>$order_param['type']],$order);
         }
         return $order;
     }

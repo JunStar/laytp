@@ -475,6 +475,10 @@ class Curd extends Command
                     $temp = "\t\t\t\t,{field:'{$v['field_name']}',title:'{$title}'";
                 }
                 $temp .= ",align:'center'";
+                //列表排序
+                if($fields_list[$v['field_name']]['field_order']){
+                    $temp .= ",sort:true";
+                }
                 if($relation_info = $this->is_relation_key($v['field_name'])){
                     $relation_show_field = explode(',',$relation_info['show_field']);
                     $templet = [];

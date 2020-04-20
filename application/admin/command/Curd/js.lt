@@ -29,6 +29,7 @@ layui.use(['layTp'],function() {
             , where: where
             , even: true
             , method: 'GET'
+            , autoSort: false
             , cellMinWidth: {%cellMinWidth%}
             , page: {
                 curr: page

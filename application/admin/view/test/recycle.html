@@ -2,9 +2,17 @@
 
 {block name="body"}
 <div class="search-form-page-tab-content" id="search-form" style="display:none;">
-    <div class="layui-form layui-card-header" style="height:auto;padding:0;">
-        <form class="layui-form-item layui-form-pane" style="margin-bottom:0px;">
-            <div class="layui-inline" style="padding-left: 10px;">
+    <form class="layui-form" lay-filter="laytp_search_form" style="margin-bottom:0px;">
+        <input type="hidden" id="order_param_field" name="order_param[field]" value="">
+        <input type="hidden" id="order_param_type" name="order_param[type]" value="">
+        <div class="layui-form-item layui-inline">
+            <label class="layui-form-label" title="ID">ID</label>
+            <div class="layui-input-inline">
+                <input autocomplete="off" type="text" id="id" name="search_param[id][value]" id="id" placeholder="请输入ID" class="layui-input">
+                <input type="hidden" name="search_param[id][condition]" value="=">
+            </div>
+        </div>
+        <div class="layui-form-item layui-inline">
                 <label class="layui-form-label" title="标题">标题</label>
                 <div class="layui-input-inline">
                     <input autocomplete="off" type="text" id="title" name="search_param[title][value]" id="title" placeholder="请输入标题" class="layui-input">
@@ -12,7 +20,7 @@
                 </div>
             </div>
 
-		    <div class="layui-inline" style="padding-left: 10px;">
+		    <div class="layui-form-item layui-inline">
                 <label class="layui-form-label" title="年级">年级</label>
                 <div class="layui-input-inline">
                     <select id="grade" name="search_param[grade][value]" placeholder="请输入年级">
@@ -25,7 +33,7 @@
                 </div>
             </div>
 
-		    <div class="layui-inline" style="padding-left: 10px;">
+		    <div class="layui-form-item layui-inline">
                 <label class="layui-form-label" title="状态">状态</label>
                 <div class="layui-input-inline">
                     <input autocomplete="off" type="text" id="status" name="search_param[status][value]" id="status" placeholder="请输入状态" class="layui-input">
@@ -33,7 +41,7 @@
                 </div>
             </div>
 
-		    <div class="layui-inline" style="padding-left: 10px;">
+		    <div class="layui-form-item layui-inline">
                 <label class="layui-form-label" title="英雄">英雄</label>
                 <div class="layui-input-inline">
                     <input autocomplete="off" type="text" id="hero" name="search_param[hero][value]" id="hero" placeholder="请输入英雄" class="layui-input">
@@ -41,7 +49,7 @@
                 </div>
             </div>
 
-		    <div class="layui-inline" style="padding-left: 10px;">
+		    <div class="layui-form-item layui-inline">
                 <label class="layui-form-label" title="爱好">爱好</label>
                 <div class="layui-input-inline">
                     <input autocomplete="off" type="text" id="hobby" name="search_param[hobby][value]" id="hobby" placeholder="请输入爱好" class="layui-input">
@@ -49,7 +57,7 @@
                 </div>
             </div>
 
-		    <div class="layui-inline" style="padding-left: 10px;">
+		    <div class="layui-form-item layui-inline">
                 <label class="layui-form-label" title="标志">标志</label>
                 <div class="layui-input-inline">
                     <input autocomplete="off" type="text" id="sign" name="search_param[sign][value]" id="sign" placeholder="请输入标志" class="layui-input">
@@ -57,7 +65,7 @@
                 </div>
             </div>
 
-		    <div class="layui-inline" style="padding-left: 10px;">
+		    <div class="layui-form-item layui-inline">
                 <label class="layui-form-label" title="描述">描述</label>
                 <div class="layui-input-inline">
                     <input autocomplete="off" type="text" name="search_param[description][value]" id="description" placeholder="请输入描述" class="layui-input">
@@ -65,7 +73,7 @@
                 </div>
             </div>
 
-		    <div class="layui-inline" style="padding-left: 10px;">
+		    <div class="layui-form-item layui-inline">
                 <label class="layui-form-label" title="所属分类（单选）">所属分类（单选）</label>
                 <div class="layui-input-inline">
                     <input autocomplete="off" type="text" id="category_id" name="search_param[category_id][value]" id="category_id" placeholder="请输入所属分类（单选）" class="layui-input">
@@ -73,7 +81,7 @@
                 </div>
             </div>
 
-		    <div class="layui-inline" style="padding-left: 10px;">
+		    <div class="layui-form-item layui-inline">
                 <label class="layui-form-label" title="所属分类（多选）">所属分类（多选）</label>
                 <div class="layui-input-inline">
                     <input autocomplete="off" type="text" id="category_ids" name="search_param[category_ids][value]" id="category_ids" placeholder="请输入所属分类（多选）" class="layui-input">
@@ -81,7 +89,7 @@
                 </div>
             </div>
 
-		    <div class="layui-inline" style="padding-left: 10px;">
+		    <div class="layui-form-item layui-inline">
                 <label class="layui-form-label" title="单个图片">单个图片</label>
                 <div class="layui-input-inline">
                     <input autocomplete="off" type="text" id="single_img" name="search_param[single_img][value]" id="single_img" placeholder="请输入单个图片" class="layui-input">
@@ -89,7 +97,7 @@
                 </div>
             </div>
 
-		    <div class="layui-inline" style="padding-left: 10px;">
+		    <div class="layui-form-item layui-inline">
                 <label class="layui-form-label" title="视频文件地址">视频文件地址</label>
                 <div class="layui-input-inline">
                     <input autocomplete="off" type="text" id="video" name="search_param[video][value]" id="video" placeholder="请输入视频文件地址" class="layui-input">
@@ -97,7 +105,7 @@
                 </div>
             </div>
 
-		    <div class="layui-inline" style="padding-left: 10px;">
+		    <div class="layui-form-item layui-inline">
                 <label class="layui-form-label" title="音频文件地址">音频文件地址</label>
                 <div class="layui-input-inline">
                     <input autocomplete="off" type="text" id="audio" name="search_param[audio][value]" id="audio" placeholder="请输入音频文件地址" class="layui-input">
@@ -105,7 +113,7 @@
                 </div>
             </div>
 
-		    <div class="layui-inline" style="padding-left: 10px;">
+		    <div class="layui-form-item layui-inline">
                 <label class="layui-form-label" title="任意文件地址">任意文件地址</label>
                 <div class="layui-input-inline">
                     <input autocomplete="off" type="text" id="file" name="search_param[file][value]" id="file" placeholder="请输入任意文件地址" class="layui-input">
@@ -113,7 +121,7 @@
                 </div>
             </div>
 
-		    <div class="layui-inline" style="padding-left: 10px;">
+		    <div class="layui-form-item layui-inline">
                 <label class="layui-form-label" title="文章内容">文章内容</label>
                 <div class="layui-input-inline">
                     <input autocomplete="off" type="text" id="content" name="search_param[content][value]" id="content" placeholder="请输入文章内容" class="layui-input">
@@ -121,7 +129,7 @@
                 </div>
             </div>
 
-		    <div class="layui-inline" style="padding-left: 10px;">
+		    <div class="layui-form-item layui-inline">
                 <label class="layui-form-label" title="省份">省份</label>
                 <div class="layui-input-inline">
                     <input autocomplete="off" type="text" id="province_id" name="search_param[province_id][value]" id="province_id" placeholder="请输入省份" class="layui-input">
@@ -129,7 +137,7 @@
                 </div>
             </div>
 
-		    <div class="layui-inline" style="padding-left: 10px;">
+		    <div class="layui-form-item layui-inline">
                 <label class="layui-form-label" title="城市">城市</label>
                 <div class="layui-input-inline">
                     <input autocomplete="off" type="text" id="city_id" name="search_param[city_id][value]" id="city_id" placeholder="请输入城市" class="layui-input">
@@ -137,7 +145,7 @@
                 </div>
             </div>
 
-		    <div class="layui-inline" style="padding-left: 10px;">
+		    <div class="layui-form-item layui-inline">
                 <label class="layui-form-label" title="地区">地区</label>
                 <div class="layui-input-inline">
                     <input autocomplete="off" type="text" id="area_id" name="search_param[area_id][value]" id="area_id" placeholder="请输入地区" class="layui-input">
@@ -145,7 +153,7 @@
                 </div>
             </div>
 
-		    <div class="layui-inline" style="padding-left: 10px;">
+		    <div class="layui-form-item layui-inline">
                 <label class="layui-form-label" title="创建时间">创建时间</label>
                 <div class="layui-input-inline">
                     <input type="text" class="layui-input" id="create_time" name="search_param[create_time][value]" laydate="true" laydate_type="datetime" laydate_range="true" placeholder="请选择时间">
@@ -156,8 +164,7 @@
         <div class="layui-inline" style="padding-left: 10px;">
             <button class="layui-btn layui-btn-sm layui-btn-primary" lay-submit lay-filter="laytp"><i class="layui-icon"></i> 搜 索</button>
         </div>
-        </form>
-    </div>
+    </form>
 </div>
 <table class="laytp-table layui-hide-sm" lay-filter="default"></table>
 {/block}
@@ -212,7 +219,7 @@ layui.use(['layTp'],function() {
 				//,{field:'update_time',title:'更新时间',align:'center'}
 				//,{field:'delete_time',title:'删除时间',align:'center'}
 				,{field:'title',title:'标题',align:'center'}
-				,{field:'grade',title:'年级',align:'center',templet:function(d){
+				,{field:'grade',title:'年级',align:'center',sort:true,templet:function(d){
 					return layTp.facade.formatter.status('grade',d.grade,{"1":"一年级","2":"二年级","3":"三年级"});
 				}}
 				,{field:'status',title:'状态',align:'center'}
