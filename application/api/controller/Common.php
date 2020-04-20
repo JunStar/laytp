@@ -1,14 +1,13 @@
 <?php
 namespace app\api\controller;
 
-use app\api\validate\email\CheckCode;
 use app\api\validate\email\Send;
 use app\common\service\Email;
+use app\common\service\Mobile;
 use controller\Api;
 use library\QiniuYun;
 use library\Random;
 use think\facade\Config;
-use think\facade\Env;
 
 /**
  * 公用接口
@@ -201,6 +200,48 @@ class Common extends Api{
             $this->success('验证成功');
         }else{
             $this->error('验证失败',$email_service->getError());
+        }
+    }
+
+    /**
+     * @ApiTitle    (发送手机验证码)
+     * @ApiSummary  (发送手机验证码)
+     * @ApiMethod   (POST)
+     * @ApiRoute    (/api/common/send_mobile_code)
+     * @ApiHeaders  (name=token, type=string, required=true, description="用户登录后得到的Token")
+     * @ApiParams   (name="mobile", type="string", required=true, description="手机号码")
+     * @ApiParams   (name="event", type="string", required=true, sample="reg_login",description="事件名称，check=验证手机号,bind=绑定手机号,reg_login=使用手机号+验证码的方式进行注册或登录")
+     * @ApiReturnParams   (name="code", type="integer", required=true, sample="0")
+     * @ApiReturnParams   (name="msg", type="string", required=true, sample="返回成功")
+     * @ApiReturnParams   (name="time", type="integer", description="请求时间，Unix时间戳，单位秒")
+     * @ApiReturnParams   (name="data", type="null", description="只会返回null")
+     * @ApiReturn
+    ({
+    "code": 0,
+    "msg": "发送失败,触发分钟级流控Permits:1",
+    "time": 1584667483,
+    "data": null
+    })
+     */
+    public function send_mobile_code()
+    {
+        if(!$this->request->isPost()){
+            $this->error('请使用POST请求');
+        }
+
+        $params['mobile'] = $this->request->param('mobile');
+        $params['event'] = $this->request->param('event');
+
+        $validate = new \app\api\validate\mobilemsg\Send();
+        if($validate->check($params)){
+            $mobile_service = new Mobile();
+            if($mobile_service->send($params['mobile'],$params['event'],['code'=>Random::numeric()])){
+                $this->success('发送成功');
+            }else{
+                $this->error('发送失败,'.$mobile_service->getError());
+            }
+        }else{
+            $this->error('发送失败,'.$validate->getError());
         }
     }
 }
