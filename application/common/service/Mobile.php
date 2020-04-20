@@ -85,7 +85,7 @@ class Mobile extends Service
         return true;
     }
 
-    //根据token获取手机号
+    //根据token获取手机号,用于本机手机号一键免密登录
     public function getMobileByToken($access_token){
         try {
             AlibabaCloud::accessKeyClient(Config::get('aliyun.ram.access_key'), Config::get('aliyun.ram.access_key_secret'))
