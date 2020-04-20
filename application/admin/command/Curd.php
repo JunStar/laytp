@@ -475,6 +475,10 @@ class Curd extends Command
                     $temp = "\t\t\t\t,{field:'{$v['field_name']}',title:'{$title}'";
                 }
                 $temp .= ",align:'center'";
+                //列表排序
+                if($fields_list[$v['field_name']]['field_order']){
+                    $temp .= ",sort:true";
+                }
                 if($relation_info = $this->is_relation_key($v['field_name'])){
                     $relation_show_field = explode(',',$relation_info['show_field']);
                     $templet = [];
@@ -744,7 +748,7 @@ EOD;
     {
         $field_comment = $info['field_comment'];
         return <<<EOD
-    <div class="layui-inline" style="padding-left: 10px;">
+    <div class="layui-form-item layui-inline">
                 <label class="layui-form-label" title="{$field_comment}">{$field_comment}</label>
                 <div class="layui-input-inline">
                     {$content}
@@ -756,7 +760,7 @@ EOD;
     protected function get_select_relation_search_form_group($field, $content)
     {
         return <<<EOD
-    <div class="layui-inline" style="padding-left: 10px;">
+    <div class="layui-form-item layui-inline">
                 <label class="layui-form-label" title="{$field}">{$field}</label>
                 {$content}
             </div>

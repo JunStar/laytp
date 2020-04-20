@@ -35,7 +35,6 @@ layui.use(['layTp'],function() {
             , where: where
             , even: true
             , method: 'GET'
-            , autoSort: false
             , cellMinWidth: 180
             , page: {
                 curr: page
@@ -43,31 +42,17 @@ layui.use(['layTp'],function() {
             , cols: [[
                 {type:'checkbox'}
 				,{field:'id',title:'ID',align:'center',width:80}
+				,{field:'template_code',title:'阿里云短信模板ID',align:'center'}
+				,{field:'event',title:'事件名称',align:'center'}
+				,{field:'params',title:'邮件内容参数',align:'center'}
+				,{field:'mobile',title:'收信人手机号码',align:'center'}
+				,{field:'status',title:'状态',align:'center',templet:function(d){
+					return layTp.facade.formatter.status('status',d.status,{"1":"未使用","2":"已使用","3":"已过期"});
+				}}
+				,{field:'expire_time',title:'过期时间，0表示永不过期',align:'center'}
+				//,{field:'create_time',title:'创建时间',align:'center'}
 				//,{field:'update_time',title:'更新时间',align:'center'}
 				//,{field:'delete_time',title:'删除时间',align:'center'}
-				,{field:'title',title:'标题',align:'center'}
-				,{field:'grade',title:'年级',align:'center',sort:true,templet:function(d){
-					return layTp.facade.formatter.status('grade',d.grade,{"1":"一年级","2":"二年级","3":"三年级"});
-				}}
-				,{field:'status',title:'状态',align:'center'}
-				,{field:'hero',title:'英雄',align:'center'}
-				,{field:'hobby',title:'爱好',align:'center'}
-				,{field:'sign',title:'标志',align:'center'}
-				,{field:'description',title:'描述',align:'center'}
-				,{field:'category_id',title:'所属分类（单选）',align:'center'}
-				,{field:'category_ids',title:'所属分类（多选）',align:'center'}
-				,{field:'single_img',title:'单个图片',align:'center'}
-				,{field:'multi_img',title:'多个图片',align:'center',templet:function(d){
-					return layTp.facade.formatter.images(d.multi_img);
-				}}
-				,{field:'video',title:'视频文件地址',align:'center'}
-				,{field:'audio',title:'音频文件地址',align:'center'}
-				,{field:'file',title:'任意文件地址',align:'center'}
-				,{field:'content',title:'文章内容',align:'center'}
-				,{field:'province_id',title:'省份',align:'center'}
-				,{field:'city_id',title:'城市',align:'center'}
-				,{field:'area_id',title:'地区',align:'center'}
-				,{field:'create_time',title:'创建时间',align:'center'}
 				,{field:'operation',title:'操作',align:'center',toolbar:'#operation',width:100,fixed:'right'}
             ]]
         });

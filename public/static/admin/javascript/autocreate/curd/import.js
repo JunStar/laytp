@@ -18,6 +18,7 @@ layui.use(['layTp'],function(){
                     {title:'数据库字段查看', align: 'center', colspan: 3}
                     ,{title:'表单设置,影响添加编辑表单', align: 'center', colspan: 3}
                     ,{title:'显示设置', align: 'center',rowspan:2, templet: "#field_show", align: 'center', width:350}
+                    ,{title:'排序设置', align: 'center',rowspan:2, templet: "#field_order", align: 'center', width:130}
                 ]
                 ,[
                     //数据库字段设置
@@ -486,6 +487,7 @@ layui.use(['layTp'],function(){
                 ,form_additional
                 ,form_empty
                 ,field_show_index
+                ,field_order
                 ,field_show_add
                 ,field_show_edit
             ;
@@ -499,6 +501,8 @@ layui.use(['layTp'],function(){
                 form_empty = (typeof form_empty == "undefined") ? 0 : form_empty;
                 field_show_index = $('#field_show_index_'+field_name+':checked').val();
                 field_show_index = (typeof field_show_index == "undefined") ? 0 : field_show_index;
+                field_order = $('#field_order_'+field_name+':checked').val();
+                field_order = (typeof field_order == "undefined") ? 0 : field_order;
                 field_show_add = $('#field_show_add_'+field_name+':checked').val();
                 field_show_add = (typeof field_show_add == "undefined") ? 0 : field_show_add;
                 field_show_edit = $('#field_show_edit_'+field_name+':checked').val();
@@ -511,6 +515,7 @@ layui.use(['layTp'],function(){
                     ,'form_additional':form_additional
                     ,'form_empty':form_empty
                     ,'field_show_index':field_show_index
+                    ,'field_order':field_order
                     ,'field_show_add':field_show_add
                     ,'field_show_edit':field_show_edit
                 };

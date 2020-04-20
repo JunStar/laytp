@@ -21,7 +21,7 @@ layui.use(['layTp'],function() {
     });
 
     //表格渲染
-    func_controller.table_render = function (where) {
+    func_controller.table_render = function (where,page) {
         layui.table.render({
             elem: '.laytp-table'
             , id: table_id
@@ -31,7 +31,9 @@ layui.use(['layTp'],function() {
             , even: true
             , method: 'GET'
             , cellMinWidth: 80
-            , page: true
+            , page: {
+                curr: page
+            }
             , cols: [[
                 {type:'checkbox'}
                 ,{field:'id',title:'ID',align:'center',width:80}

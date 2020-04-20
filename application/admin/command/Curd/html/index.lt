@@ -2,15 +2,22 @@
 
 {block name="search_form"}
 <div class="search-form-page-tab-content" id="search-form" style="display:none;">
-    <div class="layui-form layui-card-header" style="height:auto;padding:0;">
-        <form class="layui-form-item layui-form-pane" style="margin-bottom:0px;">
-        {%searchForm%}
-
-        <div class="layui-inline">
-            <button class="layui-btn layui-btn-sm layui-btn-primary" lay-submit lay-filter="laytp"><i class="layui-icon"></i> 搜 索</button>
+    <form class="layui-form" lay-filter="laytp_search_form" style="margin-bottom:0px;">
+        <input type="hidden" id="order_param_field" name="order_param[field]" value="">
+        <input type="hidden" id="order_param_type" name="order_param[type]" value="">
+        <div class="layui-form-item layui-inline">
+            <label class="layui-form-label" title="ID">ID</label>
+            <div class="layui-input-inline">
+                <input autocomplete="off" type="text" id="id" name="search_param[id][value]" id="id" placeholder="请输入ID" class="layui-input">
+                <input type="hidden" name="search_param[id][condition]" value="=">
+            </div>
         </div>
-        </form>
-    </div>
+    {%searchForm%}
+
+        <div class="layui-form-item layui-inline">
+            <button class="layui-btn layui-btn-33 layui-btn-normal" lay-submit lay-filter="laytp"><i class="layui-icon"></i> 搜 索</button>
+        </div>
+    </form>
 </div>
 {/block}
 

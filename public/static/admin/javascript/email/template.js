@@ -26,7 +26,7 @@ layui.use(['layTp'],function() {
     layTp.facade.dropdown_set(batch_dropdown_list,true);
 
     //表格渲染
-    func_controller.table_render = function (where) {
+    func_controller.table_render = function (where,page) {
         layui.table.render({
             elem: '.layui-hide-sm'
             , id: table_id
@@ -36,7 +36,9 @@ layui.use(['layTp'],function() {
             , even: true
             , method: 'GET'
             , cellMinWidth: 180
-            , page: true
+            , page: {
+                curr: page
+            }
             , cols: [[
                 {type:'checkbox'}
 				,{field:'id',title:'ID',align:'center',width:80}

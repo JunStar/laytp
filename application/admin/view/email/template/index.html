@@ -2,57 +2,55 @@
 
 {block name="search_form"}
 <div class="search-form-page-tab-content" id="search-form" style="display:none;">
-    <div class="layui-form layui-card-header" style="height:auto;padding:0;">
-        <form class="layui-form-item layui-form-pane" style="margin-bottom:0px;">
-            <div class="layui-inline" style="padding-left: 10px;">
-                <label class="layui-form-label" title="事件名称">事件名称</label>
-                <div class="layui-input-inline">
-                    <input autocomplete="off" type="text" id="event" name="search_param[event][value]" id="event" placeholder="请输入事件名称" class="layui-input">
-                    <input type="hidden" name="search_param[event][condition]" value="LIKE">
-                </div>
+    <form class="layui-form" lay-filter="laytp_search_form" style="margin-bottom:0px;">
+        <div class="layui-form-item layui-inline">
+            <label class="layui-form-label" title="事件名称">事件名称</label>
+            <div class="layui-input-inline">
+                <input autocomplete="off" type="text" id="event" name="search_param[event][value]" id="event" placeholder="请输入事件名称" class="layui-input">
+                <input type="hidden" name="search_param[event][condition]" value="LIKE">
             </div>
-
-		    <div class="layui-inline" style="padding-left: 10px;">
-                <label class="layui-form-label" title="模板标题">模板标题</label>
-                <div class="layui-input-inline">
-                    <input autocomplete="off" type="text" id="title" name="search_param[title][value]" id="title" placeholder="请输入模板标题" class="layui-input">
-                    <input type="hidden" name="search_param[title][condition]" value="LIKE">
-                </div>
-            </div>
-
-		    <div class="layui-inline" style="padding-left: 10px;">
-                <label class="layui-form-label" title="模板内容，支持html标签">模板内容，支持html标签</label>
-                <div class="layui-input-inline">
-                    <input type="text" id="template" name="search_param[template][value]" placeholder="请输入模板内容，支持html标签" class="layui-input">
-                            <input type="hidden" name="search_param[template][condition]" value="LIKE">
-                </div>
-            </div>
-
-		    <div class="layui-inline" style="padding-left: 10px;">
-                <label class="layui-form-label" title="模板是否为html">模板是否为html</label>
-                <div class="layui-input-inline">
-                    <select id="ishtml" name="search_param[ishtml][value]" placeholder="请输入模板是否为html">
-        				<option value=""></option>
-						<option value="2">不是</option>
-						<option value="1">是</option>
-                    </select>
-                    <input type="hidden" name="search_param[ishtml][condition]" value="=">
-                </div>
-            </div>
-
-		    <div class="layui-inline" style="padding-left: 10px;">
-                <label class="layui-form-label" title="过期时长，单位秒，0表示永不过期">过期时长，单位秒，0表示永不过期</label>
-                <div class="layui-input-inline">
-                    <input autocomplete="off" type="text" id="expire" name="search_param[expire][value]" id="expire" placeholder="请输入过期时长，单位秒，0表示永不过期" class="layui-input">
-                    <input type="hidden" name="search_param[expire][condition]" value="LIKE">
-                </div>
-            </div>
-
-        <div class="layui-inline">
-            <button class="layui-btn layui-btn-sm layui-btn-primary" lay-submit lay-filter="laytp"><i class="layui-icon"></i> 搜 索</button>
         </div>
-        </form>
+
+        <div class="layui-form-item layui-inline">
+            <label class="layui-form-label" title="模板标题">模板标题</label>
+            <div class="layui-input-inline">
+                <input autocomplete="off" type="text" id="title" name="search_param[title][value]" id="title" placeholder="请输入模板标题" class="layui-input">
+                <input type="hidden" name="search_param[title][condition]" value="LIKE">
+            </div>
+        </div>
+
+        <div class="layui-form-item layui-inline">
+            <label class="layui-form-label" title="模板内容，支持html标签">模板内容，支持html标签</label>
+            <div class="layui-input-inline">
+                <input type="text" id="template" name="search_param[template][value]" placeholder="请输入模板内容，支持html标签" class="layui-input">
+                        <input type="hidden" name="search_param[template][condition]" value="LIKE">
+            </div>
+        </div>
+
+        <div class="layui-form-item layui-inline">
+            <label class="layui-form-label" title="模板是否为html">模板是否为html</label>
+            <div class="layui-input-inline">
+                <select id="ishtml" name="search_param[ishtml][value]" placeholder="请输入模板是否为html">
+                    <option value=""></option>
+                    <option value="2">不是</option>
+                    <option value="1">是</option>
+                </select>
+                <input type="hidden" name="search_param[ishtml][condition]" value="=">
+            </div>
+        </div>
+
+        <div class="layui-form-item layui-inline">
+            <label class="layui-form-label" title="过期时长，单位秒，0表示永不过期">过期时长，单位秒，0表示永不过期</label>
+            <div class="layui-input-inline">
+                <input autocomplete="off" type="text" id="expire" name="search_param[expire][value]" id="expire" placeholder="请输入过期时长，单位秒，0表示永不过期" class="layui-input">
+                <input type="hidden" name="search_param[expire][condition]" value="LIKE">
+            </div>
+        </div>
+
+    <div class="layui-form-item layui-inline">
+        <button class="layui-btn layui-btn-33 layui-btn-normal" lay-submit lay-filter="laytp"><i class="layui-icon"></i> 搜 索</button>
     </div>
+    </form>
 </div>
 {/block}
 

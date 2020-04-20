@@ -169,6 +169,37 @@ class User extends Service
     }
 
     /**
+     * 手机号+验证码 注册+登录
+     * @param $params
+     * @return bool
+     */
+    public function mobileCodeRegLogin($params){
+        try{
+            $user = \app\common\model\User::get(['mobile' => $params['mobile']]);
+            if(!$user){
+                $data = [
+                    'mobile' => $params['mobile'],
+                    'login_time' => date('Y-m-d H:i:s'),
+                    'login_ip'   => request()->ip()
+                ];
+
+                $user = \app\common\model\User::create($data, true);
+                $this->_user = \app\common\model\User::get($user->id);
+            }else{
+                $this->_user = $user;
+            }
+
+            //设置Token
+            $this->_token = Random::uuid();
+            Token::set($this->_token, $user->id, $this->token_keep_time);
+
+        }catch (Exception $e){
+            $this->setError($e->getFile().$e->getLine().$e->getMessage());
+            return false;
+        }
+    }
+
+    /**
      * 退出登录
      */
     public function logout(){

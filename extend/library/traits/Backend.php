@@ -21,9 +21,10 @@ trait Backend
     public function index(){
         if( $this->request->isAjax() ){
             $where = $this->build_params();
+            $order = $this->build_order();
             $select_page = $this->request->param('select_page');
             $limit = $select_page ? $this->request->param('pageSize') : $this->request->param('limit');
-            $data = $this->model->where($where)->order('id desc')->paginate($limit)->toArray();
+            $data = $this->model->where($where)->order($order)->paginate($limit)->toArray();
             return $select_page ? select_page_data($data) : layui_table_page_data($data);
         }
         return $this->fetch();

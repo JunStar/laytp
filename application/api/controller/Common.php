@@ -1,14 +1,13 @@
 <?php
 namespace app\api\controller;
 
-use app\api\validate\email\CheckCode;
 use app\api\validate\email\Send;
 use app\common\service\Email;
+use app\common\service\Mobile;
 use controller\Api;
 use library\QiniuYun;
 use library\Random;
 use think\facade\Config;
-use think\facade\Env;
 
 /**
  * 公用接口
@@ -42,12 +41,12 @@ class Common extends Api{
             $aliyun_oss_upload_radio = Config::get('laytp.upload.aliyun_radio');
             $local_upload_radio = Config::get('laytp.upload.radio');
             if($qiniu_upload_radio == 1 && $aliyun_oss_upload_radio == 1 && $local_upload_radio == 1){
-                $this->error('上传失败','请开启一种上传方式');
+                $this->error('上传失败','后台请开启一种上传方式');
             }
 
             $file = $this->request->file('file'); // 获取上传的文件
             if(!$file){
-                $this->error('上传失败','请选择需要的上传文件');
+                $this->error('上传失败,请选择需要的上传文件');
             }
             $info       = $file->getInfo();
             $path_info  = pathinfo($info['name']);
@@ -62,7 +61,7 @@ class Common extends Api{
             $typeDict = ['b' => 0, 'k' => 1, 'kb' => 1, 'm' => 2, 'mb' => 2, 'gb' => 3, 'g' => 3];
             $size = (int)$upload['maxsize'] * pow(1024, isset($typeDict[$type]) ? $typeDict[$type] : 0);
             if ($info['size'] > (int) $size) {
-                $this->error('上传失败','文件大小超过'.$upload['maxsize']);
+                $this->error('上传失败,文件大小超过'.$upload['maxsize']);
                 return false;
             }
 
@@ -74,7 +73,7 @@ class Common extends Api{
 
             //禁止上传PHP和HTML文件
             if (in_array($info['type'], ['text/x-php', 'text/html']) || in_array($suffix, ['php', 'html', 'htm'])) {
-                $this->error('上传失败','文件类型被禁止上传');
+                $this->error('上传失败,文件类型被禁止上传');
             }
             //验证文件后缀
             if ($upload['mimetype'] !== '*' &&
@@ -83,7 +82,7 @@ class Common extends Api{
                     || (stripos($typeArr[0] . '/', $upload['mimetype']) !== false && (!in_array($info['type'], $mimetypeArr) && !in_array($typeArr[0] . '/*', $mimetypeArr)))
                 )
             ) {
-                $this->error('上传失败','文件类型被禁止上传');
+                $this->error('上传失败,文件类型被禁止上传');
             }
 
             $file_url = '';
@@ -120,7 +119,7 @@ class Common extends Api{
             if($local_upload_radio == 2){
                 $move_info = $file->move('uploads'); // 移动文件到指定目录 没有则创建
                 $save_name = str_replace('\\','/',$move_info->getSaveName());
-                $local_file_url = '/uploads/'.$save_name;
+                $local_file_url = Config::get('laytp.upload.domain').'/uploads/'.$save_name;
 
                 $add['file_type'] = $this->request->param('accept');
                 $add['file_path'] = $local_file_url;
@@ -129,86 +128,7 @@ class Common extends Api{
 
             $this->success('上传成功',$file_url ? $file_url : $local_file_url);
         }catch (\Exception $e){
-            $this->error('上传失败',$e->getMessage());
-        }
-    }
-
-    /**
-     * @ApiTitle    (旧的文件上传)
-     * @ApiSummary  (旧的文件上传)
-     * @ApiMethod   (POST)
-     * @ApiRoute    (/api/common/old_upload)
-     * @ApiParams   (name="file", type="file", required=true, description="文件")
-     * @ApiReturnParams   (name="code", type="integer", required=true, sample="0")
-     * @ApiReturnParams   (name="msg", type="string", required=true, sample="返回成功")
-     * @ApiReturnParams   (name="data", type="object", sample="{'user_id':'int','user_name':'string','profile':{'email':'string','age':'integer'}}", description="扩展数据返回")
-     * @ApiReturn
-    ({
-    'code':'1',
-    'msg':'返回成功'
-    })
-     */
-    public function old_upload()
-    {
-        try{
-            $file = $this->request->file('file'); // 获取上传的文件
-            if(!$file){
-                $this->error('请选择需要的上传文件');
-            }
-
-            $upload = Config::get('laytp.upload');
-            preg_match('/(\d+)(\w+)/', $upload['maxsize'], $matches);
-            $type = strtolower($matches[2]);
-            $typeDict = ['b' => 0, 'k' => 1, 'kb' => 1, 'm' => 2, 'mb' => 2, 'gb' => 3, 'g' => 3];
-            $size = (int)$upload['maxsize'] * pow(1024, isset($typeDict[$type]) ? $typeDict[$type] : 0);
-
-            $fileInfo = $file->getInfo();
-            $suffix = strtolower(pathinfo($fileInfo['name'], PATHINFO_EXTENSION));
-            $suffix = $suffix && preg_match("/^[a-zA-Z0-9]+$/", $suffix) ? $suffix : 'file';
-
-            $mimetypeArr = explode(',', strtolower($upload['mimetype']));
-            $typeArr = explode('/', $fileInfo['type']);
-
-            //禁止上传PHP和HTML文件
-            if (in_array($fileInfo['type'], ['text/x-php', 'text/html']) || in_array($suffix, ['php', 'html', 'htm'])) {
-                $this->error('文件类型被禁止上传');
-            }
-            //验证文件后缀
-            if ($upload['mimetype'] !== '*' &&
-                (
-                    !in_array($suffix, $mimetypeArr)
-                    || (stripos($typeArr[0] . '/', $upload['mimetype']) !== false && (!in_array($fileInfo['type'], $mimetypeArr) && !in_array($typeArr[0] . '/*', $mimetypeArr)))
-                )
-            ) {
-                $this->error('文件类型被禁止上传');
-            }
-
-            $info = $file->validate(['size' => $size])->move('uploads'); // 移动文件到指定目录 没有则创建
-            if($info->getError()){
-                $this->error('上传失败，'.$info->getError());
-            }else{
-                $upload_way = Config::get('laytp.upload.way') ? Config::get('laytp.upload.way') : 'local';
-                $save_name = str_replace('\\','/',$info->getSaveName());
-                $file_name = '/uploads/'.$save_name;
-                if($upload_way == 'local'){
-                    $this->success('上传成功',$file_name);
-                }else if($upload_way == 'qiniu'){
-                    $qiniu_yun = QiniuYun::instance();
-                    if($qiniu_yun->upload(
-                        Config::get('laytp.upload.qiniu_access_key')
-                        ,Config::get('laytp.upload.qiniu_secret_key')
-                        ,Config::get('laytp.upload.qiniu_bucket')
-                        ,Env::get('root_path') . 'public' . $file_name
-                        ,$file_name
-                    )){
-                        $this->success('上传成功',$file_name);
-                    }else{
-                        $this->error('上传失败,'.$qiniu_yun->getMessage());
-                    }
-                }
-            }
-        }catch (Exception $e){
-            $this->error('上传失败',['data'=>$e->getMessage()]);
+            $this->error('上传失败,'.$e->getMessage());
         }
     }
 
@@ -242,10 +162,10 @@ class Common extends Api{
             if($email_service->send($params['email'],$params['event'],['code'=>Random::numeric()])){
                 $this->success('发送成功');
             }else{
-                $this->error('发送失败',$email_service->getError());
+                $this->error('发送失败,'.$email_service->getError());
             }
         }else{
-            $this->error('发送失败',$validate->getError());
+            $this->error('发送失败,'.$validate->getError());
         }
     }
 
@@ -279,7 +199,49 @@ class Common extends Api{
         if($email_service->checkCode($params['email'],$params['event'],$params['code'])){
             $this->success('验证成功');
         }else{
-            $this->error('验证失败',$email_service->getError());
+            $this->error('验证失败,'.$email_service->getError());
+        }
+    }
+
+    /**
+     * @ApiTitle    (发送手机验证码)
+     * @ApiSummary  (发送手机验证码)
+     * @ApiMethod   (POST)
+     * @ApiRoute    (/api/common/send_mobile_code)
+     * @ApiHeaders  (name=token, type=string, required=true, description="用户登录后得到的Token")
+     * @ApiParams   (name="mobile", type="string", required=true, description="手机号码")
+     * @ApiParams   (name="event", type="string", required=true, sample="reg_login",description="事件名称，check=验证手机号,bind=绑定手机号,reg_login=使用手机号+验证码的方式进行注册或登录")
+     * @ApiReturnParams   (name="code", type="integer", required=true, sample="0")
+     * @ApiReturnParams   (name="msg", type="string", required=true, sample="返回成功")
+     * @ApiReturnParams   (name="time", type="integer", description="请求时间，Unix时间戳，单位秒")
+     * @ApiReturnParams   (name="data", type="null", description="只会返回null")
+     * @ApiReturn
+    ({
+    "code": 0,
+    "msg": "发送失败,触发分钟级流控Permits:1",
+    "time": 1584667483,
+    "data": null
+    })
+     */
+    public function send_mobile_code()
+    {
+        if(!$this->request->isPost()){
+            $this->error('请使用POST请求');
+        }
+
+        $params['mobile'] = $this->request->param('mobile');
+        $params['event'] = $this->request->param('event');
+
+        $validate = new \app\api\validate\mobilemsg\Send();
+        if($validate->check($params)){
+            $mobile_service = new Mobile();
+            if($mobile_service->send($params['mobile'],$params['event'],['code'=>Random::numeric()])){
+                $this->success('发送成功');
+            }else{
+                $this->error('发送失败,'.$mobile_service->getError());
+            }
+        }else{
+            $this->error('发送失败,'.$validate->getError());
         }
     }
 }

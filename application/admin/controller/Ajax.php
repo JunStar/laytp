@@ -41,12 +41,12 @@ class Ajax extends Controller
             $aliyun_oss_upload_radio = Config::get('laytp.upload.aliyun_radio');
             $local_upload_radio = Config::get('laytp.upload.radio');
             if($qiniu_upload_radio == 1 && $aliyun_oss_upload_radio == 1 && $local_upload_radio == 1){
-                $this->error('上传失败','','请开启一种上传方式');
+                $this->error('上传失败,请开启一种上传方式');
             }
 
             $file = $file ? $file : $this->request->file('file'); // 获取上传的文件
             if(!$file){
-                $this->error('上传失败','','请选择需要的上传文件');
+                $this->error('上传失败,请选择需要的上传文件');
             }
             $info       = $file->getInfo();
             $path_info  = pathinfo($info['name']);
@@ -63,7 +63,7 @@ class Ajax extends Controller
             $typeDict = ['b' => 0, 'k' => 1, 'kb' => 1, 'm' => 2, 'mb' => 2, 'gb' => 3, 'g' => 3];
             $size = (int)$upload['maxsize'] * pow(1024, isset($typeDict[$type]) ? $typeDict[$type] : 0);
             if ($info['size'] > (int) $size) {
-                $this->error('上传失败','','文件大小超过'.$upload['maxsize']);
+                $this->error('上传失败,文件大小超过'.$upload['maxsize']);
                 return false;
             }
 
@@ -75,7 +75,7 @@ class Ajax extends Controller
 
             //禁止上传PHP和HTML文件
             if (in_array($info['type'], ['text/x-php', 'text/html']) || in_array($suffix, ['php', 'html', 'htm'])) {
-                $this->error('上传失败','','文件类型被禁止上传');
+                $this->error('上传失败,文件类型被禁止上传');
             }
             //验证文件后缀
             if ($upload['mimetype'] !== '*' &&
@@ -84,7 +84,7 @@ class Ajax extends Controller
                     || (stripos($typeArr[0] . '/', $upload['mimetype']) !== false && (!in_array($info['type'], $mimetypeArr) && !in_array($typeArr[0] . '/*', $mimetypeArr)))
                 )
             ) {
-                $this->error('上传失败','','文件类型被禁止上传');
+                $this->error('上传失败,文件类型被禁止上传');
             }
 
             $file_url = '';
@@ -121,7 +121,7 @@ class Ajax extends Controller
             if($local_upload_radio == 2){
                 $move_info = $file->move('uploads'); // 移动文件到指定目录 没有则创建
                 $save_name = str_replace('\\','/',$move_info->getSaveName());
-                $local_file_url = '/uploads/'.$save_name;
+                $local_file_url = Config::get('laytp.upload.domain').'/uploads/'.$save_name;
 
                 $add['file_type'] = $this->request->param('accept');
                 $add['file_path'] = $local_file_url;
@@ -129,7 +129,7 @@ class Ajax extends Controller
             }
             return $this->success('上传成功','',$file_url ? $file_url : $local_file_url);
         }catch (Exception $e){
-            $this->error('上传失败','',$e->getMessage());
+            $this->error('上传失败,'.$e->getMessage());
         }
     }
 
@@ -161,11 +161,15 @@ class Ajax extends Controller
         $this->success('获取成功','',$result);
     }
 
-    //文件下载
+    //文件下载或者预览
     public function download(){
         $file_url = base64_decode( $this->request->param('file_url') );
         $pathinfo = pathinfo($file_url);
-        return download('.'.$file_url,'download.'.$pathinfo['extension']);
+        if(substr($file_url,0,4) == 'http'){
+            header('location:'.$file_url);
+        }else{
+            return download('.'.$file_url,'download.'.$pathinfo['extension']);
+        }
     }
 
     //弹窗展示视频

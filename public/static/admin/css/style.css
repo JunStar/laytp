@@ -134,7 +134,7 @@ body{
 .hook-plugins-sort li span {float:left;margin-right:20px;width:150px;height:20px;line-height:22px}
 .layui-layout-admin .layui-body{top:50px;}
 .layui-layout-admin {min-width:1000px}
-.layui-form-label {min-width:90px}
+.layui-form-label {min-width:120px}
 .layui-tab-title li {padding:0 10px}
 .layui-form-mid {font-size:12px!important}
 .layui-table-cell {min-height:28px;height:auto!important}
@@ -257,4 +257,11 @@ body{
 	.header-logo{display:none;}
 	.header-logo{display:none;}
 	.main-nav{display:none;}
+}
+
+.layui-btn-33{
+	height: 33px;
+	line-height: 33px;
+	padding:0 10px;
+	font-size: 11px;
 }

@@ -6,12 +6,14 @@
 * @Last Modified time: 2019年06月09日23:23:09
 */
 layui.define([
-    'jquery', 'layer', 'form', 'table', 'laytpl', 'element','laydate','upload','selectPage'
+    'jquery', 'layer', 'form', 'table', 'laytpl', 'element','laydate','upload'
+    ,'selectPage'
     ,'select_multi'
     ,'formSelects'
     ,'dropdown'
     ,'laytp_element'
     ,'laytp_tree'
+    ,'colorpicker'
 ], function(exports){
     const MOD_NAME = 'layTp';
     let layTp = {};
@@ -532,7 +534,41 @@ layui.define([
                     }
                 }
                 return html;
+            },
+            dis_file:function(value){
+                let html = '';
+                if(value) {
+                    let value_arr = value.split(',');
+                    for(key in value_arr){
+                        if(value_arr[key].substring(value_arr[key].length - 3) == 'mp4'){
+                            html += '<a href="javascript:void(0);" class="popup-frame" data-name="查看视频" data-open="'+layTp.facade.url('admin/ajax/show_video',{'path':window.btoa(value_arr[key])})+'">视频</a> ';
+                        }else{
+                            html += '<a href="javascript:void(0);" class="preview_image" data-url="'+value_arr[key]+'">图片</a> ';
+                        }
+                    }
+                }
+                return html;
             }
+        },
+        //图片预览
+        preview_image:function(url){
+            var img = new Image();
+            img.src = url;
+            var imgHtml = "<img src='" + url + "' width='500px' height='500px'/>";
+            //弹出层
+            layui.layer.open({
+                type: 1,
+                shade: 0.8,
+                offset: 'auto',
+                area: [500 + 'px',550+'px'],
+                shadeClose:true,
+                scrollbar: false,
+                title: "图片预览", //不显示标题
+                content: imgHtml, //捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响
+                cancel: function () {
+                    //layer.msg('捕获就是从页面已经存在的元素上，包裹layer的结构', { time: 5000, icon: 6 });
+                }
+            });
         }
     }
 
@@ -542,6 +578,14 @@ layui.define([
         ajaxSet: function(){
             $.ajaxSetup({
                 "async": false
+            });
+        },
+
+        //图片预览
+        preview_image:function(){
+            $(document).on('click','.preview_image',function(){
+                let url = $(this).data("url");
+                layTp.facade.preview_image(url);
             });
         },
 
@@ -801,7 +845,7 @@ layui.define([
                                 let index = parent.layer.getFrameIndex(window.name);
                                 setTimeout(function () {
                                     parent.layer.close(index);
-                                    parent.func_controller.table_render();
+                                    parent.func_controller.table_render(parent.layui.form.val("laytp_search_form"),parent.$(".layui-laypage-em").next().html());
                                 }, 1000);
                             }
                         }else{
@@ -846,7 +890,6 @@ layui.define([
          * 渲染上传插件
          */
         upload_render: function(){
-            let multi_spe = ';';
             layui.each($("button[upload='true']"),function(key,item) {
                 let id = $(item).attr('id');
                 let elem = '#' + id;
@@ -902,10 +945,10 @@ layui.define([
                                     '</li>'
                                 );
                             }
-                            //input框增加文件值
+                            //隐藏input框增加文件值
                             let input_value = $('#input_'+id).val();
                             if(input_value){
-                                $('#input_'+id).val( input_value + multi_spe + res.data );
+                                $('#input_'+id).val( input_value + ',' + res.data );
                             }else{
                                 $('#input_'+id).val( res.data );
                             }
@@ -951,11 +994,11 @@ layui.define([
                         let input_value = $('#input_'+node).val();
                         let new_input_value = "";
                         if( input_value.indexOf(file_url_value+',') != -1 ){
-                            let reg = new RegExp(file_url_value + multi_spe);
+                            let reg = new RegExp(file_url_value + ',');
                             new_input_value = input_value.replace(reg, "");
                         }else{
-                            if( input_value.indexOf(multi_spe + file_url_value) != -1 ){
-                                let reg = new RegExp(multi_spe+file_url_value);
+                            if( input_value.indexOf(',' + file_url_value) != -1 ){
+                                let reg = new RegExp(','+file_url_value);
                                 new_input_value = input_value.replace(reg, "");
                             }else{
                                 let reg = new RegExp(file_url_value);
@@ -1174,7 +1217,7 @@ layui.define([
             });
         },
 
-        //laytp列表单选开关触发ajax
+        //laytp列表单选按钮粗发js
         laytp_switch:function(){
             layui.form.on('switch(laytp_switch)', function(obj){
                 let open_value = obj.elem.attributes['open_value'].nodeValue;
@@ -1253,6 +1296,34 @@ layui.define([
                     closeBtn:0
                 });
             }
+        },
+
+        //颜色选择器
+        colorpicker:function(){
+            layui.each($("input[colorpicker='true']"),function(key,item) {
+                let id = $(item).attr('id');//id属性，必须
+                let color = $(item).val() ? $(item).val() : '#1c97f5';//id属性，必须
+                layui.colorpicker.render({
+                    elem: '#' + id + '-div'
+                    ,color: color
+                    ,done: function(color){
+                        $('#'+ id).val(color);
+                    }
+                });
+            });
+        },
+
+        //监听表格排序
+        table_sort:function(){
+            layui.table.on('sort(default)', function(obj){
+                var where = layui.form.val("laytp_search_form");
+                where['order_param[field]'] = obj.field;
+                where['order_param[type]'] = obj.type;
+                layui.table.reload(table_id, {
+                    initSort: obj
+                    ,where: where
+                });
+            });
         }
     }
 

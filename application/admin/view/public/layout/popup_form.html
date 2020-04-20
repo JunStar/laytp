@@ -19,7 +19,7 @@
 </head>
 <body class="laytp-theme-10">
 <div class="popup-content">
-    <form class="layui-form layui-form-pane page-list-form">
+    <form class="layui-form layui-form-pane page-list-form" lay-filter="laytp_form">
         <!-- 表单内容部分 -->
         {block name="form"}{/block}
         <!-- 表单底部按钮部分 -->
@@ -39,8 +39,8 @@
         <div class="form-footer">
             <div class="layui-form-item">
                 <div class="layui-input-block">
-                    <a class="layui-btn layui-btn-normal" lay-submit lay-filter="laytp">提 交</a>
-                    <a type="reset" class="layui-btn layui-btn-primary">重置</a>
+                    <a class="layui-btn layui-btn-sm layui-btn-normal" lay-submit lay-filter="laytp">提 交</a>
+                    <a type="reset" class="layui-btn layui-btn-sm layui-btn-primary">重置</a>
                 </div>
             </div>
         </div>
