@@ -46,7 +46,7 @@ class Common extends Api{
 
             $file = $this->request->file('file'); // 获取上传的文件
             if(!$file){
-                $this->error('上传失败','请选择需要的上传文件');
+                $this->error('上传失败,请选择需要的上传文件');
             }
             $info       = $file->getInfo();
             $path_info  = pathinfo($info['name']);
@@ -61,7 +61,7 @@ class Common extends Api{
             $typeDict = ['b' => 0, 'k' => 1, 'kb' => 1, 'm' => 2, 'mb' => 2, 'gb' => 3, 'g' => 3];
             $size = (int)$upload['maxsize'] * pow(1024, isset($typeDict[$type]) ? $typeDict[$type] : 0);
             if ($info['size'] > (int) $size) {
-                $this->error('上传失败','文件大小超过'.$upload['maxsize']);
+                $this->error('上传失败,文件大小超过'.$upload['maxsize']);
                 return false;
             }
 
@@ -73,7 +73,7 @@ class Common extends Api{
 
             //禁止上传PHP和HTML文件
             if (in_array($info['type'], ['text/x-php', 'text/html']) || in_array($suffix, ['php', 'html', 'htm'])) {
-                $this->error('上传失败','文件类型被禁止上传');
+                $this->error('上传失败,文件类型被禁止上传');
             }
             //验证文件后缀
             if ($upload['mimetype'] !== '*' &&
@@ -82,7 +82,7 @@ class Common extends Api{
                     || (stripos($typeArr[0] . '/', $upload['mimetype']) !== false && (!in_array($info['type'], $mimetypeArr) && !in_array($typeArr[0] . '/*', $mimetypeArr)))
                 )
             ) {
-                $this->error('上传失败','文件类型被禁止上传');
+                $this->error('上传失败,文件类型被禁止上传');
             }
 
             $file_url = '';
@@ -128,7 +128,7 @@ class Common extends Api{
 
             $this->success('上传成功',$file_url ? $file_url : $local_file_url);
         }catch (\Exception $e){
-            $this->error('上传失败',$e->getMessage());
+            $this->error('上传失败,'.$e->getMessage());
         }
     }
 
@@ -162,10 +162,10 @@ class Common extends Api{
             if($email_service->send($params['email'],$params['event'],['code'=>Random::numeric()])){
                 $this->success('发送成功');
             }else{
-                $this->error('发送失败',$email_service->getError());
+                $this->error('发送失败,'.$email_service->getError());
             }
         }else{
-            $this->error('发送失败',$validate->getError());
+            $this->error('发送失败,'.$validate->getError());
         }
     }
 
@@ -199,7 +199,7 @@ class Common extends Api{
         if($email_service->checkCode($params['email'],$params['event'],$params['code'])){
             $this->success('验证成功');
         }else{
-            $this->error('验证失败',$email_service->getError());
+            $this->error('验证失败,'.$email_service->getError());
         }
     }
 
