@@ -41,7 +41,7 @@ audio{
     height:34px;
 }
 
-.layui-input, .layui-select, .layui-textarea, .layui-input-inline, .layui-inline{
+.layui-input, .layui-select, .layui-textarea, .layui-input-inline{
     height:34px;
 }
 
@@ -55,6 +55,12 @@ audio{
 
 .layui-form-item .layui-inline{
     margin-right:0px;
+    /*margin-bottom: 0px;*/
+}
+
+.layui-colorpicker{
+    height:22px;
+    line-height:22px;
 }
 
 .layui-form-item .layui-input-inline{
