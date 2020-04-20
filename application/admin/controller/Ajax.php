@@ -121,7 +121,7 @@ class Ajax extends Controller
             if($local_upload_radio == 2){
                 $move_info = $file->move('uploads'); // 移动文件到指定目录 没有则创建
                 $save_name = str_replace('\\','/',$move_info->getSaveName());
-                $local_file_url = '/uploads/'.$save_name;
+                $local_file_url = Config::get('laytp.upload.domain').'/uploads/'.$save_name;
 
                 $add['file_type'] = $this->request->param('accept');
                 $add['file_path'] = $local_file_url;
