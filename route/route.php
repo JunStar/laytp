@@ -9,11 +9,9 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 
-Route::get('think', function () {
-    return 'hello,ThinkPHP5!';
-});
 
-Route::get('hello/:name', 'index/hello');
+// 定义路由
+\think\facade\Route::any('addons/:addon/', "\\library\\AddonsRoute@execute");
 
 return [
 
