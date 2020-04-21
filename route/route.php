@@ -10,7 +10,7 @@
 // +----------------------------------------------------------------------
 
 
-// 定义路由
+// 定义插件访问的路由规则
 \think\facade\Route::any('addons/:addon/', "\\library\\AddonsRoute@execute");
 
 return [

@@ -87,6 +87,9 @@ layui.use(['layTp'],function() {
                     case 'config':
                         layTp.facade.popup_frame("配置项",layTp.facade.url(module + "/" + controller + "/config",{config_items:obj.data.config_items,name:obj.data.name}),'50%','50%');
                         break;
+                    case 'install':
+                        layTp.facade.popup_frame("安装",layTp.facade.url(module + "/" + controller + "/install",{name:obj.data.name}),'50%','50%');
+                        break;
                 }
             }
         });

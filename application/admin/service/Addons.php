@@ -26,7 +26,7 @@ class Addons extends Service
      * @throws  AddonException
      * @throws  Exception
      */
-    public static function download($name, $extend = [])
+    public function download($name, $extend = [])
     {
         $addonTmpDir = Env::get('runtime_path') . 'addons' . DS;
         if (!is_dir($addonTmpDir)) {
@@ -52,22 +52,26 @@ class Addons extends Service
                         $ret = Http::sendRequest($json['data']['url'], [], 'GET', $options);
                         if (!$ret['msg']) {
                             //下载返回错误，抛出异常
-                            return parent::error($json['msg']);
+                            $this->setError($json['msg']);
+                            return false;
                         }
                     } else {
                         if ($write = fopen($tmpFile, 'w')) {
                             fwrite($write, base64_decode($json['data']));
                             fclose($write);
-                            return parent::success($json['msg'],$tmpFile);
+                            return $tmpFile;
                         }
                     }
                 }else{
-                    return parent::error($json['msg']);
+                    $this->setError($json['msg']);
+                    return false;
                 }
             }
-            return parent::error('没有权限写入临时文件');
+            $this->setError('没有权限写入临时文件');
+            return false;
         }
-        return parent::error('无法下载远程文件');
+        $this->setError('无法下载远程文件');
+        return false;
     }
 
     /**
@@ -80,35 +84,39 @@ class Addons extends Service
      * @throws  Exception
      * @throws  AddonException
      */
-    public static function install($name, $force = true, $extend = [])
+    public function install($name, $force = true, $extend = [])
     {
 
         $addons_path = Env::get('root_path') . DS . 'addons' . DS;
         if (!$name || (is_dir($addons_path . $name) && !$force)) {
-            return parent::error('插件已经存在');
+            $this->setError('插件已经存在');
+            return false;
         }
 
         // 远程下载插件
-        $tmpFile = Addons::download($name, $extend);
-        if(!$tmpFile['code']){
-            return parent::error('插件下载失败');
+        $tmpFile = $this->download($name, $extend);
+        if(!$tmpFile){
+            $this->setError($this->getError());
+            return false;
         }
 
         // 解压插件
-        $addonDir = Addons::unzip($name);
+        $addonDir = $this->unzip($name);
 
         // 移除临时文件
-        @unlink($tmpFile['data']);
+        @unlink($tmpFile);
 
-        $checkRes = Addons::check($name);
+        $checkRes = $this->check($name);
         if(!$checkRes['code']){
             @DirFile::rmDirs($addonDir);
-            return parent::error($checkRes['msg']);
+            $this->setError($checkRes['msg']);
+            return false;
         }
 
         if (!$force) {
-            if( !Services::noconflict($name) ){
-                return parent::error('发现冲突文件');
+            if( !$this->noconflict($name) ){
+                $this->setError('发现冲突文件');
+                return false;
             }
         }
 
@@ -133,24 +141,26 @@ class Addons extends Service
             $class = self::getAddonClass($name);
             if ($class) {
                 $class->install();
-                return parent::success("安装成功");
+                return true;
             }else{
-                return parent::error("{$name}类不存在");
+                $this->setError('发现冲突文件');
+                return false;
             }
         } catch (Exception $e) {
-            return parent::error($e->getMessage());
+            $this->setError('发现冲突文件');
+            return false;
         }
 
         // 导入sql文件
         Services::importSql($name);
 
-        return parent::success('成功');
+        return true;
     }
 
     //卸载插件
-    public static function uninstall($name)
+    public function uninstall($name)
     {
-        $addon = self::getAddonClass($name);
+        $addon = $this->getAddonClass($name);
         if (is_object($addon)) {
             $addon->uninstall();
             //删除掉插件文件
@@ -177,13 +187,14 @@ class Addons extends Service
      * @return  boolean
      * @throws  AddonException
      */
-    public static function noConflict($name)
+    public function noConflict($name)
     {
         // 检测冲突文件
         $list = self::getGlobalFiles($name, true);
         if ($list) {
             //发现冲突文件，抛出异常
-            return parent::error('发现冲突文件',['conflictlist' => $list]);
+            $this->setError('发现冲突文件',['conflictlist' => $list]);
+            return false;
         }
         return true;
     }
@@ -238,23 +249,26 @@ class Addons extends Service
      * @return  string
      * @throws  Exception
      */
-    public static function unzip($name)
+    public function unzip($name)
     {
         $file = Env::get('runtime_path') . 'addons' . DS . $name . '.zip';
         $dir = Env::get('root_path') . 'addons' . DS . $name . DS;
         if (class_exists('ZipArchive')) {
             $zip = new \ZipArchive;
             if ($zip->open($file) !== TRUE) {
-                return parent::error('不能打开zip文件');
+                $this->setError('不能打开zip文件');
+                return false;
             }
             if (!$zip->extractTo($dir)) {
                 $zip->close();
-                return parent::error('不能提取zip文件');
+                $this->setError('不能提取zip文件');
+                return false;
             }
             $zip->close();
             return $dir;
         }
-        return parent::error('无法执行解压操作，请确保ZipArchive安装正确');
+        $this->setError('无法执行解压操作，请确保ZipArchive安装正确');
+        return false;
     }
 
     /**
@@ -264,21 +278,24 @@ class Addons extends Service
      * @return  boolean
      * @throws  Exception
      */
-    public static function check($name)
+    public function check($name)
     {
         if (!$name || !is_dir(Env::get('root_path') . 'addons' . DS . $name)) {
-            return parent::error('插件不存在');
+            $this->setError('插件不存在');
+            return false;
         }
-        $addonClass = Addons::getAddonClass($name);
+        $addonClass = $this->getAddonClass($name);
         if (!$addonClass) {
-            return parent::error('插件主启动程序不存在');
+            $this->setError('插件主启动程序不存在');
+            return false;
         }
         include_once(Env::get('root_path') . 'addons' . DS . $name . DS . ucfirst($name) . '.php');
         $addon = new $addonClass();
         if (!$addon->checkInfo()) {
-            return parent::error('配置文件不完整');
+            $this->setError('配置文件不完整');
+            return false;
         }
-        return parent::success('正常');
+        return true;
     }
 
     /**
@@ -375,6 +392,7 @@ class Addons extends Service
         if(is_file($class_file)){
             require_once $class_file;
         }else{
+//            $this->setError('插件主类不存在');
             return false;
         }
         $class_name = "addons\\" . ucfirst($name);

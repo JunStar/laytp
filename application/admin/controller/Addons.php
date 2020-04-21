@@ -83,7 +83,11 @@ class Addons extends Backend
                     'token'     => $token,
                     'version'   => $version
                 ];
-                $installRes = \app\admin\service\Addons::install($name, $force, $extend);
+                $addons_service = new \app\admin\service\Addons();
+                $installRes = $addons_service->install($name, $force, $extend);
+                if(!$installRes){
+                    $this->error($addons_service->getError());
+                }
                 if($installRes['code']){
                     $info = \app\admin\service\Addons::getAddonInfo($name);
 //                $info['config'] = \app\admin\services\Addons::getAddonConfig($name) ? 1 : 0;

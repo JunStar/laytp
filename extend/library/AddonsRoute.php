@@ -11,9 +11,10 @@ use think\Route;
 class AddonsRoute extends Route {
     /**
      * 插件路由
-     * @param null $addon
-     * @param null $controller
-     * @param null $action
+     * @param string $addon
+     * @param string $module
+     * @param string $controller
+     * @param string $action
      * @return mixed
      */
     public function execute($addon = null)
@@ -24,7 +25,17 @@ class AddonsRoute extends Route {
 
         if( isset($url_arr['3']) ){
             if(!strstr($url_arr['3'],'?')){
-                $controller = $url_arr['3'];
+                $module = $url_arr['3'];
+            }else{
+                $module = 'index';
+            }
+        }else{
+            $module = 'index';
+        }
+
+        if( isset($url_arr['4']) ){
+            if(!strstr($url_arr['4'],'?')){
+                $controller = $url_arr['4'];
             }else{
                 $controller = 'index';
             }
@@ -32,9 +43,9 @@ class AddonsRoute extends Route {
             $controller = 'index';
         }
 
-        if( isset($url_arr['4']) ){
-            if(!strstr($url_arr['4'],'?')){
-                $action = $url_arr['4'];
+        if( isset($url_arr['5']) ){
+            if(!strstr($url_arr['5'],'?')){
+                $action = $url_arr['5'];
             }else{
                 $action = 'index';
             }
@@ -47,10 +58,11 @@ class AddonsRoute extends Route {
         $filter = $convert ? 'strtolower' : 'trim';
 
         $addon = $addon ? trim(call_user_func($filter, $addon)) : '';
+        $module = $module ? trim(call_user_func($filter, $module)) : 'index';
         $controller = $controller ? trim(call_user_func($filter, $controller)) : 'index';
         $action = $action ? trim(call_user_func($filter, $action)) : 'index';
 
-        if (!empty($addon) && !empty($controller) && !empty($action)) {
+        if (!empty($addon) && !empty($module) && !empty($controller) && !empty($action)) {
             $info = Addons::getInfo($addon);
             if (!$info) {
                 throw new HttpException(404, $addon.'插件不存在');
@@ -60,9 +72,9 @@ class AddonsRoute extends Route {
             }
 
             // 设置当前请求的控制器、操作
-            $request->setController($controller)->setAction($action);
+            $request->setModule($module)->setController($controller)->setAction($action);
 
-            $class = self::get_addon_class($addon, 'controller', $controller);
+            $class = self::get_addon_class($addon, $module, 'module.controller', $controller);
             if (!$class) {
                 throw new HttpException(404, Loader::parseName($controller, 1).'控制器不存在');
             }
@@ -95,11 +107,12 @@ class AddonsRoute extends Route {
     /**
      * 获取插件类的类名
      * @param string $name  插件名
+     * @param string $module  模块名
      * @param string $type  返回命名空间类型
      * @param string $class 当前类名
      * @return string
      */
-    public static function get_addon_class($name, $type = 'hook', $class = null)
+    public static function get_addon_class($name, $module, $type = 'module.controller', $class = null)
     {
         $class = Loader::parseName($class);
         // 处理多级控制器情况
@@ -112,11 +125,14 @@ class AddonsRoute extends Route {
             $class = Loader::parseName(is_null($class) ? $name : $class, 1);
         }
         switch ($type) {
+            case 'module.controller':
+                $namespace = "addons\\" . $name . "\\" . $module . "\\controller\\" . $class;
+                break;
             case 'controller':
-                $namespace = "\\addons\\" . $name . "\\controller\\" . $class;
+                $namespace = "addons\\" . $name . "\\controller\\" . $class;
                 break;
             default:
-                $namespace = "\\addons\\" . $name . "\\" . $class;
+                $namespace = "addons\\" . $name . "\\" . $class;
         }
         return class_exists($namespace) ? $namespace : '';
     }
