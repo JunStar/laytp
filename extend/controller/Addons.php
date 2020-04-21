@@ -22,9 +22,10 @@ class Addons extends Controller
     {
         $arr = explode('\\',get_called_class());
         $addon = $arr['1'];
+        $module = $arr['2'];
         $this->view->config(
-            ['view_base'=>Env::get('root_path').'addons'.DIRECTORY_SEPARATOR.$addon.DIRECTORY_SEPARATOR.'view'.DIRECTORY_SEPARATOR]
+            ['view_path'=>Env::get('root_path')."addons/{$addon}/{$module}/view/"]
         );
-        return $this->view->fetch($template, $vars, $config);
+        return $this->view->fetch($template);
     }
 }

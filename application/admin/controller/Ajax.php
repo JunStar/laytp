@@ -4,8 +4,6 @@ namespace app\admin\controller;
 use library\DirFile;
 use library\QiniuYun;
 use OSS\OssClient;
-use Qiniu\Auth;
-use Qiniu\Storage\UploadManager;
 use think\facade\Config;
 use think\Controller;
 use think\Db;

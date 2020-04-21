@@ -175,7 +175,7 @@ class Addons extends Service
      * 获取远程服务器
      * @return  string
      */
-    protected static function getServerUrl()
+    protected function getServerUrl()
     {
         return Config::get('addons.api_url');
     }
@@ -205,7 +205,7 @@ class Addons extends Service
      * @param   string $name 插件名称
      * @return  array
      */
-    public static function getGlobalFiles($name, $onlyconflict = false)
+    public function getGlobalFiles($name, $onlyconflict = false)
     {
         $list = [];
         $addonDir = ADDON_PATH . $name . DS;
@@ -302,7 +302,7 @@ class Addons extends Service
      * 获取检测的全局文件夹目录
      * @return  array
      */
-    protected static function getCheckDirs()
+    protected function getCheckDirs()
     {
         return [
             'application',
@@ -315,13 +315,15 @@ class Addons extends Service
      * @param string $name 插件名
      * @return array
      */
-    public static function getAddonInfo($name)
+    public function getAddonInfo($name)
     {
-        $addon = self::getAddonInstance($name);
-        if (!$addon) {
-            return [];
+        $addons_path = $this->getAddonsPath($name);
+        $info_file = $addons_path . 'info.ini';
+        $info = [];
+        if (is_file($info_file)) {
+            $info = Config::parse($info_file,'','laytp_addons_'.$name);
         }
-        return $addon->getInfo($name);
+        return $info;
     }
 
     /**
@@ -331,14 +333,13 @@ class Addons extends Service
      * @return boolean
      * @throws Exception
      */
-    public static function setAddonInfo($name, $array)
+    public function setAddonInfo($name, $array)
     {
-        $file = Env::get('root_path') . DS . 'addons' . DS . $name . DIRECTORY_SEPARATOR . 'info.ini';
-        $addon = self::getAddonInstance($name);
-        if(!$addon){
-            return false;
+        $addons_path = $this->getAddonsPath($name);
+        $file = $addons_path . 'info.ini';
+        if (!isset($array['name'])) {
+            throw new Exception("插件配置写入失败");
         }
-        $array = $addon->setInfo($name, $array);
         $res = array();
         foreach ($array as $key => $val) {
             if (is_array($val)) {
@@ -352,7 +353,7 @@ class Addons extends Service
             fwrite($handle, implode("\n", $res) . "\n");
             fclose($handle);
             //清空当前配置缓存
-            Config::set($name, NULL, 'addoninfo');
+            Config::set($name, NULL, 'laytp_addons_'.$name);
         } else {
             throw new Exception("文件没有写入权限");
         }
@@ -386,7 +387,7 @@ class Addons extends Service
      * @param string $class 当前类名
      * @return string
      */
-    public static function getAddonClass($name, $type = 'hook', $class = null)
+    public function getAddonClass($name, $type = 'hook', $class = null)
     {
         $class_file = Env::get('root_path') . 'addons' . DS . $name . DS . ucfirst($name) . '.php';
         if(is_file($class_file)){
@@ -424,12 +425,16 @@ class Addons extends Service
      * @param string $name 插件名
      * @return array
      */
-    public static function getAddonConfig($name)
+    public function getAddonConfig($name)
     {
         $addon = self::getAddonInstance($name);
         if (!$addon) {
             return [];
         }
         return $addon->getConfig($name);
+    }
+
+    public function getAddonsPath($name){
+        return Env::get('root_path') . 'addons' . DS . $name . DS;
     }
 }

@@ -10,6 +10,12 @@ use think\facade\Response;
 
 class Addons extends Backend
 {
+    public $addons_service;
+    public function initialize(){
+        parent::initialize();
+        $this->addons_service = new \app\admin\service\Addons();
+    }
+
     //展示插件列表
     public function index(){
         $get_data_ajax_url = "http://local.laytpgw.com/api/addons/index";
@@ -23,7 +29,7 @@ class Addons extends Backend
             $arr_res = json_decode($res, true);
 
             foreach($arr_res['data']['list']['data'] as $k=>$v){
-                $info = \app\admin\service\Addons::getAddonInfo($v['name']);
+                $info = $this->addons_service->getAddonInfo($v['name']);
                 if(!$info){
                     $arr_res['data']['list']['data'][$k]['addon_exist'] = false;
                     $arr_res['data']['list']['data'][$k]['local_state'] = 0;
@@ -46,7 +52,7 @@ class Addons extends Backend
             $assign['category'] = $res['data']['category'];
 
             foreach($res['data']['list']['data'] as $k=>$v){
-                $info = \app\admin\service\Addons::getAddonInfo($v['name']);
+                $info = $this->addons_service->getAddonInfo($v['name']);
                 if(!$info){
                     $arr_res['data']['list']['data'][$k]['addon_exist'] = false;
                     $res['data']['list']['data'][$k]['local_state'] = 0;
@@ -112,16 +118,9 @@ class Addons extends Backend
         $field = $this->request->param('field');
         $name = $this->request->param('name');
         try{
+            $info = $this->addons_service->getAddonInfo($name);
             $info['state'] = $field_val;
-            if( \app\admin\service\Addons::setAddonInfo($name, $info) ){
-                $addon = \app\admin\service\Addons::getAddonInstance($name);
-                if($field == 'local_state'){
-                    if($field_val == 1){
-                        $addon->enable();
-                    }else{
-                        $addon->disable();
-                    }
-                }
+            if( $this->addons_service->setAddonInfo($name, $info) ){
                 return $this->success('操作成功');
             }else{
                 return $this->error('操作失败');

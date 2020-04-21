@@ -69,95 +69,95 @@ abstract class Addons
         return parent::error('无法下载远程文件');
     }
 
-    /**
-     * 远程安装插件
-     *
-     * @param   string $name 插件名称
-     * @param   boolean $force 是否覆盖
-     * @param   array $extend 扩展参数
-     * @return  boolean
-     * @throws  Exception
-     * @throws  AddonException
-     */
-    public static function install($name, $force = true, $extend = [])
-    {
-        $addons_path = Env::get('root_path') . DS . 'addons' . DS;
-        if (!$name || (is_dir($addons_path . $name) && !$force)) {
-            return parent::error('插件已经存在');
-        }
+//    /**
+//     * 远程安装插件
+//     *
+//     * @param   string $name 插件名称
+//     * @param   boolean $force 是否覆盖
+//     * @param   array $extend 扩展参数
+//     * @return  boolean
+//     * @throws  Exception
+//     * @throws  AddonException
+//     */
+//    public static function install($name, $force = true, $extend = [])
+//    {
+//        $addons_path = Env::get('root_path') . DS . 'addons' . DS;
+//        if (!$name || (is_dir($addons_path . $name) && !$force)) {
+//            return parent::error('插件已经存在');
+//        }
+//
+//        // 远程下载插件
+//        $tmpFile = Addons::download($name, $extend);
+//        if(!$tmpFile['code']){
+//            return parent::error('插件下载失败');
+//        }
+//
+//        // 解压插件
+//        $addonDir = Addons::unzip($name);
+//
+//        // 移除临时文件
+//        @unlink($tmpFile['data']);
+//
+//        $checkRes = Addons::check($name);
+//        if(!$checkRes['code']){
+//            @DirFile::rmDirs($addonDir);
+//            return parent::error($checkRes['msg']);
+//        }
+//
+//        if (!$force) {
+//            if( !Services::noconflict($name) ){
+//                return parent::error('发现冲突文件');
+//            }
+//        }
+//
+//        $addonDir = Env::get('root_path') . 'addons' . DS . $name . DS;
+//
+//        // 复制文件
+//        foreach (self::getCheckDirs() as $k => $dir) {
+//            if (is_dir($addonDir . $dir)) {
+//                DirFile::copyDirs($addonDir . $dir, Env::get('root_path') . $dir);
+//            }
+//        }
+//
+//        try {
+//            // 默认启用该插件
+//            $info = self::getAddonInfo($name);
+//            if (!$info['state']) {
+//                $info['state'] = 1;
+//                self::setAddonInfo($name, $info);
+//            }
+//
+//            // 执行安装脚本
+//            $class = self::getAddonClass($name);
+//            if ($class) {
+//                $class->install();
+//                return parent::success("安装成功");
+//            }else{
+//                return parent::error("{$name}类不存在");
+//            }
+//        } catch (Exception $e) {
+//            return parent::error($e->getMessage());
+//        }
+//
+//        // 导入sql文件
+//        Services::importSql($name);
+//
+//        return parent::success('成功');
+//    }
 
-        // 远程下载插件
-        $tmpFile = Addons::download($name, $extend);
-        if(!$tmpFile['code']){
-            return parent::error('插件下载失败');
-        }
-
-        // 解压插件
-        $addonDir = Addons::unzip($name);
-
-        // 移除临时文件
-        @unlink($tmpFile['data']);
-
-        $checkRes = Addons::check($name);
-        if(!$checkRes['code']){
-            @DirFile::rmDirs($addonDir);
-            return parent::error($checkRes['msg']);
-        }
-
-        if (!$force) {
-            if( !Services::noconflict($name) ){
-                return parent::error('发现冲突文件');
-            }
-        }
-
-        $addonDir = Env::get('root_path') . 'addons' . DS . $name . DS;
-
-        // 复制文件
-        foreach (self::getCheckDirs() as $k => $dir) {
-            if (is_dir($addonDir . $dir)) {
-                DirFile::copyDirs($addonDir . $dir, Env::get('root_path') . $dir);
-            }
-        }
-
-        try {
-            // 默认启用该插件
-            $info = self::getAddonInfo($name);
-            if (!$info['state']) {
-                $info['state'] = 1;
-                self::setAddonInfo($name, $info);
-            }
-
-            // 执行安装脚本
-            $class = self::getAddonClass($name);
-            if ($class) {
-                $class->install();
-                return parent::success("安装成功");
-            }else{
-                return parent::error("{$name}类不存在");
-            }
-        } catch (Exception $e) {
-            return parent::error($e->getMessage());
-        }
-
-        // 导入sql文件
-        Services::importSql($name);
-
-        return parent::success('成功');
-    }
-
-    //卸载插件
-    public static function uninstall($name)
-    {
-        $addon = self::getAddonClass($name);
-        if (is_object($addon)) {
-            $addon->uninstall();
-            //删除掉插件文件
-            DirFile::rmDirs(Env::get('root_path') . 'addons' . DS . $name);
-            return parent::success("卸载成功");
-        }else{
-            return parent::error("{$name}类不存在");
-        }
-    }
+//    //卸载插件
+//    public static function uninstall($name)
+//    {
+//        $addon = self::getAddonClass($name);
+//        if (is_object($addon)) {
+//            $addon->uninstall();
+//            //删除掉插件文件
+//            DirFile::rmDirs(Env::get('root_path') . 'addons' . DS . $name);
+//            return parent::success("卸载成功");
+//        }else{
+//            return parent::error("{$name}类不存在");
+//        }
+//    }
 
     /**
      * 获取远程服务器
@@ -370,7 +370,7 @@ abstract class Addons
     {
         $addons_path = Addons::getAddonsPath($name);
         $file = $addons_path . 'info.ini';
-        if (!isset($array['name']) || !isset($array['title']) || !isset($array['version'])) {
+        if (!isset($array['name'])) {
             throw new Exception("插件配置写入失败");
         }
         $res = array();
