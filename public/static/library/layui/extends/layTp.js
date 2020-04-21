@@ -14,11 +14,15 @@ layui.define([
     ,'laytp_element'
     ,'laytp_tree'
     ,'colorpicker'
+    ,'laytp_editor'
+    ,'laytp_doceditor'
 ], function(exports){
     const MOD_NAME = 'layTp';
     let layTp = {};
     const $ = layTp.$ = layui.jquery;
     const selectPagePlugin = layui.selectPage;
+    const laytp_editor = layui.laytp_editor;
+    const laytp_doceditor = layui.laytp_doceditor;
 
     const default_popup_frame_width = '100%';
     const default_popup_frame_height = '100%';
@@ -134,6 +138,16 @@ layui.define([
 
             let url = path + params;
             return url;
+        },
+
+        //layEdit简易编辑器
+        layEditor: function(options){
+            laytp_editor.createEditor(options);
+        },
+
+        //layDocEditor
+        layDocEditor: function(options){
+            laytp_doceditor.createEditor(options);
         },
 
         //layer弹窗iFrame
@@ -1015,12 +1029,21 @@ layui.define([
         },
 
         /**
-         * 百度编辑器
+         * 编辑器
          */
-        ueditor_render: function(){
+        editor_render: function(){
+            //渲染UEditor
             layui.each($("script[editor='true']"),function(key,item) {
                 let id = $(item).attr('id');
-                UE.getEditor(id, { zIndex: 0});
+                UE.getEditor(id, {zIndex: 0});
+            });
+            //渲染layEditor
+            layTp.facade.layEditor({
+                elem:'.layeditor'
+            });
+            //渲染laydocEditor
+            layTp.facade.layDocEditor({
+                elem:'.laydoceditor'
             });
         },
 
