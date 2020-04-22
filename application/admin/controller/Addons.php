@@ -21,7 +21,7 @@ class Addons extends Backend
         $get_data_ajax_url = "http://local.laytpgw.com/api/addons/index";
         if($this->request->isAjax()){
             $post['category_id'] = $this->request->param('category_id');
-            $post['buy_type'] = $this->request->param('buy_type');
+            $post['charge_type'] = $this->request->param('charge_type');
             $post['page'] = intval($this->request->param('page'));
             $post['limit'] = intval($this->request->param('limit'));
             $res = request_by_curl($get_data_ajax_url, $post);

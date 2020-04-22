@@ -32,15 +32,15 @@ layui.use(['layTp'],function() {
                 ,{field:'description',title:'简介'}
                 ,{field:'author',title:'作者',align:'center',width:100}
                 ,{field:'price',title:'价格',align:'center',width:100,templet:function(d){
-                    if(d.buy_type == 2){
+                    if(d.charge_type == 2){
                         return '<text style="color: red;">￥' + d.price + '</text>';
-                    }else if(d.buy_type == 3){
+                    }else if(d.charge_type == 3){
                         return '<text style="color: blue;">' + parseInt(d.price) + '积分</text>';
                     }else{
                         return '<text style="color: green">免费</text>';
                     }
                 }}
-                ,{field:'download_num',title:'下载',width:100,align:'center'}
+                ,{field:'download_num',title:'下载次数',width:100,align:'center'}
                 ,{field:'latest_version',title:'最新版本',width:100,align:'center'}
                 ,{field:'local_state',title:'状态',width:100,align:'center',templet:function(d){
                     let data_list = {"open":{"value":1,"text":"开启"},"close":{"value":0,"text":"关闭"}};
@@ -127,7 +127,7 @@ layui.use(['layTp'],function() {
     window.func_controller = func_controller;
 
     //全部、免费、付费、积分、本地插件切换
-    $(document).on('click','.buy_type',function(){
+    $(document).on('click','.charge_type',function(){
         let obj = $(this);
         let field = obj.attr('field');
         let field_val = obj.attr('field_val');
@@ -135,7 +135,7 @@ layui.use(['layTp'],function() {
         if( isNaN(click_field_val) ){
             click_field_val = "";
         }
-        let data = {"buy_type":click_field_val};
+        let data = {"charge_type":click_field_val};
         layui.laytpl($('#template_default_toolbar').html()).render(data, function(html){
             $('#default_toolbar').html(html);
             //搜索框的值设置成对应值
