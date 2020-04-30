@@ -48,7 +48,9 @@ class Addons extends Service
                 'X-REQUESTED-WITH: XMLHttpRequest'
             ]
         ];
-        $ret = Http::sendRequest(self::getServerUrl() . '/addons/download', array_merge(['name' => $name], $extend), 'POST', $options);
+        $ret = Http::sendRequest(self::getServerUrl() . '/api/addons/download', array_merge(['name' => $name], $extend), 'POST', $options);
+        echo $ret['msg'];
+        exit();
         if ($ret['ret']) {
             if (substr($ret['msg'], 0, 1) == '{') {
                 $json = (array)json_decode($ret['msg'], true);
@@ -102,17 +104,17 @@ class Addons extends Service
         }
 
         // 远程下载插件
-        $tmpFile = $this->download($name, $extend);
-        if(!$tmpFile){
-            $this->setError($this->getError());
-            return false;
-        }
+//        $tmpFile = $this->download($name, $extend);
+//        if(!$tmpFile){
+//            $this->setError($this->getError());
+//            return false;
+//        }
 
         // 解压插件
         $addonDir = $this->unzip($name);
 
         // 移除临时文件
-        @unlink($tmpFile);
+//        @unlink($tmpFile);
 
         $checkRes = $this->_info->check($name);
         if(!$checkRes){

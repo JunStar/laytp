@@ -18,7 +18,7 @@ class Addons extends Backend
 
     //展示插件列表
     public function index(){
-        $get_data_ajax_url = "http://local.laytpgw.com/api/addons/index";
+        $get_data_ajax_url = Config::get('addons.api_url')."/api/addons/index";
         if($this->request->isAjax()){
             $post['category_id'] = $this->request->param('category_id');
             $post['charge_type'] = $this->request->param('charge_type');
