@@ -72,7 +72,12 @@ layui.use(['layTp'],function() {
                         layTp.facade.popup_frame("配置项",layTp.facade.url(module + "/" + controller + "/config",{config_items:obj.data.config_items,name:obj.data.name}),'50%','50%');
                         break;
                     case 'install':
-                        layTp.facade.popup_frame("安装",layTp.facade.url(module + "/" + controller + "/install",{name:obj.data.name}),'50%','50%');
+                        let laytp_token = layTp.facade.getcookie('laytp_token');
+                        if(!laytp_token){
+                            layTp.facade.popup_frame("会员信息",layTp.facade.url(module + "/" + controller + "/user"),'60%','55%');
+                        }else{
+                            layTp.facade.popup_frame("安装",layTp.facade.url(module + "/" + controller + "/install",{name:obj.data.name}),'50%','50%');
+                        }
                         break;
                 }
             }
