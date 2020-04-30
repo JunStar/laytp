@@ -290,3 +290,7 @@ layui-nav-child dd.layui-this, .layui-nav-tree .layui-nav-child dd.layui-this a{
     font-size:13px;
     color:#666;
 }
+
+.layui-elem-quote a{
+    color:#01AAED;
+}
