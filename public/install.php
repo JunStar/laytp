@@ -45,8 +45,7 @@ $link = array(
 // 检测目录是否存在
 $checkDirs = [
     'thinkphp',
-    'vendor',
-//    'public' . DS . 'assets' . DS . 'libs'
+    'vendor'
 ];
 //缓存目录
 $runtimeDir = APP_PATH . 'runtime';

@@ -4,16 +4,21 @@
  */
 namespace app\admin\controller\auth;
 
+use library\Random;
+use library\Token;
 use think\Controller;
-use think\facade\Session;
+use think\facade\Cookie;
 
 class Login extends Controller
 {
     //登录界面
     public function index(){
-        $session = Session::get('admin_user_id');
-        if( $session ){
-            return $this->redirect(url('/admin?ref=1'));
+        $token = $this->request->server('HTTP_TOKEN', $this->request->request('token', Cookie::get('token')));
+        if( $token ){
+            $data = Token::get($token);
+            if(isset($data['user_id'])){
+                return $this->redirect(url('/admin?ref=1'));
+            }
         }
         return $this->fetch();
     }
@@ -25,14 +30,16 @@ class Login extends Controller
         if (!$validate->check($param))
             return $this->error($validate->getError());
         //设置SESSION
-        $session = model('auth.User')->where('username','=',$param['username'])->value('id');
-        Session::set('admin_user_id', $session);
-        return $this->success('登录成功');
+        $user_id = model('auth.User')->where('username','=',$param['username'])->value('id');
+        $token = Random::uuid();
+        Token::set($token, $user_id, 24 * 60 * 60 * 3);
+        return $this->success('登录成功','',['token'=>$token]);
     }
 
     //退出登录
     public function logout(){
-        Session::clear();
+        $token = $this->request->server('HTTP_TOKEN', $this->request->request('token', Cookie::get('token')));
+        Token::delete($token);
         return $this->redirect(url('/admin/auth.login/index'));
     }
 }

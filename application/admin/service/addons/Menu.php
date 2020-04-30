@@ -1,7 +1,7 @@
 <?php
+namespace app\admin\service\addons;
 
-namespace service;
-
+use service\Service;
 /**
  * 菜单类
  */
@@ -16,38 +16,25 @@ class Menu extends Service
     }
 
     //创建菜单
-    public function create($menus,$pid=0,$is_menu=1,$unique_name=1){
+    public function create($menus,$pid=0){
+        static $ids;
         foreach($menus as $menu){
-            if($unique_name){
-                $id = \app\admin\model\auth\Menu::where('name','=',$menu['name'])
-                    ->value('id');
-            }else{
-                $id = false;
-            }
-
-            if(!$id){
-                $add_menu = [
-                    'name' => $menu['name'],
-                    'des' => $menu['name'],
-                    'rule' => isset($menu['rule']) ? $menu['rule'] : $this->default_rule,
-                    'is_menu' => $is_menu,
-                    'pid' => $pid,
-                    'icon' => isset($menu['icon']) ? $menu['icon'] : $this->default_icon
-                ];
-                $id = $this->menu_model->insertGetId($add_menu);
-            }else{
-                $this->menu_model->where('id','=',$id)->update(['is_hide'=>0]);
-            }
+            $add_menu = [
+                'name' => $menu['name'],
+                'des' => isset($menu['des']) ? $menu['des'] : '',
+                'rule' => isset($menu['rule']) ? $menu['rule'] : $this->default_rule,
+                'is_menu' => $menu['is_menu'],
+                'pid' => $pid,
+                'icon' => isset($menu['icon']) ? $menu['icon'] : $this->default_icon
+            ];
+            $id = $this->menu_model->insertGetId($add_menu);
+            $ids[] = $id;
 
             if(isset($menu['children'])){
                 self::create($menu['children'],$id);
             }
-
-            if(isset($menu['actionList'])){
-                self::create($menu['actionList'],$id,0,0);
-            }
         }
-        return true;
+        return $ids;
     }
 
     //删除菜单

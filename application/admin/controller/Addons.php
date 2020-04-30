@@ -29,7 +29,7 @@ class Addons extends Backend
             $arr_res = json_decode($res, true);
 
             foreach($arr_res['data']['list']['data'] as $k=>$v){
-                $info = $this->addons_service->getAddonInfo($v['name']);
+                $info = $this->addons_service->_info->getAddonInfo($v['name']);
                 if(!$info){
                     $arr_res['data']['list']['data'][$k]['addon_exist'] = false;
                     $arr_res['data']['list']['data'][$k]['local_state'] = 0;
@@ -52,7 +52,7 @@ class Addons extends Backend
             $assign['category'] = $res['data']['category'];
 
             foreach($res['data']['list']['data'] as $k=>$v){
-                $info = $this->addons_service->getAddonInfo($v['name']);
+                $info = $this->addons_service->_info->getAddonInfo($v['name']);
                 if(!$info){
                     $arr_res['data']['list']['data'][$k]['addon_exist'] = false;
                     $res['data']['list']['data'][$k]['local_state'] = 0;
@@ -94,14 +94,9 @@ class Addons extends Backend
                 if(!$installRes){
                     $this->error($addons_service->getError());
                 }
-                if($installRes['code']){
-                    $info = \app\admin\service\Addons::getAddonInfo($name);
-//                $info['config'] = \app\admin\services\Addons::getAddonConfig($name) ? 1 : 0;
-                    $info['state'] = 1;
-                    $this->success('安装成功', ['addon' => $info]);
-                }else{
-                    $this->error($installRes['msg']);
-                }
+                $info = $addons_service->_info->getAddonInfo($name);
+                $info['state'] = 1;
+                $this->success('安装成功', ['addon' => $info]);
             } catch (Exception $e) {
                 $this->error($e->getMessage(), $e->getCode());
             }
@@ -212,5 +207,13 @@ class Addons extends Backend
         }catch (Exception $e){
             $this->error('安装失败',$e->getMessage());
         }
+    }
+
+    //用户信息
+    public function user(){
+        if($this->request->isAjax()){
+
+        }
+        return $this->fetch();
     }
 }

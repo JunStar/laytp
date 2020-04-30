@@ -105,7 +105,7 @@ class Role extends Backend
             }
 
             $role_info = $this->model->getByName($post['name']);
-            if($role_info['id'] != $edit_where['id']){
+            if($role_info && ($role_info['id'] != $edit_where['id'])){
                 return $this->error('角色名已存在');
             }
 

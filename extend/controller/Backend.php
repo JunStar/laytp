@@ -6,8 +6,10 @@
 namespace controller;
 
 use app\admin\model\auth\Menu;
+use library\Token;
 use library\Tree;
 use think\Controller;
+use think\facade\Cookie;
 use think\facade\Hook;
 use think\facade\Session;
 
@@ -88,7 +90,15 @@ class Backend extends Controller
     //权限检测
     public function auth(){
         //当前登录用户信息
-        $admin_user_id = Session::get('admin_user_id');
+        $token = $this->request->server('HTTP_TOKEN', $this->request->request('token', Cookie::get('token')));
+        if(!$token){
+            $this->redirect(url('/admin/auth.login/index'));
+        }
+        $data = Token::get($token);
+        if(!$data){
+            $this->redirect(url('/admin/auth.login/index'));
+        }
+        $admin_user_id = $data['user_id'];
         if(!$admin_user_id){
             $this->redirect(url('/admin/auth.login/index'));
         }

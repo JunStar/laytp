@@ -19,7 +19,7 @@ layui.use(['layTp'],function() {
                     "data": res.data.list.data //解析数据列表
                 };
             }
-            , toolbar: '#default_toolbar'
+            , toolbar: '#top_toolbar'
             , where: where
             , even: true
             , method: 'GET'
@@ -53,22 +53,6 @@ layui.use(['layTp'],function() {
                     layui.laytpl($('#operation').html()).render(d, function(html){
                         operation_html = html;
                     });
-                    // let options = [];
-                    // for(k in d.multi_version){
-                    //     options[k] = {};
-                    //     options[k].action = "install";
-                    //     options[k].title = '安装' + d.multi_version[k]['version_num'];
-                    //     options[k].switch_type = "popup_frame";
-                    //     options[k].need_data = false;
-                    //     options[k].need_refresh = true;
-                    //     options[k].uri = layTp.facade.url(module + "/" + controller + "/install",{"version":d.multi_version[k]['version_num'],"name":d.name});
-                    // }
-                    //
-                    // //批量操作渲染
-                    // layui.dropdown.render({
-                    //     elem: '.version_list_'+d.id,
-                    //     options: options
-                    // });
                     return operation_html;
                 }}
             ]]
@@ -136,8 +120,8 @@ layui.use(['layTp'],function() {
             click_field_val = "";
         }
         let data = {"charge_type":click_field_val};
-        layui.laytpl($('#template_default_toolbar').html()).render(data, function(html){
-            $('#default_toolbar').html(html);
+        layui.laytpl($('#top_toolbar_template').html()).render(data, function(html){
+            $('#top_toolbar').html(html);
             //搜索框的值设置成对应值
             $('#'+field).val(field_val);
             layui.form.render('select');

@@ -140,6 +140,28 @@ layui.define([
             return url;
         },
 
+        setcookie: function(name,value,Days){
+            var exp  = new Date();
+            exp.setTime(exp.getTime() + Days*24*60*60*1000);
+            document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString() + ";path=/";
+        },
+
+        getcookie:function(name){
+            var arr = document.cookie.match(new RegExp("(^| )"+name+"=([^;]*)(;|$)"));
+            if(arr != null){
+                return (arr[2]);
+            }else{
+                return "";
+            }
+        },
+
+        delcookie:function(name){
+            var exp = new Date();
+            exp.setTime(exp.getTime() - 1);
+            var cval=getCookie(name);
+            if(cval!=null) document.cookie= name + "="+cval+";expires="+exp.toGMTString();
+        },
+
         //layEdit简易编辑器
         layEditor: function(options){
             laytp_editor.createEditor(options);
@@ -1358,11 +1380,7 @@ layui.define([
         });
     }
 
-    layui.each(layTp.init, function(key,item){
-        if(typeof item == "function"){
-            item();
-        }
-    });
+    layTp.init_render();
 
     //输出模块
     exports(MOD_NAME, layTp);
