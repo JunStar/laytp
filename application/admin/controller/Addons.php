@@ -211,9 +211,7 @@ class Addons extends Backend
 
     //用户信息
     public function user(){
-        if($this->request->isAjax()){
-
-        }
+        $this->assign('addons_api_url',Config::get('addons.api_url'));
         return $this->fetch();
     }
 }

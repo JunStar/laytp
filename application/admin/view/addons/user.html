@@ -3,24 +3,24 @@
 {block name="body"}
 <div id="login_form" style="display:none;">
 <blockquote class="layui-elem-quote">注意：此处登录laytp官网账号</blockquote>
-<form class="layui-form layui-form-pane page-list-form" action="http://local.laytpgw.com/api/user/email_login" lay-filter="login">
+<form class="layui-form layui-form-pane page-list-form" action="{$addons_api_url}/api/user/email_login" lay-filter="login">
     <div class="layui-form-item">
         <label class="layui-form-label" title="简称">邮箱 <text title="必填项" style="color:red;">*</text></label>
         <div class="layui-input-block">
-            <input type="text" name="email" placeholder="请输入邮箱" class="layui-input" lay-verify="required" lay-verType="tips">
+            <input type="text" name="email" id="email" placeholder="请输入邮箱" class="layui-input" lay-verify="required" lay-verType="tips">
         </div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label" title="名称">密码 <text title="必填项" style="color:red;">*</text></label>
         <div class="layui-input-block">
-            <input type="password" name="password" placeholder="请输入密码" class="layui-input" lay-verify="required" lay-verType="tips">
+            <input type="password" name="password" id="password" placeholder="请输入密码" class="layui-input" lay-verify="required" lay-verType="tips">
         </div>
     </div>
 
     <div class="layui-form-item">
         <div class="layui-input-block">
-            <a class="layui-btn layui-btn-sm layui-btn-normal" lay-submit lay-filter="login">提 交</a>
+            <a class="layui-btn layui-btn-sm layui-btn-normal" lay-submit lay-filter="login" id="login_submit_btn">提 交</a>
             <a href="http://www.laytp.com/index/user/reg.html" target="_blank" class="layui-btn layui-btn-sm layui-btn-primary">注册账号</a>
         </div>
     </div>
@@ -41,11 +41,12 @@
             layTp = layui.layTp
             , $ = layui.jquery
         ;
+        let addons_api_url = "{$addons_api_url}";
         let laytp_token = layTp.facade.getcookie('laytp_token');
         if(laytp_token){
             $.ajax({
                 type: "POST",
-                url: "http://local.laytpgw.com/api/user/info",
+                url: addons_api_url + "/api/user/info",
                 data: {"token":laytp_token},
                 dataType: 'json',
                 success: function (res) {
@@ -110,6 +111,18 @@
                     }
                 }
             });
+        });
+
+        $("#password").focus(function()
+        {
+            $(document).on("keydown",function(event)
+            {
+                if( event.keyCode == 13 )
+                {
+                    $('#login_submit_btn').click();
+                }
+            });
+            $("#password").unbind();
         });
     });
 </script>
