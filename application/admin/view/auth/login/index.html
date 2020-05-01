@@ -59,6 +59,7 @@
                                         <span class="icon icon-key margin-small"></span>
                                     </div>
                                 </div>
+                                <input type="hidden" value="{$referer}" name="referer" id="referer" />
                                 {if $Think.config.laytp.basic.login_vercode}
                                 <div class="form-group">
                                     <div class="field field-icon-right">
@@ -93,6 +94,7 @@
         form.render();
 
         form.on('submit(user-login-submit)', function(obj){
+            console.log(obj.field);
             $.ajax({
                 type: 'POST'
                 ,url: '/admin/auth.login/do_login'
@@ -102,7 +104,8 @@
                     if(res.code == 1){
                         layTp.facade.setcookie('token', res.data.token, 3);
                         layTp.facade.success(res.msg);
-                        setTimeout( redirect, 1000 );
+                        // setTimeout( redirect, 1000 );
+                        setTimeout( function(){redirect(res.url)}, 1000 );
                     }else{
                         layTp.facade.error(res.msg);
                         $('#user-get-vercode').click();
@@ -118,9 +121,10 @@
             });
         });
 
-        function redirect()
+        function redirect(url)
         {
-            location.href = "/admin?ref=1";
+            url = url ? url : "/admin?ref=1";
+            location.href = url;
         }
 
         {if $Think.config.laytp.basic.login_vercode}

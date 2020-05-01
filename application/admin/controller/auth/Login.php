@@ -20,6 +20,11 @@ class Login extends Controller
                 return $this->redirect(url('/admin?ref=1'));
             }
         }
+        $referer = $this->request->server('HTTP_REFERER');
+        $parse_url = parse_url($referer);
+        $query = str_replace('=','/',$parse_url['query']);
+        $query = str_replace('ref','laytp_menu_id',$query);
+        $this->assign('referer',$parse_url['scheme'].'://'.$parse_url['host'].$parse_url['path'].'/'.$query);
         return $this->fetch();
     }
 
@@ -33,7 +38,7 @@ class Login extends Controller
         $user_id = model('auth.User')->where('username','=',$param['username'])->value('id');
         $token = Random::uuid();
         Token::set($token, $user_id, 24 * 60 * 60 * 3);
-        return $this->success('登录成功','',['token'=>$token]);
+        return $this->success('登录成功',$param['referer'],['token'=>$token]);
     }
 
     //退出登录
