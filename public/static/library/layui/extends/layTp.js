@@ -200,7 +200,7 @@ layui.define([
 
         //layer弹窗confirm
         popup_confirm: function(text,url){
-            layui.layer.confirm('确定'+text+'么?', function(index){
+            layui.layer.confirm('确定'+text+'吗?', function(index){
                 $.ajax({
                     type: 'POST',
                     url: url,

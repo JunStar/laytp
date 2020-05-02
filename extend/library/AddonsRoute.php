@@ -1,6 +1,7 @@
 <?php
 namespace library;
 
+use app\admin\service\Addons;
 use think\Container;
 use think\exception\HttpException;
 use think\facade\Config;
@@ -63,7 +64,8 @@ class AddonsRoute extends Route {
         $action = $action ? trim(call_user_func($filter, $action)) : 'index';
 
         if (!empty($addon) && !empty($module) && !empty($controller) && !empty($action)) {
-            $info = Addons::getInfo($addon);
+            $addons_server = new Addons();
+            $info = $addons_server->_info->getAddonInfo($addon);
             if (!$info) {
                 throw new HttpException(404, $addon.'插件不存在');
             }
@@ -76,7 +78,7 @@ class AddonsRoute extends Route {
 
             $class = self::get_addon_class($addon, $module, 'module.controller', $controller);
             if (!$class) {
-                throw new HttpException(404, Loader::parseName($controller, 1).'控制器不存在');
+                throw new HttpException(404, Loader::parseName($controller, 'module.controller').'控制器不存在');
             }
 
             if(substr($controller,0,3) == 'api'){

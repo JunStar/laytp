@@ -30,6 +30,7 @@ class Addons extends Backend
 
             foreach($arr_res['data']['list']['data'] as $k=>$v){
                 $info = $this->addons_service->_info->getAddonInfo($v['name']);
+                $config = $this->addons_service->_config->getConfig($v['name']);
                 if(!$info){
                     $arr_res['data']['list']['data'][$k]['addon_exist'] = false;
                     $arr_res['data']['list']['data'][$k]['local_state'] = 0;
@@ -37,6 +38,10 @@ class Addons extends Backend
                     $arr_res['data']['list']['data'][$k]['addon_exist'] = true;
                     $arr_res['data']['list']['data'][$k]['local_state'] = $info['state'];
                 }
+                $arr_res['data']['list']['data'][$k]['latest_version'] = $arr_res['data']['list']['data'][$k]['versions'][count($arr_res['data']['list']['data'][$k]['versions']) - 1]['version'];
+                $arr_res['data']['list']['data'][$k]['backend_url'] = isset($info['backend_url']) && $info['backend_url'] ? $this->addons_service->_info->getUrl($info['name'],$info['backend_url']) : '';
+                $arr_res['data']['list']['data'][$k]['frontend_url'] = isset($info['frontend_url']) && $info['frontend_url'] ? $this->addons_service->_info->getUrl($info['name'],$info['frontend_url']) : '';
+                $arr_res['data']['list']['data'][$k]['config'] = $config ? true : false;
             }
             $res = json_encode($arr_res);
 
@@ -89,12 +94,11 @@ class Addons extends Backend
                     'token'     => $token,
                     'version'   => $version
                 ];
-                $addons_service = new \app\admin\service\Addons();
-                $installRes = $addons_service->install($name, $force, $extend);
+                $installRes = $this->addons_service->install($name, $force, $extend);
                 if(!$installRes){
-                    $this->error($addons_service->getError());
+                    $this->error($this->addons_service->getError());
                 }
-                $info = $addons_service->_info->getAddonInfo($name);
+                $info = $this->addons_service->_info->getAddonInfo($name);
                 $info['state'] = 1;
                 $this->success('安装成功', ['addon' => $info]);
             } catch (Exception $e) {
@@ -113,9 +117,12 @@ class Addons extends Backend
         $field = $this->request->param('field');
         $name = $this->request->param('name');
         try{
-            $info = $this->addons_service->getAddonInfo($name);
+            $info = $this->addons_service->_info->getAddonInfo($name);
+            if(!$info){
+                return $this->error('插件不存在');
+            }
             $info['state'] = $field_val;
-            if( $this->addons_service->setAddonInfo($name, $info) ){
+            if( $this->addons_service->_info->setAddonInfo($name, $info) ){
                 return $this->success('操作成功');
             }else{
                 return $this->error('操作失败');
@@ -132,14 +139,14 @@ class Addons extends Backend
             return $this->error('参数name不能为空');
         }
         try {
-            $info = \app\admin\service\Addons::getAddonInfo($name);
+            $info = $this->addons_service->_info->getAddonInfo($name);
             if(!$info){
                 return $this->error('插件不存在');
             }
             if($info['state'] == 1){
                 return $this->error('请先关闭插件');
             }
-            $installRes = \app\admin\service\Addons::uninstall($name);
+            $installRes = $this->addons_service->uninstall($name);
             if($installRes['code']){
                 return $this->success('卸载成功');
             }else{
@@ -157,6 +164,7 @@ class Addons extends Backend
     //配置项
     public function config(){
         $name = $this->request->param('name');
+        $config_items = $this->addons_service->_config->getConfig($name);
         if($this->request->isAjax()){
             $addons = Config::get('addons.');
             $config_items = $this->request->param('row');
@@ -165,9 +173,13 @@ class Addons extends Backend
             file_put_contents($file_name,"<?php\nreturn ".var_export($addons,true).';');
             return $this->success('配置成功');
         }
-        $this->assign('config_items', json_decode($this->request->param('config_items'),true));
-        $this->assign('config_values', Config::get('addons.'.$name));
-        return $this->fetch();
+        $this->assign('config_items', $config_items);
+        $this->assign('config', Config::get('addons.'.$name));
+        if(isset($config_items['group']) && $config_items['group']){
+            return $this->fetch('group_config');
+        }else{
+            return $this->fetch();
+        }
     }
 
     //离线安装

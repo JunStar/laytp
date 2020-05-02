@@ -17,11 +17,14 @@ use think\facade\Env;
 class Addons extends Service
 {
     public $_info;
+    public $_menu;
+    public $_config;
 
     public function __construct()
     {
         $this->_info = new Info();
         $this->_menu = new Menu();
+        $this->_config = new \app\admin\service\addons\Config();
     }
 
     /**

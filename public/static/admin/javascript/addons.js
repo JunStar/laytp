@@ -28,7 +28,7 @@ layui.use(['layTp'],function() {
                 curr: page
             }
             , cols: [[
-                {field:'title',title:'插件名称'}
+                {field:'title',title:'插件名称',width:90}
                 ,{field:'description',title:'简介'}
                 ,{field:'author',title:'作者',align:'center',width:100}
                 ,{field:'price',title:'价格',align:'center',width:100,templet:function(d){
@@ -66,17 +66,17 @@ layui.use(['layTp'],function() {
                 //新增的其他操作按钮在这里来写
                 switch(obj.event){
                     case 'uninstall':
-                        layTp.facade.popup_confirm("卸载",layTp.facade.url(module + "/" + controller + "/uninstall",{name:obj.data.name}));
+                        layTp.facade.popup_confirm("卸载插件 " + obj.data.title + " ",layTp.facade.url(module + "/" + controller + "/uninstall",{name:obj.data.name}));
                         break;
                     case 'config':
-                        layTp.facade.popup_frame("配置项",layTp.facade.url(module + "/" + controller + "/config",{config_items:obj.data.config_items,name:obj.data.name}),'50%','50%');
+                        layTp.facade.popup_frame("配置插件 " + obj.data.title,layTp.facade.url(module + "/" + controller + "/config",{config:obj.data.config,name:obj.data.name}),'50%','50%');
                         break;
                     case 'install':
                         let laytp_token = layTp.facade.getcookie('laytp_token');
                         if(!laytp_token){
                             layTp.facade.popup_frame("会员信息",layTp.facade.url(module + "/" + controller + "/user"),'60%','55%');
                         }else{
-                            layTp.facade.popup_frame("安装",layTp.facade.url(module + "/" + controller + "/install",{name:obj.data.name}),'50%','50%');
+                            layTp.facade.popup_frame("插件 " + obj.data.title + " 安装",layTp.facade.url(module + "/" + controller + "/install",{name:obj.data.name}),'50%','50%');
                         }
                         break;
                 }

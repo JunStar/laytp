@@ -84,4 +84,10 @@ class Info extends Service
         }
         return true;
     }
+
+
+    public function getUrl($name,$url){
+        $server = request()->server();
+        return $server['REQUEST_SCHEME'].'://'.$server['SERVER_NAME'].'/addons/'.$name.'/'.$url;
+    }
 }
