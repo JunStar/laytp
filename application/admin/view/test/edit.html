@@ -2,9 +2,9 @@
 
 {block name="form"}
     <div class="layui-form-item">
-        <label class="layui-form-label" title="标题">标题</label>
+        <label class="layui-form-label" title="标题">标题 <text title="必填项" style="color:red;">*</text></label>
         <div class="layui-input-block">
-            <input autocomplete="off" type="text" name="row[title]" id="title" placeholder="请输入标题" value="{$title}" class="layui-input" lay-verify="" lay-verType="tips">
+            <input autocomplete="off" type="text" name="row[title]" id="title" placeholder="请输入标题" value="{$title}" class="layui-input" lay-verify="required" lay-verType="tips">
         </div>
     </div>
 

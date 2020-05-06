@@ -41,7 +41,13 @@ layui.use(['layTp'],function() {
                     }
                 }}
                 ,{field:'download_num',title:'下载次数',width:90,align:'center'}
-                ,{field:'latest_version',title:'最新版本',width:90,align:'center'}
+                ,{field:'version',title:'版本',width:90,align:'center',templet:function(d){
+                    if(d.version < d.latest_version){
+                        return '<a href="" time="4000" colour="#000000" layer-tips="发现新版本' + d.latest_version + '，点击查看更新日志">' + d.version + ' <text style="color:red;">*</text></a>';
+                    }else{
+                        return d.version;
+                    }
+                }}
                 ,{field:'local_state',title:'状态',width:100,align:'center',templet:function(d){
                     let data_list = {"open":{"value":1,"text":"开启"},"close":{"value":0,"text":"关闭"}};
                     let lay_text = data_list.open.text + "|" + data_list.close.text;

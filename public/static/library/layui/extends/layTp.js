@@ -1231,9 +1231,10 @@ layui.define([
             $(document).on('mouseover','[layer-tips]',function(){
                 let obj = $(this);
                 let colour = (typeof obj.attr('colour') != 'undefined') ? obj.attr('colour') : '#3595CC';
+                let time = (typeof obj.attr('time') != 'undefined') ? obj.attr('time') : 800;
                 layui.layer.tips($(this).attr('layer-tips'), this, {
                     tips: [1, colour],
-                    time: 800
+                    time: time
                 });
             });
         },
