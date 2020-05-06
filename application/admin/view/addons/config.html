@@ -190,10 +190,10 @@
             </thead>
             <tbody>
             {if is_array($config[$v['key']])}
-            {foreach $config[$v['key']] as $vk=>$vv}
+            {foreach $config[$v['key']]['key'] as $vk=>$vv}
             <tr>
-                <td style="padding: 4px 15px;"><input class="layui-input" type="text" name="row[{$v.key}][key][]" value="{$vk}" /></td>
-                <td style="padding: 4px 15px;"><input class="layui-input" type="text" name="row[{$v.key}][value][]" value="{$vv}" /></td>
+                <td style="padding: 4px 15px;"><input class="layui-input" type="text" name="row[{$v.key}][key][]" value="{$vv}" /></td>
+                <td style="padding: 4px 15px;"><input class="layui-input" type="text" name="row[{$v.key}][value][]" value="{$config[$v['key']]['value'][$vk]}" /></td>
                 <td style="padding: 4px 15px;">
                     <a href="javascript:void(0);" class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-delete del_array_item" layer-tips="删除" title="删除"></a>
                 </td>

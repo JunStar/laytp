@@ -8,21 +8,18 @@ return [
                 'name'=>'单行输入框1'
                 ,'key'=>'wx_input'
                 ,'type'=>'input'
-                ,'default'=>''
                 ,'content'=>''
             ],
             [
                 'name'=>'普通文本域1'
                 ,'key'=>'wx_textarea'
                 ,'type'=>'textarea'
-                ,'default'=>''
                 ,'content'=>''
             ],
             [
                 'name'=>'状态(开关单选)'
                 ,'key'=>'wx_status'
                 ,'type'=>'radio'
-                ,'default'=>'2'
                 ,'content'=>[
                     '1'=>'关闭'
                     ,'2'=>'打开'
@@ -106,21 +103,18 @@ return [
                 'name'=>'单行输入框2'
                 ,'key'=>'input'
                 ,'type'=>'input'
-                ,'default'=>''
                 ,'content'=>''
             ],
             [
                 'name'=>'普通文本域'
                 ,'key'=>'textarea'
                 ,'type'=>'textarea'
-                ,'default'=>''
                 ,'content'=>''
             ],
             [
                 'name'=>'状态(开关单选)'
                 ,'key'=>'status'
                 ,'type'=>'radio'
-                ,'default'=>'2'
                 ,'content'=>[
                     '1'=>'关闭'
                     ,'2'=>'打开'
@@ -209,21 +203,18 @@ return [
         'name'=>'单行输入框'
         ,'key'=>'input'
         ,'type'=>'input'
-        ,'default'=>''
         ,'content'=>''
     ],
     [
         'name'=>'普通文本域'
         ,'key'=>'textarea'
         ,'type'=>'textarea'
-        ,'default'=>''
         ,'content'=>''
     ],
     [
         'name'=>'状态(开关单选)'
         ,'key'=>'status'
         ,'type'=>'radio'
-        ,'default'=>'2'
         ,'content'=>[
             '1'=>'关闭'
             ,'2'=>'打开'
