@@ -1,5 +1,6 @@
 <?php
 //有分组模式
+
 return [
     'group' => ['微信','支付宝'],
     'items' => [
@@ -20,6 +21,7 @@ return [
                 'name'=>'状态(开关单选)'
                 ,'key'=>'wx_status'
                 ,'type'=>'radio'
+                ,'default'=>2
                 ,'content'=>[
                     '1'=>'关闭'
                     ,'2'=>'打开'
@@ -115,6 +117,7 @@ return [
                 'name'=>'状态(开关单选)'
                 ,'key'=>'status'
                 ,'type'=>'radio'
+                ,'default'=>2
                 ,'content'=>[
                     '1'=>'关闭'
                     ,'2'=>'打开'
@@ -215,6 +218,7 @@ return [
         'name'=>'状态(开关单选)'
         ,'key'=>'status'
         ,'type'=>'radio'
+        ,'default'=>2
         ,'content'=>[
             '1'=>'关闭'
             ,'2'=>'打开'

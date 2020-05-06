@@ -17,7 +17,11 @@
             <option value="">请选择</option>
             {if is_array($v['content'])}
             {foreach $v['content'] as $content_k=>$content_v}
-            <option value="{$content_k}" {if $config[$v['key']] ? $config[$v['key']] : $v['default'] == $content_k}selected="selected"{/if}>{$content_v}</option>
+            <option value="{$content_k}"
+                {php}if(($config[$v['key']] ? $config[$v['key']] : $v['default']) == $content_k){{/php}
+                selected="selected"
+                {php}}{/php}
+            >{$content_v}</option>
             {/foreach}
             {/if}
         </select>
@@ -35,10 +39,12 @@
         <!-- 隐藏域设置开关未选中时需要传递的参数值 -->
         <input type="hidden" name="row[{$v['key']}]" value="{:key($v['content'])}" />
         <input type="checkbox" name="row[{$v['key']}]" lay-skin="switch"
-               lay-text="{:next($v['content'])}|{:prev($v['content'])}"
-               next-item="{:next($v['content'])}"
-               value="{:key($v['content'])}"
-               {if key($v['content']) == $v['default']}checked="checked"{/if} />
+            lay-text="{:next($v['content'])}|{:prev($v['content'])}"
+            next-item="{:next($v['content'])}"
+            value="{:key($v['content'])}"
+            {php}if(($config[$v['key']] ? $config[$v['key']] : $v['default']) == key($v['content'])){{/php}
+            checked="checked"
+            {php}}{/php} />
         {/if}
         {/case}
         {case image_single}
