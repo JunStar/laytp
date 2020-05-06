@@ -3,11 +3,13 @@ namespace app\admin\controller;
 
 use library\DirFile;
 use library\QiniuYun;
+use library\Token;
 use OSS\OssClient;
 use think\facade\Config;
 use think\Controller;
 use think\Db;
 use think\Exception;
+use think\facade\Cookie;
 use think\facade\Env;
 use think\facade\Session;
 
@@ -15,8 +17,9 @@ use think\facade\Session;
 class Ajax extends Controller
 {
     public function initialize(){
-        $admin_user_id = Session::get('admin_user_id');
-        if(!$admin_user_id){
+        $token = $this->request->server('HTTP_TOKEN', $this->request->request('token', Cookie::get('token')));
+        $data = Token::get($token);
+        if(!$data['user_id']){
             $this->error('请先登录');
         }
     }
@@ -202,8 +205,9 @@ class Ajax extends Controller
     public function lock_screen(){
         if($this->request->isAjax()){
             $password = $this->request->param('password');
-            $admin_user_id = Session::get('admin_user_id');
-            $password_hash = model('auth.User')->where('id','=',$admin_user_id)->value('password');
+            $token = $this->request->server('HTTP_TOKEN', $this->request->request('token', Cookie::get('token')));
+            $data = Token::get($token);
+            $password_hash = model('auth.User')->where('id','=',$data['user_id'])->value('password');
             if( !password_verify( $password, $password_hash ) )
             {
                 $this->error('密码错误');

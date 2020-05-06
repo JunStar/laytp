@@ -469,7 +469,8 @@ layui.define([
                             options[key].param = {};
                         }
                         for(rk in rule_list){
-                            if(rule_list[rk] === options[key].node){
+                            var node_arr = options[key].node.split('/');
+                            if(rule_list[rk] === node_arr[0] + '/' + node_arr[1] + '/' + node_arr[2]){
                                 hasAuthOptions.push(
                                     {
                                         action: options[key].action
@@ -852,7 +853,12 @@ layui.define([
             //搜索表单进行提交时，触发的方法
             function index(data){
                 if(typeof func_controller != "undefined"){
-                    func_controller.table_render(data.field);
+                    // func_controller.table_render(data.field);
+                    var where = layui.form.val("laytp_search_form");
+                    layui.table.reload(table_id, {
+                        where: where
+                        ,page: 1
+                    });
                 }else{
                     do_update(data);
                 }
@@ -953,7 +959,7 @@ layui.define([
                     done: function (res) {
                         layer.close(layer.msg());//关闭上传提示窗口
                         if (res.code == 0) {
-                            return layTp.facade.error(res.msg + ":" + res.data);
+                            return layTp.facade.error(res.msg);
                         }
                         if(is_multiple){
                             //预览，LayUI的批量上传，其实是请求了多次上传接口
@@ -970,14 +976,14 @@ layui.define([
                                 $('#preview_' + id).append(
                                     '<li class="item_video">' +
                                     '<video src="' + res.data + '" controls="controls" width="200px" height="200px"></video>' +
-                                    '<button class="layui-btn layui-btn-sm layui-btn-danger upload_delete" style="display: block; width: 100%;" file_url_data="' + res.data + '"><i class="layui-icon">&#xe640;</i></button>' +
+                                    '<button class="layui-btn layui-btn-sm layui-btn-danger upload_delete" style="display: block; width: 100%;" file_url_data="' + res.data + '" node="'+id+'"><i class="layui-icon">&#xe640;</i></button>' +
                                     '</li>'
                                 );
                             }else if(accept == 'audio'){
                                 $('#preview_' + id).append(
                                     '<li class="item_audio">' +
                                     '<audio src="' + res.data + '" controls="controls" style="height:54px;"></audio>' +
-                                    '<button class="layui-btn layui-btn-sm layui-btn-danger upload_delete" style="display: block; width: 100%;" file_url_data="' + res.data + '"><i class="layui-icon">&#xe640;</i></button>' +
+                                    '<button class="layui-btn layui-btn-sm layui-btn-danger upload_delete" style="display: block; width: 100%;" file_url_data="' + res.data + '" node="'+id+'"><i class="layui-icon">&#xe640;</i></button>' +
                                     '</li>'
                                 );
                             }
@@ -994,7 +1000,7 @@ layui.define([
                                 $('#preview_' + id).html(
                                     '<li class="item_img">' +
                                     '<div class="operate">' +
-                                    '<i class="upload_img_close layui-icon" file_url_data="' + res.data + '"></i>' +
+                                    '<i class="upload_img_close layui-icon" file_url_data="' + res.data + '" node="'+id+'"></i>' +
                                     '</div>' +
                                     '<img src="' + res.data + '" class="img" >' +
                                     '</li>'

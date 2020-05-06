@@ -107,7 +107,31 @@
     <div class="layui-form-item">
         <label class="layui-form-label" title="视频文件地址">视频文件地址</label>
         <div class="layui-input-block">
-            <input autocomplete="off" type="text" name="row[video]" id="video" placeholder="请输入视频文件地址" class="layui-input" lay-verify="" lay-verType="tips">
+            <div class="layui-upload">
+                <div class="layui-inline" style="width: 70%;"><input type="text" class="layui-input" name="row[video]" id="input_video" /></div>
+                <div class="layui-inline">
+                    <button type="button" class="layui-btn layui-btn-sm layui-btn-primary pull-left"
+                            id="video"
+                            upload="true"
+                            accept="video"
+                            upload_dir=""
+                            single_multi="single">
+                        <i class="layui-icon">&#xe62f;</i> 上 传
+                    </button>
+                </div>
+                <div class="layui-inline">
+                    <button type="button"
+                            class="layui-btn layui-btn-sm layui-btn-danger pull-left popup-frame"
+                            data-open="{:url('admin/attachment/select',['id_val'=>'video','accept'=>'video','single_multi'=>'single'])}"
+                            data-width="100%"
+                            data-height="100%">
+                        <i class="layui-icon">&#xe60a;</i> 选 择
+                    </button>
+                </div>
+				<div class="pic-more">
+                    <ul class="pic-more-upload-list" id="preview_video"></ul>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -121,7 +145,28 @@
     <div class="layui-form-item">
         <label class="layui-form-label" title="任意文件地址">任意文件地址</label>
         <div class="layui-input-block">
-            <input autocomplete="off" type="text" name="row[file]" id="file" placeholder="请输入任意文件地址" class="layui-input" lay-verify="" lay-verType="tips">
+            <div class="layui-upload">
+                <div class="layui-inline" style="width: 70%;"><input type="text" class="layui-input" name="row[file]" id="input_file" /></div>
+                <div class="layui-inline">
+                    <button type="button" class="layui-btn layui-btn-sm layui-btn-primary pull-left"
+                            id="file"
+                            upload="true"
+                            accept="file"
+                            upload_dir=""
+                            single_multi="single">
+                        <i class="layui-icon">&#xe62f;</i> 上 传
+                    </button>
+                </div>
+                <div class="layui-inline">
+                    <button type="button"
+                            class="layui-btn layui-btn-sm layui-btn-danger pull-left popup-frame"
+                            data-open="{:url('admin/attachment/select',['id_val'=>'file','accept'=>'file','single_multi'=>'single'])}"
+                            data-width="100%"
+                            data-height="100%">
+                        <i class="layui-icon">&#xe60a;</i> 选 择
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 

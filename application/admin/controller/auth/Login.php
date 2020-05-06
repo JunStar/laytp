@@ -21,10 +21,19 @@ class Login extends Controller
             }
         }
         $referer = $this->request->server('HTTP_REFERER');
-        $parse_url = parse_url($referer);
-        $query = str_replace('=','/',$parse_url['query']);
-        $query = str_replace('ref','laytp_menu_id',$query);
-        $this->assign('referer',$parse_url['scheme'].'://'.$parse_url['host'].$parse_url['path'].'/'.$query);
+        $normal_logout = Cookie::get('normal_logout');
+        if(!$normal_logout && $referer){
+            $parse_url = parse_url($referer);
+            $query = '';
+            if(isset($parse_url['query'])){
+                $query = str_replace('=','/',$parse_url['query']);
+                $query = str_replace('ref','laytp_menu_id',$query);
+            }
+            $this->assign('referer',$parse_url['scheme'].'://'.$parse_url['host'].$parse_url['path'].'/'.$query);
+        }else{
+            $this->assign('referer','');
+        }
+        Cookie::set('normal_logout',0);
         return $this->fetch();
     }
 
@@ -45,6 +54,7 @@ class Login extends Controller
     public function logout(){
         $token = $this->request->server('HTTP_TOKEN', $this->request->request('token', Cookie::get('token')));
         Token::delete($token);
+        Cookie::set('normal_logout','1');
         return $this->redirect(url('/admin/auth.login/index'));
     }
 }
