@@ -29,9 +29,9 @@ layui.use(['layTp'],function() {
             }
             , cols: [[
                 {field:'title',title:'插件名称',width:90}
-                ,{field:'description',title:'简介'}
-                ,{field:'author',title:'作者',align:'center',width:100}
-                ,{field:'price',title:'价格',align:'center',width:100,templet:function(d){
+                ,{field:'description',title:'简介',width:260}
+                ,{field:'author',title:'作者',align:'center',width:70}
+                ,{field:'price',title:'价格',align:'center',width:90,templet:function(d){
                     if(d.charge_type == 2){
                         return '<text style="color: red;">￥' + d.price + '</text>';
                     }else if(d.charge_type == 3){
@@ -40,8 +40,8 @@ layui.use(['layTp'],function() {
                         return '<text style="color: green">免费</text>';
                     }
                 }}
-                ,{field:'download_num',title:'下载次数',width:100,align:'center'}
-                ,{field:'latest_version',title:'最新版本',width:100,align:'center'}
+                ,{field:'download_num',title:'下载次数',width:90,align:'center'}
+                ,{field:'latest_version',title:'最新版本',width:90,align:'center'}
                 ,{field:'local_state',title:'状态',width:100,align:'center',templet:function(d){
                     let data_list = {"open":{"value":1,"text":"开启"},"close":{"value":0,"text":"关闭"}};
                     let lay_text = data_list.open.text + "|" + data_list.close.text;
