@@ -5,22 +5,22 @@ return [
     'items' => [
         '微信' => [
             [
-                'name'=>'单行输入框'
-                ,'key'=>'input'
+                'name'=>'单行输入框1'
+                ,'key'=>'wx_input'
                 ,'type'=>'input'
                 ,'default'=>''
                 ,'content'=>''
             ],
             [
-                'name'=>'普通文本域'
-                ,'key'=>'textarea'
+                'name'=>'普通文本域1'
+                ,'key'=>'wx_textarea'
                 ,'type'=>'textarea'
                 ,'default'=>''
                 ,'content'=>''
             ],
             [
                 'name'=>'状态(开关单选)'
-                ,'key'=>'status'
+                ,'key'=>'wx_status'
                 ,'type'=>'radio'
                 ,'default'=>'2'
                 ,'content'=>[
@@ -30,7 +30,7 @@ return [
             ],
             [
                 'name'=>'单选下拉框'
-                ,'key'=>'hero'
+                ,'key'=>'wx_hero'
                 ,'type'=>'select_single'
                 ,'default'=>'4'
                 ,'content'=>[
@@ -46,7 +46,7 @@ return [
             ],
             [
                 'name'=>'多选下拉框'
-                ,'key'=>'sign'
+                ,'key'=>'wx_sign'
                 ,'type'=>'select_multi'
                 ,'default'=>'1,3'
                 ,'content'=>[
@@ -62,48 +62,48 @@ return [
             ],
             [
                 'name'=>'单图'
-                ,'key'=>'image'
+                ,'key'=>'wx_image'
                 ,'type'=>'image_single'
             ],
             [
                 'name'=>'多图'
-                ,'key'=>'images'
+                ,'key'=>'wx_images'
                 ,'type'=>'image_multi'
             ],
             [
                 'name'=>'单视频'
-                ,'key'=>'video'
+                ,'key'=>'wx_video'
                 ,'type'=>'video_single'
             ],
             [
                 'name'=>'多视频'
-                ,'key'=>'videos'
+                ,'key'=>'wx_videos'
                 ,'type'=>'video_multi'
             ],
             [
                 'name'=>'单文件'
-                ,'key'=>'file'
+                ,'key'=>'wx_file'
                 ,'type'=>'file_single'
             ],
             [
                 'name'=>'多文件'
-                ,'key'=>'files'
+                ,'key'=>'wx_files'
                 ,'type'=>'file_multi'
             ],
             [
                 'name'=>'数组'
-                ,'key'=>'array'
+                ,'key'=>'wx_array'
                 ,'type'=>'array'
             ],
             [
                 'name'=>'富文本编辑器'
-                ,'key'=>'ueditor'
+                ,'key'=>'wx_ueditor'
                 ,'type'=>'ueditor'
             ]
         ],
         '支付宝' => [
             [
-                'name'=>'单行输入框'
+                'name'=>'单行输入框2'
                 ,'key'=>'input'
                 ,'type'=>'input'
                 ,'default'=>''

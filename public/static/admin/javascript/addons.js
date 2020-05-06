@@ -69,7 +69,7 @@ layui.use(['layTp'],function() {
                         layTp.facade.popup_confirm("卸载插件 " + obj.data.title + " ",layTp.facade.url(module + "/" + controller + "/uninstall",{name:obj.data.name}));
                         break;
                     case 'config':
-                        layTp.facade.popup_frame("配置插件 " + obj.data.title,layTp.facade.url(module + "/" + controller + "/config",{name:obj.data.name}),'50%','50%');
+                        layTp.facade.popup_frame("配置插件 " + obj.data.title,layTp.facade.url(module + "/" + controller + "/config",{name:obj.data.name}),'70%','70%');
                         break;
                     case 'install':
                         let laytp_token = layTp.facade.getcookie('laytp_token');
