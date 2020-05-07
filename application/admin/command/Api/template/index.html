@@ -52,9 +52,9 @@
                 </div>
                 <label class="layui-form-label" style="color: #ffffff!important;">ApiUrl:</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="api_url" id="api_url" lay-verify="api_url" autocomplete="off" placeholder="http://www.domain.com/" class="layui-input">
+                    <input type="text" name="{$addon}api_url" id="{$addon}api_url" lay-verify="{$addon}api_url" autocomplete="off" placeholder="http://www.domain.com/" class="layui-input">
                 </div>
-                <button class="layui-btn layui-btn-primary" lay-submit="" lay-filter="api_url">保存</button>
+                <button class="layui-btn layui-btn-primary" lay-submit="" lay-filter="{$addon}api_url">保存</button>
             </div>
         </div>
     </div>
@@ -302,15 +302,15 @@
 
         if (storage) {
             $('#token').val(storage.getItem('token'));
-            $('#api_url').val(storage.getItem('api_url'));
+            $('#{$addon}api_url').val(storage.getItem('{$addon}api_url'));
         } else {
             alert('Your browser does not support local storage');
         }
 
-        layui.form.on('submit(api_url)', function(data){
+        layui.form.on('submit({$addon}api_url)', function(data){
             if (storage) {
                 storage.setItem('token', data.field.token);
-                storage.setItem('api_url', data.field.api_url);
+                storage.setItem('{$addon}api_url', data.field.{$addon}api_url);
             } else {
                 alert('Your browser does not support local storage');
             }
@@ -334,7 +334,7 @@
                     formData.append($(input).attr('name'), $(input).val())
                 }
             });
-            let url = storage.getItem('api_url') ? storage.getItem('api_url') + $('#test_inline_'+id).attr('route') : $('#test_inline_'+id).attr('route');
+            let url = storage.getItem('{$addon}api_url') ? storage.getItem('{$addon}api_url') + $('#test_inline_'+id).attr('route') : $('#test_inline_'+id).attr('route');
 
             let headers = {};
 

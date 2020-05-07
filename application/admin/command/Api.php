@@ -55,6 +55,7 @@ class Api extends Command
         $apiDir = __DIR__ . DS . 'Api' . DS;
         $template_dir = $apiDir . 'template' . DS;
         $template_file = $template_dir . $input->getOption('template');
+        $var['addon'] = $input->getOption('addon');
         $var['title'] = $input->getOption('title');
 
         $content = $builder->render($template_file,$var);
