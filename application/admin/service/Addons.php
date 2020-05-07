@@ -143,7 +143,20 @@ class Addons extends Service
     //卸载插件
     public function uninstall($name)
     {
+        //删除插件目录
         DirFile::rmDirs(Env::get('root_path') . 'addons' . DS . $name);
+        //删除配置项
+        $addons = Config::get('addons.');
+        if(isset($addons[$name])){
+            unset($addons[$name]);
+            $file_name = Env::get('root_path') .  DS . 'config' . DS . 'addons.php';
+            file_put_contents($file_name,"<?php\nreturn ".var_export($addons,true).';');
+        }
+        //删除api文档
+        $api_dir = Env::get('root_path') . DS . 'public' . DS . 'addons' . DS . $name;
+        if(is_dir($api_dir)){
+            DirFile::rmDirs($api_dir);
+        }
         return true;
     }
 

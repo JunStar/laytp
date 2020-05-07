@@ -86,7 +86,7 @@ layui.use(['layTp'],function() {
                         }
                         break;
                     case 'api':
-                        layTp.facade.popup_frame("插件 " + obj.data.title + " Api文档",layTp.facade.url(module + "/" + controller + "/api",{name:obj.data.name}),'60%','55%');
+                        layTp.facade.popup_frame("插件 " + obj.data.title + " Api文档",layTp.facade.url(module + "/" + controller + "/api",{name:obj.data.name}),'40%','27%');
                         break;
                     case 'domain':
                         layTp.facade.popup_frame("插件 " + obj.data.title + " 域名配置",layTp.facade.url(module + "/" + controller + "/domain",{name:obj.data.name}),'40%','30%');
