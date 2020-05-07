@@ -43,6 +43,6 @@ class Demo extends Api
      */
     public function test1()
     {
-        $this->success('返回成功', ['action' => 'test1']);
+        $this->success('返回成功', ['action' => 'test12']);
     }
 }

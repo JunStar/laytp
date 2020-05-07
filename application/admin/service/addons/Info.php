@@ -1,6 +1,7 @@
 <?php
 namespace app\admin\service\addons;
 
+use library\DirFile;
 use service\Service;
 use think\Exception;
 use think\facade\Config;
@@ -89,5 +90,37 @@ class Info extends Service
     public function getUrl($name,$url){
         $server = request()->server();
         return $server['REQUEST_SCHEME'].'://'.$server['SERVER_NAME'].'/addons/'.$name.'/'.$url;
+    }
+
+    /**
+     * 根据域名获取插件名称
+     */
+    public function getAddonByDomain($domain){
+        $addons_path = Env::get('root_path') . DS . 'addons';
+        $addons_dir = DirFile::recurDir($addons_path);
+        foreach($addons_dir as $k=>$v){
+            if($v['type'] == 'dir'){
+                $info = $this->getAddonInfo($v['baseName']);
+                if($info['domain'] == $domain){
+                    return $info['name'];
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 获取所有插件的info
+     */
+    public function getAddonsInfo(){
+        $addons_path = Env::get('root_path') . DS . 'addons';
+        $addons_dir = DirFile::recurDir($addons_path);
+        $addons = [];
+        foreach($addons_dir as $k=>$v){
+            if($v['type'] == 'dir'){
+                $addons[] = $this->getAddonInfo($v['baseName']);
+            }
+        }
+        return $addons;
     }
 }

@@ -107,6 +107,86 @@ class AddonsRoute extends Route {
         }
     }
 
+    //插件绑定域名路由器
+    public static function domain_execute($addon = ''){
+        $request = Request::instance();
+        $url = $request->url();
+        $url_arr = array_merge(array_filter(explode('/',$url)));
+        $module = isset($url_arr[0]) ? $url_arr[0] : 'index';
+        $controller = isset($url_arr[1]) ? $url_arr[1] : 'index';
+        $action = isset($url_arr[2]) ? $url_arr[2] : 'index';
+
+        // 是否自动转换控制器和操作名
+        $convert = Config::get('url_convert');
+        $filter = $convert ? 'strtolower' : 'trim';
+
+        $addon = $addon ? trim(call_user_func($filter, $addon)) : '';
+        $module = $module ? trim(call_user_func($filter, $module)) : 'index';
+        $controller = $controller ? trim(call_user_func($filter, $controller)) : 'index';
+        $action = $action ? trim(call_user_func($filter, $action)) : 'index';
+
+        if (!empty($addon) && !empty($module) && !empty($controller) && !empty($action)) {
+            $addons_server = new Addons();
+            $info = $addons_server->_info->getAddonInfo($addon);
+            if (!$info) {
+                $result = [
+                    'code' => 0,
+                    'msg'  => $addon.'插件不存在',
+                    'data' => '',
+                    'url'  => '',
+                    'wait' => 3,
+                ];
+                $app     = Container::get('app');
+                $response = Response::create($result, 'jump',404)->options(['jump_template' => $app['config']->get('dispatch_success_tmpl')]);
+
+                throw new HttpResponseException($response);
+//                throw new HttpException(404, $addon.'插件不存在');
+            }
+            if (!$info['state']) {
+                $result = [
+                    'code' => 0,
+                    'msg'  => $addon.'插件已关闭',
+                    'data' => '',
+                    'url'  => '',
+                    'wait' => 3,
+                ];
+                $app     = Container::get('app');
+                $response = Response::create($result, 'jump',500)->options(['jump_template' => $app['config']->get('dispatch_success_tmpl')]);
+                throw new HttpResponseException($response);
+            }
+
+            // 设置当前请求的控制器、操作
+            $request->setModule($module)->setController($controller)->setAction($action);
+            $class = self::get_addon_class($addon, $module, 'module.controller', $controller);
+            if (!$class) {
+                throw new HttpException(404, Loader::parseName($controller, 'module.controller').'控制器不存在');
+            }
+
+            if(substr($controller,0,3) == 'api'){
+                $instance = new $class($request);
+            }else{
+                $instance = new $class(Container::get('app'));
+            }
+
+            $vars = [];
+            if (is_callable([$instance, $action])) {
+                // 执行操作方法
+                $call = [$instance, $action];
+            } elseif (is_callable([$instance, '_empty'])) {
+                // 空操作
+                $call = [$instance, '_empty'];
+                $vars = [$action];
+            } else {
+                // 操作不存在
+                throw new HttpException(404, get_class($instance) . '->' . $action . '()'.'方法不存在');
+            }
+
+            return call_user_func_array($call, $vars);
+        } else {
+            abort(500, $addon . '插件不允许空操作');
+        }
+    }
+
     /**
      * 获取插件类的类名
      * @param string $name  插件名
