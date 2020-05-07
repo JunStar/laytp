@@ -4,9 +4,11 @@ namespace library;
 use app\admin\service\Addons;
 use think\Container;
 use think\exception\HttpException;
+use think\exception\HttpResponseException;
 use think\facade\Config;
 use think\facade\Request;
 use think\Loader;
+use think\Response;
 use think\Route;
 
 class AddonsRoute extends Route {
@@ -67,10 +69,30 @@ class AddonsRoute extends Route {
             $addons_server = new Addons();
             $info = $addons_server->_info->getAddonInfo($addon);
             if (!$info) {
-                throw new HttpException(404, $addon.'插件不存在');
+                $result = [
+                    'code' => 0,
+                    'msg'  => $addon.'插件不存在',
+                    'data' => '',
+                    'url'  => '',
+                    'wait' => 3,
+                ];
+                $app     = Container::get('app');
+                $response = Response::create($result, 'jump',404)->options(['jump_template' => $app['config']->get('dispatch_success_tmpl')]);
+
+                throw new HttpResponseException($response);
+//                throw new HttpException(404, $addon.'插件不存在');
             }
             if (!$info['state']) {
-                throw new HttpException(500, $addon.'插件已关闭');
+                $result = [
+                    'code' => 0,
+                    'msg'  => $addon.'插件已关闭',
+                    'data' => '',
+                    'url'  => '',
+                    'wait' => 3,
+                ];
+                $app     = Container::get('app');
+                $response = Response::create($result, 'jump',500)->options(['jump_template' => $app['config']->get('dispatch_success_tmpl')]);
+                throw new HttpResponseException($response);
             }
 
             // 设置当前请求的控制器、操作
