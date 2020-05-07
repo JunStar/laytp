@@ -29,7 +29,7 @@ layui.use(['layTp'],function() {
             }
             , cols: [[
                 {field:'title',title:'插件名称',width:90}
-                ,{field:'description',title:'简介',width:260}
+                ,{field:'description',title:'简介',width:180}
                 ,{field:'author',title:'作者',align:'center',width:70}
                 ,{field:'price',title:'价格',align:'center',width:90,templet:function(d){
                     if(d.charge_type == 2){
