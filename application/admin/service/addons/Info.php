@@ -105,7 +105,7 @@ class Info extends Service
         foreach($addons_dir as $k=>$v){
             if($v['type'] == 'dir'){
                 $info = $this->getAddonInfo($v['baseName']);
-                if($info['domain'] == $domain){
+                if(isset($info['domain']) && $info['domain'] == $domain){
                     return $info['name'];
                 }
             }
