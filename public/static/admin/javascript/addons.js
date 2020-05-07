@@ -72,10 +72,10 @@ layui.use(['layTp'],function() {
                 //新增的其他操作按钮在这里来写
                 switch(obj.event){
                     case 'uninstall':
-                        layTp.facade.popup_confirm("卸载插件 " + obj.data.title + " ",layTp.facade.url(module + "/" + controller + "/uninstall",{name:obj.data.name}));
+                        layTp.facade.popup_confirm("插件 " +  obj.data.title + " 卸载",layTp.facade.url(module + "/" + controller + "/uninstall",{name:obj.data.name}));
                         break;
                     case 'config':
-                        layTp.facade.popup_frame("配置插件 " + obj.data.title,layTp.facade.url(module + "/" + controller + "/config",{name:obj.data.name}),'70%','70%');
+                        layTp.facade.popup_frame("插件 " + obj.data.title+ " 配置",layTp.facade.url(module + "/" + controller + "/config",{name:obj.data.name}),'70%','70%');
                         break;
                     case 'install':
                         let laytp_token = layTp.facade.getcookie('laytp_token');
@@ -86,7 +86,10 @@ layui.use(['layTp'],function() {
                         }
                         break;
                     case 'api':
-                        layTp.facade.popup_frame(obj.data.title + " Api文档",layTp.facade.url(module + "/" + controller + "/api",{name:obj.data.name}),'60%','55%');
+                        layTp.facade.popup_frame("插件 " + obj.data.title + " Api文档",layTp.facade.url(module + "/" + controller + "/api",{name:obj.data.name}),'60%','55%');
+                        break;
+                    case 'domain':
+                        layTp.facade.popup_frame("插件 " + obj.data.title + " 域名配置",layTp.facade.url(module + "/" + controller + "/domain",{name:obj.data.name}),'60%','55%');
                         break;
                 }
             }

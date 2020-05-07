@@ -39,9 +39,9 @@ class Addons extends Backend
                     $arr_res['data']['list']['data'][$k]['local_state'] = $info['state'];
                 }
                 $arr_res['data']['list']['data'][$k]['latest_version'] = $arr_res['data']['list']['data'][$k]['versions'][count($arr_res['data']['list']['data'][$k]['versions']) - 1]['version'];
-                $info['domain'] = isset($info['domain']) ? $info['domain'] : '';
-                $arr_res['data']['list']['data'][$k]['backend_url'] = isset($info['backend_url']) && $info['backend_url'] ? $this->addons_service->_info->getUrl($info['name'],$info['backend_url'],$info['domain']) : '';
-                $arr_res['data']['list']['data'][$k]['frontend_url'] = isset($info['frontend_url']) && $info['frontend_url'] ? $this->addons_service->_info->getUrl($info['name'],$info['frontend_url'],$info['domain']) : '';
+                $arr_res['data']['list']['data'][$k]['domain'] = isset($info['domain']) ? $info['domain'] : '';
+                $arr_res['data']['list']['data'][$k]['backend_url'] = isset($info['backend_url']) && $info['backend_url'] ? $this->addons_service->_info->getUrl($info['name'],$info['backend_url'],$arr_res['data']['list']['data'][$k]['domain']) : '';
+                $arr_res['data']['list']['data'][$k]['frontend_url'] = isset($info['frontend_url']) && $info['frontend_url'] ? $this->addons_service->_info->getUrl($info['name'],$info['frontend_url'],$arr_res['data']['list']['data'][$k]['domain']) : '';
                 $arr_res['data']['list']['data'][$k]['api_module'] = isset($info['api_module']) && $info['api_module'] ? $info['api_module'] : '';
                 $arr_res['data']['list']['data'][$k]['version'] = isset($info['version']) && $info['version'] ? $info['version'] : '';
                 $arr_res['data']['list']['data'][$k]['config'] = $config ? true : false;
@@ -242,6 +242,20 @@ class Addons extends Backend
             }
         }
         $this->assign('name',$name);
+        return $this->fetch();
+    }
+
+    //域名配置
+    public function domain(){
+        $name = $this->request->param('name');
+        $info = $this->addons_service->_info->getAddonInfo($name);
+        if($this->request->isAjax()){
+            $info['domain'] = $this->request->param('domain');
+            $this->addons_service->_info->setAddonInfo($name,$info);
+            $this->success('操作成功');
+        }
+        $this->assign('name',$name);
+        $this->assign('domain',isset($info['domain']) ? $info['domain'] : '');
         return $this->fetch();
     }
 }
