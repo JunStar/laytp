@@ -37,14 +37,10 @@ class Api extends Controller
      */
     protected $response_type = 'json';
 
-    /**
-     * Api constructor.
-     * @param Request|null $request
-     * @throws \think\Exception
-     */
-    public function __construct(Request $request = null)
+
+    public function initialize()
     {
-        $this->request = is_null($request) ? Request::instance() : $request;
+        $this->request = \request();
 
         // 控制器初始化
         $this->_initialize();

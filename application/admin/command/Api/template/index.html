@@ -282,11 +282,7 @@
         let element = layui.element;
         let $ = layui.$;
 
-        // layui.code({
-        //     elem:"pre",
-        //     title:'返回示例',
-        //     about:false
-        // });
+        var addon = "{$addon}";
 
         hljs.initHighlightingOnLoad();
 
@@ -323,7 +319,7 @@
             if( css.indexOf('layui-show') == -1 ){
                 $('#'+id).click();
             }
-        }
+        };
 
         api.test_inline = function(id){
             let formData = new FormData();
@@ -334,7 +330,13 @@
                     formData.append($(input).attr('name'), $(input).val())
                 }
             });
-            let url = storage.getItem('{$addon}api_url') ? storage.getItem('{$addon}api_url') + $('#test_inline_'+id).attr('route') : $('#test_inline_'+id).attr('route');
+            if(addon){
+                var url = storage.getItem('{$addon}api_url') ? storage.getItem('{$addon}api_url') + $('#test_inline_'+id).attr('route') : '/addons/{$addon}'+$('#test_inline_'+id).attr('route');
+            }else{
+                var url = storage.getItem('{$addon}api_url') ? storage.getItem('{$addon}api_url') + $('#test_inline_'+id).attr('route') : $('#test_inline_'+id).attr('route');
+            }
+            console.log(url);
+
 
             let headers = {};
 
@@ -384,7 +386,7 @@
                 }
             });
             return false;
-        }
+        };
 
         window.api = api;
     });
