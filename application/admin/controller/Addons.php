@@ -149,11 +149,10 @@ class Addons extends Backend
             if($info['state'] == 1){
                 return $this->error('请先关闭插件');
             }
-            $installRes = $this->addons_service->uninstall($name);
-            if($installRes['code']){
+            if($this->addons_service->uninstall($name)){
                 return $this->success('卸载成功');
             }else{
-                return $this->error($installRes['msg']);
+                return $this->error('卸载失败');
             }
         } catch (Exception $e) {
             $data['file'] = $e->getFile();

@@ -143,15 +143,8 @@ class Addons extends Service
     //卸载插件
     public function uninstall($name)
     {
-        $addon = $this->getAddonClass($name);
-        if (is_object($addon)) {
-            $addon->uninstall();
-            //删除掉插件文件
-            DirFile::rmDirs(Env::get('root_path') . 'addons' . DS . $name);
-            return parent::success("卸载成功");
-        }else{
-            return parent::error("{$name}类不存在");
-        }
+        DirFile::rmDirs(Env::get('root_path') . 'addons' . DS . $name);
+        return true;
     }
 
     /**

@@ -1,5 +1,0 @@
-DROP TABLE IF EXISTS `{$prefix}testaddon`;
-CREATE TABLE `{$prefix}testaddon` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='测试插件导入sql';

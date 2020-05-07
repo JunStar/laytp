@@ -13,21 +13,21 @@
     {{# if(d.addon_exist){ }}
     <div class="layui-btn-group">
         {{# if(d.domain){ }}
-        <a class="layui-btn layui-btn-sm layui-btn-danger layui-icon layui-icon-link" lay-event="domain" title="域名配置" layer-tips="域名配置" colour="#f51c1c"> 域名配置</a>
+        <a class="layui-btn layui-btn-xs layui-btn-danger layui-icon layui-icon-link" lay-event="domain" title="域名配置" layer-tips="域名配置" colour="#f51c1c"> 域名配置</a>
         {{# } }}
         {{# if(d.api_module){ }}
-        <a class="layui-btn layui-btn-sm layui-btn-primary layui-icon layui-icon-list" lay-event="api" title="Api文档" layer-tips="Api文档"> Api文档</a>
+        <a class="layui-btn layui-btn-xs layui-btn-primary layui-icon layui-icon-list" lay-event="api" title="Api文档" layer-tips="Api文档"> Api文档</a>
         {{# } }}
         {{# if(d.frontend_url){ }}
-        <a class="layui-btn layui-btn-sm layui-btn-warm layui-icon layui-icon-home" href="{{ d.frontend_url }}" target="_blank" title="进入前台" layer-tips="进入前台" colour="#FDBC3C"> 前台</a>
+        <a class="layui-btn layui-btn-xs layui-btn-warm layui-icon layui-icon-home" href="{{ d.frontend_url }}" target="_blank" title="进入前台" layer-tips="进入前台" colour="#FDBC3C"> 前台</a>
         {{# } }}
         {{# if(d.backend_url){ }}
-        <a class="layui-btn layui-btn-sm layui-btn-normal layui-icon layui-icon-console" href="{{ d.backend_url }}" target="_blank" title="进入后台" layer-tips="进入后台" colour="#366797"> 后台</a>
+        <a class="layui-btn layui-btn-xs layui-btn-normal layui-icon layui-icon-console" href="{{ d.backend_url }}" target="_blank" title="进入后台" layer-tips="进入后台" colour="#366797"> 后台</a>
         {{# } }}
         {{# if(d.config){ }}
-        <a class="layui-btn layui-btn-sm layui-icon layui-icon-set" lay-event="config" title="配置" layer-tips="配置" colour="#159688"> 配置</a>
+        <a class="layui-btn layui-btn-xs layui-icon layui-icon-set" lay-event="config" title="配置" layer-tips="配置" colour="#159688"> 配置</a>
         {{# } }}
-        <a class="layui-btn layui-btn-sm layui-btn-danger layui-icon layui-icon-close-fill" lay-event="uninstall" title="卸载" layer-tips="卸载" colour="#f51c1c"> 卸载</a>
+        <a class="layui-btn layui-btn-xs layui-btn-danger layui-icon layui-icon-close-fill" lay-event="uninstall" title="卸载" layer-tips="卸载" colour="#f51c1c"> 卸载</a>
     </div>
     {{# } }}
 </script>
