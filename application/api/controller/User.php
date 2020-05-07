@@ -18,6 +18,7 @@ class User extends Api{
         'username_login'
         ,'username_reg'
         ,'mobile_code_reg_login'
+        ,'mobile_one_click_login'
     ];
 
     /**
@@ -96,7 +97,6 @@ class User extends Api{
      * @ApiMethod   (POST)
      * @ApiRoute    (/api/user/mobile_one_click_login)
      * @ApiParams   (name="access_token", type="string", required=true, description="app端SDK获取的登录token")
-     * @ApiParams   (name="device_id", type="string", required=true, description="手机设备号")
      * @ApiReturnParams   (name="code", type="integer", description="返回状态码.0=失败,1=成功")
      * @ApiReturnParams   (name="msg", type="string", description="返回描述")
      * @ApiReturnParams   (name="time", type="integer", description="请求时间，Unix时间戳，单位秒")
@@ -138,7 +138,6 @@ class User extends Api{
         }
 
         $params['access_token'] = $this->request->request('access_token');
-        $params['device_id'] = $this->request->request('device_id');
 
         $validate = new MobileOneClickLogin();
         if($validate->check($params)){
@@ -149,7 +148,7 @@ class User extends Api{
             }else{
                 $this->error('操作失败,'.$mobile_service->getError());
             }
-            if($this->service_user->mobileCodeRegLogin($params,1)){
+            if($this->service_user->mobileCodeRegLogin($params)){
                 $this->success('操作成功', $this->service_user->getUserInfo());
             }else{
                 $this->error('操作失败,'.$this->service_user->getError());
