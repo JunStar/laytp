@@ -3,6 +3,7 @@
 namespace app\admin\command;
 
 use app\admin\command\Api\library\Builder;
+use app\admin\service\Addons;
 use library\DirFile;
 use think\facade\Config;
 use think\console\Command;
@@ -34,7 +35,9 @@ class Api extends Command
     {
         $addon = $input->getOption('addon');
         if($addon){
-            $controllerDir = Env::get('root_path') . DS . 'addons' . DS . $addon . DS . 'api' . DS;
+            $addon_service = new Addons();
+            $addon_info = $addon_service->_info->getAddonInfo($addon);
+            $controllerDir = Env::get('root_path') . DS . 'addons' . DS . $addon . DS . $addon_info['api_module'] . DS;
         }else{
             $controllerDir = Env::get('app_path') . DS . 'api' . DS . Config::get('url_controller_layer') . DS;
         }

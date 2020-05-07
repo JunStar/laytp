@@ -218,7 +218,6 @@ class Extractor
         {
             $methodAnnotations['ApiSummary'] = [$methodTitle];
         }
-
         if ($methodAnnotations)
         {
             foreach ($classAnnotations as $name => $valueClass)
@@ -261,6 +260,11 @@ class Extractor
             if ($prefixArr[0] == 'app')
             {
                 $prefixArr[0] = '';
+            }else if($prefixArr[0] == 'addons'){
+                $tempPrefixArr = [];
+                $tempPrefixArr[0] = '';
+                $tempPrefixArr[1] = $prefixArr[2];
+                $prefixArr = $tempPrefixArr;
             }
             $urlArr = array_merge($urlArr, $prefixArr);
             $urlArr[] = implode('.', array_map(function($item) {
