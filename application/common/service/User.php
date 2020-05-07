@@ -192,7 +192,7 @@ class User extends Service
             //设置Token
             $this->_token = Random::uuid();
             Token::set($this->_token, $user->id, $this->token_keep_time);
-
+            return true;
         }catch (Exception $e){
             $this->setError($e->getFile().$e->getLine().$e->getMessage());
             return false;

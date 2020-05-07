@@ -228,4 +228,19 @@ class Addons extends Backend
         $this->assign('addons_api_url',Config::get('addons.api_url'));
         return $this->fetch();
     }
+
+    //Api文档
+    public function api(){
+        $name = $this->request->param('name');
+        if($this->request->isAjax()){
+            $exec_res = exec_command('app\admin\command\Api',['--output=addons/'.$name.'/api.html', '--title=插件 '.$name.' Api文档','--addon='.$name]);
+            if($exec_res['code']){
+                $this->success('操作成功');
+            }else{
+                $this->error($exec_res['msg']);
+            }
+        }
+        $this->assign('name',$name);
+        return $this->fetch();
+    }
 }

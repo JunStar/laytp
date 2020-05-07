@@ -82,8 +82,11 @@ layui.use(['layTp'],function() {
                         if(!laytp_token){
                             layTp.facade.popup_frame("会员信息",layTp.facade.url(module + "/" + controller + "/user"),'60%','55%');
                         }else{
-                            layTp.facade.popup_frame("插件 " + obj.data.title + " 安装",layTp.facade.url(module + "/" + controller + "/install",{name:obj.data.name}),'50%','50%');
+                            layTp.facade.popup_frame("插件 " + obj.data.title + " 安装",layTp.facade.url(module + "/" + controller + "/install",{name:obj.data.name}),'60%','55%');
                         }
+                        break;
+                    case 'api':
+                        layTp.facade.popup_frame(obj.data.title + " Api文档",layTp.facade.url(module + "/" + controller + "/api",{name:obj.data.name}),'60%','55%');
                         break;
                 }
             }

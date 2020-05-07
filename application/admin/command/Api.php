@@ -3,6 +3,7 @@
 namespace app\admin\command;
 
 use app\admin\command\Api\library\Builder;
+use library\DirFile;
 use think\facade\Config;
 use think\console\Command;
 use think\console\Input;
@@ -18,6 +19,7 @@ class Api extends Command
         $this
             ->setName('api')
             ->addOption('url', 'u', Option::VALUE_OPTIONAL, 'default api url', '')
+            ->addOption('addon', 'addon', Option::VALUE_OPTIONAL, 'addon name', '')
             ->addOption('module', 'm', Option::VALUE_OPTIONAL, 'module name(admin/index/api)', 'api')
             ->addOption('output', 'o', Option::VALUE_OPTIONAL, 'output index file name', 'api.html')
             ->addOption('template', 'e', Option::VALUE_OPTIONAL, '', 'index.html')
@@ -25,12 +27,17 @@ class Api extends Command
             ->addOption('title', 't', Option::VALUE_OPTIONAL, 'document title', 'Api文档')
             ->addOption('author', 'a', Option::VALUE_OPTIONAL, 'document author', '暂无')
             ->addOption('class', 'c', Option::VALUE_OPTIONAL | Option::VALUE_IS_ARRAY, 'extend class', null)
-            ->setDescription('Compress js and css file');
+            ->setDescription('Api');
     }
 
     protected function execute(Input $input, Output $output)
     {
-        $controllerDir = Env::get('app_path') . DS . 'api' . DS . Config::get('url_controller_layer') . DS;
+        $addon = $input->getOption('addon');
+        if($addon){
+            $controllerDir = Env::get('root_path') . DS . 'addons' . DS . $addon . DS . 'api' . DS;
+        }else{
+            $controllerDir = Env::get('app_path') . DS . 'api' . DS . Config::get('url_controller_layer') . DS;
+        }
 
         $files = new \RecursiveIteratorIterator(
             new \RecursiveDirectoryIterator($controllerDir), \RecursiveIteratorIterator::LEAVES_ONLY
@@ -54,6 +61,7 @@ class Api extends Command
 
         $output_dir = Env::get('root_path') . 'public' . DS;
         $output_file = $output_dir . $input->getOption('output');
+        DirFile::createDir(dirname($output_file));
         if (!file_put_contents($output_file, $content)) {
             throw new Exception('Cannot save the content to ' . $output_file);
         }

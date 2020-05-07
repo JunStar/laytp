@@ -14,7 +14,11 @@ use controller\Api;
  */
 class User extends Api{
 
-    public $no_need_login = ['username_login','username_reg'];
+    public $no_need_login = [
+        'username_login'
+        ,'username_reg'
+        ,'mobile_code_reg_login'
+    ];
 
     /**
      * 根据token获取用户信息
@@ -30,7 +34,6 @@ class User extends Api{
      * @ApiMethod   (POST)
      * @ApiRoute    (/api/user/mobile_code_reg_login)
      * @ApiParams   (name="mobile", type="string", required=true, description="手机号")
-     * @ApiParams   (name="device_id", type="string", required=true, description="手机设备号")
      * @ApiParams   (name="code", type="string", required=true, description="手机验证码")
      * @ApiReturnParams   (name="code", type="integer", description="返回状态码.0=失败,1=成功")
      * @ApiReturnParams   (name="msg", type="string", description="返回描述")
