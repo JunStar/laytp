@@ -87,9 +87,13 @@ class Info extends Service
     }
 
 
-    public function getUrl($name,$url){
+    public function getUrl($name,$url,$domain=''){
         $server = request()->server();
-        return $server['REQUEST_SCHEME'].'://'.$server['SERVER_NAME'].'/addons/'.$name.'/'.$url;
+        if($domain){
+            return $server['REQUEST_SCHEME'].'://'.$domain.'/'.$url;
+        }else{
+            return $server['REQUEST_SCHEME'].'://'.$server['SERVER_NAME'].'/addons/'.$name.'/'.$url;
+        }
     }
 
     /**
