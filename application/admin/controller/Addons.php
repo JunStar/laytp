@@ -167,12 +167,16 @@ class Addons extends Backend
     public function config(){
         $name = $this->request->param('name');
         if($this->request->isAjax()){
-            $addons = Config::get('addons.');
-            $config_items = $this->request->param('row');
-            $addons[$name] = $config_items;
-            $file_name = Env::get('root_path') .  DS . 'config' . DS . 'addons.php';
-            file_put_contents($file_name,"<?php\nreturn ".var_export($addons,true).';');
-            return $this->success('配置成功');
+            try{
+                $addons = Config::get('addons.');
+                $config_items = $this->request->param('row');
+                $addons[$name] = $config_items;
+                $file_name = Env::get('root_path') .  DS . 'config' . DS . 'addons.php';
+                file_put_contents($file_name,"<?php\nreturn ".var_export($addons,true).';');
+                return $this->success('配置成功');
+            }catch (Exception $e){
+                $this->error($e->getMessage());
+            }
         }
         $config_items = $this->addons_service->_config->getConfig($name);
         $this->assign('config_items', $config_items);
