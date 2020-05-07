@@ -26,34 +26,13 @@ class AddonsRoute extends Route {
         $url = $request->url();
         $url_arr = array_filter(explode('/',$url));
 
-        if( isset($url_arr['3']) ){
-            if(!strstr($url_arr['3'],'?')){
-                $module = $url_arr['3'];
-            }else{
-                $module = 'index';
+        foreach($url_arr as $k=>$v){
+            if($url_arr[$k] == $addon){
+                $module = isset($url_arr[$k+1]) ? $url_arr[$k+1] : 'index';
+                $controller = isset($url_arr[$k+2]) ? $url_arr[$k+2] : 'index';
+                $action = isset($url_arr[$k+3]) ? $url_arr[$k+3] : 'index';
+                break;
             }
-        }else{
-            $module = 'index';
-        }
-
-        if( isset($url_arr['4']) ){
-            if(!strstr($url_arr['4'],'?')){
-                $controller = $url_arr['4'];
-            }else{
-                $controller = 'index';
-            }
-        }else{
-            $controller = 'index';
-        }
-
-        if( isset($url_arr['5']) ){
-            if(!strstr($url_arr['5'],'?')){
-                $action = $url_arr['5'];
-            }else{
-                $action = 'index';
-            }
-        }else{
-            $action = 'index';
         }
 
         // 是否自动转换控制器和操作名
