@@ -29,7 +29,7 @@ layui.use(['layTp'],function() {
             }
             , cols: [[
                 {field:'title',title:'插件名称',width:90}
-                ,{field:'description',title:'简介',width:195}
+                ,{field:'description',title:'简介',width:255}
                 ,{field:'author',title:'作者',align:'center',width:70}
                 ,{field:'price',title:'价格',align:'center',width:90,templet:function(d){
                     if(d.charge_type == 2){
@@ -89,7 +89,7 @@ layui.use(['layTp'],function() {
                         layTp.facade.popup_frame("插件 " + obj.data.title + " Api文档",layTp.facade.url(module + "/" + controller + "/api",{name:obj.data.name}),'60%','55%');
                         break;
                     case 'domain':
-                        layTp.facade.popup_frame("插件 " + obj.data.title + " 域名配置",layTp.facade.url(module + "/" + controller + "/domain",{name:obj.data.name}),'60%','55%');
+                        layTp.facade.popup_frame("插件 " + obj.data.title + " 域名配置",layTp.facade.url(module + "/" + controller + "/domain",{name:obj.data.name}),'40%','30%');
                         break;
                 }
             }
