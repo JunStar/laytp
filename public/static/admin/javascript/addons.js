@@ -84,7 +84,7 @@ layui.use(['layTp'],function() {
                                 ,title: "安装" + versions[key].version + "版本"//文字标题
                                 ,icon: ""//图标
                                 ,node: module + "/" + controller + "/install"
-                                ,param: {name:obj.data.name,version:versions[key]['version']}//操作节点需要传入的参数，为空可以不传
+                                ,param: {name:obj.data.name,version:versions[key]['version']}
                                 ,switch_type: "popup_frame"//操作类型
                             }
                         }
