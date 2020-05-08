@@ -50,7 +50,7 @@ class AddonsRoute extends Route {
             if (!$info) {
                 $result = [
                     'code' => 0,
-                    'msg'  => $addon.'插件不存在',
+                    'msg'  => $addon.'插件未安装',
                     'data' => '',
                     'url'  => '',
                     'wait' => 3,
@@ -59,7 +59,7 @@ class AddonsRoute extends Route {
                 $response = Response::create($result, 'jump',404)->options(['jump_template' => $app['config']->get('dispatch_success_tmpl')]);
 
                 throw new HttpResponseException($response);
-//                throw new HttpException(404, $addon.'插件不存在');
+//                throw new HttpException(404, $addon.'插件未安装');
             }
             if (!$info['state']) {
                 $result = [
@@ -131,7 +131,7 @@ class AddonsRoute extends Route {
             if (!$info) {
                 $result = [
                     'code' => 0,
-                    'msg'  => $addon.'插件不存在',
+                    'msg'  => $addon.'插件未安装',
                     'data' => '',
                     'url'  => '',
                     'wait' => 3,
@@ -140,7 +140,7 @@ class AddonsRoute extends Route {
                 $response = Response::create($result, 'jump',404)->options(['jump_template' => $app['config']->get('dispatch_success_tmpl')]);
 
                 throw new HttpResponseException($response);
-//                throw new HttpException(404, $addon.'插件不存在');
+//                throw new HttpException(404, $addon.'插件未安装');
             }
             if (!$info['state']) {
                 $result = [

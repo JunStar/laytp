@@ -43,7 +43,11 @@ layui.use(['layTp'],function() {
                 ,{field:'download_num',title:'下载次数',width:90,align:'center'}
                 ,{field:'version',title:'版本',width:90,align:'center',templet:function(d){
                     if(d.version < d.latest_version){
-                        return '<a href="" time="4000" colour="#000000" layer-tips="发现新版本' + d.latest_version + '，点击查看更新日志">' + d.version + ' <text style="color:red;">*</text></a>';
+                        if(d.version){
+                            return '<a href="" time="4000" colour="#000000" layer-tips="发现新版本' + d.latest_version + '，点击查看更新日志">' + d.version + ' <text style="color:red;">*</text></a>';
+                        }else{
+                            return '-';
+                        }
                     }else{
                         return d.version;
                     }

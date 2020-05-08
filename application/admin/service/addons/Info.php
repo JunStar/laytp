@@ -30,7 +30,7 @@ class Info extends Service
     public function check($name)
     {
         if (!$name || !is_dir(Env::get('root_path') . 'addons' . DS . $name)) {
-            $this->setError('插件不存在');
+            $this->setError('插件未安装');
             return false;
         }
         return true;

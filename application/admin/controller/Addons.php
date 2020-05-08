@@ -122,7 +122,7 @@ class Addons extends Backend
         try{
             $info = $this->addons_service->_info->getAddonInfo($name);
             if(!$info){
-                return $this->error('插件不存在');
+                return $this->error('插件未安装');
             }
             $info['state'] = $field_val;
             if( $this->addons_service->_info->setAddonInfo($name, $info) ){
@@ -144,7 +144,7 @@ class Addons extends Backend
         try {
             $info = $this->addons_service->_info->getAddonInfo($name);
             if(!$info){
-                return $this->error('插件不存在');
+                return $this->error('插件未安装');
             }
             if($info['state'] == 1){
                 return $this->error('请先关闭插件');
