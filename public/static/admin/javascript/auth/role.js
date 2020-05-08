@@ -2,29 +2,27 @@ layui.use(['layTp'],function() {
     const
         func_controller = {}
         ,layTp = layui.layTp
-        ,$ = layui.jquery
     ;
 
-    //批量操作渲染
-    layui.dropdown.render({
-        elem: '.action-more',
-        options: [
-            {
-                action: "edit"
-                ,title: "编辑"
-                ,icon: "layui-icon-edit"
-                ,uri: layTp.facade.url(module + "/" + controller + "/edit")
-                ,switch_type: "popup_frame"
-            }
-            ,{
-                action: 'del',
-                title: '删除'
-                ,icon: "layui-icon-delete"
-                ,uri: layTp.facade.url(module + "/" + controller + "/del")
-                ,switch_type: "confirm_action"
-            }
-        ]
-    });
+    //批量操作下拉展示列表设置
+    let batch_dropdown_list = [
+        {
+            action: "edit"
+            ,title: "编辑"
+            ,icon: "layui-icon-edit"
+            ,uri: layTp.facade.url(module + "/" + controller + "/edit")
+            ,switch_type: "popup_frame"
+        }
+        ,{
+            action: 'del',
+            title: '删除'
+            ,icon: "layui-icon-delete"
+            ,uri: layTp.facade.url(module + "/" + controller + "/del")
+            ,switch_type: "confirm_action"
+        }
+    ];
+
+    layTp.facade.dropdown_set(batch_dropdown_list,true);
 
     //表格渲染
     func_controller.table_render = function (where) {

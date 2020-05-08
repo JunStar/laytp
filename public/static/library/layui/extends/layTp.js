@@ -452,6 +452,8 @@ layui.define([
             }
 
             if(!checkAuth){
+                console.log(elem);
+                console.log(options);
                 layui.dropdown.render({
                     elem: elem,
                     options: options

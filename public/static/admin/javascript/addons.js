@@ -75,11 +75,20 @@ layui.use(['layTp'],function() {
             }else{
                 //新增的其他操作按钮在这里来写
                 switch(obj.event){
-                    case 'uninstall':
-                        layTp.facade.popup_confirm("卸载 " +  obj.data.title + " 插件",layTp.facade.url(module + "/" + controller + "/uninstall",{name:obj.data.name}));
-                        break;
-                    case 'config':
-                        layTp.facade.popup_frame("插件 " + obj.data.title+ " 配置",layTp.facade.url(module + "/" + controller + "/config",{name:obj.data.name}),'70%','70%');
+                    case 'version_list':
+                        var versions = obj.data.versions;
+                        var dropdown_list = [];
+                        for(key in versions){
+                            dropdown_list[key] = {
+                                action: "install"//操作名称
+                                ,title: "安装" + versions[key].version + "版本"//文字标题
+                                ,icon: ""//图标
+                                ,node: module + "/" + controller + "/install"
+                                ,param: {name:obj.data.name,version:versions[key]['version']}//操作节点需要传入的参数，为空可以不传
+                                ,switch_type: "popup_frame"//操作类型
+                            }
+                        }
+                        layTp.facade.dropdown_set(dropdown_list,false,'.version_list_' + obj.data.id);
                         break;
                     case 'install':
                         let laytp_token = layTp.facade.getcookie('laytp_token');
@@ -88,6 +97,12 @@ layui.use(['layTp'],function() {
                         }else{
                             layTp.facade.popup_frame("插件 " + obj.data.title + " 安装",layTp.facade.url(module + "/" + controller + "/install",{name:obj.data.name}),'60%','55%');
                         }
+                        break;
+                    case 'uninstall':
+                        layTp.facade.popup_confirm("卸载 " +  obj.data.title + " 插件",layTp.facade.url(module + "/" + controller + "/uninstall",{name:obj.data.name}));
+                        break;
+                    case 'config':
+                        layTp.facade.popup_frame("插件 " + obj.data.title+ " 配置",layTp.facade.url(module + "/" + controller + "/config",{name:obj.data.name}),'70%','70%');
                         break;
                     case 'api':
                         layTp.facade.popup_frame("插件 " + obj.data.title + " Api文档",layTp.facade.url(module + "/" + controller + "/api",{name:obj.data.name}),'40%','27%');
