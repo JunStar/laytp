@@ -39,7 +39,7 @@ class Addons extends Backend
                     $arr_res['data']['list']['data'][$k]['addon_exist'] = true;
                     $arr_res['data']['list']['data'][$k]['local_state'] = $info['state'];
                 }
-                $arr_res['data']['list']['data'][$k]['latest_version'] = $arr_res['data']['list']['data'][$k]['versions'][count($arr_res['data']['list']['data'][$k]['versions']) - 1]['version'];
+                $arr_res['data']['list']['data'][$k]['latest_version'] = $arr_res['data']['list']['data'][$k]['versions'][0]['version'];
                 $arr_res['data']['list']['data'][$k]['domain'] = isset($info['domain']) ? $info['domain'] : '';
                 $arr_res['data']['list']['data'][$k]['backend_url'] = isset($info['backend_url']) && $info['backend_url'] ? $this->addons_service->_info->getUrl($info['name'],$info['backend_url'],$arr_res['data']['list']['data'][$k]['domain']) : '';
                 $arr_res['data']['list']['data'][$k]['frontend_url'] = isset($info['frontend_url']) && $info['frontend_url'] ? $this->addons_service->_info->getUrl($info['name'],$info['frontend_url'],$arr_res['data']['list']['data'][$k]['domain']) : '';
