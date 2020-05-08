@@ -51,10 +51,7 @@ class Addons extends Service
                 'X-REQUESTED-WITH: XMLHttpRequest'
             ]
         ];
-        dump($extend);
         $ret = Http::sendRequest(self::getServerUrl() . '/api/addons/download', array_merge(['name' => $name], $extend), 'POST', $options);
-        echo $ret['msg'];
-        exit();
         if ($ret['ret']) {
             if (substr($ret['msg'], 0, 1) == '{') {
                 $json = (array)json_decode($ret['msg'], true);
@@ -67,6 +64,14 @@ class Addons extends Service
                             //下载返回错误，抛出异常
                             $this->setError($json['msg']);
                             return false;
+                        }
+                        if(file_exists($tmpFile)){
+                            @unlink($tmpFile);
+                        }
+                        if ($write = fopen($tmpFile, 'w')) {
+                            fwrite($write, $ret['msg']);
+                            fclose($write);
+                            return $tmpFile;
                         }
                     }
                     if(file_exists($tmpFile)){
