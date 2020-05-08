@@ -38,62 +38,20 @@ class Menu extends Service
     }
 
     //删除菜单
-    public function delete($menus){
-        foreach($menus as $menu){
-            $info = \app\admin\model\auth\Menu::where('rule','=',$menu['rule'])
-                ->where('name','=',$menu['name'])
-                ->find();
-            if($info) {
-                if ($menu['delete_status'] == 1 && !$info->is_hide) {
-                    $info->is_hide = 1;
-                    $info->save();
-                }
-            }
-
-            if(isset($menu['children'])){
-                self::delete($menu['children']);
-            }
-        }
+    public function delete($menu_ids){
+        \app\admin\model\auth\Menu::where('id','in',$menu_ids)->delete();
         return true;
     }
 
     //启用菜单
-    public function enable($menus){
-        foreach($menus as $menu){
-            $info = \app\admin\model\auth\Menu::where('rule','=',$menu['rule'])
-                ->where('name','=',$menu['name'])
-                ->find();
-            if(is_object($info)){
-                if($info->is_hide) {
-                    $info->is_hide = 0;
-                    $info->save();
-                }
-            }
-
-            if(isset($menu['children'])){
-                self::enable($menu['children']);
-            }
-        }
+    public function enable($menu_ids){
+        \app\admin\model\auth\Menu::where('id','in',$menu_ids)->update(['is_hide'=>0]);
         return true;
     }
 
     //禁用菜单
-    public function disable($menus){
-        foreach($menus as $menu){
-            $info = \app\admin\model\auth\Menu::where('rule','=',$menu['rule'])
-                ->where('name','=',$menu['name'])
-                ->find();
-            if($info) {
-                if ($menu['delete_status'] == 1 && !$info->is_hide) {
-                    $info->is_hide = 1;
-                    $info->save();
-                }
-            }
-
-            if(isset($menu['children'])){
-                self::disable($menu['children']);
-            }
-        }
+    public function disable($menu_ids){
+        \app\admin\model\auth\Menu::where('id','in',$menu_ids)->update(['is_hide'=>1]);
         return true;
     }
 }

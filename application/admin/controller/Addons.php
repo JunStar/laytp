@@ -123,6 +123,14 @@ class Addons extends Backend
             if(!$info){
                 return $this->error('插件未安装');
             }
+            //打开
+            if($field_val == 1){
+                $this->addons_service->_menu->enable($info['menu_ids']);
+            }
+            //关闭
+            else{
+                $this->addons_service->_menu->disable($info['menu_ids']);
+            }
             $info['state'] = $field_val;
             if( $this->addons_service->_info->setAddonInfo($name, $info) ){
                 return $this->success('操作成功');
