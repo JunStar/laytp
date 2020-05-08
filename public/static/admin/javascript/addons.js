@@ -84,7 +84,7 @@ layui.use(['layTp'],function() {
                                 ,title: "安装" + versions[key].version + "版本"//文字标题
                                 ,icon: ""//图标
                                 ,node: module + "/" + controller + "/install"
-                                ,param: {name:obj.data.name,version:versions[key]['version']}
+                                ,param: {name:obj.data.name,version:versions[key]['version'],laytp_token:layTp.facade.getcookie('laytp_token')}
                                 ,switch_type: "popup_frame"//操作类型
                                 ,width: "30%"//宽
                                 ,height: "30%"//高
@@ -98,7 +98,7 @@ layui.use(['layTp'],function() {
                         if(!laytp_token){
                             layTp.facade.popup_frame("会员信息",layTp.facade.url(module + "/" + controller + "/user"),'60%','55%');
                         }else{
-                            layTp.facade.popup_frame("插件 " + obj.data.title + " 安装",layTp.facade.url(module + "/" + controller + "/install",{name:obj.data.name,version:obj.data.versions[0]['version']}),'30%','30%');
+                            layTp.facade.popup_frame("插件 " + obj.data.title + " 安装",layTp.facade.url(module + "/" + controller + "/install",{name:obj.data.name,version:obj.data.versions[0]['version'],laytp_token:laytp_token}),'30%','30%');
                         }
                         break;
                     case 'uninstall':

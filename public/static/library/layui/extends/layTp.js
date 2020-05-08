@@ -129,7 +129,8 @@ layui.define([
                 params = $.param(params);
                 let reg = new RegExp('=','g');
                 params = params.replace(reg,'/');
-                params = params.replace('&','/');
+                let reg_1 = new RegExp('&','g');
+                params = params.replace(reg_1,'/');
                 params = '/' + params;
             }else{
                 params = '';

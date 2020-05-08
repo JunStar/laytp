@@ -5,6 +5,7 @@ use controller\Backend;
 use think\Exception;
 use think\exception\HttpResponseException;
 use think\facade\Config;
+use think\facade\Cookie;
 use think\facade\Env;
 use think\facade\Response;
 
@@ -89,11 +90,9 @@ class Addons extends Backend
                 $this->error('参数name不能为空');
             }
             try {
-                $uid = $this->request->param("uid");
-                $token = $this->request->param("token");
+                $token = $this->request->param("laytp_token");
                 $version = $this->request->param("version");
                 $extend = [
-                    'uid'       => $uid,
                     'token'     => $token,
                     'version'   => $version
                 ];
@@ -102,12 +101,12 @@ class Addons extends Backend
                     $this->error($this->addons_service->getError());
                 }
                 $info = $this->addons_service->_info->getAddonInfo($name);
-                $info['state'] = 1;
                 $this->success('安装成功', ['addon' => $info]);
             } catch (Exception $e) {
                 $this->error($e->getMessage(), $e->getCode());
             }
         }
+        $assign['laytp_token'] = $this->request->param("laytp_token");
         $assign['name'] = $this->request->param("name");
         $assign['version'] = $this->request->param("version");
         $this->assign($assign);

@@ -1,6 +1,7 @@
 {extend name="admin@public/layout/popup_form"}
 
 {block name="form"}
+<input type="hidden" name="laytp_token" value="{$laytp_token}" />
 <input type="hidden" name="name" value="{$name}" />
 <input type="hidden" name="version" value="{$version}" />
 <div class="layui-form-item">
