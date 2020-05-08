@@ -425,15 +425,23 @@ layui.define([
                     ,icon: "layui-icon-edit"//图标
                     ,node: module + "/" + controller + "/edit"
                     ,param: {}//操作节点需要传入的参数，为空可以不传
+                    ,uri: layTp.facade.url(module + "/" + controller + "/edit",{id:id})//layTp.facade.url(node,param) = uri
                     ,switch_type: "popup_frame"//操作类型
+                    ,width:'100%'//宽
+                    ,height:'100%'//高
+                    ,need_data:true//是否需要数据，默认为true，当为false时，不需要选中数据表的复选框
                 }
                 ,{
                     action: 'del',
                     title: '删除'
                     ,icon: "layui-icon-delete"
                     ,node: module + "/" + controller + "/del"//操作节点名称
+                    ,uri: layTp.facade.url(module + "/" + controller + "/edit",{id:id})//layTp.facade.url(node,param) = uri
                     ,param: {}//操作节点需要传入的参数，为空可以不传
                     ,switch_type: "confirm_action"
+                    ,width:'100%'//宽
+                    ,height:'100%'//高
+                    ,need_data:true//是否需要数据，默认为true，当为false时，不需要选中数据表的复选框
                 }
          *  ]
          * @param elem string 渲染的document节点名称，举例：.action-more
@@ -638,6 +646,8 @@ layui.define([
                 let field = $(this).attr("field");
                 let field_val = $(this).attr("field_val");
                 let need_data = $(this).attr("need_data");
+                let width = $(this).attr("width");
+                let height = $(this).attr("height");
                 let need_refresh = $(this).attr("need_refresh");
                 let text = $(this).text();
                 let switch_type = $(this).attr("switch_type");
@@ -657,10 +667,10 @@ layui.define([
                         if( need_data == "true" ){
                             for(key in checkData){
                                 url = layTp.facade.url(uri,{id:checkData[key].id});
-                                layTp.facade.popup_frame(text, url);
+                                layTp.facade.popup_frame(text, url, width, height);
                             }
                         }else{
-                            layTp.facade.popup_frame(text, uri);
+                            layTp.facade.popup_frame(text, uri, width, height);
                         }
                         break;
                     case 'confirm_action':
