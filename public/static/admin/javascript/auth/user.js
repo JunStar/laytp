@@ -10,14 +10,14 @@ layui.use(['layTp'],function() {
             action: "edit"
             ,title: "编辑"
             ,icon: "layui-icon-edit"
-            ,uri: layTp.facade.url(module + "/" + controller + "/edit")
+            ,node: module + "/" + controller + "/edit"
             ,switch_type: "popup_frame"
         }
         ,{
             action: 'del',
             title: '删除'
             ,icon: "layui-icon-delete"
-            ,uri: layTp.facade.url(module + "/" + controller + "/del")
+            ,node: module + "/" + controller + "/del"
             ,switch_type: "confirm_action"
         }
     ];

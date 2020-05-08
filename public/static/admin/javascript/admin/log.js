@@ -10,7 +10,7 @@ layui.use(['layTp'],function() {
             action: 'del',
             title: '删除'
             ,icon: "layui-icon-delete"
-            ,uri: layTp.facade.url(module + "/" + controller + "/del")
+            ,node: module + "/" + controller + "/del"
             ,switch_type: "confirm_action"
         }
     ];

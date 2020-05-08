@@ -448,12 +448,12 @@ layui.define([
             }
 
             for(options_k in options){
-                options[options_k].uri = layTp.facade.url(options[options_k].node,options[options_k].param);
+                if(!options[options_k].uri){
+                    options[options_k].uri = layTp.facade.url(options[options_k].node,options[options_k].param);
+                }
             }
 
             if(!checkAuth){
-                console.log(elem);
-                console.log(options);
                 layui.dropdown.render({
                     elem: elem,
                     options: options
