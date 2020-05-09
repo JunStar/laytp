@@ -159,7 +159,7 @@ class Addons extends Backend
             if($this->addons_service->uninstall($name)){
                 return $this->success('卸载成功',['reload'=>true]);
             }else{
-                return $this->error('卸载失败');
+                return $this->error($this->addons_service->getError());
             }
         } catch (Exception $e) {
             $data['file'] = $e->getFile();
