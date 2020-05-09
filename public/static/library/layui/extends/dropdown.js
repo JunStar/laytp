@@ -41,6 +41,7 @@ layui.define(['jquery'], function(exports) {
                 $('.' + CLS_DROPDOWN + '[lay-index="' + self.index + '"]').remove()
 
                 dropdown.html(self.createOptionsHtml(config))
+                console.log(dropdown);
                 $('body').prepend(dropdown)
                 // dropdown.on('click', '.' + CLS_OPTION, function(e) {
                 //     e.stopPropagation()

@@ -1402,6 +1402,32 @@ layui.define([
                     ,where: where
                 });
             });
+        },
+
+        //菜单跳转
+        menu:function(){
+            $(document).on('click','[menuto]',function(){
+                let obj = $(this);
+                let rule = obj.attr('rule');
+                let menu_id = obj.attr('menu_id');
+                let selected_menu_ids = obj.attr('select_menu_ids');
+                let index = obj.attr('index');
+                $('#layTpIframe').attr('src',__URL__ + rule + '/laytp_menu_id/' + menu_id);
+                editHistory(default_menu.name,__URL__ + rule + '?ref=' + menu_id);
+                $.post(__URL__ + 'admin/ajax/get_crumbs',{menu_id:menu_id},function(res){
+                    if(res.code==1){
+                        let html = '';
+                        for(let key in res.data){
+                            html += '<li>' + res.data[key] + '</li>';
+                        }
+                        $('.bread-crumbs').html(html);
+                    }
+                });
+                let data = menu_json[index].children;
+                select_menu_ids = selected_menu_ids.split(',');
+                createMenu(data,0,true);
+                layui.laytp_element.init();
+            });
         }
     }
 

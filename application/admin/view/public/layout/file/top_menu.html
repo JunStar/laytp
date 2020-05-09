@@ -10,10 +10,14 @@
         {/foreach}
         {if $more_first_menus}
         <li class="layui-nav-item">
-            <a href="javascript:;" more_first_menus="true" id="menu-more">
-                <i class="layui-icon layui-icon-align-left" style="font-size: 24px;"></i>
-                <i class="layui-icon layui-icon-triangle-d"></i>
+            <a href="javascript:;" more_first_menus="true">
+                <i class="layui-icon layui-icon-align-left" style="font-size: 20px;"></i>
             </a>
+            <dl class="layui-nav-child">
+                {foreach $more_first_menus as $k=>$menu}
+                <dd><a href="javascript:;" menuto="true" index="{:count($first_menus)+$k}" rule="{if isset($menu['default_menu']['rule'])}{$menu['default_menu']['rule']}{else}admin/dashboard{/if}" menu_id="{if isset($menu['default_menu']['id'])}{$menu['default_menu']['id']}{/if}" select_menu_ids="{$menu['select_menu_ids']}">{$menu['name']}</a></dd>
+                {/foreach}
+            </dl>
         </li>
         {/if}
     </ul>
@@ -61,8 +65,6 @@
     let ref = {$ref};
     let top_menu = JSON.parse('{:json_encode($top_menu,JSON_UNESCAPED_UNICODE)}');
     let select_menu = JSON.parse('{:json_encode($select_menu,JSON_UNESCAPED_UNICODE)}');
-    let first_menus_count = "{:count($first_menus)}";
-    let more_first_menus = JSON.parse('{:json_encode($more_first_menus,JSON_UNESCAPED_UNICODE)}');
     let select_menu_ids = new Array();
     for(let key in select_menu){
         select_menu_ids.push(select_menu[key].id.toString());
