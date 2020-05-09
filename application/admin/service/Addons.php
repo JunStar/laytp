@@ -137,7 +137,7 @@ class Addons extends Service
         $menu_ids = $this->_menu->create($menus);
 
         $info = $this->_info->getAddonInfo($name);
-        $info['status'] = 1;
+        $info['state'] = 1;
         $info['menu_ids'] = implode(',',$menu_ids);
         $this->_info->setAddonInfo($name,$info);
 
