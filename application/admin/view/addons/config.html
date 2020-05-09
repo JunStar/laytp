@@ -7,10 +7,10 @@
     <div class="layui-input-block">
         {switch ($v['type'])}
         {case input}
-        <input type="text" name="row[{$v.key}]" class="layui-input" value="{$config[$v['key']]}" autocomplete="off" />
+        <input type="text" name="row[{$v.key}]" class="layui-input" value="{:isset($config[$v['key']])?$config[$v['key']]:(isset($v['content'])?$v['content']:'')}" autocomplete="off" />
         {/case}
         {case textarea}
-        <textarea name="row[{$v.key}]" class="layui-textarea">{$config[$v['key']]}</textarea>
+        <textarea name="row[{$v.key}]" class="layui-textarea">{:isset($config[$v['key']])?$config[$v['key']]:(isset($v['content'])?$v['content']:'')}</textarea>
         {/case}
         {case select_single}
         <select name="row[{$v['key']}]">
@@ -205,6 +205,18 @@
                 </td>
             </tr>
             {/foreach}
+            {else/}
+            {if isset($v['content']) && is_array($v['content'])}
+            {foreach $v['content'] as $vk=>$vv}
+            <tr>
+                <td style="padding: 4px 15px;"><input class="layui-input" type="text" name="row[{$v.key}][key][]" value="{$vk}" /></td>
+                <td style="padding: 4px 15px;"><input class="layui-input" type="text" name="row[{$v.key}][value][]" value="{$vv}" /></td>
+                <td style="padding: 4px 15px;">
+                    <a href="javascript:void(0);" class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-delete del_array_item" layer-tips="删除" title="删除"></a>
+                </td>
+            </tr>
+            {/foreach}
+            {/if}
             {/if}
             <tr class='nodrop nodrag'>
                 <td colspan="3" style="padding: 4px 15px;">
