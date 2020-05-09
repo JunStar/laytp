@@ -18,6 +18,21 @@ if (!function_exists('addon_url')) {
     }
 }
 
+//获取插件js目录
+function getAddonJSDir($addon,$module){
+    return "/addons/$addon/static/$module/javascript/";
+}
+
+//获取插件css目录
+function getAddonCSSDir($addon,$module){
+    return "/addons/$addon/static/$module/css/";
+}
+
+//获取插件image目录
+function getAddonImageDir($addon,$module){
+    return "/addons/$addon/static/$module/image/";
+}
+
 /**
  * 二维数组，外层索引替换成item内某个索引对应的值
  * @param $array

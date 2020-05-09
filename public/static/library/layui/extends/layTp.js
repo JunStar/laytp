@@ -141,6 +141,31 @@ layui.define([
             return url;
         },
 
+        //组装成插件url
+        addon_url: function(addon,path, params){
+            let count = 0;
+            for(k in params){
+                if(params.hasOwnProperty(k)){
+                    count++;
+                }
+            }
+            path = path.replace('\.html','');
+            if( typeof params !== 'undefined' && count > 0 ){
+                params = $.param(params);
+                let reg = new RegExp('=','g');
+                params = params.replace(reg,'/');
+                let reg_1 = new RegExp('&','g');
+                params = params.replace(reg_1,'/');
+                params = '/' + params;
+            }else{
+                params = '';
+            }
+            path = '/' + path.replace(/(^\/)|(\/$)/,'');
+
+            let url = '/addons/' + addon + path + params;
+            return url;
+        },
+
         setcookie: function(name,value,Days){
             var exp  = new Date();
             exp.setTime(exp.getTime() + Days*24*60*60*1000);

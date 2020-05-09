@@ -31,7 +31,12 @@ class AddonsRoute extends Route {
             if($url_arr[$k] == $addon){
                 $module = isset($url_arr[$k+1]) ? $url_arr[$k+1] : 'index';
                 $controller = isset($url_arr[$k+2]) ? $url_arr[$k+2] : 'index';
-                $action = isset($url_arr[$k+3]) ? $url_arr[$k+3] : 'index';
+                if(isset($url_arr[$k+3])){
+                    $action_param = explode('?',$url_arr[$k+3]);
+                    $action = $action_param[0];
+                }else{
+                    $action = 'index';
+                }
                 break;
             }
         }
@@ -121,7 +126,13 @@ class AddonsRoute extends Route {
         $url_arr = array_merge(array_filter(explode('/',$url)));
         $module = isset($url_arr[0]) ? $url_arr[0] : 'index';
         $controller = isset($url_arr[1]) ? $url_arr[1] : 'index';
-        $action = isset($url_arr[2]) ? $url_arr[2] : 'index';
+        if(isset($url_arr[2])){
+            $action_param = explode('?',$url_arr[2]);
+            $action = $action_param[0];
+        }else{
+            $action = 'index';
+        }
+//        $action = isset($url_arr[2]) ? $url_arr[2] : 'index';
 
         // 是否自动转换控制器和操作名
         $convert = Config::get('url_convert');

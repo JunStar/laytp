@@ -148,5 +148,5 @@
 <script>
     let table_list = {:json_encode($table_list)};
 </script>
-<script src="__ADMIN_JS__/{$js_global_var.js_controller}/{$js_global_var.action}.js" charset="utf-8"></script>
+<script src="{:getAddonJSDir('autocreate','admin')}/{$js_global_var.js_controller}/{$js_global_var.action}.js" charset="utf-8"></script>
 {/block}
