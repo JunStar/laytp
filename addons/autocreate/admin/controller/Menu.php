@@ -2,7 +2,7 @@
 /**
  * 一键生成菜单
  */
-namespace addons\autocreate\admin\controller\autocreate;
+namespace addons\autocreate\admin\controller;
 
 use controller\Backend;
 

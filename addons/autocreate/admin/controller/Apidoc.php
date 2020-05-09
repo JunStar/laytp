@@ -2,7 +2,7 @@
 /**
  * 一键生成Api文档
  */
-namespace app\admin\controller\autocreate;
+namespace addons\autocreate\admin\controller;
 
 use controller\Backend;
 

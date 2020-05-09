@@ -2,14 +2,14 @@
 /**
  * 一键生成Curd
  */
-namespace addons\autocreate\admin\controller\autocreate;
+namespace addons\autocreate\admin\controller;
 
-use controller\Backend;
+use controller\AddonsBackend;
 use think\Db;
 use think\Exception;
 use think\facade\Config;
 
-class Curd extends Backend
+class Curd extends AddonsBackend
 {
     public $model;
 

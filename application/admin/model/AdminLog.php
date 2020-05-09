@@ -2,6 +2,7 @@
 
 namespace app\admin\model;
 
+use library\Token;
 use model\Backend;
 
 class AdminLog extends Backend
@@ -21,9 +22,10 @@ class AdminLog extends Backend
         self::$content = $content;
     }
 
-    public static function record($title = '')
+    public static function record($token)
     {
-        $admin_user_id = isLogin();
+        $data = Token::get($token);
+        $admin_user_id = isset($data['user_id']) ? $data['user_id'] : 0;
         $admin_user = model('auth.User')->get($admin_user_id);
 
         $admin_id = $admin_user_id ? $admin_user->id : 0;

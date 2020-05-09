@@ -153,19 +153,6 @@ function getDefaultAvatar($avatar){
     }
 }
 
-/**
- * 判断是否登录状态
- * @return bool
- */
-function isLogin(){
-    $admin_user_id = Session::get('admin_user_id');
-    if($admin_user_id){
-        return $admin_user_id;
-    }else{
-        return false;
-    }
-}
-
 //导入规则
 function importRule($controller, $pid)
 {

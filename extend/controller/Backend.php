@@ -34,7 +34,8 @@ class Backend extends Controller
 
     public function initialize(){
         if( $this->request->isPost() ){
-            Hook::exec('app\\admin\\behavior\\AdminLog');
+            $token = $this->request->server('HTTP_TOKEN', $this->request->request('token', Cookie::get('token')));
+            Hook::exec('app\\admin\\behavior\\AdminLog',$token);
         }
 
         $this->module = $this->request->module();
@@ -60,7 +61,7 @@ class Backend extends Controller
             //获取顶级菜单
             $this->assign('top_menu', $select_menu[count($select_menu)-1]);
 
-            exit($this->fetch('ltiframe/index'));
+            exit($this->fetch('admin@ltiframe/index'));
         }
 
         $menu_id = $this->request->param('laytp_menu_id');

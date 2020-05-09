@@ -5,11 +5,11 @@ namespace app\admin\behavior;
 class AdminLog
 {
 
-    public function run()
+    public function run($token)
     {
 //        if (request()->isPost())
 //        {
-            \app\admin\model\AdminLog::record();
+            \app\admin\model\AdminLog::record($token);
 //        }
     }
 

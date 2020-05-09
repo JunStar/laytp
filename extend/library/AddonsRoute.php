@@ -6,6 +6,7 @@ use think\Container;
 use think\exception\HttpException;
 use think\exception\HttpResponseException;
 use think\facade\Config;
+use think\facade\Env;
 use think\facade\Request;
 use think\Loader;
 use think\Response;
@@ -80,6 +81,12 @@ class AddonsRoute extends Route {
             $class = self::get_addon_class($addon, $module, 'module.controller', $controller);
             if (!$class) {
                 throw new HttpException(404, Loader::parseName($controller, 'module.controller').'控制器不存在');
+            }
+
+            //加载common.php
+            $common_func_file = Env::get('root_path') . DS . 'addons' . DS . $addon . DS . 'common.php';
+            if(is_file($common_func_file)){
+                include_once Env::get('root_path') . DS . 'addons' . DS . $addon . DS . 'common.php';
             }
 
             if(substr($controller,0,3) == 'api'){

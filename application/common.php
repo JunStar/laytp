@@ -1,4 +1,23 @@
 <?php
+
+use think\facade\Url;
+
+if (!function_exists('addon_url')) {
+    /**
+     * Url生成
+     * @param string        $url 路由地址
+     * @param string|array  $vars 变量
+     * @param bool|string   $suffix 生成的URL后缀
+     * @param bool|string   $domain 域名
+     * @return string
+     */
+    function addon_url($addon, $url = '', $vars = '', $suffix = true, $domain = false)
+    {
+        $addon_url = "/addons/$addon/$url";
+        return Url::build($addon_url, $vars, $suffix, $domain);
+    }
+}
+
 /**
  * 二维数组，外层索引替换成item内某个索引对应的值
  * @param $array
