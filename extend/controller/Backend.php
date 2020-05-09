@@ -9,6 +9,7 @@ use app\admin\model\auth\Menu;
 use library\Token;
 use library\Tree;
 use think\Controller;
+use think\facade\Config;
 use think\facade\Cookie;
 use think\facade\Hook;
 use think\facade\Session;
@@ -162,7 +163,15 @@ class Backend extends Controller
             }
         }
 
-        $assign['first_menus'] = $first_menus;
+        $first_menu_num = Config::get('laytp.basic.first_menu_num') ? Config::get('laytp.basic.first_menu_num') : 7;
+
+        if(count($first_menus) > $first_menu_num){
+            $assign['first_menus'] = array_slice($first_menus,0,$first_menu_num);
+            $assign['more_first_menus'] = array_slice($first_menus,$first_menu_num);
+        }else{
+            $assign['first_menus'] = $first_menus;
+            $assign['more_first_menus'] = [];
+        }
         $this->assign($assign);
     }
 

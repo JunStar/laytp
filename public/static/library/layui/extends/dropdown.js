@@ -137,6 +137,7 @@ layui.define(['jquery'], function(exports) {
                     'field_val="' + field_val +'"' +
                     'switch_type="' + option.switch_type +'"' +
                     'callback="' + option.callback +'"' +
+                    'param=\'' + JSON.stringify(option.param) +'\'' +
                 '>' +
                     '<p class="' + CLS_TITLE +' layui-elip">' +
                         '<span class="layui-icon ' + option.icon + '"></span>' + option.title +

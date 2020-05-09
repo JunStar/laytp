@@ -431,6 +431,7 @@ layui.define([
                     ,width:'100%'//宽
                     ,height:'100%'//高
                     ,need_data:true//是否需要数据，默认为true，当为false时，不需要选中数据表的复选框
+                    ,callback:"function_name"//回调函数名，函数可以使用window.function_name进行定义，callback有值，则node,uri,switch_type,width,height,need_data都无效，如果函数需要传参，参数使用param赋值
                 }
                 ,{
                     action: 'del',
@@ -443,6 +444,7 @@ layui.define([
                     ,width:'100%'//宽
                     ,height:'100%'//高
                     ,need_data:true//是否需要数据，默认为true，当为false时，不需要选中数据表的复选框
+                    ,callback:"function_name"//回调函数名，函数可以使用window.function_name进行定义，callback有值，则node,uri,switch_type,width,height,need_data都无效，如果函数需要传参，参数使用param赋值
                 }
          *  ]
          * @param elem string 渲染的document节点名称，举例：.action-more
@@ -479,6 +481,9 @@ layui.define([
                         if(!options[key].hasOwnProperty("param")){
                             options[key].param = {};
                         }
+                        if(!options[key].hasOwnProperty("callback")){
+                            options[key].callback = '';
+                        }
                         for(rk in rule_list){
                             var node_arr = options[key].node.split('/');
                             if(rule_list[rk] === node_arr[0] + '/' + node_arr[1] + '/' + node_arr[2]){
@@ -489,6 +494,7 @@ layui.define([
                                         ,icon: options[key].icon
                                         ,uri: layTp.facade.url(options[key].node,options[key].param)
                                         ,switch_type: options[key].switch_type
+                                        ,callback: options[key].callback
                                     }
                                 );
                                 break;
@@ -640,6 +646,13 @@ layui.define([
         //批量操作
         batch_action: function(){
             $(document).on('click','.batch-action',function(){
+                //执行callback
+                let callback = $(this).attr('callback');
+                if(!(callback == "undefined" || callback == "")){
+                    let param = $(this).attr('param');
+                    eval(callback+"("+param+")");
+                    return true;
+                }
                 let uri = $(this).attr("uri");
                 if(uri == undefined){
                     return false;

@@ -1,4 +1,4 @@
-layui.define("jquery", function (t) {
+layui.define(["jquery","dropdown"], function (t) {
     "use strict";
     var a = layui.$,
         i = (layui.hint(), layui.device()),
@@ -116,12 +116,53 @@ layui.define("jquery", function (t) {
 
                 //点击顶级菜单
                 if( s.parent().hasClass('main-nav') ) {
-                    click_menu_redirect(t);
-                    let data = menu_json[s.index()].children;
-                    select_menu_ids = t.attr('select_menu_ids').split(',');
-                    // console.log(select_menu_ids);
-                    createMenu(data,0,true);
-                    layui.laytp_element.init();
+                    let more_attr = t.attr('more_first_menus');
+                    if(more_attr == "true"){
+                        var more_menu_dropdown_list = [];
+                        var mmkey = 0;
+                        for(mmkey in more_first_menus){
+                            more_menu_dropdown_list[mmkey] = {
+                                action: "install"//操作名称
+                                ,title: more_first_menus[mmkey].name//文字标题
+                                ,icon: ""//图标
+                                ,param:{
+                                    rule:more_first_menus[mmkey].default_menu.rule
+                                    ,menu_id:more_first_menus[mmkey].default_menu.id
+                                    ,name:more_first_menus[mmkey].default_menu.name
+                                    ,select_menu_ids:more_first_menus[mmkey].select_menu_ids
+                                    ,index:parseInt(parseInt(first_menus_count) + parseInt(mmkey))
+                                }
+                                ,callback:"more_menu"
+                            };
+                        }
+                        window.more_menu = function(param){
+                            $('#layTpIframe').attr('src',__URL__ + param.rule + '/laytp_menu_id/' + param.menu_id);
+                            editHistory(param.name,__URL__ + param.rule + '?ref=' + param.menu_id);
+                            $.post(__URL__ + 'admin/ajax/get_crumbs',{menu_id:param.menu_id},function(res){
+                                if(res.code==1){
+                                    let html = '';
+                                    for(let key in res.data){
+                                        html += '<li>' + res.data[key] + '</li>';
+                                    }
+                                    $('.bread-crumbs').html(html);
+                                }
+                            });
+                            let data = menu_json[param.index].children;
+                            select_menu_ids = param.select_menu_ids.split(',');
+                            createMenu(data,0,true);
+                            layui.laytp_element.init();
+                        };
+                        layui.dropdown.render({
+                            elem:'#menu-more',
+                            options:more_menu_dropdown_list
+                        });
+                    }else{
+                        click_menu_redirect(t);
+                        let data = menu_json[s.index()].children;
+                        select_menu_ids = t.attr('select_menu_ids').split(',');
+                        createMenu(data,0,true);
+                        layui.laytp_element.init();
+                    }
                 //点击二级菜单
                 }else if(s.parent().parent().attr('id') == 'navBarId'){
                     //点击已经选中的菜单
