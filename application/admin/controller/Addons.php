@@ -177,6 +177,15 @@ class Addons extends Backend
             try{
                 $addons = Config::get('addons.');
                 $config_items = $this->request->param('row');
+                foreach($config_items as $k=>$v){
+                    if(is_array($v)){
+                        $temp = [];
+                        foreach($v['key'] as $arr_k=>$arr_v){
+                            $temp[$arr_v] = $v['value'][$arr_k];
+                        }
+                        $config_items[$k] = $temp;
+                    }
+                }
                 $addons[$name] = $config_items;
                 $file_name = Env::get('root_path') .  DS . 'config' . DS . 'addons.php';
                 file_put_contents($file_name,"<?php\nreturn ".var_export($addons,true).';');
