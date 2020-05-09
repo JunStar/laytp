@@ -15,8 +15,6 @@ class Curd extends Backend
 
     protected $special_fields;
 
-    public $no_need_auth = ['get_table_list','get_curd_info','get_fields_by_table_name','get_fields_with_pk_by_table_name'];
-
     public function initialize(){
         $this->special_fields = Config::get('curd.special_fields');
         parent::initialize();
