@@ -1,8 +1,8 @@
 <?php
 /**
- * 后台菜单模型
+ * 自动生成Curd模型
  */
-namespace app\admin\model\autocreate;
+namespace addons\autocreate\admin\model;
 
 use model\Backend;
 use think\Db;
@@ -25,7 +25,8 @@ class Curd extends Backend
     public function import_category($post_data){
         $is_exist = $this->where(['table_name'=>$post_data['table_name']])->value('id');
         $data['table_name'] = $post_data['table_name'];
-        $data['table_comment'] = model('admin/InformationSchema')->getTableComment($post_data['table_name']);
+        $informationSchema = new InformationSchema();
+        $data['table_comment'] = $informationSchema->getTableComment($post_data['table_name']);
         $data['field_list'] = json_encode([],JSON_UNESCAPED_UNICODE);
         $data['global'] = json_encode($post_data,JSON_UNESCAPED_UNICODE);
         $data['relation_model'] = json_encode([],JSON_UNESCAPED_UNICODE);
@@ -55,7 +56,8 @@ class Curd extends Backend
             $model = Db::table($table_name);
             $fields = $model->getTableFields();
             $pk = $model->getPk();
-            $comment = model('admin/InformationSchema')->getFieldsComment($table_name)->toArray();
+            $informationSchema = new InformationSchema();
+            $comment = $informationSchema->getFieldsComment($table_name)->toArray();
             $comment_map = arr_to_map($comment,'COLUMN_NAME');
             $all_fields = [];
             foreach($fields as $k=>$v){

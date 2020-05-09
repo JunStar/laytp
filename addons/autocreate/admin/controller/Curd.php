@@ -4,6 +4,7 @@
  */
 namespace addons\autocreate\admin\controller;
 
+use addons\autocreate\admin\model\InformationSchema;
 use controller\AddonsBackend;
 use think\Db;
 use think\Exception;
@@ -16,9 +17,9 @@ class Curd extends AddonsBackend
     protected $special_fields;
 
     public function initialize(){
-        $this->special_fields = Config::get('curd.special_fields');
+        $this->special_fields = Config::get('curd.special_fields') ? Config::get('curd.special_fields') : ['id'];
         parent::initialize();
-        $this->model = model('autocreate.Curd');
+        $this->model = new \addons\autocreate\admin\model\Curd();
     }
 
     //首页
@@ -57,7 +58,8 @@ class Curd extends AddonsBackend
         }
 
         //获取所有的表名称
-        $assign['table_list'] = model('InformationSchema')->getTableList();
+        $informationSchema = new InformationSchema();
+        $assign['table_list'] = $informationSchema->getTableList();
         $this->assign($assign);
         return $this->fetch();
     }
@@ -83,14 +85,16 @@ class Curd extends AddonsBackend
         }
 
         //获取所有的表名称
-        $assign['table_list'] = model('InformationSchema')->getTableList();
+        $informationSchema = new InformationSchema();
+        $assign['table_list'] = $informationSchema->getTableList();
         $this->assign($assign);
         return $this->fetch();
     }
 
     //获取所有表名
     public function get_table_list(){
-        $result = model('InformationSchema')->getTableList();
+        $informationSchema = new InformationSchema();
+        $result = $informationSchema->getTableList();
         $this->success('获取成功', $result);
     }
 
@@ -107,7 +111,8 @@ class Curd extends AddonsBackend
             $model = Db::table($table);
             $pk = $model->getPk();
             $fields = $model->getTableFields();
-            $comment = model('InformationSchema')->getFieldsComment($table)->toArray();
+            $informationSchema = new InformationSchema();
+            $comment = $informationSchema->getFieldsComment($table)->toArray();
             $comment_map = arr_to_map($comment,'COLUMN_NAME');
             //生成过用生成过的数据渲染默认的详细设置
             if($curd_info){
@@ -176,7 +181,7 @@ class Curd extends AddonsBackend
                 $this->success('获取成功', $result);
             }
         }catch (Exception $e){
-            $this->error($e->getMessage());
+            $this->error($e->getMessage().$e->getLine());
         }
     }
 
