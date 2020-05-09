@@ -165,9 +165,9 @@ class Addons extends Service
                 file_put_contents($file_name,"<?php\nreturn ".var_export($addons,true).';');
             }
             //删除api文档
-            $api_dir = Env::get('root_path') . DS . 'public' . DS . 'addons' . DS . $name;
-            if(is_dir($api_dir)){
-                DirFile::rmDirs($api_dir);
+            $api_file = Env::get('root_path') . DS . 'public' . DS . 'addons' . DS . $name . DS . 'api.html';
+            if(is_file($api_file)){
+                unlink($api_file);
             }
             return true;
         }catch (Exception $e){
