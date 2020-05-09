@@ -1,0 +1,63 @@
+{extend name="admin@public/layout/popup_form"}
+
+{block name="form"}
+<div class="layui-form-item">
+    <label class="layui-form-label" title="控制器">所属一级菜单</label>
+    <div class="layui-input-block">
+        <select
+            linkage="true"
+            lay-filter="first_menu_id"
+            lay-verify="required"
+            lay-verType="tips"
+            placeholder="请选择一级菜单，必选项"
+            name="row[first_menu_id]"
+            id="first_menu_id"
+            table_name="lt_admin_menu"
+            search_field="pid"
+            search_field_val="0"
+            selected_val=""
+            show_field="name"
+            left_field=""
+            right_field="second_menu_id"
+        >
+            <option value="">请选择一级菜单，必选项</option>
+        </select>
+    </div>
+</div>
+
+<div class="layui-form-item">
+    <label class="layui-form-label" title="控制器">所属二级菜单</label>
+    <div class="layui-input-block">
+        <select
+            linkage="true"
+            lay-filter="second_menu_id"
+            lay-verType="tips"
+            placeholder="请选择二级菜单"
+            name="row[second_menu_id]"
+            id="second_menu_id"
+            table_name="lt_admin_menu"
+            search_field="pid"
+            search_field_val="0"
+            selected_val=""
+            show_field="name"
+            left_field="first_menu_id"
+            right_field=""
+        >
+            <option value="">请选择二级菜单，可不选，不选表示要生成的菜单为二级菜单</option>
+        </select>
+    </div>
+</div>
+
+<div class="layui-form-item">
+    <label class="layui-form-label" title="控制器">控制器</label>
+    <div class="layui-input-block">
+        <input type="text" name="row[controller]" id="controller" placeholder="请选择" class="layui-input selectPage"
+            search-field="name"
+            search-url="{:url('admin/autocreate.menu/get_controller_list')}"
+            show-field="name"
+            search-condition="LIKE"
+            show-multiple="false"
+        >
+    </div>
+</div>
+{/block}

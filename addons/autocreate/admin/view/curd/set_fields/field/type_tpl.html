@@ -1,0 +1,45 @@
+<script type="text/html" id="field_type">
+    <select name="field_type[]" lay-search="true" lay-filter="field_type" data-field_name="{{d.field_name}}}">
+        <option value="bigint" {{# if(d.field_type=='bigint'){ }}selected="selected"{{# } }}>bigint</option>
+        <option value="binary" {{# if(d.field_type=='binary'){ }}selected="selected"{{# } }}>binary</option>
+        <option value="bit" {{# if(d.field_type=='bit'){ }}selected="selected"{{# } }}>bit</option>
+        <option value="blob" {{# if(d.field_type=='blob'){ }}selected="selected"{{# } }}>blob</option>
+        <option value="char" {{# if(d.field_type=='char'){ }}selected="selected"{{# } }}>char</option>
+        <option value="date" {{# if(d.field_type=='date'){ }}selected="selected"{{# } }}>date</option>
+        <option value="datetime" {{# if(d.field_type=='datetime'){ }}selected="selected"{{# } }}>datetime</option>
+        <option value="decimal" {{# if(d.field_type=='decimal'){ }}selected="selected"{{# } }}>decimal</option>
+        <option value="double" {{# if(d.field_type=='double'){ }}selected="selected"{{# } }}>double</option>
+        <option value="enum" {{# if(d.field_type=='enum'){ }}selected="selected"{{# } }}>enum</option>
+        <option value="float" {{# if(d.field_type=='float'){ }}selected="selected"{{# } }}>float</option>
+        <option value="geometry" {{# if(d.field_type=='geometry'){ }}selected="selected"{{# } }}>geometry</option>
+        <option value="geometrycollection" {{# if(d.field_type=='geometrycollection'){ }}selected="selected"{{# } }}>geometrycollection</option>
+        <option value="int" {{# if(d.field_type=='int'){ }}selected="selected"{{# } }}>int</option>
+        <option value="integer" {{# if(d.field_type=='integer'){ }}selected="selected"{{# } }}>integer</option>
+        <option value="json" {{# if(d.field_type=='json'){ }}selected="selected"{{# } }}>json</option>
+        <option value="linestring" {{# if(d.field_type=='linestring'){ }}selected="selected"{{# } }}>linestring</option>
+        <option value="longblob" {{# if(d.field_type=='longblob'){ }}selected="selected"{{# } }}>longblob</option>
+        <option value="longtext" {{# if(d.field_type=='longtext'){ }}selected="selected"{{# } }}>longtext</option>
+        <option value="mediumblob" {{# if(d.field_type=='mediumblob'){ }}selected="selected"{{# } }}>mediumblob</option>
+        <option value="mediumint" {{# if(d.field_type=='mediumint'){ }}selected="selected"{{# } }}>mediumint</option>
+        <option value="mediumtext" {{# if(d.field_type=='mediumtext'){ }}selected="selected"{{# } }}>mediumtext</option>
+        <option value="multilinestring" {{# if(d.field_type=='multilinestring'){ }}selected="selected"{{# } }}>multilinestring</option>
+        <option value="multipoint" {{# if(d.field_type=='multipoint'){ }}selected="selected"{{# } }}>multipoint</option>
+        <option value="multipolygon" {{# if(d.field_type=='multipolygon'){ }}selected="selected"{{# } }}>multipolygon</option>
+        <option value="numeric" {{# if(d.field_type=='numeric'){ }}selected="selected"{{# } }}>numeric</option>
+        <option value="point" {{# if(d.field_type=='point'){ }}selected="selected"{{# } }}>point</option>
+        <option value="polygon" {{# if(d.field_type=='polygon'){ }}selected="selected"{{# } }}>polygon</option>
+        <option value="real" {{# if(d.field_type=='real'){ }}selected="selected"{{# } }}>real</option>
+        <option value="set" {{# if(d.field_type=='set'){ }}selected="selected"{{# } }}>set</option>
+        <option value="smallint" {{# if(d.field_type=='smallint'){ }}selected="selected"{{# } }}>smallint</option>
+        <option value="text" {{# if(d.field_type=='text'){ }}selected="selected"{{# } }}>text</option>
+        <option value="time" {{# if(d.field_type=='time'){ }}selected="selected"{{# } }}>time</option>
+        <option value="timestamp" {{# if(d.field_type=='timestamp'){ }}selected="selected"{{# } }}>timestamp</option>
+        <option value="tinyblob" {{# if(d.field_type=='tinyblob'){ }}selected="selected"{{# } }}>tinyblob</option>
+        <option value="tinyint" {{# if(d.field_type=='tinyint'){ }}selected="selected"{{# } }}>tinyint</option>
+        <option value="tinytext" {{# if(d.field_type=='tinytext'){ }}selected="selected"{{# } }}>tinytext</option>
+        <option value="varbinary" {{# if(d.field_type=='varbinary'){ }}selected="selected"{{# } }}>varbinary</option>
+        <option value="varbinary" {{# if(d.field_type=='varbinary'){ }}selected="selected"{{# } }}>varbinary</option>
+        <option value="varchar" {{# if(d.field_type=='varchar'){ }}selected="selected"{{# } }}>varchar</option>
+        <option value="year" {{# if(d.field_type=='year'){ }}selected="selected"{{# } }}>year</option>
+    </select>
+</script>

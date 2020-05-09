@@ -1,0 +1,10 @@
+{extend name="admin@public/layout/main"}
+
+{block name="script"}
+<script src="__ADMIN_JS__/autocreate/menu.js" charset="utf-8"></script>
+{/block}
+
+{block name="js_template"}
+{include file="autocreate/menu/toolbar_tpl"}
+{include file="autocreate/menu/operation_tpl"}
+{/block}

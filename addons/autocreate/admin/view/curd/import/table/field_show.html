@@ -1,0 +1,7 @@
+<script type="text/html" id="field_show">
+    <div name="field_show_{{d.field_name}}" id="field_show_{{d.field_name}}">
+        <input type="checkbox" {{ d.field_show_index == "1" ? "checked='checked'" : "" }} name="field_show_index_{{d.field_name}}" id="field_show_index_{{d.field_name}}" value="1" title="列表展示" />
+        <input type="checkbox" {{ d.field_show_add == "1" ? "checked='checked'" : "" }} name="field_show_add_{{d.field_name}}" id="field_show_add_{{d.field_name}}" value="1" title="添加表单" />
+        <input type="checkbox" {{ d.field_show_edit == "1" ? "checked='checked'" : "" }} name="field_show_edit_{{d.field_name}}" id="field_show_edit_{{d.field_name}}" value="1" title="编辑表单" />
+    </div>
+</script>
