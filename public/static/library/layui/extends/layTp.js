@@ -906,7 +906,7 @@ layui.define([
                             layTp.facade.success(res.msg);
                             if(typeof res.data.reload === 'boolean' && res.data.reload){
                                 setTimeout(function () {
-                                    location.reload();
+                                    parent.parent.location.reload();
                                 }, 1000);
                             }
                             if(typeof parent.func_controller != "undefined"){

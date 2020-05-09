@@ -101,7 +101,7 @@ class Addons extends Backend
                     $this->error($this->addons_service->getError());
                 }
                 $info = $this->addons_service->_info->getAddonInfo($name);
-                $this->success('安装成功', ['addon' => $info]);
+                $this->success('安装成功', ['addon' => $info,'reload'=>true]);
             } catch (Exception $e) {
                 $this->error($e->getMessage(), $e->getCode());
             }
@@ -157,7 +157,7 @@ class Addons extends Backend
                 return $this->error('请先关闭插件');
             }
             if($this->addons_service->uninstall($name)){
-                return $this->success('卸载成功');
+                return $this->success('卸载成功',['reload'=>true]);
             }else{
                 return $this->error('卸载失败');
             }
