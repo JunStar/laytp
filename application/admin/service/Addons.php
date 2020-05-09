@@ -125,12 +125,26 @@ class Addons extends Service
         // 移除临时文件
         @unlink($tmpFile);
 
+        //检测下载下来的插件包是否完整
         $checkRes = $this->_info->check($name);
         if(!$checkRes){
             @DirFile::rmDirs($addonDir);
             $this->setError($checkRes['msg']);
             return false;
         }
+
+        //初始化配置
+        $config = include_once $addons_path. $name . DS . 'config.php';
+        $default_config = [];
+        foreach($config as $k=>$v){
+            if(isset($v['content'])){
+                $default_config[$v['key']] = $v['content'];
+            }
+        }
+        $addons = Config::get('addons.');
+        $addons[$name] = $default_config;
+        $file_name = Env::get('root_path') .  DS . 'config' . DS . 'addons.php';
+        file_put_contents($file_name,"<?php\nreturn ".var_export($addons,true).';');
 
         //生成menu
         $menus = include_once $addonDir.'menu.php';
