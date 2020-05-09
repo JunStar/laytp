@@ -210,6 +210,11 @@ layui.define([
                     success: function (res) {
                         if( res.code == 1 ){
                             layTp.facade.success(res.msg);
+                            if(typeof res.data.reload === 'boolean' && res.data.reload){
+                                setTimeout(function () {
+                                    parent.parent.location.reload();
+                                }, 1000);
+                            }
                             func_controller.table_render();
                         }else{
                             layTp.facade.error(res.msg);
