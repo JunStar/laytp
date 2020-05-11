@@ -20,17 +20,17 @@ if (!function_exists('addon_url')) {
 
 //获取插件js目录
 function getAddonJSDir($addon,$module){
-    return "/addons/$addon/static/$module/javascript/";
+    return "/addons/$addon/static/$module/javascript";
 }
 
 //获取插件css目录
 function getAddonCSSDir($addon,$module){
-    return "/addons/$addon/static/$module/css/";
+    return "/addons/$addon/static/$module/css";
 }
 
 //获取插件image目录
 function getAddonImageDir($addon,$module){
-    return "/addons/$addon/static/$module/image/";
+    return "/addons/$addon/static/$module/image";
 }
 
 /**

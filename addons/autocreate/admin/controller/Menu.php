@@ -4,15 +4,15 @@
  */
 namespace addons\autocreate\admin\controller;
 
-use controller\Backend;
+use controller\AddonsBackend;
 
-class Menu extends Backend
+class Menu extends AddonsBackend
 {
     public $model;
 
     public function initialize(){
         parent::initialize();
-        $this->model = model('autocreate.Menu');
+        $this->model = new \addons\autocreate\admin\model\Menu();
     }
 
     //查看
