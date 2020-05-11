@@ -1,6 +1,6 @@
 <?php
 
-namespace app\admin\command_bak;
+namespace addons\autocreate\admin\command;
 
 use app\admin\command_bak\Api\library\Builder;
 use app\admin\service\Addons;
