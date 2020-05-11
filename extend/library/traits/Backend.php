@@ -34,7 +34,7 @@ trait Backend
     public function add(){
         if( $this->request->isAjax() && $this->request->isPost() ){
             $post = filterPostData($this->request->post("row/a"));
-            if(!Validate::token($post['__token__'],'__token__',$post)){
+            if(isset($post['__token__']) && !Validate::token($post['__token__'],'__token__',$post)){
                 $this->error('请勿重复提交');
             }
             if( $this->model->create($post) ){
@@ -52,7 +52,7 @@ trait Backend
         $info = $this->model->get($id);
         if( $this->request->isAjax() && $this->request->isPost() ){
             $post = filterPostData($this->request->post("row/a"));
-            if(!Validate::token($post['__token__'],'__token__',$post)){
+            if(isset($post['__token__']) && !Validate::token($post['__token__'],'__token__',$post)){
                 $this->error('请勿重复提交');
             }
             foreach($post as $k=>$v){
