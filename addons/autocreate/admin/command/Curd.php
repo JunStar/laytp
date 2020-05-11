@@ -8,7 +8,7 @@
  */
 namespace addons\autocreate\admin\command;
 
-use app\admin\model\InformationSchema;
+use addons\autocreate\admin\model\InformationSchema;
 use think\console\Command;
 use think\console\Input;
 use think\console\input\Option;
@@ -21,6 +21,7 @@ class Curd extends Command
 {
     protected
         $curdModel,//autocreate_curdModel
+        $informationModel,//autocreate_informationModel
         $id,//autocreate_curd主键id
         $info,//autocreate_curd主键id对应的数据
         $curd_config,//分析info后，主要是json_decode字段内容后，生成的配置信息
@@ -57,7 +58,8 @@ class Curd extends Command
 
     //ThinkPHP命令行执行函数
     protected function execute(Input $input, Output $output){
-        $this->curdModel = model('admin/autocreate.Curd');
+        $this->curdModel = new \addons\autocreate\admin\model\Curd();
+        $this->informationModel = new InformationSchema();
         $this->id = $input->getOption('id') ?: 0;
 
         $this->set_param();
@@ -107,8 +109,7 @@ class Curd extends Command
     public function set_param(){
         $this->info = $this->get_info_by_id();
         $this->curd_config = $this->format_info();
-        $information = new InformationSchema();
-        $field_list_db = $information->getFieldsComment($this->curd_config['table_name']);
+        $field_list_db = $this->informationModel->getFieldsComment($this->curd_config['table_name']);
         $this->field_list_map = arr_to_map($field_list_db->toArray(),'COLUMN_NAME');
         $this->model_app_name = $this->curd_config['global']['common_model'] ? 'common' : 'admin';
 
@@ -438,11 +439,11 @@ class Curd extends Command
         //是否隐藏主键列
         if(!$this->curd_config['global']['hide_pk']){
             $has_first_cols = true;
-            $pk = model('admin/InformationSchema')->getPkInfo($this->curd_config['table_name']);
+            $pk = $this->informationModel->getPkInfo($this->curd_config['table_name']);
             $temp = "{field:'{$pk['pk']}',title:'{$pk['field_comment']}',align:'center',width:80}\n";
             $cols .= $temp;
         }else{
-            $pk = model('admin/InformationSchema')->getPkInfo($this->curd_config['table_name']);
+            $pk = $this->informationModel->getPkInfo($this->curd_config['table_name']);
             $temp = "//{field:'{$pk['pk']}',title:'{$pk['field_comment']}',align:'center',width:80}\n";
             $cols .= $temp;
         }

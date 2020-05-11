@@ -20,7 +20,9 @@
     <div class="layui-form-item">
         <label class="layui-form-label" title="状态">状态</label>
         <div class="layui-input-block">
-            <input autocomplete="off" type="text" name="row[status]" id="status" placeholder="请输入状态" class="layui-input" lay-verify="" lay-verType="tips">
+            <!-- 隐藏域设置开关未选中时需要传递的参数值 -->
+            <input type="hidden" name="row[status]" id="status-0" value="0" />
+            <input type="checkbox" name="row[status]" id="status-1" lay-skin="switch" lay-text="打开|关闭" value="1"  />
         </div>
     </div>
 

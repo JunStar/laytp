@@ -36,8 +36,12 @@
 		    <div class="layui-form-item layui-inline">
                 <label class="layui-form-label" title="状态">状态</label>
                 <div class="layui-input-inline">
-                    <input autocomplete="off" type="text" id="status" name="search_param[status][value]" id="status" placeholder="请输入状态" class="layui-input">
-                    <input type="hidden" name="search_param[status][condition]" value="LIKE">
+                    <select id="status" name="search_param[status][value]" placeholder="请输入状态">
+        				<option value=""></option>
+						<option value="0">关闭</option>
+						<option value="1">打开</option>
+                    </select>
+                    <input type="hidden" name="search_param[status][condition]" value="=">
                 </div>
             </div>
 
@@ -206,7 +210,9 @@ layui.use(['layTp'],function() {
 				,{field:'grade',title:'年级',align:'center',sort:true,templet:function(d){
 					return layTp.facade.formatter.status('grade',d.grade,{"1":"一年级","2":"二年级","3":"三年级"});
 				}}
-				,{field:'status',title:'状态',align:'center'}
+				,{field:'status',title:'状态',align:'center',templet:function(d){
+					return layTp.facade.formatter.switch('status',d,{"open":{"value":1,"text":"打开"},"close":{"value":0,"text":"关闭"}});
+				}}
 				,{field:'hero',title:'英雄',align:'center'}
 				,{field:'hobby',title:'爱好',align:'center'}
 				,{field:'sign',title:'标志',align:'center'}

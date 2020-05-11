@@ -36,8 +36,12 @@
 		    <div class="layui-form-item layui-inline">
                 <label class="layui-form-label" title="状态">状态</label>
                 <div class="layui-input-inline">
-                    <input autocomplete="off" type="text" id="status" name="search_param[status][value]" id="status" placeholder="请输入状态" class="layui-input">
-                    <input type="hidden" name="search_param[status][condition]" value="LIKE">
+                    <select id="status" name="search_param[status][value]" placeholder="请输入状态">
+        				<option value=""></option>
+						<option value="0">关闭</option>
+						<option value="1">打开</option>
+                    </select>
+                    <input type="hidden" name="search_param[status][condition]" value="=">
                 </div>
             </div>
 

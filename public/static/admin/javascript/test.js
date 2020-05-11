@@ -49,7 +49,9 @@ layui.use(['layTp'],function() {
 				,{field:'grade',title:'年级',align:'center',sort:true,templet:function(d){
 					return layTp.facade.formatter.status('grade',d.grade,{"1":"一年级","2":"二年级","3":"三年级"});
 				}}
-				,{field:'status',title:'状态',align:'center'}
+				,{field:'status',title:'状态',align:'center',templet:function(d){
+					return layTp.facade.formatter.switch('status',d,{"open":{"value":1,"text":"打开"},"close":{"value":0,"text":"关闭"}});
+				}}
 				,{field:'hero',title:'英雄',align:'center'}
 				,{field:'hobby',title:'爱好',align:'center'}
 				,{field:'sign',title:'标志',align:'center'}
