@@ -14,7 +14,7 @@ layui.use(['layTp'],function(){
 
             $.ajax({
                 type: 'GET',
-                url: layTp.facade.url('/' + module + '/' + controller + '/get_fields_by_table_name'),
+                url: layTp.facade.addon_url('autocreate','/' + module + '/' + controller + '/get_fields_by_table_name'),
                 data: {table_name:select_table_name},
                 dataType: 'json',
                 success: function(res){
@@ -53,7 +53,7 @@ layui.use(['layTp'],function(){
             }
             $.ajax({
                 type: 'POST',
-                url: layTp.facade.url('/' + module + '/' + controller + '/import_category'),
+                url: layTp.facade.addon_url('autocreate','/' + module + '/' + controller + '/import_category'),
                 data: {table_name:select_table_name,parent_field:parent_field,name_field:name_field,sort_field:sort_field,common_model:common_model},
                 dataType: 'json',
                 success: function(res){
