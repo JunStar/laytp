@@ -1,0 +1,9 @@
+    //删除
+    public function del(){
+        $del_where['id'] = $this->request->param('id');
+        if( $this->model->where($del_where)->delete() ){
+            return $this->success('操作成功');
+        }else{
+            return $this->error('操作失败');
+        }
+    }

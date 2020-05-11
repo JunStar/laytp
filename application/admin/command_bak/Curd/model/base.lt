@@ -1,0 +1,36 @@
+<?php
+/**
+ * {%tableComment%}模型
+ */
+namespace {%modelNamespace%};
+
+use model\Backend;{%soft_del_package%}
+
+class {%modelClassName%} extends Backend
+{{%use_soft_del%}{%defaultSoftDelete%}
+    //模型名
+    protected $name = '{%modelName%}';
+
+    //时间戳字段转换
+    {%autoTimeFormat%}
+    //是否关闭create_time自动写入
+    {%autoCreateTime%}
+    //是否关闭update_time自动写入
+    {%autoUpdateTime%}
+    //是否关闭delete_time自动写入
+    {%autoDeleteTime%}
+
+    //表名
+    {%tableName%}
+
+    //数组常量
+    public $const = [
+{%arrayConst%}
+    ];
+
+    //关联模型
+    {%relationModel%}
+
+    //获取数组常量的函数
+    {%getArrayConstListFunction%}
+}

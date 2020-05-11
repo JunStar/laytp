@@ -1,0 +1,6 @@
+<input type="text" id="{%field_name%}" name="search_param[{%field_name%}][value]" id="{%field_name%}" placeholder="请选择" class="layui-input selectPage"
+                    search-field="nickname"
+                    search-url="{:url('admin/auth.user/select_page')}"
+                    show-field="nickname"
+                    show-multiple="true">
+                    <input type="hidden" name="search_param[{%field_name%}][condition]" value="IN">

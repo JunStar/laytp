@@ -1,0 +1,3 @@
+public function getArrayConstList($field_name){
+        return $this->const[$field_name];
+    }
