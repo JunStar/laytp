@@ -107,6 +107,9 @@ class Addons extends Service
     public function install($name, $force = true, $extend = [])
     {
         $addons_path = Env::get('root_path') . DS . 'addons' . DS;
+        if(!$addons_path){
+            DirFile::createDir($addons_path);
+        }
         if (!$name || (is_dir($addons_path . $name) && !$force)) {
             $this->setError('插件已经存在');
             return false;
