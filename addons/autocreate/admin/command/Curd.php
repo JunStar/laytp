@@ -121,6 +121,9 @@ class Curd extends Command
         $this->set_html_param();
     }
 
+    /**
+     * 生成静态文件、控制器和模型文件
+     */
     public function create(){
         $this->c_html();
         $this->c_js();
