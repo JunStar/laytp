@@ -21,7 +21,7 @@ class DirFile{
         if(is_dir($path)){
             return true;
         }else{
-            //如果目录不存在，则创建
+            //如果目录不存在，则递归创建
             if(mkdir($path,$mode,true)){
                 return true;
             }else{

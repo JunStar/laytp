@@ -158,6 +158,16 @@ class Addons extends Service
         // 导入sql文件
         $this->importSql($name);
 
+        //复制静态文件
+        $source_static_dir = $addonDir . DS . 'static';
+        if(is_dir($source_static_dir)){
+            $dest_static_dir = Env::get('root_path') . 'public' . DS . 'addons' . DS . $name . DS . 'static';
+            if(!is_dir($dest_static_dir)){
+                DirFile::createDir($dest_static_dir);
+            }
+            DirFile::copyDirs($source_static_dir,$dest_static_dir);
+        }
+
         return true;
     }
 
@@ -178,11 +188,9 @@ class Addons extends Service
                 $file_name = Env::get('root_path') .  DS . 'config' . DS . 'addons.php';
                 file_put_contents($file_name,"<?php\nreturn ".var_export($addons,true).';');
             }
-            //删除api文档
-            $api_file = Env::get('root_path') . DS . 'public' . DS . 'addons' . DS . $name . DS . 'api.html';
-            if(is_file($api_file)){
-                unlink($api_file);
-            }
+            //删除静态文件
+            $api_file = Env::get('root_path') . DS . 'public' . DS . 'addons' . DS . $name;
+            DirFile::rmDirs($api_file);
             return true;
         }catch (Exception $e){
             $this->setError($e->getMessage());
