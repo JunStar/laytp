@@ -1,8 +1,8 @@
 <?php
 
-namespace app\admin\command_bak;
+namespace app\admin\command;
 
-use app\admin\command_bak\Api\library\Builder;
+use app\admin\command\Api\library\Builder;
 use app\admin\service\Addons;
 use library\DirFile;
 use think\facade\Config;

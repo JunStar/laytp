@@ -45,7 +45,7 @@ class Curd extends AddonsBackend
                 $post_data = $this->request->post();
                 $result = $this->model->import_category($post_data);
                 if( $result['code'] ){
-                    $exec_res = exec_command('app\admin\command\CurdCategory',['--id='.$result['data']]);
+                    $exec_res = exec_command('addons\autocreate\admin\command\CurdCategory',['--id='.$result['data']]);
                     if($exec_res['code']){
                         $this->success($exec_res['msg']);
                     }else{
@@ -72,7 +72,7 @@ class Curd extends AddonsBackend
                 $post_data = $this->request->post();
                 $result = $this->model->import($post_data);
                 if( $result['code'] ){
-                    $exec_res = exec_command('app\admin\command\Curd',['--id='.$result['data']]);
+                    $exec_res = exec_command('addons\autocreate\admin\command\Curd',['--id='.$result['data']]);
                     if($exec_res['code']){
                         $this->success($exec_res['msg']);
                     }else{

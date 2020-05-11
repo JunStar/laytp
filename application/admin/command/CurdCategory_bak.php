@@ -6,7 +6,7 @@
  * Time: 18:29:42
  * Example: php think curd -i 1
  */
-namespace app\admin\command_bak;
+namespace app\admin\command;
 
 use app\admin\model\InformationSchema;
 use think\console\Command;

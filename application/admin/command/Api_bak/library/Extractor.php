@@ -1,6 +1,6 @@
 <?php
 
-namespace app\admin\command_bak\Api\library;
+namespace app\admin\command\Api\library;
 
 use think\facade\Config;
 use Exception;
