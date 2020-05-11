@@ -1,3 +1,0 @@
-public function {%relation_function_name%}(){
-        return $this->{%relation_way%}('{%relation_model_name%}','{%foreign_key%}','{%local_key%}')->field('id,{%show_field%}');
-    }

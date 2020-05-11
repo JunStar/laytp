@@ -1,1 +1,0 @@
-<input type="radio" name="row[{%field_name%}]" id="{%field_name%}-{%value%}" value="{%value%}" title="{%title%}" {%checked_status%} />
