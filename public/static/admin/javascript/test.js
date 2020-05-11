@@ -54,7 +54,9 @@ layui.use(['layTp'],function() {
 				,{field:'description',title:'描述',align:'center'}
 				,{field:'category_id',title:'所属分类（单选）',align:'center'}
 				,{field:'category_ids',title:'所属分类（多选）',align:'center'}
-				,{field:'single_img',title:'单个图片',align:'center'}
+				,{field:'single_img',title:'单个图片',align:'center',templet:function(d){
+					return layTp.facade.formatter.images(d.single_img);
+				}}
 				,{field:'multi_img',title:'多个图片',align:'center'}
 				,{field:'video',title:'视频文件地址',align:'center'}
 				,{field:'audio',title:'音频文件地址',align:'center'}

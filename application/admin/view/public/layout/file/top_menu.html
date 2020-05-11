@@ -15,7 +15,7 @@
             </a>
             <dl class="layui-nav-child">
                 {foreach $more_first_menus as $k=>$menu}
-                <dd><a href="javascript:;" menuto="true" index="{:count($first_menus)+$k}" rule="{if isset($menu['default_menu']['rule'])}{$menu['default_menu']['rule']}{else}admin/dashboard{/if}" menu_id="{if isset($menu['default_menu']['id'])}{$menu['default_menu']['id']}{/if}" select_menu_ids="{$menu['select_menu_ids']}">{$menu['name']}</a></dd>
+                <dd><a href="javascript:;" menuto="true" index="{:count($first_menus)+$k}" rule="{if isset($menu['default_menu']['rule'])}{$menu['default_menu']['rule']}{else}admin/dashboard{/if}" menu_id="{if isset($menu['default_menu']['id'])}{$menu['default_menu']['id']}{/if}" select_menu_ids="{$menu['select_menu_ids']}"><i class="{$menu.icon}"></i> {$menu['name']}</a></dd>
                 {/foreach}
             </dl>
         </li>

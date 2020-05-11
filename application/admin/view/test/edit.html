@@ -1,6 +1,7 @@
 {extend name="admin@public/layout/popup_form"}
 
 {block name="form"}
+    <input type="hidden" name="row[__token__]" value="{$Request.token}" id="__token__" class="layui-input">
     <div class="layui-form-item">
         <label class="layui-form-label" title="标题">标题</label>
         <div class="layui-input-block">
@@ -67,7 +68,39 @@
     <div class="layui-form-item">
         <label class="layui-form-label" title="单个图片">单个图片</label>
         <div class="layui-input-block">
-            <input autocomplete="off" type="text" name="row[single_img]" id="single_img" placeholder="请输入单个图片" value="{$single_img}" class="layui-input" lay-verify="" lay-verType="tips">
+            <div class="layui-upload">
+                <div class="layui-inline" style="width: 70%;"><input type="text" class="layui-input" name="row[single_img]" id="input_single_img" value="{$single_img}" /></div>
+                <div class="layui-inline">
+                    <button type="button" class="layui-btn layui-btn-sm layui-btn-primary pull-left"
+                            id="single_img"
+                            upload="true"
+                            accept="images"
+                            single_multi="single">
+                        <i class="layui-icon">&#xe62f;</i> 上 传
+                    </button>
+                </div>
+                <div class="layui-inline">
+                    <button type="button"
+                            class="layui-btn layui-btn-sm layui-btn-danger pull-left popup-frame"
+                            data-open="{:url('admin/attachment/select',['id_val'=>'single_img','accept'=>'images','single_multi'=>'single'])}"
+                            data-width="100%"
+                            data-height="100%">
+                        <i class="layui-icon">&#xe60a;</i> 选 择
+                    </button>
+                </div>
+				<div class="pic-more">
+                    <ul class="pic-more-upload-list" id="preview_single_img">
+                    {if $single_img}
+                        <li class="item_img">
+                            <div class="operate">
+                                <i class="upload_img_close layui-icon" file_url_data="{$single_img}" node="single_img"></i>
+                            </div>
+                            <img src="{$single_img}" class="img">
+                        </li>
+                    {/if}
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 
