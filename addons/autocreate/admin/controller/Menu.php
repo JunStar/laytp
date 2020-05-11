@@ -5,6 +5,7 @@
 namespace addons\autocreate\admin\controller;
 
 use controller\AddonsBackend;
+use think\facade\Env;
 
 class Menu extends AddonsBackend
 {
@@ -50,8 +51,7 @@ class Menu extends AddonsBackend
      */
     public function get_controller_list()
     {
-        $adminPath = dirname(__DIR__) . DS;
-        $controllerDir = $adminPath;
+        $controllerDir = Env::get('app_path') . 'admin' . DS . 'controller' . DS;
         $files = new \RecursiveIteratorIterator(
             new \RecursiveDirectoryIterator($controllerDir), \RecursiveIteratorIterator::LEAVES_ONLY
         );

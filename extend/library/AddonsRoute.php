@@ -33,7 +33,9 @@ class AddonsRoute extends Route {
                 $controller = isset($url_arr[$k+2]) ? $url_arr[$k+2] : 'index';
                 if(isset($url_arr[$k+3])){
                     $action_param = explode('?',$url_arr[$k+3]);
-                    $action = $action_param[0];
+                    $temp_action = $action_param[0];
+                    $temp_action_arr = explode('.',$action_param[0]);
+                    $action = $temp_action_arr[0];
                 }else{
                     $action = 'index';
                 }
