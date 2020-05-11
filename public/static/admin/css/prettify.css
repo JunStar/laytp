@@ -202,7 +202,7 @@ layui-nav-child dd.layui-this, .layui-nav-tree .layui-nav-child dd.layui-this a{
 }
 
 .layui-nav{
-    background-color:#009688;
+    background-color:var(--laytp-layui-nav-bar);
 }
 
 .layui-nav-tree li.layui-nav-itemed>a{
