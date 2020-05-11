@@ -13,7 +13,7 @@
     {{# } }}
     {{# if(d.addon_exist){ }}
     <div class="layui-btn-group">
-        {{# if(d.domain){ }}
+        {{# if(typeof(d.domain) != 'boolean'){ }}
         <a class="layui-btn layui-btn-xs layui-btn-danger layui-icon layui-icon-link" lay-event="domain" title="域名配置" layer-tips="域名配置" colour="#f51c1c"> 域名配置</a>
         {{# } }}
         {{# if(d.api_module){ }}

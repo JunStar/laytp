@@ -96,11 +96,11 @@ class AddonsRoute extends Route {
                 include_once Env::get('root_path') . DS . 'addons' . DS . $addon . DS . 'common.php';
             }
 
-            if(substr($controller,0,3) == 'api'){
-                $instance = new $class($request);
-            }else{
+//            if(substr($controller,0,4) == 'api' . DS){
+//                $instance = new $class($request);
+//            }else{
                 $instance = new $class(Container::get('app'));
-            }
+//            }
 
             $vars = [];
             if (is_callable([$instance, $action])) {
@@ -182,11 +182,11 @@ class AddonsRoute extends Route {
                 throw new HttpException(404, Loader::parseName($controller, 'module.controller').'控制器不存在');
             }
 
-            if(substr($controller,0,3) == 'api'){
-                $instance = new $class($request);
-            }else{
+//            if(substr($controller,0,3) == 'api'){
+//                $instance = new $class($request);
+//            }else{
                 $instance = new $class(Container::get('app'));
-            }
+//            }
 
             $vars = [];
             if (is_callable([$instance, $action])) {
