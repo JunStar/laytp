@@ -16,7 +16,7 @@ class Test extends Backend
     //时间戳字段转换
     
     //是否关闭create_time自动写入
-    protected $createTime = false;
+    
     //是否关闭update_time自动写入
     
     //是否关闭delete_time自动写入
@@ -27,45 +27,12 @@ class Test extends Backend
 
     //数组常量
     public $const = [
-		'grade' => [
-			'1'=>'一年级'
-			,'2'=>'二年级'
-			,'3'=>'三年级'
-		],
 
-		'status' => [
-			'0'=>'关闭'
-			,'1'=>'打开'
-		],
-
-		'hero' => [
-			'0'=>'秀逗魔法师'
-			,'1'=>'受折磨的灵魂'
-			,'2'=>'船长'
-			,'3'=>'虚空假面'
-			,'4'=>'幻影刺客'
-			,'5'=>'谜团'
-			,'6'=>'全能骑士'
-			,'7'=>'敌法师'
-		],
-
-		'hobby' => [
-			'0'=>'游泳'
-			,'1'=>'下棋'
-			,'2'=>'游戏'
-			,'3'=>'乒乓球'
-			,'4'=>'羽毛'
-			,'5'=>'跑步'
-			,'6'=>'爬山'
-			,'7'=>'美食'
-		],
     ];
 
     //关联模型
     
 
     //获取数组常量的函数
-    public function getArrayConstList($field_name){
-        return $this->const[$field_name];
-    }
+    
 }

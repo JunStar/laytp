@@ -46,38 +46,24 @@ layui.use(['layTp'],function() {
 				//,{field:'update_time',title:'更新时间',align:'center'}
 				//,{field:'delete_time',title:'删除时间',align:'center'}
 				,{field:'title',title:'标题',align:'center'}
-				,{field:'grade',title:'年级',align:'center',sort:true,templet:function(d){
-					return layTp.facade.formatter.status('grade',d.grade,{"1":"一年级","2":"二年级","3":"三年级"});
-				}}
-				,{field:'status',title:'状态',align:'center',templet:function(d){
-					return layTp.facade.formatter.switch('status',d,{"open":{"value":1,"text":"打开"},"close":{"value":0,"text":"关闭"}});
-				}}
-				,{field:'hero',title:'英雄',align:'center',templet:function(d){
-					return layTp.facade.formatter.status('hero',d.hero,["秀逗魔法师","受折磨的灵魂","船长","虚空假面","幻影刺客","谜团","全能骑士","敌法师"]);
-				}}
-				,{field:'hobby',title:'爱好',align:'center',templet:function(d){
-					return layTp.facade.formatter.flag(d.hobby,["游泳","下棋","游戏","乒乓球","羽毛","跑步","爬山","美食"]);
-				}}
+				,{field:'grade',title:'年级',align:'center'}
+				,{field:'status',title:'状态',align:'center'}
+				,{field:'hero',title:'英雄',align:'center'}
+				,{field:'hobby',title:'爱好',align:'center'}
 				,{field:'sign',title:'标志',align:'center'}
 				,{field:'description',title:'描述',align:'center'}
 				,{field:'category_id',title:'所属分类（单选）',align:'center'}
 				,{field:'category_ids',title:'所属分类（多选）',align:'center'}
 				,{field:'single_img',title:'单个图片',align:'center'}
-				,{field:'multi_img',title:'多个图片',align:'center',templet:function(d){
-					return layTp.facade.formatter.images(d.multi_img);
-				}}
-				,{field:'video',title:'视频文件地址',align:'center',templet:function(d){
-					return layTp.facade.formatter.video(d.video);
-				}}
+				,{field:'multi_img',title:'多个图片',align:'center'}
+				,{field:'video',title:'视频文件地址',align:'center'}
 				,{field:'audio',title:'音频文件地址',align:'center'}
-				,{field:'file',title:'任意文件地址',align:'center',templet:function(d){
-					return layTp.facade.formatter.file(d.file);
-				}}
+				,{field:'file',title:'任意文件地址',align:'center'}
 				,{field:'content',title:'文章内容',align:'center'}
 				,{field:'province_id',title:'省份',align:'center'}
 				,{field:'city_id',title:'城市',align:'center'}
 				,{field:'area_id',title:'地区',align:'center'}
-				,{field:'create_time',title:'创建时间',align:'center'}
+				//,{field:'create_time',title:'创建时间',align:'center'}
 				,{field:'operation',title:'操作',align:'center',toolbar:'#operation',width:100,fixed:'right'}
             ]]
         });

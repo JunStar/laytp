@@ -2,8 +2,8 @@
 
 namespace library\traits;
 
-use app\admin\model\auth\User;
 use think\Exception;
+use think\facade\Validate;
 
 trait Backend
 {
@@ -34,6 +34,9 @@ trait Backend
     public function add(){
         if( $this->request->isAjax() && $this->request->isPost() ){
             $post = filterPostData($this->request->post("row/a"));
+            if(!Validate::token($post['__token__'],'__token__',$post)){
+                $this->error('请勿重复提交');
+            }
             if( $this->model->create($post) ){
                 return $this->success('操作成功');
             }else{
@@ -49,6 +52,9 @@ trait Backend
         $info = $this->model->get($id);
         if( $this->request->isAjax() && $this->request->isPost() ){
             $post = filterPostData($this->request->post("row/a"));
+            if(!Validate::token($post['__token__'],'__token__',$post)){
+                $this->error('请勿重复提交');
+            }
             foreach($post as $k=>$v){
                 $info->$k = $v;
             }
