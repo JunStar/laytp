@@ -48,16 +48,26 @@
 		    <div class="layui-form-item layui-inline">
                 <label class="layui-form-label" title="英雄">英雄</label>
                 <div class="layui-input-inline">
-                    <input autocomplete="off" type="text" id="hero" name="search_param[hero][value]" id="hero" placeholder="请输入英雄" class="layui-input">
-                    <input type="hidden" name="search_param[hero][condition]" value="LIKE">
+                    <select id="hero" name="search_param[hero][value]" placeholder="请输入英雄">
+        				<option value=""></option>
+						<option value="0">秀逗魔法师</option>
+						<option value="1">受折磨的灵魂</option>
+						<option value="2">船长</option>
+						<option value="3">虚空假面</option>
+						<option value="4">幻影刺客</option>
+						<option value="5">谜团</option>
+						<option value="6">全能骑士</option>
+						<option value="7">敌法师</option>
+                    </select>
+                    <input type="hidden" name="search_param[hero][condition]" value="=">
                 </div>
             </div>
 
 		    <div class="layui-form-item layui-inline">
                 <label class="layui-form-label" title="爱好">爱好</label>
                 <div class="layui-input-inline">
-                    <input autocomplete="off" type="text" id="hobby" name="search_param[hobby][value]" id="hobby" placeholder="请输入爱好" class="layui-input">
-                    <input type="hidden" name="search_param[hobby][condition]" value="LIKE">
+                    <div id="hobby" class="select_multi" max="9" name="search_param[hobby][value]" options='{:getSelectMultiJsConst($const_hobby)}'></div>
+                    <input type="hidden" name="search_param[hobby][condition]" value="FIND_IN_SET">
                 </div>
             </div>
 

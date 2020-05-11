@@ -29,14 +29,31 @@
     <div class="layui-form-item">
         <label class="layui-form-label" title="英雄">英雄</label>
         <div class="layui-input-block">
-            <input autocomplete="off" type="text" name="row[hero]" id="hero" placeholder="请输入英雄" class="layui-input" lay-verify="" lay-verType="tips">
+            <select name="row[hero]" id="hero" lay-verify="" lay-verType="tips" placeholder="请选择英雄">
+				<option value=""></option>
+				<option value="0">秀逗魔法师</option>
+				<option value="1">受折磨的灵魂</option>
+				<option value="2">船长</option>
+				<option value="3">虚空假面</option>
+				<option value="4">幻影刺客</option>
+				<option value="5">谜团</option>
+				<option value="6">全能骑士</option>
+				<option value="7">敌法师</option>
+            </select>
         </div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label" title="爱好">爱好</label>
         <div class="layui-input-block">
-            <input autocomplete="off" type="text" name="row[hobby]" id="hobby" placeholder="请输入爱好" class="layui-input" lay-verify="" lay-verType="tips">
+            <input autocomplete="off" type="checkbox" name="row[hobby][]" id="hobby-0" value="0" title="游泳" checked="checked"/>
+			<input autocomplete="off" type="checkbox" name="row[hobby][]" id="hobby-1" value="1" title="下棋" checked="checked"/>
+			<input autocomplete="off" type="checkbox" name="row[hobby][]" id="hobby-2" value="2" title="游戏" checked="checked"/>
+			<input autocomplete="off" type="checkbox" name="row[hobby][]" id="hobby-3" value="3" title="乒乓球" />
+			<input autocomplete="off" type="checkbox" name="row[hobby][]" id="hobby-4" value="4" title="羽毛" />
+			<input autocomplete="off" type="checkbox" name="row[hobby][]" id="hobby-5" value="5" title="跑步" />
+			<input autocomplete="off" type="checkbox" name="row[hobby][]" id="hobby-6" value="6" title="爬山" />
+			<input autocomplete="off" type="checkbox" name="row[hobby][]" id="hobby-7" value="7" title="美食" />
         </div>
     </div>
 

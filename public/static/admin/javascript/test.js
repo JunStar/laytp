@@ -52,8 +52,12 @@ layui.use(['layTp'],function() {
 				,{field:'status',title:'状态',align:'center',templet:function(d){
 					return layTp.facade.formatter.switch('status',d,{"open":{"value":1,"text":"打开"},"close":{"value":0,"text":"关闭"}});
 				}}
-				,{field:'hero',title:'英雄',align:'center'}
-				,{field:'hobby',title:'爱好',align:'center'}
+				,{field:'hero',title:'英雄',align:'center',templet:function(d){
+					return layTp.facade.formatter.status('hero',d.hero,["秀逗魔法师","受折磨的灵魂","船长","虚空假面","幻影刺客","谜团","全能骑士","敌法师"]);
+				}}
+				,{field:'hobby',title:'爱好',align:'center',templet:function(d){
+					return layTp.facade.formatter.flag(d.hobby,["游泳","下棋","游戏","乒乓球","羽毛","跑步","爬山","美食"]);
+				}}
 				,{field:'sign',title:'标志',align:'center'}
 				,{field:'description',title:'描述',align:'center'}
 				,{field:'category_id',title:'所属分类（单选）',align:'center'}
