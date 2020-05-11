@@ -4,18 +4,18 @@
  */
 namespace addons\autocreate\admin\controller;
 
-use controller\Backend;
+use controller\AddonsBackend;
 
-class Apidoc extends Backend
+class Apidoc extends AddonsBackend
 {
     public function index(){
         $where['group'] = 'apidoc';
 
         if( $this->request->isAjax() && $this->request->isPost() ){
-            $post = filterPostData($this->request->post("row/a"));
+            $post = $this->request->post("row/a");
             $update_res = model('Sysconf')->saveData($post,$where['group']);
             if( $update_res || $update_res === 0 ){
-                $exec_res = exec_command('app\admin\command\Api',['--output='.$post['apidoc_file_name'].'.html', '--title='.$post['apidoc_title']]);
+                $exec_res = exec_command('addons\autocreate\admin\command\Api',['--output='.$post['apidoc_file_name'].'.html', '--title='.$post['apidoc_title']]);
                 if($exec_res['code']){
                     return $this->success('操作成功');
                 }else{
