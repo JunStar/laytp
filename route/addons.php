@@ -5,8 +5,10 @@ use think\facade\Request;
 use think\facade\Route;
 
 Route::domain('*', function(){
+    //正常插件访问路由，例：http://www.yourdomain.com/addons/demo/[module]/[controller]/[action]
     Route::any('addons/:addon/', "\\library\\AddonsRoute@execute");
 
+    //绑定了二级域名插件访问路由，例：http://demo.yourdomain.com/[module]/[controller]/[action]
     $request = Request::instance();
     $host = $request->host();
     $addon_service = new \app\admin\service\Addons();
