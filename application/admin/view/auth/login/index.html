@@ -94,7 +94,6 @@
         form.render();
 
         form.on('submit(user-login-submit)', function(obj){
-            console.log(obj.field);
             $.ajax({
                 type: 'POST'
                 ,url: '/admin/auth.login/do_login'

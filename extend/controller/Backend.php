@@ -46,6 +46,7 @@ class Backend extends Controller
         $this->auth();
         $this->init_assing_val();
         $this->is_show_batch();//是否显示批量操作
+        $this->theme();
         $this->menu();
         if($this->ref){
             $default_menu = Menu::where('id',$this->ref)->find();
@@ -141,6 +142,12 @@ class Backend extends Controller
         if( !in_array($this->now_node, $rule_list) && !in_array($this->action, $this->no_need_login) ){
             $this->error('无权限访问，请联系管理员');
         }
+    }
+
+    //设置主题
+    public function theme(){
+        $theme = Cookie::get('theme') ? Cookie::get('theme') : mt_rand(2,23);
+        $this->assign('theme', $theme);
     }
 
     //设置菜单

@@ -1375,21 +1375,6 @@ layui.define([
 
         //锁屏
         lock_screen: function(){
-            $(document).on('click','#lock_screen',function(){
-                localStorage.setItem("laytp_lock_screen", "locked");
-                layui.layer.open({
-                    type : 2,
-                    title : '锁屏',
-                    content : layTp.facade.url("admin/ajax/lock_screen"),
-                    area: ['50%','25%'],
-                    btn: [],//不加这个，全屏高度不会变化
-                    shade: 1,
-                    maxmin:true,
-                    skin:'hide-layer-box-shadow',
-                    closeBtn:0
-                });
-            });
-
             let lock_screen_status = localStorage.getItem("laytp_lock_screen");
             if( lock_screen_status == "locked" ){
                 layui.layer.open({
@@ -1404,11 +1389,28 @@ layui.define([
                     closeBtn:0
                 });
             }
+
+            $(document).on('click','#lock_screen',function(){
+                layui.layer.confirm('锁屏后，需要使用登录密码解锁，确定锁屏么?', function(index){
+                    localStorage.setItem("laytp_lock_screen", "locked");
+                    layui.layer.open({
+                        type : 2,
+                        title : '锁屏',
+                        content : layTp.facade.url("admin/ajax/lock_screen"),
+                        area: ['50%','25%'],
+                        btn: [],//不加这个，全屏高度不会变化
+                        shade: 1,
+                        maxmin:true,
+                        skin:'hide-layer-box-shadow',
+                        closeBtn:0
+                    });
+                });
+            });
         },
 
         //颜色选择器
         colorpicker:function(){
-            layui.each($("input[colorpicker='true']"),function(key,item) {
+            layui.each($("[colorpicker='true']"),function(key,item) {
                 let id = $(item).attr('id');//id属性，必须
                 let color = $(item).val() ? $(item).val() : '#1c97f5';//id属性，必须
                 layui.colorpicker.render({

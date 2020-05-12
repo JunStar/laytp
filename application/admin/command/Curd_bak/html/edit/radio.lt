@@ -1,1 +1,0 @@
-<input type="radio" name="row[{%field_name%}]" id="{%field_name%}-{%value%}" value="{%value%}" title="{%title%}" {if ${%field_name%} == '{%value%}'}checked="checked"{/if} />

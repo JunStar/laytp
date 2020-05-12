@@ -1,3 +1,59 @@
+<style>
+    .laytp-setTheme{
+        padding:15px;
+        overflow-x:hidden;
+    }
+
+    .layui-card-body{
+        position:relative;
+        line-height:24px;
+    }
+
+    .laytp-setTheme-color{
+        width: 330px;
+        font-size: 0;
+    }
+
+    .laytp-setTheme-color li {
+        position: relative;
+        display: inline-block;
+        vertical-align: top;
+        width: 80px;
+        height: 50px;
+        margin: 0 15px 15px 0;
+        background-color: #f2f2f2;
+        cursor: pointer;
+        font-size: 12px;
+        color: #666;
+    }
+
+    .laytp-setTheme-header {
+        position: relative;
+        z-index: 10;
+        height: 10px;
+        border-top: 1px solid #f2f2f2;
+        border-right: 1px solid #f2f2f2;
+    }
+
+    .laytp-setTheme-side {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 20px;
+        height: 100%;
+        z-index: 11;
+        box-shadow: 1px 0 2px 0 rgba(0,0,0,.05);
+    }
+
+    .laytp-setTheme-logo {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 10px;
+        box-shadow: 0 1px 2px 0 rgba(0,0,0,.15);
+    }
+</style>
 <div class="layui-header" style="z-index:99999!important;">
     <div class="fl header-logo">{$Think.config.laytp.basic.site_name}</div>
     <ul class="layui-nav fl nobg main-nav">
@@ -76,6 +132,27 @@
     layui.use(['layTp'], function(){
         let element = layui.laytp_element;
         let $ = layui.jquery;
+
+        //弹窗展示样式模板列表
+        $(document).on('click','#laytp_theme',function(){
+            layui.layer.open({
+                type : 1,
+                title : '主题样式',
+                content : $('#theme').html(),
+                area: ['300px','100%'],
+                btn: [],//不加这个，全屏高度不会变化
+                offset: ['50px', parseInt(document.body.offsetWidth - 300) +'px'],
+                maxmin:true
+            });
+        });
+
+        //绑定样式选择点击事件
+        $(document).on('click','[laytp-event="setTheme"]',function(){
+            let index = $(this).data('index');
+            $('body').attr('class','layui-layout-body laytp-theme-'+index);
+            layui.layTp.facade.setcookie('theme',index);
+        });
+
         //取出子菜单
         let data;
         for(let key in menu_json){
@@ -197,4 +274,155 @@
     function repeat(str, n){
         return new Array(n+1).join(str);
     }
+</script>
+
+<script type="text/html" id="theme">
+    <div class="layui-card-body laytp-setTheme">
+    <ul class="laytp-setTheme-color">
+        <li laytp-event="setTheme" data-index="0" data-alias="default" class="layui-this" title="default">
+            <div class="laytp-setTheme-header" style="background-color: #23262e;"></div>
+            <div class="laytp-setTheme-side" style="background-color: #eef1f5;">
+                <div class="laytp-setTheme-logo" style="background-color: #23262e;"></div>
+            </div>
+        </li>
+        <li laytp-event="setTheme" data-index="1" data-alias="default" class="layui-this" title="default">
+            <div class="laytp-setTheme-header" style="background-color: #23262e;"></div>
+            <div class="laytp-setTheme-side" style="background-color: #222d32;">
+                <div class="laytp-setTheme-logo" style="background-color: #23262e;"></div>
+            </div>
+        </li>
+        <li laytp-event="setTheme" data-index="2" data-alias="default" class="layui-this" title="default">
+            <div class="laytp-setTheme-header" style="background-color: #20a0ff;"></div>
+            <div class="laytp-setTheme-side" style="background-color: #eef1f5;">
+                <div class="laytp-setTheme-logo" style="background-color: #20a0ff;"></div>
+            </div>
+        </li>
+        <li laytp-event="setTheme" data-index="3" data-alias="default" class="layui-this" title="default">
+            <div class="laytp-setTheme-header" style="background-color: #20a0ff;"></div>
+            <div class="laytp-setTheme-side" style="background-color: #222d32;">
+                <div class="laytp-setTheme-logo" style="background-color: #20a0ff;"></div>
+            </div>
+        </li>
+        <li laytp-event="setTheme" data-index="4" data-alias="default" class="layui-this" title="default">
+            <div class="laytp-setTheme-header" style="background-color: #f78400;"></div>
+            <div class="laytp-setTheme-side" style="background-color: #eef1f5;">
+                <div class="laytp-setTheme-logo" style="background-color: #f78400;"></div>
+            </div>
+        </li>
+        <li laytp-event="setTheme" data-index="5" data-alias="default" class="layui-this" title="default">
+            <div class="laytp-setTheme-header" style="background-color: #f78400;"></div>
+            <div class="laytp-setTheme-side" style="background-color: #222d32;">
+                <div class="laytp-setTheme-logo" style="background-color: #f78400;"></div>
+            </div>
+        </li>
+        <li laytp-event="setTheme" data-index="6" data-alias="default" class="layui-this" title="default">
+            <div class="laytp-setTheme-header" style="background-color: #2f9688;"></div>
+            <div class="laytp-setTheme-side" style="background-color: #eef1f5;">
+                <div class="laytp-setTheme-logo" style="background-color: #2f9688;"></div>
+            </div>
+        </li>
+        <li laytp-event="setTheme" data-index="7" data-alias="default" class="layui-this" title="default">
+            <div class="laytp-setTheme-header" style="background-color: #2f9688;"></div>
+            <div class="laytp-setTheme-side" style="background-color: #222d32;">
+                <div class="laytp-setTheme-logo" style="background-color: #2f9688;"></div>
+            </div>
+        </li>
+        <li laytp-event="setTheme" data-index="8" data-alias="default" class="layui-this" title="default">
+            <div class="laytp-setTheme-header" style="background-color: #1fbddf;"></div>
+            <div class="laytp-setTheme-side" style="background-color: #eef1f5;">
+                <div class="laytp-setTheme-logo" style="background-color: #1fbddf;"></div>
+            </div>
+        </li>
+        <li laytp-event="setTheme" data-index="9" data-alias="default" class="layui-this" title="default">
+            <div class="laytp-setTheme-header" style="background-color: #1fbddf;"></div>
+            <div class="laytp-setTheme-side" style="background-color: #222d32;">
+                <div class="laytp-setTheme-logo" style="background-color: #1fbddf;"></div>
+            </div>
+        </li>
+        <li laytp-event="setTheme" data-index="10" data-alias="default" class="layui-this" title="default">
+            <div class="laytp-setTheme-header" style="background-color: #01479d;"></div>
+            <div class="laytp-setTheme-side" style="background-color: #eef1f5;">
+                <div class="laytp-setTheme-logo" style="background-color: #01479d;"></div>
+            </div>
+        </li>
+        <li laytp-event="setTheme" data-index="11" data-alias="default" class="layui-this" title="default">
+            <div class="laytp-setTheme-header" style="background-color: #01479d;"></div>
+            <div class="laytp-setTheme-side" style="background-color: #222d32;">
+                <div class="laytp-setTheme-logo" style="background-color: #01479d;"></div>
+            </div>
+        </li>
+        <li laytp-event="setTheme" data-index="12" data-alias="default" class="layui-this" title="default">
+            <div class="laytp-setTheme-header" style="background-color: #8858a0;"></div>
+            <div class="laytp-setTheme-side" style="background-color: #eef1f5;">
+                <div class="laytp-setTheme-logo" style="background-color: #8858a0;"></div>
+            </div>
+        </li>
+        <li laytp-event="setTheme" data-index="13" data-alias="default" class="layui-this" title="default">
+            <div class="laytp-setTheme-header" style="background-color: #8858a0;"></div>
+            <div class="laytp-setTheme-side" style="background-color: #222d32;">
+                <div class="laytp-setTheme-logo" style="background-color: #8858a0;"></div>
+            </div>
+        </li>
+        <li laytp-event="setTheme" data-index="14" data-alias="default" class="layui-this" title="default">
+            <div class="laytp-setTheme-header" style="background-color: #0078d7;"></div>
+            <div class="laytp-setTheme-side" style="background-color: #eef1f5;">
+                <div class="laytp-setTheme-logo" style="background-color: #0078d7;"></div>
+            </div>
+        </li>
+        <li laytp-event="setTheme" data-index="15" data-alias="default" class="layui-this" title="default">
+            <div class="laytp-setTheme-header" style="background-color: #0078d7;"></div>
+            <div class="laytp-setTheme-side" style="background-color: #222d32;">
+                <div class="laytp-setTheme-logo" style="background-color: #0078d7;"></div>
+            </div>
+        </li>
+        <li laytp-event="setTheme" data-index="16" data-alias="default" class="layui-this" title="default">
+            <div class="laytp-setTheme-header" style="background-color: #0185a6;"></div>
+            <div class="laytp-setTheme-side" style="background-color: #eef1f5;">
+                <div class="laytp-setTheme-logo" style="background-color: #0185a6;"></div>
+            </div>
+        </li>
+        <li laytp-event="setTheme" data-index="17" data-alias="default" class="layui-this" title="default">
+            <div class="laytp-setTheme-header" style="background-color: #0185a6;"></div>
+            <div class="laytp-setTheme-side" style="background-color: #222d32;">
+                <div class="laytp-setTheme-logo" style="background-color: #0185a6;"></div>
+            </div>
+        </li>
+        <li laytp-event="setTheme" data-index="18" data-alias="default" class="layui-this" title="default">
+            <div class="laytp-setTheme-header" style="background-color: #3c9;"></div>
+            <div class="laytp-setTheme-side" style="background-color: #eef1f5;">
+                <div class="laytp-setTheme-logo" style="background-color: #3c9;"></div>
+            </div>
+        </li>
+        <li laytp-event="setTheme" data-index="19" data-alias="default" class="layui-this" title="default">
+            <div class="laytp-setTheme-header" style="background-color: #3c9;"></div>
+            <div class="laytp-setTheme-side" style="background-color: #222d32;">
+                <div class="laytp-setTheme-logo" style="background-color: #3c9;"></div>
+            </div>
+        </li>
+        <li laytp-event="setTheme" data-index="20" data-alias="default" class="layui-this" title="default">
+            <div class="laytp-setTheme-header" style="background-color: #369;"></div>
+            <div class="laytp-setTheme-side" style="background-color: #eef1f5;">
+                <div class="laytp-setTheme-logo" style="background-color: #369;"></div>
+            </div>
+        </li>
+        <li laytp-event="setTheme" data-index="21" data-alias="default" class="layui-this" title="default">
+            <div class="laytp-setTheme-header" style="background-color: #369;"></div>
+            <div class="laytp-setTheme-side" style="background-color: #222d32;">
+                <div class="laytp-setTheme-logo" style="background-color: #369;"></div>
+            </div>
+        </li>
+        <li laytp-event="setTheme" data-index="22" data-alias="default" class="layui-this" title="default">
+            <div class="laytp-setTheme-header" style="background-color: #18bc9c;"></div>
+            <div class="laytp-setTheme-side" style="background-color: #eef1f5;">
+                <div class="laytp-setTheme-logo" style="background-color: #18bc9c;"></div>
+            </div>
+        </li>
+        <li laytp-event="setTheme" data-index="23" data-alias="default" class="layui-this" title="default">
+            <div class="laytp-setTheme-header" style="background-color: #18bc9c;"></div>
+            <div class="laytp-setTheme-side" style="background-color: #222d32;">
+                <div class="laytp-setTheme-logo" style="background-color: #18bc9c;"></div>
+            </div>
+        </li>
+    </ul>
+    </div>
 </script>

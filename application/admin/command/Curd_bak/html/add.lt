@@ -1,5 +1,0 @@
-{extend name="admin@public/layout/popup_form"}
-
-{block name="form"}
-{%formContent%}
-{/block}

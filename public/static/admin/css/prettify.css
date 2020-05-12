@@ -193,6 +193,10 @@ layui-nav-child dd.layui-this, .layui-nav-tree .layui-nav-child dd.layui-this a{
     background: var(--laytp-layui-nav-child-a-bg)!important;
 }
 
+.layui-nav-tree .layui-nav-child dd.layui-this, .layui-nav-tree .layui-nav-child dd.layui-this a, .layui-nav-tree .layui-this, .layui-nav-tree .layui-this>a, .layui-nav-tree .layui-this>a:hover{
+    background-color:var(--laytp-layui-nav-child-a-bg)!important;
+}
+
 .layui-layout-right .layui-nav-mored, .layui-nav-itemed>a .layui-nav-more{
     margin-top: -9px;
 }
