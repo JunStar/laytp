@@ -41,7 +41,6 @@ layui.define(['jquery'], function(exports) {
                 $('.' + CLS_DROPDOWN + '[lay-index="' + self.index + '"]').remove()
 
                 dropdown.html(self.createOptionsHtml(config))
-                console.log(dropdown);
                 $('body').prepend(dropdown)
                 // dropdown.on('click', '.' + CLS_OPTION, function(e) {
                 //     e.stopPropagation()
@@ -57,7 +56,7 @@ layui.define(['jquery'], function(exports) {
             var dropdown = self.dropdownElem
             dropdown.css('z-index','999');
 
-            var top = $(this).offset().top + $(this).height() + 12
+            var top = $(this).offset().top + $(this).height() + 12 - $(document).scrollTop()
             var left = $(this).offset().left
             dropdown.css({
                 top: top - 10
@@ -94,7 +93,7 @@ layui.define(['jquery'], function(exports) {
                         opacity: 1
                     },
                     250
-                )
+                );
         }
     }
     Class.prototype.createOptionsHtml = function(data, depth) {
