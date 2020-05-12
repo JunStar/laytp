@@ -690,8 +690,8 @@ layui.define([
                 let field = $(this).attr("field");
                 let field_val = $(this).attr("field_val");
                 let need_data = $(this).attr("need_data");
-                let width = $(this).attr("width");
-                let height = $(this).attr("height");
+                let width = $(this).attr("width") ? $(this).attr("width") : default_popup_frame_width;
+                let height = $(this).attr("height") ? $(this).attr("height") : default_popup_frame_height;
                 let need_refresh = $(this).attr("need_refresh");
                 let text = $(this).text();
                 let switch_type = $(this).attr("switch_type");
