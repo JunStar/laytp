@@ -118,8 +118,8 @@ body .laytp-layer .layui-layer-btn{
 
 .layui-btn:active, .layui-btn.active{
     color: #fff;
-    background-color:#217dbb;
-    border-color:#2077b2;
+    background-color:var(--laytp-layui-btn-active);
+    border-color:var(--laytp-layui-btn-active);
     box-shadow:inset 0 3px 5px rgba(0,0,0,0.125)
 }
 

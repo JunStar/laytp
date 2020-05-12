@@ -146,6 +146,7 @@ body{
 	--laytp-head-bg:#23262e;
 	--laytp-side-bg:#eef1f5;
 	--laytp-layui-form-checked:#23262e;
+	--laytp-layui-btn-active:#494c52;
 	--laytp-layui-nav-bar:#23262e;
 	--laytp-layui-nav-item-a-bg:#eff2f6;
 	--laytp-layui-nav-item-a-c:#48576a;
@@ -170,6 +171,7 @@ body{
 	--laytp-head-bg:#23262e;
 	--laytp-side-bg:#222d32;
 	--laytp-layui-form-checked:#23262e;
+	--laytp-layui-btn-active:#494c52;
 	--laytp-layui-nav-bar:#23262e;
 	--laytp-layui-nav-item-a-bg:#222d32;
 	--laytp-layui-nav-item-a-c:#b8c7ce;
@@ -195,6 +197,7 @@ body{
 	--laytp-head-bg:#20a0ff;
 	--laytp-side-bg:#eef1f5;
 	--laytp-layui-form-checked:#20a0ff;
+	--laytp-layui-btn-active:#258cd8;
 	--laytp-layui-nav-bar:#20a0ff;
 	--laytp-layui-nav-item-a-bg:#eff2f6;
 	--laytp-layui-nav-item-a-c:#48576a;
@@ -219,6 +222,7 @@ body{
 	--laytp-head-bg:#20a0ff;
 	--laytp-side-bg:#222d32;
 	--laytp-layui-form-checked:#20a0ff;
+	--laytp-layui-btn-active:#258cd8;
 	--laytp-layui-nav-bar:#20a0ff;
 	--laytp-layui-nav-item-a-bg:#222d32;
 	--laytp-layui-nav-item-a-c:#b8c7ce;
@@ -244,6 +248,7 @@ body{
 	--laytp-head-bg:#f78400;
 	--laytp-side-bg:#eef1f5;
 	--laytp-layui-form-checked:#f78400;
+	--laytp-layui-btn-active:#cc710a;
 	--laytp-layui-nav-bar:#f78400;
 	--laytp-layui-nav-item-a-bg:#eff2f6;
 	--laytp-layui-nav-item-a-c:#48576a;
@@ -268,6 +273,7 @@ body{
 	--laytp-head-bg:#f78400;
 	--laytp-side-bg:#222d32;
 	--laytp-layui-form-checked:#f78400;
+	--laytp-layui-btn-active:#cc710a;
 	--laytp-layui-nav-bar:#f78400;
 	--laytp-layui-nav-item-a-bg:#222d32;
 	--laytp-layui-nav-item-a-c:#b8c7ce;
@@ -293,6 +299,7 @@ body{
 	--laytp-head-bg:#2f9688;
 	--laytp-side-bg:#eef1f5;
 	--laytp-layui-form-checked:#2f9688;
+	--laytp-layui-btn-active:#205851;
 	--laytp-layui-nav-bar:#2f9688;
 	--laytp-layui-nav-item-a-bg:#eff2f6;
 	--laytp-layui-nav-item-a-c:#48576a;
@@ -317,6 +324,7 @@ body{
 	--laytp-head-bg:#2f9688;
 	--laytp-side-bg:#222d32;
 	--laytp-layui-form-checked:#2f9688;
+	--laytp-layui-btn-active:#205851;
 	--laytp-layui-nav-bar:#2f9688;
 	--laytp-layui-nav-item-a-bg:#222d32;
 	--laytp-layui-nav-item-a-c:#b8c7ce;
@@ -342,6 +350,7 @@ body{
 	--laytp-head-bg:#1fbddf;
 	--laytp-side-bg:#eef1f5;
 	--laytp-layui-form-checked:#1fbddf;
+	--laytp-layui-btn-active:#31a4bd;
 	--laytp-layui-nav-bar:#1fbddf;
 	--laytp-layui-nav-item-a-bg:#eff2f6;
 	--laytp-layui-nav-item-a-c:#48576a;
@@ -366,6 +375,7 @@ body{
 	--laytp-head-bg:#1fbddf;
 	--laytp-side-bg:#222d32;
 	--laytp-layui-form-checked:#1fbddf;
+	--laytp-layui-btn-active:#31a4bd;
 	--laytp-layui-nav-bar:#1fbddf;
 	--laytp-layui-nav-item-a-bg:#222d32;
 	--laytp-layui-nav-item-a-c:#b8c7ce;
@@ -387,12 +397,18 @@ body{
 	--laytp-layui-form-label:#666;
 }
 .laytp-theme-item-10 {background-color:#01479d}
-.laytp-theme-10 {--laytp-head-bg:#01479d;--laytp-side-bg:#eef1f5;--laytp-layui-form-checked:#01479d;--laytp-layui-nav-bar:#01479d;--laytp-layui-nav-item-a-bg:#eff2f6;--laytp-layui-nav-item-a-c:#48576a;--laytp-layui-nav-child-a-bg:#e5e9f2;--laytp-layui-nav-child-a-c:#48576a;--laytp-layui-nav-child-a-c-hover:#d1dbe5;--laytp-layui-side-i:#48566a;--laytp-layui-side-layui-this-a:#01479d;--laytp-side-layui-nav-more:#48566a;--laytp-layui-tab-title:#f9f9f9;--laytp-layui-nav-bar:#01479d;--laytp-layui-btn-normal:#01479d;--laytp-layui-btn-primary:#fff;--laytp-layui-btn-primary-hover:#01479d;--laytp-layui-form-radio-hover:#01479d;--laytp-layui-laypage-em:#01479d;--laytp-border-color:#01479d;--laytp-layui-form-label:#666}
+.laytp-theme-10 {
+	--laytp-head-bg:#01479d;
+	--laytp-side-bg:#eef1f5;
+	--laytp-layui-form-checked:#01479d;
+	--laytp-layui-btn-active:#2c6bb9;
+	--laytp-layui-nav-bar:#01479d;--laytp-layui-nav-item-a-bg:#eff2f6;--laytp-layui-nav-item-a-c:#48576a;--laytp-layui-nav-child-a-bg:#e5e9f2;--laytp-layui-nav-child-a-c:#48576a;--laytp-layui-nav-child-a-c-hover:#d1dbe5;--laytp-layui-side-i:#48566a;--laytp-layui-side-layui-this-a:#01479d;--laytp-side-layui-nav-more:#48566a;--laytp-layui-tab-title:#f9f9f9;--laytp-layui-nav-bar:#01479d;--laytp-layui-btn-normal:#01479d;--laytp-layui-btn-primary:#fff;--laytp-layui-btn-primary-hover:#01479d;--laytp-layui-form-radio-hover:#01479d;--laytp-layui-laypage-em:#01479d;--laytp-border-color:#01479d;--laytp-layui-form-label:#666}
 .laytp-theme-item-11 {background-color:#01479d}
 .laytp-theme-11 {
 	--laytp-head-bg:#01479d;
 	--laytp-side-bg:#222d32;
 	--laytp-layui-form-checked:#01479d;
+	--laytp-layui-btn-active:#2c6bb9;
 	--laytp-layui-nav-bar:#01479d;
 	--laytp-layui-nav-item-a-bg:#222d32;
 	--laytp-layui-nav-item-a-c:#b8c7ce;
@@ -414,12 +430,16 @@ body{
 	--laytp-layui-form-label:#666;
 }
 .laytp-theme-item-12 {background-color:#8858a0}
-.laytp-theme-12 {--laytp-head-bg:#8858a0;--laytp-side-bg:#eef1f5;--laytp-layui-form-checked:#8858a0;--laytp-layui-nav-bar:#8858a0;--laytp-layui-nav-item-a-bg:#eff2f6;--laytp-layui-nav-item-a-c:#48576a;--laytp-layui-nav-child-a-bg:#e5e9f2;--laytp-layui-nav-child-a-c:#48576a;--laytp-layui-nav-child-a-c-hover:#d1dbe5;--laytp-layui-side-i:#48566a;--laytp-layui-side-layui-this-a:#8858a0;--laytp-side-layui-nav-more:#48566a;--laytp-layui-tab-title:#f9f9f9;--laytp-layui-nav-bar:#8858a0;--laytp-layui-btn-normal:#8858a0;--laytp-layui-btn-primary:#fff;--laytp-layui-btn-primary-hover:#8858a0;--laytp-layui-form-radio-hover:#8858a0;--laytp-layui-laypage-em:#8858a0;--laytp-border-color:#8858a0;--laytp-layui-form-label:#666}
+.laytp-theme-12 {--laytp-head-bg:#8858a0;--laytp-side-bg:#eef1f5;
+	--laytp-layui-form-checked:#8858a0;
+	--laytp-layui-btn-active:#9e7daf;
+	--laytp-layui-nav-bar:#8858a0;--laytp-layui-nav-item-a-bg:#eff2f6;--laytp-layui-nav-item-a-c:#48576a;--laytp-layui-nav-child-a-bg:#e5e9f2;--laytp-layui-nav-child-a-c:#48576a;--laytp-layui-nav-child-a-c-hover:#d1dbe5;--laytp-layui-side-i:#48566a;--laytp-layui-side-layui-this-a:#8858a0;--laytp-side-layui-nav-more:#48566a;--laytp-layui-tab-title:#f9f9f9;--laytp-layui-nav-bar:#8858a0;--laytp-layui-btn-normal:#8858a0;--laytp-layui-btn-primary:#fff;--laytp-layui-btn-primary-hover:#8858a0;--laytp-layui-form-radio-hover:#8858a0;--laytp-layui-laypage-em:#8858a0;--laytp-border-color:#8858a0;--laytp-layui-form-label:#666}
 .laytp-theme-item-13 {background-color:#8858a0}
 .laytp-theme-13 {
 	--laytp-head-bg:#8858a0;
 	--laytp-side-bg:#222d32;
 	--laytp-layui-form-checked:#8858a0;
+	--laytp-layui-btn-active:#9e7daf;
 	--laytp-layui-nav-bar:#8858a0;
 	--laytp-layui-nav-item-a-bg:#222d32;
 	--laytp-layui-nav-item-a-c:#b8c7ce;
@@ -441,12 +461,16 @@ body{
 	--laytp-layui-form-label:#666;
 }
 .laytp-theme-item-14 {background-color:#0078d7}
-.laytp-theme-14 {--laytp-head-bg:#0078d7;--laytp-side-bg:#eef1f5;--laytp-layui-form-checked:#0078d7;--laytp-layui-nav-bar:#0078d7;--laytp-layui-nav-item-a-bg:#eff2f6;--laytp-layui-nav-item-a-c:#48576a;--laytp-layui-nav-child-a-bg:#e5e9f2;--laytp-layui-nav-child-a-c:#48576a;--laytp-layui-nav-child-a-c-hover:#d1dbe5;--laytp-layui-side-i:#48566a;--laytp-layui-side-layui-this-a:#0078d7;--laytp-side-layui-nav-more:#48566a;--laytp-layui-tab-title:#f9f9f9;--laytp-layui-nav-bar:#0078d7;--laytp-layui-btn-normal:#0078d7;--laytp-layui-btn-primary:#fff;--laytp-layui-btn-primary-hover:#0078d7;--laytp-layui-form-radio-hover:#0078d7;--laytp-layui-laypage-em:#0078d7;--laytp-border-color:#0078d7;--laytp-layui-form-label:#666}
+.laytp-theme-14 {--laytp-head-bg:#0078d7;--laytp-side-bg:#eef1f5;
+	--laytp-layui-form-checked:#0078d7;
+	--laytp-layui-btn-active:#318dd6;
+	--laytp-layui-nav-bar:#0078d7;--laytp-layui-nav-item-a-bg:#eff2f6;--laytp-layui-nav-item-a-c:#48576a;--laytp-layui-nav-child-a-bg:#e5e9f2;--laytp-layui-nav-child-a-c:#48576a;--laytp-layui-nav-child-a-c-hover:#d1dbe5;--laytp-layui-side-i:#48566a;--laytp-layui-side-layui-this-a:#0078d7;--laytp-side-layui-nav-more:#48566a;--laytp-layui-tab-title:#f9f9f9;--laytp-layui-nav-bar:#0078d7;--laytp-layui-btn-normal:#0078d7;--laytp-layui-btn-primary:#fff;--laytp-layui-btn-primary-hover:#0078d7;--laytp-layui-form-radio-hover:#0078d7;--laytp-layui-laypage-em:#0078d7;--laytp-border-color:#0078d7;--laytp-layui-form-label:#666}
 .laytp-theme-item-15 {background-color:#0078d7}
 .laytp-theme-15 {
 	--laytp-head-bg:#0078d7;
 	--laytp-side-bg:#222d32;
 	--laytp-layui-form-checked:#0078d7;
+	--laytp-layui-btn-active:#318dd6;
 	--laytp-layui-nav-bar:#0078d7;
 	--laytp-layui-nav-item-a-bg:#222d32;
 	--laytp-layui-nav-item-a-c:#b8c7ce;
@@ -468,12 +492,16 @@ body{
 	--laytp-layui-form-label:#666;
 }
 .laytp-theme-item-16 {background-color:#0185a6}
-.laytp-theme-16 {--laytp-head-bg:#0185a6;--laytp-side-bg:#eef1f5;--laytp-layui-form-checked:#0185a6;--laytp-layui-nav-bar:#0185a6;--laytp-layui-nav-item-a-bg:#eff2f6;--laytp-layui-nav-item-a-c:#48576a;--laytp-layui-nav-child-a-bg:#e5e9f2;--laytp-layui-nav-child-a-c:#48576a;--laytp-layui-nav-child-a-c-hover:#d1dbe5;--laytp-layui-side-i:#48566a;--laytp-layui-side-layui-this-a:#0185a6;--laytp-side-layui-nav-more:#48566a;--laytp-layui-tab-title:#f9f9f9;--laytp-layui-nav-bar:#0185a6;--laytp-layui-btn-normal:#0185a6;--laytp-layui-btn-primary:#fff;--laytp-layui-btn-primary-hover:#0185a6;--laytp-layui-form-radio-hover:#0185a6;--laytp-layui-laypage-em:#0185a6;--laytp-border-color:#0185a6;--laytp-layui-form-label:#666}
+.laytp-theme-16 {--laytp-head-bg:#0185a6;--laytp-side-bg:#eef1f5;
+	--laytp-layui-form-checked:#0185a6;
+	--laytp-layui-btn-active:#32b5d6;
+	--laytp-layui-nav-bar:#0185a6;--laytp-layui-nav-item-a-bg:#eff2f6;--laytp-layui-nav-item-a-c:#48576a;--laytp-layui-nav-child-a-bg:#e5e9f2;--laytp-layui-nav-child-a-c:#48576a;--laytp-layui-nav-child-a-c-hover:#d1dbe5;--laytp-layui-side-i:#48566a;--laytp-layui-side-layui-this-a:#0185a6;--laytp-side-layui-nav-more:#48566a;--laytp-layui-tab-title:#f9f9f9;--laytp-layui-nav-bar:#0185a6;--laytp-layui-btn-normal:#0185a6;--laytp-layui-btn-primary:#fff;--laytp-layui-btn-primary-hover:#0185a6;--laytp-layui-form-radio-hover:#0185a6;--laytp-layui-laypage-em:#0185a6;--laytp-border-color:#0185a6;--laytp-layui-form-label:#666}
 .laytp-theme-item-17 {background-color:#0185a6}
 .laytp-theme-17 {
 	--laytp-head-bg:#0185a6;
 	--laytp-side-bg:#222d32;
 	--laytp-layui-form-checked:#0185a6;
+	--laytp-layui-btn-active:#32b5d6;
 	--laytp-layui-nav-bar:#0185a6;
 	--laytp-layui-nav-item-a-bg:#222d32;
 	--laytp-layui-nav-item-a-c:#b8c7ce;
@@ -495,12 +523,16 @@ body{
 	--laytp-layui-form-label:#666;
 }
 .laytp-theme-item-18 {background-color:#3c9}
-.laytp-theme-18 {--laytp-head-bg:#3c9;--laytp-side-bg:#eef1f5;--laytp-layui-form-checked:#3c9;--laytp-layui-nav-bar:#3c9;--laytp-layui-nav-item-a-bg:#eff2f6;--laytp-layui-nav-item-a-c:#48576a;--laytp-layui-nav-child-a-bg:#e5e9f2;--laytp-layui-nav-child-a-c:#48576a;--laytp-layui-nav-child-a-c-hover:#d1dbe5;--laytp-layui-side-i:#48566a;--laytp-layui-side-layui-this-a:#3c9;--laytp-side-layui-nav-more:#48566a;--laytp-layui-tab-title:#f9f9f9;--laytp-layui-nav-bar:#3c9;--laytp-layui-btn-normal:#3c9;--laytp-layui-btn-primary:#fff;--laytp-layui-btn-primary-hover:#3c9;--laytp-layui-form-radio-hover:#3c9;--laytp-layui-laypage-em:#3c9;--laytp-border-color:#3c9;--laytp-layui-form-label:#666}
+.laytp-theme-18 {--laytp-head-bg:#3c9;--laytp-side-bg:#eef1f5;
+	--laytp-layui-form-checked:#3c9;
+	--laytp-layui-btn-active:#34ad85;
+	--laytp-layui-nav-bar:#3c9;--laytp-layui-nav-item-a-bg:#eff2f6;--laytp-layui-nav-item-a-c:#48576a;--laytp-layui-nav-child-a-bg:#e5e9f2;--laytp-layui-nav-child-a-c:#48576a;--laytp-layui-nav-child-a-c-hover:#d1dbe5;--laytp-layui-side-i:#48566a;--laytp-layui-side-layui-this-a:#3c9;--laytp-side-layui-nav-more:#48566a;--laytp-layui-tab-title:#f9f9f9;--laytp-layui-nav-bar:#3c9;--laytp-layui-btn-normal:#3c9;--laytp-layui-btn-primary:#fff;--laytp-layui-btn-primary-hover:#3c9;--laytp-layui-form-radio-hover:#3c9;--laytp-layui-laypage-em:#3c9;--laytp-border-color:#3c9;--laytp-layui-form-label:#666}
 .laytp-theme-item-19 {background-color:#3c9}
 .laytp-theme-19 {
 	--laytp-head-bg:#3c9;
 	--laytp-side-bg:#222d32;
 	--laytp-layui-form-checked:#3c9;
+	--laytp-layui-btn-active:#34ad85;
 	--laytp-layui-nav-bar:#3c9;
 	--laytp-layui-nav-item-a-bg:#222d32;
 	--laytp-layui-nav-item-a-c:#b8c7ce;
@@ -526,6 +558,7 @@ body{
 	--laytp-head-bg:#369;
 	--laytp-side-bg:#eef1f5;
 	--laytp-layui-form-checked:#369;
+	--laytp-layui-btn-active:#5786b5;
 	--laytp-layui-nav-bar:#369;
 	--laytp-layui-nav-item-a-bg:#eff2f6;
 	--laytp-layui-nav-item-a-c:#48576a;
@@ -550,6 +583,7 @@ body{
 	--laytp-head-bg:#369;
 	--laytp-side-bg:#222d32;
 	--laytp-layui-form-checked:#369;
+	--laytp-layui-btn-active:#5786b5;
 	--laytp-layui-nav-bar:#369;
 	--laytp-layui-nav-item-a-bg:#222d32;
 	--laytp-layui-nav-item-a-c:#b8c7ce;
@@ -575,6 +609,7 @@ body{
 	--laytp-head-bg:#18bc9c;
 	--laytp-side-bg:#eef1f5;
 	--laytp-layui-form-checked:#18bc9c;
+	--laytp-layui-btn-active:#38d4b5;
 	--laytp-layui-nav-bar:#18bc9c;
 	--laytp-layui-nav-item-a-bg:#eff2f6;
 	--laytp-layui-nav-item-a-c:#48576a;
@@ -599,6 +634,7 @@ body{
 	--laytp-head-bg:#18bc9c;
 	--laytp-side-bg:#222d32;
 	--laytp-layui-form-checked:#18bc9c;
+	--laytp-layui-btn-active:#38d4b5;
 	--laytp-layui-nav-bar:#18bc9c;
 	--laytp-layui-nav-item-a-bg:#222d32;
 	--laytp-layui-nav-item-a-c:#b8c7ce;

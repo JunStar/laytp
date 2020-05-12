@@ -146,7 +146,8 @@ class Backend extends Controller
 
     //设置主题
     public function theme(){
-        $theme = Cookie::get('theme') ? Cookie::get('theme') : mt_rand(2,23);
+        $cookie = Cookie::get('theme');
+        $theme = ($cookie !== null) ? Cookie::get('theme') : mt_rand(2,23);
         $this->assign('theme', $theme);
     }
 
