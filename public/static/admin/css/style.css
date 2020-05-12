@@ -629,7 +629,7 @@ body{
 .layui-nav-tree .layui-nav-tree .layui-nav-child .layui-this a {background-color:var(--laytp-layui-nav-child-a-c-hover)!important}
 .layui-side i.aicon {color:var(--laytp-layui-side-i)}
 .layui-side .layui-nav-more {border-color:var(--laytp-side-layui-nav-more) transparent transparent!important}
-/*.layui-nav-itemed .layui-nav-more {border-color:transparent transparent var(--laytp-side-layui-nav-more)!important}*/
+.layui-nav-itemed .layui-nav-more {border-color:transparent transparent var(--laytp-side-layui-nav-more)!important}
 .layui-form-onswitch,.layui-form-checked[lay-skin=primary] i {border-color:var(--laytp-layui-form-checked);background-color:var(--laytp-layui-form-checked)}
 .layui-form-label {color:var(--laytp-layui-form-label)!important}
 .layui-side .layui-this a,.layui-side .layui-this i.aicon {

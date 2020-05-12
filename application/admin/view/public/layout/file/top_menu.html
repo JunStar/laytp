@@ -150,6 +150,7 @@
         $(document).on('click','[laytp-event="setTheme"]',function(){
             let index = $(this).data('index');
             $('body').attr('class','layui-layout-body laytp-theme-'+index);
+            $('body',$("#layTpIframe").contents()).attr('class','layui-layout-body laytp-theme-'+index);
             layui.layTp.facade.setcookie('theme',index);
         });
 
