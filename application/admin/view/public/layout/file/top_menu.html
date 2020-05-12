@@ -143,7 +143,11 @@
                 btn: [],//不加这个，全屏高度不会变化
                 offset: ['50px', parseInt(document.body.offsetWidth - 300) +'px'],
                 maxmin:true,
-                anim:2
+                anim:2,
+                shadeClose:true,
+                end: function(index, layero){
+                    $('#laytp_theme',parent.document).parent('li').removeClass('layui-this');
+                }
             });
         });
 
