@@ -338,7 +338,7 @@ class Backend extends Controller
     }
 
     /**
-     * selectPage插件ajax请求时组合的查询条件
+     * selectPage插件ajax请求时组合的查询条件,已弃用
      * @return string
      */
     public function build_select_page_params(){

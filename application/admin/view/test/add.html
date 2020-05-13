@@ -132,63 +132,201 @@
     <div class="layui-form-item">
         <label class="layui-form-label" title="多个图片">多个图片</label>
         <div class="layui-input-block">
-            <input autocomplete="off" type="text" name="row[multi_img]" id="multi_img" placeholder="请输入多个图片" class="layui-input" lay-verify="" lay-verType="tips">
+            <div class="layui-upload">
+                <div class="layui-inline" style="width: 70%;"><input type="text" class="layui-input" name="row[multi_img]" id="input_multi_img" /></div>
+                <div class="layui-inline">
+                    <button type="button" class="layui-btn layui-btn-sm layui-btn-primary pull-left"
+                            id="multi_img"
+                            upload="true"
+                            accept="images"
+                            upload_dir=""
+                            single_multi="multi">
+                        <i class="layui-icon">&#xe62f;</i> 上 传
+                    </button>
+                </div>
+                <div class="layui-inline">
+                    <button type="button"
+                            class="layui-btn layui-btn-sm layui-btn-danger pull-left popup-frame"
+                            data-open="{:url('admin/attachment/select',['id_val'=>'multi_img','accept'=>'images','single_multi'=>'multi'])}"
+                            data-width="100%"
+                            data-height="100%">
+                        <i class="layui-icon">&#xe60a;</i> 选 择
+                    </button>
+                </div>
+				<div class="pic-more">
+                    <ul class="pic-more-upload-list" id="preview_multi_img"></ul>
+                </div>
+            </div>
         </div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label" title="视频文件地址">视频文件地址</label>
         <div class="layui-input-block">
-            <input autocomplete="off" type="text" name="row[video]" id="video" placeholder="请输入视频文件地址" class="layui-input" lay-verify="" lay-verType="tips">
+            <div class="layui-upload">
+                <div class="layui-inline" style="width: 70%;"><input type="text" class="layui-input" name="row[video]" id="input_video" /></div>
+                <div class="layui-inline">
+                    <button type="button" class="layui-btn layui-btn-sm layui-btn-primary pull-left"
+                            id="video"
+                            upload="true"
+                            accept="video"
+                            upload_dir=""
+                            single_multi="single">
+                        <i class="layui-icon">&#xe62f;</i> 上 传
+                    </button>
+                </div>
+                <div class="layui-inline">
+                    <button type="button"
+                            class="layui-btn layui-btn-sm layui-btn-danger pull-left popup-frame"
+                            data-open="{:url('admin/attachment/select',['id_val'=>'video','accept'=>'video','single_multi'=>'single'])}"
+                            data-width="100%"
+                            data-height="100%">
+                        <i class="layui-icon">&#xe60a;</i> 选 择
+                    </button>
+                </div>
+				<div class="pic-more">
+                    <ul class="pic-more-upload-list" id="preview_video"></ul>
+                </div>
+            </div>
         </div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label" title="音频文件地址">音频文件地址</label>
         <div class="layui-input-block">
-            <input autocomplete="off" type="text" name="row[audio]" id="audio" placeholder="请输入音频文件地址" class="layui-input" lay-verify="" lay-verType="tips">
+            <div class="layui-upload">
+                <div class="layui-inline" style="width: 70%;"><input type="text" class="layui-input" name="row[audio]" id="input_audio" /></div>
+                <div class="layui-inline">
+                    <button type="button" class="layui-btn layui-btn-sm layui-btn-primary pull-left"
+                            id="audio"
+                            upload="true"
+                            accept="audio"
+                            upload_dir=""
+                            single_multi="single">
+                        <i class="layui-icon">&#xe62f;</i> 上 传
+                    </button>
+                </div>
+                <div class="layui-inline">
+                    <button type="button"
+                            class="layui-btn layui-btn-sm layui-btn-danger pull-left popup-frame"
+                            data-open="{:url('admin/attachment/select',['id_val'=>'audio','accept'=>'audio','single_multi'=>'single'])}"
+                            data-width="100%"
+                            data-height="100%">
+                        <i class="layui-icon">&#xe60a;</i> 选 择
+                    </button>
+                </div>
+				<div class="pic-more">
+                    <ul class="pic-more-upload-list" id="preview_audio"></ul>
+                </div>
+            </div>
         </div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label" title="任意文件地址">任意文件地址</label>
         <div class="layui-input-block">
-            <input autocomplete="off" type="text" name="row[file]" id="file" placeholder="请输入任意文件地址" class="layui-input" lay-verify="" lay-verType="tips">
+            <div class="layui-upload">
+                <div class="layui-inline" style="width: 70%;"><input type="text" class="layui-input" name="row[file]" id="input_file" /></div>
+                <div class="layui-inline">
+                    <button type="button" class="layui-btn layui-btn-sm layui-btn-primary pull-left"
+                            id="file"
+                            upload="true"
+                            accept="file"
+                            upload_dir=""
+                            single_multi="single">
+                        <i class="layui-icon">&#xe62f;</i> 上 传
+                    </button>
+                </div>
+                <div class="layui-inline">
+                    <button type="button"
+                            class="layui-btn layui-btn-sm layui-btn-danger pull-left popup-frame"
+                            data-open="{:url('admin/attachment/select',['id_val'=>'file','accept'=>'file','single_multi'=>'single'])}"
+                            data-width="100%"
+                            data-height="100%">
+                        <i class="layui-icon">&#xe60a;</i> 选 择
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label" title="文章内容">文章内容</label>
         <div class="layui-input-block">
-            <input autocomplete="off" type="text" name="row[content]" id="content" placeholder="请输入文章内容" class="layui-input" lay-verify="" lay-verType="tips">
-        </div>
-    </div>
-
-    <div class="layui-form-item">
-        <label class="layui-form-label" title="省份">省份</label>
-        <div class="layui-input-block">
-            <input autocomplete="off" type="text" name="row[province_id]" id="province_id" placeholder="请输入省份" class="layui-input" lay-verify="" lay-verType="tips">
-        </div>
-    </div>
-
-    <div class="layui-form-item">
-        <label class="layui-form-label" title="城市">城市</label>
-        <div class="layui-input-block">
-            <input autocomplete="off" type="text" name="row[city_id]" id="city_id" placeholder="请输入城市" class="layui-input" lay-verify="" lay-verType="tips">
-        </div>
-    </div>
-
-    <div class="layui-form-item">
-        <label class="layui-form-label" title="地区">地区</label>
-        <div class="layui-input-block">
-            <input autocomplete="off" type="text" name="row[area_id]" id="area_id" placeholder="请输入地区" class="layui-input" lay-verify="" lay-verType="tips">
+            <script editor="true" type="ueditor" id="content" name="row[content]" type="text/plain"></script>
         </div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label" title="创建时间">创建时间</label>
         <div class="layui-input-block">
-            <input autocomplete="off" type="text" name="row[create_time]" id="create_time" placeholder="请输入创建时间" class="layui-input" lay-verify="" lay-verType="tips">
+            <input type="text" class="layui-input" name="row[create_time]" id="create_time" autocomplete="off" laydate="true" laydate_type="datetime" placeholder="请选择时间">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label" title="地区设置">地区设置 <text title="必填项" style="color:red;">*</text></label>
+        <div class="layui-input-block">
+            <div class="layui-input-inline">
+                <select
+                    linkage="true"
+                    lay-filter="province_id"
+                    lay-verify=""
+                    lay-verType="tips"
+                    placeholder="请选择省份"
+                    name="row[province_id]"
+                    id="province_id"
+                    table_name="lt_area"
+                    search_field="pid"
+                    search_field_val="0"
+                    selected_val=""
+                    show_field="name"
+                    left_field=""
+                    right_field="city_id"
+                >
+                    <option value="">请选择省份</option>
+                </select>
+            </div>
+			<div class="layui-input-inline">
+                <select
+                    linkage="true"
+                    lay-filter="city_id"
+                    lay-verify=""
+                    lay-verType="tips"
+                    placeholder="请选择城市"
+                    name="row[city_id]"
+                    id="city_id"
+                    table_name="lt_area"
+                    search_field="pid"
+                    search_field_val="0"
+                    selected_val=""
+                    show_field="name"
+                    left_field="province_id"
+                    right_field="area_id"
+                >
+                    <option value="">请选择城市</option>
+                </select>
+            </div>
+			<div class="layui-input-inline">
+                <select
+                    linkage="true"
+                    lay-filter="area_id"
+                    lay-verify=""
+                    lay-verType="tips"
+                    placeholder="请选择地区"
+                    name="row[area_id]"
+                    id="area_id"
+                    table_name="lt_area"
+                    search_field="pid"
+                    search_field_val="0"
+                    selected_val=""
+                    show_field="name"
+                    left_field="city_id"
+                    right_field=""
+                >
+                    <option value="">请选择地区</option>
+                </select>
+            </div>
         </div>
     </div>
 {/block}

@@ -126,74 +126,82 @@
             </div>
 
 		    <div class="layui-form-item layui-inline">
-                <label class="layui-form-label" title="多个图片">多个图片</label>
-                <div class="layui-input-inline">
-                    <input autocomplete="off" type="text" id="multi_img" name="search_param[multi_img][value]" id="multi_img" placeholder="请输入多个图片" class="layui-input">
-                    <input type="hidden" name="search_param[multi_img][condition]" value="LIKE">
-                </div>
-            </div>
-
-		    <div class="layui-form-item layui-inline">
-                <label class="layui-form-label" title="视频文件地址">视频文件地址</label>
-                <div class="layui-input-inline">
-                    <input autocomplete="off" type="text" id="video" name="search_param[video][value]" id="video" placeholder="请输入视频文件地址" class="layui-input">
-                    <input type="hidden" name="search_param[video][condition]" value="LIKE">
-                </div>
-            </div>
-
-		    <div class="layui-form-item layui-inline">
-                <label class="layui-form-label" title="音频文件地址">音频文件地址</label>
-                <div class="layui-input-inline">
-                    <input autocomplete="off" type="text" id="audio" name="search_param[audio][value]" id="audio" placeholder="请输入音频文件地址" class="layui-input">
-                    <input type="hidden" name="search_param[audio][condition]" value="LIKE">
-                </div>
-            </div>
-
-		    <div class="layui-form-item layui-inline">
-                <label class="layui-form-label" title="任意文件地址">任意文件地址</label>
-                <div class="layui-input-inline">
-                    <input autocomplete="off" type="text" id="file" name="search_param[file][value]" id="file" placeholder="请输入任意文件地址" class="layui-input">
-                    <input type="hidden" name="search_param[file][condition]" value="LIKE">
-                </div>
-            </div>
-
-		    <div class="layui-form-item layui-inline">
                 <label class="layui-form-label" title="文章内容">文章内容</label>
                 <div class="layui-input-inline">
-                    <input autocomplete="off" type="text" id="content" name="search_param[content][value]" id="content" placeholder="请输入文章内容" class="layui-input">
+                    <input autocomplete="off" type="text" name="search_param[content][value]" id="content" placeholder="请输入文章内容" class="layui-input">
                     <input type="hidden" name="search_param[content][condition]" value="LIKE">
-                </div>
-            </div>
-
-		    <div class="layui-form-item layui-inline">
-                <label class="layui-form-label" title="省份">省份</label>
-                <div class="layui-input-inline">
-                    <input autocomplete="off" type="text" id="province_id" name="search_param[province_id][value]" id="province_id" placeholder="请输入省份" class="layui-input">
-                    <input type="hidden" name="search_param[province_id][condition]" value="LIKE">
-                </div>
-            </div>
-
-		    <div class="layui-form-item layui-inline">
-                <label class="layui-form-label" title="城市">城市</label>
-                <div class="layui-input-inline">
-                    <input autocomplete="off" type="text" id="city_id" name="search_param[city_id][value]" id="city_id" placeholder="请输入城市" class="layui-input">
-                    <input type="hidden" name="search_param[city_id][condition]" value="LIKE">
-                </div>
-            </div>
-
-		    <div class="layui-form-item layui-inline">
-                <label class="layui-form-label" title="地区">地区</label>
-                <div class="layui-input-inline">
-                    <input autocomplete="off" type="text" id="area_id" name="search_param[area_id][value]" id="area_id" placeholder="请输入地区" class="layui-input">
-                    <input type="hidden" name="search_param[area_id][condition]" value="LIKE">
                 </div>
             </div>
 
 		    <div class="layui-form-item layui-inline">
                 <label class="layui-form-label" title="创建时间">创建时间</label>
                 <div class="layui-input-inline">
-                    <input autocomplete="off" type="text" id="create_time" name="search_param[create_time][value]" id="create_time" placeholder="请输入创建时间" class="layui-input">
-                    <input type="hidden" name="search_param[create_time][condition]" value="LIKE">
+                    <input type="text" class="layui-input" id="create_time" name="search_param[create_time][value]" laydate="true" laydate_type="datetime" laydate_range="true" placeholder="请选择时间">
+<input type="hidden" name="search_param[create_time][condition]" value="BETWEEN">
+                </div>
+            </div>
+
+		    <div class="layui-form-item layui-inline">
+                <label class="layui-form-label" title="地区设置">地区设置</label>
+                <div class="layui-input-inline">
+                    <select
+                        linkage="true"
+                        lay-filter="province_id"
+                        lay-verType="tips"
+                        placeholder="请选择省份"
+                        name="search_param[province_id][value]"
+                        id="province_id"
+                        table_name="lt_area"
+                        search_field="pid"
+                        search_field_val=""
+                        selected_val=""
+                        show_field="name"
+                        left_field=""
+                        right_field="city_id"
+                    >
+                        <option value="">请选择省份</option>
+                    </select>
+                    <input type="hidden" name="search_param[province_id][condition]" value="=">
+                </div>
+				<div class="layui-input-inline">
+                    <select
+                        linkage="true"
+                        lay-filter="city_id"
+                        lay-verType="tips"
+                        placeholder="请选择城市"
+                        name="search_param[city_id][value]"
+                        id="city_id"
+                        table_name="lt_area"
+                        search_field="pid"
+                        search_field_val=""
+                        selected_val=""
+                        show_field="name"
+                        left_field="province_id"
+                        right_field="area_id"
+                    >
+                        <option value="">请选择城市</option>
+                    </select>
+                    <input type="hidden" name="search_param[city_id][condition]" value="=">
+                </div>
+				<div class="layui-input-inline">
+                    <select
+                        linkage="true"
+                        lay-filter="area_id"
+                        lay-verType="tips"
+                        placeholder="请选择地区"
+                        name="search_param[area_id][value]"
+                        id="area_id"
+                        table_name="lt_area"
+                        search_field="pid"
+                        search_field_val=""
+                        selected_val=""
+                        show_field="name"
+                        left_field="city_id"
+                        right_field=""
+                    >
+                        <option value="">请选择地区</option>
+                    </select>
+                    <input type="hidden" name="search_param[area_id][condition]" value="=">
                 </div>
             </div>
 
