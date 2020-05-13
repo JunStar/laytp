@@ -357,7 +357,7 @@ CREATE TABLE `lt_admin_user` (
 -- Records of lt_admin_user
 -- ----------------------------
 INSERT INTO `lt_admin_user` VALUES ('1', 'admin', 'admin', '$2y$10$IuNOD1BdU04B0gml8WP6OuQJHDYpNq4YLwXJdClHShL56OJEPaA1e', '/uploads/20200101/e7dc8d0e6113445382b7f093a78c574a.jpeg', '1', '1', '2019-03-20 00:33:25', '2019-03-20 00:33:25', null);
-INSERT INTO `lt_admin_user` VALUES ('2', 'test', 'test', '$2y$10$yl3GBlR0XNsufCDkTnFM1OjOs8bOGTHdMGQT8Jj3lsg9Uoeh7tOqa', '/static/admin/image/default_avatar.png', '0', '1', '2020-01-01 22:36:00', '2020-01-01 22:36:00', null);
+INSERT INTO `lt_admin_user` VALUES ('2', 'test', 'test', '$2y$10$yl3GBlR0XNsufCDkTnFM1OjOs8bOGTHdMGQT8Jj3lsg9Uoeh7tOqa', '/static/admin/image/default_avatar.jpg', '0', '1', '2020-01-01 22:36:00', '2020-01-01 22:36:00', null);
 
 -- ----------------------------
 -- Table structure for `lt_area`

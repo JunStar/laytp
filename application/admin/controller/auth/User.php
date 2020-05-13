@@ -33,7 +33,7 @@ class User extends Backend
                 return $this->error('两次密码输入不相同');
             }
             $post['password'] = password_hash($post['password'], PASSWORD_DEFAULT);
-            $post['avatar'] = $post['avatar'] ? $post['avatar'] : '/static/admin/image/default_avatar.png';
+            $post['avatar'] = $post['avatar'] ? $post['avatar'] : '/static/admin/image/default_avatar.jpg';
 
             $unique_username = $this->model->withTrashed()->where('username','=',$post['username'])->find();
             if($unique_username){

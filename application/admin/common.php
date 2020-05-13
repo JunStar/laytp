@@ -147,7 +147,7 @@ function filterPostData($post){
  */
 function getDefaultAvatar($avatar){
     if(!$avatar){
-        return '/static/admin/image/default_avatar.png';
+        return '/static/admin/image/default_avatar.jpg';
     }else{
         return $avatar;
     }
