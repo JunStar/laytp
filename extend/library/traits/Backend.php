@@ -104,7 +104,7 @@ trait Backend
                 if( $this->model->where('id','in',$ids)->delete() ){
                     return $this->success('操作成功');
                 }else{
-                    return $this->error('操作失败2');
+                    return $this->error('操作失败');
                 }
             }
         }
