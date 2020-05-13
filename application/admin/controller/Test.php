@@ -22,7 +22,9 @@ class Test extends Backend
     {
         parent::initialize();
         $this->model = new \app\admin\model\Test();
-        
+        $assign['const_hobby'] = $this->model->getArrayConstList('hobby');
+		$assign['const_sign'] = $this->model->getArrayConstList('sign');
+		$this->assign($assign);
     }
 
     

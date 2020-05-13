@@ -23,64 +23,93 @@
 		    <div class="layui-form-item layui-inline">
                 <label class="layui-form-label" title="年级">年级</label>
                 <div class="layui-input-inline">
-                    <input autocomplete="off" type="text" id="grade" name="search_param[grade][value]" id="grade" placeholder="请输入年级" class="layui-input">
-                    <input type="hidden" name="search_param[grade][condition]" value="LIKE">
+                    <select id="grade" name="search_param[grade][value]" placeholder="请输入年级">
+        				<option value=""></option>
+						<option value="1">一年级</option>
+						<option value="2">二年级</option>
+						<option value="3">三年级</option>
+                    </select>
+                    <input type="hidden" name="search_param[grade][condition]" value="=">
                 </div>
             </div>
 
 		    <div class="layui-form-item layui-inline">
                 <label class="layui-form-label" title="状态">状态</label>
                 <div class="layui-input-inline">
-                    <input autocomplete="off" type="text" id="status" name="search_param[status][value]" id="status" placeholder="请输入状态" class="layui-input">
-                    <input type="hidden" name="search_param[status][condition]" value="LIKE">
+                    <select id="status" name="search_param[status][value]" placeholder="请输入状态">
+        				<option value=""></option>
+						<option value="0">关闭</option>
+						<option value="1">打开</option>
+                    </select>
+                    <input type="hidden" name="search_param[status][condition]" value="=">
                 </div>
             </div>
 
 		    <div class="layui-form-item layui-inline">
                 <label class="layui-form-label" title="英雄">英雄</label>
                 <div class="layui-input-inline">
-                    <input autocomplete="off" type="text" id="hero" name="search_param[hero][value]" id="hero" placeholder="请输入英雄" class="layui-input">
-                    <input type="hidden" name="search_param[hero][condition]" value="LIKE">
+                    <select id="hero" name="search_param[hero][value]" placeholder="请输入英雄">
+        				<option value=""></option>
+						<option value="0">秀逗魔法师</option>
+						<option value="1">受折磨的灵魂</option>
+						<option value="2">船长</option>
+						<option value="3">虚空假面</option>
+						<option value="4">幻影刺客</option>
+						<option value="5">谜团</option>
+						<option value="6">全能骑士</option>
+						<option value="7">敌法师</option>
+                    </select>
+                    <input type="hidden" name="search_param[hero][condition]" value="=">
                 </div>
             </div>
 
 		    <div class="layui-form-item layui-inline">
                 <label class="layui-form-label" title="爱好">爱好</label>
                 <div class="layui-input-inline">
-                    <input autocomplete="off" type="text" id="hobby" name="search_param[hobby][value]" id="hobby" placeholder="请输入爱好" class="layui-input">
-                    <input type="hidden" name="search_param[hobby][condition]" value="LIKE">
+                    <div id="hobby" class="select_multi" max="9" name="search_param[hobby][value]" options='{:getSelectMultiJsConst($const_hobby)}'></div>
+                    <input type="hidden" name="search_param[hobby][condition]" value="FIND_IN_SET">
                 </div>
             </div>
 
 		    <div class="layui-form-item layui-inline">
                 <label class="layui-form-label" title="标志">标志</label>
                 <div class="layui-input-inline">
-                    <input autocomplete="off" type="text" id="sign" name="search_param[sign][value]" id="sign" placeholder="请输入标志" class="layui-input">
-                    <input type="hidden" name="search_param[sign][condition]" value="LIKE">
+                    <div id="sign" class="select_multi" max="9" name="search_param[sign][value]" options='{:getSelectMultiJsConst($const_sign)}'></div>
+                    <input type="hidden" name="search_param[sign][condition]" value="FIND_IN_SET">
                 </div>
             </div>
 
 		    <div class="layui-form-item layui-inline">
                 <label class="layui-form-label" title="描述">描述</label>
                 <div class="layui-input-inline">
-                    <input autocomplete="off" type="text" id="description" name="search_param[description][value]" id="description" placeholder="请输入描述" class="layui-input">
-                    <input type="hidden" name="search_param[description][condition]" value="LIKE">
+                    <input type="text" id="description" name="search_param[description][value]" placeholder="请输入描述" class="layui-input">
+                            <input type="hidden" name="search_param[description][condition]" value="LIKE">
                 </div>
             </div>
 
 		    <div class="layui-form-item layui-inline">
                 <label class="layui-form-label" title="所属分类（单选）">所属分类（单选）</label>
                 <div class="layui-input-inline">
-                    <input autocomplete="off" type="text" id="category_id" name="search_param[category_id][value]" id="category_id" placeholder="请输入所属分类（单选）" class="layui-input">
-                    <input type="hidden" name="search_param[category_id][condition]" value="LIKE">
+                    <input autocomplete="off" type="text" id="category_id" name="search_param[category_id][value]" id="category_id" placeholder="请选择" class="layui-input selectPage"
+                    search-field="name"
+                    search-url="{:url('admin/test.category/select_page')}"
+                    show-field="name"
+                    show-multiple="true"
+                    >
+                    <input type="hidden" name="search_param[category_id][condition]" value="IN">
                 </div>
             </div>
 
 		    <div class="layui-form-item layui-inline">
                 <label class="layui-form-label" title="所属分类（多选）">所属分类（多选）</label>
                 <div class="layui-input-inline">
-                    <input autocomplete="off" type="text" id="category_ids" name="search_param[category_ids][value]" id="category_ids" placeholder="请输入所属分类（多选）" class="layui-input">
-                    <input type="hidden" name="search_param[category_ids][condition]" value="LIKE">
+                    <input autocomplete="off" type="text" id="category_ids" name="search_param[category_ids][value]" id="category_ids" placeholder="请选择" class="layui-input selectPage"
+                    search-field="name"
+                    search-url="{:url('admin/test.category/select_page')}"
+                    show-field="name"
+                    show-multiple="true"
+                    >
+                    <input type="hidden" name="search_param[category_ids][condition]" value="FIND_IN_SET">
                 </div>
             </div>
 
@@ -148,6 +177,14 @@
                 </div>
             </div>
 
+		    <div class="layui-form-item layui-inline">
+                <label class="layui-form-label" title="创建时间">创建时间</label>
+                <div class="layui-input-inline">
+                    <input autocomplete="off" type="text" id="create_time" name="search_param[create_time][value]" id="create_time" placeholder="请输入创建时间" class="layui-input">
+                    <input type="hidden" name="search_param[create_time][condition]" value="LIKE">
+                </div>
+            </div>
+
         <div class="layui-form-item layui-inline">
             <button class="layui-btn layui-btn-sm layui-btn-normal" lay-submit lay-filter="laytp"><i class="layui-icon"></i> 搜 索</button>
         </div>
@@ -203,14 +240,22 @@ layui.use(['layTp'],function() {
             , cols: [[
                 {type:'checkbox'}
 				,{field:'id',title:'ID',align:'center',width:80}
-				//,{field:'update_time',title:'更新时间',align:'center'}
-				//,{field:'delete_time',title:'删除时间',align:'center'}
 				,{field:'title',title:'标题',align:'center'}
-				,{field:'grade',title:'年级',align:'center'}
-				,{field:'status',title:'状态',align:'center'}
-				,{field:'hero',title:'英雄',align:'center'}
-				,{field:'hobby',title:'爱好',align:'center'}
-				,{field:'sign',title:'标志',align:'center'}
+				,{field:'grade',title:'年级',align:'center',templet:function(d){
+					return layTp.facade.formatter.status('grade',d.grade,{"1":"一年级","2":"二年级","3":"三年级"});
+				}}
+				,{field:'status',title:'状态',align:'center',templet:function(d){
+					return layTp.facade.formatter.switch('status',d,{"open":{"value":1,"text":"打开"},"close":{"value":0,"text":"关闭"}});
+				}}
+				,{field:'hero',title:'英雄',align:'center',templet:function(d){
+					return layTp.facade.formatter.status('hero',d.hero,["秀逗魔法师","受折磨的灵魂","船长","虚空假面","幻影刺客","谜团","全能骑士","敌法师"]);
+				}}
+				,{field:'hobby',title:'爱好',align:'center',templet:function(d){
+					return layTp.facade.formatter.flag(d.hobby,["游泳","下棋","游戏","乒乓球","羽毛","跑步","爬山","美食"]);
+				}}
+				,{field:'sign',title:'标志',align:'center',templet:function(d){
+					return layTp.facade.formatter.flag(d.sign,["热门","首页","顶级分类推荐","二级分类推荐","特定分类推荐","轮播图","置顶","新闻"]);
+				}}
 				,{field:'description',title:'描述',align:'center'}
 				,{field:'category_id',title:'所属分类（单选）',align:'center'}
 				,{field:'category_ids',title:'所属分类（多选）',align:'center'}
@@ -225,7 +270,9 @@ layui.use(['layTp'],function() {
 				,{field:'province_id',title:'省份',align:'center'}
 				,{field:'city_id',title:'城市',align:'center'}
 				,{field:'area_id',title:'地区',align:'center'}
-				//,{field:'create_time',title:'创建时间',align:'center'}
+				,{field:'create_time',title:'创建时间',align:'center'}
+				//,{field:'update_time',title:'更新时间',align:'center'}
+				//,{field:'delete_time',title:'删除时间',align:'center'}
 				,{field:'operation',title:'操作',align:'center',toolbar:'#operation',width:100,fixed:'right'}
             ]]
         });

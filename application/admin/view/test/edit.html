@@ -12,56 +12,89 @@
     <div class="layui-form-item">
         <label class="layui-form-label" title="年级">年级</label>
         <div class="layui-input-block">
-            <input autocomplete="off" type="text" name="row[grade]" id="grade" placeholder="请输入年级" value="{$grade}" class="layui-input" lay-verify="" lay-verType="tips">
+            <input type="radio" name="row[grade]" id="grade-1" value="1" title="一年级" {if $grade == '1'}checked="checked"{/if} />
+			<input type="radio" name="row[grade]" id="grade-2" value="2" title="二年级" {if $grade == '2'}checked="checked"{/if} />
+			<input type="radio" name="row[grade]" id="grade-3" value="3" title="三年级" {if $grade == '3'}checked="checked"{/if} />
         </div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label" title="状态">状态</label>
         <div class="layui-input-block">
-            <input autocomplete="off" type="text" name="row[status]" id="status" placeholder="请输入状态" value="{$status}" class="layui-input" lay-verify="" lay-verType="tips">
+            <!-- 隐藏域设置开关未选中时需要传递的参数值 -->
+            <input type="hidden" name="row[status]" id="status-0" value="0" />
+            <input type="checkbox" name="row[status]" id="status-1" lay-skin="switch" lay-text="打开|关闭" value="1" {if 1 == $status}checked="checked"{/if} />
         </div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label" title="英雄">英雄</label>
         <div class="layui-input-block">
-            <input autocomplete="off" type="text" name="row[hero]" id="hero" placeholder="请输入英雄" value="{$hero}" class="layui-input" lay-verify="" lay-verType="tips">
+            <select name="row[hero]" id="hero" lay-verify="" lay-verType="tips" placeholder="请输入英雄">
+				<option value=""></option>
+				<option value="0" {if $hero == '0'}selected="selected"{/if}>秀逗魔法师</option>
+				<option value="1" {if $hero == '1'}selected="selected"{/if}>受折磨的灵魂</option>
+				<option value="2" {if $hero == '2'}selected="selected"{/if}>船长</option>
+				<option value="3" {if $hero == '3'}selected="selected"{/if}>虚空假面</option>
+				<option value="4" {if $hero == '4'}selected="selected"{/if}>幻影刺客</option>
+				<option value="5" {if $hero == '5'}selected="selected"{/if}>谜团</option>
+				<option value="6" {if $hero == '6'}selected="selected"{/if}>全能骑士</option>
+				<option value="7" {if $hero == '7'}selected="selected"{/if}>敌法师</option>
+            </select>
         </div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label" title="爱好">爱好</label>
         <div class="layui-input-block">
-            <input autocomplete="off" type="text" name="row[hobby]" id="hobby" placeholder="请输入爱好" value="{$hobby}" class="layui-input" lay-verify="" lay-verType="tips">
+            <input autocomplete="off" type="checkbox" name="row[hobby][]" id="hobby-0" value="0" title="游泳" {if in_array('0',explode(',',$hobby))}checked="checked"{/if}>
+			<input autocomplete="off" type="checkbox" name="row[hobby][]" id="hobby-1" value="1" title="下棋" {if in_array('1',explode(',',$hobby))}checked="checked"{/if}>
+			<input autocomplete="off" type="checkbox" name="row[hobby][]" id="hobby-2" value="2" title="游戏" {if in_array('2',explode(',',$hobby))}checked="checked"{/if}>
+			<input autocomplete="off" type="checkbox" name="row[hobby][]" id="hobby-3" value="3" title="乒乓球" {if in_array('3',explode(',',$hobby))}checked="checked"{/if}>
+			<input autocomplete="off" type="checkbox" name="row[hobby][]" id="hobby-4" value="4" title="羽毛" {if in_array('4',explode(',',$hobby))}checked="checked"{/if}>
+			<input autocomplete="off" type="checkbox" name="row[hobby][]" id="hobby-5" value="5" title="跑步" {if in_array('5',explode(',',$hobby))}checked="checked"{/if}>
+			<input autocomplete="off" type="checkbox" name="row[hobby][]" id="hobby-6" value="6" title="爬山" {if in_array('6',explode(',',$hobby))}checked="checked"{/if}>
+			<input autocomplete="off" type="checkbox" name="row[hobby][]" id="hobby-7" value="7" title="美食" {if in_array('7',explode(',',$hobby))}checked="checked"{/if}>
         </div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label" title="标志">标志</label>
         <div class="layui-input-block">
-            <input autocomplete="off" type="text" name="row[sign]" id="sign" placeholder="请输入标志" value="{$sign}" class="layui-input" lay-verify="" lay-verType="tips">
+            <div id="sign" class="select_multi" options='{:getSelectMultiJsConst($const_sign)}' selected_data="['{:str_replace(",","','",$sign)}']" max="0" name="row[sign]" verify=""></div>
         </div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label" title="描述">描述</label>
         <div class="layui-input-block">
-            <input autocomplete="off" type="text" name="row[description]" id="description" placeholder="请输入描述" value="{$description}" class="layui-input" lay-verify="" lay-verType="tips">
+            <textarea name="row[description]" id="description" placeholder="请输入描述" class="layui-textarea" lay-verify="" lay-verType="tips">{$description}</textarea>
         </div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label" title="所属分类（单选）">所属分类（单选）</label>
         <div class="layui-input-block">
-            <input autocomplete="off" type="text" name="row[category_id]" id="category_id" placeholder="请输入所属分类（单选）" value="{$category_id}" class="layui-input" lay-verify="" lay-verType="tips">
+            <input autocomplete="off" type="text" value="{$category_id}" name="row[category_id]" id="category_id" placeholder="请选择" class="layui-input selectPage"
+                search-field="name"
+                search-url="{:url('admin/test.category/select_page')}"
+                show-field="name"
+                search-condition="LIKE"
+                show-multiple="false"
+                >
         </div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label" title="所属分类（多选）">所属分类（多选）</label>
         <div class="layui-input-block">
-            <input autocomplete="off" type="text" name="row[category_ids]" id="category_ids" placeholder="请输入所属分类（多选）" value="{$category_ids}" class="layui-input" lay-verify="" lay-verType="tips">
+            <input autocomplete="off" type="text" value="{$category_ids}" name="row[category_ids]" id="category_ids" placeholder="请选择" class="layui-input selectPage"
+                search-field="name"
+                search-url="{:url('admin/test.category/select_page')}"
+                show-field="name"
+                search-condition="LIKE"
+                show-multiple="true"
+                >
         </div>
     </div>
 
@@ -157,6 +190,13 @@
         <label class="layui-form-label" title="地区">地区</label>
         <div class="layui-input-block">
             <input autocomplete="off" type="text" name="row[area_id]" id="area_id" placeholder="请输入地区" value="{$area_id}" class="layui-input" lay-verify="" lay-verType="tips">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label" title="创建时间">创建时间</label>
+        <div class="layui-input-block">
+            <input autocomplete="off" type="text" name="row[create_time]" id="create_time" placeholder="请输入创建时间" value="{$create_time}" class="layui-input" lay-verify="" lay-verType="tips">
         </div>
     </div>
 {/block}

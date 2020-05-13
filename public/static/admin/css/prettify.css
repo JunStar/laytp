@@ -298,3 +298,10 @@ layui-nav-child dd.layui-this, .layui-nav-tree .layui-nav-child dd.layui-this a{
 .layui-elem-quote a{
     color:#01AAED;
 }
+
+.layui-form-select dl dd.layui-this
+,.layui-form-checked span, .layui-form-checked:hover span
+,.layui-laydate .layui-this
+{
+    background-color: var(--laytp-layui-form-checked)
+}
