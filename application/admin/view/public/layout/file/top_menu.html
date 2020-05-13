@@ -1,4 +1,5 @@
 <style>
+    /*设置主题样式*/
     .laytp-setTheme{
         padding:15px;
         overflow-x:hidden;
@@ -52,6 +53,50 @@
         width: 100%;
         height: 10px;
         box-shadow: 0 1px 2px 0 rgba(0,0,0,.15);
+    }
+
+    /*左侧菜单顶部用户信息*/
+    .user-panel{
+        white-space:nowrap;
+        overflow:hidden;
+        position: relative;
+        width: 100%;
+        padding: 10px;
+    }
+
+    .pull-left{
+        float: left !important;
+    }
+
+    .user-panel > .image img{
+        vertical-align:middle;
+        border:0;
+        width:45px;
+        height:45px;
+    }
+
+    .img-circle{
+        border-radius: 50%;
+    }
+
+    .user-panel > .info, .skin-green .user-panel > .info > a{
+        color:var(--laytp-layui-nav-item-a-c);
+    }
+
+    .user-panel > .info {
+        padding: 5px 5px 5px 15px;
+        line-height: 1;
+        position: absolute;
+        left: 55px;
+    }
+
+    .user-panel > .info > p {
+        font-weight: 600;
+        margin-bottom: 9px;
+    }
+
+    #navBarId dl{
+        background-color: var(--laytp-layui-nav-child-a-bg)!important;
     }
 </style>
 <div class="layui-header" style="z-index:99999!important;">
@@ -113,51 +158,6 @@
     </div>
     <div id="navBarId"></div>
 </div>
-
-<style>
-    .user-panel{
-        white-space:nowrap;
-        overflow:hidden;
-        position: relative;
-        width: 100%;
-        padding: 10px;
-    }
-
-    .pull-left{
-        float: left !important;
-    }
-
-    .user-panel > .image img{
-        vertical-align:middle;
-        border:0;
-        width:45px;
-        height:45px;
-    }
-
-    .img-circle{
-        border-radius: 50%;
-    }
-
-    .user-panel > .info, .skin-green .user-panel > .info > a{
-        color:var(--laytp-layui-nav-item-a-c);
-    }
-
-    .user-panel > .info {
-        padding: 5px 5px 5px 15px;
-        line-height: 1;
-        position: absolute;
-        left: 55px;
-    }
-
-    .user-panel > .info > p {
-        font-weight: 600;
-        margin-bottom: 9px;
-    }
-
-    #navBarId dl{
-        background-color: var(--laytp-layui-nav-child-a-bg)!important;
-    }
-</style>
 
 <script>
     // 导航菜单的间隔像素

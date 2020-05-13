@@ -166,7 +166,7 @@ class Backend extends Controller
         $first_menus = [];
         foreach($menus as $k=>$v){
             if($v['pid'] == 0){
-                $v['default_menu'] = $menu_tree_obj->getDefaultMenu($v['id']);
+                $v['default_menu'] = $menu_tree_obj->getDefaultMenu($v['id']) ?: $v;
                 $v['select_menu_ids'] = implode(',',getSelectMenuIds($menu_tree_obj, $v['id'], true));
                 $first_menus[] = $v;
             }
