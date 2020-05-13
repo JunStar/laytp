@@ -10,16 +10,16 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <!-- 加载公用css文件 -->
-    {include file="public/layout/file/css_file"}
+    {include file="admin@public/layout/file/css_file"}
     <!-- 自定义样式 -->
     {block name="style"}{/block}
     <!-- 加载全局js常量 -->
-    {include file="public/layout/file/js_global_var"}
-    {include file="public/layout/file/js_file"}
+    {include file="admin@public/layout/file/js_global_var"}
+    {include file="admin@public/layout/file/js_file"}
 </head>
 <body class="layui-layout-body laytp-theme-{$theme}">
 <div class="layui-layout layui-layout-admin">
-    {include file="public/layout/file/top_menu"}
+    {include file="admin@public/layout/file/top_menu"}
     <div class="layui-body">
         <ul class="bread-crumbs">
             {foreach $crumbs as $k=>$v}
