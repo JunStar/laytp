@@ -65,10 +65,18 @@ layui.use(['layTp'],function() {
 				,{field:'single_img',title:'单个图片',align:'center',templet:function(d){
 					return layTp.facade.formatter.images(d.single_img);
 				}}
-				,{field:'multi_img',title:'多个图片',align:'center'}
-				,{field:'video',title:'视频文件地址',align:'center'}
-				,{field:'audio',title:'音频文件地址',align:'center'}
-				,{field:'file',title:'任意文件地址',align:'center'}
+				,{field:'multi_img',title:'多个图片',align:'center',templet:function(d){
+					return layTp.facade.formatter.images(d.multi_img);
+				}}
+				,{field:'video',title:'视频文件地址',align:'center',templet:function(d){
+					return layTp.facade.formatter.video(d.video);
+				}}
+				,{field:'audio',title:'音频文件地址',align:'center',templet:function(d){
+					return layTp.facade.formatter.audio(d.audio);
+				}}
+				,{field:'file',title:'任意文件地址',align:'center',templet:function(d){
+					return layTp.facade.formatter.file(d.file);
+				}}
 				,{field:'content',title:'文章内容',align:'center'}
 				,{field:'province_id',title:'省份',align:'center'}
 				,{field:'city_id',title:'城市',align:'center'}

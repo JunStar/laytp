@@ -179,7 +179,7 @@ div.sp_result_area.shadowUp{
 }
 
 ul.sp_results > li.sp_over {
-    background-color: #53A4EA !important;
+    background-color: var(--laytp-layui-form-checked) !important;
     color: #fff !important;
     cursor: pointer;
 }
