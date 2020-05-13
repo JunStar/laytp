@@ -210,7 +210,7 @@ layui-nav-child dd.layui-this, .layui-nav-tree .layui-nav-child dd.layui-this a{
 }
 
 .layui-nav-tree li.layui-nav-itemed>a{
-    /*background:#1e282c!important;*/
+    background:var(--laytp-side-itemed-a-bg)!important;
     color:var(--laytp-layui-side-layui-this-a)!important;
     margin-left: 5px;
 }

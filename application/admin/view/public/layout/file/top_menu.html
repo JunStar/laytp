@@ -103,11 +103,57 @@
 </div>
 
 <div class="layui-side">
-    <div class="fl header-logo">{$Think.config.laytp.basic.site_name}</div>
-    <div id="navBarId" class="layui-side-scroll"></div>
+    <div class="user-panel hidden-xs">
+        <div class="pull-left image">
+            <a href="general/profile" class="addtabsit"><img src="{$laytp_admin_user.avatar}" class="img-circle"></a>
+        </div>
+        <div class="pull-left info">
+            <p>Admin</p>
+            <span class="layui-badge-dot" style="position: relative; top: -2px; left: -4px;background-color: #18bc9c"></span> 在线        </div>
+    </div>
+    <div id="navBarId"></div>
 </div>
 
 <style>
+    .user-panel{
+        white-space:nowrap;
+        overflow:hidden;
+        position: relative;
+        width: 100%;
+        padding: 10px;
+    }
+
+    .pull-left{
+        float: left !important;
+    }
+
+    .user-panel > .image img{
+        vertical-align:middle;
+        border:0;
+        width:45px;
+        height:45px;
+    }
+
+    .img-circle{
+        border-radius: 50%;
+    }
+
+    .user-panel > .info, .skin-green .user-panel > .info > a{
+        color:var(--laytp-layui-nav-item-a-c);
+    }
+
+    .user-panel > .info {
+        padding: 5px 5px 5px 15px;
+        line-height: 1;
+        position: absolute;
+        left: 55px;
+    }
+
+    .user-panel > .info > p {
+        font-weight: 600;
+        margin-bottom: 9px;
+    }
+
     #navBarId dl{
         background-color: var(--laytp-layui-nav-child-a-bg)!important;
     }
