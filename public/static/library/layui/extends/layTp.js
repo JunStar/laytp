@@ -737,9 +737,9 @@ layui.define([
                                     if( res.code == 1 ){
                                         if( need_data == "true" || need_refresh == "true" ){
                                             if(typeof parent.func_controller != "undefined"){
-                                                parent.func_controller.table_render();
+                                                parent.func_controller.table_render(parent.layui.form.val("laytp_search_form"),parent.$(".layui-laypage-em").next().html());
                                             }else if(typeof func_controller != "undefined"){
-                                                func_controller.table_render();
+                                                func_controller.table_render(layui.form.val("laytp_search_form"),$(".layui-laypage-em").next().html());
                                             }
                                         }
                                         layTp.facade.success(res.msg);
@@ -1325,7 +1325,7 @@ layui.define([
             });
         },
 
-        //laytp列表单选按钮粗发js
+        //laytp列表单选按钮触发js
         laytp_switch:function(){
             layui.form.on('switch(laytp_switch)', function(obj){
                 let open_value = obj.elem.attributes['open_value'].nodeValue;

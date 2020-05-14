@@ -5,7 +5,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">父级</label>
         <div class="layui-input-block">
-            <select id="pid" name="row[pid]">
+            <select id="parent_id" name="row[parent_id]">
                 <option value="0">------请选择------</option>
                 {foreach $parent_list as $key=>$vo}
                 <option value="{$vo.id}">{$vo.name}</option>

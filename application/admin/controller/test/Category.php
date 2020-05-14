@@ -26,8 +26,8 @@ class Category extends Backend
         $order['id'] = 'asc';
         $data = $this->model->order($order)->select()->toArray();
         $tree_obj = Tree::instance();
-        $tree_obj->init($data);
-        $this->parent_list = $tree_obj->getTreeList($tree_obj->getTreeArray(0));
+        $tree_obj->init($data,'parent_id');
+        $this->parent_list = $tree_obj->getTreeList($tree_obj->getTreeArray(0),'name');
         $this->assign('parent_list', $this->parent_list);
     }
 
@@ -39,7 +39,7 @@ class Category extends Backend
             $data = $this->model->order($order)->paginate($limit)->toArray();
             $tree_obj = Tree::instance();
             $tree_obj->init($data['data']);
-            $data['data'] = $tree_obj->getTreeList($tree_obj->getTreeArray(0));
+            $data['data'] = $tree_obj->getTreeList($tree_obj->getTreeArray(0),'name');
             return select_page_data($data);
         }
     }
