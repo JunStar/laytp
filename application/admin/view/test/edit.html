@@ -2,6 +2,8 @@
 
 {block name="form"}
     <input type="hidden" name="row[__token__]" value="{$Request.token}" id="__token__" class="layui-input">
+<input type="hidden" name="row[admin_id]" value="{$laytp_admin_user.id}" id="admin_id" placeholder="请输入管理员" class="layui-input">
+
     <div class="layui-form-item">
         <label class="layui-form-label" title="标题">标题</label>
         <div class="layui-input-block">

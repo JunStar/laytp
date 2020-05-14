@@ -25,6 +25,18 @@
             </div>
         </div>
         <div class="layui-form-item layui-inline">
+                <label class="layui-form-label" title="管理员">管理员</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="admin_id" name="search_param[admin_id][value]" id="admin_id" placeholder="请选择" class="layui-input selectPage"
+                    search-field="nickname"
+                    search-url="{:url('admin/auth.user/select_page')}"
+                    show-field="nickname"
+                    show-multiple="true">
+                    <input type="hidden" name="search_param[admin_id][condition]" value="IN">
+                </div>
+            </div>
+
+		    <div class="layui-form-item layui-inline">
                 <label class="layui-form-label" title="标题">标题</label>
                 <div class="layui-input-inline">
                     <input autocomplete="off" type="text" id="title" name="search_param[title][value]" id="title" placeholder="请输入标题" class="layui-input">
