@@ -2,20 +2,37 @@
 
 use think\facade\Url;
 
-if (!function_exists('addon_url')) {
-    /**
-     * Url生成
-     * @param string        $url 路由地址
-     * @param string|array  $vars 变量
-     * @param bool|string   $suffix 生成的URL后缀
-     * @param bool|string   $domain 域名
-     * @return string
-     */
-    function addon_url($addon, $url = '', $vars = '', $suffix = true, $domain = false)
-    {
-        $addon_url = "/addons/$addon/$url";
-        return Url::build($addon_url, $vars, $suffix, $domain);
+/**
+ * 生成插件url地址
+ * @param $addon 插件名
+ * @param string $url
+ * @param string $vars
+ * @param bool $suffix
+ * @param bool $domain
+ * @return string
+ */
+function addon_url($addon, $url = '', $vars = '', $suffix = true, $domain = false)
+{
+    $addon_url = "/addons/$addon/$url";
+    return Url::build($addon_url, $vars, $suffix, $domain);
+}
+
+/**
+ * 统一处理post数据
+ * @param $post
+ * @return mixed
+ */
+function filterPostData($post){
+    if(!$post){
+        return [];
     }
+    //处理数组
+    foreach($post as $k=>$v){
+        if(is_array($v)){
+            $post[$k] = implode(',',$v);
+        }
+    }
+    return $post;
 }
 
 //获取插件js目录

@@ -125,7 +125,15 @@
                 <label class="layui-form-label" title="创建时间">创建时间</label>
                 <div class="layui-input-inline">
                     <input type="text" class="layui-input" id="create_time" name="search_param[create_time][value]" laydate="true" laydate_type="datetime" laydate_range="true" placeholder="请选择时间">
-<input type="hidden" name="search_param[create_time][condition]" value="BETWEEN">
+<input type="hidden" name="search_param[create_time][condition]" value="BETWEEN_STRTOTIME">
+                </div>
+            </div>
+
+		    <div class="layui-form-item layui-inline">
+                <label class="layui-form-label" title="日期">日期</label>
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input" id="date" name="search_param[date][value]" laydate="true" laydate_type="month" laydate_range="true" placeholder="请选择时间">
+<input type="hidden" name="search_param[date][condition]" value="BETWEEN">
                 </div>
             </div>
 
@@ -289,6 +297,7 @@ layui.use(['layTp'],function() {
 				,{field:'create_time',title:'创建时间',align:'center'}
 				//,{field:'update_time',title:'更新时间',align:'center'}
 				//,{field:'delete_time',title:'删除时间',align:'center'}
+				,{field:'date',title:'日期',align:'center'}
 				,{field:'operation',title:'操作',align:'center',toolbar:'#operation',width:100,fixed:'right'}
             ]]
         });

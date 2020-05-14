@@ -84,6 +84,7 @@ layui.use(['layTp'],function() {
 				,{field:'create_time',title:'创建时间',align:'center'}
 				//,{field:'update_time',title:'更新时间',align:'center'}
 				//,{field:'delete_time',title:'删除时间',align:'center'}
+				,{field:'date',title:'日期',align:'center'}
 				,{field:'operation',title:'操作',align:'center',toolbar:'#operation',width:100,fixed:'right'}
             ]]
         });

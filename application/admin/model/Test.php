@@ -10,16 +10,21 @@ use think\model\concern\SoftDelete;
 class Test extends Backend
 {
 	use SoftDelete;
+	protected $defaultSoftDelete='0';
     //模型名
     protected $name = 'test';
 
     //时间戳字段转换
-    
-    //是否关闭create_time自动写入
+    protected $type = [
+		'create_time'  =>  'timestamp:Y-m-d H:i:s',
+		'update_time'  =>  'timestamp:Y-m-d H:i:s',
+		'delete_time'  =>  'timestamp:Y-m-d H:i:s',
+	];
+    //是否设置创建时间字段，当设置$createTime = false时，为关闭create_time自动写入，默认值为$createTime = 'create_time'
     protected $createTime = false;
-    //是否关闭update_time自动写入
+    //是否设置更新时间字段，当设置$updateTime = false时，为关闭update_time自动写入，默认值为$updateTime = 'update_time'
     
-    //是否关闭delete_time自动写入
+    //是否设置删除时间字段，当设置$deleteTime = false时，为关闭delete_time自动写入，默认值为$deleteTime = 'delete_time'
     
 
     //表名
