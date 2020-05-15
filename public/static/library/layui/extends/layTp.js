@@ -15,14 +15,12 @@ layui.define([
     ,'laytp_tree'
     ,'colorpicker'
     ,'laytp_editor'
-    ,'laytp_doceditor'
 ], function(exports){
     const MOD_NAME = 'layTp';
     let layTp = {};
     const $ = layTp.$ = layui.jquery;
     const selectPagePlugin = layui.selectPage;
     const laytp_editor = layui.laytp_editor;
-    const laytp_doceditor = layui.laytp_doceditor;
 
     const default_popup_frame_width = '100%';
     const default_popup_frame_height = '100%';
@@ -191,11 +189,6 @@ layui.define([
         //layEdit简易编辑器
         layEditor: function(options){
             laytp_editor.createEditor(options);
-        },
-
-        //layDocEditor
-        layDocEditor: function(options){
-            laytp_doceditor.createEditor(options);
         },
 
         //layer弹窗iFrame
@@ -1124,10 +1117,6 @@ layui.define([
             //渲染layEditor
             layTp.facade.layEditor({
                 elem:'.layeditor'
-            });
-            //渲染laydocEditor
-            layTp.facade.layDocEditor({
-                elem:'.laydoceditor'
             });
         },
 
