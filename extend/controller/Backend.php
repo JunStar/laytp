@@ -12,7 +12,6 @@ use think\Controller;
 use think\facade\Config;
 use think\facade\Cookie;
 use think\facade\Hook;
-use think\facade\Session;
 
 class Backend extends Controller
 {
@@ -32,6 +31,7 @@ class Backend extends Controller
     public $no_need_login=['select_page'];//无需登录的方法名（无需登录就不需要鉴权了）
     public $ref;//前端直接访问带[ref=菜单id]参数的链接地址就直接渲染菜单页，并且前端js把iframe的地址跳转到当前地址
 
+    //初始化
     public function initialize(){
         if( $this->request->isPost() ){
             $token = $this->request->server('HTTP_TOKEN', $this->request->request('token', Cookie::get('token')));
@@ -106,10 +106,6 @@ class Backend extends Controller
             $this->redirect(url('/admin/auth.login/index'));
         }
         $this->admin_user = model('admin/auth.User')->get($admin_user_id);
-        if(!$this->admin_user){
-            Session::clear();
-            $this->error('用户不存在');
-        }
         $this->assign('laytp_admin_user', $this->admin_user);
 
         if($this->admin_user->is_super_manager){
@@ -334,30 +330,6 @@ class Backend extends Controller
             }
         }
         $whereStr = implode(' OR ', $where);
-        return $whereStr;
-    }
-
-    /**
-     * selectPage插件ajax请求时组合的查询条件,已弃用
-     * @return string
-     */
-    public function build_select_page_params(){
-        $where = [];
-        $q_word = $this->request->param('q_word');
-        $andOr = $this->request->param('andOr');
-        $searchField = $this->request->param('searchField');
-        $searchFieldStr = $searchField[0];
-        if(is_array($q_word) && count($q_word)){
-            foreach($q_word as $keyword){
-                $where[] = "{$searchFieldStr} LIKE '%{$keyword}%'";
-            }
-        }
-        $searchKey = $this->request->param('searchKey');
-        $searchValue = $this->request->param('searchValue');
-        if($searchKey && $searchValue){
-            $where[] = "{$searchKey} in ({$searchValue})";
-        }
-        $whereStr = implode(" {$andOr} ", $where);
         return $whereStr;
     }
 
