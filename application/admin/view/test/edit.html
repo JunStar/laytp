@@ -49,21 +49,21 @@
     <div class="layui-form-item">
         <label class="layui-form-label" title="爱好">爱好</label>
         <div class="layui-input-block">
-            <input autocomplete="off" type="checkbox" name="row[hobby][]" id="hobby-0" value="0" title="游泳" {if in_array('0',explode(',',$hobby))}checked="checked"{/if}>
-			<input autocomplete="off" type="checkbox" name="row[hobby][]" id="hobby-1" value="1" title="下棋" {if in_array('1',explode(',',$hobby))}checked="checked"{/if}>
-			<input autocomplete="off" type="checkbox" name="row[hobby][]" id="hobby-2" value="2" title="游戏" {if in_array('2',explode(',',$hobby))}checked="checked"{/if}>
-			<input autocomplete="off" type="checkbox" name="row[hobby][]" id="hobby-3" value="3" title="乒乓球" {if in_array('3',explode(',',$hobby))}checked="checked"{/if}>
-			<input autocomplete="off" type="checkbox" name="row[hobby][]" id="hobby-4" value="4" title="羽毛" {if in_array('4',explode(',',$hobby))}checked="checked"{/if}>
-			<input autocomplete="off" type="checkbox" name="row[hobby][]" id="hobby-5" value="5" title="跑步" {if in_array('5',explode(',',$hobby))}checked="checked"{/if}>
-			<input autocomplete="off" type="checkbox" name="row[hobby][]" id="hobby-6" value="6" title="爬山" {if in_array('6',explode(',',$hobby))}checked="checked"{/if}>
-			<input autocomplete="off" type="checkbox" name="row[hobby][]" id="hobby-7" value="7" title="美食" {if in_array('7',explode(',',$hobby))}checked="checked"{/if}>
+            <div id="hobby" class="select_multi" options='{:getSelectMultiJsConst($const_hobby)}' selected_data="['{:str_replace(",","','",$hobby)}']" max="0" name="row[hobby]" verify=""></div>
         </div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label" title="标志">标志</label>
         <div class="layui-input-block">
-            <div id="sign" class="select_multi" options='{:getSelectMultiJsConst($const_sign)}' selected_data="['{:str_replace(",","','",$sign)}']" max="0" name="row[sign]" verify=""></div>
+            <input autocomplete="off" type="checkbox" name="row[sign][]" id="sign-0" value="0" title="热门" {if in_array('0',explode(',',$sign))}checked="checked"{/if}>
+			<input autocomplete="off" type="checkbox" name="row[sign][]" id="sign-1" value="1" title="首页" {if in_array('1',explode(',',$sign))}checked="checked"{/if}>
+			<input autocomplete="off" type="checkbox" name="row[sign][]" id="sign-2" value="2" title="顶级分类推荐" {if in_array('2',explode(',',$sign))}checked="checked"{/if}>
+			<input autocomplete="off" type="checkbox" name="row[sign][]" id="sign-3" value="3" title="二级分类推荐" {if in_array('3',explode(',',$sign))}checked="checked"{/if}>
+			<input autocomplete="off" type="checkbox" name="row[sign][]" id="sign-4" value="4" title="特定分类推荐" {if in_array('4',explode(',',$sign))}checked="checked"{/if}>
+			<input autocomplete="off" type="checkbox" name="row[sign][]" id="sign-5" value="5" title="轮播图" {if in_array('5',explode(',',$sign))}checked="checked"{/if}>
+			<input autocomplete="off" type="checkbox" name="row[sign][]" id="sign-6" value="6" title="置顶" {if in_array('6',explode(',',$sign))}checked="checked"{/if}>
+			<input autocomplete="off" type="checkbox" name="row[sign][]" id="sign-7" value="7" title="新闻" {if in_array('7',explode(',',$sign))}checked="checked"{/if}>
         </div>
     </div>
 
