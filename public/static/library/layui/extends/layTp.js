@@ -164,12 +164,14 @@ layui.define([
             return url;
         },
 
+        //设置cookie
         setcookie: function(name,value,Days){
             var exp  = new Date();
             exp.setTime(exp.getTime() + Days*24*60*60*1000);
             document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString() + ";path=/";
         },
 
+        //获取cookie
         getcookie:function(name){
             var arr = document.cookie.match(new RegExp("(^| )"+name+"=([^;]*)(;|$)"));
             if(arr != null){
@@ -179,6 +181,7 @@ layui.define([
             }
         },
 
+        //删除cookie
         delcookie:function(name){
             var exp = new Date();
             exp.setTime(exp.getTime() - 1);
@@ -627,6 +630,7 @@ layui.define([
                 return html;
             }
         },
+
         //图片预览
         preview_image:function(url){
             var img = new Image();
