@@ -114,6 +114,7 @@
                         <i class="layui-icon">&#xe62f;</i> 上 传
                     </button>
                 </div>
+                {if ($laytp_admin_user['is_super_manager'] || in_array('admin/attachment/select', $rule_list))}
                 <div class="layui-inline">
                     <button type="button"
                             class="layui-btn layui-btn-sm layui-btn-danger pull-left popup-frame"
@@ -123,6 +124,7 @@
                         <i class="layui-icon">&#xe60a;</i> 选 择
                     </button>
                 </div>
+                {/if}
 				<div class="pic-more">
                     <ul class="pic-more-upload-list" id="preview_single_img">
                     {if $single_img}
@@ -153,6 +155,7 @@
                         <i class="layui-icon">&#xe62f;</i> 上 传
                     </button>
                 </div>
+                {if ($laytp_admin_user['is_super_manager'] || in_array('admin/attachment/select', $rule_list))}
                 <div class="layui-inline">
                     <button type="button"
                             class="layui-btn layui-btn-sm layui-btn-danger pull-left popup-frame"
@@ -162,6 +165,7 @@
                         <i class="layui-icon">&#xe60a;</i> 选 择
                     </button>
                 </div>
+                {/if}
 				<div class="pic-more">
                     <ul class="pic-more-upload-list" id="preview_multi_img">
                     {if $multi_img}
@@ -194,6 +198,7 @@
                         <i class="layui-icon">&#xe62f;</i> 上 传
                     </button>
                 </div>
+                {if ($laytp_admin_user['is_super_manager'] || in_array('admin/attachment/select', $rule_list))}
                 <div class="layui-inline">
                     <button type="button"
                             class="layui-btn layui-btn-sm layui-btn-danger pull-left popup-frame"
@@ -203,6 +208,7 @@
                         <i class="layui-icon">&#xe60a;</i> 选 择
                     </button>
                 </div>
+                {/if}
 				<div class="pic-more">
                     <ul class="pic-more-upload-list" id="preview_video">
                     {if $video}
@@ -231,6 +237,7 @@
                         <i class="layui-icon">&#xe62f;</i> 上 传
                     </button>
                 </div>
+                {if ($laytp_admin_user['is_super_manager'] || in_array('admin/attachment/select', $rule_list))}
                 <div class="layui-inline">
                     <button type="button"
                             class="layui-btn layui-btn-sm layui-btn-danger pull-left popup-frame"
@@ -240,6 +247,7 @@
                         <i class="layui-icon">&#xe60a;</i> 选 择
                     </button>
                 </div>
+                {/if}
 				<div class="pic-more">
                     <ul class="pic-more-upload-list" id="preview_audio">
                     {if $audio}
@@ -268,6 +276,7 @@
                         <i class="layui-icon">&#xe62f;</i> 上 传
                     </button>
                 </div>
+                {if ($laytp_admin_user['is_super_manager'] || in_array('admin/attachment/select', $rule_list))}
                 <div class="layui-inline">
                     <button type="button"
                             class="layui-btn layui-btn-sm layui-btn-danger pull-left popup-frame"
@@ -277,6 +286,7 @@
                         <i class="layui-icon">&#xe60a;</i> 选 择
                     </button>
                 </div>
+                {/if}
             </div>
         </div>
     </div>
