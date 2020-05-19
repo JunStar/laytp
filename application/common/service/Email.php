@@ -10,9 +10,11 @@ class Email extends Service
     //发送邮件
     public function send($to, $event, $template_date, $from=''){
         $template = Template::where('event',$event)->find();
-        $template_content = '';
-        foreach($template_date as $k=>$v){
-            $template_content = str_replace('{'.$k.'}',$v,$template->template);
+        $template_content = $template->template;
+        if($template_date) {
+            foreach ($template_date as $k => $v) {
+                $template_content = str_replace('{' . $k . '}', $v, $template_content);
+            }
         }
         $email_lib = \library\Email::instance();
         if($from){
