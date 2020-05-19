@@ -933,7 +933,7 @@ layui.define([
                             layTp.facade.success(res.msg);
                             if(typeof res.data.reload === 'boolean' && res.data.reload){
                                 setTimeout(function () {
-                                    parent.parent.location.reload();
+                                    parent.location.reload();
                                 }, 1000);
                             }
                             if(typeof parent.func_controller != "undefined"){
@@ -945,6 +945,11 @@ layui.define([
                             }
                         }else{
                             layTp.facade.error(res.msg);
+                            if(typeof res.data.reload === 'boolean' && res.data.reload){
+                                setTimeout(function () {
+                                    parent.location.reload();
+                                }, 1000);
+                            }
                         }
                     },
                     error: function (xhr) {
