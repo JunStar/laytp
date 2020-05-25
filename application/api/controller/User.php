@@ -49,6 +49,7 @@ class User extends Api{
         "email": null,
         "username": null,
         "nickname": null,
+        "avatar": "http://local.sjdw.com/static/index/image/default.png",
         "token": "920df4ba-368c-4b6c-aa5d-bc61c6e9f17e",
         "user_id": 3,
         "createtime": 1590206642,
