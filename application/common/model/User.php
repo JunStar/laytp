@@ -5,6 +5,7 @@
 namespace app\common\model;
 
 use model\Backend;
+use think\facade\Config;
 use think\model\concern\SoftDelete;
 
 class User extends Backend
@@ -42,6 +43,6 @@ class User extends Backend
     }
 
     public function getAvatarAttr($avatar){
-        return $avatar ? : '/static/index/image/default.png';
+        return $avatar ? : Config::get('laytp.upload.domain') . '/static/index/image/default.png';
     }
 }
