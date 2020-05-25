@@ -19,7 +19,7 @@ class User extends Service
     protected $_logined = null;
     public $token_keep_time = 1800;//Token默认有效时长,单位秒，30分钟
 
-    protected $allowFields = ['id', 'username', 'nickname', 'email', 'mobile', 'avatar', 'exp'];
+    protected $allowFields = ['id', 'username', 'nickname', 'avatar', 'email', 'mobile', 'avatar', 'exp'];
 
 
     /**
