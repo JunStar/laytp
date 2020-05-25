@@ -84,24 +84,24 @@ class User extends Api{
      * @ApiReturnParams   (name="data.expiretime", type="integer", description="Token有效至，Unix时间戳，单位秒")
      * @ApiReturnParams   (name="data.expires_in", type="integer", description="Token有效时长，单位秒")
      * @ApiReturn
-    ({
+({
     "code": 1,
     "msg": "操作成功",
     "time": 1584330277,
     "data": {
-    "id": 3,
-    "mobile": "13800000000",
-    "email": null,
-    "username": null,
-    "nickname": null,
-    "avatar": null,
-    "token": "c96599f3-4708-418f-906e-b4d62f2bd323",
-    "user_id": 3,
-    "createtime": 1584330099,
-    "expiretime": 1584416499,
-    "expires_in": 86222
+        "id": 3,
+        "mobile": "13800000000",
+        "email": null,
+        "username": null,
+        "nickname": null,
+        "avatar": null,
+        "token": "c96599f3-4708-418f-906e-b4d62f2bd323",
+        "user_id": 3,
+        "createtime": 1584330099,
+        "expiretime": 1584416499,
+        "expires_in": 86222
     }
-    })
+})
      */
     public function mobile_code_reg_login()
     {
@@ -145,24 +145,24 @@ class User extends Api{
      * @ApiReturnParams   (name="data.expiretime", type="integer", description="Token有效至，Unix时间戳，单位秒")
      * @ApiReturnParams   (name="data.expires_in", type="integer", description="Token有效时长，单位秒")
      * @ApiReturn
-    ({
+({
     "code": 1,
     "msg": "操作成功",
     "time": 1584513627,
     "data": {
-    "id": 4,
-    "mobile": null,
-    "email": null,
-    "username": null,
-    "nickname": null,
-    "avatar": null,
-    "token": "3a526ba6-5c39-4c5e-bf75-4365c8f85f4e",
-    "user_id": 4,
-    "createtime": 1584513627,
-    "expiretime": 1899873627,
-    "expires_in": 315360000
+        "id": 4,
+        "mobile": null,
+        "email": null,
+        "username": null,
+        "nickname": null,
+        "avatar": null,
+        "token": "3a526ba6-5c39-4c5e-bf75-4365c8f85f4e",
+        "user_id": 4,
+        "createtime": 1584513627,
+        "expiretime": 1899873627,
+        "expires_in": 315360000
     }
-    })
+})
      */
     public function mobile_one_click_login()
     {
@@ -199,12 +199,38 @@ class User extends Api{
      * @ApiParams   (name="username", type="integer", required=true, description="用户名")
      * @ApiParams   (name="password", type="string", required=true, description="密码")
      * @ApiParams   (name="repassword", type="string", required=true, description="重复密码")
-     * @ApiReturnParams   (name="code", type="integer", required=true, sample="1")
-     * @ApiReturnParams   (name="msg", type="string", required=true, sample="注册成功")
+     * @ApiReturnParams   (name="code", type="integer", description="返回状态码.0=失败,1=成功")
+     * @ApiReturnParams   (name="msg", type="string", description="返回描述")
+     * @ApiReturnParams   (name="time", type="integer", description="请求时间，Unix时间戳，单位秒")
+     * @ApiReturnParams   (name="data.id", type="integer", description="用户主键ID")
+     * @ApiReturnParams   (name="data.mobile", type="string", description="手机号")
+     * @ApiReturnParams   (name="data.email", type="string", description="Email")
+     * @ApiReturnParams   (name="data.username", type="string", description="用户名")
+     * @ApiReturnParams   (name="data.nickname", type="string", description="昵称")
+     * @ApiReturnParams   (name="data.avatar", type="string", description="头像")
+     * @ApiReturnParams   (name="data.token", type="string", description="用户登录凭证,Token")
+     * @ApiReturnParams   (name="data.user_id", type="integer", description="用户主键ID")
+     * @ApiReturnParams   (name="data.createtime", type="integer", description="创建时间，Unix时间戳，单位秒")
+     * @ApiReturnParams   (name="data.expiretime", type="integer", description="Token有效至，Unix时间戳，单位秒")
+     * @ApiReturnParams   (name="data.expires_in", type="integer", description="Token有效时长，单位秒")
      * @ApiReturn
 ({
-    'code':'1',
-    'msg':'注册成功'
+    "code": 1,
+    "msg": "操作成功",
+    "time": 1584513627,
+    "data": {
+        "id": 4,
+        "mobile": null,
+        "email": null,
+        "username": null,
+        "nickname": null,
+        "avatar": null,
+        "token": "3a526ba6-5c39-4c5e-bf75-4365c8f85f4e",
+        "user_id": 4,
+        "createtime": 1584513627,
+        "expiretime": 1899873627,
+        "expires_in": 315360000
+    }
 })
      */
     public function username_reg()
@@ -236,13 +262,39 @@ class User extends Api{
      * @ApiRoute    (/api/user/username_login)
      * @ApiParams   (name="username", type="string", required=true, description="用户名")
      * @ApiParams   (name="password", type="string", required=true, description="密码")
-     * @ApiReturnParams   (name="code", type="integer", required=true, sample="0")
-     * @ApiReturnParams   (name="msg", type="string", required=true, sample="登录成功")
+     * @ApiReturnParams   (name="code", type="integer", description="返回状态码.0=失败,1=成功")
+     * @ApiReturnParams   (name="msg", type="string", description="返回描述")
+     * @ApiReturnParams   (name="time", type="integer", description="请求时间，Unix时间戳，单位秒")
+     * @ApiReturnParams   (name="data.id", type="integer", description="用户主键ID")
+     * @ApiReturnParams   (name="data.mobile", type="string", description="手机号")
+     * @ApiReturnParams   (name="data.email", type="string", description="Email")
+     * @ApiReturnParams   (name="data.username", type="string", description="用户名")
+     * @ApiReturnParams   (name="data.nickname", type="string", description="昵称")
+     * @ApiReturnParams   (name="data.avatar", type="string", description="头像")
+     * @ApiReturnParams   (name="data.token", type="string", description="用户登录凭证,Token")
+     * @ApiReturnParams   (name="data.user_id", type="integer", description="用户主键ID")
+     * @ApiReturnParams   (name="data.createtime", type="integer", description="创建时间，Unix时间戳，单位秒")
+     * @ApiReturnParams   (name="data.expiretime", type="integer", description="Token有效至，Unix时间戳，单位秒")
+     * @ApiReturnParams   (name="data.expires_in", type="integer", description="Token有效时长，单位秒")
      * @ApiReturn
-    ({
-    'code':'1',
-    'msg':'登录成功'
-    })
+({
+    "code": 1,
+    "msg": "操作成功",
+    "time": 1584513627,
+    "data": {
+        "id": 4,
+        "mobile": null,
+        "email": null,
+        "username": null,
+        "nickname": null,
+        "avatar": null,
+        "token": "3a526ba6-5c39-4c5e-bf75-4365c8f85f4e",
+        "user_id": 4,
+        "createtime": 1584513627,
+        "expiretime": 1899873627,
+        "expires_in": 315360000
+    }
+})
      */
     public function username_login()
     {
@@ -272,13 +324,39 @@ class User extends Api{
      * @ApiRoute    (/api/user/email_login)
      * @ApiParams   (name="email", type="string", required=true, description="邮箱")
      * @ApiParams   (name="password", type="string", required=true, description="密码")
-     * @ApiReturnParams   (name="code", type="integer", required=true, sample="0")
-     * @ApiReturnParams   (name="msg", type="string", required=true, sample="登录成功")
+     * @ApiReturnParams   (name="code", type="integer", description="返回状态码.0=失败,1=成功")
+     * @ApiReturnParams   (name="msg", type="string", description="返回描述")
+     * @ApiReturnParams   (name="time", type="integer", description="请求时间，Unix时间戳，单位秒")
+     * @ApiReturnParams   (name="data.id", type="integer", description="用户主键ID")
+     * @ApiReturnParams   (name="data.mobile", type="string", description="手机号")
+     * @ApiReturnParams   (name="data.email", type="string", description="Email")
+     * @ApiReturnParams   (name="data.username", type="string", description="用户名")
+     * @ApiReturnParams   (name="data.nickname", type="string", description="昵称")
+     * @ApiReturnParams   (name="data.avatar", type="string", description="头像")
+     * @ApiReturnParams   (name="data.token", type="string", description="用户登录凭证,Token")
+     * @ApiReturnParams   (name="data.user_id", type="integer", description="用户主键ID")
+     * @ApiReturnParams   (name="data.createtime", type="integer", description="创建时间，Unix时间戳，单位秒")
+     * @ApiReturnParams   (name="data.expiretime", type="integer", description="Token有效至，Unix时间戳，单位秒")
+     * @ApiReturnParams   (name="data.expires_in", type="integer", description="Token有效时长，单位秒")
      * @ApiReturn
-    ({
-    'code':'1',
-    'msg':'登录成功'
-    })
+({
+    "code": 1,
+    "msg": "操作成功",
+    "time": 1584513627,
+    "data": {
+        "id": 4,
+        "mobile": null,
+        "email": null,
+        "username": null,
+        "nickname": null,
+        "avatar": null,
+        "token": "3a526ba6-5c39-4c5e-bf75-4365c8f85f4e",
+        "user_id": 4,
+        "createtime": 1584513627,
+        "expiretime": 1899873627,
+        "expires_in": 315360000
+    }
+})
      */
     public function email_login()
     {
