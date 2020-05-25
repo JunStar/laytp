@@ -23,7 +23,39 @@ class User extends Api{
 
     /**
      * 根据token获取用户信息
-     * @ApiHeaders  (name=token, type=string, required=true, description="用户登录后得到的Token")
+     * @ApiHeaders        (name=token, type=string, required=true, description="用户登录后得到的Token")
+     * @ApiReturnParams   (name="code", type="integer", description="返回状态码.0=失败,1=成功")
+     * @ApiReturnParams   (name="msg", type="string", description="返回描述")
+     * @ApiReturnParams   (name="time", type="integer", description="请求时间，Unix时间戳，单位秒")
+     * @ApiReturnParams   (name="data.id", type="integer", description="用户主键ID")
+     * @ApiReturnParams   (name="data.mobile", type="string", description="手机号")
+     * @ApiReturnParams   (name="data.email", type="string", description="Email")
+     * @ApiReturnParams   (name="data.username", type="string", description="用户名")
+     * @ApiReturnParams   (name="data.nickname", type="string", description="昵称")
+     * @ApiReturnParams   (name="data.avatar", type="string", description="头像")
+     * @ApiReturnParams   (name="data.token", type="string", description="用户登录凭证,Token")
+     * @ApiReturnParams   (name="data.user_id", type="integer", description="用户主键ID")
+     * @ApiReturnParams   (name="data.createtime", type="integer", description="创建时间，Unix时间戳，单位秒")
+     * @ApiReturnParams   (name="data.expiretime", type="integer", description="Token有效至，Unix时间戳，单位秒")
+     * @ApiReturnParams   (name="data.expires_in", type="integer", description="Token有效时长，单位秒")
+     * @ApiReturn
+({
+    "code": 1,
+    "msg": "获取成功",
+    "time": 1590206649,
+    "data": {
+        "id": 3,
+        "mobile": "17603005415",
+        "email": null,
+        "username": null,
+        "nickname": null,
+        "token": "920df4ba-368c-4b6c-aa5d-bc61c6e9f17e",
+        "user_id": 3,
+        "createtime": 1590206642,
+        "expiretime": 1590208442,
+        "expires_in": 1793
+    }
+})
      */
     public function info(){
         $this->success('获取成功', $this->service_user->getUserInfo());
