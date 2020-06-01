@@ -61,17 +61,4 @@ class Menu extends Backend
         $this->assign($info->toArray());
         return $this->fetch();
     }
-
-    //设置状态
-    public function set_status(){
-        $where['id'] = $this->request->param('id');
-        $field = $this->request->param('field');
-        $field_val = $this->request->param('field_val');
-        $save[$field] = $field_val;
-        if( model('auth.Menu')->where($where)->update($save) ){
-            return $this->success('操作成功');
-        }else{
-            return $this->error('操作失败');
-        }
-    }
 }
