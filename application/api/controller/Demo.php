@@ -41,10 +41,6 @@ class Demo extends Api
     }
 
     /**
-    * 无需登录的接口
-    * @ApiRoute    (/api/demo/test1)
-    */
-    /**
      * @ApiTitle    (无需登录的接口)
      * @ApiSummary  (无需登录的接口详细描述)
      * @ApiMethod   (POST)
