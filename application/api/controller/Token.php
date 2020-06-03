@@ -6,8 +6,7 @@ use controller\Api;
 use library\Random;
 
 /**
- * Token接口
- * @ApiWeigh (90)
+ * Token相关
  */
 class Token extends Api
 {

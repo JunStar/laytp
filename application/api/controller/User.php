@@ -11,7 +11,7 @@ use controller\Api;
 
 /**
  * 会员相关
- * @ApiWeigh (100)
+ * @ApiWeigh (90)
  */
 class User extends Api{
 

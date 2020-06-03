@@ -11,7 +11,7 @@ use think\facade\Config;
 
 /**
  * 公用接口
- * @ApiWeigh (80)
+ * @ApiWeigh (100)
  */
 class Common extends Api{
 
@@ -22,16 +22,17 @@ class Common extends Api{
      * @ApiSummary  (文件上传)
      * @ApiMethod   (POST)
      * @ApiRoute    (/api/common/upload)
-     * @ApiHeaders  (name=token, type=string, required=true, description="用户登录后得到的Token")
-     * @ApiParams   (name="file", type="file", required=true, description="文件")
-     * @ApiReturnParams   (name="code", type="integer", required=true, sample="0")
-     * @ApiReturnParams   (name="msg", type="string", required=true, sample="返回成功")
-     * @ApiReturnParams   (name="time", type="int", required=true, sample="请求的Unix时间戳，单位秒")
+     * @ApiHeaders  (name=token, type=string, required="true", description="用户登录后得到的Token")
+     * @ApiParams   (name="file", type="file", required="true", description="文件")
+     * @ApiParams   (name="upload_dir", type="string", required="false", description="上传目录，允许为空", sample="avatar")
+     * @ApiReturnParams   (name="code", type="integer", description="错误码.0=没有错误，表示操作成功；1=常规错误码，客户端仅需提示msg；其他错误码与具体业务相关，其他错误码举例：10401。前端需要跳转至登录界面。")
+     * @ApiReturnParams   (name="msg", type="string", description="返回描述")
+     * @ApiReturnParams   (name="time", type="integer", description="请求时间，Unix时间戳，单位秒")
      * @ApiReturnParams   (name="data", type="null", description="null")
      * @ApiReturn
 ({
     'code':'1',
-    'msg':'返回成功',
+    'msg':'上传成功',
     'time':'15632654875',
     'data':null
 })
@@ -54,7 +55,11 @@ class Common extends Api{
             $file_ext   = strtolower($path_info['extension']);
             $save_name  = date("Ymd") . "/" . md5(uniqid(mt_rand())) . ".{$file_ext}";
             $upload_dir = $this->request->param('upload_dir');
-            $object     = $upload_dir . '/' . $save_name;//上传至阿里云或者七牛云的文件名
+            if($upload_dir){
+                $object     = $upload_dir . '/' . $save_name;//上传至阿里云或者七牛云的文件名
+            }else{
+                $object     = $save_name;//上传至阿里云或者七牛云的文件名
+            }
 
             $upload = Config::get('laytp.upload');
             preg_match('/(\d+)(\w+)/', $upload['maxsize'], $matches);
