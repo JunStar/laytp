@@ -142,12 +142,10 @@ class Sysconf extends Backend
             $config = model('Sysconf')->field('group,key,value,type')->select()->toArray();
             $result_config = [];
             foreach($config as $k=>$v){
-                if($v['value']){
-                    if($v['type'] == 'array'){
-                        $result_config[$v['group']][$v['key']] = json_decode( $v['value'], true );
-                    }else{
-                        $result_config[$v['group']][$v['key']] = $v['value'];
-                    }
+                if($v['type'] == 'array'){
+                    $result_config[$v['group']][$v['key']] = json_decode( $v['value'], true );
+                }else{
+                    $result_config[$v['group']][$v['key']] = $v['value'];
                 }
             }
             file_put_contents($file_name,"<?php\nreturn ".var_export($result_config,true).';');
