@@ -25,13 +25,13 @@ class Common extends Api{
      * @ApiHeaders  (name="token", type="string", required="true", description="用户登录后得到的Token")
      * @ApiParams   (name="file", type="file", required="true", description="文件")
      * @ApiParams   (name="upload_dir", type="string", required="false", description="上传目录，允许为空", sample="avatar")
-     * @ApiReturnParams   (name="code", type="integer", description="错误码.0=没有错误，表示操作成功；1=常规错误码，客户端仅需提示msg；其他错误码与具体业务相关，其他错误码举例：10401。前端需要跳转至登录界面。")
+     * @ApiReturnParams   (name="err_code", type="integer", description="错误码.0=没有错误，表示操作成功；1=常规错误码，客户端仅需提示msg；其他错误码与具体业务相关，其他错误码举例：10401。前端需要跳转至登录界面。")
      * @ApiReturnParams   (name="msg", type="string", description="返回描述")
      * @ApiReturnParams   (name="time", type="integer", description="请求时间，Unix时间戳，单位秒")
      * @ApiReturnParams   (name="data", type="null", description="null")
      * @ApiReturn
 ({
-    'code':'1',
+    'err_code':0,
     'msg':'上传成功',
     'time':'15632654875',
     'data':null
