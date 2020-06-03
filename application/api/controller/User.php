@@ -231,48 +231,6 @@ class User extends Api{
     }
 
     /**
-     * @ApiTitle    (邮箱密码登录)
-     * @ApiSummary  (邮箱密码登录)
-     * @ApiMethod   (POST)
-     * @ApiRoute    (/api/user/email_login)
-     * @ApiParams   (name="email", type="string", required="true", description="邮箱")
-     * @ApiParams   (name="password", type="string", required="true", description="密码")
-     * @ApiReturnParams   (name="err_code", type="integer", description="错误码.0=没有错误，表示操作成功；1=常规错误码，客户端仅需提示msg；其他错误码与具体业务相关，其他错误码举例：10401。前端需要跳转至登录界面。")
-     * @ApiReturnParams   (name="msg", type="string", description="返回描述")
-     * @ApiReturnParams   (name="time", type="integer", description="请求时间，Unix时间戳，单位秒")
-     * @ApiReturnParams   (name="data.token", type="string", description="用户登录后得到的凭证，token")
-     * @ApiReturn
-({
-    "err_code": 0,
-    "msg": "登录成功",
-    "time": 1584513627,
-    "data": {
-        "token": "b58ea1f0-e856-4ec4-b2b3-d852b9af86b5"
-    }
-})
-     */
-    public function email_login()
-    {
-        if(!$this->request->isPost()){
-            $this->error('请使用POST请求');
-        }
-
-        $param['email'] = $this->request->request('email');
-        $param['password'] = $this->request->request('password');
-
-        $validate = new EmailLogin();
-        if($validate->check($param)){
-            if($this->service_user->emailLogin($param)){
-                $this->success('登录成功', ['token'=>$this->service_user->getToken()]);
-            }else{
-                $this->error('登录失败',$this->service_user->getError());
-            }
-        }else{
-            $this->error('登录失败',$validate->getError());
-        }
-    }
-
-    /**
      * @ApiTitle    (注销登录)
      * @ApiSummary  (注销登录信息)
      * @ApiMethod   (GET)

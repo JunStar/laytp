@@ -83,7 +83,7 @@ class User extends Service
      * @param array $no_need_login 需要验证权限的数组
      * @return boolean
      */
-    public function is_need_login($no_need_login = [])
+    public function isNeedLogin($no_need_login = [])
     {
         $no_need_login = is_array($no_need_login) ? $no_need_login : explode(',', $no_need_login);
         if (!$no_need_login) {
@@ -134,34 +134,13 @@ class User extends Service
      * 用户名密码登录
      * @param $params
      * @return bool
-     */
-    public function usernameLogin($params){
-        $username = $params['username'];
-        $this->_user = \app\common\model\User::where('username','=', $username)->find();
-        $this->_token = Random::uuid();
-        $this->_logined = true;
-        Token::set($this->_token, $this->_user->id, $this->token_keep_time);
-        return true;
-    }
-
-    /**
-     * 邮箱密码注册
-     */
-    public function emailReg(){
-
-    }
-
-    /**
-     * 邮箱密码登录
-     * @param $params
-     * @return bool
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
      */
-    public function emailLogin($params){
-        $email = $params['email'];
-        $this->_user = \app\common\model\User::where('email','=', $email)->find();
+    public function usernameLogin($params){
+        $username = $params['username'];
+        $this->_user = \app\common\model\User::where('username','=', $username)->find();
         $this->_token = Random::uuid();
         $this->_logined = true;
         Token::set($this->_token, $this->_user->id, $this->token_keep_time);

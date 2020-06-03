@@ -48,7 +48,7 @@ class Api extends Controller
 
     public function _initialize(){
         $this->service_user = User::instance();
-        if ($this->service_user->is_need_login($this->no_need_login)) {
+        if ($this->service_user->isNeedLogin($this->no_need_login)) {
             $token = $this->request->server('HTTP_TOKEN', $this->request->request('token', Cookie::get('token')));
             $this->service_user->init($token);
             if (!$this->service_user->isLogin()) {
