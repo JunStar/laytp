@@ -61,7 +61,7 @@ layui.use(['layTp'],function() {
 					return layTp.facade.formatter.flag(d.sign,["热门","首页","顶级分类推荐","二级分类推荐","特定分类推荐","轮播图","置顶","新闻"]);
 				}}
 				,{field:'description',title:'描述',align:'center'}
-				,{field:'category_id',title:'所属分类（单选）',align:'center',templet:'<div>{{# if(d.remt){ }}{{d.remt.name}}{{# }else{ }}-{{# } }}</div>'}
+				,{field:'category_id',title:'所属分类（单选）',align:'center',templet:'<div>{{# if(d.category){ }}{{d.category.name}}{{# }else{ }}-{{# } }}</div>'}
 				,{field:'category_ids',title:'所属分类（多选）',align:'center'}
 				,{field:'single_img',title:'单个图片',align:'center',templet:function(d){
 					return layTp.facade.formatter.images(d.single_img);

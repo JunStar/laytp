@@ -15,7 +15,7 @@
         <div class="layui-form-item layui-inline">
                 <label class="layui-form-label" title="管理员">管理员</label>
                 <div class="layui-input-inline">
-                    <input type="text" id="admin_id" name="search_param[admin_id][value]" id="admin_id" placeholder="请选择" class="layui-input selectPage"
+                    <input type="text" id="admin_id" name="search_param[admin_id][value]" placeholder="请选择" class="layui-input selectPage"
                     search-field="nickname"
                     search-url="{:url('admin/auth.user/select_page')}"
                     show-field="nickname"
@@ -27,7 +27,7 @@
 		    <div class="layui-form-item layui-inline">
                 <label class="layui-form-label" title="标题">标题</label>
                 <div class="layui-input-inline">
-                    <input autocomplete="off" type="text" id="title" name="search_param[title][value]" id="title" placeholder="请输入标题" class="layui-input">
+                    <input autocomplete="off" type="text" id="title" name="search_param[title][value]" placeholder="请输入标题" class="layui-input">
                     <input type="hidden" name="search_param[title][condition]" value="LIKE">
                 </div>
             </div>
@@ -286,7 +286,7 @@ layui.use(['layTp'],function() {
 					return layTp.facade.formatter.flag(d.sign,["热门","首页","顶级分类推荐","二级分类推荐","特定分类推荐","轮播图","置顶","新闻"]);
 				}}
 				,{field:'description',title:'描述',align:'center'}
-				,{field:'category_id',title:'所属分类（单选）',align:'center',templet:'<div>{{# if(d.remt){ }}{{d.remt.name}}{{# }else{ }}-{{# } }}</div>'}
+				,{field:'category_id',title:'所属分类（单选）',align:'center',templet:'<div>{{# if(d.category){ }}{{d.category.name}}{{# }else{ }}-{{# } }}</div>'}
 				,{field:'category_ids',title:'所属分类（多选）',align:'center'}
 				,{field:'single_img',title:'单个图片',align:'center',templet:function(d){
 					return layTp.facade.formatter.images(d.single_img);
