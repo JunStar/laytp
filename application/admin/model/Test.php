@@ -17,8 +17,6 @@ class Test extends Backend
     //时间戳字段转换
     protected $type = [
 		'create_time'  =>  'timestamp:Y-m-d H:i:s',
-		'update_time'  =>  'timestamp:Y-m-d H:i:s',
-		'delete_time'  =>  'timestamp:Y-m-d H:i:s',
 	];
     //是否设置创建时间字段，当设置$createTime = false时，为关闭create_time自动写入，默认值为$createTime = 'create_time'
     protected $createTime = false;
@@ -78,7 +76,9 @@ class Test extends Backend
     ];
 
     //关联模型
-    
+    public function category(){
+        return $this->belongsTo('app\admin\model\test\Category','category_id','id')->field('id,name');
+    }
 
     //获取数组常量的函数
     public function getArrayConstList($field_name){
