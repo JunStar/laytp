@@ -7,6 +7,7 @@ use library\Random;
 
 /**
  * Token接口
+ * @ApiWeigh (90)
  */
 class Token extends Api
 {

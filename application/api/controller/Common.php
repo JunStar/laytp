@@ -11,6 +11,7 @@ use think\facade\Config;
 
 /**
  * 公用接口
+ * @ApiWeigh (80)
  */
 class Common extends Api{
 

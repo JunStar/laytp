@@ -19,7 +19,7 @@ class User extends Service
     protected $_logined = null;
     public $token_keep_time = 1800;//Token默认有效时长,单位秒，30分钟
 
-    protected $allowFields = ['id', 'username', 'nickname', 'avatar', 'email', 'mobile', 'avatar', 'exp'];
+    protected $allowFields = ['id', 'username', 'nickname', 'avatar', 'email', 'mobile'];
 
 
     /**
@@ -233,7 +233,7 @@ class User extends Service
         $data = $this->_user->toArray();
         $allowFields = $this->getAllowFields();
         $userinfo = array_intersect_key($data, array_flip($allowFields));
-        $userinfo = array_merge($userinfo, Token::get($this->_token));
+        $userinfo = array_merge($userinfo, ['token'=>$this->_token]);
         return $userinfo;
     }
 
