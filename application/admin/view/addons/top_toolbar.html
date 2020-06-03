@@ -8,7 +8,7 @@
         <a href="javascript:void(0);" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-more-vertical charge_type" click_search="true" field="charge_type" field_val="1">&nbsp;免费</a>
         <a href="javascript:void(0);" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-rmb charge_type" click_search="true" field="charge_type" field_val="2">&nbsp;付费</a>
         <a href="javascript:void(0);" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-star charge_type" click_search="true" field="charge_type" field_val="3">&nbsp;积分</a>
-        <a href="javascript:void(0);" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-home">&nbsp;本地插件</a>
+        <a href="javascript:void(0);" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-home charge_type" click_search="true" field="charge_type" field_val="4">&nbsp;本地插件</a>
     </div>
     <div class="layui-btn-group fl">
         <a href="javascript:void(0);" class="layui-btn layui-btn-warm layui-btn-sm layui-icon layui-icon-username popup-frame"
@@ -27,7 +27,7 @@
         <a href="javascript:void(0);" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-more-vertical {{#  if(d.charge_type === 1){ }}active{{#  } }} charge_type" field="charge_type" field_val="1">&nbsp;免费</a>
         <a href="javascript:void(0);" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-rmb {{#  if(d.charge_type === 2){ }}active{{#  } }} charge_type" field="charge_type" field_val="2">&nbsp;付费</a>
         <a href="javascript:void(0);" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-star {{#  if(d.charge_type === 3){ }}active{{#  } }} charge_type" click_search="true" field="charge_type" field_val="3">&nbsp;积分</a>
-        <a href="javascript:void(0);" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-home">&nbsp;本地插件</a>
+        <a href="javascript:void(0);" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-home {{#  if(d.charge_type === '4'){ }}active{{#  } }} charge_type" click_search="true" field="charge_type" field_val="4">&nbsp;本地插件</a>
     </div>
     <div class="layui-btn-group fl">
         <a href="javascript:void(0);" class="layui-btn layui-btn-warm layui-btn-sm layui-icon layui-icon-username

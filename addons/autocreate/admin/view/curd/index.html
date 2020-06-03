@@ -1,0 +1,31 @@
+{extend name="admin@public/layout/main"}
+
+{block name="script"}
+<script src="{:getAddonJSDir('autocreate','admin')}/curd.js" charset="utf-8"></script>
+{/block}
+
+{block name="js_template"}
+<script type="text/html" id="curd_toolbar">
+    <div class="layui-table-tool-temp">
+        <div class="layui-btn-group fl">
+            <a href="javascript:void(0);"
+               class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-add-circle-fine popup-frame"
+               data-name="生成常规Curd"
+               data-open="{:addon_url('autocreate',$js_global_var['module'].'/'.$js_global_var['controller'].'/import')}"
+               data-width="100%"
+               data-height="100%">
+                生成常规Curd
+            </a>
+            <a href="javascript:void(0);"
+               class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-add-circle-fine popup-frame"
+               data-name="生成无限级分类Curd"
+               data-open="{:addon_url('autocreate',$js_global_var['module'].'/'.$js_global_var['controller'].'/import_category')}"
+               data-width="100%"
+               data-height="100%">
+                生成无限级分类Curd
+            </a>
+        </div>
+    </div>
+</script>
+{include file="curd/operation_tpl"}
+{/block}

@@ -23,35 +23,69 @@ class Addons extends Backend
         $get_data_ajax_url = Config::get('addons.api_url')."/api/addons/index";
         if($this->request->isAjax()){
             $post['category_id'] = $this->request->param('category_id');
-            $post['charge_type'] = $this->request->param('charge_type');
+            $charge_type = $this->request->param('charge_type');
             $post['page'] = intval($this->request->param('page'));
             $post['limit'] = intval($this->request->param('limit'));
-            $res = Http::post($get_data_ajax_url,$post);
+            if($charge_type == '4'){
+                $post['charge_type'] = '';
+                $res = Http::post($get_data_ajax_url,$post);
 
-            $arr_res = json_decode($res, true);
-
-            foreach($arr_res['data']['list']['data'] as $k=>$v){
-                $info = $this->addons_service->_info->getAddonInfo($v['name']);
-                $config = $this->addons_service->_config->getConfig($v['name']);
-                if(!$info){
-                    $arr_res['data']['list']['data'][$k]['addon_exist'] = false;
-                    $arr_res['data']['list']['data'][$k]['local_state'] = 0;
-                }else{
-                    $arr_res['data']['list']['data'][$k]['addon_exist'] = true;
-                    $arr_res['data']['list']['data'][$k]['local_state'] = $info['state'];
+                $arr_res = json_decode($res, true);
+                $remote_addons = get_arr_by_key($arr_res['data']['list']['data'],'name');
+                $local_addons = $this->addons_service->_info->getAddonsInfo();
+                foreach($local_addons as $k=>$v){
+                    $local_addons[$k]['title'] = $local_addons[$k]['name'];
+                    $local_addons[$k]['addon_exist'] = true;
+                    $local_addons[$k]['author'] = '未知';
+                    $local_addons[$k]['download_num'] = 0;
+                    $local_addons[$k]['local_state'] = 1;
+                    $config = $this->addons_service->_config->getConfig($v['name']);
+                    $local_addons[$k]['config'] = $config ? true : false;
+                    $local_addons[$k]['backend_url'] = isset($v['backend_url']) && $v['backend_url'] ? $this->addons_service->_info->getUrl($v['name'],$v['backend_url'],$v['domain']) : '';
+                    $local_addons[$k]['frontend_url'] = isset($v['frontend_url']) && $v['frontend_url'] ? $this->addons_service->_info->getUrl($v['name'],$v['frontend_url'],$v['domain']) : '';
+                    $local_addons[$k]['api_module'] = isset($v['api_module']) && $v['api_module'] ? $v['api_module'] : '';
+                    foreach($remote_addons as $rk=>$rv){
+                        if($rv == $v['name']){
+                            unset($local_addons[$k]);
+                        }
+                    }
                 }
-                $arr_res['data']['list']['data'][$k]['latest_version'] = $arr_res['data']['list']['data'][$k]['versions'][0]['version'];
-                $arr_res['data']['list']['data'][$k]['domain'] = isset($info['domain']) ? $info['domain'] : false;
-                $arr_res['data']['list']['data'][$k]['backend_url'] = isset($info['backend_url']) && $info['backend_url'] ? $this->addons_service->_info->getUrl($info['name'],$info['backend_url'],$arr_res['data']['list']['data'][$k]['domain']) : '';
-                $arr_res['data']['list']['data'][$k]['frontend_url'] = isset($info['frontend_url']) && $info['frontend_url'] ? $this->addons_service->_info->getUrl($info['name'],$info['frontend_url'],$arr_res['data']['list']['data'][$k]['domain']) : '';
-                $arr_res['data']['list']['data'][$k]['api_module'] = isset($info['api_module']) && $info['api_module'] ? $info['api_module'] : '';
-                $arr_res['data']['list']['data'][$k]['version'] = isset($info['version']) && $info['version'] ? $info['version'] : '';
-                $arr_res['data']['list']['data'][$k]['config'] = $config ? true : false;
-            }
-            $res = json_encode($arr_res);
+                $return['data']['list']['data'] = $local_addons;
+                $return['data']['list']['total'] = count($local_addons);
+                $res = json_encode($return);
 
-            $response = Response::create($res);
-            throw new HttpResponseException($response);
+                $response = Response::create($res);
+                throw new HttpResponseException($response);
+            }else{
+                $post['charge_type'] = $charge_type;
+                $res = Http::post($get_data_ajax_url,$post);
+
+                $arr_res = json_decode($res, true);
+
+                foreach($arr_res['data']['list']['data'] as $k=>$v){
+                    $info = $this->addons_service->_info->getAddonInfo($v['name']);
+                    $config = $this->addons_service->_config->getConfig($v['name']);
+                    if(!$info){
+                        $arr_res['data']['list']['data'][$k]['addon_exist'] = false;
+                        $arr_res['data']['list']['data'][$k]['local_state'] = 0;
+                    }else{
+                        $arr_res['data']['list']['data'][$k]['addon_exist'] = true;
+                        $arr_res['data']['list']['data'][$k]['local_state'] = $info['state'];
+                    }
+                    $arr_res['data']['list']['data'][$k]['latest_version'] = $arr_res['data']['list']['data'][$k]['versions'][0]['version'];
+                    $arr_res['data']['list']['data'][$k]['domain'] = isset($info['domain']) ? $info['domain'] : false;
+                    $arr_res['data']['list']['data'][$k]['backend_url'] = isset($info['backend_url']) && $info['backend_url'] ? $this->addons_service->_info->getUrl($info['name'],$info['backend_url'],$arr_res['data']['list']['data'][$k]['domain']) : '';
+                    $arr_res['data']['list']['data'][$k]['frontend_url'] = isset($info['frontend_url']) && $info['frontend_url'] ? $this->addons_service->_info->getUrl($info['name'],$info['frontend_url'],$arr_res['data']['list']['data'][$k]['domain']) : '';
+                    $arr_res['data']['list']['data'][$k]['api_module'] = isset($info['api_module']) && $info['api_module'] ? $info['api_module'] : '';
+                    $arr_res['data']['list']['data'][$k]['version'] = isset($info['version']) && $info['version'] ? $info['version'] : '';
+                    $arr_res['data']['list']['data'][$k]['config'] = $config ? true : false;
+                }
+                $res = json_encode($arr_res);
+                dump($arr_res['data']['list']['data']);
+
+                $response = Response::create($res);
+                throw new HttpResponseException($response);
+            }
         }
 
         $res = json_decode( Http::post($get_data_ajax_url), true );

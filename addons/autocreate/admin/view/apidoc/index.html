@@ -1,0 +1,125 @@
+{extend name="admin@public/layout/main"}
+
+{block name="main_body"}
+<div class="layui-card">
+    <div class="layui-tab layui-tab-brief">
+        <ul class="layui-tab-title">
+            <li class="layui-this">生成文档</li>
+            <li>代码示例</li>
+        </ul>
+        <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+                <style type="text/css">
+                    .layui-form-item .layui-form-label{width:130px;text-align:right;}
+                    .layui-form-item .layui-input-inline{max-width:80%;width:auto;min-width:260px;}
+                    .layui-form-mid{padding:0!important;}
+                    .layui-form-mid code{color:#5FB878;}
+                </style>
+                <form class="page-list-form layui-form">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">api文档文件名称</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="row[apidoc_file_name]" id="apidoc_file_name" placeholder="请输入api文档文件名称" class="layui-input" value="{$apidoc_file_name}" />
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">生成的Api文档的文件名<br />默认使用api，点击生成则会在根目录下生成api.html文件</div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">api文档标题</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="row[apidoc_title]" id="apidoc_title" placeholder="请输入api文档标题" class="layui-input" value="{$apidoc_title}" />
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">生成的Api文档的标题</div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label"> </label>
+                        <div class="layui-input-inline">
+                            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="laytp">生 成</button>
+                            <a class="layui-btn layui-btn-primary" href="javascript:void(0);" onclick="showApi();">查 看</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="layui-tab-item">
+        <pre class="layui-code">
+&lt;?php
+//文件位置application/api/controller/Demo.php
+namespace app\api\controller;
+
+use controller\Api;
+
+/**
+ * 示例接口
+ */
+class Demo extends Api
+{
+    // 无需无需登录的接口，*表示全部
+    public $no_need_login = ['test1'];
+
+    /**
+     * @ApiTitle    (需要登录的接口)
+     * @ApiSummary  (需要登录的接口详细描述)
+     * @ApiMethod   (POST)
+     * @ApiRoute    (/api/demo/test)
+     * @ApiHeaders  (name="token", type="string", required="true", description="请求的Token")
+     * @ApiParams   (name="id", type="integer", required="true", description="会员ID")
+     * @ApiParams   (name="name", type="string", required="true", description="用户名")
+     * @ApiReturnParams   (name="err_code", type="integer", description="错误码.0=没有错误，表示操作成功；1=常规错误码，客户端仅需提示msg；其他错误码与具体业务相关，其他错误码举例：10401。前端需要跳转至登录界面。")
+     * @ApiReturnParams   (name="msg", type="string", description="返回描述")
+     * @ApiReturnParams   (name="time", type="integer", description="请求时间，Unix时间戳，单位秒")
+     * @ApiReturnParams   (name="data", type="object", description="返回的数据对象")
+     * @ApiReturnParams   (name="data.id", type="string", description="参数id的值")
+     * @ApiReturnParams   (name="data.name", type="string", description="参数name的值")
+     * @ApiReturn
+({
+    "err_code": 0,
+    "msg": "返回成功",
+    "time": 1591168410,
+    "data": {
+        "id": "",
+        "name": ""
+    }
+})
+    */
+    public function test(){
+        $this->success('返回成功', $this->request->param());
+    }
+
+    /**
+     * @ApiTitle    (无需登录的接口)
+     * @ApiSummary  (无需登录的接口详细描述)
+     * @ApiMethod   (POST)
+     * @ApiRoute    (/api/demo/test1)
+     * @ApiReturnParams   (name="err_code", type="integer", description="错误码.0=没有错误，表示操作成功；1=常规错误码，客户端仅需提示msg；其他错误码与具体业务相关，其他错误码举例：10401。前端需要跳转至登录界面。")
+     * @ApiReturnParams   (name="msg", type="string", description="返回描述")
+     * @ApiReturnParams   (name="time", type="integer", description="请求时间，Unix时间戳，单位秒")
+     * @ApiReturnParams   (name="data", type="object", description="返回的数据对象")
+     * @ApiReturnParams   (name="data.action", type="string", description="固定返回test1")
+     * @ApiReturn
+({
+    "err_code": 0,
+    "msg": "返回成功",
+    "time": 1591168410,
+    "data": {
+        "action": "test1"
+    }
+})
+     */
+    public function test1(){
+        $this->success('返回成功', ['action' => 'test1']);
+    }
+}
+
+        </pre>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+
+{block name="script"}
+<script type="text/javascript">
+    function showApi(){
+        window.open('/' + $('#apidoc_file_name').val() + '.html');
+    }
+</script>
+{/block}

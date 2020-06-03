@@ -1,0 +1,27 @@
+<?php
+return [
+    [
+        'name'=>'accessKey'
+        ,'key'=>'access_key'
+        ,'type'=>'input'
+        ,'content'=>''
+    ],
+    [
+        'name'=>'secretKey'
+        ,'key'=>'secret_key'
+        ,'type'=>'input'
+        ,'content'=>''
+    ],
+    [
+        'name'=>'bucket'
+        ,'key'=>'bucket'
+        ,'type'=>'input'
+        ,'content'=>''
+    ],
+    [
+        'name'=>'空间域名'
+        ,'key'=>'domain'
+        ,'type'=>'input'
+        ,'content'=>''
+    ],
+];
