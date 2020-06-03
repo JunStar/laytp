@@ -114,8 +114,9 @@ trait Backend
     public function recycle(){
         if( $this->request->isAjax() ){
             $where = $this->build_params();
+            $order = $this->build_order();
             $limit = $this->request->param('limit');
-            $data = $this->model->onlyTrashed()->where($where)->order('id desc')->paginate($limit)->toArray();
+            $data = $this->model->onlyTrashed()->where($where)->order($order)->paginate($limit)->toArray();
             return layui_table_page_data($data);
         }
         return $this->fetch();

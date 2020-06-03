@@ -35,7 +35,7 @@ class Test extends Backend
             $select_page = $this->request->param('select_page');
             $limit = $select_page ? $this->request->param('pageSize') : $this->request->param('limit');
             $data = $this->model
-                ->with(['category'])
+                ->with(['remt','category'])
                 ->where($where)->order('id desc')->paginate($limit)->toArray();
             return layui_table_page_data($data);
         }
@@ -49,7 +49,7 @@ class Test extends Backend
             $where = $this->build_params();
             $limit = $this->request->param('limit');
             $data = $this->model->onlyTrashed()
-                ->with(['category'])
+                ->with(['remt','category'])
                 ->where($where)->order('id desc')->paginate($limit)->toArray();
             return layui_table_page_data($data);
         }

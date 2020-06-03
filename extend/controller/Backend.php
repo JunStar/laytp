@@ -30,6 +30,7 @@ class Backend extends Controller
     public $is_show_search_btn = true;//是否展示筛选按钮
     public $no_need_login=['select_page'];//无需登录的方法名（无需登录就不需要鉴权了）
     public $ref;//前端直接访问带[ref=菜单id]参数的链接地址就直接渲染菜单页，并且前端js把iframe的地址跳转到当前地址
+    public $order_rule=['id'=>'desc'];//默认排序规则
 
     //初始化
     public function initialize(){
@@ -313,7 +314,7 @@ class Backend extends Controller
      * 生成排序条件
      */
     public function build_order(){
-        $order = ['id'=>'desc'];
+        $order = $this->order_rule;
         //传递了search_param字段，就说明是进行筛选搜索
         $order_param = $this->request->param('order_param');
         if($order_param && $order_param['field'] && $order_param['type']){

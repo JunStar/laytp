@@ -76,7 +76,11 @@ class Test extends Backend
     ];
 
     //关联模型
-    public function category(){
+    public function remt(){
+        return $this->belongsTo('app\admin\model\test\relation\model\Table','category_id','id')->field('id,name');
+    }
+
+	public function category(){
         return $this->belongsTo('app\admin\model\test\Category','category_id','id')->field('id,name');
     }
 
