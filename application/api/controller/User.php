@@ -61,38 +61,18 @@ class User extends Api{
      * @ApiMethod   (POST)
      * @ApiRoute    (/api/user/mobile_code_reg_login)
      * @ApiParams   (name="mobile", type="string", required=true, description="手机号")
-     * @ApiParams   (name="code", type="string", required=true, description="手机验证码")
-     * @ApiReturnParams   (name="code", type="integer", description="返回状态码.0=失败,1=成功")
+     * @ApiParams   (name="code", type="string", required=true, description="手机验证码。配置信息app_debug=true时，可以任意输入；app_debug=false时，需要先使用公用接口的发送手机验证码接口，然后输入手机短信收到的验证码")
+     * @ApiReturnParams   (name="err_code", type="integer", description="错误码.0=没有错误，表示操作成功；1=常规错误码，客户端仅需提示msg；其他错误码与具体业务相关，其他错误码举例：10401。前端需要跳转至登录界面。")
      * @ApiReturnParams   (name="msg", type="string", description="返回描述")
      * @ApiReturnParams   (name="time", type="integer", description="请求时间，Unix时间戳，单位秒")
-     * @ApiReturnParams   (name="data.id", type="integer", description="用户主键ID")
-     * @ApiReturnParams   (name="data.mobile", type="string", description="手机号")
-     * @ApiReturnParams   (name="data.email", type="string", description="Email")
-     * @ApiReturnParams   (name="data.username", type="string", description="用户名")
-     * @ApiReturnParams   (name="data.nickname", type="string", description="昵称")
-     * @ApiReturnParams   (name="data.avatar", type="string", description="头像")
-     * @ApiReturnParams   (name="data.token", type="string", description="用户登录凭证,Token")
-     * @ApiReturnParams   (name="data.user_id", type="integer", description="用户主键ID")
-     * @ApiReturnParams   (name="data.createtime", type="integer", description="创建时间，Unix时间戳，单位秒")
-     * @ApiReturnParams   (name="data.expiretime", type="integer", description="Token有效至，Unix时间戳，单位秒")
-     * @ApiReturnParams   (name="data.expires_in", type="integer", description="Token有效时长，单位秒")
+     * @ApiReturnParams   (name="data.token", type="string", description="用户登录后得到的凭证，token")
      * @ApiReturn
 ({
-    "code": 1,
-    "msg": "操作成功",
-    "time": 1584330277,
+    "err_code": 0,
+    "msg": "登录成功",
+    "time": 1591151771,
     "data": {
-        "id": 3,
-        "mobile": "13800000000",
-        "email": null,
-        "username": null,
-        "nickname": null,
-        "avatar": null,
-        "token": "c96599f3-4708-418f-906e-b4d62f2bd323",
-        "user_id": 3,
-        "createtime": 1584330099,
-        "expiretime": 1584416499,
-        "expires_in": 86222
+        "token": "b58ea1f0-e856-4ec4-b2b3-d852b9af86b5"
     }
 })
      */
@@ -108,12 +88,12 @@ class User extends Api{
         $validate = new MobileCodeRegLogin();
         if($validate->check($param)){
             if($this->service_user->mobileCodeRegLogin($param)){
-                $this->success('操作成功', $this->service_user->getUserInfo());
+                $this->success('登录成功', ['token'=>$this->service_user->getToken()]);
             }else{
-                $this->error('操作失败,'.$this->service_user->getError());
+                $this->error('登录失败,'.$this->service_user->getError());
             }
         }else{
-            $this->error('操作失败,'.$validate->getError());
+            $this->error('登录失败,'.$validate->getError());
         }
     }
 
