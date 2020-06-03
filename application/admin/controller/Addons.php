@@ -2,6 +2,7 @@
 namespace app\admin\controller;
 
 use controller\Backend;
+use library\Http;
 use think\Exception;
 use think\exception\HttpResponseException;
 use think\facade\Config;
@@ -25,7 +26,7 @@ class Addons extends Backend
             $post['charge_type'] = $this->request->param('charge_type');
             $post['page'] = intval($this->request->param('page'));
             $post['limit'] = intval($this->request->param('limit'));
-            $res = request_by_curl($get_data_ajax_url, $post);
+            $res = Http::post($get_data_ajax_url,$post);
 
             $arr_res = json_decode($res, true);
 
@@ -53,7 +54,7 @@ class Addons extends Backend
             throw new HttpResponseException($response);
         }
 
-        $res = json_decode( request_by_curl($get_data_ajax_url), true );
+        $res = json_decode( Http::post($get_data_ajax_url), true );
         if(!$res['code']){
             $assign['category'] = [];
             $assign['list'] = [];
