@@ -24,7 +24,7 @@ class User extends Api{
 
     /**
      * 根据token获取用户信息
-     * @ApiHeaders  (name=token, type=string, required=true, description="用户登录后得到的Token")
+     * @ApiHeaders  (name="token", type="string", required="true", description="用户登录后得到的Token")
      * @ApiReturnParams   (name="err_code", type="integer", description="错误码.0=没有错误，表示操作成功；1=常规错误码，客户端仅需提示msg；其他错误码与具体业务相关，其他错误码举例：10401。前端需要跳转至登录界面。")
      * @ApiReturnParams   (name="msg", type="string", description="返回描述")
      * @ApiReturnParams   (name="time", type="integer", description="请求时间，Unix时间戳，单位秒")
@@ -103,7 +103,7 @@ class User extends Api{
      * @ApiMethod   (POST)
      * @ApiRoute    (/api/user/mobile_one_click_login)
      * @ApiParams   (name="access_token", type="string", required=true, description="app端SDK获取的登录token")
-     * @ApiReturnParams   (name="code", type="integer", description="返回状态码.0=失败,1=成功")
+     * @ApiReturnParams   (name="err_code", type="integer", description="错误码.0=没有错误，表示操作成功；1=常规错误码，客户端仅需提示msg；其他错误码与具体业务相关，其他错误码举例：10401。前端需要跳转至登录界面。")
      * @ApiReturnParams   (name="msg", type="string", description="返回描述")
      * @ApiReturnParams   (name="time", type="integer", description="请求时间，Unix时间戳，单位秒")
      * @ApiReturnParams   (name="data.id", type="integer", description="用户主键ID")
@@ -119,21 +119,11 @@ class User extends Api{
      * @ApiReturnParams   (name="data.expires_in", type="integer", description="Token有效时长，单位秒")
      * @ApiReturn
 ({
-    "code": 1,
-    "msg": "操作成功",
-    "time": 1584513627,
+    "err_code": 0,
+    "msg": "登录成功",
+    "time": 1591151771,
     "data": {
-        "id": 4,
-        "mobile": null,
-        "email": null,
-        "username": null,
-        "nickname": null,
-        "avatar": null,
-        "token": "3a526ba6-5c39-4c5e-bf75-4365c8f85f4e",
-        "user_id": 4,
-        "createtime": 1584513627,
-        "expiretime": 1899873627,
-        "expires_in": 315360000
+        "token": "b58ea1f0-e856-4ec4-b2b3-d852b9af86b5"
     }
 })
      */
@@ -152,15 +142,15 @@ class User extends Api{
             if($service_res){
                 $params['mobile'] = $service_res;
             }else{
-                $this->error('操作失败,'.$mobile_service->getError());
+                $this->error('登录失败,'.$mobile_service->getError());
             }
             if($this->service_user->mobileCodeRegLogin($params)){
-                $this->success('操作成功', $this->service_user->getUserInfo());
+                $this->success('登录成功', ['token'=>$this->service_user->getToken()]);
             }else{
-                $this->error('操作失败,'.$this->service_user->getError());
+                $this->error('登录失败,'.$this->service_user->getError());
             }
         }else{
-            $this->error('操作失败,'.$validate->getError());
+            $this->error('登录失败,'.$validate->getError());
         }
     }
 
@@ -172,7 +162,7 @@ class User extends Api{
      * @ApiParams   (name="username", type="integer", required=true, description="用户名")
      * @ApiParams   (name="password", type="string", required=true, description="密码")
      * @ApiParams   (name="repassword", type="string", required=true, description="重复密码")
-     * @ApiReturnParams   (name="code", type="integer", description="返回状态码.0=失败,1=成功")
+     * @ApiReturnParams   (name="err_code", type="integer", description="错误码.0=没有错误，表示操作成功；1=常规错误码，客户端仅需提示msg；其他错误码与具体业务相关，其他错误码举例：10401。前端需要跳转至登录界面。")
      * @ApiReturnParams   (name="msg", type="string", description="返回描述")
      * @ApiReturnParams   (name="time", type="integer", description="请求时间，Unix时间戳，单位秒")
      * @ApiReturnParams   (name="data.id", type="integer", description="用户主键ID")
@@ -188,21 +178,11 @@ class User extends Api{
      * @ApiReturnParams   (name="data.expires_in", type="integer", description="Token有效时长，单位秒")
      * @ApiReturn
 ({
-    "code": 1,
+    "err_code": 0,
     "msg": "操作成功",
     "time": 1584513627,
     "data": {
-        "id": 4,
-        "mobile": null,
-        "email": null,
-        "username": null,
-        "nickname": null,
-        "avatar": null,
-        "token": "3a526ba6-5c39-4c5e-bf75-4365c8f85f4e",
-        "user_id": 4,
-        "createtime": 1584513627,
-        "expiretime": 1899873627,
-        "expires_in": 315360000
+        "token": "b58ea1f0-e856-4ec4-b2b3-d852b9af86b5"
     }
 })
      */
@@ -219,7 +199,7 @@ class User extends Api{
         $validate = new UsernameReg();
         if($validate->check($param)){
             if($this->service_user->usernameReg($param)){
-                $this->success('注册成功', $this->service_user->getUserInfo());
+                $this->success('注册成功', ['token'=>$this->service_user->getToken()]);
             }else{
                 $this->error('注册失败',$this->service_user->getError());
             }
@@ -235,7 +215,7 @@ class User extends Api{
      * @ApiRoute    (/api/user/username_login)
      * @ApiParams   (name="username", type="string", required=true, description="用户名")
      * @ApiParams   (name="password", type="string", required=true, description="密码")
-     * @ApiReturnParams   (name="code", type="integer", description="返回状态码.0=失败,1=成功")
+     * @ApiReturnParams   (name="err_code", type="integer", description="错误码.0=没有错误，表示操作成功；1=常规错误码，客户端仅需提示msg；其他错误码与具体业务相关，其他错误码举例：10401。前端需要跳转至登录界面。")
      * @ApiReturnParams   (name="msg", type="string", description="返回描述")
      * @ApiReturnParams   (name="time", type="integer", description="请求时间，Unix时间戳，单位秒")
      * @ApiReturnParams   (name="data.id", type="integer", description="用户主键ID")
@@ -251,21 +231,11 @@ class User extends Api{
      * @ApiReturnParams   (name="data.expires_in", type="integer", description="Token有效时长，单位秒")
      * @ApiReturn
 ({
-    "code": 1,
+    "err_code": 0,
     "msg": "操作成功",
     "time": 1584513627,
     "data": {
-        "id": 4,
-        "mobile": null,
-        "email": null,
-        "username": null,
-        "nickname": null,
-        "avatar": null,
-        "token": "3a526ba6-5c39-4c5e-bf75-4365c8f85f4e",
-        "user_id": 4,
-        "createtime": 1584513627,
-        "expiretime": 1899873627,
-        "expires_in": 315360000
+        "token": "b58ea1f0-e856-4ec4-b2b3-d852b9af86b5"
     }
 })
      */
@@ -281,7 +251,7 @@ class User extends Api{
         $validate = new UsernameLogin();
         if($validate->check($param)){
             if($this->service_user->usernameLogin($param)){
-                $this->success('登录成功', $this->service_user->getUserInfo());
+                $this->success('登录成功', ['token'=>$this->service_user->getToken()]);
             }else{
                 $this->error('登录失败',$this->service_user->getError());
             }
@@ -297,7 +267,7 @@ class User extends Api{
      * @ApiRoute    (/api/user/email_login)
      * @ApiParams   (name="email", type="string", required=true, description="邮箱")
      * @ApiParams   (name="password", type="string", required=true, description="密码")
-     * @ApiReturnParams   (name="code", type="integer", description="返回状态码.0=失败,1=成功")
+     * @ApiReturnParams   (name="err_code", type="integer", description="错误码.0=没有错误，表示操作成功；1=常规错误码，客户端仅需提示msg；其他错误码与具体业务相关，其他错误码举例：10401。前端需要跳转至登录界面。")
      * @ApiReturnParams   (name="msg", type="string", description="返回描述")
      * @ApiReturnParams   (name="time", type="integer", description="请求时间，Unix时间戳，单位秒")
      * @ApiReturnParams   (name="data.id", type="integer", description="用户主键ID")
@@ -313,21 +283,11 @@ class User extends Api{
      * @ApiReturnParams   (name="data.expires_in", type="integer", description="Token有效时长，单位秒")
      * @ApiReturn
 ({
-    "code": 1,
-    "msg": "操作成功",
+    "err_code": 0,
+    "msg": "登录成功",
     "time": 1584513627,
     "data": {
-        "id": 4,
-        "mobile": null,
-        "email": null,
-        "username": null,
-        "nickname": null,
-        "avatar": null,
-        "token": "3a526ba6-5c39-4c5e-bf75-4365c8f85f4e",
-        "user_id": 4,
-        "createtime": 1584513627,
-        "expiretime": 1899873627,
-        "expires_in": 315360000
+        "token": "b58ea1f0-e856-4ec4-b2b3-d852b9af86b5"
     }
 })
      */
@@ -343,7 +303,7 @@ class User extends Api{
         $validate = new EmailLogin();
         if($validate->check($param)){
             if($this->service_user->emailLogin($param)){
-                $this->success('登录成功', $this->service_user->getUserInfo());
+                $this->success('登录成功', ['token'=>$this->service_user->getToken()]);
             }else{
                 $this->error('登录失败',$this->service_user->getError());
             }
@@ -357,13 +317,17 @@ class User extends Api{
      * @ApiSummary  (注销登录信息)
      * @ApiMethod   (GET)
      * @ApiRoute    (/api/user/logout)
-     * @ApiHeaders  (name=token, type=string, required=true, description="用户登录后得到的Token")
-     * @ApiReturnParams   (name="code", type="integer", required=true, sample="0")
-     * @ApiReturnParams   (name="msg", type="string", required=true, sample="注销成功")
+     * @ApiHeaders  (name="token", type="string", required="true", description="用户登录后得到的Token")
+     * @ApiReturnParams   (name="err_code", type="integer", description="错误码.0=没有错误，表示操作成功；1=常规错误码，客户端仅需提示msg；其他错误码与具体业务相关，其他错误码举例：10401。前端需要跳转至登录界面。")
+     * @ApiReturnParams   (name="msg", type="string", description="返回描述")
+     * @ApiReturnParams   (name="time", type="integer", description="请求时间，Unix时间戳，单位秒")
+     * @ApiReturnParams   (name="data", type="null", description="只会返回null")
      * @ApiReturn
 ({
-    'code':'1',
-    'msg':'注销成功'
+    "err_code": 0,
+    "msg": "注销成功",
+    "time": 1584513627,
+    "data": null
 })
      */
     public function logout()

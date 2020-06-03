@@ -214,7 +214,7 @@ class Common extends Api{
      * @ApiSummary  (发送手机验证码)
      * @ApiMethod   (POST)
      * @ApiRoute    (/api/common/send_mobile_code)
-     * @ApiHeaders  (name=token, type=string, required=true, description="用户登录后得到的Token")
+     * @ApiHeaders  (name="token", type="string", required="true", description="用户登录后得到的Token")
      * @ApiParams   (name="mobile", type="string", required=true, description="手机号码")
      * @ApiParams   (name="event", type="string", required=true, sample="reg_login",description="事件名称，check=验证手机号,bind=绑定手机号,reg_login=使用手机号+验证码的方式进行注册或登录")
      * @ApiReturnParams   (name="code", type="integer", required=true, sample="0")
