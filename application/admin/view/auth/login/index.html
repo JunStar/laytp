@@ -101,9 +101,8 @@
                 ,dataType: 'json'
                 ,success:function(res){
                     if(res.code == 1){
-                        layTp.facade.setcookie('token', res.data.token, 3);
+                        layTp.facade.setcookie('admin_token', res.data.admin_token, 3);
                         layTp.facade.success(res.msg);
-                        // setTimeout( redirect, 1000 );
                         setTimeout( function(){redirect(res.url)}, 1000 );
                     }else{
                         layTp.facade.error(res.msg);

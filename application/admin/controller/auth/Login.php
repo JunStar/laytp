@@ -13,7 +13,7 @@ class Login extends Controller
 {
     //登录界面
     public function index(){
-        $token = $this->request->server('HTTP_TOKEN', $this->request->request('token', Cookie::get('token')));
+        $token = $this->request->server('HTTP_ADMIN_TOKEN', $this->request->request('admin_token', Cookie::get('admin_token')));
         if( $token ){
             $data = Token::get($token);
             if(isset($data['user_id'])){
@@ -43,16 +43,16 @@ class Login extends Controller
         $param = $this->request->param();
         if (!$validate->check($param))
             return $this->error($validate->getError());
-        //设置SESSION
+        //设置登录信息
         $user_id = model('auth.User')->where('username','=',$param['username'])->value('id');
         $token = Random::uuid();
         Token::set($token, $user_id, 24 * 60 * 60 * 3);
-        return $this->success('登录成功',$param['referer'],['token'=>$token]);
+        return $this->success('登录成功',$param['referer'],['admin_token'=>$token]);
     }
 
     //退出登录
     public function logout(){
-        $token = $this->request->server('HTTP_TOKEN', $this->request->request('token', Cookie::get('token')));
+        $token = $this->request->server('HTTP_ADMIN_TOKEN', $this->request->request('admin_token', Cookie::get('admin_token')));
         Token::delete($token);
         Cookie::set('normal_logout','1');
         return $this->redirect(url('/admin/auth.login/index'));

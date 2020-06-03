@@ -11,13 +11,12 @@ use think\Db;
 use think\Exception;
 use think\facade\Cookie;
 use think\facade\Env;
-use think\facade\Session;
 
 //集成controller，不走权限控制
 class Ajax extends Controller
 {
     public function initialize(){
-        $token = $this->request->server('HTTP_TOKEN', $this->request->request('token', Cookie::get('token')));
+        $token = $this->request->server('HTTP_ADMIN_TOKEN', $this->request->request('admin_token', Cookie::get('admin_token')));
         $data = Token::get($token);
         if(!$data['user_id']){
             $this->error('请先登录');

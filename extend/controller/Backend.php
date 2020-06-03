@@ -94,7 +94,7 @@ class Backend extends Controller
     //权限检测
     public function auth(){
         //当前登录用户信息
-        $token = $this->request->server('HTTP_TOKEN', $this->request->request('token', Cookie::get('token')));
+        $token = $this->request->server('HTTP_TOKEN', $this->request->request('admin_token', Cookie::get('admin_token')));
         if(!$token){
             if($this->request->isAjax()){
                 $this->error('登录信息过期，请重新登录',['reload'=>true]);
