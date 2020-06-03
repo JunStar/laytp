@@ -15,14 +15,14 @@ use think\facade\Config;
  */
 class Common extends Api{
 
-    public $no_need_login = ['send_email_code','check_email_code'];
+    public $no_need_login = ['send_email_code','check_email_code','send_mobile_code'];
 
     /**
      * @ApiTitle    (文件上传)
      * @ApiSummary  (文件上传)
      * @ApiMethod   (POST)
      * @ApiRoute    (/api/common/upload)
-     * @ApiHeaders  (name=token, type=string, required="true", description="用户登录后得到的Token")
+     * @ApiHeaders  (name="token", type="string", required="true", description="用户登录后得到的Token")
      * @ApiParams   (name="file", type="file", required="true", description="文件")
      * @ApiParams   (name="upload_dir", type="string", required="false", description="上传目录，允许为空", sample="avatar")
      * @ApiReturnParams   (name="code", type="integer", description="错误码.0=没有错误，表示操作成功；1=常规错误码，客户端仅需提示msg；其他错误码与具体业务相关，其他错误码举例：10401。前端需要跳转至登录界面。")
@@ -149,10 +149,10 @@ class Common extends Api{
      * @ApiReturnParams   (name="msg", type="string", required=true, sample="返回成功")
      * @ApiReturnParams   (name="data", type="object", sample="{'user_id':'int','user_name':'string','profile':{'email':'string','age':'integer'}}", description="扩展数据返回")
      * @ApiReturn
-    ({
+({
     'code':'1',
     'msg':'返回成功'
-    })
+})
      */
     public function send_email_code(){
         if(!$this->request->isPost()){
