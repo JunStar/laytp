@@ -30,7 +30,8 @@
         <a href="javascript:void(0);" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-home {{#  if(d.charge_type === 4){ }}active{{#  } }} charge_type" field="charge_type" field_val="4">&nbsp;本地插件</a>
     </div>
     <div class="layui-btn-group fl">
-        <a href="javascript:void(0);" class="layui-btn layui-btn-warm layui-btn-sm layui-icon layui-icon-username
-                ">&nbsp;会员信息</a>
+        <a href="javascript:void(0);" class="layui-btn layui-btn-warm layui-btn-sm layui-icon layui-icon-username popup-frame"
+           data-name="会员信息" data-open="{:url('admin/addons/user')}"
+           data-width="60%" data-height="55%">&nbsp;会员信息</a>
     </div>
 </script>
