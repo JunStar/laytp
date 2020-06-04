@@ -1,10 +1,10 @@
 <?php
 namespace app\admin\controller;
 
+use addons\aliyuncs\service\Oss;
 use addons\qiniu\service\Kodo;
 use library\DirFile;
 use library\Token;
-use OSS\OssClient;
 use think\facade\Config;
 use think\Controller;
 use think\Db;
@@ -42,9 +42,12 @@ class Ajax extends Controller
             if(!$qiniu_upload_radio){
                 $qiniu_upload_radio = 'close';
             }
-            $aliyun_oss_upload_radio = Config::get('laytp.upload.aliyun_radio');
+            $aliyun_oss_upload_radio = Config::get('addons.aliyuncs.open_status');
+            if(!$aliyun_oss_upload_radio){
+                $aliyun_oss_upload_radio = 'close';
+            }
             $local_upload_radio = Config::get('laytp.upload.radio');
-            if($qiniu_upload_radio == 'close' && $aliyun_oss_upload_radio == 1 && $local_upload_radio == 1){
+            if($qiniu_upload_radio == 'close' && $aliyun_oss_upload_radio == 'close' && $local_upload_radio == 1){
                 $this->error('上传失败,请开启一种上传方式');
             }
 
@@ -96,8 +99,7 @@ class Ajax extends Controller
             //上传至七牛云
             if($qiniu_upload_radio == 'open'){
                 $qiniu_yun = Kodo::instance();
-                $qiniu_yun->upload($info['tmp_name'],$object);
-                $file_url = Config::get('addons.qiniu.domain') . '/' . $object;
+                $file_url = $qiniu_yun->upload($info['tmp_name'],$object);
 
                 $add['file_type'] = $this->request->param('accept');
                 $add['file_path'] = $file_url;
@@ -105,10 +107,9 @@ class Ajax extends Controller
             }
 
             //上传至阿里云
-            if($aliyun_oss_upload_radio == 2){
-                $ossClient = new OssClient(Config::get('laytp.aliyun_oss.access_key_id'), Config::get('laytp.aliyun_oss.access_key_secret'), Config::get('laytp.aliyun_oss.endpoint'));
-                $ossClient->uploadFile(Config::get('laytp.aliyun_oss.bucket'), $object, $info['tmp_name']);
-                $file_url = Config::get('laytp.aliyun_oss.bucket_url') . '/' . $object;
+            if($aliyun_oss_upload_radio == 'open'){
+                $oss = Oss::instance();
+                $file_url = $oss->upload($info['tmp_name'], $object);
 
                 $add['file_type'] = $this->request->param('accept');
                 $add['file_path'] = $file_url;

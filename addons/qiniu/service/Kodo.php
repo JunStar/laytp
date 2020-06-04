@@ -47,7 +47,7 @@ class Kodo extends Service
                 $this->setError('上传失败,'.$err);
                 return false;
             } else {
-                return true;
+                return Config::get('addons.qiniu.domain') . '/' . $save_file_name;
             }
         }catch (\Exception $e){
             $this->setError('上传失败,'.$e->getMessage());

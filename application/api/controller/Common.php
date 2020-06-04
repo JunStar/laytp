@@ -7,7 +7,6 @@ use app\common\service\Email;
 use app\common\service\Mobile;
 use controller\Api;
 use library\Random;
-use OSS\OssClient;
 use think\facade\Config;
 
 /**
