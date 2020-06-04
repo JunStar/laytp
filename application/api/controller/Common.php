@@ -1,6 +1,7 @@
 <?php
 namespace app\api\controller;
 
+use addons\aliyuncs\service\Oss;
 use addons\qiniu\service\Kodo;
 use app\api\validate\email\Send;
 use app\common\service\Email;
@@ -106,10 +107,9 @@ class Common extends Api{
             }
 
             //上传至阿里云
-            if($aliyun_oss_upload_radio == 2){
-                $ossClient = new OssClient(Config::get('laytp.aliyun_oss.access_key_id'), Config::get('laytp.aliyun_oss.access_key_secret'), Config::get('laytp.aliyun_oss.endpoint'));
-                $ossClient->uploadFile(Config::get('laytp.aliyun_oss.bucket'), $object, $info['tmp_name']);
-                $file_url = Config::get('laytp.aliyun_oss.bucket_url') . '/' . $object;
+            if($aliyun_oss_upload_radio == 'open'){
+                $oss = Oss::instance();
+                $file_url = $oss->upload($info['tmp_name'], $object);
 
                 $add['file_type'] = $this->request->param('accept');
                 $add['file_path'] = $file_url;
