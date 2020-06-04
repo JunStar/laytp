@@ -1,8 +1,8 @@
 <?php
 
-namespace OSS\Result;
+namespace addons\aliyuncs\library\OSS\Result;
 
-use OSS\Model\GetLiveChannelStatus;
+use addons\aliyuncs\library\OSS\Model\GetLiveChannelStatus;
 
 class GetLiveChannelStatusResult extends Result
 {

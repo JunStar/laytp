@@ -1,9 +1,9 @@
 <?php
 
-namespace OSS\Result;
+namespace addons\aliyuncs\library\OSS\Result;
 
-use OSS\Core\OssException;
-use OSS\OssClient;
+use addons\aliyuncs\library\OSS\Core\OssException;
+use addons\aliyuncs\library\OSS\OssClient;
 
 /**
  *

@@ -1,6 +1,6 @@
 <?php
 
-namespace OSS\Core;
+namespace addons\aliyuncs\library\OSS\Core;
 
 /**
  * Class OssException

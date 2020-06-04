@@ -1,8 +1,8 @@
 <?php
 
-namespace OSS\Result;
+namespace addons\aliyuncs\library\OSS\Result;
 
-use OSS\Core\OssException;
+use addons\aliyuncs\library\OSS\Core\OssException;
 
 /**
  * The type of the return value of getBucketAcl, it wraps the data parsed from xml.

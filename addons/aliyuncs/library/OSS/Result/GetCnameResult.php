@@ -1,8 +1,8 @@
 <?php
 
-namespace OSS\Result;
+namespace addons\aliyuncs\library\OSS\Result;
 
-use OSS\Model\CnameConfig;
+use addons\aliyuncs\library\OSS\Model\CnameConfig;
 
 class GetCnameResult extends Result
 {

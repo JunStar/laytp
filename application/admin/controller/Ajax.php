@@ -12,9 +12,10 @@ use think\Exception;
 use think\facade\Cookie;
 use think\facade\Env;
 
-//集成controller，不走权限控制
+//继承controller，不走权限控制
 class Ajax extends Controller
 {
+    //虽然不走权限控制，但是也要登录
     public function initialize(){
         $token = $this->request->server('HTTP_ADMIN_TOKEN', $this->request->request('admin_token', Cookie::get('admin_token')));
         $data = Token::get($token);

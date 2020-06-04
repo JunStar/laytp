@@ -1,6 +1,6 @@
 <?php
 
-namespace OSS\Model;
+namespace addons\aliyuncs\library\OSS\Model;
 /**
  * Class LiveChannelHistory
  * @package OSS\Model

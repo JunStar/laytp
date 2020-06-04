@@ -1,8 +1,8 @@
 <?php
 
-namespace OSS\Result;
+namespace addons\aliyuncs\library\OSS\Result;
 
-use OSS\Model\LiveChannelListInfo;
+use addons\aliyuncs\library\OSS\Model\LiveChannelListInfo;
 
 class ListLiveChannelResult extends Result
 {

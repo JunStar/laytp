@@ -1,7 +1,9 @@
 <?php
 namespace addons\aliyuncs\service;
 
+use OSS\OssClient;
 use service\Service;
+use think\facade\Config;
 
 class Oss extends Service
 {
@@ -31,17 +33,10 @@ class Oss extends Service
         try{
             $access_key = Config::get('addons.qiniu.access_key');
             $secret_key = Config::get('addons.qiniu.secret_key');
-            $bucket = Config::get('addons.qiniu.bucket');
-            $client = new Auth($access_key,$secret_key);
-            $token = $client->uploadToken($bucket);
-            $upload_mgr = new UploadManager();
-            list($ret, $err) = $upload_mgr->putFile($token,$save_file_name,$local_file_name);
-            if ($err !== null) {
-                $this->setError('上传失败,'.$err);
-                return false;
-            } else {
-                return true;
-            }
+            $endpoint = Config::get('addons.qiniu.bucket');
+            $ossClient = new OssClient($access_key, $secret_key, $endpoint);
+            $ossClient->uploadFile(Config::get('laytp.aliyun_oss.bucket'), $save_file_name, $local_file_name);
+            return true;
         }catch (\Exception $e){
             $this->setError('上传失败,'.$e->getMessage());
             return false;

@@ -1,9 +1,9 @@
 <?php
 
-namespace OSS\Result;
+namespace addons\aliyuncs\library\OSS\Result;
 
-use OSS\Model\BucketInfo;
-use OSS\Model\BucketListInfo;
+use addons\aliyuncs\library\OSS\Model\BucketInfo;
+use addons\aliyuncs\library\OSS\Model\BucketListInfo;
 
 /**
  * Class ListBucketsResult

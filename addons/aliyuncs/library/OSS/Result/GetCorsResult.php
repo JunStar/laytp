@@ -1,8 +1,8 @@
 <?php
 
-namespace OSS\Result;
+namespace addons\aliyuncs\library\OSS\Result;
 
-use OSS\Model\CorsConfig;
+use addons\aliyuncs\library\OSS\Model\CorsConfig;
 
 class GetCorsResult extends Result
 {

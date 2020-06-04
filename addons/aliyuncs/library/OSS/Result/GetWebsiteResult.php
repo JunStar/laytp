@@ -1,8 +1,8 @@
 <?php
 
-namespace OSS\Result;
+namespace addons\aliyuncs\library\OSS\Result;
 
-use OSS\Model\WebsiteConfig;
+use addons\aliyuncs\library\OSS\Model\WebsiteConfig;
 
 /**
  * Class GetWebsiteResult

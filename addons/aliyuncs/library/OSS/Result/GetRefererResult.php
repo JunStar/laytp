@@ -1,9 +1,9 @@
 <?php
 
-namespace OSS\Result;
+namespace addons\aliyuncs\library\OSS\Result;
 
 
-use OSS\Model\RefererConfig;
+use addons\aliyuncs\library\OSS\Model\RefererConfig;
 
 /**
  * Class GetRefererResult

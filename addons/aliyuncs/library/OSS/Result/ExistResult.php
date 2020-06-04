@@ -1,6 +1,6 @@
 <?php
 
-namespace OSS\Result;
+namespace addons\aliyuncs\library\OSS\Result;
 
 /**
  * Class ExistResult checks if bucket or object exists, according to the http status in response headers.

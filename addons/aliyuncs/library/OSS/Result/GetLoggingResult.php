@@ -1,8 +1,8 @@
 <?php
 
-namespace OSS\Result;
+namespace addons\aliyuncs\library\OSS\Result;
 
-use OSS\Model\LoggingConfig;
+use addons\aliyuncs\library\OSS\Model\LoggingConfig;
 
 
 /**
