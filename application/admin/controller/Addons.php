@@ -82,7 +82,6 @@ class Addons extends Backend
                     $arr_res['data']['list']['data'][$k]['config'] = $config ? true : false;
                 }
                 $res = json_encode($arr_res);
-                dump($arr_res['data']['list']['data']);
 
                 $response = Response::create($res);
                 throw new HttpResponseException($response);
