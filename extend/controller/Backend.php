@@ -35,7 +35,7 @@ class Backend extends Controller
     //初始化
     public function initialize(){
         if( $this->request->isPost() ){
-            $token = $this->request->server('HTTP_TOKEN', $this->request->request('token', Cookie::get('token')));
+            $token = $this->request->server('HTTP_ADMIN_TOKEN', $this->request->request('admin_token', Cookie::get('admin_token')));
             Hook::exec('app\\admin\\behavior\\AdminLog',$token);
         }
 

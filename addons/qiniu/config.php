@@ -4,10 +4,10 @@ return [
         'name'=>'上传开关'
         ,'key'=>'open_status'
         ,'type'=>'radio'
-        ,'default'=>1
+        ,'default'=>'close'
         ,'content'=>[
-        '1'=>'关闭'
-        ,'2'=>'打开'
+        'close'=>'关闭'
+        ,'open'=>'打开'
     ]
     ],
     [

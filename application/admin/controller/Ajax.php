@@ -37,7 +37,7 @@ class Ajax extends Controller
     //新上传接口
     public function upload($file=''){
         try{
-            $qiniu_upload_radio = Config::get('laytp.upload.qiniu_radio');
+            $qiniu_upload_radio = Config::get('laytp.addons.qiniu.open_status');
             $aliyun_oss_upload_radio = Config::get('laytp.upload.aliyun_radio');
             $local_upload_radio = Config::get('laytp.upload.radio');
             if($qiniu_upload_radio == 1 && $aliyun_oss_upload_radio == 1 && $local_upload_radio == 1){
@@ -204,7 +204,7 @@ class Ajax extends Controller
     public function lock_screen(){
         if($this->request->isAjax()){
             $password = $this->request->param('password');
-            $token = $this->request->server('HTTP_TOKEN', $this->request->request('token', Cookie::get('token')));
+            $token = $this->request->server('HTTP_ADMIN_TOKEN', $this->request->request('admin_token', Cookie::get('admin_token')));
             $data = Token::get($token);
             $password_hash = model('auth.User')->where('id','=',$data['user_id'])->value('password');
             if( !password_verify( $password, $password_hash ) )
