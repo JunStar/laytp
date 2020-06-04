@@ -28,15 +28,14 @@ class Addons extends Backend
             $post['limit'] = intval($this->request->param('limit'));
             if($charge_type == '4'){
                 $post['charge_type'] = '';
-                $res = Http::post($get_data_ajax_url,$post);
-
-                $arr_res = json_decode($res, true);
-                $remote_addons = get_arr_by_key($arr_res['data']['list']['data'],'name');
+//                $res = Http::post($get_data_ajax_url,$post);
+//
+//                $arr_res = json_decode($res, true);
+//                $remote_addons = get_arr_by_key($arr_res['data']['list']['data'],'name');
                 $local_addons = $this->addons_service->_info->getAddonsInfo();
                 foreach($local_addons as $k=>$v){
                     $local_addons[$k]['title'] = $local_addons[$k]['name'];
                     $local_addons[$k]['addon_exist'] = true;
-                    $local_addons[$k]['author'] = '未知';
                     $local_addons[$k]['charge_type'] = 4;
                     $local_addons[$k]['download_num'] = 0;
                     $local_addons[$k]['local_state'] = 1;
@@ -45,11 +44,11 @@ class Addons extends Backend
                     $local_addons[$k]['backend_url'] = isset($v['backend_url']) && $v['backend_url'] ? $this->addons_service->_info->getUrl($v['name'],$v['backend_url'],$v['domain']) : '';
                     $local_addons[$k]['frontend_url'] = isset($v['frontend_url']) && $v['frontend_url'] ? $this->addons_service->_info->getUrl($v['name'],$v['frontend_url'],$v['domain']) : '';
                     $local_addons[$k]['api_module'] = isset($v['api_module']) && $v['api_module'] ? $v['api_module'] : '';
-                    foreach($remote_addons as $rk=>$rv){
-                        if($rv == $v['name']){
-                            unset($local_addons[$k]);
-                        }
-                    }
+//                    foreach($remote_addons as $rk=>$rv){
+//                        if($rv == $v['name']){
+//                            unset($local_addons[$k]);
+//                        }
+//                    }
                 }
                 $return['data']['list']['data'] = $local_addons;
                 $return['data']['list']['total'] = count($local_addons);
