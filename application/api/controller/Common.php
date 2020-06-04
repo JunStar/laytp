@@ -46,9 +46,12 @@ class Common extends Api{
             if(!$qiniu_upload_radio){
                 $qiniu_upload_radio = 'close';
             }
-            $aliyun_oss_upload_radio = Config::get('laytp.upload.aliyun_radio');
+            $aliyun_oss_upload_radio = Config::get('addons.aliyuncs.open_status');
+            if(!$aliyun_oss_upload_radio){
+                $aliyun_oss_upload_radio = 'close';
+            }
             $local_upload_radio = Config::get('laytp.upload.radio');
-            if($qiniu_upload_radio == 'close' && $aliyun_oss_upload_radio == 1 && $local_upload_radio == 1){
+            if($qiniu_upload_radio == 'close' && $aliyun_oss_upload_radio == 'close' && $local_upload_radio == 1){
                 $this->error('未开启上传方式');
             }
 
