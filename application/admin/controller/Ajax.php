@@ -96,7 +96,7 @@ class Ajax extends Controller
             if($qiniu_upload_radio == 'open'){
                 $qiniu_yun = Kodo::instance();
                 $qiniu_yun->upload($info['tmp_name'],$object);
-                $file_url = Config::get('laytp.qiniu_kodo.domain') . '/' . $object;
+                $file_url = Config::get('addons.qiniu.domain') . '/' . $object;
 
                 $add['file_type'] = $this->request->param('accept');
                 $add['file_path'] = $file_url;
