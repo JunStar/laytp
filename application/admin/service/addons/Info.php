@@ -92,7 +92,7 @@ class Info extends Service
         if($domain){
             return $server['REQUEST_SCHEME'].'://'.$domain.'/'.$url;
         }else{
-            return $server['REQUEST_SCHEME'].'://'.$server['SERVER_NAME'].'/addons/'.$name.'/'.$url;
+            return $server['REQUEST_SCHEME'].'://'.$server['HTTP_HOST'].'/addons/'.$name.'/'.$url;
         }
     }
 
