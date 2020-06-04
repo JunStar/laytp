@@ -20,8 +20,7 @@
         "topthink/framework": "5.1.*",
         "topthink/think-captcha": "^2.0",
         "phpmailer/phpmailer": "^6.1",
-        "alibabacloud/sdk": "^1.8",
-        "aliyuncs/oss-sdk-php": "^2.3"
+        "alibabacloud/sdk": "^1.8"
     },
     "autoload": {
         "psr-4": {
