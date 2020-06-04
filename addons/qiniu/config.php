@@ -1,6 +1,16 @@
 <?php
 return [
     [
+        'name'=>'上传开关'
+        ,'key'=>'open_status'
+        ,'type'=>'radio'
+        ,'default'=>1
+        ,'content'=>[
+        '1'=>'关闭'
+        ,'2'=>'打开'
+    ]
+    ],
+    [
         'name'=>'accessKey'
         ,'key'=>'access_key'
         ,'type'=>'input'
