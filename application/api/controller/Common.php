@@ -3,11 +3,13 @@ namespace app\api\controller;
 
 use addons\aliyuncs\service\Oss;
 use addons\qiniu\service\Kodo;
+use app\admin\model\Attachment;
 use app\api\validate\email\Send;
 use app\common\service\Email;
 use app\common\service\Mobile;
 use controller\Api;
 use library\Random;
+use think\Exception;
 use think\facade\Config;
 
 /**
@@ -52,7 +54,7 @@ class Common extends Api{
 
             $file = $this->request->file('file'); // 获取上传的文件
             if(!$file){
-                $this->error('上传失败,请选择需要的上传文件');
+                $this->error('上传失败,请选择需要上传的文件');
             }
             $info       = $file->getInfo();
             $path_info  = pathinfo($info['name']);
@@ -103,7 +105,7 @@ class Common extends Api{
 
                 $add['file_type'] = $this->request->param('accept');
                 $add['file_path'] = $file_url;
-                model('Attachment')->create($add);
+                Attachment::create($add);
             }
 
             //上传至阿里云
@@ -113,7 +115,7 @@ class Common extends Api{
 
                 $add['file_type'] = $this->request->param('accept');
                 $add['file_path'] = $file_url;
-                model('Attachment')->create($add);
+                Attachment::create($add);
             }
 
             //本地上传
@@ -124,12 +126,12 @@ class Common extends Api{
 
                 $add['file_type'] = $this->request->param('accept');
                 $add['file_path'] = $local_file_url;
-                model('Attachment')->create($add);
+                Attachment::create($add);
             }
 
             $this->success('上传成功',$file_url ? $file_url : $local_file_url);
-        }catch (\Exception $e){
-            $this->error('上传失败,'.$e->getMessage());
+        }catch (Exception $e){
+            $this->error('上传失败,' . $e->getMessage());
         }
     }
 

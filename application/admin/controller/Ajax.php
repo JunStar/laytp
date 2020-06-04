@@ -3,6 +3,7 @@ namespace app\admin\controller;
 
 use addons\aliyuncs\service\Oss;
 use addons\qiniu\service\Kodo;
+use app\admin\model\Attachment;
 use library\DirFile;
 use library\Token;
 use think\facade\Config;
@@ -103,7 +104,7 @@ class Ajax extends Controller
 
                 $add['file_type'] = $this->request->param('accept');
                 $add['file_path'] = $file_url;
-                model('Attachment')->create($add);
+                Attachment::create($add);
             }
 
             //上传至阿里云
@@ -113,7 +114,7 @@ class Ajax extends Controller
 
                 $add['file_type'] = $this->request->param('accept');
                 $add['file_path'] = $file_url;
-                model('Attachment')->create($add);
+                Attachment::create($add);
             }
 
             //本地上传
@@ -124,7 +125,7 @@ class Ajax extends Controller
 
                 $add['file_type'] = $this->request->param('accept');
                 $add['file_path'] = $local_file_url;
-                model('Attachment')->create($add);
+                Attachment::create($add);
             }
             $this->success('上传成功','',$file_url ? $file_url : $local_file_url);
         }catch (Exception $e){
