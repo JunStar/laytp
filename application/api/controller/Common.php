@@ -1,11 +1,11 @@
 <?php
 namespace app\api\controller;
 
+use addons\qiniu\service\Kodo;
 use app\api\validate\email\Send;
 use app\common\service\Email;
 use app\common\service\Mobile;
 use controller\Api;
-use library\QiniuYun;
 use library\Random;
 use think\facade\Config;
 
@@ -39,10 +39,13 @@ class Common extends Api{
      */
     public function upload(){
         try{
-            $qiniu_upload_radio = Config::get('laytp.upload.qiniu_radio');
+            $qiniu_upload_radio = Config::get('addons.qiniu.open_status');
+            if(!$qiniu_upload_radio){
+                $qiniu_upload_radio = 'close';
+            }
             $aliyun_oss_upload_radio = Config::get('laytp.upload.aliyun_radio');
             $local_upload_radio = Config::get('laytp.upload.radio');
-            if($qiniu_upload_radio == 1 && $aliyun_oss_upload_radio == 1 && $local_upload_radio == 1){
+            if($qiniu_upload_radio == 'close' && $aliyun_oss_upload_radio == 1 && $local_upload_radio == 1){
                 $this->error('上传失败','后台请开启一种上传方式');
             }
 
@@ -94,8 +97,8 @@ class Common extends Api{
             $file_url = '';
             $local_file_url = '';
             //上传至七牛云
-            if($qiniu_upload_radio == 2){
-                $qiniu_yun = QiniuYun::instance();
+            if($qiniu_upload_radio == 'open'){
+                $qiniu_yun = Kodo::instance();
                 $qiniu_yun->upload(
                     Config::get('laytp.qiniu_kodo.access_key')
                     ,Config::get('laytp.qiniu_kodo.secret_key')
