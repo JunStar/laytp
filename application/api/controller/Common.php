@@ -7,6 +7,7 @@ use app\common\service\Email;
 use app\common\service\Mobile;
 use controller\Api;
 use library\Random;
+use OSS\OssClient;
 use think\facade\Config;
 
 /**
@@ -58,11 +59,9 @@ class Common extends Api{
             $file_ext   = strtolower($path_info['extension']);
             $save_name  = date("Ymd") . "/" . md5(uniqid(mt_rand())) . ".{$file_ext}";
             $upload_dir = $this->request->param('upload_dir');
-            if($upload_dir){
-                $object     = $upload_dir . '/' . $save_name;//上传至阿里云或者七牛云的文件名
-            }else{
-                $object     = $save_name;//上传至阿里云或者七牛云的文件名
-            }
+            $upload_dir = $upload_dir ? $upload_dir . '/' : '';
+
+            $object     = $upload_dir . $save_name;//上传至阿里云或者七牛云的文件名
 
             $upload = Config::get('laytp.upload');
             preg_match('/(\d+)(\w+)/', $upload['maxsize'], $matches);
@@ -99,14 +98,8 @@ class Common extends Api{
             //上传至七牛云
             if($qiniu_upload_radio == 'open'){
                 $qiniu_yun = Kodo::instance();
-                $qiniu_yun->upload(
-                    Config::get('laytp.qiniu_kodo.access_key')
-                    ,Config::get('laytp.qiniu_kodo.secret_key')
-                    ,Config::get('laytp.qiniu_kodo.bucket')
-                    ,$info['tmp_name']
-                    ,$object
-                );
-                $file_url = Config::get('laytp.qiniu_kodo.domain') . '/' . $object;
+                $qiniu_yun->upload($info['tmp_name'],$object);
+                $file_url = Config::get('addons.qiniu.domain') . '/' . $object;
 
                 $add['file_type'] = $this->request->param('accept');
                 $add['file_path'] = $file_url;
