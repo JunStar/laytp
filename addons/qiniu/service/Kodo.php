@@ -3,13 +3,14 @@ namespace addons\qiniu\service;
 
 use addons\qiniu\library\Qiniu\Auth;
 use addons\qiniu\library\Qiniu\Storage\UploadManager;
+use service\Service;
 use think\facade\Config;
 
 /**
  * Class Kodo
  * @package addons\qiniu\service
  */
-class Kodo
+class Kodo extends Service
 {
     protected static $instance;
 
@@ -43,22 +44,14 @@ class Kodo
             $upload_mgr = new UploadManager();
             list($ret, $err) = $upload_mgr->putFile($token,$save_file_name,$local_file_name);
             if ($err !== null) {
-                $this->setMessage('上传失败,'.$err);
+                $this->setError('上传失败,'.$err);
                 return false;
             } else {
                 return true;
             }
         }catch (\Exception $e){
-            $this->setMessage('上传失败,'.$e->getMessage());
+            $this->setError('上传失败,'.$e->getMessage());
             return false;
         }
-    }
-
-    public function getMessage(){
-        return $this->_message;
-    }
-
-    public function setMessage($message){
-        $this->_message = $message;
     }
 }
