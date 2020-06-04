@@ -37,6 +37,7 @@ class Addons extends Backend
                     $local_addons[$k]['title'] = $local_addons[$k]['name'];
                     $local_addons[$k]['addon_exist'] = true;
                     $local_addons[$k]['author'] = '未知';
+                    $local_addons[$k]['charge_type'] = 4;
                     $local_addons[$k]['download_num'] = 0;
                     $local_addons[$k]['local_state'] = 1;
                     $config = $this->addons_service->_config->getConfig($v['name']);
