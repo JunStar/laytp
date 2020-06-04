@@ -3,6 +3,7 @@ namespace addons\qiniu\service;
 
 use addons\qiniu\library\Qiniu\Auth;
 use addons\qiniu\library\Qiniu\Storage\UploadManager;
+use think\facade\Config;
 
 /**
  * Class Kodo
@@ -27,16 +28,16 @@ class Kodo
 
     /**
      * 上传文件
-     * @param $access_key
-     * @param $secret_key
-     * @param $bucket
      * @param $local_file_name
      * @param $save_file_name
      * @return bool
      * @throws Exception
      */
-    public function upload($access_key, $secret_key, $bucket, $local_file_name, $save_file_name){
+    public function upload($local_file_name, $save_file_name){
         try{
+            $access_key = Config::get('addons.qiniu.access_key');
+            $secret_key = Config::get('addons.qiniu.secret_key');
+            $bucket = Config::get('addons.qiniu.bucket');
             $client = new Auth($access_key,$secret_key);
             $token = $client->uploadToken($bucket);
             $upload_mgr = new UploadManager();

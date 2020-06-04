@@ -95,13 +95,7 @@ class Ajax extends Controller
             //上传至七牛云
             if($qiniu_upload_radio == 'open'){
                 $qiniu_yun = Kodo::instance();
-                $qiniu_yun->upload(
-                    Config::get('laytp.qiniu_kodo.access_key')
-                    ,Config::get('laytp.qiniu_kodo.secret_key')
-                    ,Config::get('laytp.qiniu_kodo.bucket')
-                    ,$info['tmp_name']
-                    ,$object
-                );
+                $qiniu_yun->upload($info['tmp_name'],$object);
                 $file_url = Config::get('laytp.qiniu_kodo.domain') . '/' . $object;
 
                 $add['file_type'] = $this->request->param('accept');
