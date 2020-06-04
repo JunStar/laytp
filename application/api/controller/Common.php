@@ -46,7 +46,7 @@ class Common extends Api{
             $aliyun_oss_upload_radio = Config::get('laytp.upload.aliyun_radio');
             $local_upload_radio = Config::get('laytp.upload.radio');
             if($qiniu_upload_radio == 'close' && $aliyun_oss_upload_radio == 1 && $local_upload_radio == 1){
-                $this->error('上传失败','后台请开启一种上传方式');
+                $this->error('未开启上传方式');
             }
 
             $file = $this->request->file('file'); // 获取上传的文件
