@@ -105,7 +105,7 @@ layui.use(['layTp'],function() {
                         layTp.facade.popup_confirm("卸载 " +  obj.data.title + " 插件",layTp.facade.url(module + "/" + controller + "/uninstall",{name:obj.data.name}));
                         break;
                     case 'config':
-                        layTp.facade.popup_frame("插件 " + obj.data.title+ " 配置",layTp.facade.url(module + "/" + controller + "/config",{name:obj.data.name}),'70%','70%');
+                        layTp.facade.popup_frame("插件 " + obj.data.title+ " 配置",layTp.facade.url(module + "/" + controller + "/config",{name:obj.data.name}),'80%','80%');
                         break;
                     case 'api':
                         layTp.facade.popup_frame("插件 " + obj.data.title + " Api文档",layTp.facade.url(module + "/" + controller + "/api",{name:obj.data.name}),'40%','27%');

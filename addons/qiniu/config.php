@@ -2,6 +2,7 @@
 return [
     [
         'name'=>'上传开关'
+        ,'tip'=>'上传开关'
         ,'key'=>'open_status'
         ,'type'=>'radio'
         ,'default'=>'close'
@@ -12,24 +13,28 @@ return [
     ],
     [
         'name'=>'accessKey'
+        ,'tip'=>'七牛云的accessKey'
         ,'key'=>'access_key'
         ,'type'=>'input'
         ,'content'=>''
     ],
     [
         'name'=>'secretKey'
+        ,'tip'=>'七牛云的secretKey'
         ,'key'=>'secret_key'
         ,'type'=>'input'
         ,'content'=>''
     ],
     [
         'name'=>'bucket'
+        ,'tip'=>'bucket'
         ,'key'=>'bucket'
         ,'type'=>'input'
         ,'content'=>''
     ],
     [
         'name'=>'空间域名'
+        ,'tip'=>'空间域名'
         ,'key'=>'domain'
         ,'type'=>'input'
         ,'content'=>''
