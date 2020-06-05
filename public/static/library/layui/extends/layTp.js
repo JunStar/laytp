@@ -1320,6 +1320,8 @@ layui.define([
                     });
                 }
                 $('[lay-submit]').click();
+                //插件市场，点击顶部Tab切换后，离线安装的上传控件需要进行渲染
+                layTp.init.upload_render();
             });
         },
 
