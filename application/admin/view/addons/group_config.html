@@ -10,7 +10,7 @@
 <div class="layui-tab">
     <ul class="layui-tab-title">
         {foreach $config_items['group'] as $k=>$v}
-        <li {if $k==0}class="layui-this"{/if}>{$v}</span></li>
+        <li {if $k==0}class="layui-this"{/if}>{$v.name}</span></li>
         {/foreach}
     </ul>
     <div class="layui-tab-content">
@@ -23,7 +23,7 @@
                     <col width="40%">
                 </colgroup>
                 <tbody>
-                {foreach $config_items['items'][$gv] as $k=>$v}
+                {foreach $config_items['items'][$gv['key']] as $k=>$v}
                 <tr>
                     <td style="text-align:right;
                         {if in_array($v['type'],['textarea','array','image_single','image_multi','ueditor'])}vertical-align:top;{/if}
@@ -55,7 +55,7 @@
                         {/case}
                         {case select_multi}
                         <div class="select_multi"
-                             id="{$v['key']}"
+                             id="{$gv.key}_{$v['key']}"
                              options='{:getSelectMultiJsConst($v["content"])}'
                              name="row[{$v['key']}]"
                              selected_data='{:json_encode(explode(",",$config[$v['key']] ? $config[$v['key']] : $v['default']))}'
@@ -259,7 +259,7 @@
                             <div class="layui-form-mid layui-word-aux">
                                 {$v.tip}
                                 <br />
-                                调用方式<code>Config::get('addons.{$addon_name}.{$v.key}')</code>
+                                调用方式<code>Config::get('addons.{$addon_name}.{$gv.key}.{$v.key}')</code>
                             </div>
                         </td>
                 </tr>
