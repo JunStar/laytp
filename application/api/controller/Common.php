@@ -158,8 +158,13 @@ class Common extends Api{
 })
      */
     public function send_email_code(){
-        if(!$this->request->isPost()){
-            $this->error('请使用POST请求');
+        $addons_service = new \app\admin\service\Addons();
+        $addon = $addons_service->_info->getAddonInfo('email');
+        if(!$addon){
+            $this->error('请先安装Email插件');
+        }
+        if(!$addon['state']){
+            $this->error('Email插件已关闭');
         }
 
         $params['email'] = $this->request->param('email');
@@ -186,18 +191,26 @@ class Common extends Api{
      * @ApiParams   (name="email", type="string", required="true", description="邮箱")
      * @ApiParams   (name="event", type="string", required="true", sample="register",description="事件名称")
      * @ApiParams   (name="code", type="string", required="true", sample="register",description="邮箱验证码")
-     * @ApiReturnParams   (name="code", type="integer", required="true", sample="0")
-     * @ApiReturnParams   (name="msg", type="string", required="true", sample="返回成功")
-     * @ApiReturnParams   (name="data", type="object", sample="{'user_id':'int','user_name':'string','profile':{'email':'string','age':'integer'}}", description="扩展数据返回")
+     * @ApiReturnParams   (name="err_code", type="integer", description="错误码.0=没有错误，表示操作成功；1=常规错误码，客户端仅需提示msg；其他错误码与具体业务相关，其他错误码举例：10401。前端需要跳转至登录界面。")
+     * @ApiReturnParams   (name="msg", type="string", description="返回描述")
+     * @ApiReturnParams   (name="time", type="integer", description="请求时间，Unix时间戳，单位秒")
+     * @ApiReturnParams   (name="data", type="null", description="null")
      * @ApiReturn
-    ({
-    'code':'1',
-    'msg':'返回成功'
-    })
+({
+    'err_code':0,
+    'msg':'发送成功',
+    'time':'15632654875',
+    'data':null
+})
      */
     public function check_email_code(){
-        if(!$this->request->isPost()){
-            $this->error('请使用POST请求');
+        $addons_service = new \app\admin\service\Addons();
+        $addon = $addons_service->_info->getAddonInfo('email');
+        if(!$addon){
+            $this->error('请先安装Email插件');
+        }
+        if(!$addon['state']){
+            $this->error('Email插件已关闭');
         }
 
         $params['email'] = $this->request->param('email');
@@ -225,19 +238,14 @@ class Common extends Api{
      * @ApiReturnParams   (name="time", type="integer", description="请求时间，Unix时间戳，单位秒")
      * @ApiReturnParams   (name="data", type="null", description="只会返回null")
      * @ApiReturn
-    ({
+({
     "code": 0,
     "msg": "发送失败,触发分钟级流控Permits:1",
     "time": 1584667483,
     "data": null
-    })
+})
      */
-    public function send_mobile_code()
-    {
-        if(!$this->request->isPost()){
-            $this->error('请使用POST请求');
-        }
-
+    public function send_mobile_code(){
         $params['mobile'] = $this->request->param('mobile');
         $params['event'] = $this->request->param('event');
 
