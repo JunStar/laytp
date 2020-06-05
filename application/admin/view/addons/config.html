@@ -12,9 +12,8 @@
     <table class="layui-table" style="margin: 0;" lay-skin="nob">
         <colgroup>
             <col width="20%">
-            <col width="40%">
-            <col width="35%">
-            <col width="5%">
+            <col width="30%">
+            <col width="50%">
         </colgroup>
         <tbody>
         {foreach $config_items as $k=>$v}
@@ -253,7 +252,7 @@
                 <div class="layui-form-mid layui-word-aux">
                     {$v.tip}
                     <br />
-                    <code>Config::get('addons.{$addon_name}.{$v.key}')</code>
+                    调用方式<code>Config::get('addons.{$addon_name}.{$v.key}')</code>
                 </div>
             </td>
         </tr>
