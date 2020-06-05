@@ -5,6 +5,7 @@ use controller\Backend;
 use library\Http;
 use think\Exception;
 use think\exception\HttpResponseException;
+use think\Facade;
 use think\facade\Config;
 use think\facade\Cookie;
 use think\facade\Env;
@@ -204,13 +205,29 @@ class Addons extends Backend
             try{
                 $addons = Config::get('addons.');
                 $config_items = $this->request->param('row');
-                foreach($config_items as $k=>$v){
-                    if(is_array($v)){
-                        $temp = [];
-                        foreach($v['key'] as $arr_k=>$arr_v){
-                            $temp[$arr_v] = $v['value'][$arr_k];
+                $is_laytp_addons_group = isset($config_items['is_laytp_addons_group']) ? $config_items['is_laytp_addons_group'] : 0;
+                if($is_laytp_addons_group){
+                    unset($config_items['is_laytp_addons_group']);
+                    foreach($config_items as $group=>$items){
+                        foreach($items as $k=>$v){
+                            if(is_array($v)){
+                                $temp = [];
+                                foreach($v['key'] as $arr_k=>$arr_v){
+                                    $temp[$arr_v] = $v['value'][$arr_k];
+                                }
+                                $config_items[$group][$k] = $temp;
+                            }
                         }
-                        $config_items[$k] = $temp;
+                    }
+                }else{
+                    foreach($config_items as $k=>$v){
+                        if(is_array($v)){
+                            $temp = [];
+                            foreach($v['key'] as $arr_k=>$arr_v){
+                                $temp[$arr_v] = $v['value'][$arr_k];
+                            }
+                            $config_items[$k] = $temp;
+                        }
                     }
                 }
                 $addons[$name] = $config_items;

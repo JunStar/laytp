@@ -1,6 +1,7 @@
 {extend name="admin@public/layout/popup_form"}
 
 {block name="form"}
+<input type="hidden" name="row[is_laytp_addons_group]" value="1" autocomplete="off" />
 <style type="text/css">
     .layui-form-mid{padding:0!important;}
     .layui-form-mid code{color:#5FB878;}
@@ -34,18 +35,18 @@
                     <td>
                         {switch ($v['type'])}
                         {case input}
-                        <input type="text" name="row[{$v.key}]" class="layui-input" value="{:isset($config[$v['key']])?$config[$v['key']]:(isset($v['content'])?$v['content']:'')}" autocomplete="off" />
+                        <input type="text" name="row[{$gv.key}][{$v.key}]" class="layui-input" value="{:isset($config[$gv['key']][$v['key']])?$config[$gv['key']][$v['key']]:(isset($v['content'])?$v['content']:'')}" autocomplete="off" />
                         {/case}
                         {case textarea}
-                        <textarea name="row[{$v.key}]" class="layui-textarea">{:isset($config[$v['key']])?$config[$v['key']]:(isset($v['content'])?$v['content']:'')}</textarea>
+                        <textarea name="row[{$gv.key}][{$v.key}]" class="layui-textarea">{:isset($config[$gv['key']][$v['key']])?$config[$gv['key']][$v['key']]:(isset($v['content'])?$v['content']:'')}</textarea>
                         {/case}
                         {case select_single}
-                        <select name="row[{$v['key']}]">
+                        <select name="row[{$gv.key}][{$v.key}]">
                             <option value="">请选择</option>
                             {if is_array($v['content'])}
                             {foreach $v['content'] as $content_k=>$content_v}
                             <option value="{$content_k}"
-                                    {php}if(($config[$v['key']] ? $config[$v['key']] : $v['default']) == $content_k){{/php}
+                                    {php}if(($config[$gv['key']][$v['key']] ? $config[$gv['key']][$v['key']] : $v['default']) == $content_k){{/php}
                             selected="selected"
                             {php}}{/php}
                             >{$content_v}</option>
@@ -57,42 +58,42 @@
                         <div class="select_multi"
                              id="{$gv.key}_{$v['key']}"
                              options='{:getSelectMultiJsConst($v["content"])}'
-                             name="row[{$v['key']}]"
-                             selected_data='{:json_encode(explode(",",$config[$v['key']] ? $config[$v['key']] : $v['default']))}'
+                             name="row[{$gv.key}][{$v.key}]"
+                             selected_data='{:json_encode(explode(",",$config[$gv['key']][$v['key']] ? $config[$gv['key']][$v['key']] : $v['default']))}'
                         ></div>
                         {/case}
                         {case radio}
                         {if is_array($v['content'])}
                         <!-- 隐藏域设置开关未选中时需要传递的参数值 -->
-                        <input type="hidden" name="row[{$v['key']}]" value="{:key($v['content'])}" />
-                        <input type="checkbox" name="row[{$v['key']}]" lay-skin="switch"
+                        <input type="hidden" name="row[{$gv.key}][{$v.key}]" value="{:key($v['content'])}" />
+                        <input type="checkbox" name="row[{$gv.key}][{$v.key}]" lay-skin="switch"
                                lay-text="{:next($v['content'])}|{:prev($v['content'])}"
                                next-item="{:next($v['content'])}"
                                value="{:key($v['content'])}"
-                               {php}if(($config[$v['key']] ? $config[$v['key']] : $v['default']) == key($v['content'])){{/php}
+                               {php}if(($config[$gv['key']][$v['key']] ? $config[$gv['key']][$v['key']] : $v['default']) == key($v['content'])){{/php}
                         checked="checked"
                         {php}}{/php} />
                         {/if}
                         {/case}
                         {case image_single}
                         <div class="layui-upload">
-                            <div class="layui-inline" style="width: 75%;"><input type="text" class="layui-input" name="row[{$v['key']}]" id="input_{$v['key']}" value="{$config[$v['key']]}" /></div>
+                            <div class="layui-inline" style="width: 75%;"><input type="text" class="layui-input" name="row[{$gv.key}][{$v.key}]" id="input_{$gv.key}_{$v['key']}" value="{$config[$gv['key']][$v['key']]}" /></div>
                             <div class="layui-inline">
                                 <button type="button" class="layui-btn layui-btn-primary layui-btn-sm pull-left"
-                                        id="{$v['key']}"
+                                        id="{$gv.key}_{$v['key']}"
                                         upload="true"
                                         accept="images"
                                         single_multi="single"
                                 ><i class="layui-icon">&#xe62f;</i>选择上传</button>
                             </div>
                             <div class="pic-more">
-                                <ul class="pic-more-upload-list" id="preview_{$v['key']}">
-                                    {if $config[$v['key']]}
+                                <ul class="pic-more-upload-list" id="preview_{$gv.key}_{$v['key']}">
+                                    {if $config[$gv['key']][$v['key']]}
                                     <li class="item_img">
                                         <div class="operate">
-                                            <i class="upload_img_close layui-icon" file_url_data="{$config[$v['key']]}" node="{$v['key']}"></i>
+                                            <i class="upload_img_close layui-icon" file_url_data="{$config[$gv['key']][$v['key']]}" node="{$v['key']}"></i>
                                         </div>
-                                        <img src="{$config[$v['key']]}" class="img">
+                                        <img src="{$config[$gv['key']][$v['key']]}" class="img">
                                     </li>
                                     {/if}
                                 </ul>
@@ -101,19 +102,19 @@
                         {/case}
                         {case image_multi}
                         <div class="layui-upload">
-                            <div class="layui-inline" style="width: 75%;"><input type="text" class="layui-input" name="row[{$v['key']}]" id="input_{$v['key']}" value="{$config[$v['key']]}" /></div>
+                            <div class="layui-inline" style="width: 75%;"><input type="text" class="layui-input" name="row[{$gv.key}][{$v.key}]" id="input_{$gv.key}_{$v['key']}" value="{$config[$gv['key']][$v['key']]}" /></div>
                             <div class="layui-inline">
                                 <button type="button" class="layui-btn layui-btn-primary layui-btn-sm pull-left"
-                                        id="{$v['key']}"
+                                        id="{$gv.key}_{$v['key']}"
                                         upload="true"
                                         accept="images"
                                         single_multi="multi"
                                 ><i class="layui-icon">&#xe62f;</i>选择上传</button>
                             </div>
                             <div class="pic-more">
-                                <ul class="pic-more-upload-list" id="preview_{$v['key']}">
-                                    {if $config[$v['key']]}
-                                    {foreach :explode(",",$config[$v['key']]) as $key=>$vo}
+                                <ul class="pic-more-upload-list" id="preview_{$gv.key}_{$v['key']}">
+                                    {if $config[$gv['key']][$v['key']]}
+                                    {foreach :explode(",",$config[$gv['key']][$v['key']]) as $key=>$vo}
                                     <li class="item_img">
                                         <div class="operate">
                                             <i class="upload_img_close layui-icon" file_url_data="{$vo}" node="{$v['key']}"></i>
@@ -128,10 +129,10 @@
                         {/case}
                         {case video_single}
                         <div class="layui-upload">
-                            <div class="layui-inline" style="width: 75%;"><input type="text" class="layui-input" name="row[{$v['key']}]" id="input_{$v['key']}" value="{$config[$v['key']]}" /></div>
+                            <div class="layui-inline" style="width: 75%;"><input type="text" class="layui-input" name="row[{$gv.key}][{$v.key}]" id="input_{$gv.key}_{$v['key']}" value="{$config[$gv['key']][$v['key']]}" /></div>
                             <div class="layui-inline">
                                 <button type="button" class="layui-btn layui-btn-sm layui-btn-primary pull-left"
-                                        id="{$v['key']}"
+                                        id="{$gv.key}_{$v['key']}"
                                         upload="true"
                                         accept="video"
                                         upload_dir=""
@@ -140,11 +141,11 @@
                                 </button>
                             </div>
                             <div class="pic-more">
-                                <ul class="pic-more-upload-list" id="preview_{$v['key']}">
-                                    {if $config[$v['key']]}
+                                <ul class="pic-more-upload-list" id="preview_{$gv.key}_{$v['key']}">
+                                    {if $config[$gv['key']][$v['key']]}
                                     <li class="item_video">
-                                        <video src="{$config[$v['key']]}" controls="controls" width="200px" height="200px"></video>
-                                        <button class="layui-btn layui-btn-sm layui-btn-danger upload_delete" style="display: block; width: 100%;" file_url_data="{$config[$v['key']]}" node="{$v['key']}"><i class="layui-icon">&#xe640;</i></button>
+                                        <video src="{$config[$gv['key']][$v['key']]}" controls="controls" width="200px" height="200px"></video>
+                                        <button class="layui-btn layui-btn-sm layui-btn-danger upload_delete" style="display: block; width: 100%;" file_url_data="{$config[$gv['key']][$v['key']]}" node="{$v['key']}"><i class="layui-icon">&#xe640;</i></button>
                                     </li>
                                     {/if}
                                 </ul>
@@ -153,10 +154,10 @@
                         {/case}
                         {case video_multi}
                         <div class="layui-upload">
-                            <div class="layui-inline" style="width: 75%;"><input type="text" class="layui-input" name="row[{$v['key']}]" id="input_{$v['key']}" value="{$config[$v['key']]}" /></div>
+                            <div class="layui-inline" style="width: 75%;"><input type="text" class="layui-input" name="row[{$gv.key}][{$v.key}]" id="input_{$gv.key}_{$v['key']}" value="{$config[$gv['key']][$v['key']]}" /></div>
                             <div class="layui-inline">
                                 <button type="button" class="layui-btn layui-btn-sm layui-btn-primary pull-left"
-                                        id="{$v['key']}"
+                                        id="{$gv.key}_{$v['key']}"
                                         upload="true"
                                         accept="video"
                                         upload_dir=""
@@ -165,9 +166,9 @@
                                 </button>
                             </div>
                             <div class="pic-more">
-                                <ul class="pic-more-upload-list" id="preview_{$v['key']}">
-                                    {if $config[$v['key']]}
-                                    {foreach :explode(",",$config[$v['key']]) as $key=>$vo}
+                                <ul class="pic-more-upload-list" id="preview_{$gv.key}_{$v['key']}">
+                                    {if $config[$gv['key']][$v['key']]}
+                                    {foreach :explode(",",$config[$gv['key']][$v['key']]) as $key=>$vo}
                                     <li class="item_video">
                                         <video src="{$vo}" controls="controls" width="200px" height="200px"></video>
                                         <button class="layui-btn layui-btn-sm layui-btn-danger upload_delete" style="display: block; width: 100%;" file_url_data="{$vo}" node="{$v['key']}"><i class="layui-icon">&#xe640;</i></button>
@@ -180,10 +181,10 @@
                         {/case}
                         {case file_single}
                         <div class="layui-upload">
-                            <div class="layui-inline" style="width: 75%;"><input type="text" class="layui-input" name="row[{$v['key']}]" id="input_{$v['key']}" value="{$config[$v['key']]}" /></div>
+                            <div class="layui-inline" style="width: 75%;"><input type="text" class="layui-input" name="row[{$gv.key}][{$v.key}]" id="input_{$gv.key}_{$v['key']}" value="{$config[$gv['key']][$v['key']]}" /></div>
                             <div class="layui-inline">
                                 <button type="button" class="layui-btn layui-btn-sm layui-btn-primary pull-left"
-                                        id="{$v['key']}"
+                                        id="{$gv.key}_{$v['key']}"
                                         upload="true"
                                         accept="file"
                                         single_multi="single"
@@ -193,10 +194,10 @@
                         {/case}
                         {case file_multi}
                         <div class="layui-upload">
-                            <div class="layui-inline" style="width: 75%;"><input type="text" class="layui-input" name="row[{$v['key']}]" id="input_{$v['key']}" value="{$config[$v['key']]}" /></div>
+                            <div class="layui-inline" style="width: 75%;"><input type="text" class="layui-input" name="row[{$gv.key}][{$v.key}]" id="input_{$gv.key}_{$v['key']}" value="{$config[$gv['key']][$v['key']]}" /></div>
                             <div class="layui-inline">
                                 <button type="button" class="layui-btn layui-btn-sm layui-btn-primary pull-left"
-                                        id="{$v['key']}"
+                                        id="{$gv.key}_{$v['key']}"
                                         upload="true"
                                         accept="file"
                                         single_multi="multi"
@@ -205,7 +206,7 @@
                         </div>
                         {/case}
                         {case ueditor}
-                        <script editor="true" type="ueditor" id="{$v['key']}" name="row[{$v['key']}]" type="text/plain">{$config[$v['key']]|raw}</script>
+                        <script editor="true" type="ueditor" id="{$gv.key}_{$v['key']}" name="row[{$gv.key}][{$v.key}]" type="text/plain">{:isset($config[$gv['key']][$v['key']])?html_entity_decode($config[$gv['key']][$v['key']]):(isset($v['content'])?$v['content']:'')}</script>
                         {/case}
                         {case array}
                         <table class="layui-table tableDnd" style="margin: 0;" lay-skin="line">
@@ -222,11 +223,11 @@
                             </tr>
                             </thead>
                             <tbody>
-                            {if is_array($config[$v['key']])}
-                            {foreach $config[$v['key']] as $vk=>$vv}
+                            {if isset($config[$gv['key']][$v['key']]) && is_array($config[$gv['key']][$v['key']])}
+                            {foreach $config[$gv['key']][$v['key']] as $vk=>$vv}
                             <tr>
-                                <td style="padding: 4px 15px;"><input class="layui-input" type="text" name="row[{$v.key}][key][]" value="{$vk}" /></td>
-                                <td style="padding: 4px 15px;"><input class="layui-input" type="text" name="row[{$v.key}][value][]" value="{$vv}" /></td>
+                                <td style="padding: 4px 15px;"><input class="layui-input" type="text" name="row[{$gv.key}][{$v.key}][key][]" value="{$vk}" /></td>
+                                <td style="padding: 4px 15px;"><input class="layui-input" type="text" name="row[{$gv.key}][{$v.key}][value][]" value="{$vv}" /></td>
                                 <td style="padding: 4px 15px;">
                                     <a href="javascript:void(0);" class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-delete del_array_item" layer-tips="删除" title="删除"></a>
                                 </td>
@@ -247,7 +248,7 @@
                             {/if}
                             <tr class='nodrop nodrag'>
                                 <td colspan="3" style="padding: 4px 15px;">
-                                    <a href="javascript:void(0);" class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-add-1 add_array_item" config_key="{$v.key}" title="追加">追加</a>
+                                    <a href="javascript:void(0);" class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-add-1 add_array_item" config_group="{$gv.key}" config_key="{$v.key}" title="追加">追加</a>
                                 </td>
                             </tr>
                             </tbody>
@@ -283,8 +284,10 @@
         $(document).on('click', '.add_array_item', function () {
             let click_obj = $(this);
             let config_key = click_obj.attr('config_key');
+            let config_group = click_obj.attr('config_group');
             layui.laytpl($('#array_item_html').html()).render({
-                config_key: config_key
+                config_key: config_key,
+                config_group: config_group
             }, function (string) {
                 click_obj.parent().parent().before(string);
             });
@@ -301,8 +304,8 @@
 {block name="js_template"}
 <script id="array_item_html" type="text/html">
     <tr>
-        <td style="padding: 4px 15px;"><input class="layui-input" type="text" name="row[{{ d.config_key }}][key][]" /></td>
-        <td style="padding: 4px 15px;"><input class="layui-input" type="text" name="row[{{ d.config_key }}][value][]" /></td>
+        <td style="padding: 4px 15px;"><input class="layui-input" type="text" name="row[{{ d.config_group }}][{{ d.config_key }}][key][]" /></td>
+        <td style="padding: 4px 15px;"><input class="layui-input" type="text" name="row[{{ d.config_group }}][{{ d.config_key }}][value][]" /></td>
         <td style="padding: 4px 15px;">
             <a href="javascript:void(0);" class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-delete del_array_item" layer-tips="删除" title="删除"></a>
         </td>
