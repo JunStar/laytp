@@ -132,7 +132,6 @@ class Sysconf extends Backend
 
     /**
      * 更新配置文件
-     * @param $group
      * @return array
      */
     public function update_config(){
