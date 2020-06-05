@@ -199,6 +199,7 @@ class Addons extends Backend
     //配置项
     public function config(){
         $name = $this->request->param('name');
+        $this->assign('addon_name', $name);
         if($this->request->isAjax()){
             try{
                 $addons = Config::get('addons.');

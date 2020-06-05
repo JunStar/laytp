@@ -2,6 +2,7 @@
 return [
     [
         'name'=>'邮件发送方式'
+        ,'tip'=>'邮件发送方式'
         ,'key'=>'send_type'
         ,'type'=>'select_single'
         ,'default'=>'1'
@@ -12,30 +13,35 @@ return [
     ],
     [
         'name'=>'SMTP服务器'
+        ,'tip'=>'SMTP服务器'
         ,'key'=>'smtp_host'
         ,'type'=>'input'
         ,'content'=>'smtp.qq.com'
     ],
     [
         'name'=>'SMTP端口'
+        ,'tip'=>'SMTP端口'
         ,'key'=>'smtp_port'
         ,'type'=>'input'
         ,'content'=>'587'
     ],
     [
         'name'=>'SMTP用户名'
+        ,'tip'=>'SMTP用户名'
         ,'key'=>'smtp_user'
         ,'type'=>'input'
         ,'content'=>''
     ],
     [
         'name'=>'SMTP密码'
+        ,'tip'=>'SMTP密码'
         ,'key'=>'smtp_password'
         ,'type'=>'input'
         ,'content'=>''
     ],
     [
         'name'=>'SMTP验证方式'
+        ,'tip'=>'SMTP验证方式'
         ,'key'=>'verify_type'
         ,'type'=>'select_single'
         ,'default'=>'1'
@@ -47,18 +53,21 @@ return [
     ],
     [
         'name'=>'发件人邮箱'
+        ,'tip'=>'发件人邮箱'
         ,'key'=>'from'
         ,'type'=>'input'
         ,'content'=>''
     ],
     [
         'name'=>'发件人昵称'
+        ,'tip'=>'发件人昵称'
         ,'key'=>'from_name'
         ,'type'=>'input'
         ,'content'=>''
     ],
     [
         'name'=>'邮件数上限'
+        ,'tip'=>'邮件数上限'
         ,'key'=>'max_send_num'
         ,'type'=>'input'
         ,'content'=>''
