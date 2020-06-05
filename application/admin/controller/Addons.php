@@ -31,7 +31,6 @@ class Addons extends Backend
                 $post['charge_type'] = '';
                 $local_addons = $this->addons_service->_info->getAddonsInfo();
                 foreach($local_addons as $k=>$v){
-                    $local_addons[$k]['title'] = $local_addons[$k]['name'];
                     $local_addons[$k]['addon_exist'] = true;
                     $local_addons[$k]['charge_type'] = 4;
                     $local_addons[$k]['download_num'] = 0;
