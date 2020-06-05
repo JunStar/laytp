@@ -2,10 +2,10 @@
 namespace app\api\controller;
 
 use addons\aliyuncs\service\Oss;
+use addons\email\service\Email;
 use addons\qiniu\service\Kodo;
 use app\admin\model\Attachment;
 use app\api\validate\email\Send;
-use app\common\service\Email;
 use app\common\service\Mobile;
 use controller\Api;
 use library\Random;
@@ -145,13 +145,16 @@ class Common extends Api{
      * @ApiRoute    (/api/common/send_email_code)
      * @ApiParams   (name="email", type="string", required="true", description="邮箱")
      * @ApiParams   (name="event", type="string", required="true", sample="register",description="事件名称")
-     * @ApiReturnParams   (name="code", type="integer", required="true", sample="0")
-     * @ApiReturnParams   (name="msg", type="string", required="true", sample="返回成功")
-     * @ApiReturnParams   (name="data", type="object", sample="{'user_id':'int','user_name':'string','profile':{'email':'string','age':'integer'}}", description="扩展数据返回")
+     * @ApiReturnParams   (name="err_code", type="integer", description="错误码.0=没有错误，表示操作成功；1=常规错误码，客户端仅需提示msg；其他错误码与具体业务相关，其他错误码举例：10401。前端需要跳转至登录界面。")
+     * @ApiReturnParams   (name="msg", type="string", description="返回描述")
+     * @ApiReturnParams   (name="time", type="integer", description="请求时间，Unix时间戳，单位秒")
+     * @ApiReturnParams   (name="data", type="null", description="null")
      * @ApiReturn
 ({
-    'code':'1',
-    'msg':'返回成功'
+    'err_code':0,
+    'msg':'发送成功',
+    'time':'15632654875',
+    'data':null
 })
      */
     public function send_email_code(){
