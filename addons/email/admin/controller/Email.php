@@ -21,7 +21,7 @@ class Email extends AddonsBackend
     public function initialize()
     {
         parent::initialize();
-        $this->model = new \app\common\model\Email();
+        $this->model = new \addons\email\admin\model\Email();
         
     }
 

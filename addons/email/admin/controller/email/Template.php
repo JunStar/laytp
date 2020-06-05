@@ -21,7 +21,7 @@ class Template extends AddonsBackend
     public function initialize()
     {
         parent::initialize();
-        $this->model = new \app\common\model\email\Template();
+        $this->model = new \addons\email\admin\model\email\Template();
         
     }
 
