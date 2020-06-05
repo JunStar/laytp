@@ -44,7 +44,7 @@ return [
         ,'tip'=>'SMTP验证方式'
         ,'key'=>'verify_type'
         ,'type'=>'select_single'
-        ,'default'=>'1'
+        ,'default'=>'ssl'
         ,'content'=>[
             'none'=>'None'
             ,'tls'=>'TLS'
@@ -70,6 +70,6 @@ return [
         ,'tip'=>'邮件数上限'
         ,'key'=>'max_send_num'
         ,'type'=>'input'
-        ,'content'=>''
+        ,'content'=>'3'
     ],
 ];

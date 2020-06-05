@@ -1,16 +1,23 @@
 {extend name="admin@public/layout/popup_form"}
 
 {block name="form"}
-{foreach $config_items as $k=>$v}
+
+<style type="text/css">
+    .layui-form-mid{padding:0!important;}
+    .layui-form-mid code{color:#5FB878;}
+    .layui-table{color: #333!important}
+    .layui-form-switch{margin-top: 0px;}
+</style>
 <div class="layui-form-item">
     <table class="layui-table" style="margin: 0;" lay-skin="nob">
         <colgroup>
-            <col width="10%">
-            <col width="50%">
+            <col width="20%">
+            <col width="40%">
             <col width="35%">
             <col width="5%">
         </colgroup>
         <tbody>
+        {foreach $config_items as $k=>$v}
         <tr>
             <td style="text-align:right;
                 {if in_array($v['type'],['textarea','array','image_single','image_multi','ueditor'])}vertical-align:top;{/if}
@@ -246,14 +253,14 @@
                 <div class="layui-form-mid layui-word-aux">
                     {$v.tip}
                     <br />
-                    调用方式<code>Config::get('addons.{$addon_name}.{$v.key}')</code>
+                    <code>Config::get('addons.{$addon_name}.{$v.key}')</code>
                 </div>
             </td>
         </tr>
+        {/foreach}
         </tbody>
     </table>
 </div>
-{/foreach}
 {/block}
 
 {block name="script"}
