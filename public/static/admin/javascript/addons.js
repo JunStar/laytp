@@ -161,10 +161,12 @@ layui.use(['layTp'],function() {
         let data = {"charge_type":click_field_val};
         layui.laytpl($('#top_toolbar_template').html()).render(data, function(html){
             $('#top_toolbar').html(html);
-            //搜索框的值设置成对应值
+            //搜索框的值设置成对应值并提交搜索表单
             $('#'+field).val(field_val);
             layui.form.render('select');
             $('[lay-submit]').click();
+            //渲染上传插件
+            layTp.init.upload_render();
         });
     });
 });
