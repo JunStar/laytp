@@ -56,10 +56,9 @@ class Email
             $this->options = array_merge($this->options, $config);
         }
         $this->options = array_merge($this->options, $options);
-        $securArr = [1 => 'tls', 2 => 'ssl'];
 
         $this->mail = new PHPMailer();
-        $this->mail->setLanguage('cn');
+        $this->mail->setLanguage('zh_cn');
         $this->mail->CharSet = $this->options['charset'];
         $this->mail->SMTPDebug = false;
         $this->mail->isSMTP();
@@ -67,7 +66,7 @@ class Email
         $this->mail->Host = $this->options['smtp_host'];
         $this->mail->Username = $this->options['smtp_user'];
         $this->mail->Password = $this->options['smtp_password'];
-        $this->mail->SMTPSecure = isset($securArr[$this->options['verify_type']]) ? $securArr[$this->options['verify_type']] : '';
+        $this->mail->SMTPSecure = isset($this->options['verify_type']) ? $this->options['verify_type'] : '';
         $this->mail->Port = $this->options['smtp_port'];
 
         //设置发件人
@@ -183,7 +182,7 @@ class Email
                 break;
             default:
                 //邮件功能已关闭
-                $this->setError('邮件功能已关闭');
+                $this->setError('Email插件未配置发送方式');
                 break;
         }
         return $result;

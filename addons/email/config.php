@@ -7,8 +7,8 @@ return [
         ,'type'=>'select_single'
         ,'default'=>'1'
         ,'content'=>[
-            '1'=>'SMTP'
-            ,'2'=>'Mail'
+            'smtp'=>'SMTP'
+            ,'mail'=>'Mail'
         ]
     ],
     [

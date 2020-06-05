@@ -176,7 +176,7 @@ class Common extends Api{
             if($email_service->send($params['email'],$params['event'],['code'=>Random::numeric()])){
                 $this->success('发送成功');
             }else{
-                $this->error('发送失败,'.$email_service->getError());
+                $this->error($email_service->getError());
             }
         }else{
             $this->error('发送失败,'.$validate->getError());
