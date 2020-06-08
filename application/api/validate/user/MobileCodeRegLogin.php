@@ -2,8 +2,7 @@
 //手机号+手机验证码注册验证器
 namespace app\api\validate\user;
 
-use app\common\model\Device;
-use app\common\service\Mobile;
+use addons\aliyun_mobilemsg\service\Mobile;
 use think\facade\Config;
 use think\Validate;
 
