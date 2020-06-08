@@ -13,7 +13,7 @@ class Mobile extends Service
     //发送手机短信
     public function send($mobile, $event, $template_param){
         try {
-            AlibabaCloud::accessKeyClient(Config::get('addons.aliyun_mobilemsg.access_key'), Config::get('addons.aliyun_mobilemsg.access_key_secret'))
+            AlibabaCloud::accessKeyClient(Config::get('addons.aliyun_mobilemsg.access_key'), Config::get('addons.aliyun_mobilemsg.secret_key'))
                 ->regionId('cn-hangzhou')
                 ->asDefaultClient();
 

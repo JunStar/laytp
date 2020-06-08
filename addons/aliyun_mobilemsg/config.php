@@ -1,27 +1,16 @@
 <?php
 return [
     [
-        'name'=>'上传开关'
-        ,'tip'=>'上传开关'
-        ,'key'=>'open_status'
-        ,'type'=>'radio'
-        ,'default'=>'close'
-        ,'content'=>[
-        'close'=>'关闭'
-        ,'open'=>'打开'
-    ]
-    ],
-    [
-        'name'=>'accessKey'
-        ,'tip'=>'accessKey'
-        ,'key'=>'access_key'
+        'name'=>'AccessKeyID'
+        ,'tip'=>'AccessKeyID'
+        ,'key'=>'access_key_id'
         ,'type'=>'input'
         ,'content'=>''
     ],
     [
-        'name'=>'secretKey'
-        ,'tip'=>'secretKey'
-        ,'key'=>'secret_key'
+        'name'=>'AccessKeySecret'
+        ,'tip'=>'AccessKeySecret'
+        ,'key'=>'access_key_secret'
         ,'type'=>'input'
         ,'content'=>''
     ],
