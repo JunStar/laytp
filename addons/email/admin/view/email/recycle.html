@@ -99,7 +99,7 @@ layui.use(['layTp'],function() {
                 action: "renew"
                 ,title: "还原"
                 ,icon: "layui-icon-list"
-                ,uri: layTp.facade.url(module + "/" + controller + "/renew")
+                ,uri: layTp.facade.addon_url(addon, module + "/" + controller + "/renew")
                 ,need_refresh:true
                 ,switch_type: "confirm_action"
             }
@@ -107,7 +107,7 @@ layui.use(['layTp'],function() {
                 action: 'true_del',
                 title: '彻底删除'
                 ,icon: "layui-icon-delete"
-                ,uri: layTp.facade.url(module + "/" + controller + "/true_del")
+                ,uri: layTp.facade.addon_url(addon, module + "/" + controller + "/true_del")
                 ,need_refresh:true
                 ,switch_type: "confirm_action"
             }
@@ -115,7 +115,7 @@ layui.use(['layTp'],function() {
     });
 
     //表格渲染
-    func_controller.table_render = function (where) {
+    func_controller.table_render = function (where, page) {
         layui.table.render({
             elem: '.layui-hide-sm'
             , id: table_id
@@ -125,7 +125,9 @@ layui.use(['layTp'],function() {
             , even: true
             , method: 'GET'
             , cellMinWidth: 80
-            , page: true
+            , page: {
+                curr: page
+            }
             , cols: [[
                 {type:'checkbox'}
 				,{field:'id',title:'ID',align:'center',width:80}
