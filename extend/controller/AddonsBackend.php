@@ -17,6 +17,12 @@ use think\facade\Session;
 
 class AddonsBackend extends Backend
 {
+    public $addon;//当前插件名
+
+    public function initialize(){
+        parent::initialize();
+    }
+
     /**
      * 重写fetch方法，定义模板初始路径
      * @param string $template

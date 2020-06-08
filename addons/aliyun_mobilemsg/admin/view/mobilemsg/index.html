@@ -73,10 +73,10 @@
 {/block}
 
 {block name="script"}
-<script src="__ADMIN_JS__/mobilemsg.js" charset="utf-8"></script>
+<script src="{:getAddonJSDir('aliyun_mobilemsg','admin')}/{$js_global_var.js_controller}.js" charset="utf-8"></script>
 {/block}
 
 {block name="js_template"}
-{include file="public/js_tpl/toolbar_tpl"}
-{include file="public/js_tpl/operation_tpl"}
+{include file="admin@public/js_tpl/addon_toolbar_tpl"}
+{include file="admin@public/js_tpl/addon_operation_tpl"}
 {/block}

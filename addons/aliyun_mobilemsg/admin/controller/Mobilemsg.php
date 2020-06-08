@@ -20,6 +20,7 @@ class Mobilemsg extends AddonsBackend
 
     public function initialize()
     {
+        $this->addon = 'aliyun_mobilemsg';
         parent::initialize();
         $this->model = new \addons\aliyun_mobilemsg\admin\model\Mobilemsg();
         

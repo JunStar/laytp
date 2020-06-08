@@ -16,6 +16,7 @@ use think\facade\Hook;
 class Backend extends Controller
 {
     use \library\traits\Backend;
+    public $addon;//当前插件名
     public $module;//当前模型名
     public $controller;//当前控制器名
     public $action;//当前操作名
@@ -197,6 +198,7 @@ class Backend extends Controller
         $controller = strtolower($this->request->controller());
         $action = strtolower($this->request->action());
 
+        $assign['js_global_var']['addon'] = $this->addon;
         $assign['js_global_var']['module'] = $module;
         $assign['js_global_var']['controller'] = $controller;
         $assign['js_global_var']['js_controller'] = str_replace('.','/',$controller);

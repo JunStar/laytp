@@ -286,35 +286,65 @@ layui.define([
         //表格点击[编辑][删除][还原][彻底删除]按钮
         table_tool: function(obj){
             let data = obj.data;
-            if(obj.event === 'del'){
-                layui.layer.confirm('真的删除么?', function(index){
+            if(obj.event === 'del') {
+                layui.layer.confirm('真的删除么?', function (index) {
                     $.ajax({
                         type: 'POST',
-                        url: layTp.facade.url(module + '/' + controller +'/del'),
-                        data: {ids:data.id},
+                        url: layTp.facade.url(module + '/' + controller + '/del'),
+                        data: {ids: data.id},
                         dataType: 'json',
                         success: function (res) {
-                            if( res.code == 1 ){
+                            if (res.code == 1) {
                                 //只删除一行不够，角色管理是多级列表，删除某个顶级列表，需要重新获取所有数据
                                 obj.del();
                                 func_controller.table_render();
-                            }else{
+                            } else {
                                 layTp.facade.error(res.msg);
                             }
                             layui.layer.close(index);
                         },
                         error: function (xhr) {
-                            if( xhr.status == '500' ){
+                            if (xhr.status == '500') {
                                 layTp.facade.error('本地网络问题或者服务器错误');
-                            }else if( xhr.status == '404' ){
+                            } else if (xhr.status == '404') {
                                 layTp.facade.error('请求地址不存在');
                             }
                         }
                     });
                 });
-                //点击编辑按钮
-            }else if(obj.event === 'edit'){
-                let url = layTp.facade.url(module + '/' + controller + '/edit',{id:data.id});
+            }else if(obj.event == 'addon_del'){
+                layui.layer.confirm('真的删除么?', function (index) {
+                    $.ajax({
+                        type: 'POST',
+                        url: layTp.facade.addon_url(addon,module + '/' + controller + '/del'),
+                        data: {ids: data.id},
+                        dataType: 'json',
+                        success: function (res) {
+                            if (res.code == 1) {
+                                //只删除一行不够，角色管理是多级列表，删除某个顶级列表，需要重新获取所有数据
+                                obj.del();
+                                func_controller.table_render();
+                            } else {
+                                layTp.facade.error(res.msg);
+                            }
+                            layui.layer.close(index);
+                        },
+                        error: function (xhr) {
+                            if (xhr.status == '500') {
+                                layTp.facade.error('本地网络问题或者服务器错误');
+                            } else if (xhr.status == '404') {
+                                layTp.facade.error('请求地址不存在');
+                            }
+                        }
+                    });
+                });
+            }else if(obj.event === 'edit') {
+                console.log('edit');
+                let url = layTp.facade.url(module + '/' + controller + '/edit', {id: data.id});
+                layTp.facade.popup_frame('编辑', url);
+            }else if(obj.event === 'addon_edit'){
+                console.log('addon_edit');
+                let url = layTp.facade.addon_url(addon,module + '/' + controller + '/edit', {id: data.id});
                 layTp.facade.popup_frame('编辑', url);
             }else if(obj.event === 'renew'){
                 layui.layer.confirm('真的还原么?', function(index){
