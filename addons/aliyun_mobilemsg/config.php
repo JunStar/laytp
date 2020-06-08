@@ -2,32 +2,32 @@
 return [
     [
         'name'=>'AccessKeyID'
-        ,'tip'=>'AccessKeyID'
+        ,'tip'=>'阿里云密钥管理中设置的AccessKeyID'
         ,'key'=>'access_key_id'
         ,'type'=>'input'
         ,'content'=>''
     ],
     [
         'name'=>'AccessKeySecret'
-        ,'tip'=>'AccessKeySecret'
+        ,'tip'=>'阿里云密钥管理中设置的AccessKeySecret'
         ,'key'=>'access_key_secret'
         ,'type'=>'input'
         ,'content'=>''
     ],
     [
         'name'=>'签名'
-        ,'tip'=>'签名'
+        ,'tip'=>'阿里云手机短信中设置的签名'
         ,'key'=>'sign'
         ,'type'=>'input'
         ,'content'=>''
     ],
     [
-        'name'=>'模板事件对应'
-        ,'tip'=>'模板事件对应'
+        'name'=>'模板与事件对应关系'
+        ,'tip'=>'模板与事件对应关系'
         ,'key'=>'template'
         ,'type'=>'array'
         ,'content'=>[
-            'reg_login' => 'template_id'
+            'reg_login' => '阿里云的模板ID'
         ]
     ],
     [
