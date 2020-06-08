@@ -1,10 +1,10 @@
 <?php
-namespace addons\qiniu\library\Qiniu\Storage;
+namespace addons\qiniu_kodo\library\Qiniu\Storage;
 
-use addons\qiniu\library\Qiniu\Config;
-use addons\qiniu\library\Qiniu\Http\HttpClient;
-use addons\qiniu\library\Qiniu\Storage\ResumeUploader;
-use addons\qiniu\library\Qiniu\Storage\FormUploader;
+use addons\qiniu_kodo\library\Qiniu\Config;
+use addons\qiniu_kodo\library\Qiniu\Http\HttpClient;
+use addons\qiniu_kodo\library\Qiniu\Storage\ResumeUploader;
+use addons\qiniu_kodo\library\Qiniu\Storage\FormUploader;
 
 /**
  * 主要涉及了资源上传接口的实现

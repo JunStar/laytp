@@ -1,10 +1,10 @@
 <?php
 
-namespace addons\aliyuncs\library\OSS\Result;
+namespace addons\aliyun_oss\library\OSS\Result;
 
-use addons\aliyuncs\library\OSS\Core\OssUtil;
-use addons\aliyuncs\library\OSS\Model\ListMultipartUploadInfo;
-use addons\aliyuncs\library\OSS\Model\UploadInfo;
+use addons\aliyun_oss\library\OSS\Core\OssUtil;
+use addons\aliyun_oss\library\OSS\Model\ListMultipartUploadInfo;
+use addons\aliyun_oss\library\OSS\Model\UploadInfo;
 
 
 /**

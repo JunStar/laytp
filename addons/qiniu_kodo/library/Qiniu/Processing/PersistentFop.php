@@ -1,10 +1,10 @@
 <?php
-namespace addons\qiniu\library\Qiniu\Processing;
+namespace addons\qiniu_kodo\library\Qiniu\Processing;
 
-use addons\qiniu\library\Qiniu\Config;
-use addons\qiniu\library\Qiniu\Http\Client;
-use addons\qiniu\library\Qiniu\Http\Error;
-use addons\qiniu\library\Qiniu\Processing\Operation;
+use addons\qiniu_kodo\library\Qiniu\Config;
+use addons\qiniu_kodo\library\Qiniu\Http\Client;
+use addons\qiniu_kodo\library\Qiniu\Http\Error;
+use addons\qiniu_kodo\library\Qiniu\Processing\Operation;
 
 /**
  * 持久化处理类,该类用于主动触发异步持久化操作.

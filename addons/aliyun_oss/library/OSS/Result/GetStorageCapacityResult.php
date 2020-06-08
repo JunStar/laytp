@@ -1,8 +1,8 @@
 <?php
 
-namespace addons\aliyuncs\library\OSS\Result;
+namespace addons\aliyun_oss\library\OSS\Result;
 
-use addons\aliyuncs\library\OSS\Core\OssException;
+use addons\aliyun_oss\library\OSS\Core\OssException;
 
 /**
  * Class AclResult  GetBucketAcl interface returns the result class, encapsulated

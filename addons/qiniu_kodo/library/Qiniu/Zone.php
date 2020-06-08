@@ -1,7 +1,7 @@
 <?php
-namespace addons\qiniu\library\Qiniu;
+namespace addons\qiniu_kodo\library\Qiniu;
 
-use addons\qiniu\library\Qiniu\Region;
+use addons\qiniu_kodo\library\Qiniu\Region;
 
 class Zone extends Region
 {

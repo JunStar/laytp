@@ -1,7 +1,7 @@
 <?php
-namespace addons\qiniu\library\Qiniu;
+namespace addons\qiniu_kodo\library\Qiniu;
 
-use addons\qiniu\library\Qiniu\Zone;
+use addons\qiniu_kodo\library\Qiniu\Zone;
 
 final class Auth
 {

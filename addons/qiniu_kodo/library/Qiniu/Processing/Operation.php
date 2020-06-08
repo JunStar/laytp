@@ -1,9 +1,9 @@
 <?php
 
-namespace addons\qiniu\library\Qiniu\Processing;
+namespace addons\qiniu_kodo\library\Qiniu\Processing;
 
-use addons\qiniu\library\Qiniu\Http\Client;
-use addons\qiniu\library\Qiniu\Http\Error;
+use addons\qiniu_kodo\library\Qiniu\Http\Client;
+use addons\qiniu_kodo\library\Qiniu\Http\Error;
 
 final class Operation
 {

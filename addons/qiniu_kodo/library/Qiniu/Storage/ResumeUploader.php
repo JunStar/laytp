@@ -1,9 +1,9 @@
 <?php
-namespace addons\qiniu\library\Qiniu\Storage;
+namespace addons\qiniu_kodo\library\Qiniu\Storage;
 
-use addons\qiniu\library\Qiniu\Config;
-use addons\qiniu\library\Qiniu\Http\Client;
-use addons\qiniu\library\Qiniu\Http\Error;
+use addons\qiniu_kodo\library\Qiniu\Config;
+use addons\qiniu_kodo\library\Qiniu\Http\Client;
+use addons\qiniu_kodo\library\Qiniu\Http\Error;
 
 /**
  * 断点续上传类, 该类主要实现了断点续上传中的分块上传,

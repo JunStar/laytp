@@ -1,7 +1,7 @@
 <?php
-namespace addons\aliyuncs\service;
+namespace addons\aliyun_oss\service;
 
-use addons\aliyuncs\library\OSS\OssClient;
+use addons\aliyun_oss\library\OSS\OssClient;
 use service\Service;
 use think\facade\Config;
 

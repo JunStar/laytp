@@ -1,8 +1,8 @@
 <?php
-namespace addons\qiniu\service;
+namespace addons\qiniu_kodo\service;
 
-use addons\qiniu\library\Qiniu\Auth;
-use addons\qiniu\library\Qiniu\Storage\UploadManager;
+use addons\qiniu_kodo\library\Qiniu\Auth;
+use addons\qiniu_kodo\library\Qiniu\Storage\UploadManager;
 use service\Service;
 use think\facade\Config;
 

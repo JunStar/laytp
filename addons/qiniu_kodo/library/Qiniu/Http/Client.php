@@ -1,9 +1,9 @@
 <?php
-namespace addons\qiniu\library\Qiniu\Http;
+namespace addons\qiniu_kodo\library\Qiniu\Http;
 
-use addons\qiniu\library\Qiniu\Config;
-use addons\qiniu\library\Qiniu\Http\Request;
-use addons\qiniu\library\Qiniu\Http\Response;
+use addons\qiniu_kodo\library\Qiniu\Config;
+use addons\qiniu_kodo\library\Qiniu\Http\Request;
+use addons\qiniu_kodo\library\Qiniu\Http\Response;
 
 final class Client
 {

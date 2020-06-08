@@ -1,5 +1,5 @@
 <?php
-namespace addons\qiniu\library\Qiniu\Http;
+namespace addons\qiniu_kodo\library\Qiniu\Http;
 
 final class Request
 {

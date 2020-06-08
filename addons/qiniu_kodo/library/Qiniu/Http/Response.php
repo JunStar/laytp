@@ -1,6 +1,6 @@
 <?php
 
-namespace addons\qiniu\library\Qiniu\Http;
+namespace addons\qiniu_kodo\library\Qiniu\Http;
 
 /**
  * HTTP response Object

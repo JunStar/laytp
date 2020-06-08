@@ -1,8 +1,8 @@
 <?php
 
-namespace addons\aliyuncs\library\OSS\Result;
+namespace addons\aliyun_oss\library\OSS\Result;
 
-use addons\aliyuncs\library\OSS\Model\GetLiveChannelHistory;
+use addons\aliyun_oss\library\OSS\Model\GetLiveChannelHistory;
 
 class GetLiveChannelHistoryResult extends Result
 {

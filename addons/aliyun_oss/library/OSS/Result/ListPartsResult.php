@@ -1,9 +1,9 @@
 <?php
 
-namespace addons\aliyuncs\library\OSS\Result;
+namespace addons\aliyun_oss\library\OSS\Result;
 
-use addons\aliyuncs\library\OSS\Model\ListPartsInfo;
-use addons\aliyuncs\library\OSS\Model\PartInfo;
+use addons\aliyun_oss\library\OSS\Model\ListPartsInfo;
+use addons\aliyun_oss\library\OSS\Model\PartInfo;
 
 
 /**

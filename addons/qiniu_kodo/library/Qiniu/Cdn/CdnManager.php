@@ -1,10 +1,10 @@
 <?php
 
-namespace addons\qiniu\library\Qiniu\Cdn;
+namespace addons\qiniu_kodo\library\Qiniu\Cdn;
 
-use addons\qiniu\library\Qiniu\Auth;
-use addons\qiniu\library\Qiniu\Http\Error;
-use addons\qiniu\library\Qiniu\Http\Client;
+use addons\qiniu_kodo\library\Qiniu\Auth;
+use addons\qiniu_kodo\library\Qiniu\Http\Error;
+use addons\qiniu_kodo\library\Qiniu\Http\Client;
 
 final class CdnManager
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace addons\aliyuncs\library\OSS\Core;
+namespace addons\aliyun_oss\library\OSS\Core;
 
 /**
  * Class OssUtil

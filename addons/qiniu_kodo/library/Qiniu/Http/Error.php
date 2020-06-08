@@ -1,5 +1,5 @@
 <?php
-namespace addons\qiniu\library\Qiniu\Http;
+namespace addons\qiniu_kodo\library\Qiniu\Http;
 
 /**
  * 七牛业务请求逻辑错误封装类，主要用来解析API请求返回如下的内容：

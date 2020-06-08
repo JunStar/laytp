@@ -1,11 +1,11 @@
 <?php
 
-namespace addons\aliyuncs\library\OSS\Result;
+namespace addons\aliyun_oss\library\OSS\Result;
 
-use addons\aliyuncs\library\OSS\Core\OssUtil;
-use addons\aliyuncs\library\OSS\Model\ObjectInfo;
-use addons\aliyuncs\library\OSS\Model\ObjectListInfo;
-use addons\aliyuncs\library\OSS\Model\PrefixInfo;
+use addons\aliyun_oss\library\OSS\Core\OssUtil;
+use addons\aliyun_oss\library\OSS\Model\ObjectInfo;
+use addons\aliyun_oss\library\OSS\Model\ObjectListInfo;
+use addons\aliyun_oss\library\OSS\Model\PrefixInfo;
 
 /**
  * Class ListObjectsResult

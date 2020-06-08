@@ -1,6 +1,6 @@
 <?php
 
-namespace addons\aliyuncs\library\OSS\Model;
+namespace addons\aliyun_oss\library\OSS\Model;
 
 
 /**

@@ -1,5 +1,5 @@
 <?php
-namespace addons\qiniu\library\Qiniu;
+namespace addons\qiniu_kodo\library\Qiniu;
 
 final class Config
 {

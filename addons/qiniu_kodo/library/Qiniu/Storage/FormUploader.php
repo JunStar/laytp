@@ -1,8 +1,8 @@
 <?php
-namespace addons\qiniu\library\Qiniu\Storage;
+namespace addons\qiniu_kodo\library\Qiniu\Storage;
 
-use addons\qiniu\library\Qiniu\Http\Client;
-use addons\qiniu\library\Qiniu\Http\Error;
+use addons\qiniu_kodo\library\Qiniu\Http\Client;
+use addons\qiniu_kodo\library\Qiniu\Http\Error;
 
 final class FormUploader
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace addons\qiniu\library\Qiniu;
+namespace addons\qiniu_kodo\library\Qiniu;
 
-use addons\qiniu\library\Qiniu\Config;
+use addons\qiniu_kodo\library\Qiniu\Config;
 
 final class Etag
 {

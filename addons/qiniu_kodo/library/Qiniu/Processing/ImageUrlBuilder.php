@@ -1,7 +1,7 @@
 <?php
-namespace addons\qiniu\library\Qiniu\Processing;
+namespace addons\qiniu_kodo\library\Qiniu\Processing;
 
-use addons\qiniu\library\Qiniu;
+use addons\qiniu_kodo\library\Qiniu;
 
 /**
  * 主要涉及图片链接拼接

@@ -1,6 +1,6 @@
 <?php
 
-namespace addons\aliyuncs\library\OSS\Http;
+namespace addons\aliyun_oss\library\OSS\Http;
 
 class RequestCore_Exception extends \Exception
 {

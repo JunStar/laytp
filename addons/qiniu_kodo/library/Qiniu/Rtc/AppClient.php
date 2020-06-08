@@ -1,10 +1,10 @@
 <?php
-namespace addons\qiniu\library\Qiniu\Rtc;
+namespace addons\qiniu_kodo\library\Qiniu\Rtc;
 
-use addons\qiniu\library\Qiniu\Http\Client;
-use addons\qiniu\library\Qiniu\Http\Error;
-use addons\qiniu\library\Qiniu\Config;
-use addons\qiniu\library\Qiniu\Auth;
+use addons\qiniu_kodo\library\Qiniu\Http\Client;
+use addons\qiniu_kodo\library\Qiniu\Http\Error;
+use addons\qiniu_kodo\library\Qiniu\Config;
+use addons\qiniu_kodo\library\Qiniu\Auth;
 
 class AppClient
 {

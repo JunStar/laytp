@@ -1,11 +1,11 @@
 <?php
-namespace addons\qiniu\library\Qiniu\Storage;
+namespace addons\qiniu_kodo\library\Qiniu\Storage;
 
-use addons\qiniu\library\Qiniu\Auth;
-use addons\qiniu\library\Qiniu\Config;
-use addons\qiniu\library\Qiniu\Zone;
-use addons\qiniu\library\Qiniu\Http\Client;
-use addons\qiniu\library\Qiniu\Http\Error;
+use addons\qiniu_kodo\library\Qiniu\Auth;
+use addons\qiniu_kodo\library\Qiniu\Config;
+use addons\qiniu_kodo\library\Qiniu\Zone;
+use addons\qiniu_kodo\library\Qiniu\Http\Client;
+use addons\qiniu_kodo\library\Qiniu\Http\Error;
 
 /**
  * 主要涉及了鉴黄接口的实现，具体的接口规格可以参考

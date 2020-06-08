@@ -1,8 +1,8 @@
 <?php
 
-namespace addons\aliyuncs\library\OSS\Result;
+namespace addons\aliyun_oss\library\OSS\Result;
 
-use addons\aliyuncs\library\OSS\Model\CorsConfig;
+use addons\aliyun_oss\library\OSS\Model\CorsConfig;
 
 class GetCorsResult extends Result
 {
