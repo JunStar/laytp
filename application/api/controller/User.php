@@ -1,12 +1,11 @@
 <?php
 namespace app\api\controller;
 
-use app\api\validate\user\EmailLogin;
+use app\admin\service\Addons;
 use app\api\validate\user\MobileCodeRegLogin;
 use app\api\validate\user\MobileOneClickLogin;
 use app\api\validate\user\UsernameLogin;
 use app\api\validate\user\UsernameReg;
-use app\common\service\Mobile;
 use controller\Api;
 
 /**
@@ -79,8 +78,13 @@ class User extends Api{
      */
     public function mobile_code_reg_login()
     {
-        if(!$this->request->isPost()){
-            $this->error('请使用POST请求');
+        $addons_service = new Addons();
+        $addon = $addons_service->_info->getAddonInfo('aliyun_mobilemsg');
+        if(!$addon){
+            $this->error('请先安装阿里云手机短信插件');
+        }
+        if(!$addon['state']){
+            $this->error('阿里云手机短信插件已关闭');
         }
 
         $param['mobile'] = $this->request->request('mobile');
@@ -120,15 +124,20 @@ class User extends Api{
      */
     public function mobile_one_click_login()
     {
-        if(!$this->request->isPost()){
-            $this->error('请使用POST请求');
+        $addons_service = new Addons();
+        $addon = $addons_service->_info->getAddonInfo('aliyun_mobileauth');
+        if(!$addon){
+            $this->error('请先安装阿里云号码认证插件');
+        }
+        if(!$addon['state']){
+            $this->error('阿里云号码认证插件已关闭');
         }
 
         $params['access_token'] = $this->request->request('access_token');
 
         $validate = new MobileOneClickLogin();
         if($validate->check($params)){
-            $mobile_service = new Mobile();
+            $mobile_service = new \addons\aliyun_mobileauth\service\Mobile();
             $service_res = $mobile_service->getMobileByToken($params['access_token']);
             if($service_res){
                 $params['mobile'] = $service_res;

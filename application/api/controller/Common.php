@@ -7,6 +7,7 @@ use addons\email\service\Email;
 use addons\email\validate\Send;
 use addons\qiniu_kodo\service\Kodo;
 use app\admin\model\Attachment;
+use app\admin\service\Addons;
 use controller\Api;
 use library\Random;
 use think\Exception;
@@ -158,7 +159,7 @@ class Common extends Api{
 })
      */
     public function send_email_code(){
-        $addons_service = new \app\admin\service\Addons();
+        $addons_service = new Addons();
         $addon = $addons_service->_info->getAddonInfo('email');
         if(!$addon){
             $this->error('请先安装Email插件');
@@ -204,7 +205,7 @@ class Common extends Api{
 })
      */
     public function check_email_code(){
-        $addons_service = new \app\admin\service\Addons();
+        $addons_service = new Addons();
         $addon = $addons_service->_info->getAddonInfo('email');
         if(!$addon){
             $this->error('请先安装Email插件');
@@ -246,7 +247,7 @@ class Common extends Api{
 })
      */
     public function send_mobile_code(){
-        $addons_service = new \app\admin\service\Addons();
+        $addons_service = new Addons();
         $addon = $addons_service->_info->getAddonInfo('aliyun_mobilemsg');
         if(!$addon){
             $this->error('请先安装阿里云手机短信插件');
