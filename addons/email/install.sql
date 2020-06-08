@@ -2,10 +2,10 @@ SET NAMES utf8;
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
---  Table structure for `lt_email`
+--  Table structure for `{$prefix}email`
 -- ----------------------------
-DROP TABLE IF EXISTS `lt_email`;
-CREATE TABLE `lt_email` (
+DROP TABLE IF EXISTS `{$prefix}email`;
+CREATE TABLE `{$prefix}email` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `template_id` int(11) DEFAULT NULL COMMENT '模板ID',
   `event` varchar(255) DEFAULT NULL COMMENT '事件名称',
@@ -22,10 +22,10 @@ CREATE TABLE `lt_email` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='邮件管理'
 
 -- ----------------------------
---  Table structure for `lt_email_template`
+--  Table structure for `{$prefix}email_template`
 -- ----------------------------
-DROP TABLE IF EXISTS `lt_email_template`;
-CREATE TABLE `lt_email_template` (
+DROP TABLE IF EXISTS `{$prefix}email_template`;
+CREATE TABLE `{$prefix}email_template` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `event` varchar(255) DEFAULT NULL COMMENT '事件名称',
   `title` varchar(255) DEFAULT NULL COMMENT '模板标题',

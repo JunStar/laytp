@@ -1,5 +1,5 @@
 <?php
-namespace app\common\service;
+namespace addons\aliyun_mobilemsg\service;
 
 use AlibabaCloud\Client\AlibabaCloud;
 use AlibabaCloud\Client\Exception\ClientException;
@@ -13,11 +13,11 @@ class Mobile extends Service
     //发送手机短信
     public function send($mobile, $event, $template_param){
         try {
-            AlibabaCloud::accessKeyClient(Config::get('aliyun.mobilemsg.access_key'), Config::get('aliyun.mobilemsg.access_key_secret'))
+            AlibabaCloud::accessKeyClient(Config::get('addons.aliyun_mobilemsg.access_key'), Config::get('addons.aliyun_mobilemsg.access_key_secret'))
                 ->regionId('cn-hangzhou')
                 ->asDefaultClient();
 
-            $mobile_msg_template = Config::get('aliyun.mobilemsg.template');
+            $mobile_msg_template = Config::get('addons.aliyun_mobilemsg.template');
             $result = AlibabaCloud::rpc()
                 ->product('Dysmsapi')
                 // ->scheme('https') // https | http
@@ -29,7 +29,7 @@ class Mobile extends Service
                     'query' => [
                         'RegionId' => "cn-hangzhou",
                         'PhoneNumbers' => $mobile,
-                        'SignName' => Config::get('aliyun.mobilemsg.sign'),
+                        'SignName' => Config::get('addons.aliyun_mobilemsg.sign'),
                         'TemplateCode' => $mobile_msg_template[$event],
                         'TemplateParam' => json_encode($template_param, JSON_UNESCAPED_UNICODE),
                     ],
@@ -41,7 +41,7 @@ class Mobile extends Service
                     'template_code' => $mobile_msg_template[$event],
                     'event' => $event,
                     'mobile' => $mobile,
-                    'expire_time' => Config::get('aliyun.mobilemsg.expire_time') ? time() + Config::get('aliyun.mobilemsg.expire_time') : 0,
+                    'expire_time' => Config::get('addons.aliyun_mobilemsg.expire_time') ? time() + Config::get('addons.aliyun_mobilemsg.expire_time') : 0,
                     'params' => json_encode($template_param, JSON_UNESCAPED_UNICODE),
                 ];
                 Mobilemsg::create($data);
@@ -76,48 +76,12 @@ class Mobile extends Service
                 return false;
             }
             if ($message->expire_time && $message->expire_time < time()) {
-                \app\common\model\Email::where('id', '=', $message->id)->update(['status' => 3]);
+                Mobilemsg::where('id', '=', $message->id)->update(['status' => 3]);
                 $this->setError('验证码已过期');
                 return false;
             }
             Mobilemsg::where('id', '=', $message->id)->update(['status' => 2]);
         }
         return true;
-    }
-
-    //根据token获取手机号,用于本机手机号一键免密登录
-    public function getMobileByToken($access_token){
-        try {
-            AlibabaCloud::accessKeyClient(Config::get('aliyun.ram.access_key'), Config::get('aliyun.ram.access_key_secret'))
-                ->regionId('cn-hangzhou')
-                ->asDefaultClient();
-            $result = AlibabaCloud::rpc()
-                ->product('Dypnsapi')
-                 ->scheme('https') // https | http
-                ->version('2017-05-25')
-                ->action('GetMobile')
-                ->method('POST')
-                ->host('dypnsapi.aliyuncs.com')
-                ->options([
-                    'query' => [
-                        'RegionId' => "cn-hangzhou",
-                        'AccessToken' => $access_token
-                    ],
-                ])
-                ->request();
-            $res = $result->toArray();
-            if($res['Code'] == 'OK'){
-                return $res['GetMobileResultDTO']['Mobile'];
-            }else{
-                $this->setError($res['Message']);
-                return false;
-            }
-        } catch (ClientException $e) {
-            $this->setError($e->getErrorMessage());
-            return false;
-        } catch (ServerException $e) {
-            $this->setError($e->getErrorMessage());
-            return false;
-        }
     }
 }

@@ -1,12 +1,12 @@
 <?php
 namespace app\api\controller;
 
+use addons\aliyun_mobilemsg\service\Mobile;
 use addons\aliyun_oss\service\Oss;
 use addons\email\service\Email;
 use addons\qiniu_kodo\service\Kodo;
 use app\admin\model\Attachment;
 use app\api\validate\email\Send;
-use app\common\service\Mobile;
 use controller\Api;
 use library\Random;
 use think\Exception;
@@ -246,6 +246,15 @@ class Common extends Api{
 })
      */
     public function send_mobile_code(){
+        $addons_service = new \app\admin\service\Addons();
+        $addon = $addons_service->_info->getAddonInfo('aliyun_mobilemsg');
+        if(!$addon){
+            $this->error('请先安装阿里云手机短信插件');
+        }
+        if(!$addon['state']){
+            $this->error('阿里云手机短信插件已关闭');
+        }
+
         $params['mobile'] = $this->request->param('mobile');
         $params['event'] = $this->request->param('event');
 
