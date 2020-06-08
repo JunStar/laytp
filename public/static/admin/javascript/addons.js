@@ -34,8 +34,10 @@ layui.use(['layTp'],function() {
                 ,{field:'price',title:'价格',align:'center',width:90,templet:function(d){
                     if(d.charge_type == 2){
                         return '<text style="color: red;">￥' + d.price + '</text>';
-                    }else if(d.charge_type == 3){
+                    }else if(d.charge_type == 3) {
                         return '<text style="color: blue;">' + parseInt(d.price) + '积分</text>';
+                    }else if(d.charge_type == 4){
+                            return '<text style="color: blue;"> - </text>';
                     }else{
                         return '<text style="color: green">免费</text>';
                     }
