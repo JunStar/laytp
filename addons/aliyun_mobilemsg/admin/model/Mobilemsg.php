@@ -2,7 +2,7 @@
 /**
  * 手机短信管理模型
  */
-namespace addons\aliyun_mobilemsg\model;
+namespace addons\aliyun_mobilemsg\admin\model;
 
 use model\Backend;
 use think\model\concern\SoftDelete;

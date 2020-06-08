@@ -1,0 +1,82 @@
+{extend name="admin@public/layout/main"}
+
+{block name="search_form"}
+<div class="search-form-page-tab-content" id="search-form" style="display:none;">
+    <form class="layui-form" lay-filter="laytp_search_form" style="margin-bottom:0px;">
+        <input type="hidden" id="order_param_field" name="order_param[field]" value="">
+        <input type="hidden" id="order_param_type" name="order_param[type]" value="">
+        <div class="layui-form-item layui-inline">
+            <label class="layui-form-label" title="ID">ID</label>
+            <div class="layui-input-inline">
+                <input autocomplete="off" type="text" id="id" name="search_param[id][value]" id="id" placeholder="请输入ID" class="layui-input">
+                <input type="hidden" name="search_param[id][condition]" value="=">
+            </div>
+        </div>
+        <div class="layui-form-item layui-inline">
+                <label class="layui-form-label" title="阿里云短信模板ID">阿里云短信模板ID</label>
+                <div class="layui-input-inline">
+                    <input autocomplete="off" type="text" id="template_code" name="search_param[template_code][value]" id="template_code" placeholder="请输入阿里云短信模板ID" class="layui-input">
+                    <input type="hidden" name="search_param[template_code][condition]" value="LIKE">
+                </div>
+            </div>
+
+		    <div class="layui-form-item layui-inline">
+                <label class="layui-form-label" title="事件名称">事件名称</label>
+                <div class="layui-input-inline">
+                    <input autocomplete="off" type="text" id="event" name="search_param[event][value]" id="event" placeholder="请输入事件名称" class="layui-input">
+                    <input type="hidden" name="search_param[event][condition]" value="LIKE">
+                </div>
+            </div>
+
+		    <div class="layui-form-item layui-inline">
+                <label class="layui-form-label" title="邮件内容参数">邮件内容参数</label>
+                <div class="layui-input-inline">
+                    <input autocomplete="off" type="text" id="params" name="search_param[params][value]" id="params" placeholder="请输入邮件内容参数" class="layui-input">
+                    <input type="hidden" name="search_param[params][condition]" value="LIKE">
+                </div>
+            </div>
+
+		    <div class="layui-form-item layui-inline">
+                <label class="layui-form-label" title="收信人手机号码">收信人手机号码</label>
+                <div class="layui-input-inline">
+                    <input autocomplete="off" type="text" id="mobile" name="search_param[mobile][value]" id="mobile" placeholder="请输入收信人手机号码" class="layui-input">
+                    <input type="hidden" name="search_param[mobile][condition]" value="LIKE">
+                </div>
+            </div>
+
+		    <div class="layui-form-item layui-inline">
+                <label class="layui-form-label" title="状态">状态</label>
+                <div class="layui-input-inline">
+                    <select id="status" name="search_param[status][value]" placeholder="请输入状态">
+        				<option value=""></option>
+						<option value="1">未使用</option>
+						<option value="2">已使用</option>
+						<option value="3">已过期</option>
+                    </select>
+                    <input type="hidden" name="search_param[status][condition]" value="=">
+                </div>
+            </div>
+
+		    <div class="layui-form-item layui-inline">
+                <label class="layui-form-label" title="过期时间，0表示永不过期">过期时间，0表示永不过期</label>
+                <div class="layui-input-inline">
+                    <input autocomplete="off" type="text" id="expire_time" name="search_param[expire_time][value]" id="expire_time" placeholder="请输入过期时间，0表示永不过期" class="layui-input">
+                    <input type="hidden" name="search_param[expire_time][condition]" value="LIKE">
+                </div>
+            </div>
+
+        <div class="layui-form-item layui-inline">
+            <button class="layui-btn layui-btn-sm layui-btn-normal" lay-submit lay-filter="laytp"><i class="layui-icon"></i> 搜 索</button>
+        </div>
+    </form>
+</div>
+{/block}
+
+{block name="script"}
+<script src="__ADMIN_JS__/mobilemsg.js" charset="utf-8"></script>
+{/block}
+
+{block name="js_template"}
+{include file="public/js_tpl/toolbar_tpl"}
+{include file="public/js_tpl/operation_tpl"}
+{/block}
