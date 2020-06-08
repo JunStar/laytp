@@ -21,10 +21,10 @@ class Send extends Validate
         'event.require'  => '事件名称不能为空',
     ];
 
-    //自定义密码检验方法
+    //自定义检验方法
     protected function checkEmail($email){
         $email_model = new \app\common\model\Email();
-        $max_send_num = Config::get('laytp.email.max_send_num') ? Config::get('laytp.email.max_send_num') : 3;
+        $max_send_num = Config::get('addons.email.max_send_num') ? Config::get('addons.email.max_send_num') : 3;
         $email_limit_list = $email_model->where('to','=',$email)->order('id','desc')->limit($max_send_num)->select()->toArray();
         if($email_limit_list){
             if( time() - strtotime($email_limit_list[0]['create_time'] ) < 60 ){

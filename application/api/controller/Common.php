@@ -232,14 +232,14 @@ class Common extends Api{
      * @ApiRoute    (/api/common/send_mobile_code)
      * @ApiHeaders  (name="token", type="string", required="true", description="用户登录后得到的Token")
      * @ApiParams   (name="mobile", type="string", required="true", description="手机号码")
-     * @ApiParams   (name="event", type="string", required="true", sample="reg_login",description="事件名称，check=验证手机号,bind=绑定手机号,reg_login=使用手机号+验证码的方式进行注册或登录")
+     * @ApiParams   (name="event", type="string", required="true", sample="reg_login",description="事件名称，reg_login=使用手机号+验证码的方式进行注册或登录")
      * @ApiReturnParams   (name="code", type="integer", required="true", sample="0")
      * @ApiReturnParams   (name="msg", type="string", required="true", sample="返回成功")
      * @ApiReturnParams   (name="time", type="integer", description="请求时间，Unix时间戳，单位秒")
      * @ApiReturnParams   (name="data", type="null", description="只会返回null")
      * @ApiReturn
 ({
-    "code": 0,
+    "err_code": 1,
     "msg": "发送失败,触发分钟级流控Permits:1",
     "time": 1584667483,
     "data": null

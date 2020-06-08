@@ -79,9 +79,4 @@ class Test extends Backend
     public function category(){
         return $this->belongsTo('app\admin\model\test\Category','category_id','id')->field('id,name');
     }
-
-    //获取数组常量的函数
-    public function getArrayConstList($field_name){
-        return $this->const[$field_name];
-    }
 }

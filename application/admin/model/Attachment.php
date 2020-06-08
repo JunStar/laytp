@@ -27,10 +27,4 @@ class Attachment extends Backend
     ];
 
     //关联模型
-    
-
-    //获取数组常量的函数
-    public function getArrayConstList($field_name){
-        return $this->const[$field_name];
-    }
 }

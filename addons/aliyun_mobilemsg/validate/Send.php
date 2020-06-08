@@ -1,5 +1,5 @@
 <?php
-namespace app\api\validate\mobilemsg;
+namespace addons\aliyun_mobilemsg\validate;
 
 //发送邮件验证器
 use app\common\model\Mobilemsg;

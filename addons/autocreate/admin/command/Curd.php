@@ -854,13 +854,6 @@ EOD;
         }else{
             $this->modelParam['data']['arrayConst'] = '';
         }
-        //设置获取常量的函数
-        if(!empty($this->model_array_const)){
-            $array_const_function_lt = 'model' . DS . 'array_const_function';
-            $this->modelParam['data']['getArrayConstListFunction'] = $this->get_replaced_tpl($array_const_function_lt);
-        }else{
-            $this->modelParam['data']['getArrayConstListFunction'] = '';
-        }
         //是否拥有软删除功能
         $this->modelParam['data']['soft_del_package'] = "";
         $this->modelParam['data']['use_soft_del'] = "";

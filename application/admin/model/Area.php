@@ -27,9 +27,4 @@ class Area extends Backend
     public function area(){
         return $this->belongsTo('app\admin\model\Area','pid','id');
     }
-
-    //获取数组常量的函数
-    public function getArrayConstList($field_name){
-        return $this->const[$field_name];
-    }
 }

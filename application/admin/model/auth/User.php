@@ -32,9 +32,4 @@ class User extends Model
             ,'1'=>'是'
         ]
     ];
-
-    //获取数组常量的函数
-    public function getArrayConstList($field_name){
-        return $this->const[$field_name];
-    }
 }

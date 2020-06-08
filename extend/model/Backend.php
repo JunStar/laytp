@@ -9,6 +9,13 @@ use think\Model;
 
 class Backend extends Model
 {
+    public $const=[];
+
+    //获取数组常量的函数
+    public function getArrayConstList($field_name){
+        return $this->const[$field_name];
+    }
+
     public function success($msg,$data){
         $result['code'] = 1;
         $result['msg'] = $msg;

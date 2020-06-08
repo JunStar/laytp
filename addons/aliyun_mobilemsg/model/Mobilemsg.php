@@ -1,17 +1,17 @@
 <?php
 /**
- * 邮件管理模型
+ * 手机短信管理模型
  */
-namespace addons\email\admin\model;
+namespace addons\aliyun_mobilemsg\model;
 
 use model\Backend;
 use think\model\concern\SoftDelete;
 
-class Email extends Backend
+class Mobilemsg extends Backend
 {
 	use SoftDelete;
     //模型名
-    protected $name = 'email';
+    protected $name = 'aliyun_mobilemsg';
 
     //时间戳字段转换
     

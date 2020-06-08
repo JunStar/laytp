@@ -15,23 +15,32 @@ return [
         ,'content'=>''
     ],
     [
-        'name'=>'endpoint'
-        ,'tip'=>'endpoint'
-        ,'key'=>'endpoint'
+        'name'=>'签名'
+        ,'tip'=>'签名'
+        ,'key'=>'sign'
         ,'type'=>'input'
         ,'content'=>''
     ],
     [
-        'name'=>'bucket'
-        ,'tip'=>'bucket'
-        ,'key'=>'bucket'
+        'name'=>'模板事件对应'
+        ,'tip'=>'模板事件对应'
+        ,'key'=>'template'
+        ,'type'=>'array'
+        ,'content'=>[
+            'reg_login' => 'template_id'
+        ]
+    ],
+    [
+        'name'=>'过期时间'
+        ,'tip'=>'过期时间，Unix时间戳，单位秒'
+        ,'key'=>'expire_time'
         ,'type'=>'input'
         ,'content'=>''
     ],
     [
-        'name'=>'空间域名'
-        ,'tip'=>'空间域名'
-        ,'key'=>'domain'
+        'name'=>'间隔时间'
+        ,'tip'=>'对同一手机号，两条短信发送的间隔时间，单位秒'
+        ,'key'=>'interval_time'
         ,'type'=>'input'
         ,'content'=>''
     ],
