@@ -1,9 +1,9 @@
 <?php
 namespace app\api\controller;
 
-use addons\aliyuncs\service\Oss;
+use addons\aliyun_oss\service\Oss;
 use addons\email\service\Email;
-use addons\qiniu\service\Kodo;
+use addons\qiniu_kodo\service\Kodo;
 use app\admin\model\Attachment;
 use app\api\validate\email\Send;
 use app\common\service\Mobile;

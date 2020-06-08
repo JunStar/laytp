@@ -1,8 +1,8 @@
 <?php
 namespace app\admin\controller;
 
-use addons\aliyuncs\service\Oss;
-use addons\qiniu\service\Kodo;
+use addons\aliyun_oss\service\Oss;
+use addons\qiniu_kodo\service\Kodo;
 use app\admin\model\Attachment;
 use library\DirFile;
 use library\Token;
