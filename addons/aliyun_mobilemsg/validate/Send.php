@@ -2,7 +2,7 @@
 namespace addons\aliyun_mobilemsg\validate;
 
 //发送邮件验证器
-use app\common\model\Mobilemsg;
+use addons\aliyun_mobilemsg\model\Mobilemsg;
 use think\facade\Config;
 use think\Validate;
 

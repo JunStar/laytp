@@ -13,18 +13,18 @@ class Backend extends Model
 
     //获取数组常量的函数
     public function getArrayConstList($field_name){
-        return $this->const[$field_name];
+        return array_key_exists($field_name,$this->const) ? $this->const[$field_name] : '';
     }
 
     public function success($msg,$data){
-        $result['code'] = 1;
+        $result['err_code'] = 0;
         $result['msg'] = $msg;
         $result['data'] = $data;
         return $result;
     }
 
     public function error($msg){
-        $result['code'] = 0;
+        $result['err_code'] = 1;
         $result['msg'] = $msg;
         return $result;
     }

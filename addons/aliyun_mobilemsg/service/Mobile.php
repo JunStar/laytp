@@ -4,7 +4,7 @@ namespace addons\aliyun_mobilemsg\service;
 use AlibabaCloud\Client\AlibabaCloud;
 use AlibabaCloud\Client\Exception\ClientException;
 use AlibabaCloud\Client\Exception\ServerException;
-use app\common\model\Mobilemsg;
+use addons\aliyun_mobilemsg\model\Mobilemsg;
 use service\Service;
 use think\facade\Config;
 

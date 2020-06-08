@@ -4,9 +4,9 @@ namespace app\api\controller;
 use addons\aliyun_mobilemsg\service\Mobile;
 use addons\aliyun_oss\service\Oss;
 use addons\email\service\Email;
+use addons\email\validate\Send;
 use addons\qiniu_kodo\service\Kodo;
 use app\admin\model\Attachment;
-use app\api\validate\email\Send;
 use controller\Api;
 use library\Random;
 use think\Exception;
@@ -22,7 +22,7 @@ class Common extends Api{
 
     /**
      * @ApiTitle    (文件上传)
-     * @ApiSummary  (文件上传)
+     * @ApiSummary  (文件上传，兼容阿里云OSS、七牛云KODO和本地上传，需安装对应插件)
      * @ApiMethod   (POST)
      * @ApiRoute    (/api/common/upload)
      * @ApiHeaders  (name="token", type="string", required="true", description="用户登录后得到的Token")
@@ -42,16 +42,16 @@ class Common extends Api{
      */
     public function upload(){
         try{
-            $qiniu_upload_radio = Config::get('addons.qiniu.open_status');
+            $qiniu_upload_radio = Config::get('addons.qiniu_kodo.open_status');
             if(!$qiniu_upload_radio){
                 $qiniu_upload_radio = 'close';
             }
-            $aliyun_oss_upload_radio = Config::get('addons.aliyuncs.open_status');
+            $aliyun_oss_upload_radio = Config::get('addons.aliyun_oss.open_status');
             if(!$aliyun_oss_upload_radio){
                 $aliyun_oss_upload_radio = 'close';
             }
             $local_upload_radio = Config::get('laytp.upload.radio');
-            if($qiniu_upload_radio == 'close' && $aliyun_oss_upload_radio == 'close' && $local_upload_radio == 1){
+            if($qiniu_upload_radio == 'close' && $aliyun_oss_upload_radio == 'close' && $local_upload_radio == 'close'){
                 $this->error('未开启上传方式');
             }
 
@@ -104,7 +104,7 @@ class Common extends Api{
             if($qiniu_upload_radio == 'open'){
                 $qiniu_yun = Kodo::instance();
                 $qiniu_yun->upload($info['tmp_name'],$object);
-                $file_url = Config::get('addons.qiniu.domain') . '/' . $object;
+                $file_url = Config::get('addons.qiniu_kodo.domain') . '/' . $object;
 
                 $add['file_type'] = $this->request->param('accept');
                 $add['file_path'] = $file_url;
@@ -258,7 +258,7 @@ class Common extends Api{
         $params['mobile'] = $this->request->param('mobile');
         $params['event'] = $this->request->param('event');
 
-        $validate = new \app\api\validate\mobilemsg\Send();
+        $validate = new \addons\aliyun_mobilemsg\validate\Send();
         if($validate->check($params)){
             $mobile_service = new Mobile();
             if($mobile_service->send($params['mobile'],$params['event'],['code'=>Random::numeric()])){

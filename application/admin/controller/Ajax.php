@@ -39,11 +39,11 @@ class Ajax extends Controller
     //新上传接口
     public function upload($file=''){
         try{
-            $qiniu_upload_radio = Config::get('addons.qiniu.open_status');
+            $qiniu_upload_radio = Config::get('addons.qiniu_kodo.open_status');
             if(!$qiniu_upload_radio){
                 $qiniu_upload_radio = 'close';
             }
-            $aliyun_oss_upload_radio = Config::get('addons.aliyuncs.open_status');
+            $aliyun_oss_upload_radio = Config::get('addons.aliyun_oss.open_status');
             if(!$aliyun_oss_upload_radio){
                 $aliyun_oss_upload_radio = 'close';
             }

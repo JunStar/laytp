@@ -36,9 +36,9 @@ class Kodo extends Service
      */
     public function upload($local_file_name, $save_file_name){
         try{
-            $access_key = Config::get('addons.qiniu.access_key');
-            $secret_key = Config::get('addons.qiniu.secret_key');
-            $bucket = Config::get('addons.qiniu.bucket');
+            $access_key = Config::get('addons.qiniu_kodo.access_key');
+            $secret_key = Config::get('addons.qiniu_kodo.secret_key');
+            $bucket = Config::get('addons.qiniu_kodo.bucket');
             $client = new Auth($access_key,$secret_key);
             $token = $client->uploadToken($bucket);
             $upload_mgr = new UploadManager();
@@ -47,7 +47,7 @@ class Kodo extends Service
                 $this->setError('上传失败,'.$err);
                 return false;
             } else {
-                return Config::get('addons.qiniu.domain') . '/' . $save_file_name;
+                return Config::get('addons.qiniu_kodo.domain') . '/' . $save_file_name;
             }
         }catch (\Exception $e){
             $this->setError('上传失败,'.$e->getMessage());
