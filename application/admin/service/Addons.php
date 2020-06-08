@@ -94,6 +94,64 @@ class Addons extends Service
         return false;
     }
 
+    //离线安装插件
+    public function off_line_install($name){
+        $addons_path = Env::get('root_path') . DS . 'addons' . DS;
+
+        if (!$name || (is_dir($addons_path . $name))) {
+            $this->setError($name.'插件已经存在');
+            return false;
+        }
+
+        // 解压插件
+        $addonDir = $this->unzip($name);
+
+        //检测下载下来的插件包是否完整
+        $checkRes = $this->_info->check($name);
+        if(!$checkRes){
+            @DirFile::rmDirs($addonDir);
+            $this->setError($checkRes['msg']);
+            return false;
+        }
+
+        //初始化配置
+        $config = include_once $addons_path. $name . DS . 'config.php';
+        $default_config = [];
+        foreach($config as $k=>$v){
+            if(isset($v['content'])){
+                $default_config[$v['key']] = $v['content'];
+            }
+        }
+        $addons = Config::get('addons.');
+        $addons[$name] = $default_config;
+        $file_name = Env::get('root_path') .  DS . 'config' . DS . 'addons.php';
+        file_put_contents($file_name,"<?php\nreturn ".var_export($addons,true).';');
+
+        //生成menu
+        $menus = include_once $addonDir.'menu.php';
+        $menu_ids = $this->_menu->create($menus);
+
+        $info = $this->_info->getAddonInfo($name);
+        $info['state'] = 1;
+        $info['menu_ids'] = implode(',',$menu_ids);
+        $this->_info->setAddonInfo($name,$info);
+
+        // 导入sql文件
+        $this->importSql($name);
+
+        //复制静态文件
+        $source_static_dir = $addonDir . DS . 'static';
+        if(is_dir($source_static_dir)){
+            $dest_static_dir = Env::get('root_path') . 'public' . DS . 'addons' . DS . $name . DS . 'static';
+            if(!is_dir($dest_static_dir)){
+                DirFile::createDir($dest_static_dir);
+            }
+            DirFile::copyDirs($source_static_dir,$dest_static_dir);
+        }
+
+        return true;
+    }
+
     /**
      * 安装插件
      *

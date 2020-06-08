@@ -268,7 +268,7 @@ class Addons extends Backend
                 $this->error('上传失败','仅允许上传zip文件');
             }
 
-            $info = $file->validate(['size' => $size])->move(Env::get('root_path') .'addons',false); // 移动文件到指定目录 没有则创建
+            $info = $file->validate(['size' => $size])->move(Env::get('runtime_path') .'addons',false); // 移动文件到指定目录 没有则创建
 
             if($info->getError()){
                 $this->error('上传失败',$info->getError());
@@ -278,7 +278,7 @@ class Addons extends Backend
                 $add['file_path'] = '/uploads/'.$save_name;
                 model('Attachment')->create($add);
                 $pathinfo = pathinfo($info->getSaveName());
-                \library\Addons::off_line_install($pathinfo['filename']);
+                $this->addons_service->off_line_install($pathinfo['filename']);
                 $this->success('安装成功');
             }
         }catch (Exception $e){
