@@ -71,7 +71,7 @@ class Curd extends AddonsBackend
                 //这里要将数据存入数据库
                 $post_data = $this->request->post();
                 $result = $this->model->import($post_data);
-                if( $result['code'] ){
+                if( !$result['err_code'] ){
                     $exec_res = exec_command('addons\autocreate\admin\command\Curd',['--id='.$result['data']]);
                     if($exec_res['code']){
                         $this->success($exec_res['msg']);
