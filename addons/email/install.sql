@@ -19,7 +19,7 @@ CREATE TABLE `{$prefix}email` (
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `delete_time` datetime DEFAULT NULL COMMENT '删除时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='邮件管理'
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='邮件管理';
 
 -- ----------------------------
 --  Table structure for `{$prefix}email_template`
@@ -36,6 +36,6 @@ CREATE TABLE `{$prefix}email_template` (
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `delete_time` datetime DEFAULT NULL COMMENT '删除时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='邮件模板管理'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='邮件模板管理';
 
 SET FOREIGN_KEY_CHECKS = 1;
