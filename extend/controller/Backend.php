@@ -146,7 +146,16 @@ class Backend extends Controller
         $this->rule_list = $rule_list;
 
         if( !in_array($this->now_node, $rule_list) && !in_array($this->action, $this->no_need_login) ){
-            $this->error('无权限访问，请联系管理员');
+            if(!$rule_list){
+                $this->error('您没有任何权限，请联系管理员');
+            }
+            //对有权限的用户，直接跳转进入他的第一个权限节点
+            $current_rule = current($rule_list);
+            $current_rule_id = model('admin/auth.Menu')->where([
+                ['rule','=',$current_rule],
+                ['is_menu','=',1]
+            ])->order('id','desc')->value('id');
+            $this->redirect('/'.current($rule_list).'/?ref='.$current_rule_id);
         }
     }
 
