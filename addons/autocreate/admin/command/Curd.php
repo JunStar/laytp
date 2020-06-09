@@ -359,13 +359,13 @@ class Curd extends Command
                 }
             }
         }
-        if(isset($time_set['create_time']) && $field_list_map['create_time']['DATA_TYPE'] == 'int'){
+        if($field_list_map['create_time']['DATA_TYPE'] == 'int'){
             $time_set['create_time'] = "\n\t\t" . '\'create_time\'  =>  \'timestamp:Y-m-d H:i:s\',';
         }
-        if(isset($time_set['update_time']) && $field_list_map['update_time']['DATA_TYPE'] == 'int'){
+        if($field_list_map['update_time']['DATA_TYPE'] == 'int'){
             $time_set['update_time'] = "\n\t\t" . '\'update_time\'  =>  \'timestamp:Y-m-d H:i:s\',';
         }
-        if(isset($time_set['delete_time']) && $field_list_map['delete_time']['DATA_TYPE'] == 'int'){
+        if($field_list_map['delete_time']['DATA_TYPE'] == 'int'){
             $time_set['delete_time'] = "\n\t\t" . '\'delete_time\'  =>  \'timestamp:Y-m-d H:i:s\',';
         }
         if($time_set){
