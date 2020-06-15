@@ -306,6 +306,7 @@ ul.sp_element_box li.full_width input{
     width: 100% !important;
 }
 ul.sp_element_box li.selected_tag {
+    top: 10px;
     border: 1px solid #AAAAAA;
     border-radius: 3px;
     background-color: #EFEFEF;
