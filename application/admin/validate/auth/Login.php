@@ -22,7 +22,7 @@ class Login extends Validate
 
     //自定义验证码检验方法
     protected function checkCode($code){
-        if( !Config::get('basic.login_vercode') ){
+        if( !Config::get('laytp.basic.login_vercode') ){
             return true;
         }
         $captcha = new Captcha();
