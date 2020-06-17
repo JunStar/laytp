@@ -48,7 +48,7 @@ class Ajax extends Controller
                 $aliyun_oss_upload_radio = 'close';
             }
             $local_upload_radio = Config::get('laytp.upload.radio');
-            if($qiniu_upload_radio == 'close' && $aliyun_oss_upload_radio == 'close' && $local_upload_radio == 1){
+            if($qiniu_upload_radio == 'close' && $aliyun_oss_upload_radio == 'close' && $local_upload_radio == 'close'){
                 $this->error('上传失败,请开启一种上传方式');
             }
 
@@ -118,7 +118,7 @@ class Ajax extends Controller
             }
 
             //本地上传
-            if($local_upload_radio == 2){
+            if($local_upload_radio == 'open'){
                 $move_info = $file->move('uploads'); // 移动文件到指定目录 没有则创建
                 $save_name = str_replace('\\','/',$move_info->getSaveName());
                 $local_file_url = Config::get('laytp.upload.domain').'/uploads/'.$save_name;
