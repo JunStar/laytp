@@ -12,9 +12,9 @@ CREATE TABLE `lt_autocreate_curd` (
   `update_time` datetime DEFAULT NULL COMMENT '数据更新时间',
   `exec_create_time` datetime DEFAULT NULL COMMENT '首次执行时间',
   `exec_update_time` datetime DEFAULT NULL COMMENT '最近一次执行时间',
-  `exec_count` int(11) DEFAULT '1' COMMENT '总共生成的次数',
+  `exec_count` int(11) DEFAULT '0' COMMENT '总共生成的次数',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='curd自动生成';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='curd自动生成';
 
 DROP TABLE IF EXISTS `lt_autocreate_menu`;
 CREATE TABLE `lt_autocreate_menu` (
@@ -25,4 +25,4 @@ CREATE TABLE `lt_autocreate_menu` (
   `create_time` datetime DEFAULT NULL COMMENT '生成时间',
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='自动生成菜单';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='自动生成菜单';
