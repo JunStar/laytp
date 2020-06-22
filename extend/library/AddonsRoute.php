@@ -82,6 +82,20 @@ class AddonsRoute extends Route {
                 throw new HttpResponseException($response);
             }
 
+            $info['lt_version'] = isset($info['lt_version']) ? $info['lt_version'] : '1.0.0';
+            if(LT_VERSION < $info['lt_version']){
+                $result = [
+                    'code' => 0,
+                    'msg'  => 'laytp框架版本过低',
+                    'data' => '',
+                    'url'  => '',
+                    'wait' => 3,
+                ];
+                $app     = Container::get('app');
+                $response = Response::create($result, 'jump',500)->options(['jump_template' => $app['config']->get('dispatch_success_tmpl')]);
+                throw new HttpResponseException($response);
+            }
+
             // 设置当前请求的控制器、操作
             $request->setModule($module)->setController($controller)->setAction($action);
 
