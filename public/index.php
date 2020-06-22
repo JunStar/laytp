@@ -12,6 +12,7 @@ if (!is_file(APP_PATH . 'admin/command/Install/install.lock'))
 
 if (!defined('DS')) {
     define('DS', DIRECTORY_SEPARATOR);
+    define('LT_VERSION', '1.0.0');
 }
 
 // 加载基础文件
