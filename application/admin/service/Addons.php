@@ -239,8 +239,10 @@ class Addons extends Service
         try{
             //删除菜单
             $info = $this->_info->getAddonInfo($name);
-            $menu_ids = $info['menu_ids'];
-            $this->_menu->delete($menu_ids);
+            if(isset($info['menu_ids'])){
+                $menu_ids = $info['menu_ids'];
+                $this->_menu->delete($menu_ids);
+            }
             //删除插件目录
             DirFile::rmDirs(Env::get('root_path') . 'addons' . DS . $name);
             //删除配置项
