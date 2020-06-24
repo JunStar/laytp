@@ -4,10 +4,10 @@
  */
 namespace addons\aliyun_mobilemsg\admin\model;
 
-use model\Backend;
+use model\Base;
 use think\model\concern\SoftDelete;
 
-class Mobilemsg extends Backend
+class Mobilemsg extends Base
 {
 	use SoftDelete;
     //模型名

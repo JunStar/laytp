@@ -4,11 +4,11 @@
  */
 namespace addons\autocreate\admin\model;
 
-use model\Backend;
+use model\Base;
 use think\Db;
 use think\Exception;
 
-class Curd extends Backend
+class Curd extends Base
 {
     // 表名
     protected $name = 'autocreate_curd';

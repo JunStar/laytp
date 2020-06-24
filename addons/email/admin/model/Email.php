@@ -4,10 +4,10 @@
  */
 namespace addons\email\admin\model;
 
-use model\Backend;
+use model\Base;
 use think\model\concern\SoftDelete;
 
-class Email extends Backend
+class Email extends Base
 {
 	use SoftDelete;
     //模型名

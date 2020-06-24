@@ -4,9 +4,9 @@
  */
 namespace addons\autocreate\admin\model;
 
-use model\Backend;
+use model\Base;
 
-class Menu extends Backend
+class Menu extends Base
 {
     // 表名
     protected $name = 'autocreate_menu';
