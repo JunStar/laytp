@@ -1,4 +1,5 @@
 /.idea
+/addons_bak
 /.vscode
 *.log
 .env

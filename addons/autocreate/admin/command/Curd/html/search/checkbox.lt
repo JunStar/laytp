@@ -1,2 +1,0 @@
-<div id="{%field_name%}" name="search_param[{%field_name%}][value]" class="select_multi" max="{%max%}"></div>
-            <input type="hidden" name="search_param[{%field_name%}][condition]" value="FIND_IN_SET">
