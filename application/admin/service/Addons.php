@@ -208,13 +208,14 @@ class Addons extends Service
         file_put_contents($file_name,"<?php\nreturn ".var_export($addons,true).';');
 
         //生成menu
-        $menus = include_once $addonDir.'menu.php';
-        $menu_ids = $this->_menu->create($menus);
-
-        $info = $this->_info->getAddonInfo($name);
-        $info['state'] = 1;
-        $info['menu_ids'] = implode(',',$menu_ids);
-        $this->_info->setAddonInfo($name,$info);
+        if(file_exists($addonDir.'menu.php')){
+            $menus = include_once $addonDir.'menu.php';
+            $menu_ids = $this->_menu->create($menus);
+            $info = $this->_info->getAddonInfo($name);
+            $info['state'] = 1;
+            $info['menu_ids'] = implode(',',$menu_ids);
+            $this->_info->setAddonInfo($name,$info);
+        }
 
         // 导入sql文件
         $this->importSql($name);
