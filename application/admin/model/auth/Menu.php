@@ -4,9 +4,9 @@
  */
 namespace app\admin\model\auth;
 
-use model\Backend;
+use model\Base;
 
-class Menu extends Backend
+class Menu extends Base
 {
     protected $name = 'admin_menu';
 

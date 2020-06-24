@@ -3,9 +3,9 @@
 namespace app\admin\model;
 
 use library\Token;
-use model\Backend;
+use model\Base;
 
-class AdminLog extends Backend
+class AdminLog extends Base
 {
     //自定义日志标题
     protected static $title = '';

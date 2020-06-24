@@ -4,10 +4,10 @@
  */
 namespace app\admin\model;
 
-use model\Backend;
+use model\Base;
 use think\model\concern\SoftDelete;
 
-class Test extends Backend
+class Test extends Base
 {
 	use SoftDelete;
 	protected $defaultSoftDelete='0';

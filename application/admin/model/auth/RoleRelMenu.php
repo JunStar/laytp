@@ -4,9 +4,9 @@
  */
 namespace app\admin\model\auth;
 
-use model\Backend;
+use model\Base;
 
-class RoleRelMenu extends Backend
+class RoleRelMenu extends Base
 {
     protected $name = 'admin_role_rel_menu';
 

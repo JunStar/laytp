@@ -4,11 +4,11 @@
  */
 namespace app\common\model;
 
-use model\Backend;
+use model\Base;
 use think\facade\Config;
 use think\model\concern\SoftDelete;
 
-class User extends Backend
+class User extends Base
 {
     use SoftDelete;
     //模型名

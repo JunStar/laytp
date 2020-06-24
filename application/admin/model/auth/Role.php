@@ -4,9 +4,9 @@
  */
 namespace app\admin\model\auth;
 
-use model\Backend;
+use model\Base;
 
-class Role extends Backend
+class Role extends Base
 {
     protected $name = 'admin_role';
     protected $autoWriteTimestamp = 'datetime';

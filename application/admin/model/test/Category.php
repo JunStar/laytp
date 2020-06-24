@@ -4,10 +4,10 @@
  */
 namespace app\admin\model\test;
 
-use model\Backend;
+use model\Base;
 use think\model\concern\SoftDelete;
 
-class Category extends Backend
+class Category extends Base
 {
 	use SoftDelete;
     //模型名

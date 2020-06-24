@@ -4,9 +4,9 @@
  */
 namespace app\admin\model;
 
-use model\Backend;
+use model\Base;
 
-class Area extends Backend
+class Area extends Base
 {
     //模型名
     protected $name = 'area';

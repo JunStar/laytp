@@ -4,9 +4,9 @@
  */
 namespace app\admin\model;
 
-use model\Backend;
+use model\Base;
 
-class Sysconf extends Backend
+class Sysconf extends Base
 {
     public function addData($post){
         $data['group'] = $post['group'];
