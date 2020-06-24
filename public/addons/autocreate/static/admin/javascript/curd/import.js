@@ -17,18 +17,18 @@ layui.use(['layTp'],function(){
                 [
                     {title:'数据库字段查看', align: 'center', colspan: 3}
                     ,{title:'表单设置,影响添加编辑表单', align: 'center', colspan: 3}
-                    ,{title:'显示设置', align: 'center',rowspan:2, templet: "#field_show", align: 'center', width:260}
+                    ,{title:'显示设置', align: 'center',rowspan:2, templet: "#field_show", align: 'center', width:350}
                     ,{title:'排序设置', align: 'center',rowspan:2, templet: "#field_order", align: 'center', width:130}
                 ]
                 ,[
                     //数据库字段设置
                     {title:'序号', type:'numbers', align: 'center'}
-                    ,{field:'field_name', title:'字段名称', align: 'center', edit: 'text', width:100}
-                    ,{field:'field_comment', title:'字段注释', align: 'center', edit: 'text', width:100}
+                    ,{field:'field_name', title:'字段名称', align: 'center', edit: 'text', width:120}
+                    ,{field:'field_comment', title:'字段注释', align: 'center', edit: 'text', width:150}
                     //表单设置
-                    ,{field:'form_type', title:'表单元素', templet: "#form_type", align: 'center', width:160}
+                    ,{field:'form_type', title:'表单元素', templet: "#form_type", align: 'center', width:180}
                     ,{field:'form_additional', title:'附加设置', templet: "#form_additional", align: 'center', width:280}
-                    ,{field:'form_empty', title:'允许为空', templet: "#form_empty", align: 'center', width:110}
+                    ,{field:'form_empty', title:'允许为空', templet: "#form_empty", align: 'center', width:150}
                 ]
             ]
         });
@@ -301,7 +301,6 @@ layui.use(['layTp'],function(){
     func_controller.init();
 
     func_controller.form_type_select_after = function(field_name, value, form_additional){
-        let admin_id_html = '';
         let input_html =
             '<select name="form_additional_set_value_input_'+field_name+'" id="form_additional_set_value_input_'+field_name+'">' +
             '<option value="">不限制</option>' +
@@ -364,7 +363,7 @@ layui.use(['layTp'],function(){
             '<select name="form_additional_set_value_input_'+field_name+'" id="form_additional_set_value_input_'+field_name+'" lay-filter="form_additional_set_value_input_'+field_name+'">' +
             '<option value="ueditor" ' + ((form_additional == "ueditor") ? 'selected="selected"' : '') + '>UEditor</option>' +
             '</select>';
-        let type_arr = ['admin_id','input','password','select','select_page','select_relation','time','province','city','county','upload','textarea','editor'];
+        let type_arr = ['input','password','select','select_page','select_relation','time','province','city','county','upload','textarea','editor'];
         let set_value_input_type = ['radio','checkbox'];
         if(set_value_input_type.indexOf(value) != -1){
             $('#form_additional_' + field_name).html(set_value_html);
