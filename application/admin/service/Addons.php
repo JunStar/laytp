@@ -165,20 +165,20 @@ class Addons extends Service
     public function install($name, $force = true, $extend = [])
     {
         $addons_path = Env::get('root_path') . DS . 'addons' . DS;
-//        if(!$addons_path){
-//            DirFile::createDir($addons_path);
-//        }
-//        if (!$name || (is_dir($addons_path . $name) && !$force)) {
-//            $this->setError('插件已经存在');
-//            return false;
-//        }
-//
-//        // 远程下载插件
-//        $tmpFile = $this->download($name, $extend);
-//        if(!$tmpFile){
-//            $this->setError($this->getError());
-//            return false;
-//        }
+        if(!$addons_path){
+            DirFile::createDir($addons_path);
+        }
+        if (!$name || (is_dir($addons_path . $name) && !$force)) {
+            $this->setError('插件已经存在');
+            return false;
+        }
+
+        // 远程下载插件
+        $tmpFile = $this->download($name, $extend);
+        if(!$tmpFile){
+            $this->setError($this->getError());
+            return false;
+        }
 
         // 解压插件
         $addonDir = $this->unzip($name);
@@ -191,7 +191,7 @@ class Addons extends Service
         }
 
         // 移除临时文件
-//        @unlink($tmpFile);
+        @unlink($tmpFile);
 
         //检测下载下来的插件包是否完整
         $checkRes = $this->_info->check($name);
@@ -231,14 +231,6 @@ class Addons extends Service
         $result[] = $this->importSql($name);
 
         //复制静态文件
-//        $source_static_dir = $addonDir . DS . 'static';
-//        if(is_dir($source_static_dir)){
-//            $dest_static_dir = Env::get('root_path') . 'public' . DS . 'addons' . DS . $name . DS . 'static';
-//            if(!is_dir($dest_static_dir)){
-//                DirFile::createDir($dest_static_dir);
-//            }
-//            DirFile::copyDirs($source_static_dir,$dest_static_dir);
-//        }
         $result[] = $this->copyStatic($name);
         if(check_res($result)){
             return true;
@@ -268,7 +260,7 @@ class Addons extends Service
             }
 
             //删除静态文件
-            if( $this->rmStatic($name) ){
+            if( !$this->rmStatic($name) ){
                 $this->setError($this->getError());
                 return false;
             }
@@ -409,14 +401,21 @@ class Addons extends Service
                 DirFile::copyDirs($source_library_dir,$dest_library_dir);
             }
 
-            //将addons下的文件复制到addons/{name}下
-            $source_addons_dir = $source_static_dir . DS . 'addons';
-            if(is_dir($source_addons_dir)){
+            //将static下除了三个特殊文件和library文件夹，其他的都复制到public/addons/$name/目录下
+            if(is_dir($source_static_dir)){
                 $dest_addons_dir = Env::get('root_path') . 'public' . DS . 'addons' . DS . $name;
-                if(!is_dir($dest_addons_dir)){
-                    DirFile::createDir($dest_addons_dir);
+                $dest_addons_files = scandir($source_static_dir);
+                foreach($dest_addons_files as $fileName){
+                    if(in_array($fileName, array('.', '..','library'))) {
+                        continue;
+                    }
+                    if(is_dir($source_static_dir.DS.$fileName)){
+                        if(!is_dir($dest_addons_dir.DS.$fileName)){
+                            DirFile::createDir($dest_addons_dir.DS.$fileName);
+                        }
+                        DirFile::copyDirs($source_static_dir.DS.$fileName,$dest_addons_dir.DS.$fileName);
+                    }
                 }
-                DirFile::copyDirs($source_addons_dir,$dest_addons_dir);
             }
         }
         return true;
@@ -503,6 +502,12 @@ class Addons extends Service
                         DirFile::rmDirs($true_library_dir);
                     }
                 }
+            }
+
+            //删除public/addons/$name下的文件
+            $addons_public_dir = Env::get('root_path').DS.'public'.DS.'addons'.DS.$name;
+            if(is_dir($addons_public_dir)){
+                DirFile::rmDirs($addons_public_dir);
             }
         }
         return true;

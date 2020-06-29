@@ -76,7 +76,7 @@ function filterPostData($post){
 
 //获取插件js目录
 function getAddonJSDir($addon,$module){
-    return "/addons/$addon/static/$module/javascript";
+    return "/addons/$addon/$module/javascript";
 }
 
 //获取插件css目录
