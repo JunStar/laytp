@@ -14,13 +14,11 @@ layui.define([
     ,'laytp_element'
     ,'laytp_tree'
     ,'colorpicker'
-    ,'laytp_editor'
 ], function(exports){
     const MOD_NAME = 'layTp';
     let layTp = {};
     const $ = layTp.$ = layui.jquery;
     const selectPagePlugin = layui.selectPage;
-    const laytp_editor = layui.laytp_editor;
 
     const default_popup_frame_width = '100%';
     const default_popup_frame_height = '100%';
@@ -187,11 +185,6 @@ layui.define([
             exp.setTime(exp.getTime() - 1);
             var cval=getCookie(name);
             if(cval!=null) document.cookie= name + "="+cval+";expires="+exp.toGMTString();
-        },
-
-        //layEdit简易编辑器
-        layEditor: function(options){
-            laytp_editor.createEditor(options);
         },
 
         //layer弹窗iFrame
@@ -1145,17 +1138,15 @@ layui.define([
         },
 
         /**
-         * 编辑器
+         * 渲染编辑器
          */
         editor_render: function(){
-            //渲染UEditor
-            layui.each($("script[editor='true']"),function(key,item) {
-                let id = $(item).attr('id');
-                UE.getEditor(id, {zIndex: 0});
-            });
-            //渲染layEditor
-            layTp.facade.layEditor({
-                elem:'.layeditor'
+            layui.each($("[editor='true']"),function(key,item) {
+                var type = $(item).attr('type');
+                var id = $(item).attr('id');
+                layui.use(type,function(){
+                    layui[type].render(id);
+                });
             });
         },
 
