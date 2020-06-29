@@ -165,26 +165,33 @@ class Addons extends Service
     public function install($name, $force = true, $extend = [])
     {
         $addons_path = Env::get('root_path') . DS . 'addons' . DS;
-        if(!$addons_path){
-            DirFile::createDir($addons_path);
-        }
-        if (!$name || (is_dir($addons_path . $name) && !$force)) {
-            $this->setError('插件已经存在');
-            return false;
-        }
-
-        // 远程下载插件
-        $tmpFile = $this->download($name, $extend);
-        if(!$tmpFile){
-            $this->setError($this->getError());
-            return false;
-        }
+//        if(!$addons_path){
+//            DirFile::createDir($addons_path);
+//        }
+//        if (!$name || (is_dir($addons_path . $name) && !$force)) {
+//            $this->setError('插件已经存在');
+//            return false;
+//        }
+//
+//        // 远程下载插件
+//        $tmpFile = $this->download($name, $extend);
+//        if(!$tmpFile){
+//            $this->setError($this->getError());
+//            return false;
+//        }
 
         // 解压插件
         $addonDir = $this->unzip($name);
 
+        $info = $this->_info->getAddonInfo($name);
+        if(array_key_exists('lt_version', $info) && ($info['lt_version'] > LT_VERSION)){
+            $this->setError('当前框架版本过低');
+            DirFile::rmDirs($addons_path.$name);
+            return false;
+        }
+
         // 移除临时文件
-        @unlink($tmpFile);
+//        @unlink($tmpFile);
 
         //检测下载下来的插件包是否完整
         $checkRes = $this->_info->check($name);
@@ -195,17 +202,20 @@ class Addons extends Service
         }
 
         //初始化配置
-        $config = include_once $addons_path. $name . DS . 'config.php';
-        $default_config = [];
-        foreach($config as $k=>$v){
-            if(isset($v['content'])){
-                $default_config[$v['key']] = $v['content'];
+        if(file_exists($addons_path. $name . DS . 'config.php')){
+            $config = include_once $addons_path. $name . DS . 'config.php';
+            $default_config = [];
+            foreach($config as $k=>$v){
+                if(isset($v['content'])){
+                    $default_config[$v['key']] = $v['content'];
+                }
             }
+            $addons = Config::get('addons.');
+            $addons[$name] = $default_config;
+            $file_name = Env::get('root_path') .  DS . 'config' . DS . 'addons.php';
+            file_put_contents($file_name,"<?php\nreturn ".var_export($addons,true).';');
         }
-        $addons = Config::get('addons.');
-        $addons[$name] = $default_config;
-        $file_name = Env::get('root_path') .  DS . 'config' . DS . 'addons.php';
-        file_put_contents($file_name,"<?php\nreturn ".var_export($addons,true).';');
+
 
         //生成menu
         if(file_exists($addonDir.'menu.php')){
@@ -218,19 +228,24 @@ class Addons extends Service
         }
 
         // 导入sql文件
-        $this->importSql($name);
+        $result[] = $this->importSql($name);
 
         //复制静态文件
-        $source_static_dir = $addonDir . DS . 'static';
-        if(is_dir($source_static_dir)){
-            $dest_static_dir = Env::get('root_path') . 'public' . DS . 'addons' . DS . $name . DS . 'static';
-            if(!is_dir($dest_static_dir)){
-                DirFile::createDir($dest_static_dir);
-            }
-            DirFile::copyDirs($source_static_dir,$dest_static_dir);
+//        $source_static_dir = $addonDir . DS . 'static';
+//        if(is_dir($source_static_dir)){
+//            $dest_static_dir = Env::get('root_path') . 'public' . DS . 'addons' . DS . $name . DS . 'static';
+//            if(!is_dir($dest_static_dir)){
+//                DirFile::createDir($dest_static_dir);
+//            }
+//            DirFile::copyDirs($source_static_dir,$dest_static_dir);
+//        }
+        $result[] = $this->copyStatic($name);
+        if(check_res($result)){
+            return true;
+        }else{
+            $this->setError($this->getError());
+            return false;
         }
-
-        return true;
     }
 
     //卸载插件
@@ -252,9 +267,12 @@ class Addons extends Service
                 $file_name = Env::get('root_path') .  DS . 'config' . DS . 'addons.php';
                 file_put_contents($file_name,"<?php\nreturn ".var_export($addons,true).';');
             }
+
             //删除静态文件
-            $api_file = Env::get('root_path') . DS . 'public' . DS . 'addons' . DS . $name;
-            DirFile::rmDirs($api_file);
+            $this->rmStatic($name);
+
+//            $api_file = Env::get('root_path') . DS . 'public' . DS . 'addons' . DS . $name;
+//            DirFile::rmDirs($api_file);
             return true;
         }catch (Exception $e){
             $this->setError($e->getMessage());
@@ -334,6 +352,157 @@ class Addons extends Service
         $sql = str_replace("`{\$prefix}", "`{$mysql_prefix}", $sql);
         $pdo->query("USE `{$mysql_database}`");
         $pdo->exec($sql);
+        return true;
+    }
+
+    /**
+     * 复制静态目录
+     */
+    public function copyStatic($name){
+        $addon_dir = $this->_info->getAddonPath($name);
+        $source_static_dir = $addon_dir . DS . 'static';
+        if(is_dir($source_static_dir)){
+            //对三个特殊文件进行复制操作
+            $js_file = $source_static_dir . DS . 'js_file.html';
+            //application/admin/view/public/layout/file/js_file.html
+            $dest_js_file = Env::get('app_path').DS.'admin'.DS.'view'.DS.'public'.DS.'layout'.DS.'file'.DS.'js_file.html';
+            if(file_exists($js_file)){
+                if(!file_exists($dest_js_file)){
+                    $this->setError('框架文件application/admin/view/public/layout/file/js_file.html不存在');
+                    return false;
+                }
+                file_put_contents($dest_js_file,file_get_contents($js_file)."\r\n",FILE_APPEND);
+            }
+
+            $css_file = $source_static_dir . DS . 'css_file.html';
+            //application/admin/view/public/layout/file/js_file.html
+            $dest_css_file = Env::get('app_path').DS.'admin'.DS.'view'.DS.'public'.DS.'layout'.DS.'file'.DS.'css_file.html';
+            if(file_exists($css_file)){
+                if(!file_exists($dest_css_file)){
+                    $this->setError('框架文件application/admin/view/public/layout/file/css_file.html不存在');
+                    return false;
+                }
+                file_put_contents($dest_css_file,file_get_contents($css_file)."\r\n",FILE_APPEND);
+            }
+
+            $js_global_var = $source_static_dir . DS . 'js_global_var.html';
+            //application/admin/view/public/layout/file/js_global_var.html
+            $dest_js_global_var = Env::get('app_path').DS.'admin'.DS.'view'.DS.'public'.DS.'layout'.DS.'file'.DS.'css_file.html';
+            if(file_exists($css_file)){
+                if(!file_exists($dest_js_global_var)){
+                    $this->setError('框架文件application/admin/view/public/layout/file/js_global_var.html不存在');
+                    return false;
+                }
+                file_put_contents($dest_js_global_var,file_get_contents($js_global_var)."\r\n",FILE_APPEND);
+            }
+
+            //对library进行复制，将library下所有文件复制到public/static/library
+            $source_library_dir = $source_static_dir . DS . 'library';
+            if(is_dir($source_library_dir)){
+                $dest_library_dir = Env::get('root_path') . 'public' . DS . 'static' . DS . 'library';
+                if(!is_dir($dest_library_dir)){
+                    $this->setError('框架目录public/static/library不存在');
+                    return false;
+                }
+                DirFile::copyDirs($source_library_dir,$dest_library_dir);
+            }
+
+            //将addons下的文件复制到addons/{name}下
+            $source_addons_dir = $source_static_dir . DS . 'addons';
+            if(is_dir($source_addons_dir)){
+                $dest_addons_dir = Env::get('root_path') . 'public' . DS . 'addons' . DS . $name;
+                if(!is_dir($dest_addons_dir)){
+                    DirFile::createDir($dest_addons_dir);
+                }
+                DirFile::copyDirs($source_addons_dir,$dest_addons_dir);
+            }
+        }
+        return true;
+    }
+
+    /**
+     * 删除静态文件
+     */
+    public function rmStatic($name){
+        $addon_dir = $this->_info->getAddonPath($name);
+        $source_static_dir = $addon_dir . DS . 'static';
+        if(is_dir($source_static_dir)) {
+            //对三个特殊文件进行删除操作
+            $js_file = $source_static_dir . DS . 'js_file.html';
+            //application/admin/view/public/layout/file/js_file.html
+            $dest_js_file = Env::get('app_path') . DS . 'admin' . DS . 'view' . DS . 'public' . DS . 'layout' . DS . 'file' . DS . 'js_file.html';
+            if (file_exists($js_file)) {
+                if (!file_exists($dest_js_file)) {
+                    $this->setError('框架文件application/admin/view/public/layout/file/js_file.html不存在');
+                    return false;
+                }
+                $js_file_arr = file($js_file);
+                $dest_js_file_arr = file($dest_js_file);
+                $res_js_file_arr = array_diff($dest_js_file_arr, $js_file_arr);
+                $res_js_file = implode("\r\n",$res_js_file_arr);
+                file_put_contents($dest_js_file, $res_js_file);
+            }
+
+            $css_file = $source_static_dir . DS . 'css_file.html';
+            //application/admin/view/public/layout/file/css_file.html
+            $dest_css_file = Env::get('app_path') . DS . 'admin' . DS . 'view' . DS . 'public' . DS . 'layout' . DS . 'file' . DS . 'css_file.html';
+            if (file_exists($js_file)) {
+                if (!file_exists($dest_css_file)) {
+                    $this->setError('框架文件application/admin/view/public/layout/file/css_file.html不存在');
+                    return false;
+                }
+                $css_file_arr = file($css_file);
+                $dest_css_file_arr = file($dest_css_file);
+                $res_css_file_arr = array_diff($dest_css_file_arr, $css_file_arr);
+                $res_css_file = implode("\r\n",$res_css_file_arr);
+                file_put_contents($dest_css_file, $res_css_file);
+            }
+
+            $js_global_var = $source_static_dir . DS . 'js_global_var.html';
+            //application/admin/view/public/layout/file/js_global_var.html
+            $dest_js_global_var = Env::get('app_path') . DS . 'admin' . DS . 'view' . DS . 'public' . DS . 'layout' . DS . 'file' . DS . 'js_global_var.html';
+            if (file_exists($js_global_var)) {
+                if (!file_exists($dest_js_global_var)) {
+                    $this->setError('框架文件application/admin/view/public/layout/file/js_global_var.html不存在');
+                    return false;
+                }
+                $js_global_var_arr = file($css_file);
+                $dest_js_global_var_arr = file($dest_js_global_var);
+                $res_js_global_var_arr = array_diff($dest_js_global_var_arr, $js_global_var_arr);
+                $res_js_global_var = implode("\r\n",$res_js_global_var_arr);
+                file_put_contents($dest_js_global_var, $res_js_global_var);
+            }
+
+            //对library下layui/extends下文件进行删除操作
+            $exntends_dir = $source_static_dir.DS.'library'.DS.'layui'.DS.'extends';
+            if(is_dir($exntends_dir)){
+                $extends_files = scandir($exntends_dir);
+                foreach($extends_files as $fileName){
+                    if(in_array($fileName, array('.', '..'))) {
+                        continue;
+                    }
+                    $true_extends_file = Env::get('root_path').DS.'public'.DS.'static'.DS.'library'.DS.'layui'.DS.'extends'.DS.$fileName;
+                    if(file_exists($true_extends_file)){
+                        unlink($true_extends_file);
+                    }
+                }
+            }
+
+            //对library其他目录进行删除操作
+            $library = $source_static_dir.DS.'library';
+            if(is_dir($library)){
+                $extends_files = scandir($library);
+                foreach($extends_files as $fileName){
+                    if(in_array($fileName, array('.', '..','layui'))) {
+                        continue;
+                    }
+                    $true_library_dir = Env::get('root_path').DS.'public'.DS.'static'.DS.'library'.DS.$fileName;
+                    if(is_dir($true_library_dir)){
+                        DirFile::rmDirs($true_library_dir);
+                    }
+                }
+            }
+        }
         return true;
     }
 }

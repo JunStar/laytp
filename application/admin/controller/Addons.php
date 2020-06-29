@@ -31,16 +31,24 @@ class Addons extends Backend
                 $post['charge_type'] = '';
                 $local_addons = $this->addons_service->_info->getAddonsInfo();
                 foreach($local_addons as $k=>$v){
-                    $local_addons[$k]['addon_exist'] = true;
+                    if(!$v['state']){
+                        $local_addons[$k]['addon_exist'] = true;
+                        $local_addons[$k]['local_state'] = 0;
+                    }else{
+                        $local_addons[$k]['addon_exist'] = true;
+                        $local_addons[$k]['local_state'] = 1;
+                    }
+
                     $local_addons[$k]['charge_type'] = 4;
                     $local_addons[$k]['download_num'] = 0;
-                    $local_addons[$k]['local_state'] = 1;
+
                     $config = $this->addons_service->_config->getConfig($v['name']);
                     $local_addons[$k]['config'] = $config ? true : false;
                     $local_addons[$k]['domain'] = isset($local_addons['domain']) ? $local_addons['domain'] : '';
                     $local_addons[$k]['backend_url'] = isset($v['backend_url']) && $v['backend_url'] ? $this->addons_service->_info->getUrl($v['name'],$v['backend_url'],$local_addons[$k]['domain']) : '';
                     $local_addons[$k]['frontend_url'] = isset($v['frontend_url']) && $v['frontend_url'] ? $this->addons_service->_info->getUrl($v['name'],$v['frontend_url'],$local_addons[$k]['domain']) : '';
                     $local_addons[$k]['api_module'] = isset($v['api_module']) && $v['api_module'] ? $v['api_module'] : '';
+                    $local_addons[$k]['versions'][0] = '';
                 }
                 $return['data']['list']['data'] = $local_addons;
                 $return['data']['list']['total'] = count($local_addons);
