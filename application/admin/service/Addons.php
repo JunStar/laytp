@@ -400,7 +400,7 @@ class Addons extends Service
             $js_global_var = $source_static_dir . DS . 'js_global_var.html';
             //application/admin/view/public/layout/file/js_global_var.html
             $dest_js_global_var = Env::get('app_path').DS.'admin'.DS.'view'.DS.'public'.DS.'layout'.DS.'file'.DS.'css_file.html';
-            if(file_exists($css_file)){
+            if(file_exists($js_global_var)){
                 if(!file_exists($dest_js_global_var)){
                     $this->setError('框架文件application/admin/view/public/layout/file/js_global_var.html不存在');
                     return false;

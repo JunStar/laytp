@@ -40,7 +40,8 @@ return [
         '__APP__'    => $appRoot,
         '__ROOT__'   => $uriRoot,
         '__STATIC__' => $uriRoot . "/static",
-        '__ADMIN__' => '/static/admin',
-        '__ADMIN_JS__' => '/static/admin/javascript',
+        '__LIBRARY__' => $uriRoot . "/static/library",
+        '__ADMIN__' =>  $uriRoot . '/static/admin',
+        '__ADMIN_JS__' => $uriRoot . '/static/admin/javascript',
     ]
 ];
