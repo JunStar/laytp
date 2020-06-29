@@ -1,7 +1,4 @@
 <?php
 return [
-    'api_url' => 'http://www.laytp.com',
-    'editor' => [
-        'ueditor',
-    ]
+    'api_url' => 'http://www.laytp.com'
 ];

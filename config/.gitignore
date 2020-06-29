@@ -1,5 +1,6 @@
 *.php
 !app.php
+!addons.php
 !tags.php
 !template.php
 !database.php
