@@ -438,9 +438,15 @@ class Addons extends Service
                     return false;
                 }
                 $js_file_arr = file($js_file);
+                foreach($js_file_arr as $k=>$v){
+                    $js_file_arr[$k] = trim($v);
+                }
                 $dest_js_file_arr = file($dest_js_file);
+                foreach($dest_js_file_arr as $k=>$v){
+                    $dest_js_file_arr[$k] = trim($v);
+                }
                 $res_js_file_arr = array_diff($dest_js_file_arr, $js_file_arr);
-                $res_js_file = implode("",$res_js_file_arr);
+                $res_js_file = implode("\n",$res_js_file_arr);
                 file_put_contents($dest_js_file, $res_js_file);
             }
 
@@ -453,9 +459,15 @@ class Addons extends Service
                     return false;
                 }
                 $css_file_arr = file($css_file);
+                foreach($css_file_arr as $k=>$v){
+                    $css_file_arr[$k] = trim($v);
+                }
                 $dest_css_file_arr = file($dest_css_file);
+                foreach($dest_css_file_arr as $k=>$v){
+                    $dest_css_file_arr[$k] = trim($v);
+                }
                 $res_css_file_arr = array_diff($dest_css_file_arr, $css_file_arr);
-                $res_css_file = implode("",$res_css_file_arr);
+                $res_css_file = implode("\n",$res_css_file_arr);
                 file_put_contents($dest_css_file, $res_css_file);
             }
 
@@ -468,9 +480,15 @@ class Addons extends Service
                     return false;
                 }
                 $js_global_var_arr = file($css_file);
+                foreach($js_global_var_arr as $k=>$v){
+                    $js_global_var_arr[$k] = trim($v);
+                }
                 $dest_js_global_var_arr = file($dest_js_global_var);
+                foreach($dest_js_global_var_arr as $k=>$v){
+                    $dest_js_global_var_arr[$k] = trim($v);
+                }
                 $res_js_global_var_arr = array_diff($dest_js_global_var_arr, $js_global_var_arr);
-                $res_js_global_var = implode("",$res_js_global_var_arr);
+                $res_js_global_var = implode("\n",$res_js_global_var_arr);
                 file_put_contents($dest_js_global_var, $res_js_global_var);
             }
 
