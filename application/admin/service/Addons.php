@@ -218,9 +218,8 @@ class Addons extends Service
 
             //如果是编辑器插件，需要修改addons.php的配置文件内容中的editor项，增加此编辑器的标识
             if(array_key_exists('is_editor',$info) && $info['is_editor'] == 1){
-                $addons['editor'][$name] = $name;
+                $addons['editor'][] = $name;
             }
-            dump($addons['editor']);
 
             $file_name = Env::get('root_path') .  DS . 'config' . DS . 'addons.php';
             file_put_contents($file_name,"<?php\nreturn ".var_export($addons,true).';');
