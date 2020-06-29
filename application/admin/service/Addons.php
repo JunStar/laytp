@@ -258,8 +258,7 @@ class Addons extends Service
                 $menu_ids = $info['menu_ids'];
                 $this->_menu->delete($menu_ids);
             }
-            //删除插件目录
-            DirFile::rmDirs(Env::get('root_path') . 'addons' . DS . $name);
+
             //删除配置项
             $addons = Config::get('addons.');
             if(isset($addons[$name])){
@@ -269,10 +268,13 @@ class Addons extends Service
             }
 
             //删除静态文件
-            $this->rmStatic($name);
+            if( $this->rmStatic($name) ){
+                $this->setError($this->getError());
+                return false;
+            }
 
-//            $api_file = Env::get('root_path') . DS . 'public' . DS . 'addons' . DS . $name;
-//            DirFile::rmDirs($api_file);
+            //删除插件目录
+            DirFile::rmDirs(Env::get('root_path') . 'addons' . DS . $name);
             return true;
         }catch (Exception $e){
             $this->setError($e->getMessage());
@@ -425,7 +427,7 @@ class Addons extends Service
      */
     public function rmStatic($name){
         $addon_dir = $this->_info->getAddonPath($name);
-        $source_static_dir = $addon_dir . DS . 'static';
+        $source_static_dir = $addon_dir . 'static';
         if(is_dir($source_static_dir)) {
             //对三个特殊文件进行删除操作
             $js_file = $source_static_dir . DS . 'js_file.html';
@@ -439,14 +441,14 @@ class Addons extends Service
                 $js_file_arr = file($js_file);
                 $dest_js_file_arr = file($dest_js_file);
                 $res_js_file_arr = array_diff($dest_js_file_arr, $js_file_arr);
-                $res_js_file = implode("\r\n",$res_js_file_arr);
+                $res_js_file = implode("",$res_js_file_arr);
                 file_put_contents($dest_js_file, $res_js_file);
             }
 
             $css_file = $source_static_dir . DS . 'css_file.html';
             //application/admin/view/public/layout/file/css_file.html
             $dest_css_file = Env::get('app_path') . DS . 'admin' . DS . 'view' . DS . 'public' . DS . 'layout' . DS . 'file' . DS . 'css_file.html';
-            if (file_exists($js_file)) {
+            if (file_exists($css_file)) {
                 if (!file_exists($dest_css_file)) {
                     $this->setError('框架文件application/admin/view/public/layout/file/css_file.html不存在');
                     return false;
@@ -454,7 +456,7 @@ class Addons extends Service
                 $css_file_arr = file($css_file);
                 $dest_css_file_arr = file($dest_css_file);
                 $res_css_file_arr = array_diff($dest_css_file_arr, $css_file_arr);
-                $res_css_file = implode("\r\n",$res_css_file_arr);
+                $res_css_file = implode("",$res_css_file_arr);
                 file_put_contents($dest_css_file, $res_css_file);
             }
 
@@ -469,7 +471,7 @@ class Addons extends Service
                 $js_global_var_arr = file($css_file);
                 $dest_js_global_var_arr = file($dest_js_global_var);
                 $res_js_global_var_arr = array_diff($dest_js_global_var_arr, $js_global_var_arr);
-                $res_js_global_var = implode("\r\n",$res_js_global_var_arr);
+                $res_js_global_var = implode("",$res_js_global_var_arr);
                 file_put_contents($dest_js_global_var, $res_js_global_var);
             }
 
