@@ -212,6 +212,10 @@ class Addons extends Service
             }
             $addons = Config::get('addons.');
             $addons[$name] = $default_config;
+            //如果是编辑器插件，需要修改addons.php的配置文件内容中的editor项，增加此编辑器的标识
+            if(array_key_exists('is_editor',$info) && $info['is_editor'] == 1){
+                $addons['editor'][] = $name;
+            }
             $file_name = Env::get('root_path') .  DS . 'config' . DS . 'addons.php';
             file_put_contents($file_name,"<?php\nreturn ".var_export($addons,true).';');
         }
@@ -232,6 +236,7 @@ class Addons extends Service
 
         //复制静态文件
         $result[] = $this->copyStatic($name);
+
         if(check_res($result)){
             return true;
         }else{
@@ -255,9 +260,18 @@ class Addons extends Service
             $addons = Config::get('addons.');
             if(isset($addons[$name])){
                 unset($addons[$name]);
-                $file_name = Env::get('root_path') .  DS . 'config' . DS . 'addons.php';
-                file_put_contents($file_name,"<?php\nreturn ".var_export($addons,true).';');
             }
+            //如果是编辑器插件，需要修改addons.php的配置文件内容中的editor项，删除此编辑器的标识
+            if(array_key_exists('is_editor',$info) && $info['is_editor'] == 1){
+                foreach($addons['editor'] as $k=>$v){
+                    if($v == $name){
+                        unset($addons['editor'][$k]);
+                    }
+                }
+                sort($addons['editor']);
+            }
+            $file_name = Env::get('root_path') .  DS . 'config' . DS . 'addons.php';
+            file_put_contents($file_name,"<?php\nreturn ".var_export($addons,true).';');
 
             //删除静态文件
             if( !$this->rmStatic($name) ){
@@ -446,7 +460,7 @@ class Addons extends Service
                     $dest_js_file_arr[$k] = trim($v);
                 }
                 $res_js_file_arr = array_diff($dest_js_file_arr, $js_file_arr);
-                $res_js_file = implode("\n",$res_js_file_arr);
+                $res_js_file = implode("\n",$res_js_file_arr)."\n";
                 file_put_contents($dest_js_file, $res_js_file);
             }
 
@@ -467,7 +481,7 @@ class Addons extends Service
                     $dest_css_file_arr[$k] = trim($v);
                 }
                 $res_css_file_arr = array_diff($dest_css_file_arr, $css_file_arr);
-                $res_css_file = implode("\n",$res_css_file_arr);
+                $res_css_file = implode("\n",$res_css_file_arr)."\n";
                 file_put_contents($dest_css_file, $res_css_file);
             }
 
@@ -488,7 +502,7 @@ class Addons extends Service
                     $dest_js_global_var_arr[$k] = trim($v);
                 }
                 $res_js_global_var_arr = array_diff($dest_js_global_var_arr, $js_global_var_arr);
-                $res_js_global_var = implode("\n",$res_js_global_var_arr);
+                $res_js_global_var = implode("\n",$res_js_global_var_arr)."\n";
                 file_put_contents($dest_js_global_var, $res_js_global_var);
             }
 
