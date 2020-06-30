@@ -57,10 +57,10 @@ class Api extends Controller
         }
     }
 
-    public function success($msg = '', $data = null, $err_code = 0, $status_code = 200, array $header = []){
+    public function success($err_msg = '', $data = null, $err_code = 0, $status_code = 200, array $header = []){
         $result = [
             'err_code' => $err_code,
-            'msg'  => $msg,
+            'err_msg'  => $err_msg,
             'time' => $this->request->server('REQUEST_TIME'),
             'data' => $data,
         ];
@@ -68,10 +68,10 @@ class Api extends Controller
         throw new HttpResponseException($response);
     }
 
-    public function error($msg = '', $err_code = 1, $data = null,  $status_code = 200, array $header = []){
+    public function error($err_msg = '', $err_code = 1, $data = null,  $status_code = 200, array $header = []){
         $result = [
             'err_code' => $err_code,
-            'msg'  => $msg,
+            'err_msg'  => $err_msg,
             'time' => $this->request->server('REQUEST_TIME'),
             'data' => $data,
         ];
