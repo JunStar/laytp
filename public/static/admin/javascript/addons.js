@@ -28,7 +28,7 @@ layui.use(['layTp'],function() {
                 curr: page
             }
             , cols: [[
-                {field:'title',title:'插件名称',width:90}
+                {field:'title',title:'插件名称',width:140}
                 ,{field:'description',title:'简介',width:255}
                 ,{field:'author',title:'作者',align:'center',width:70}
                 ,{field:'price',title:'价格',align:'center',width:90,templet:function(d){
