@@ -231,6 +231,11 @@ class Addons extends Service
                 $addons['editor'][] = $name;
             }
 
+            //如果info里面有domain的配置，需要将domain的值写入配置项domains中
+            if(array_key_exists('is_editor',$info) && $info['domain']){
+                $addons['domains'][$name] = $info['domain'];
+            }
+
             $file_name = Env::get('root_path') .  DS . 'config' . DS . 'addons.php';
             file_put_contents($file_name,"<?php\nreturn ".var_export($addons,true).';');
         }
