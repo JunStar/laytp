@@ -138,7 +138,7 @@ layui.define([
         },
 
         //组装成插件url
-        addon_url: function(addon,path, params){
+        addon_url: function(addon, path, params){
             let count = 0;
             for(k in params){
                 if(params.hasOwnProperty(k)){

@@ -184,10 +184,20 @@ class Addons extends Service
         $addonDir = $this->unzip($name);
 
         $info = $this->_info->getAddonInfo($name);
+        //依赖laytp版本检测
         if(array_key_exists('lt_version', $info) && ($info['lt_version'] > LT_VERSION)){
             $this->setError('当前框架版本过低');
             DirFile::rmDirs($addons_path.$name);
             return false;
+        }
+        //如果安装编辑器插件，需要优先安装autocreate插件
+        if(array_key_exists('is_editor',$info) && $info['is_editor'] == 1){
+            $autocreate_info = $this->_info->getAddonInfo('autocreate');
+            if(!$autocreate_info){
+                $this->setError('请先安装 [一键生成] 插件');
+                DirFile::rmDirs($addons_path.$name);
+                return false;
+            }
         }
 
         // 移除临时文件
@@ -235,7 +245,7 @@ class Addons extends Service
             $this->_info->setAddonInfo($name,$info);
         }
 
-        // 导入sql文件
+        //导入sql文件
         $result[] = $this->importSql($name);
 
         //复制静态文件
@@ -433,6 +443,35 @@ class Addons extends Service
                         }
                         DirFile::copyDirs($source_static_dir.DS.$fileName,$dest_addons_dir.DS.$fileName);
                     }
+                }
+            }
+
+            //如果是编辑器插件，且插件下存在autocreate目录，将autocreate目录下的add.lt，edit.lt，search.lt复制到autocreate插件对应的目录下
+            $info = $this->_info->getAddonInfo($name);
+            if(array_key_exists('is_editor',$info) && $info['is_editor'] == 1){
+                $source_add_lt = $addon_dir . DS . 'autocreate' . DS . 'add.lt';
+                if(file_exists($source_add_lt)){
+                    //addons/autocreate/admin/command/Curd/html/add/editor
+                    $dest_add_lt = Env::get('root_path') . DS . 'addons' . DS . 'autocreate' . DS
+                        . 'admin' . DS . 'command' . DS . 'Curd' . DS . 'html' . DS
+                        . 'add' . DS . 'editor' . DS . $name.'.lt';
+                    copy($source_add_lt, $dest_add_lt);
+                }
+                $source_edit_lt = $addon_dir . DS . 'autocreate' . DS . 'edit.lt';
+                if(file_exists($source_edit_lt)){
+                    //addons/autocreate/admin/command/Curd/html/edit/editor
+                    $dest_edit_lt = Env::get('root_path') . DS . 'addons' . DS . 'autocreate' . DS
+                        . 'admin' . DS . 'command' . DS . 'Curd' . DS . 'html' . DS
+                        . 'edit' . DS . 'editor' . DS . $name.'.lt';
+                    copy($source_edit_lt, $dest_edit_lt);
+                }
+                $source_search_lt = $addon_dir . DS . 'autocreate' . DS . 'search.lt';
+                if(file_exists($source_search_lt)){
+                    //addons/autocreate/admin/command/Curd/html/search/editor
+                    $dest_search_lt = Env::get('root_path') . DS . 'addons' . DS . 'autocreate' . DS
+                        . 'admin' . DS . 'command' . DS . 'Curd' . DS . 'html' . DS
+                        . 'search' . DS . 'editor' . DS . $name.'.lt';
+                    copy($source_search_lt, $dest_search_lt);
                 }
             }
         }

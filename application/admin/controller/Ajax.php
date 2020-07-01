@@ -51,8 +51,7 @@ class Ajax extends Controller
             if($qiniu_upload_radio == 'close' && $aliyun_oss_upload_radio == 'close' && $local_upload_radio == 'close'){
                 $this->error('上传失败,请开启一种上传方式');
             }
-
-            $file = $file ? $file : $this->request->file('file'); // 获取上传的文件
+            $file = $file ? $file : ($this->request->file('file') ? : (is_array($this->request->file()) ? current($this->request->file()) : '')); // 获取上传的文件
             if(!$file){
                 $this->error('上传失败,请选择需要的上传文件');
             }
