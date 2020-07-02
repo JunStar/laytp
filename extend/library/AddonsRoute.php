@@ -154,7 +154,10 @@ class AddonsRoute extends Route {
         $convert = Config::get('url_convert');
         $filter = $convert ? 'strtolower' : 'trim';
 
-        $addon = $addon ? trim(call_user_func($filter, $addon)) : '';
+        $addons_domains = array_flip(\think\facade\Config::get('addons.domains'));
+        $host = Request::server('HTTP_HOST');
+
+        $addon = $addon ? trim(call_user_func($filter, $addon)) : $addons_domains[$host];
         $module = $module ? trim(call_user_func($filter, $module)) : 'index';
         $controller = $controller ? trim(call_user_func($filter, $controller)) : 'index';
         $action = $action ? trim(call_user_func($filter, $action)) : 'index';

@@ -322,6 +322,17 @@ class Addons extends Backend
         if($this->request->isAjax()){
             $info['domain'] = $this->request->param('domain');
             $this->addons_service->_info->setAddonInfo($name,$info);
+
+            $addons = Config::get('addons.');
+            if(!array_key_exists('domains',$addons)){
+                $addons['domains'] = [];
+            }
+            if($info['domain'] && !in_array($info['domain'], $addons['domains'])){
+                $addons['domains'][$name] = $info['domain'];
+                $file_name = Env::get('root_path') .  DS . 'config' . DS . 'addons.php';
+                file_put_contents($file_name,"<?php\nreturn ".var_export($addons,true).';');
+            }
+
             $this->success('操作成功');
         }
         $this->assign('name',$name);
