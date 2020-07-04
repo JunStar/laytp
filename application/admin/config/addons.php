@@ -1,4 +1,4 @@
 <?php
 return [
-    'api_url' => 'http://www.laytp.com'
+    'api_url' => 'http://api.laytp.com'
 ];
