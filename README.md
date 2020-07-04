@@ -29,7 +29,7 @@ http://www.laytp.com
 
 #### 使用文档
 
-http://www.laytp.com/index/document/index/id/2.html
+http://www.laytp.com/document/index/id/2.html
 
 #### 参与贡献
 
