@@ -237,7 +237,7 @@ class Addons extends Service
                 }
 
                 //如果info里面有domain的配置，需要将domain的值写入配置项domains中
-                if(array_key_exists('is_editor',$info) && $info['domain']){
+                if(array_key_exists('is_editor',$info) && array_key_exists('domain',$info) && $info['domain']){
                     $addons['domains'][$name] = $info['domain'];
                 }
 
