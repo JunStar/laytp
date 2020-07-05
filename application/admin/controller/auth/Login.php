@@ -22,7 +22,10 @@ class Login extends Controller
         }
         $referer = $this->request->server('HTTP_REFERER');
         $host = $this->request->server('HTTP_HOST');
-        if("http://".$host.'/' == $referer || "https://".$host.'/' == $referer){
+        if(
+            "http://".$host.'/' == $referer || "https://".$host.'/' == $referer ||
+            "http://".$host.'/install.php/' == $referer || "https://".$host.'/install.php/' == $referer
+        ){
             $referer = $referer.'admin';
         }
         $normal_logout = Cookie::get('normal_logout');
