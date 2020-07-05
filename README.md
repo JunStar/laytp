@@ -6,6 +6,8 @@ laytp完全免费，无任何商业授权版本，只是需要保留laytp的标�
 
 #### 官网
 http://www.laytp.com
+#### 演示
+http://demo.laytp.com
 
 #### 默认功能
 - RBAC权限控制
