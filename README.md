@@ -9,7 +9,7 @@ http://www.laytp.com
 
 #### 演示
 - 地址:http://demo.laytp.com
-- 账号:admin
+- 账号:demo
 - 密码:123456
 
 #### 默认功能
