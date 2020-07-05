@@ -2,6 +2,7 @@
 
 #### 介绍
 基于ThinkPHP5.1+layui的一个极速后台开发框架。
+laytp完全免费，无任何商业授权版本，只是需要保留laytp的标志信息。
 
 #### 官网
 http://www.laytp.com
