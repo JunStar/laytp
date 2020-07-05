@@ -43,7 +43,13 @@ class Backend extends Controller
         $this->module = $this->request->module();
         $this->controller = strtolower($this->request->controller());
         $this->action = strtolower($this->request->action());
-        $this->now_node = $this->module . '/' . $this->controller . '/' . $this->action;
+
+        $addon = defined('LT_ADDON') ? LT_ADDON : '';
+        if($addon){
+            $this->now_node = $addon . '/' . $this->module . '/' . $this->controller . '/' . $this->action;
+        }else{
+            $this->now_node = $this->module . '/' . $this->controller . '/' . $this->action;
+        }
 
         $this->auth();
         $this->init_assing_val();
@@ -144,7 +150,6 @@ class Backend extends Controller
         ];
         $rule_list = array_unique( model('admin/auth.Menu')->where($where)->column('rule') );
         $this->rule_list = $rule_list;
-
         if( !in_array($this->now_node, $rule_list) && !in_array($this->action, $this->no_need_login) ){
             if(!$rule_list){
                 $this->error('您没有任何权限，请联系管理员');

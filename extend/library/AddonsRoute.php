@@ -48,6 +48,7 @@ class AddonsRoute extends Route {
         $filter = $convert ? 'strtolower' : 'trim';
 
         $addon = $addon ? trim(call_user_func($filter, $addon)) : '';
+        define('LT_ADDON', 'addons/'.$addon);
         $module = $module ? trim(call_user_func($filter, $module)) : 'index';
         $controller = $controller ? trim(call_user_func($filter, $controller)) : 'index';
         $action = $action ? trim(call_user_func($filter, $action)) : 'index';
