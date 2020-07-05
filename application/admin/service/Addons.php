@@ -237,7 +237,12 @@ class Addons extends Service
             }
 
             $file_name = Env::get('root_path') .  DS . 'config' . DS . 'addons.php';
-            file_put_contents($file_name,"<?php\nreturn ".var_export($addons,true).';');
+            try{
+                file_put_contents($file_name,"<?php\nreturn ".var_export($addons,true).';');
+            }catch (Exception $e){
+                $this->setError($e->getMessage());
+                return false;
+            }
         }
 
         //生成menu
