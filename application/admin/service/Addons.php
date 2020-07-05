@@ -51,7 +51,7 @@ class Addons extends Service
                 'X-REQUESTED-WITH: XMLHttpRequest'
             ]
         ];
-        $ret = Http::sendRequest(self::getServerUrl() . '/api/addons/download', array_merge(['name' => $name], $extend), 'POST', $options);
+        $ret = Http::sendRequest(self::getServerUrl() . '/addons/download', array_merge(['name' => $name], $extend), 'POST', $options);
         if ($ret['ret']) {
             if (substr($ret['msg'], 0, 1) == '{') {
                 $json = (array)json_decode($ret['msg'], true);
