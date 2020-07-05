@@ -164,107 +164,107 @@ class Addons extends Service
      */
     public function install($name, $force = true, $extend = [])
     {
-        $addons_path = Env::get('root_path') . DS . 'addons' . DS;
-        if(!$addons_path){
-            DirFile::createDir($addons_path);
-        }
-        if (!$name || (is_dir($addons_path . $name) && !$force)) {
-            $this->setError('插件已经存在');
-            return false;
-        }
+        try{
+            $addons_path = Env::get('root_path') . DS . 'addons' . DS;
+            if(!$addons_path){
+                DirFile::createDir($addons_path);
+            }
+            if (!$name || (is_dir($addons_path . $name) && !$force)) {
+                $this->setError('插件已经存在');
+                return false;
+            }
 
-        // 远程下载插件
-        $tmpFile = $this->download($name, $extend);
-        if(!$tmpFile){
-            $this->setError($this->getError());
-            return false;
-        }
+            // 远程下载插件
+            $tmpFile = $this->download($name, $extend);
+            if(!$tmpFile){
+                $this->setError($this->getError());
+                return false;
+            }
 
-        // 解压插件
-        $addonDir = $this->unzip($name);
+            // 解压插件
+            $addonDir = $this->unzip($name);
 
-        $info = $this->_info->getAddonInfo($name);
-        //依赖laytp版本检测
-        if(array_key_exists('lt_version', $info) && ($info['lt_version'] > LT_VERSION)){
-            $this->setError('当前框架版本过低');
-            DirFile::rmDirs($addons_path.$name);
-            return false;
-        }
-        //如果安装编辑器插件，需要优先安装autocreate插件
-        if(array_key_exists('is_editor',$info) && $info['is_editor'] == 1){
-            $autocreate_info = $this->_info->getAddonInfo('autocreate');
-            if(!$autocreate_info){
-                $this->setError('请先安装 [一键生成] 插件');
+            $info = $this->_info->getAddonInfo($name);
+            //依赖laytp版本检测
+            if(array_key_exists('lt_version', $info) && ($info['lt_version'] > LT_VERSION)){
+                $this->setError('当前框架版本过低');
                 DirFile::rmDirs($addons_path.$name);
                 return false;
             }
-        }
-
-        // 移除临时文件
-        @unlink($tmpFile);
-
-        //检测下载下来的插件包是否完整
-        $checkRes = $this->_info->check($name);
-        if(!$checkRes){
-            @DirFile::rmDirs($addonDir);
-            $this->setError($checkRes['msg']);
-            return false;
-        }
-
-        //初始化配置
-        if(file_exists($addons_path. $name . DS . 'config.php') || (array_key_exists('is_editor',$info) && $info['is_editor'] == 1)){
-            $default_config = [];
-            if(file_exists($addons_path. $name . DS . 'config.php')){
-                $config = include_once $addons_path. $name . DS . 'config.php';
-                foreach($config as $k=>$v){
-                    if(isset($v['content'])){
-                        $default_config[$v['key']] = $v['content'];
-                    }
+            //如果安装编辑器插件，需要优先安装autocreate插件
+            if(array_key_exists('is_editor',$info) && $info['is_editor'] == 1){
+                $autocreate_info = $this->_info->getAddonInfo('autocreate');
+                if(!$autocreate_info){
+                    $this->setError('请先安装 [一键生成] 插件');
+                    DirFile::rmDirs($addons_path.$name);
+                    return false;
                 }
             }
 
-            $addons = Config::get('addons.');
-            $addons[$name] = $default_config;
+            // 移除临时文件
+            @unlink($tmpFile);
 
-            //如果是编辑器插件，需要修改addons.php的配置文件内容中的editor项，增加此编辑器的标识
-            if(array_key_exists('is_editor',$info) && $info['is_editor'] == 1){
-                $addons['editor'][] = $name;
-            }
-
-            //如果info里面有domain的配置，需要将domain的值写入配置项domains中
-            if(array_key_exists('is_editor',$info) && $info['domain']){
-                $addons['domains'][$name] = $info['domain'];
-            }
-
-            $file_name = Env::get('root_path') .  DS . 'config' . DS . 'addons.php';
-            try{
-                file_put_contents($file_name,"<?php\nreturn ".var_export($addons,true).';');
-            }catch (Exception $e){
-                $this->setError($e->getMessage());
+            //检测下载下来的插件包是否完整
+            $checkRes = $this->_info->check($name);
+            if(!$checkRes){
+                @DirFile::rmDirs($addonDir);
+                $this->setError($checkRes['msg']);
                 return false;
             }
-        }
 
-        //生成menu
-        if(file_exists($addonDir.'menu.php')){
-            $menus = include_once $addonDir.'menu.php';
-            $menu_ids = $this->_menu->create($menus);
-            $info = $this->_info->getAddonInfo($name);
-            $info['state'] = 1;
-            $info['menu_ids'] = implode(',',$menu_ids);
-            $this->_info->setAddonInfo($name,$info);
-        }
+            //初始化配置
+            if(file_exists($addons_path. $name . DS . 'config.php') || (array_key_exists('is_editor',$info) && $info['is_editor'] == 1)){
+                $default_config = [];
+                if(file_exists($addons_path. $name . DS . 'config.php')){
+                    $config = include_once $addons_path. $name . DS . 'config.php';
+                    foreach($config as $k=>$v){
+                        if(isset($v['content'])){
+                            $default_config[$v['key']] = $v['content'];
+                        }
+                    }
+                }
 
-        //导入sql文件
-        $result[] = $this->importSql($name);
+                $addons = Config::get('addons.');
+                $addons[$name] = $default_config;
 
-        //复制静态文件
-        $result[] = $this->copyStatic($name);
+                //如果是编辑器插件，需要修改addons.php的配置文件内容中的editor项，增加此编辑器的标识
+                if(array_key_exists('is_editor',$info) && $info['is_editor'] == 1){
+                    $addons['editor'][] = $name;
+                }
 
-        if(check_res($result)){
-            return true;
-        }else{
-            $this->setError($this->getError());
+                //如果info里面有domain的配置，需要将domain的值写入配置项domains中
+                if(array_key_exists('is_editor',$info) && $info['domain']){
+                    $addons['domains'][$name] = $info['domain'];
+                }
+
+                $file_name = Env::get('root_path') .  DS . 'config' . DS . 'addons.php';
+                file_put_contents($file_name,"<?php\nreturn ".var_export($addons,true).';');
+            }
+
+            //生成menu
+            if(file_exists($addonDir.'menu.php')){
+                $menus = include_once $addonDir.'menu.php';
+                $menu_ids = $this->_menu->create($menus);
+                $info = $this->_info->getAddonInfo($name);
+                $info['state'] = 1;
+                $info['menu_ids'] = implode(',',$menu_ids);
+                $this->_info->setAddonInfo($name,$info);
+            }
+
+            //导入sql文件
+            $result[] = $this->importSql($name);
+
+            //复制静态文件
+            $result[] = $this->copyStatic($name);
+
+            if(check_res($result)){
+                return true;
+            }else{
+                $this->setError($this->getError());
+                return false;
+            }
+        }catch (Exception $e){
+            $this->setError($e->getMessage());
             return false;
         }
     }
