@@ -65,7 +65,7 @@ if (is_file($lockFile)) {
 } else if (!extension_loaded("PDO")) {
     $errInfo = "当前未开启PDO，无法进行安装";
 } else if (!is_really_writable($dbConfigFile)) {
-    $errInfo = '当前权限不足，无法写入配置文件application/database.php';
+    $errInfo = '当前权限不足，无法写入配置文件application/config.php/database.php';
 } else {
     $dirArr = [];
     foreach ($checkDirs as $k => $v) {
