@@ -183,6 +183,10 @@ class Addons extends Service
 
             // 解压插件
             $addonDir = $this->unzip($name);
+            if(!$addonDir){
+                $this->setError($this->getError());
+                return false;
+            }
 
             $info = $this->_info->getAddonInfo($name);
             //依赖laytp版本检测
