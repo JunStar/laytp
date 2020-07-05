@@ -51,7 +51,7 @@
         if(laytp_token){
             $.ajax({
                 type: "POST",
-                url: addons_api_url + "/api/user/info",
+                url: addons_api_url + "/user/info",
                 data: {"token":laytp_token},
                 dataType: 'json',
                 success: function (res) {
