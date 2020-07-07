@@ -534,18 +534,21 @@ layui.define([
                             options[key].callback = '';
                         }
                         for(rk in rule_list){
-                            if(options[key].node){
-                                var node_arr = options[key].node.split('/');
-                            }else{
-                                var node_arr = options[key].uri.split('/');
+                            var node_str = (options[key].node) ? options[key].node : options[key].uri;
+                            var uri = (options[key].node) ?
+                                layTp.facade.url(options[key].node,options[key].param) :
+                                options[key].uri;
+                            if(node_str.slice(0,1) == '/'){
+                                node_str = node_str.slice(1);
                             }
+                            var node_arr = node_str.split('/');
                             if(rule_list[rk] === node_arr[0] + '/' + node_arr[1] + '/' + node_arr[2]){
                                 hasAuthOptions.push(
                                     {
                                         action: options[key].action
                                         ,title: options[key].title
                                         ,icon: options[key].icon
-                                        ,uri: layTp.facade.url(options[key].node,options[key].param)
+                                        ,uri: uri
                                         ,switch_type: options[key].switch_type
                                         ,callback: options[key].callback
                                     }
