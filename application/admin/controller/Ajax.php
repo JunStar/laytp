@@ -215,6 +215,7 @@ class Ajax extends Controller
                 $this->success('密码正确');
             }
         }
+        $this->assign('theme','2');
         return $this->fetch();
     }
 }
