@@ -487,8 +487,8 @@ layui.define([
                     title: '删除'
                     ,icon: "layui-icon-delete"
                     ,node: module + "/" + controller + "/del"//操作节点名称
-                    ,uri: layTp.facade.url(module + "/" + controller + "/edit",{id:id})//layTp.facade.url(node,param) = uri
                     ,param: {}//操作节点需要传入的参数，为空可以不传
+                    ,uri: layTp.facade.url(module + "/" + controller + "/edit",{id:id})//layTp.facade.url(node,param) = uri
                     ,switch_type: "confirm_action"
                     ,width:'100%'//宽
                     ,height:'100%'//高
@@ -534,7 +534,11 @@ layui.define([
                             options[key].callback = '';
                         }
                         for(rk in rule_list){
-                            var node_arr = options[key].node.split('/');
+                            if(options[key].node){
+                                var node_arr = options[key].node.split('/');
+                            }else{
+                                var node_arr = options[key].uri.split('/');
+                            }
                             if(rule_list[rk] === node_arr[0] + '/' + node_arr[1] + '/' + node_arr[2]){
                                 hasAuthOptions.push(
                                     {
