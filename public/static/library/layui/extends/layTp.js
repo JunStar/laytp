@@ -542,7 +542,17 @@ layui.define([
                                 node_str = node_str.slice(1);
                             }
                             var node_arr = node_str.split('/');
-                            if(rule_list[rk] === node_arr[0] + '/' + node_arr[1] + '/' + node_arr[2]){
+                            var auth_node = '';
+                            if(node_arr[0] == 'addons'){
+                                auth_node = node_arr[0] + '/' + node_arr[1] + '/' + node_arr[2] + '/' + node_arr[3] + '/' + node_arr[4];
+                            }else{
+                                auth_node = node_arr[0] + '/' + node_arr[1] + '/' + node_arr[2];
+                            }
+                            var auth_rule = rule_list[rk];
+                            if(auth_rule.slice(0,1) == '/'){
+                                auth_rule = auth_rule.slice(1);
+                            }
+                            if(auth_rule === auth_node){
                                 hasAuthOptions.push(
                                     {
                                         action: options[key].action
