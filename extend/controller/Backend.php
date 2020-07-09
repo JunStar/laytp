@@ -242,14 +242,20 @@ class Backend extends Controller
             foreach ($this->batch_action_list as $action) {
                 if ($action == 'del') {
                     if ($this->has_del && in_array('del', $this->batch_action_list)) {
-                        if (in_array($this->module . '/' . $this->controller . '/del', $this->rule_list)) {
+                        if (
+                            in_array($this->module . '/' . $this->controller . '/del', $this->rule_list) ||
+                            in_array('addons/' . $this->addon . '/' . $this->module . '/' . $this->controller . '/del', $this->rule_list)
+                        ) {
                             $show_batch = true;
                             break;
                         }
                     }
                 } else {
                     if (in_array($action, $this->batch_action_list)) {
-                        if (in_array($this->module . '/' . $this->controller . '/' . $action, $this->rule_list)) {
+                        if (
+                            in_array($this->module . '/' . $this->controller . '/' . $action, $this->rule_list) ||
+                            in_array('addons/' . $this->addon . '/' . $this->module . '/' . $this->controller . '/' . $action, $this->rule_list)
+                        ) {
                             $show_batch = true;
                             break;
                         }

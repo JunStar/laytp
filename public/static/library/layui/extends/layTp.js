@@ -487,8 +487,8 @@ layui.define([
                     title: '删除'
                     ,icon: "layui-icon-delete"
                     ,node: module + "/" + controller + "/del"//操作节点名称
-                    ,uri: layTp.facade.url(module + "/" + controller + "/edit",{id:id})//layTp.facade.url(node,param) = uri
                     ,param: {}//操作节点需要传入的参数，为空可以不传
+                    ,uri: layTp.facade.url(module + "/" + controller + "/edit",{id:id})//layTp.facade.url(node,param) = uri
                     ,switch_type: "confirm_action"
                     ,width:'100%'//宽
                     ,height:'100%'//高
@@ -534,14 +534,31 @@ layui.define([
                             options[key].callback = '';
                         }
                         for(rk in rule_list){
-                            var node_arr = options[key].node.split('/');
-                            if(rule_list[rk] === node_arr[0] + '/' + node_arr[1] + '/' + node_arr[2]){
+                            var node_str = (options[key].node) ? options[key].node : options[key].uri;
+                            var uri = (options[key].node) ?
+                                layTp.facade.url(options[key].node,options[key].param) :
+                                options[key].uri;
+                            if(node_str.slice(0,1) == '/'){
+                                node_str = node_str.slice(1);
+                            }
+                            var node_arr = node_str.split('/');
+                            var auth_node = '';
+                            if(node_arr[0] == 'addons'){
+                                auth_node = node_arr[0] + '/' + node_arr[1] + '/' + node_arr[2] + '/' + node_arr[3] + '/' + node_arr[4];
+                            }else{
+                                auth_node = node_arr[0] + '/' + node_arr[1] + '/' + node_arr[2];
+                            }
+                            var auth_rule = rule_list[rk];
+                            if(auth_rule.slice(0,1) == '/'){
+                                auth_rule = auth_rule.slice(1);
+                            }
+                            if(auth_rule === auth_node){
                                 hasAuthOptions.push(
                                     {
                                         action: options[key].action
                                         ,title: options[key].title
                                         ,icon: options[key].icon
-                                        ,uri: layTp.facade.url(options[key].node,options[key].param)
+                                        ,uri: uri
                                         ,switch_type: options[key].switch_type
                                         ,callback: options[key].callback
                                     }
