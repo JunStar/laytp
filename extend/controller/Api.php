@@ -15,11 +15,6 @@ use think\Response;
 class Api extends Controller
 {
     /**
-     * @var Request Request 实例
-     */
-    protected $request;
-
-    /**
      * 无需登录的方法,同时也就不需要鉴权了
      * @var array
      */
@@ -40,8 +35,6 @@ class Api extends Controller
 
     public function initialize()
     {
-        $this->request = \request();
-
         // 控制器初始化
         $this->_initialize();
     }
