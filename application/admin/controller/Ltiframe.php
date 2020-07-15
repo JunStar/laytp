@@ -1,7 +1,7 @@
 <?php
 namespace app\admin\controller;
 
-use controller\Newbackend;
+use controller\Backend;
 
 class Ltiframe extends Backend
 {
