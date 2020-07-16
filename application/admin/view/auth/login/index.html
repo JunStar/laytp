@@ -29,14 +29,14 @@
         </div>
         <div class="layui-form-item layui-input-icon-group">
             <i class="layui-icon layui-icon-password"></i>
-            <input class="layui-input" name="password" placeholder="请输入登录密码" type="password"
+            <input class="layui-input" name="password" id="password" placeholder="请输入登录密码" type="password"
                    lay-verType="tips" lay-verify="required" required value=""/>
         </div>
         <input type="hidden" value="{$referer}" name="referer" id="referer" />
         {if $Think.config.laytp.basic.login_vercode}
         <div class="layui-form-item layui-input-icon-group login-captcha-group">
             <i class="layui-icon layui-icon-auz"></i>
-            <input class="layui-input" name="code" placeholder="请输入验证码" autocomplete="off"
+            <input class="layui-input" name="code" id="code" placeholder="请输入验证码" autocomplete="off"
                    lay-verType="tips" lay-verify="required" required/>
             <img class="login-captcha" id="captcha_img" src="{:captcha_src()}" />
         </div>
@@ -44,7 +44,7 @@
         <input type="hidden" name="code" value="1"/>
         {/if}
         <div class="layui-form-item">
-            <a class="layui-btn layui-btn-normal layui-btn-fluid" lay-filter="doLogin" lay-submit>登录</a>
+            <a class="layui-btn layui-btn-normal layui-btn-fluid" id="submitBtn" lay-filter="doLogin" lay-submit>登录</a>
         </div>
     </form>
 </div>
@@ -100,6 +100,32 @@
             url = url ? url : "/admin?ref=1";
             location.href = url;
         }
+
+        {if $Think.config.laytp.basic.login_vercode}
+        $("#code").focus(function()
+        {
+            $(document).on("keydown",function(event)
+            {
+                if( event.keyCode == 13 )
+                {
+                    $('#submitBtn').click();
+                }
+            });
+            $("#code").unbind();
+        });
+        {else}
+        $("#password").focus(function()
+        {
+            $(document).on("keydown",function(event)
+            {
+                if( event.keyCode == 13 )
+                {
+                    $('#submitBtn').click();
+                }
+            });
+            $("#password").unbind();
+        });
+        {/if}
     });
 </script>
 </body>
