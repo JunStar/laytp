@@ -67,6 +67,8 @@
                                         <img src="{:captcha_src()}" alt="" width="150" height="32" class="passcode" style="height:43px;cursor:pointer;" onclick="this.src='{:captcha_src()}'">
                                     </div>
                                 </div>
+                                {else/}
+                                <input type="hidden" name="code" value="1"/>
                                 {/if}
                             </div>
                             <div style="padding:0px 30px 30px 30px">

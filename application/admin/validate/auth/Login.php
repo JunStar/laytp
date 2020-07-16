@@ -9,7 +9,7 @@ class Login extends Validate
 {
     //数组顺序就是检测的顺序，比如这里，会先检测code验证码的正确性
     protected $rule =   [
-        'code'      =>  'checkCode:',
+        'code'      =>  'require|checkCode:',
         'username'  =>  'require',
         'password'  =>  'require|checkPassword:',
     ];

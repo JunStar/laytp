@@ -32,14 +32,19 @@
             <input class="layui-input" name="password" placeholder="请输入登录密码" type="password"
                    lay-verType="tips" lay-verify="required" required value=""/>
         </div>
+        <input type="hidden" value="{$referer}" name="referer" id="referer" />
+        {if $Think.config.laytp.basic.login_vercode}
         <div class="layui-form-item layui-input-icon-group login-captcha-group">
             <i class="layui-icon layui-icon-auz"></i>
-            <input class="layui-input" name="verify_code" placeholder="请输入验证码" autocomplete="off"
+            <input class="layui-input" name="code" placeholder="请输入验证码" autocomplete="off"
                    lay-verType="tips" lay-verify="required" required/>
             <img class="login-captcha" id="captcha_img" src="{:captcha_src()}" />
         </div>
+        {else/}
+        <input type="hidden" name="code" value="1"/>
+        {/if}
         <div class="layui-form-item">
-            <button class="layui-btn layui-btn-normal layui-btn-fluid" lay-filter="doLogin" lay-submit>登录</button>
+            <a class="layui-btn layui-btn-normal layui-btn-fluid" lay-filter="doLogin" lay-submit>登录</a>
         </div>
     </form>
 </div>
@@ -57,10 +62,10 @@
         version: false //一般用于更新模块缓存，默认不开启。设为true即让浏览器不缓存。也可以设为一个固定的值，如：201610
         ,debug: false //用于开启调试模式，默认false，如果设为true，则JS模块的节点会保留在页面
         ,base: '/static/library/layui/extends/' //设定扩展的Layui模块的所在目录，一般用于外部模块扩展
-    }).use(['laytp'],function(){
+    }).use(['layTp'],function(){
         var $ = layui.jquery;
         var form = layui.form;
-        var laytp = layui.laytp;
+        var laytp = layui.layTp;
 
         $("#captcha_img").click(function(){
             this.src = "{:captcha_src()}?v=" + Math.random();
@@ -69,11 +74,11 @@
         form.on('submit(doLogin)', function(obj){
             $.ajax({
                 type: 'POST'
-                ,url: '/admin/auth.login/doLogin'
+                ,url: '/admin/auth.login/do_login'
                 ,data: obj.field
                 ,dataType: 'json'
                 ,success:function(res){
-                    if(res['err_code'] === 0){
+                    if(res['code'] === 1){
                         laytp.facade.setcookie('admin_token', res['data']['admin_token'], 3);
                         laytp.facade.success(res.msg);
                         setTimeout( function(){redirect(res['data']['url'])}, 1000 );
@@ -92,7 +97,7 @@
 
         function redirect(url)
         {
-            url = url ? url : "/admin/r/1";
+            url = url ? url : "/admin?ref=1";
             location.href = url;
         }
     });
