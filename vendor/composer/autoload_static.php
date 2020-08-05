@@ -15,15 +15,21 @@ class ComposerStaticInitebb6ccacfc92d5643dd3c68f4ea3aa91
         '65fec9ebcfbb3cbb4fd0d519687aea01' => __DIR__ . '/..' . '/danielstjules/stringy/src/Create.php',
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
         'b067bc7112e384b61c701452d53a14a8' => __DIR__ . '/..' . '/mtdowling/jmespath.php/src/JmesPath.php',
+        '9b552a3cc426e3287cc811caefa3cf53' => __DIR__ . '/..' . '/topthink/think-helper/src/helper.php',
+        'bd9634f2d41831496de0d3dfe4c94881' => __DIR__ . '/..' . '/symfony/polyfill-php56/bootstrap.php',
         '66453932bc1be9fb2f910a27947d11b6' => __DIR__ . '/..' . '/alibabacloud/client/src/Functions.php',
+        'cc56288302d9df745d97c934d6a6e5f0' => __DIR__ . '/..' . '/topthink/think-queue/src/common.php',
         '1cfd2761b63b0a29ed23657ea394cb2d' => __DIR__ . '/..' . '/topthink/think-captcha/src/helper.php',
+        'ea51e7f80936725691663347d5b38bd9' => __DIR__ . '/..' . '/topthink/think-swoole/src/command.php',
     );
 
     public static $prefixLengthsPsr4 = array (
         't' => 
         array (
+            'think\\swoole\\' => 13,
             'think\\composer\\' => 15,
             'think\\captcha\\' => 14,
+            'think\\' => 6,
         ),
         'c' => 
         array (
@@ -33,14 +39,22 @@ class ComposerStaticInitebb6ccacfc92d5643dd3c68f4ea3aa91
         array (
             'app\\' => 4,
         ),
+        'X' => 
+        array (
+            'XCron\\' => 6,
+        ),
         'S' => 
         array (
+            'Symfony\\Polyfill\\Util\\' => 22,
+            'Symfony\\Polyfill\\Php56\\' => 23,
             'Symfony\\Polyfill\\Mbstring\\' => 26,
+            'SuperClosure\\' => 13,
             'Stringy\\' => 8,
         ),
         'P' => 
         array (
             'Psr\\Http\\Message\\' => 17,
+            'PhpParser\\' => 10,
             'PHPMailer\\PHPMailer\\' => 20,
         ),
         'J' => 
@@ -62,6 +76,10 @@ class ComposerStaticInitebb6ccacfc92d5643dd3c68f4ea3aa91
     );
 
     public static $prefixDirsPsr4 = array (
+        'think\\swoole\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/topthink/think-swoole/src',
+        ),
         'think\\composer\\' => 
         array (
             0 => __DIR__ . '/..' . '/topthink/think-installer/src',
@@ -69,6 +87,11 @@ class ComposerStaticInitebb6ccacfc92d5643dd3c68f4ea3aa91
         'think\\captcha\\' => 
         array (
             0 => __DIR__ . '/..' . '/topthink/think-captcha/src',
+        ),
+        'think\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/topthink/think-helper/src',
+            1 => __DIR__ . '/..' . '/topthink/think-queue/src',
         ),
         'clagiordano\\weblibs\\configmanager\\' => 
         array (
@@ -78,9 +101,25 @@ class ComposerStaticInitebb6ccacfc92d5643dd3c68f4ea3aa91
         array (
             0 => __DIR__ . '/../..' . '/application',
         ),
+        'XCron\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/xavier/xcron-expression/src/Cron',
+        ),
+        'Symfony\\Polyfill\\Util\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/polyfill-util',
+        ),
+        'Symfony\\Polyfill\\Php56\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/polyfill-php56',
+        ),
         'Symfony\\Polyfill\\Mbstring\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring',
+        ),
+        'SuperClosure\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/jeremeamia/superclosure/src',
         ),
         'Stringy\\' => 
         array (
@@ -89,6 +128,10 @@ class ComposerStaticInitebb6ccacfc92d5643dd3c68f4ea3aa91
         'Psr\\Http\\Message\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/http-message/src',
+        ),
+        'PhpParser\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser',
         ),
         'PHPMailer\\PHPMailer\\' => 
         array (
