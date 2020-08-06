@@ -42,7 +42,7 @@ class Api extends Controller
     public function _initialize(){
         $this->service_user = User::instance();
         if ($this->service_user->isNeedLogin($this->no_need_login)) {
-            $token = $this->request->server('HTTP_TOKEN', $this->request->request('token', Cookie::get('token')));
+            $token = $this->request->header('token', $this->request->param('token', Cookie::get('token')));
             $this->service_user->init($token);
             if (!$this->service_user->isLogin()) {
                 $this->error('请先登录', 10401);

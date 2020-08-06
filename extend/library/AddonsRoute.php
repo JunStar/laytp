@@ -23,6 +23,9 @@ class AddonsRoute extends Route {
      */
     public function execute($addon = null)
     {
+        if(!defined('LT_VERSION')){
+            define('LT_VERSION', '1.0.0');
+        }
         $request = Request::instance();
         $url = $request->url();
         $url_arr = array_filter(explode('/',$url));
@@ -48,7 +51,9 @@ class AddonsRoute extends Route {
         $filter = $convert ? 'strtolower' : 'trim';
 
         $addon = $addon ? trim(call_user_func($filter, $addon)) : '';
-        define('LT_ADDON', 'addons/'.$addon);
+        if(!defined('LT_ADDON')){
+            define('LT_ADDON', 'addons/'.$addon);
+        }
         $module = $module ? trim(call_user_func($filter, $module)) : 'index';
         $controller = $controller ? trim(call_user_func($filter, $controller)) : 'index';
         $action = $action ? trim(call_user_func($filter, $action)) : 'index';

@@ -19,14 +19,6 @@ trait Backend
 
     //查看
     public function index(){
-        /**
-         * 为支持swoole
-         * swoole中不允许使用exit和die函数进行程序流程控制
-         * 当有ref参数时，只需要显示$this->fetch('admin@ltiframe/index');其他页面等待ajax请求响应
-         */
-        if($this->ref){
-            return $this->fetch('admin@ltiframe/index');
-        }
         if( $this->request->isAjax() ){
             $where = $this->build_params();
             $order = $this->build_order();

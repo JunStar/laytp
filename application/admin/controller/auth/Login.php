@@ -13,7 +13,7 @@ class Login extends Controller
 {
     //登录界面
     public function index(){
-        $token = $this->request->server('HTTP_ADMIN_TOKEN', $this->request->request('admin_token', Cookie::get('admin_token')));
+        $token = $this->request->param('admin_token', $this->request->param('admin_token', Cookie::get('admin_token')));
         if( $token ){
             $data = Token::get($token);
             if(isset($data['user_id'])){
@@ -46,7 +46,7 @@ class Login extends Controller
 
     //登录界面
     public function index_old(){
-        $token = $this->request->server('HTTP_ADMIN_TOKEN', $this->request->request('admin_token', Cookie::get('admin_token')));
+        $token = $this->request->param('admin_token', $this->request->param('admin_token', Cookie::get('admin_token')));
         if( $token ){
             $data = Token::get($token);
             if(isset($data['user_id'])){
@@ -92,7 +92,7 @@ class Login extends Controller
 
     //退出登录
     public function logout(){
-        $token = $this->request->server('HTTP_ADMIN_TOKEN', $this->request->request('admin_token', Cookie::get('admin_token')));
+        $token = $this->request->param('admin_token', $this->request->param('admin_token', Cookie::get('admin_token')));
         Token::delete($token);
         Cookie::set('normal_logout','1');
         return $this->redirect(url('/admin/auth.login/index'));

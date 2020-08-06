@@ -18,7 +18,7 @@ class Ajax extends Controller
 {
     //虽然不走权限控制，但是也要登录
     public function initialize(){
-        $token = $this->request->server('HTTP_ADMIN_TOKEN', $this->request->request('admin_token', Cookie::get('admin_token')));
+        $token = $this->request->param('admin_token', $this->request->param('admin_token', Cookie::get('admin_token')));
         $data = Token::get($token);
         if(!$data['user_id']){
             $this->error('请先登录');
@@ -203,7 +203,7 @@ class Ajax extends Controller
     public function lock_screen(){
         if($this->request->isAjax()){
             $password = $this->request->param('password');
-            $token = $this->request->server('HTTP_ADMIN_TOKEN', $this->request->request('admin_token', Cookie::get('admin_token')));
+            $token = $this->request->param('admin_token', $this->request->param('admin_token', Cookie::get('admin_token')));
             $data = Token::get($token);
             $password_hash = model('auth.User')->where('id','=',$data['user_id'])->value('password');
             if( !password_verify( $password, $password_hash ) )

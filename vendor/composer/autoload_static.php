@@ -38,6 +38,7 @@ class ComposerStaticInitebb6ccacfc92d5643dd3c68f4ea3aa91
         'a' => 
         array (
             'app\\' => 4,
+            'addons\\' => 7,
         ),
         'X' => 
         array (
@@ -100,6 +101,10 @@ class ComposerStaticInitebb6ccacfc92d5643dd3c68f4ea3aa91
         'app\\' => 
         array (
             0 => __DIR__ . '/../..' . '/application',
+        ),
+        'addons\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/addons',
         ),
         'XCron\\' => 
         array (

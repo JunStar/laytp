@@ -38,7 +38,7 @@
             <i class="layui-icon layui-icon-auz"></i>
             <input class="layui-input" name="code" id="code" placeholder="请输入验证码" autocomplete="off"
                    lay-verType="tips" lay-verify="required" required/>
-            <img class="login-captcha" id="captcha_img" src="{:captcha_src()}" />
+            <img class="login-captcha" id="captcha_img" src="/verifyCode" />
         </div>
         {else/}
         <input type="hidden" name="code" value="1"/>
@@ -68,7 +68,7 @@
         var laytp = layui.layTp;
 
         $("#captcha_img").click(function(){
-            this.src = "{:captcha_src()}?v=" + Math.random();
+            this.src = "/verifyCode?v=" + Math.random();
         });
 
         form.on('submit(doLogin)', function(obj){

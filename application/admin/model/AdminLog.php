@@ -75,7 +75,7 @@ class AdminLog extends Base
             'content'   => !is_scalar($content) ? json_encode($content, JSON_UNESCAPED_UNICODE) : $content,
             'url'       => request()->url(),
             'admin_id'  => $admin_id,
-            'user_agent' => request()->server('HTTP_USER_AGENT'),
+            'user_agent' => request()->header('user_agent'),
             'ip'        => request()->ip()
         ]);
     }

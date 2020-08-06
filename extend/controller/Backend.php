@@ -9,9 +9,11 @@ use app\admin\model\auth\Menu;
 use library\Token;
 use library\Tree;
 use think\Controller;
+use think\exception\HttpResponseException;
 use think\facade\Config;
 use think\facade\Cookie;
 use think\facade\Hook;
+use think\Response;
 
 class Backend extends Controller
 {
@@ -36,7 +38,7 @@ class Backend extends Controller
     //初始化
     public function initialize(){
         if( $this->request->isPost() ){
-            $token = $this->request->server('HTTP_ADMIN_TOKEN', $this->request->request('admin_token', Cookie::get('admin_token')));
+            $token = $this->request->header('admin_token', $this->request->param('admin_token', Cookie::get('admin_token')));
             Hook::exec('app\\admin\\behavior\\AdminLog',$token);
         }
 
@@ -69,6 +71,12 @@ class Backend extends Controller
 
             //获取顶级菜单
             $this->assign('top_menu', $select_menu[count($select_menu)-1]);
+
+            /**
+             * 为支持think-swoole扩展，把exit修改成抛出异常，显示页面的方式
+             */
+            $response = Response::create($this->fetch('admin@ltiframe/index'), 'html');
+            throw new HttpResponseException($response);
         }
     }
 
@@ -92,7 +100,7 @@ class Backend extends Controller
     //权限检测
     public function auth(){
         //当前登录用户信息
-        $token = $this->request->server('HTTP_TOKEN', $this->request->request('admin_token', Cookie::get('admin_token')));
+        $token = $this->request->header('token', $this->request->param('admin_token', Cookie::get('admin_token')));
         if(!$token){
             if($this->request->isAjax()){
                 $this->error('登录信息过期，请重新登录',['reload'=>true]);

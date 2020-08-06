@@ -87,8 +87,8 @@ class User extends Api{
             $this->error('阿里云手机短信插件已关闭');
         }
 
-        $param['mobile'] = $this->request->request('mobile');
-        $param['code'] = $this->request->request('code');
+        $param['mobile'] = $this->request->param('mobile');
+        $param['code'] = $this->request->param('code');
 
         $validate = new MobileCodeRegLogin();
         if($validate->check($param)){
@@ -133,7 +133,7 @@ class User extends Api{
             $this->error('阿里云号码认证插件已关闭');
         }
 
-        $params['access_token'] = $this->request->request('access_token');
+        $params['access_token'] = $this->request->param('access_token');
 
         $validate = new MobileOneClickLogin();
         if($validate->check($params)){
@@ -182,9 +182,9 @@ class User extends Api{
             $this->error('请使用POST请求');
         }
 
-        $param['username'] = $this->request->request('username');
-        $param['password'] = $this->request->request('password');
-        $param['repassword'] = $this->request->request('repassword');
+        $param['username'] = $this->request->param('username');
+        $param['password'] = $this->request->param('password');
+        $param['repassword'] = $this->request->param('repassword');
 
         $validate = new UsernameReg();
         if($validate->check($param)){
@@ -225,8 +225,8 @@ class User extends Api{
             $this->error('请使用POST请求');
         }
 
-        $param['username'] = $this->request->request('username');
-        $param['password'] = $this->request->request('password');
+        $param['username'] = $this->request->param('username');
+        $param['password'] = $this->request->param('password');
 
         $validate = new UsernameLogin();
         if($validate->check($param)){

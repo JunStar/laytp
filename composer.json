@@ -25,7 +25,8 @@
     },
     "autoload": {
         "psr-4": {
-            "app\\": "application"
+            "app\\": "application",
+            "addons\\": "addons"
         }
     },
     "extra": {

@@ -15,10 +15,8 @@ if (!is_file(APP_PATH . 'admin/command/Install/install.lock'))
     exit;
 }
 
-if (!defined('DS')) {
-    define('DS', DIRECTORY_SEPARATOR);
-    define('LT_VERSION', '1.0.0');
-}
+define('DS', DIRECTORY_SEPARATOR);
+define('LT_VERSION', '1.0.0');
 
 // 加载基础文件
 require __DIR__ . '/../thinkphp/base.php';
