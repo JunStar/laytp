@@ -69,15 +69,6 @@ class Backend extends Controller
 
             //获取顶级菜单
             $this->assign('top_menu', $select_menu[count($select_menu)-1]);
-
-            exit($this->fetch('admin@ltiframe/index'));
-        }
-
-        $menu_id = $this->request->param('laytp_menu_id');
-        if($menu_id){
-            $this->assign('menu_info', Menu::get($menu_id)->toArray());
-        }else{
-            $this->assign('menu_info', ['des'=>'']);
         }
     }
 
@@ -202,6 +193,13 @@ class Backend extends Controller
             $assign['more_first_menus'] = [];
         }
         $this->assign($assign);
+
+        $menu_id = $this->request->param('laytp_menu_id');
+        if($menu_id){
+            $this->assign('menu_info', Menu::get($menu_id)->toArray());
+        }else{
+            $this->assign('menu_info', ['des'=>'']);
+        }
     }
 
     /**
