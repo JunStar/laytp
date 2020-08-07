@@ -2,8 +2,12 @@
 
 {block name="main_body"}
 <div class="layui-card">
-    <div class="layui-tab layui-tab-brief">
+    <div class="layui-tab layui-tab-brief layui-tab-vertical">
         <ul class="layui-tab-title">
+            <span class="layui-tab-vertical-btn">
+                <button class="layui-btn layui-btn-normal layui-btn-sm">+分组</button>
+                <button class="layui-btn layui-btn-normal layui-btn-sm">+配置</button>
+            </span>
             {foreach $config_group as $k=>$v}
             <li {if $group==$k}class="layui-this"{/if} onclick="location.href='{:url('admin/sysconf/index',['group'=>$k])}'"><span>{$v}</span></li>
             {/foreach}
@@ -204,12 +208,9 @@
                         {/foreach}
                         </tbody>
                     </table>
-                    <div class="layui-form-item"></div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label"> </label>
-                        <div class="layui-input-inline">
-                            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="laytp">提 交</button>
-                        </div>
+                    <div class="layui-input-block">
+                        <button class="layui-btn layui-btn-normal" lay-submit lay-filter="laytp">提 交</button>
+                        <button class="layui-btn layui-btn-danger">删除分组</button>
                     </div>
                 </form>
                 {/if}
