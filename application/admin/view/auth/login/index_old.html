@@ -64,7 +64,7 @@
                                 <div class="form-group">
                                     <div class="field field-icon-right">
                                         <input type="text" class="input input-big" id="code" name="code" placeholder="填写右侧的验证码" lay-verify="required">
-                                        <img src="{:captcha_src()}" alt="" width="150" height="32" class="passcode" style="height:43px;cursor:pointer;" onclick="this.src='{:captcha_src()}'">
+                                        <img id="captcha_img" src="/verifyCode" alt="" width="150" height="32" class="passcode" style="height:43px;cursor:pointer;" />
                                     </div>
                                 </div>
                                 {else/}
@@ -94,6 +94,10 @@
             ,layTp = layui.layTp
         ;
         form.render();
+
+        $("#captcha_img").click(function(){
+            this.src = "/verifyCode?v=" + Math.random();
+        });
 
         form.on('submit(user-login-submit)', function(obj){
             $.ajax({
