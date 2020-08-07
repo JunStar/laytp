@@ -4,8 +4,12 @@
  * @param $id
  * @return array
  */
-function get_crumbs($menus,$id){
+function get_crumbs($menus,$id,$init=false){
     static $select_menu,$crumbs;
+    if($init){
+        $select_menu = [];
+        $crumbs = [];
+    }
     foreach($menus as $k=>$v){
         if($v['id'] == $id){
             $select_menu[] = $v;

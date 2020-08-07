@@ -31,7 +31,7 @@ class Ajax extends Controller
         $menus_where['is_menu'] = 1;
         $menus_where['is_hide'] = 0;
         $menus = model('admin/auth.Menu')->where($menus_where)->order(['pid'=>'asc','sort'=>'desc'])->select()->toArray();
-        $crumbs = get_crumbs($menus, $menu_id);
+        $crumbs = get_crumbs($menus, $menu_id,true);
         array_shift($crumbs[1]);
         $this->success('获取成功','',$crumbs[1]);
     }
