@@ -21,11 +21,11 @@ class Sysconf extends Backend
 
     public function index(){
         $dictionary = json_decode( model('Sysconf')->where('group','=','dictionary')->value('value'), true );
-        $dictionary = $dictionary ? $dictionary : ['basic' => '基础配置', 'upload' => '上传配置'];
+        $dictionary = $dictionary ? $dictionary : [];
         if(array_key_exists('dictionary', $dictionary)){
             unset($dictionary['dictionary']);
         }
-        $config_group = $dictionary ? $dictionary : ['basic' => '基础配置', 'upload' => '上传配置'];
+        $config_group = $dictionary;
         $this->assign('config_group', $config_group);
 
         $group = $this->request->param('group');
@@ -138,6 +138,7 @@ class Sysconf extends Backend
             }
         }
         $dictionary = json_decode( model('Sysconf')->where('group','=','dictionary')->value('value'), true );
+        $dictionary = $dictionary ? $dictionary : [];
         if(array_key_exists('dictionary', $dictionary)){
             unset($dictionary['dictionary']);
         }
