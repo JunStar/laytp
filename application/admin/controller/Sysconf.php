@@ -21,6 +21,7 @@ class Sysconf extends Backend
 
     public function index(){
         $dictionary = json_decode( model('Sysconf')->where('group','=','dictionary')->value('value'), true );
+        $dictionary = $dictionary ? $dictionary : ['basic' => '基础配置', 'upload' => '上传配置'];
         if(array_key_exists('dictionary', $dictionary)){
             unset($dictionary['dictionary']);
         }
