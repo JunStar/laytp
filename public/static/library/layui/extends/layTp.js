@@ -976,6 +976,11 @@ layui.define([
                                     parent.parent.location.reload();
                                 }, 1000);
                             }
+                            if(typeof res.data.up_reload === 'boolean' && res.data.up_reload){
+                                setTimeout(function () {
+                                    parent.location.reload();
+                                }, 1000);
+                            }
                             if(typeof parent.func_controller != "undefined"){
                                 let index = parent.layer.getFrameIndex(window.name);
                                 setTimeout(function () {

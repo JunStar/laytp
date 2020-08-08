@@ -21,7 +21,10 @@ class Sysconf extends Backend
 
     public function index(){
         $dictionary = json_decode( model('Sysconf')->where('group','=','dictionary')->value('value'), true );
-        $config_group = $dictionary ? $dictionary : ['basic' => '基础配置', 'dictionary' => '分组配置', 'upload' => '上传配置', 'email'=>'邮件配置'];
+        if(array_key_exists('dictionary', $dictionary)){
+            unset($dictionary['dictionary']);
+        }
+        $config_group = $dictionary ? $dictionary : ['basic' => '基础配置', 'upload' => '上传配置'];
         $this->assign('config_group', $config_group);
 
         $group = $this->request->param('group');
@@ -42,6 +45,103 @@ class Sysconf extends Backend
         }
         $this->assign('config', $config);
 
+        return $this->fetch();
+    }
+
+    //添加分组
+    public function add_group(){
+        if( $this->request->isAjax() && $this->request->isPost() ){
+            $post = filterPostData($this->request->post("row/a"));
+            $config = Db::table(Config::get('database.prefix').'sysconf')->where([
+                ['group','=','dictionary'],
+                ['key','=','config']
+            ])->value('value');
+            $config_arr = json_decode($config, JSON_UNESCAPED_UNICODE);
+            $config_arr[$post['group']] = $post['group_name'];
+            $value = json_encode($config_arr);
+            $update = Db::table(Config::get('database.prefix').'sysconf')
+                ->where('group','=','dictionary')
+                ->where('key','=','config')
+                ->update(['value'=>$value]);
+            if($update !== false){
+                $update_config = $this->update_config();
+                if( $update_config['code'] == 1 ){
+                    $this->success('操作成功',['up_reload'=>true]);
+                }else{
+                    $this->error($update_config['msg']);
+                }
+
+            }else{
+                $this->error('操作失败');
+            }
+        }
+        return $this->fetch();
+    }
+
+    //删除分组
+    public function del_group(){
+        $group = $this->request->param('group');
+        $config = Db::table(Config::get('database.prefix').'sysconf')->where([
+            ['group','=','dictionary'],
+            ['key','=','config']
+        ])->value('value');
+        $config_arr = json_decode($config, JSON_UNESCAPED_UNICODE);
+        if(array_key_exists($group,$config_arr)){
+            unset($config_arr[$group]);
+        }
+        $value = json_encode($config_arr);
+        $update = Db::table(Config::get('database.prefix').'sysconf')
+            ->where('group','=','dictionary')
+            ->where('key','=','config')
+            ->update(['value'=>$value]);
+        if($update !== false){
+            $update_config = $this->update_config();
+            if( $update_config['code'] == 1 ){
+                $this->success('操作成功');
+            }else{
+                $this->error($update_config['msg']);
+            }
+        }else{
+            $this->error('操作失败');
+        }
+    }
+
+    //添加配置属性
+    public function add_config(){
+        if( $this->request->isAjax() && $this->request->isPost() ){
+            $post = filterPostData($this->request->post("row/a"));
+            //检测group,key是否存在
+            $exist = model('Sysconf')->where(['group'=>$post['group'],'key'=>$post['key']])->find();
+            if($exist){
+                return $this->error($post['key'].'已存在');
+            }
+            $content = explode("\n", $post['content']);
+            $return = [];
+            foreach($content as $v){
+                $temp = explode('|', $v);
+                $return[$temp[0]] = $temp[1];
+            }
+            $post['content'] = json_encode($return, JSON_UNESCAPED_UNICODE);
+            $update_res = model('Sysconf')->insert($post);
+            if( $update_res ){
+                //写入配置文件
+                $update_config = $this->update_config();
+                if( $update_config['code'] == 1 ){
+                    $this->success('操作成功',['up_reload'=>true]);
+                }else{
+                    $this->error($update_config['msg']);
+                }
+                $this->success('操作成功');
+            }else if( $update_res === null ){
+                $this->error('操作失败');
+            }
+        }
+        $dictionary = json_decode( model('Sysconf')->where('group','=','dictionary')->value('value'), true );
+        if(array_key_exists('dictionary', $dictionary)){
+            unset($dictionary['dictionary']);
+        }
+        $config_group = $dictionary ? $dictionary : ['basic' => '基础配置', 'upload' => '上传配置'];
+        $this->assign('config_group', $config_group);
         return $this->fetch();
     }
 
@@ -66,13 +166,13 @@ class Sysconf extends Backend
                 //写入配置文件
                 $update_config = $this->update_config();
                 if( $update_config['code'] == 1 ){
-                    return $this->success('操作成功');
+                    $this->success('操作成功');
                 }else{
-                    return $this->error($update_config['msg']);
+                    $this->error($update_config['msg']);
                 }
-                return $this->success('操作成功');
+                $this->success('操作成功');
             }else if( $update_res === null ){
-                return $this->error('操作失败');
+                $this->error('操作失败');
             }
         }
         return $this->fetch();
@@ -108,13 +208,13 @@ class Sysconf extends Backend
                 Db::commit();
                 $update_config = $this->update_config();
                 if( $update_config['code'] == 1 ){
-                    return $this->success('操作成功');
+                    $this->success('操作成功');
                 }else{
-                    return $this->error($update_config['msg']);
+                    $this->error($update_config['msg']);
                 }
             }else{
                 Db::rollback();
-                return $this->error('操作失败');
+                $this->error('操作失败');
             }
         }
     }
@@ -124,9 +224,9 @@ class Sysconf extends Backend
         $ids = $this->request->param('ids');
         if( $this->model->where('id','in',$ids)->delete() ){
             $this->update_config();
-            return $this->success('操作成功');
+            $this->success('操作成功');
         }else{
-            return $this->error('操作失败1');
+            $this->error('操作失败1');
         }
     }
 

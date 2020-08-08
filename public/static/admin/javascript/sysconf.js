@@ -4,15 +4,6 @@ layui.use(['layTp'],function() {
         , $ = layui.jquery
     ;
 
-    //监听选择表下拉框onchange事件
-    layui.form.on('select(select_type)',function(data){
-        let array_content_types = ['select_single','select_multi','checkbox','radio'];
-        if( array_content_types.indexOf(data.value) != -1 ){
-            $('#form-item-content').show();
-        }else{
-            $('#form-item-content').hide();
-        }
-    });
 
     $(document).on('click','.add_array_item',function(){
         let click_obj = $(this);
@@ -40,6 +31,33 @@ layui.use(['layTp'],function() {
                 success: function (res) {
                     if( res.code == 1 ){
                         click_obj.parent().parent().remove();
+                    }else{
+                        layTp.facade.error(res.msg);
+                    }
+                    layui.layer.close(index);
+                },
+                error: function (xhr) {
+                    if( xhr.status == '500' ){
+                        layTp.facade.error('本地网络问题或者服务器错误');
+                    }else if( xhr.status == '404' ){
+                        layTp.facade.error('请求地址不存在');
+                    }
+                }
+            });
+        });
+    });
+
+    //删除分组
+    $(document).on('click','#del-group',function(){
+        layui.layer.confirm('确定删除么?', function(index){
+            $.ajax({
+                type: 'POST',
+                url: layTp.facade.url('admin/sysconf/del_group'),
+                data: {group:$('#group').val()},
+                dataType: 'json',
+                success: function (res) {
+                    if( res.code == 1 ){
+                        parent.parent.location.reload();
                     }else{
                         layTp.facade.error(res.msg);
                     }
