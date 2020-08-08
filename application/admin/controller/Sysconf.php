@@ -95,6 +95,9 @@ class Sysconf extends Backend
             ->where('group','=','dictionary')
             ->where('key','=','config')
             ->update(['value'=>$value]);
+        Db::table(Config::get('database.prefix').'sysconf')->where([
+            ['group','=',$group]
+        ])->delete();
         if($update !== false){
             $update_config = $this->update_config();
             if( $update_config['code'] == 1 ){
