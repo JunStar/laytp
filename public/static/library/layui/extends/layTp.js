@@ -990,6 +990,11 @@ layui.define([
                             }
                         }else{
                             layTp.facade.error(res.msg);
+                            if(typeof res.data.reload === 'iframe_reload' && res.data.reload){
+                                setTimeout(function () {
+                                    window.location.reload();
+                                }, 1000);
+                            }
                             if(typeof res.data.reload === 'boolean' && res.data.reload){
                                 setTimeout(function () {
                                     parent.parent.location.reload();

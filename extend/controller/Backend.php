@@ -103,7 +103,7 @@ class Backend extends Controller
         $token = $this->request->header('token', $this->request->param('admin_token', Cookie::get('admin_token')));
         if(!$token){
             if($this->request->isAjax()){
-                $this->error('登录信息过期，请重新登录');
+                $this->error('登录信息过期，请重新登录',['iframe_reload'=>true]);
             }else{
                 $this->redirect(url('/admin/auth.login/index'));
             }
@@ -111,7 +111,7 @@ class Backend extends Controller
         $data = Token::get($token);
         if(!$data){
             if($this->request->isAjax()){
-                $this->error('登录信息过期，请重新登录');
+                $this->error('登录信息过期，请重新登录',['iframe_reload'=>true]);
             }else{
                 $this->redirect(url('/admin/auth.login/index'));
             }
