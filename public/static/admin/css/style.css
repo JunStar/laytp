@@ -767,12 +767,18 @@ body{
 	clear: both;
 	display: block;
 }
-
 .layui-tab-brief>.layui-tab-title .layui-this:after {
+	border: none;
+	border-radius: 0;
+	border-bottom: 2px solid #5FB878;
+}
+
+.layui-tab-vertical>.layui-tab-title .layui-this:after {
 	border: none;
 	border-radius: 0;
 	border-bottom: 0;
 }
+
 
 .layui-tab.layui-tab-vertical>.layui-tab-title {
 	width: 130px;
