@@ -895,6 +895,7 @@ layui.define([
          *  data-input_val="value" 表示将value放到data-input_id节点中
          */
         popup_select: function(){
+            var pop_select_input = '';
             $(document).on('click','.popup-select',function(){
                 var title = $(this).text();
                 var template_id = $(this).data('template_id');
