@@ -901,6 +901,7 @@ layui.define([
                 var source = $(this).data('source');
                 pop_select_input = $(this).data('input_id');
                 $.get(source,{},function(res){
+                    res = JSON.parse(res);
                     var data = res.data;
                     layui.laytpl($('#'+template_id).html()).render(data, function(html){
                         layTp.facade.popup_div(title, html, '99%', '98%');
