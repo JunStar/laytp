@@ -65,7 +65,7 @@ class User extends Backend
         $ids_arr = explode(',',$ids);
         if(in_array(1,$ids_arr)){
             if($field == 'is_super_manager' && !$field_val){
-                return $this->success('ID为1的管理员不能设置成非超管');
+                return $this->error('ID为1的管理员不能设置成非超管');
             }
         }
         try{
