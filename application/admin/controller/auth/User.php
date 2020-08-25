@@ -3,6 +3,7 @@
 namespace app\admin\controller\auth;
 
 use controller\Backend;
+use think\Exception;
 
 /**
  * 后台管理员表
@@ -53,6 +54,29 @@ class User extends Backend
             }
         }
         return $this->fetch();
+    }
+
+    //设置状态
+    public function set_status(){
+        $field = $this->request->param('field');
+        $field_val = $this->request->param('field_val');
+        $save[$field] = $field_val;
+        $ids = $this->request->param('ids');
+        $ids_arr = explode(',',$ids);
+        if(in_array(1,$ids_arr)){
+            if($field == 'is_super_manager' && !$field_val){
+                return $this->success('ID为1的管理员不能设置成非超管');
+            }
+        }
+        try{
+            if( $this->model->where('id','in',$this->request->param('ids'))->update($save) ){
+                return $this->success('操作成功');
+            }else{
+                return $this->error('操作失败');
+            }
+        }catch (Exception $e){
+            return $this->error($e->getMessage());
+        }
     }
 
     //编辑
