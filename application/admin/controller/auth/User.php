@@ -65,6 +65,9 @@ class User extends Backend
             if( $post['password'] != $post['re_password']){
                 return $this->error('两次密码输入不相同');
             }
+            if($edit_where['id'] == 1 && !$post['is_super_manage']){
+                return $this->error('ID为1的管理员不能设置成非超管');
+            }
             $role_ids = explode( ',', $post['role_ids'] );
             unset($post['role_ids']);
             if($post['password']){
