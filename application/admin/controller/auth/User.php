@@ -93,4 +93,30 @@ class User extends Backend
         $this->assign($assign);
         return $this->fetch();
     }
+
+    //删除
+    public function del(){
+        $ids = $this->request->param('ids');
+        $ids_arr = explode(',',$ids);
+        if(in_array(1,$ids_arr)){
+            return $this->error('id为1的管理员不能被删除');
+        }
+        if(!$this->has_del){
+            return $this->error('控制器没有删除功能');
+        }else{
+            if($this->has_soft_del){
+                if( $this->model->destroy($ids) ){
+                    return $this->success('操作成功');
+                }else{
+                    return $this->error('操作失败');
+                }
+            }else{
+                if( $this->model->where('id','in',$ids)->delete() ){
+                    return $this->success('操作成功');
+                }else{
+                    return $this->error('操作失败');
+                }
+            }
+        }
+    }
 }
