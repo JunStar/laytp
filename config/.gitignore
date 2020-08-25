@@ -4,8 +4,5 @@
 !template.php
 !database.php
 !token.php
-!queue.php
-!swoole.php
-!swoole_server.php
-!timer.php
+!laytp.php
 !/demo/*.php
