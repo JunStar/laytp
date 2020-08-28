@@ -12,7 +12,11 @@ class general extends Backend
             if( $post['password'] != $post['re_password']){
                 return $this->error('两次密码输入不相同');
             }
-            $post['password'] = password_hash($post['password'], PASSWORD_DEFAULT);
+            if($post['password']){
+                $post['password'] = password_hash($post['password'], PASSWORD_DEFAULT);
+            }else{
+                unset($post['password']);
+            }
             unset($post['re_password']);
             try{
                 $update_res = model('auth.User')->where('id','=',$this->admin_user->id)->update($post);
