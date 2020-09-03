@@ -1,8 +1,0 @@
-*.php
-!app.php
-!tags.php
-!template.php
-!database.php
-!token.php
-!laytp.php
-!/demo/*.php
