@@ -1,0 +1,7 @@
+/.git
+/.gitee
+/.idea
+/.vscode
+/vendor
+*.log
+.env

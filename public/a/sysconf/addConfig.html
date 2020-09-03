@@ -1,0 +1,84 @@
+<div class="popup-content">
+    <form class="layui-form">
+        <div class="layui-form-item">
+            <label class="layui-form-label">类型</label>
+            <div class="layui-input-block">
+                <select name="type" lay-filter="selectType" lay-verify="required" lay-verType="tips">
+                    <option value="input">单行文本输入框</option>
+                    <option value="textarea">文本域</option>
+                    <option value="select_single">单选下拉框</option>
+                    <option value="select_multi">多选下拉框</option>
+                    <option value="switch">开关</option>
+                    <option value="image_single">图片</option>
+                    <option value="image_multi">图片（多个）</option>
+                    <option value="file_single">文件</option>
+                    <option value="file_multi">文件（多个）</option>
+                    <option value="array">数组</option>
+                    <option value="ueditor">富文本编辑器UEditor</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"><text style="color: red;">*</text>所属分组</label>
+            <div class="layui-input-block">
+                <select name="group" data-source="admin/sysconf/getGroup" data-value-field="k" data-show-field="v" lay-verify="required" lay-verType="tips"></select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"><text style="color: red;">*</text>配置名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="name" placeholder="请输入变量标题" class="layui-input" lay-verify="required" lay-verType="tips" autocomplete="off" />
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"><text style="color: red;">*</text>变量名</label>
+            <div class="layui-input-block">
+                <input type="text" name="key" placeholder="请输入变量名" class="layui-input" lay-verify="required" lay-verType="tips" autocomplete="off" />
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">变量值</label>
+            <div class="layui-input-block">
+                <input type="text" name="value" placeholder="请输入变量值" class="layui-input" autocomplete="off" />
+            </div>
+        </div>
+        <div class="layui-form-item" id="form-item-content" style="display: none;">
+            <label class="layui-form-label">数据列表</label>
+            <div class="layui-input-block">
+                <textarea name="content" placeholder="变量内容" class="layui-textarea">value1=title1
+value2=title2</textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"><text style="color: red;">*</text>配置说明</label>
+            <div class="layui-input-block">
+                <input type="text" name="tip" placeholder="请输入配置说明" class="layui-input" lay-verify="required" lay-verType="tips" autocomplete="off" />
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    layui.use(['layTp'],function() {
+        const
+            $ = layui.jquery
+        ;
+
+        //监听选择表下拉框onchange事件
+        layui.form.on('select(selectType)',function(data){
+            let array_content_types = ['select_single','select_multi','checkbox','switch'];
+            if( array_content_types.indexOf(data.value) !== -1 ){
+                if(data.value === "switch"){
+                    $('#form-item-content').find("textarea").html("关闭状态值=关闭状态文本\n" +
+                        "打开状态值=打开状态文本");
+                }else{
+                    $('#form-item-content').find("textarea").html("value1=title1\n" +
+                        "value2=title2");
+                }
+                $('#form-item-content').show();
+            }else{
+                $('#form-item-content').hide();
+            }
+        });
+    });
+</script>

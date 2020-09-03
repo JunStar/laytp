@@ -1,0 +1,78 @@
+.layui-dropdown .layui-dropdown-option:hover{
+    color: #5a8bff !important;
+}
+
+.layui-dropdown .layui-dropdown-select {
+    background-color: #fff !important;
+}
+
+.layui-dropdown {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    opacity: 0;
+}
+
+.layui-dropdown .layui-dropdown-arrow-up {
+    position: absolute;
+    top: -6px;
+    left: 10px;
+}
+.layui-dropdown-right .layui-dropdown-arrow-up {
+    left: auto;
+    right: 10px;
+}
+.layui-dropdown .layui-dropdown-select {
+    border-radius: 3px;
+    border: 1px solid #f1f1f1;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+}
+.layui-dropdown .layui-dropdown-option {
+    position: relative;
+    height: 38px;
+    line-height: 38px;
+    padding-left: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.layui-dropdown .layui-dropdown-option .layui-icon {
+    margin-right: 10px;
+    font-size: 14px;
+}
+
+.layui-dropdown .layui-dropdown-option .fa {
+    margin-right: 10px;
+    font-size: 14px;
+}
+
+.layui-dropdown .layui-dropdown-option .layui-dropdown-select {
+    position: absolute;
+    top: 0;
+    display: none;
+}
+.layui-dropdown .layui-dropdown-option:hover {
+    background: #f6f9ff;
+}
+.layui-dropdown .layui-dropdown-option:hover > .layui-dropdown-select {
+    display: block;
+}
+.layui-dropdown .layui-icon-right {
+    float: right;
+    position: absolute;
+    right: 0;
+    top: 0;
+    color: #aaa;
+}
+.layui-dropdown .layui-dropdown-title {
+    padding-right: 20px;
+}
+
+/*箭头向上*/
+.layui-dropdown-arrow-up {
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid #fff;
+}

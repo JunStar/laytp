@@ -1,0 +1,170 @@
+<div class="layui-tab-content">
+    <div class="search-form-page-tab-content" id="recycle-search-form" style="display:none;">
+        <form class="layui-form" style="margin-bottom:0px;">
+            <div class="layui-row margin-bottom6">
+                <div class="layui-inline layui-col-md4 layui-col-sm4 layui-col-xs4">
+                    <label class="layui-form-label" title="用户名">用户名</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="search_param[username][value]" id="username" placeholder="请输入用户名" class="layui-input" autocomplete="off">
+                        <input type="hidden" name="search_param[username][condition]" value="LIKE">
+                    </div>
+                </div>
+
+                <div class="layui-inline layui-col-md4 layui-col-sm4 layui-col-xs4">
+                    <label class="layui-form-label" title="昵称">昵称</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="search_param[nickname][value]" id="nickname" placeholder="请输入昵称" class="layui-input" autocomplete="off">
+                        <input type="hidden" name="search_param[nickname][condition]" value="LIKE">
+                    </div>
+                </div>
+
+                <div class="layui-inline layui-col-md4 layui-col-sm4 layui-col-xs4">
+                    <label class="layui-form-label" title="是否为超管">是否为超管</label>
+                    <div class="layui-input-inline">
+                        <select name="search_param[is_super_manager][value]" id="is_super_manager" placeholder="请输入是否为超管">
+                            <option value=""></option>
+                            <option value="0">否</option>
+                            <option value="1">是</option>
+                        </select>
+                        <input type="hidden" name="search_param[is_super_manager][condition]" value="=">
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-row margin-bottom6">
+                <div class="layui-inline layui-col-md4 layui-col-sm4 layui-col-xs4">
+                    <label class="layui-form-label" title="是否为超管">账号状态</label>
+                    <div class="layui-input-inline">
+                        <select name="search_param[status][value]" id="status" placeholder="请输入账号状态">
+                            <option value=""></option>
+                            <option value="0">冻结</option>
+                            <option value="1">正常</option>
+                        </select>
+                        <input type="hidden" name="search_param[status][condition]" value="=">
+                    </div>
+                </div>
+                <div class="layui-inline layui-col-md4 layui-col-sm4 layui-col-xs4">
+                    <label class="layui-form-label" title="创建时间">创建时间</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" id="create_time" name="search_param[create_time][value]" id="create_time" laydate="true" laydate_type="datetime" laydate_range="true" placeholder="请选择时间" autocomplete="off">
+                        <input type="hidden" name="search_param[create_time][condition]" value="BETWEEN">
+                    </div>
+                </div>
+
+                <div class="layui-inline layui-col-md4 layui-col-sm4 layui-col-xs4 search-btn">
+                    <button class="layui-btn layui-btn-sm layui-btn-normal layui-icon layui-icon-search" lay-submit lay-filter="laytp-recycle-search-form"> 确 定</button>
+                    <a class="layui-btn layui-btn-sm layui-btn-danger fa fa-file-excel-o" lay-filter="laytp"> 导出Excel</a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <table id="laytp-recycle-table" lay-filter="laytp-recycle-table"></table>
+</div>
+
+<script type="text/html" id="recycle-operation">
+    <div class="layui-btn-group">
+        <button class="layui-btn layui-btn-normal layui-btn-xs" lay-event="restore"><span class="fa fa-history"></span> 还原</button>
+        <button class="layui-btn layui-btn-danger layui-btn-xs layui-icon layui-icon-delete" lay-event="trueDel"> 删除</button>
+    </div>
+</script>
+<script type="text/html" id="recycle-toolbar">
+    <div class="layui-table-tool-temp">
+        <button class="layui-btn layui-btn-danger layui-btn-sm layui-icon layui-icon-set-fill" id="recycle-batch-action">&nbsp;批量操作</button>
+        <button class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-search" lay-event="show-hidden-recycle-search-form">&nbsp;筛选</button>
+    </div>
+</script>
+
+<script type="text/javascript">
+    layui.use(['layTp'],function() {
+        const
+            funcRecycleController = {}
+            ,facade = layui.facade
+            ,layTpForm = layui.layTpForm
+        ;
+
+        var batchActionOptions = [
+            {
+                action: "restore"
+                ,title: "还原"
+                ,icon: "fa fa-history"
+                ,node: "admin/" + controller + "/restore"
+                ,switch_type: "default"
+                ,table_id:"laytp-recycle-table"
+            }
+            ,{
+                action: 'trueDel'
+                ,title: '删除'
+                ,icon: "layui-icon layui-icon-delete"
+                ,node: "admin/" + controller + "/trueDel"
+                ,switch_type: "popupConfirm"
+                ,table_id:"laytp-recycle-table"
+            }
+        ];
+
+        facade.dropDown(batchActionOptions, true, '#recycle-batch-action');
+
+        //表格渲染
+        funcRecycleController.tableRender = function (where, page) {
+            layui.table.render({
+                elem: '#laytp-recycle-table'
+                , url: "/admin/"+controller+"/recycle.html"
+                , where: where
+                , method: 'POST'
+                , toolbar: "#recycle-toolbar"
+                , even: true
+                , loading: false
+                , page: {
+                    theme: "var(--laytp-border-color)"
+                    , curr: page
+                }
+                , parseData: function(res){
+                    return {
+                        "code": res.code, //解析接口状态
+                        "msg": res.msg, //解析提示文本
+                        "count": res.data.total, //解析数据长度
+                        "data": res.data.data //解析数据列表
+                    };
+                }
+                , cols: [[ //表头
+                    {type:'checkbox'}
+                    , {field: 'id', title: 'ID', align: 'center',width:60}
+                    , {field: 'name', title: '名称'}
+                    , {field: 'rule', title: '规则'}
+                    , {field: 'icon', title: '图标', align: 'center', templet: '#show_icon',width:60}
+                    , {field: 'sort', title: '排序', align: 'center',width:60}
+                    , {field: 'is_menu', title: '菜单', align: 'center',width:80, templet: function(d){
+                        return layTpForm.tableForm.recycleSwitch('is_menu',d,{"open":{"value":1,"text":"是"},"close":{"value":0,"text":"否"}});
+                    }}
+                    , {field: 'is_hide', title: '隐藏', align: 'center',width:80, templet: function(d){
+                        return layTpForm.tableForm.recycleSwitch('is_hide',d,{"open":{"value":1,"text":"是"},"close":{"value":0,"text":"否"}});
+                    }}
+                    , {field: 'operation', title: '操作', toolbar: '#recycle-operation', fixed: 'right', align: 'center', width: 140}
+                ]]
+            });
+
+            //监听数据表格[操作列]按钮点击事件
+            layui.table.on('tool(laytp-recycle-table)', function(obj){
+                if(defaultTableTool.indexOf(obj.event) !== -1){
+                    layTpForm.tableTool(obj);
+                }else{
+                    //自定义按钮
+                    // switch(obj.event){
+                        //自定义按钮点击事件
+                        // case '':
+                        //
+                        //     break;
+                        //默认自定义按钮点击事件
+                        // default:
+                        //     facade.popupDiv(obj.tr.context.innerText, facade.url('/admin/' + controller + '/' + obj.event), obj.data);
+                        //     layTpForm.render();
+                    // }
+                }
+            });
+        };
+
+        funcRecycleController.tableRender();
+
+        window.funcRecycleController = funcRecycleController;
+    });
+</script>

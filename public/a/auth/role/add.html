@@ -1,0 +1,53 @@
+<div class="popup-content">
+    <form class="layui-form">
+        <div class="layui-form-item">
+            <label class="layui-form-label">角色名 <text style="color:red;">*</text></label>
+            <div class="layui-input-block">
+                <input type="text" name="name" id="name" placeholder="请输入角色名" class="layui-input" lay-verify="required" lay-verType="tips" autocomplete="off" />
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">权限设置</label>
+            <div class="layui-input-block">
+                <div id="treeview"><i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i></div>
+                <input type="hidden" name="menu_ids" id="node_list" />
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    layui.use(["layTp"],function() {
+        const
+            $ = layui.$,
+            tree = layui.layTpTree,
+            facade = layui.facade
+        ;
+
+        let treeData = getTreeData(menuJson);
+
+        tree.render({
+            elem: '#treeview'
+            ,data: treeData
+            ,showCheckbox:true
+            ,accordion:true
+            ,id:'auth_node'
+            ,oncheck: function(){
+                var ids = facade.getTreeCheckedIds(tree.getChecked('auth_node'));
+                $('#node_list').val(ids);
+            }
+        });
+
+        function getTreeData(data){
+            let key;
+            for(key in data){
+                data[key].title = data[key].name;
+                data[key].spread = true;
+                if(data[key].children != null && data[key].children.length > 0){
+                    data[key].children = getTreeData(data[key].children);
+                }
+            }
+            return data;
+        }
+    });
+</script>
