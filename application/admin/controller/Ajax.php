@@ -167,7 +167,8 @@ class Ajax extends Controller
         if(substr($file_url,0,4) == 'http'){
             header('location:'.$file_url);
         }else{
-            return download('.'.$file_url,'download.'.$pathinfo['extension']);
+            download('.'.$file_url,'download.'.$pathinfo['extension']);
+            $this->success('下载成功');
         }
     }
 
