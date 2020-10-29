@@ -1,3 +1,4 @@
+!.gitignore
 /.idea
 /addons_bak
 /.vscode
@@ -5,5 +6,4 @@
 .env
 /public/api.html
 /runtime
-!.gitignore
 /public/uploads
