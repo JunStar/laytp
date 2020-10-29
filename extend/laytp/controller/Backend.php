@@ -5,37 +5,20 @@
 
 namespace laytp\controller;
 
-use app\common\middleware\admin\Auth;
-use app\common\service\admin\AuthServiceFacade;
-use app\common\service\admin\User;
+use plugin\core\middleware\Auth;
+use plugin\core\service\AuthServiceFacade;
 use laytp\BaseController;
 
 class Backend extends BaseController
 {
     use \laytp\traits\Backend;
 
-    protected $noNeedLogin = ['selectPage'];//无需登录，也无需鉴权的方法名列表
+    protected $noNeedLogin = [];//无需登录，也无需鉴权的方法名列表
     protected $noNeedAuth = [];//需要登录，但是无需鉴权的方法名列表
-    protected $addon;//当前插件名
-    protected $appName;//当前应用名
-    protected $controller;//当前控制器名
-    protected $action;//当前操作名
-    protected $nowNode;//当前访问节点
-    protected $roleIds;//当前登录者拥有的角色ID
-    protected $ruleList;//当前登录者拥有的权限节点列表
-    protected $menuIds;//当前登录者拥有的菜单列表
-    protected $hasDel=1;//当前访问的模型是否有删除功能
-    protected $hasSoftDel=0;//当前访问的模型是否有软删除功能
-    protected $batchActionList=['edit','del'];//批量操作下拉展示的节点函数名
+    protected $hasDel = 1;//当前访问的模型是否有删除功能
+    protected $hasSoftDel = 0;//当前访问的模型是否有软删除功能
     protected $isShowSearchBtn = true;//是否展示筛选按钮
-    protected $ref;//前端直接访问带[ref=菜单id]参数的链接地址就直接渲染菜单页，并且前端js把iframe的地址跳转到当前地址
-    protected $orderRule=['id'=>'desc'];//默认排序规则
-
-    /**
-     * 后台用户服务
-     * @var User
-     */
-    protected $userService = null;
+    protected $orderRule = ['id' => 'desc'];//默认排序规则
 
     /**
      * 中间件
@@ -55,7 +38,7 @@ class Backend extends BaseController
     {
         //将无需登录的方法名数组设置到权限服务中
         AuthServiceFacade::setNoNeedLogin($this->noNeedLogin);
-        //将无需登录的方法名数组设置到权限服务中
+        //将无需鉴权的方法名数组设置到权限服务中
         AuthServiceFacade::setNoNeedAuth($this->noNeedAuth);
         $this->_initialize();
     }

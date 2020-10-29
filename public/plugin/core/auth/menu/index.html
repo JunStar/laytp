@@ -1,0 +1,55 @@
+<div class="layui-tab-content">
+    <table class="laytp-table layui-hide-sm" id="laytp-tree-table" lay-filter="laytp-tree-table"></table>
+</div>
+<script type="text/javascript" src="/static/plugin/core/js/auth/menu.js" charset="utf-8"></script>
+
+<script type="text/html" id="menu_toolbar">
+    {{#
+    if(
+    facade.hasAuth(apiPrefix + "edit")
+    || facade.hasAuth(apiPrefix + "del")
+    ){
+    }}
+    <div class="dropdown-menu">
+        <button class="layui-btn layui-btn-danger layui-btn-sm layui-icon layui-icon-drop">&nbsp;批量操作</button>
+        <ul class="dropdown-menu-nav layui-anim-upbit dropdown-bottom-left layui-anim">
+            <div class="dropdown-anchor"></div>
+            {{# if(facade.hasAuth(apiPrefix + "edit")){ }}
+            <li><a lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a></li>
+            {{# } }}
+            {{# if(facade.hasAuth(apiPrefix + "del")){ }}
+            <li><a lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a></li>
+            {{# } }}
+        </ul>
+    </div>
+    {{# } }}
+    {{# if(facade.hasAuth(apiPrefix + "add")){ }}
+    <a href="javascript:void(0);"
+       class="layui-btn layui-btn-default layui-btn-sm layui-icon layui-icon-add-1" lay-event="add">&nbsp;添
+        加
+    </a>
+    {{# } }}
+    {{# if(facade.hasAuth(apiPrefix + "recycle")){ }}
+    <a href="javascript:void(0);" class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-delete"
+       lay-event="recycle">&nbsp;回收站
+    </a>
+    {{# } }}
+</script>
+
+<script type="text/html" id="show_icon">
+    <i class="{{d.icon}}"></i>
+</script>
+
+<script id="choose_icon_tpl" type="text/html">
+    <div class="choose_icon">
+        <div>
+            <ul class="list-inline">
+                {{# layui.each(d, function(index, item){ }}
+                <li class="pop-select-to-input" data-input_value="{{ item.name }}">
+                    <i class="{{ item.name }}"></i>
+                </li>
+                {{# }); }}
+            </ul>
+        </div>
+    </div>
+</script>

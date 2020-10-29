@@ -8,14 +8,15 @@
  * @param $post
  * @return mixed
  */
-function filter_post_data($post){
-    if(!$post){
+function filter_post_data($post)
+{
+    if (!$post) {
         return [];
     }
     //处理数组
-    foreach($post as $k=>$v){
-        if(is_array($v)){
-            $post[$k] = implode(',',$v);
+    foreach ($post as $k => $v) {
+        if (is_array($v)) {
+            $post[$k] = implode(',', $v);
         }
     }
     return $post;
@@ -30,9 +31,10 @@ function filter_post_data($post){
  * @param $result
  * @return bool
  */
-function check_res($result){
-    foreach($result as $v){
-        if(!$v){
+function check_res($result)
+{
+    foreach ($result as $v) {
+        if (!$v) {
             return false;
         }
     }

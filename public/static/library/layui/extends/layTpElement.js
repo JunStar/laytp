@@ -1,5 +1,5 @@
 /**
- * 修改自layui的element.js插件，实现:
+ * 修改自layui的element.js插件，仅修改了菜单的点击部分，实现:
  *  - 点击顶部菜单，渲染左侧菜单
  *  - 点击左侧菜单，展开或者渲染右侧页面
  * @version: 2.0
@@ -130,9 +130,9 @@ layui.define(["jquery", "layTpMenu"], function (t) {
                     s.parent().find("li").removeClass("layui-this");
                     s.addClass("layui-this");
                     var k, subMenu;
-                    for (k in menuJson) {
-                        if (menuJson[k]["id"] === parseInt(t.attr('menu_id'))) {
-                            subMenu = menuJson[k]["children"];
+                    for (k in menuTree) {
+                        if (menuTree[k]["id"] === parseInt(t.attr('menu_id'))) {
+                            subMenu = menuTree[k]["children"];
                             layui.layTpMenu.renderLeft(subMenu);
                             break;
                         }
@@ -142,7 +142,7 @@ layui.define(["jquery", "layTpMenu"], function (t) {
                     if (s.hasClass("layui-nav-itemed") || s.hasClass("layui-this")) {
                         //点击已经选中的菜单
                         //有子菜单的收起子菜单
-                        if (s.find("dl").attr("class") === "layui-nav-child") {
+                        if (s.find("dl").attr("class").indexOf("layui-nav-child") !== -1) {
                             s.removeClass("layui-nav-itemed");
                             s.removeClass("layui-this");
                         } else {
@@ -158,7 +158,7 @@ layui.define(["jquery", "layTpMenu"], function (t) {
                         //最末子级菜单选中项
                         s.parent().find('dd').removeClass("layui-this");
                         //2.设置当前点击菜单的选中状态
-                        if (s.find('dl').attr("class") === "layui-nav-child") {
+                        if (s.find('dl').attr("class").indexOf !== -1) {
                             //有子菜单的展开子菜单
                             s.addClass("layui-nav-itemed");
                         } else {
@@ -173,7 +173,7 @@ layui.define(["jquery", "layTpMenu"], function (t) {
                     if (s.parents().hasClass('layui-side')) {
                         if (s.hasClass("layui-nav-itemed") || s.hasClass("layui-this")) {
                             //点击已选中菜单
-                            if (s.find('dl').attr("class") === "layui-nav-child") {
+                            if (s.find('dl').hasClass("layui-nav-child")) {
                                 s.removeClass("layui-nav-itemed");
                                 s.removeClass("layui-this");
                             } else {
@@ -182,15 +182,28 @@ layui.define(["jquery", "layTpMenu"], function (t) {
                             }
                         } else {
                             //点击未选中菜单
+                            let parents = [];
+                            layui.each(s.parents(), function (key, item) {
+                                if ($(item).hasClass('layui-nav-itemed')) {
+                                    parents.push(item);
+                                }
+                            });
+
                             //1.取消选中状态
-                            s.parent().find('dd').removeClass("layui-nav-itemed");
+                            $("#layTpLeftMenu").find('dd').removeClass("layui-nav-itemed");
+
+                            layui.each(parents, function (key, item) {
+                                $(item).addClass('layui-nav-itemed');
+                            });
+
                             //2.设置当前点击菜单的选中状态
-                            if (s.find('dl').attr("class") === "layui-nav-child") {
+                            if (s.find('dl').hasClass("layui-nav-child")) {
                                 //有子菜单的展开子菜单
                                 s.addClass("layui-nav-itemed");
                             } else {
                                 //没有子菜单的，设为选中状态，且ajax渲染右侧页面
                                 s.addClass("layui-nav-itemed");
+                                s.parent().addClass("layui-nav-itemed");
                                 menu.ajaxRenderPage(t.attr("rule"), t.attr("menu_id"));
                             }
                         }

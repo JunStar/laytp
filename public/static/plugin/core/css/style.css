@@ -1,0 +1,1936 @@
+body {
+    -webkit-font-smoothing: antialiased;
+    font-family: '微软雅黑', 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+    font-size: 12px;
+    line-height: 1.42857143;
+}
+
+.fl {
+    float: left
+}
+
+.fr {
+    float: right
+}
+
+.nobg {
+    background-color: transparent !important
+}
+
+.font12 {
+    font-size: 12px !important
+}
+
+.font18 {
+    font-size: 18px !important
+}
+
+.font20 {
+    font-size: 20px !important
+}
+
+.mt10 {
+    margin-top: 10px
+}
+
+.mt20 {
+    margin-top: 20px
+}
+
+.mt30 {
+    margin-top: 30px
+}
+
+.mt40 {
+    margin-top: 40px
+}
+
+.mt50 {
+    margin-top: 50px
+}
+
+.ml10 {
+    margin-left: 10px
+}
+
+.ml20 {
+    margin-left: 20px
+}
+
+.ml30 {
+    margin-left: 30px
+}
+
+.mr10 {
+    margin-right: 10px
+}
+
+.mr20 {
+    margin-right: 20px
+}
+
+.pt10 {
+    padding-top: 10px
+}
+
+.pl20 {
+    padding-left: 20px
+}
+
+.pl50 {
+    padding-left: 50px
+}
+
+.pb50 {
+    padding-bottom: 50px
+}
+
+.w50 {
+    width: 50px !important
+}
+
+.w100 {
+    width: 100px !important
+}
+
+.w200 {
+    width: 200px !important
+}
+
+.w300 {
+    width: 300px !important
+}
+
+.w400 {
+    width: 400px !important
+}
+
+.w500 {
+    width: 500px !important
+}
+
+.w600 {
+    width: 600px !important
+}
+
+.mcolor {
+    color: #5c90d2
+}
+
+.mcolor2 {
+    color: #009688
+}
+
+.hide {
+    display: none
+}
+
+.red {
+    color: #f00 !important
+}
+
+#form-icon-preview {
+    float: left;
+    width: 34px;
+    height: 36px;
+    line-height: 36px;
+    font-size: 30px !important;
+    border: 1px solid #e6e6e6;
+    text-align: center;
+    border-radius: 3px
+}
+
+.help-tips {
+    cursor: pointer
+}
+
+.layui-header, .layui-side {
+    z-index: 900;
+    height: 50px;
+}
+
+.header-logo {
+    width: 230px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    font-size: 18px;
+    background-color: var(--laytp-head-bg);
+    color: #fff;
+    overflow: hidden;
+    /*text-overflow:ellipsis;*/
+    white-space: nowrap;
+}
+
+.header-fold {
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    color: #fff;
+}
+
+.header-fold a {
+    color: #fff
+}
+
+#foldSwitch {
+    font-size: 24px !important;
+}
+
+.head-info .layui-nav-child {
+    top: 60px
+}
+
+.head-info .layui-nav-item a {
+    padding: 0 10px
+}
+
+.main-nav {
+    padding: 0
+}
+
+/*.main-nav .layui-nav-item a {padding:0;margin:0 15px}*/
+.footer {
+    line-height: 44px;
+    padding: 0 10px;
+    color: #666
+}
+
+.footer a {
+    color: #5c90d2
+}
+
+#switchNav {
+    position: fixed;
+    left: 0;
+    top: 60px;
+    z-index: 99999
+}
+
+#switchNav .layui-nav-child dd {
+    position: relative
+}
+
+#switchNav .layui-nav-child dd .j-del-menu {
+    position: absolute;
+    right: 10px;
+    top: 3px;
+    font-size: 18px;
+    color: #999;
+    cursor: pointer
+}
+
+#switchNav .layui-nav-child dd .j-del-menu:hover {
+    color: #fff
+}
+
+#switchBody {
+    z-index: 1
+}
+
+#switchNav .fold-mark i.aicon {
+    margin-right: 20px
+}
+
+#switchNav a {
+    cursor: pointer
+}
+
+/*#switchNav i.typcn,#switchNav i.fa {font-size:16px!important}*/
+#switchNav .admin-nav-item {
+    padding-left: 35px;
+}
+
+#switchNav i.aicon {
+    margin-right: 2px
+}
+
+#switchNav.close i.aicon {
+    margin-right: 7px;
+}
+
+#switchNav img {
+    border-radius: 5px;
+    margin: -2px 5px 0 0
+}
+
+.bread-crumbs {
+    display: block;
+    background-color: #fff;
+    padding: 5px 0 0 10px;
+    height: 40px;
+    line-height: 40px;
+    overflow: hidden;
+    box-sizing: border-box;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .1)
+}
+
+.bread-crumbs li {
+    float: left;
+    margin: 0 5px;
+    color: #666;
+    height: 30px;
+    line-height: 30px
+}
+
+.bread-crumbs li a {
+    color: #666
+}
+
+.page-body {
+    display: block;
+    overflow: auto;
+    border: none !important;
+    background-color: #f5f5f5;
+}
+
+.page-tab-content {
+    background-color: #fff;
+    overflow: auto;
+    margin: 8px;
+}
+
+.recycle-page-tab-content {
+    background-color: #fff;
+    margin: 8px;
+}
+
+.search-form-page-tab-content {
+    background-color: #fff;
+}
+
+.tool-btns {
+    position: absolute;
+    right: 15px;
+    top: 11px;
+    font-size: 14px;
+    color: #888
+}
+
+.tool-btns .sys-icon {
+    color: #999;
+    margin-left: 8px
+}
+
+.fullscreen {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1090;
+    margin-bottom: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    height: 100%
+}
+
+.fullscreen.page-body, .fullscreen .layui-tab {
+    margin: 0
+}
+
+.page-toolbar {
+    display: block;
+    height: 40px;
+    margin-top: 8px;
+}
+
+.page-filter {
+    height: 40px
+}
+
+.page-filter .layui-form-pane .layui-form-label {
+    width: auto
+}
+
+.page-filter .layui-form-pane .layui-form-item .layui-input-inline {
+    margin-right: 0
+}
+
+.page-tips {
+    margin-bottom: 10px
+}
+
+.page-tips .layui-colla-title {
+    height: 26px;
+    line-height: 26px;
+    background-color: #f9f9f9;
+    color: #999
+}
+
+.page-form {
+    margin: 10px 0
+}
+
+#layerTopTips {
+    background-color: #393d49;
+    color: #fff;
+    padding: 5px 25px;
+    border-radius: 0 0 5px 5px
+}
+
+.pagination {
+    overflow: hidden;
+    display: block;
+    border-left: 1px solid #eee;
+    float: right
+}
+
+.pagination li {
+    float: left;
+    border: 1px solid #eee;
+    margin-left: -1px;
+    font-size: 13px;
+    overflow: hidden;
+    cursor: pointer
+}
+
+.pagination li a, .pagination li span {
+    display: block;
+    padding: 6px 18px
+}
+
+.pagination li.active {
+    background-color: #393e49;
+    color: #fff;
+    border-color: #393e49
+}
+
+.role-list-form dl {
+    display: block
+}
+
+.role-list-form-top {
+    border: 1px solid #f9f9f9
+}
+
+.role-list-form dl dt {
+    display: block;
+    background-color: #f9f9f9;
+    padding: 0 10px 10px 10px
+}
+
+.role-list-form dl dd {
+    display: block;
+    padding: 0 15px;
+    overflow: hidden
+}
+
+.role-list-form dl dd dl dt {
+    background: 0
+}
+
+.role-list-form dl dd dl dd {
+    padding: 0 25px
+}
+
+.role-list-form dl dd dl dd dl dd {
+    padding: 0 35px
+}
+
+.role-list-form dl dd dl dd dl dd a {
+    display: inline-block
+}
+
+.menu-hd {
+    font-size: 14px;
+    font-weight: 400;
+    border-top: 1px dotted #eee
+}
+
+.menu-dl dt, .menu-dl dd {
+    position: relative;
+    border: 1px dotted #eee;
+    border-top: 0
+}
+
+.menu-dl .hd, .menu-dl .hd2, .menu-dl .hd3, .menu-dl .layui-form-switch, .menu-btns {
+    position: absolute;
+    left: 260px;
+    top: 4px
+}
+
+.menu-dl .hd, .menu-dl .hd2, .menu-dl .hd3 {
+    top: -26px
+}
+
+.menu-dl .hd {
+    left: 280px
+}
+
+.menu-dl .hd2 {
+    left: 520px
+}
+
+.menu-dl .hd3 {
+    left: 710px
+}
+
+.menu-dl .layui-form-switch {
+    left: 490px;
+    top: 1px;
+    margin: 0
+}
+
+/*.menu-dl .checkbox-ids {width:}*/
+.menu-dl .menu-sort {
+    position: absolute;
+    left: 260px;
+    top: 3px;
+    height: 20px;
+    line-height: 20px;
+    width: 40px;
+    padding: 0;
+    text-align: center;
+    color: #666;
+    border: 1px solid #e6e6e6;
+    background-color: #fff;
+    border-radius: 2px
+}
+
+.menu-dl1, .menu-dl2 {
+    display: block
+}
+
+.menu-dl1 dt, .menu-dl2 dt {
+    padding: 5px 2px
+}
+
+.menu-dl2 {
+    padding-left: 20px
+}
+
+.menu-dl2 dd {
+    padding: 5px 20px
+}
+
+.menu-dl1 dt .menu-sort {
+    left: 280px
+}
+
+.menu-dl2 dt .menu-sort {
+    left: 300px
+}
+
+.menu-dl2 dd .menu-sort {
+    left: 340px
+}
+
+.menu-dl1 .layui-form-switch {
+    left: 520px
+}
+
+.menu-dl2 .layui-form-switch {
+    left: 500px
+}
+
+.menu-btns {
+    left: 710px
+}
+
+.menu-dl2 .menu-btns {
+    left: 688px
+}
+
+.layui-nav-child dd:hover {
+    background-color: var(--laytp-layui-nav-child-a-bg);
+    color: #fff
+}
+
+.input-sort {
+    height: 24px;
+    line-height: 24px;
+    width: 40px;
+    padding: 0;
+    text-align: center;
+    color: #666
+}
+
+.module-list-info {
+    display: block;
+    overflow: hidden
+}
+
+.module-list-info img {
+    float: left;
+    margin-right: 10px;
+    border-radius: 10px
+}
+
+.module-list-info i {
+    float: left;
+    margin-right: 10px;
+    font-size: 80px;
+    line-height: 82px;
+    text-align: center;
+    overflow: hidden;
+    color: #2a95de
+}
+
+.module-list-info .txt {
+    float: left;
+    max-width: 80%;
+    overflow: hidden
+}
+
+.module-list-info .txt h3 {
+    font-weight: 500;
+    display: inline-block
+}
+
+.module-list-info .txt p {
+    font-size: 12px
+}
+
+.module-list-info .txt p span {
+    color: #2a95de
+}
+
+.pop-bottom-bar {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 96%;
+    background: #eee;
+    padding: 5px 2%;
+    text-align: center;
+}
+
+.pop-bottom-bar .pages {
+    max-width: 70%;
+    overflow: hidden
+}
+
+.pop-bottom-bar .pages .pager li {
+    float: left;
+    margin: 0 5px
+}
+
+.pop-bottom-bar .pages .pager li a,
+.pop-bottom-bar .pages .pager li span {
+    height: 38px;
+    line-height: 38px;
+    padding: 0 10px;
+    font-weight: 500;
+    display: inline-block
+}
+
+.page-bottom-bar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 44px;
+    background-color: #fff;
+    z-index: 99998;
+    text-align: center;
+    padding: 10px 0;
+    border-top: 1px solid #e6e6e6;
+}
+
+.hook-plugins-sort {
+    margin: 10px 0 20px 0;
+    border-top: 1px dotted #eee;
+    border-left: 1px dotted #eee;
+    border-right: 1px dotted #eee;
+    float: left;
+    overflow: hidden
+}
+
+.hook-plugins-sort li {
+    float: left;
+    width: 100%;
+    padding: 5px 10px;
+    border-bottom: 1px dotted #eee;
+    overflow: hidden
+}
+
+.hook-plugins-sort li span {
+    float: left;
+    margin-right: 20px;
+    width: 150px;
+    height: 20px;
+    line-height: 22px
+}
+
+.layui-layout-admin .layui-body {
+    top: 50px;
+}
+
+.layui-layout-admin {
+    min-width: 1000px
+}
+
+/*.layui-form-label {min-width:120px}*/
+.layui-tab-title li {
+    padding: 0 10px
+}
+
+.layui-form-mid {
+    font-size: 12px !important
+}
+
+.layui-table-cell {
+    min-height: 28px;
+    height: auto !important
+}
+
+.laytp-themes {
+    overflow: hidden;
+    width: 282px
+}
+
+.laytp-themes li {
+    float: left;
+    width: 40px;
+    height: 40px;
+    overflow: hidden;
+    margin: 2px;
+    border: 1px solid #efefef;
+    cursor: pointer
+}
+
+.laytp-themes li:hover, .laytp-themes li.active {
+    border: 2px solid #ccc;
+    margin: 1px
+}
+
+.laytp-theme-item-0 {
+    background-color: #23262e
+}
+
+:root {
+    --laytp-head-bg: #23262e;
+    --laytp-side-bg: #eef1f5;
+    --laytp-side-itemed-a-bg: #d9dde6;
+    --laytp-layui-form-checked: #23262e;
+    --laytp-layui-btn-active: #494c52;
+    --laytp-layui-nav-bar: #23262e;
+    --laytp-layui-nav-item-a-bg: #eff2f6;
+    --laytp-layui-nav-item-a-c: #48576a;
+    --laytp-layui-nav-child-a-bg: #e5e9f2;
+    --laytp-layui-nav-child-a-c: #48576a;
+    --laytp-layui-nav-child-a-c-hover: #d1dbe5;
+    --laytp-layui-side-i: #48566a;
+    --laytp-layui-side-layui-this-a: #23262e;
+    --laytp-side-layui-nav-more: #48566a;
+    --laytp-layui-tab-title: #f9f9f9;
+    --laytp-layui-btn-default: #23262e;
+    --laytp-layui-btn-primary: #fff;
+    --laytp-layui-btn-primary-hover: #23262e;
+    --laytp-layui-form-radio-hover: #23262e;
+    --laytp-layui-laypage-em: #23262e;
+    --laytp-border-color: #23262e;
+    --laytp-layui-form-label: #666
+}
+
+.laytp-theme-item-1 {
+    background-color: #23262e
+}
+
+.laytp-theme-1 {
+    --laytp-head-bg: #23262e;
+    --laytp-side-bg: #222d32;
+    --laytp-side-itemed-a-bg: #1e282c;
+    --laytp-layui-form-checked: #23262e;
+    --laytp-layui-btn-active: #494c52;
+    --laytp-layui-nav-bar: #23262e;
+    --laytp-layui-nav-item-a-bg: #222d32;
+    --laytp-layui-nav-item-a-c: #b8c7ce;
+    --laytp-layui-nav-item-a-c-hover: #ffffff;
+    --laytp-layui-nav-child-a-bg: #2c3b41;
+    --laytp-layui-nav-child-a-c: #8aa4af;
+    --laytp-layui-nav-child-a-c-hover: #23262e;
+    --laytp-layui-side-i: #48566a;
+    --laytp-layui-side-layui-this-a: #ffffff;
+    --laytp-side-layui-nav-more: #48566a;
+    --laytp-layui-tab-title: #f9f9f9;
+    --laytp-layui-btn-default: #23262e;
+    --laytp-layui-btn-primary: #fff;
+    --laytp-layui-btn-primary-hover: #23262e;
+    --laytp-layui-form-radio-hover: #23262e;
+    --laytp-layui-laypage-em: #23262e;
+    --laytp-border-color: #23262e;
+    --laytp-layui-form-label: #666;
+}
+
+.laytp-theme-item-2 {
+    background-color: #20a0ff
+}
+
+.laytp-theme-2 {
+    --laytp-head-bg: #20a0ff;
+    --laytp-side-bg: #eef1f5;
+    --laytp-side-itemed-a-bg: #d9dde6;
+    --laytp-layui-form-checked: #20a0ff;
+    --laytp-layui-btn-active: #258cd8;
+    --laytp-layui-nav-bar: #20a0ff;
+    --laytp-layui-nav-item-a-bg: #eff2f6;
+    --laytp-layui-nav-item-a-c: #48576a;
+    --laytp-layui-nav-child-a-bg: #e5e9f2;
+    --laytp-layui-nav-child-a-c: #48576a;
+    --laytp-layui-nav-child-a-c-hover: #d1dbe5;
+    --laytp-layui-side-i: #48566a;
+    --laytp-layui-side-layui-this-a: #20a0ff;
+    --laytp-side-layui-nav-more: #48566a;
+    --laytp-layui-tab-title: #f9f9f9;
+    --laytp-layui-btn-default: #20a0ff;
+    --laytp-layui-btn-primary: #fff;
+    --laytp-layui-btn-primary-hover: #20a0ff;
+    --laytp-layui-form-radio-hover: #20a0ff;
+    --laytp-layui-laypage-em: #20a0ff;
+    --laytp-border-color: #20a0ff;
+    --laytp-layui-form-label: #666
+}
+
+.laytp-theme-item-3 {
+    background-color: #20a0ff
+}
+
+.laytp-theme-3 {
+    --laytp-head-bg: #20a0ff;
+    --laytp-side-bg: #222d32;
+    --laytp-side-itemed-a-bg: #1e282c;
+    --laytp-layui-form-checked: #20a0ff;
+    --laytp-layui-btn-active: #258cd8;
+    --laytp-layui-nav-bar: #20a0ff;
+    --laytp-layui-nav-item-a-bg: #222d32;
+    --laytp-layui-nav-item-a-c: #b8c7ce;
+    --laytp-layui-nav-item-a-c-hover: #ffffff;
+    --laytp-layui-nav-child-a-bg: #2c3b41;
+    --laytp-layui-nav-child-a-c: #8aa4af;
+    --laytp-layui-nav-child-a-c-hover: #20a0ff;
+    --laytp-layui-side-i: #48566a;
+    --laytp-layui-side-layui-this-a: #ffffff;
+    --laytp-side-layui-nav-more: #48566a;
+    --laytp-layui-tab-title: #f9f9f9;
+    --laytp-layui-btn-default: #20a0ff;
+    --laytp-layui-btn-primary: #fff;
+    --laytp-layui-btn-primary-hover: #20a0ff;
+    --laytp-layui-form-radio-hover: #20a0ff;
+    --laytp-layui-laypage-em: #20a0ff;
+    --laytp-border-color: #20a0ff;
+    --laytp-layui-form-label: #666;
+}
+
+.laytp-theme-item-4 {
+    background-color: #f78400
+}
+
+.laytp-theme-4 {
+    --laytp-head-bg: #f78400;
+    --laytp-side-bg: #eef1f5;
+    --laytp-side-itemed-a-bg: #d9dde6;
+    --laytp-layui-form-checked: #f78400;
+    --laytp-layui-btn-active: #cc710a;
+    --laytp-layui-nav-bar: #f78400;
+    --laytp-layui-nav-item-a-bg: #eff2f6;
+    --laytp-layui-nav-item-a-c: #48576a;
+    --laytp-layui-nav-child-a-bg: #e5e9f2;
+    --laytp-layui-nav-child-a-c: #48576a;
+    --laytp-layui-nav-child-a-c-hover: #d1dbe5;
+    --laytp-layui-side-i: #48566a;
+    --laytp-layui-side-layui-this-a: #f78400;
+    --laytp-side-layui-nav-more: #48566a;
+    --laytp-layui-tab-title: #f9f9f9;
+    --laytp-layui-btn-default: #f78400;
+    --laytp-layui-btn-primary: #fff;
+    --laytp-layui-btn-primary-hover: #f78400;
+    --laytp-layui-form-radio-hover: #f78400;
+    --laytp-layui-laypage-em: #f78400;
+    --laytp-border-color: #f78400;
+    --laytp-layui-form-label: #666
+}
+
+.laytp-theme-item-5 {
+    background-color: #f78400
+}
+
+.laytp-theme-5 {
+    --laytp-head-bg: #f78400;
+    --laytp-side-bg: #222d32;
+    --laytp-side-itemed-a-bg: #1e282c;
+    --laytp-layui-form-checked: #f78400;
+    --laytp-layui-btn-active: #cc710a;
+    --laytp-layui-nav-bar: #f78400;
+    --laytp-layui-nav-item-a-bg: #222d32;
+    --laytp-layui-nav-item-a-c: #b8c7ce;
+    --laytp-layui-nav-item-a-c-hover: #ffffff;
+    --laytp-layui-nav-child-a-bg: #2c3b41;
+    --laytp-layui-nav-child-a-c: #8aa4af;
+    --laytp-layui-nav-child-a-c-hover: #f78400;
+    --laytp-layui-side-i: #48566a;
+    --laytp-layui-side-layui-this-a: #ffffff;
+    --laytp-side-layui-nav-more: #48566a;
+    --laytp-layui-tab-title: #f9f9f9;
+    --laytp-layui-btn-default: #f78400;
+    --laytp-layui-btn-primary: #fff;
+    --laytp-layui-btn-primary-hover: #f78400;
+    --laytp-layui-form-radio-hover: #f78400;
+    --laytp-layui-laypage-em: #f78400;
+    --laytp-border-color: #f78400;
+    --laytp-layui-form-label: #666;
+}
+
+.laytp-theme-item-6 {
+    background-color: #2f9688
+}
+
+.laytp-theme-6 {
+    --laytp-head-bg: #2f9688;
+    --laytp-side-bg: #eef1f5;
+    --laytp-side-itemed-a-bg: #d9dde6;
+    --laytp-layui-form-checked: #2f9688;
+    --laytp-layui-btn-active: #205851;
+    --laytp-layui-nav-bar: #2f9688;
+    --laytp-layui-nav-item-a-bg: #eff2f6;
+    --laytp-layui-nav-item-a-c: #48576a;
+    --laytp-layui-nav-child-a-bg: #e5e9f2;
+    --laytp-layui-nav-child-a-c: #48576a;
+    --laytp-layui-nav-child-a-c-hover: #d1dbe5;
+    --laytp-layui-side-i: #48566a;
+    --laytp-layui-side-layui-this-a: #2f9688;
+    --laytp-side-layui-nav-more: #48566a;
+    --laytp-layui-tab-title: #f9f9f9;
+    --laytp-layui-btn-default: #2f9688;
+    --laytp-layui-btn-primary: #fff;
+    --laytp-layui-btn-primary-hover: #2f9688;
+    --laytp-layui-form-radio-hover: #2f9688;
+    --laytp-layui-laypage-em: #2f9688;
+    --laytp-border-color: #2f9688;
+    --laytp-layui-form-label: #666
+}
+
+.laytp-theme-item-7 {
+    background-color: #2f9688
+}
+
+.laytp-theme-7 {
+    --laytp-head-bg: #2f9688;
+    --laytp-side-bg: #222d32;
+    --laytp-side-itemed-a-bg: #1e282c;
+    --laytp-layui-form-checked: #2f9688;
+    --laytp-layui-btn-active: #205851;
+    --laytp-layui-nav-bar: #2f9688;
+    --laytp-layui-nav-item-a-bg: #222d32;
+    --laytp-layui-nav-item-a-c: #b8c7ce;
+    --laytp-layui-nav-item-a-c-hover: #ffffff;
+    --laytp-layui-nav-child-a-bg: #2c3b41;
+    --laytp-layui-nav-child-a-c: #8aa4af;
+    --laytp-layui-nav-child-a-c-hover: #2f9688;
+    --laytp-layui-side-i: #48566a;
+    --laytp-layui-side-layui-this-a: #ffffff;
+    --laytp-side-layui-nav-more: #48566a;
+    --laytp-layui-tab-title: #f9f9f9;
+    --laytp-layui-btn-default: #2f9688;
+    --laytp-layui-btn-primary: #fff;
+    --laytp-layui-btn-primary-hover: #2f9688;
+    --laytp-layui-form-radio-hover: #2f9688;
+    --laytp-layui-laypage-em: #2f9688;
+    --laytp-border-color: #2f9688;
+    --laytp-layui-form-label: #666;
+}
+
+.laytp-theme-item-8 {
+    background-color: #1fbddf
+}
+
+.laytp-theme-8 {
+    --laytp-head-bg: #1fbddf;
+    --laytp-side-bg: #eef1f5;
+    --laytp-side-itemed-a-bg: #d9dde6;
+    --laytp-layui-form-checked: #1fbddf;
+    --laytp-layui-btn-active: #31a4bd;
+    --laytp-layui-nav-bar: #1fbddf;
+    --laytp-layui-nav-item-a-bg: #eff2f6;
+    --laytp-layui-nav-item-a-c: #48576a;
+    --laytp-layui-nav-child-a-bg: #e5e9f2;
+    --laytp-layui-nav-child-a-c: #48576a;
+    --laytp-layui-nav-child-a-c-hover: #d1dbe5;
+    --laytp-layui-side-i: #48566a;
+    --laytp-layui-side-layui-this-a: #1fbddf;
+    --laytp-side-layui-nav-more: #48566a;
+    --laytp-layui-tab-title: #f9f9f9;
+    --laytp-layui-btn-default: #1fbddf;
+    --laytp-layui-btn-primary: #fff;
+    --laytp-layui-btn-primary-hover: #1fbddf;
+    --laytp-layui-form-radio-hover: #1fbddf;
+    --laytp-layui-laypage-em: #1fbddf;
+    --laytp-border-color: #1fbddf;
+    --laytp-layui-form-label: #666
+}
+
+.laytp-theme-item-9 {
+    background-color: #1fbddf
+}
+
+.laytp-theme-9 {
+    --laytp-head-bg: #1fbddf;
+    --laytp-side-bg: #222d32;
+    --laytp-side-itemed-a-bg: #1e282c;
+    --laytp-layui-form-checked: #1fbddf;
+    --laytp-layui-btn-active: #31a4bd;
+    --laytp-layui-nav-bar: #1fbddf;
+    --laytp-layui-nav-item-a-bg: #222d32;
+    --laytp-layui-nav-item-a-c: #b8c7ce;
+    --laytp-layui-nav-item-a-c-hover: #ffffff;
+    --laytp-layui-nav-child-a-bg: #2c3b41;
+    --laytp-layui-nav-child-a-c: #8aa4af;
+    --laytp-layui-nav-child-a-c-hover: #1fbddf;
+    --laytp-layui-side-i: #48566a;
+    --laytp-layui-side-layui-this-a: #ffffff;
+    --laytp-side-layui-nav-more: #48566a;
+    --laytp-layui-tab-title: #f9f9f9;
+    --laytp-layui-btn-default: #1fbddf;
+    --laytp-layui-btn-primary: #fff;
+    --laytp-layui-btn-primary-hover: #1fbddf;
+    --laytp-layui-form-radio-hover: #1fbddf;
+    --laytp-layui-laypage-em: #1fbddf;
+    --laytp-border-color: #1fbddf;
+    --laytp-layui-form-label: #666;
+}
+
+.laytp-theme-item-10 {
+    background-color: #01479d
+}
+
+.laytp-theme-10 {
+    --laytp-head-bg: #01479d;
+    --laytp-side-bg: #eef1f5;
+    --laytp-side-itemed-a-bg: #d9dde6;
+    --laytp-layui-form-checked: #01479d;
+    --laytp-layui-btn-active: #2c6bb9;
+    --laytp-layui-nav-bar: #01479d;
+    --laytp-layui-nav-item-a-bg: #eff2f6;
+    --laytp-layui-nav-item-a-c: #48576a;
+    --laytp-layui-nav-child-a-bg: #e5e9f2;
+    --laytp-layui-nav-child-a-c: #48576a;
+    --laytp-layui-nav-child-a-c-hover: #d1dbe5;
+    --laytp-layui-side-i: #48566a;
+    --laytp-layui-side-layui-this-a: #01479d;
+    --laytp-side-layui-nav-more: #48566a;
+    --laytp-layui-tab-title: #f9f9f9;
+    --laytp-layui-btn-default: #01479d;
+    --laytp-layui-btn-primary: #fff;
+    --laytp-layui-btn-primary-hover: #01479d;
+    --laytp-layui-form-radio-hover: #01479d;
+    --laytp-layui-laypage-em: #01479d;
+    --laytp-border-color: #01479d;
+    --laytp-layui-form-label: #666
+}
+
+.laytp-theme-item-11 {
+    background-color: #01479d
+}
+
+.laytp-theme-11 {
+    --laytp-head-bg: #01479d;
+    --laytp-side-bg: #222d32;
+    --laytp-side-itemed-a-bg: #1e282c;
+    --laytp-layui-form-checked: #01479d;
+    --laytp-layui-btn-active: #2c6bb9;
+    --laytp-layui-nav-bar: #01479d;
+    --laytp-layui-nav-item-a-bg: #222d32;
+    --laytp-layui-nav-item-a-c: #b8c7ce;
+    --laytp-layui-nav-item-a-c-hover: #ffffff;
+    --laytp-layui-nav-child-a-bg: #2c3b41;
+    --laytp-layui-nav-child-a-c: #8aa4af;
+    --laytp-layui-nav-child-a-c-hover: #01479d;
+    --laytp-layui-side-i: #48566a;
+    --laytp-layui-side-layui-this-a: #ffffff;
+    --laytp-side-layui-nav-more: #48566a;
+    --laytp-layui-tab-title: #f9f9f9;
+    --laytp-layui-btn-default: #01479d;
+    --laytp-layui-btn-primary: #fff;
+    --laytp-layui-btn-primary-hover: #01479d;
+    --laytp-layui-form-radio-hover: #01479d;
+    --laytp-layui-laypage-em: #01479d;
+    --laytp-border-color: #01479d;
+    --laytp-layui-form-label: #666;
+}
+
+.laytp-theme-item-12 {
+    background-color: #8858a0
+}
+
+.laytp-theme-12 {
+    --laytp-head-bg: #8858a0;
+    --laytp-side-bg: #eef1f5;
+    --laytp-side-itemed-a-bg: #d9dde6;
+    --laytp-layui-form-checked: #8858a0;
+    --laytp-layui-btn-active: #9e7daf;
+    --laytp-layui-nav-bar: #8858a0;
+    --laytp-layui-nav-item-a-bg: #eff2f6;
+    --laytp-layui-nav-item-a-c: #48576a;
+    --laytp-layui-nav-child-a-bg: #e5e9f2;
+    --laytp-layui-nav-child-a-c: #48576a;
+    --laytp-layui-nav-child-a-c-hover: #d1dbe5;
+    --laytp-layui-side-i: #48566a;
+    --laytp-layui-side-layui-this-a: #8858a0;
+    --laytp-side-layui-nav-more: #48566a;
+    --laytp-layui-tab-title: #f9f9f9;
+    --laytp-layui-btn-default: #8858a0;
+    --laytp-layui-btn-primary: #fff;
+    --laytp-layui-btn-primary-hover: #8858a0;
+    --laytp-layui-form-radio-hover: #8858a0;
+    --laytp-layui-laypage-em: #8858a0;
+    --laytp-border-color: #8858a0;
+    --laytp-layui-form-label: #666
+}
+
+.laytp-theme-item-13 {
+    background-color: #8858a0
+}
+
+.laytp-theme-13 {
+    --laytp-head-bg: #8858a0;
+    --laytp-side-bg: #222d32;
+    --laytp-side-itemed-a-bg: #1e282c;
+    --laytp-layui-form-checked: #8858a0;
+    --laytp-layui-btn-active: #9e7daf;
+    --laytp-layui-nav-bar: #8858a0;
+    --laytp-layui-nav-item-a-bg: #222d32;
+    --laytp-layui-nav-item-a-c: #b8c7ce;
+    --laytp-layui-nav-item-a-c-hover: #ffffff;
+    --laytp-layui-nav-child-a-bg: #2c3b41;
+    --laytp-layui-nav-child-a-c: #8aa4af;
+    --laytp-layui-nav-child-a-c-hover: #8858a0;
+    --laytp-layui-side-i: #48566a;
+    --laytp-layui-side-layui-this-a: #ffffff;
+    --laytp-side-layui-nav-more: #48566a;
+    --laytp-layui-tab-title: #f9f9f9;
+    --laytp-layui-btn-default: #8858a0;
+    --laytp-layui-btn-primary: #fff;
+    --laytp-layui-btn-primary-hover: #8858a0;
+    --laytp-layui-form-radio-hover: #8858a0;
+    --laytp-layui-laypage-em: #8858a0;
+    --laytp-border-color: #8858a0;
+    --laytp-layui-form-label: #666;
+}
+
+.laytp-theme-item-14 {
+    background-color: #0078d7
+}
+
+.laytp-theme-14 {
+    --laytp-head-bg: #0078d7;
+    --laytp-side-bg: #eef1f5;
+    --laytp-side-itemed-a-bg: #d9dde6;
+    --laytp-layui-form-checked: #0078d7;
+    --laytp-layui-btn-active: #318dd6;
+    --laytp-layui-nav-bar: #0078d7;
+    --laytp-layui-nav-item-a-bg: #eff2f6;
+    --laytp-layui-nav-item-a-c: #48576a;
+    --laytp-layui-nav-child-a-bg: #e5e9f2;
+    --laytp-layui-nav-child-a-c: #48576a;
+    --laytp-layui-nav-child-a-c-hover: #d1dbe5;
+    --laytp-layui-side-i: #48566a;
+    --laytp-layui-side-layui-this-a: #0078d7;
+    --laytp-side-layui-nav-more: #48566a;
+    --laytp-layui-tab-title: #f9f9f9;
+    --laytp-layui-btn-default: #0078d7;
+    --laytp-layui-btn-primary: #fff;
+    --laytp-layui-btn-primary-hover: #0078d7;
+    --laytp-layui-form-radio-hover: #0078d7;
+    --laytp-layui-laypage-em: #0078d7;
+    --laytp-border-color: #0078d7;
+    --laytp-layui-form-label: #666
+}
+
+.laytp-theme-item-15 {
+    background-color: #0078d7
+}
+
+.laytp-theme-15 {
+    --laytp-head-bg: #0078d7;
+    --laytp-side-bg: #222d32;
+    --laytp-side-itemed-a-bg: #1e282c;
+    --laytp-layui-form-checked: #0078d7;
+    --laytp-layui-btn-active: #318dd6;
+    --laytp-layui-nav-bar: #0078d7;
+    --laytp-layui-nav-item-a-bg: #222d32;
+    --laytp-layui-nav-item-a-c: #b8c7ce;
+    --laytp-layui-nav-item-a-c-hover: #ffffff;
+    --laytp-layui-nav-child-a-bg: #2c3b41;
+    --laytp-layui-nav-child-a-c: #8aa4af;
+    --laytp-layui-nav-child-a-c-hover: #0078d7;
+    --laytp-layui-side-i: #48566a;
+    --laytp-layui-side-layui-this-a: #ffffff;
+    --laytp-side-layui-nav-more: #48566a;
+    --laytp-layui-tab-title: #f9f9f9;
+    --laytp-layui-btn-default: #0078d7;
+    --laytp-layui-btn-primary: #fff;
+    --laytp-layui-btn-primary-hover: #0078d7;
+    --laytp-layui-form-radio-hover: #0078d7;
+    --laytp-layui-laypage-em: #0078d7;
+    --laytp-border-color: #0078d7;
+    --laytp-layui-form-label: #666;
+}
+
+.laytp-theme-item-16 {
+    background-color: #0185a6
+}
+
+.laytp-theme-16 {
+    --laytp-head-bg: #0185a6;
+    --laytp-side-bg: #eef1f5;
+    --laytp-side-itemed-a-bg: #d9dde6;
+    --laytp-layui-form-checked: #0185a6;
+    --laytp-layui-btn-active: #32b5d6;
+    --laytp-layui-nav-bar: #0185a6;
+    --laytp-layui-nav-item-a-bg: #eff2f6;
+    --laytp-layui-nav-item-a-c: #48576a;
+    --laytp-layui-nav-child-a-bg: #e5e9f2;
+    --laytp-layui-nav-child-a-c: #48576a;
+    --laytp-layui-nav-child-a-c-hover: #d1dbe5;
+    --laytp-layui-side-i: #48566a;
+    --laytp-layui-side-layui-this-a: #0185a6;
+    --laytp-side-layui-nav-more: #48566a;
+    --laytp-layui-tab-title: #f9f9f9;
+    --laytp-layui-btn-default: #0185a6;
+    --laytp-layui-btn-primary: #fff;
+    --laytp-layui-btn-primary-hover: #0185a6;
+    --laytp-layui-form-radio-hover: #0185a6;
+    --laytp-layui-laypage-em: #0185a6;
+    --laytp-border-color: #0185a6;
+    --laytp-layui-form-label: #666
+}
+
+.laytp-theme-item-17 {
+    background-color: #0185a6
+}
+
+.laytp-theme-17 {
+    --laytp-head-bg: #0185a6;
+    --laytp-side-bg: #222d32;
+    --laytp-side-itemed-a-bg: #1e282c;
+    --laytp-layui-form-checked: #0185a6;
+    --laytp-layui-btn-active: #32b5d6;
+    --laytp-layui-nav-bar: #0185a6;
+    --laytp-layui-nav-item-a-bg: #222d32;
+    --laytp-layui-nav-item-a-c: #b8c7ce;
+    --laytp-layui-nav-item-a-c-hover: #ffffff;
+    --laytp-layui-nav-child-a-bg: #2c3b41;
+    --laytp-layui-nav-child-a-c: #8aa4af;
+    --laytp-layui-nav-child-a-c-hover: #0185a6;
+    --laytp-layui-side-i: #48566a;
+    --laytp-layui-side-layui-this-a: #ffffff;
+    --laytp-side-layui-nav-more: #48566a;
+    --laytp-layui-tab-title: #f9f9f9;
+    --laytp-layui-btn-default: #0185a6;
+    --laytp-layui-btn-primary: #fff;
+    --laytp-layui-btn-primary-hover: #0185a6;
+    --laytp-layui-form-radio-hover: #0185a6;
+    --laytp-layui-laypage-em: #0185a6;
+    --laytp-border-color: #0185a6;
+    --laytp-layui-form-label: #666;
+}
+
+.laytp-theme-item-18 {
+    background-color: #3c9
+}
+
+.laytp-theme-18 {
+    --laytp-head-bg: #3c9;
+    --laytp-side-bg: #eef1f5;
+    --laytp-side-itemed-a-bg: #d9dde6;
+    --laytp-layui-form-checked: #3c9;
+    --laytp-layui-btn-active: #34ad85;
+    --laytp-layui-nav-bar: #3c9;
+    --laytp-layui-nav-item-a-bg: #eff2f6;
+    --laytp-layui-nav-item-a-c: #48576a;
+    --laytp-layui-nav-child-a-bg: #e5e9f2;
+    --laytp-layui-nav-child-a-c: #48576a;
+    --laytp-layui-nav-child-a-c-hover: #d1dbe5;
+    --laytp-layui-side-i: #48566a;
+    --laytp-layui-side-layui-this-a: #3c9;
+    --laytp-side-layui-nav-more: #48566a;
+    --laytp-layui-tab-title: #f9f9f9;
+    --laytp-layui-btn-default: #3c9;
+    --laytp-layui-btn-primary: #fff;
+    --laytp-layui-btn-primary-hover: #3c9;
+    --laytp-layui-form-radio-hover: #3c9;
+    --laytp-layui-laypage-em: #3c9;
+    --laytp-border-color: #3c9;
+    --laytp-layui-form-label: #666
+}
+
+.laytp-theme-item-19 {
+    background-color: #3c9
+}
+
+.laytp-theme-19 {
+    --laytp-head-bg: #3c9;
+    --laytp-side-bg: #222d32;
+    --laytp-side-itemed-a-bg: #1e282c;
+    --laytp-layui-form-checked: #3c9;
+    --laytp-layui-btn-active: #34ad85;
+    --laytp-layui-nav-bar: #3c9;
+    --laytp-layui-nav-item-a-bg: #222d32;
+    --laytp-layui-nav-item-a-c: #b8c7ce;
+    --laytp-layui-nav-item-a-c-hover: #ffffff;
+    --laytp-layui-nav-child-a-bg: #2c3b41;
+    --laytp-layui-nav-child-a-c: #8aa4af;
+    --laytp-layui-nav-child-a-c-hover: #3c9;
+    --laytp-layui-side-i: #48566a;
+    --laytp-layui-side-layui-this-a: #ffffff;
+    --laytp-side-layui-nav-more: #48566a;
+    --laytp-layui-tab-title: #f9f9f9;
+    --laytp-layui-btn-default: #3c9;
+    --laytp-layui-btn-primary: #fff;
+    --laytp-layui-btn-primary-hover: #3c9;
+    --laytp-layui-form-radio-hover: #3c9;
+    --laytp-layui-laypage-em: #3c9;
+    --laytp-border-color: #3c9;
+    --laytp-layui-form-label: #666;
+}
+
+.laytp-theme-item-20 {
+    background-color: #369
+}
+
+.laytp-theme-20 {
+    --laytp-head-bg: #369;
+    --laytp-side-bg: #eef1f5;
+    --laytp-side-itemed-a-bg: #d9dde6;
+    --laytp-layui-form-checked: #369;
+    --laytp-layui-btn-active: #5786b5;
+    --laytp-layui-nav-bar: #369;
+    --laytp-layui-nav-item-a-bg: #eff2f6;
+    --laytp-layui-nav-item-a-c: #48576a;
+    --laytp-layui-nav-child-a-bg: #e5e9f2;
+    --laytp-layui-nav-child-a-c: #48576a;
+    --laytp-layui-nav-child-a-c-hover: #d1dbe5;
+    --laytp-layui-side-i: #48566a;
+    --laytp-layui-side-layui-this-a: #369;
+    --laytp-side-layui-nav-more: #48566a;
+    --laytp-layui-tab-title: #f9f9f9;
+    --laytp-layui-btn-default: #369;
+    --laytp-layui-btn-primary: #fff;
+    --laytp-layui-btn-primary-hover: #369;
+    --laytp-layui-form-radio-hover: #369;
+    --laytp-layui-laypage-em: #369;
+    --laytp-border-color: #369;
+    --laytp-layui-form-label: #666
+}
+
+.laytp-theme-item-21 {
+    background-color: #369
+}
+
+.laytp-theme-21 {
+    --laytp-head-bg: #369;
+    --laytp-side-bg: #222d32;
+    --laytp-side-itemed-a-bg: #1e282c;
+    --laytp-layui-form-checked: #369;
+    --laytp-layui-btn-active: #5786b5;
+    --laytp-layui-nav-bar: #369;
+    --laytp-layui-nav-item-a-bg: #222d32;
+    --laytp-layui-nav-item-a-c: #b8c7ce;
+    --laytp-layui-nav-item-a-c-hover: #ffffff;
+    --laytp-layui-nav-child-a-bg: #2c3b41;
+    --laytp-layui-nav-child-a-c: #8aa4af;
+    --laytp-layui-nav-child-a-c-hover: #369;
+    --laytp-layui-side-i: #48566a;
+    --laytp-layui-side-layui-this-a: #ffffff;
+    --laytp-side-layui-nav-more: #48566a;
+    --laytp-layui-tab-title: #f9f9f9;
+    --laytp-layui-btn-default: #369;
+    --laytp-layui-btn-primary: #fff;
+    --laytp-layui-btn-primary-hover: #369;
+    --laytp-layui-form-radio-hover: #369;
+    --laytp-layui-laypage-em: #369;
+    --laytp-border-color: #369;
+    --laytp-layui-form-label: #666;
+}
+
+.laytp-theme-item-22 {
+    background-color: #18bc9c
+}
+
+.laytp-theme-22 {
+    --laytp-head-bg: #18bc9c;
+    --laytp-side-bg: #eef1f5;
+    --laytp-side-itemed-a-bg: #d9dde6;
+    --laytp-layui-form-checked: #18bc9c;
+    --laytp-layui-btn-active: #38d4b5;
+    --laytp-layui-nav-bar: #18bc9c;
+    --laytp-layui-nav-item-a-bg: #eff2f6;
+    --laytp-layui-nav-item-a-c: #48576a;
+    --laytp-layui-nav-child-a-bg: #e5e9f2;
+    --laytp-layui-nav-child-a-c: #48576a;
+    --laytp-layui-nav-child-a-c-hover: #d1dbe5;
+    --laytp-layui-side-i: #48566a;
+    --laytp-layui-side-layui-this-a: #18bc9c;
+    --laytp-side-layui-nav-more: #48566a;
+    --laytp-layui-tab-title: #f9f9f9;
+    --laytp-layui-btn-default: #18bc9c;
+    --laytp-layui-btn-primary: #fff;
+    --laytp-layui-btn-primary-hover: #18bc9c;
+    --laytp-layui-form-radio-hover: #18bc9c;
+    --laytp-layui-laypage-em: #18bc9c;
+    --laytp-border-color: #18bc9c;
+    --laytp-layui-form-label: #666
+}
+
+.laytp-theme-item-23 {
+    background-color: #18bc9c
+}
+
+.laytp-theme-23 {
+    --laytp-head-bg: #18bc9c;
+    --laytp-side-bg: #222d32;
+    --laytp-side-itemed-a-bg: #1e282c;
+    --laytp-layui-form-checked: #18bc9c;
+    --laytp-layui-btn-active: #38d4b5;
+    --laytp-layui-nav-bar: #18bc9c;
+    --laytp-layui-nav-item-a-bg: #222d32;
+    --laytp-layui-nav-item-a-c: #b8c7ce;
+    --laytp-layui-nav-item-a-c-hover: #ffffff;
+    --laytp-layui-nav-child-a-bg: #2c3b41;
+    --laytp-layui-nav-child-a-c: #8aa4af;
+    --laytp-layui-nav-child-a-c-hover: #18bc9c;
+    --laytp-layui-side-i: #48566a;
+    --laytp-layui-side-layui-this-a: #ffffff;
+    --laytp-side-layui-nav-more: #48566a;
+    --laytp-layui-tab-title: #f9f9f9;
+    --laytp-layui-btn-default: #18bc9c;
+    --laytp-layui-btn-primary: #fff;
+    --laytp-layui-btn-primary-hover: #18bc9c;
+    --laytp-layui-form-radio-hover: #18bc9c;
+    --laytp-layui-laypage-em: #18bc9c;
+    --laytp-border-color: #18bc9c;
+    --laytp-layui-form-label: #666;
+}
+
+.layui-header {
+    z-index: 900;
+    background-color: var(--laytp-head-bg) !important
+}
+
+.layui-side {
+    z-index: 900;
+    background-color: var(--laytp-side-bg) !important;
+}
+
+.layui-header .layui-nav .layui-this:after, .layui-header .layui-nav-bar {
+    background-color: var(--laytp-layui-nav-bar) !important
+}
+
+.layui-nav-tree .layui-nav-item a {
+    background-color: var(--laytp-layui-nav-item-a-bg) !important;
+    color: var(--laytp-layui-nav-item-a-c) !important
+}
+
+.layui-nav-tree .layui-nav-child a {
+    background-color: var(--laytp-layui-nav-child-a-bg) !important;
+    color: var(--laytp-layui-nav-child-a-c) !important
+}
+
+.layui-nav-tree .layui-nav-tree .layui-nav-child .layui-this a {
+    background-color: var(--laytp-layui-nav-child-a-c-hover) !important
+}
+
+.layui-side i.aicon {
+    color: var(--laytp-layui-side-i)
+}
+
+.layui-form-onswitch, .layui-form-checked[lay-skin=primary] i {
+    border-color: var(--laytp-layui-form-checked) !important;
+    background-color: var(--laytp-layui-form-checked)
+}
+
+.layui-form-label {
+    line-height: 18px;
+}
+
+.layui-side .layui-this a, .layui-side .layui-this i.aicon {
+    background: #1e282c !important;
+    border-left-color: #18bc9c !important;
+    color: var(--laytp-layui-side-layui-this-a) !important;
+    margin-left: 5px;
+}
+
+.layui-tab-card .layui-tab-title {
+    background-color: #fff !important
+}
+
+.layui-nav-tree .layui-nav-bar {
+    background-color: var(--laytp-layui-nav-bar) !important
+}
+
+.layui-btn-default {
+    background-color: var(--laytp-layui-btn-default)
+}
+
+.layui-btn-primary {
+    background-color: var(--laytp-layui-btn-primary)
+}
+
+.layui-btn-primary:hover {
+    border-color: var(--laytp-layui-btn-primary-hover);
+    color: var(--laytp-layui-btn-primary-hover)
+}
+
+.layui-form-radio i:hover, .layui-form-radioed i {
+    color: var(--laytp-layui-form-radio-hover)
+}
+
+.layui-laypage .layui-laypage-curr .layui-laypage-em {
+    background-color: var(--laytp-layui-laypage-em)
+}
+
+.layui-form .layui-form-label {
+    color: #333 !important;
+}
+
+.layui-table-view .layui-table {
+    width: 100% !important;
+}
+
+.layui-tab-brief > .layui-tab-title .layui-this {
+    color: var(--laytp-head-bg);
+}
+
+.layui-tab-brief > .layui-tab-title .layui-this:after {
+    border: none;
+    border-radius: 0;
+    border-bottom: 2px solid var(--laytp-head-bg);
+}
+
+.tooltip {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    background: url(/a/img/tooltip.png) no-repeat;
+    position: relative;
+    cursor: pointer
+}
+
+.ai-tishi {
+    color: #1e91cf !important;
+    position: relative;
+    cursor: pointer
+}
+
+.tooltip i {
+    position: absolute;
+    left: 18px;
+    top: 1px;
+    width: 160px;
+    word-break: break-all;
+    padding: 3px 10px;
+    background-color: #000;
+    color: #fff;
+    font-size: 12px;
+    font-style: normal;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: subpixel-antialiased;
+    z-index: 998;
+    text-align: left;
+    display: none
+}
+
+.tooltip i:before {
+    content: '';
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent #000 transparent transparent;
+    position: absolute;
+    left: -10px;
+    top: 4px
+}
+
+.tooltip i a {
+    color: #fff
+}
+
+.lock-screen {
+    padding: 20px;
+    overflow: hidden;
+    display: block
+}
+
+.lock-screen input {
+    float: left;
+    width: 180px;
+    background-color: #009688;
+    border-color: #009688;
+    color: #fff;
+    font-size: 13px
+}
+
+.lock-screen input::-webkit-input-placeholder {
+    color: #fff
+}
+
+.lock-screen input:-moz-placeholder {
+    color: #fff
+}
+
+.lock-screen input::-moz-placeholder {
+    color: #fff
+}
+
+.lock-screen input:-ms-input-placeholder {
+    color: #fff
+}
+
+.lock-screen button {
+    float: left;
+    margin-left: 20px
+}
+
+/*应用themes*/
+.app-themes {
+}
+
+.app-themes li {
+    float: left;
+    width: 360px;
+    overflow: hidden;
+    margin: 10px 20px 10px 10px;
+}
+
+.app-themes li img {
+    float: left;
+    border-radius: 5px;
+    padding: 2px;
+    border: 1px solid #ddd;
+}
+
+.app-themes li dl {
+    float: right;
+    width: 190px;
+    overflow: hidden;
+}
+
+.app-themes li dd {
+    line-height: 28px;
+}
+
+.app-themes li dt {
+    margin-top: 10px;
+}
+
+.apps-filter-tr {
+    width: 100%;
+    overflow: hidden;
+    display: block;
+    padding: 5px 0;
+    line-height: 25px;
+}
+
+.apps-filter-tr dt {
+    float: left;
+    text-align: right;
+    color: #666;
+}
+
+.apps-filter-tr dd {
+    float: left;
+    width: 90%;
+    overflow: hidden;
+}
+
+.apps-filter-tr dd a {
+    margin-left: 0 !important;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+.app-spec {
+    float: left;
+    width: 100%;
+    margin: 5px 0;
+}
+
+.app-spec dt {
+    float: left;
+    width: 20%;
+    overflow: hidden;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+}
+
+.app-spec dd {
+    float: left;
+    width: 80%;
+    overflow: hidden;
+}
+
+.app-spec dd a {
+    margin: 4px 5px 0 0;
+    float: left;
+}
+
+.app-price,
+.app-order-id, .app-pay-success {
+    text-align: center;
+    font-weight: 400;
+    color: #000;
+}
+
+.app-price {
+    font-size: 24px;
+}
+
+.app-qrocde {
+    display: block;
+    width: 100;
+    text-align: center;
+}
+
+.app-order-id {
+    color: #999;
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.app-pay-success {
+    height: 200px;
+    padding-top: 80px;
+}
+
+@media screen and (max-device-width: 750px) {
+    .layui-layout-admin .layui-side {
+        display: none;
+    }
+
+    .layui-layout-admin .layui-body {
+        left: 0;
+    }
+
+    .header-logo {
+        display: none;
+    }
+
+    .header-logo {
+        display: none;
+    }
+
+    .main-nav {
+        display: none;
+    }
+}
+
+/*左侧菜单顶部用户信息*/
+.user-panel {
+    white-space: nowrap;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    padding: 10px;
+}
+
+.pull-left {
+    float: left !important;
+}
+
+.user-panel > .image img {
+    vertical-align: middle;
+    border: 0;
+    width: 45px;
+    height: 45px;
+}
+
+.img-circle {
+    border-radius: 50%;
+}
+
+.user-panel > .info, .skin-green .user-panel > .info > a {
+    color: var(--laytp-layui-nav-item-a-c);
+}
+
+.user-panel > .info {
+    padding: 5px 5px 5px 15px;
+    line-height: 1;
+    position: absolute;
+    left: 55px;
+}
+
+.user-panel > .info > p {
+    font-weight: 600;
+    margin-bottom: 9px;
+}
+
+#layTpLeftMenu dl {
+    background-color: var(--laytp-layui-nav-child-a-bg) !important;
+}
+
+/*设置主题样式*/
+.laytp-setTheme {
+    padding: 15px;
+    overflow-x: hidden;
+}
+
+.layui-card-body {
+    position: relative;
+    line-height: 24px;
+    background-color: #fdfdfd;
+}
+
+.laytp-setTheme-color {
+    width: 330px;
+    font-size: 0;
+}
+
+.laytp-setTheme-color li {
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    width: 80px;
+    height: 50px;
+    margin: 0 15px 15px 0;
+    background-color: #f2f2f2;
+    cursor: pointer;
+    font-size: 12px;
+    color: #666;
+}
+
+.laytp-setTheme-header {
+    position: relative;
+    z-index: 10;
+    height: 10px;
+    border-top: 1px solid #f2f2f2;
+    border-right: 1px solid #f2f2f2;
+}
+
+.laytp-setTheme-side {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 20px;
+    height: 100%;
+    z-index: 11;
+    box-shadow: 1px 0 2px 0 rgba(0, 0, 0, .05);
+}
+
+.laytp-setTheme-logo {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 10px;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .15);
+}
+
+/*左侧菜单顶部用户信息*/
+.user-panel {
+    white-space: nowrap;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    padding: 10px;
+}
+
+.pull-left {
+    float: left !important;
+}
+
+.user-panel > .image img {
+    vertical-align: middle;
+    border: 0;
+    width: 45px;
+    height: 45px;
+}
+
+.img-circle {
+    border-radius: 50%;
+}
+
+.user-panel > .info, .skin-green .user-panel > .info > a {
+    color: var(--laytp-layui-nav-item-a-c);
+}
+
+.user-panel > .info {
+    padding: 5px 5px 5px 15px;
+    line-height: 1;
+    position: absolute;
+    left: 55px;
+}
+
+.user-panel > .info > p {
+    font-weight: 600;
+    margin-bottom: 9px;
+}
+
+#layTpLeftMenu dl {
+    background-color: var(--laytp-layui-nav-child-a-bg) !important;
+}
+
+/**
+垂直选项卡
+ */
+.layui-vertical-card {
+    border-radius: 2px;
+    background-color: #fff;
+}
+
+.layui-tab.layui-tab-vertical {
+    position: relative;
+}
+
+.layui-tab.layui-tab-vertical:after {
+    content: "";
+    clear: both;
+    display: block;
+}
+
+.layui-tab-vertical > .layui-tab-title .layui-this:after {
+    border: none;
+    border-radius: 0;
+    border-bottom: 0;
+}
+
+
+.layui-tab.layui-tab-vertical > .layui-tab-title {
+    width: 130px;
+    min-height: 590px;
+    border: 0;
+    border-right: 1px solid #e9e9e9;
+    box-sizing: border-box;
+    float: left;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.layui-tab.layui-tab-vertical > .layui-tab-title > .layui-tab-vertical-btn {
+    line-height: normal;
+    padding: 10px 5px;
+    display: block;
+    white-space: normal;
+}
+
+.layui-tab.layui-tab-vertical > .layui-tab-title > li.layui-this {
+    color: var(--laytp-head-bg);
+    border-right: 3px solid var(--laytp-head-bg);
+}
+
+.layui-tab.layui-tab-vertical > .layui-tab-title::-webkit-scrollbar {
+    height: 1px;
+    width: 0;
+}
+
+.layui-tab.layui-tab-vertical > .layui-tab-title > li {
+    display: block;
+    border-right: 3px solid transparent;
+    white-space: normal;
+    line-height: normal;
+    padding: 10px 15px;
+    text-align: right;
+}
+
+.layui-tab.layui-tab-vertical > .layui-tab-content {
+    margin-left: 130px;
+}
+
+.layui-table-tool-temp {
+    padding-right: 0px;
+}

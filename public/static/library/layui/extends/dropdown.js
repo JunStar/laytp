@@ -1,172 +1,240 @@
-layui.define(['jquery'], function(exports) {
-    var $ = layui.jquery
-    var CLS_DROPDOWN = 'layui-dropdown'
-    var CLS_DROPDOWN_RIGHT = 'layui-dropdown-direright'
-    var CLS_SELECT = 'layui-dropdown-select'
-    var CLS_OPTION = 'layui-dropdown-option'
-    var CLS_TITLE = 'layui-dropdown-title'
-    var CLS_ARROW = 'layui-dropdown-arrow-up'
-    var HTML_DROPDOWN = '<div class="' + CLS_DROPDOWN + '"><div>'
-    var DEPTH = 0
-    var INDEX = 0
-
-    var Class = function(config) {
-        this.config = $.extend({}, this.config, config)
-        this.render(config)
+layui.define(["jquery"], function (f) {
+    var h = layui.jquery;
+    var i = "dropdown-open";
+    var e = "dropdown-disabled";
+    var b = "dropdown-no-scroll";
+    var c = "dropdown-menu-shade";
+    var n = "dropdown-menu";
+    var m = "dropdown-menu-nav";
+    var j = "dropdown-hover";
+    var d = "fixed";
+    var g = "no-shade";
+    var k = "layui-anim layui-anim-upbit";
+    var a = "layui-anim layui-anim-fadein";
+    var l = ["bottom-left", "bottom-right", "bottom-center", "top-left", "top-right", "top-center", "left-top", "left-bottom", "left-center", "right-top", "right-bottom", "right-center"];
+    if (h("#ew-css-dropdown").length <= 0) {
+        layui.addcss("extends/dropdown.css", "skindropdowncss");
     }
-    Class.prototype.config = {
-        width: 150,
-        trigger: 'click'
-    }
-    Class.prototype.dropdownElem = ''
-    Class.prototype.exists = false
-    Class.prototype.depth = 0
-    Class.prototype.index = 0
-    Class.prototype.render = function(config) {
-        var self = this
-        if (typeof this.config.elem == 'string') {
-            $(document).off('click', this.config.elem).on('click', this.config.elem, event);
-        } else {
-            this.config.elem.click(event)
-        }
-
-        function event(e) {
-            e.stopPropagation()
-
-            if (self.dropdownElem == '') {
-                INDEX += 1
-                self.index = INDEX
-
-                var dropdown = $(HTML_DROPDOWN).attr('lay-index', self.index)
-                $('.' + CLS_DROPDOWN + '[lay-index="' + self.index + '"]').remove()
-
-                dropdown.html(self.createOptionsHtml(config))
-                $('body').prepend(dropdown)
-                // dropdown.on('click', '.' + CLS_OPTION, function(e) {
-                //     e.stopPropagation()
-                //     if ($.isFunction(config.click)) {
-                //         config.click($(this).attr('lay-action'), $(this), e)
-                //         dropdown.hide()
-                //     }
-                // })
-                self.dropdownElem = dropdown
-                self.dropdownSelect = dropdown.find('.' + CLS_SELECT)
-            }
-
-            var dropdown = self.dropdownElem
-            dropdown.css('z-index','198704230');
-
-            var top = $(this).offset().top + $(this).height() + 12 - $(document).scrollTop()
-            var left = $(this).offset().left
-            dropdown.css({
-                top: top - 10
-            })
-            var offsetWidth = (self.depth + 1) * self.config.width
-
-            if (left + offsetWidth > $(window).width()) {
-                dropdown
-                    .addClass('layui-dropdown-right')
-                    .css('left', left - dropdown.width() + $(this).width())
-                self.dropdownSelect.css({ left: 'auto', right: self.config.width })
-            } else {
-                dropdown.removeClass('layui-dropdown-right').css('left', left)
-                self.dropdownSelect.css({ right: 'auto', left: self.config.width })
-            }
-
-            $('body').one('click', function(e) {
-                dropdown.css('z-index','-1');
-                dropdown.stop().animate(
-                    {
-                        top: '-=10',
-                        opacity: 0
-                    },
-                    250
-                )
+    var o = {
+        init: function () {
+            h(document).off("click.dropdown").on("click.dropdown", "." + n + ">*:first-child", function (t) {
+                var u = h(this).parent();
+                if (!u.hasClass(j)) {
+                    if (u.hasClass(i)) {
+                        u.removeClass(i)
+                    } else {
+                        o.hideAll();
+                        o.show(h(this).parent().find("." + m))
+                    }
+                }
+                t.stopPropagation()
             });
-
-            dropdown
-                .show()
-                .stop()
-                .animate(
-                    {
-                        top: '+=10',
-                        opacity: 1
-                    },
-                    250
-                );
-        }
-    }
-    Class.prototype.createOptionsHtml = function(data, depth) {
-        depth = depth || 0
-        var self = this
-        var width = self.config.width + 'px;'
-        var html =
-            '<div class="' +
-            CLS_SELECT +
-            '" style="width:' +
-            width +
-            (depth > 0 ? 'left:' + width : '') +
-            '">'
-        if (depth == 0) {
-            html += '<div class="' + CLS_ARROW + '"></div>'
-        }
-        let field = "";
-        let field_val = "";
-        let need_data = "";
-        let twidth = "";
-        let height = "";
-        let need_refresh = "";
-        let table_id = "";
-        layui.each(data.options, function(i, option) {
-            var options = option.options || [];
-            field = (typeof option.field != "undefined") ? option.field : "";
-            field_val = (typeof option.field_val != "undefined") ? option.field_val : "";
-            need_data = (typeof option.need_data != "undefined") ? option.need_data : "true";
-            twidth = (typeof option.width != "undefined") ? option.width : "";
-            height = (typeof option.height != "undefined") ? option.height : "";
-            need_refresh = (typeof option.need_refresh != "undefined") ? option.need_refresh : "false";
-            table_id = (typeof option.table_id != "undefined") ? option.table_id : "";
-            // var class_name = tree_table ? 'dropdown-treetable-action' : 'dropdown-action';
-            var class_name = 'dropdown-action';
-            html +=
-                '<div ' +
-                    'lay-action=' + option.action + ' ' +
-                    'class="' +CLS_OPTION + ' ' +class_name +'"' +
-                    'uri="' + option.uri +'"' +
-                    'field="' + field +'"' +
-                    'need_data="' + need_data +'"' +
-                    'width="' + twidth +'"' +
-                    'height="' + height +'"' +
-                    'need_refresh="' + need_refresh +'"' +
-                    'field_val="' + field_val +'"' +
-                    'switch_type="' + option.switch_type +'"' +
-                    'table_id="' + table_id +'"' +
-                    'callback="' + option.callback +'"' +
-                    'param=\'' + JSON.stringify(option.param) +'\'' +
-                '>' +
-                    '<p class="' + CLS_TITLE +' layui-elip">' +
-                        '<span class="' + option.icon + '"></span>' + option.title +
-                    '</p>' +
-                    (options.length > 0
-                        ? '<i class="layui-icon layui-icon-right"></i>'
-                        : '');
-            option.options = option.options || [];
-            if (option.options.length > 0){
-                html += self.createOptionsHtml(option, depth + 1);
+            h(document).off("click.dropHide").on("click.dropHide", function (t) {
+                o.hideAll()
+            });
+            h(document).off("click.dropNav").on("click.dropNav", "." + m, function (t) {
+                t.stopPropagation()
+            });
+            var s, p, q = "." + n + "." + j;
+            h(document).off("mouseenter.dropdown").on("mouseenter.dropdown", q, function (t) {
+                if (p && p == t.currentTarget) {
+                    clearTimeout(s)
+                }
+                o.show(h(this).find("." + m))
+            });
+            h(document).off("mouseleave.dropdown").on("mouseleave.dropdown", q, function (t) {
+                p = t.currentTarget;
+                s = setTimeout(function () {
+                    h(t.currentTarget).removeClass(i)
+                }, 300)
+            });
+            h(document).off("click.dropStand").on("click.dropStand", "[data-dropdown]", function (t) {
+                o.showFixed(h(this));
+                t.stopPropagation()
+            });
+            var r = "." + m + " li";
+            h(document).off("mouseenter.dropdownNav").on("mouseenter.dropdownNav", r, function (t) {
+                h(this).children(".dropdown-menu-nav-child").addClass(k);
+                h(this).addClass("active")
+            });
+            h(document).off("mouseleave.dropdownNav").on("mouseleave.dropdownNav", r, function (t) {
+                h(this).removeClass("active");
+                h(this).find("li.active").removeClass("active")
+            });
+            h(document).off("click.popconfirm").on("click.popconfirm", ".dropdown-menu-nav [btn-cancel]", function (t) {
+                o.hideAll();
+                t.stopPropagation()
+            })
+        },
+        openClickNavClose: function () {
+            h(document).off("click.dropNavA").on("click.dropNavA", "." + m + ">li>a", function (p) {
+                o.hideAll();
+                h(this).parentsUntil("." + n).last().parent().removeClass(i);
+                p.stopPropagation()
+            })
+        },
+        hideAll: function () {
+            h("." + n).removeClass(i);
+            h("." + m + "." + d).addClass("layui-hide");
+            h("." + c).remove();
+            h("body").removeClass(b);
+            h(".dropdown-fix-parent").removeClass("dropdown-fix-parent");
+            h("[data-dropdown]").removeClass(i)
+        },
+        show: function (r) {
+            if (r && r.length > 0 && !r.hasClass(e)) {
+                if (r.hasClass("dropdown-popconfirm")) {
+                    r.removeClass(k);
+                    r.addClass(a)
+                } else {
+                    r.removeClass(a);
+                    r.addClass(k)
+                }
+                var p;
+                for (var q = 0; q < l.length; q++) {
+                    if (r.hasClass("dropdown-" + l[q])) {
+                        p = l[q];
+                        break
+                    }
+                }
+                if (!p) {
+                    r.addClass("dropdown-" + l[0]);
+                    p = l[0]
+                }
+                o.forCenter(r, p);
+                r.parent("." + n).addClass(i);
+                return p
             }
-            html += '</div>';
-            if (self.depth < depth) self.depth = depth
-        })
-        html += '</div>'
-        return html
-    }
-
-    var self = {
-        render: function(config) {
-            new Class(config)
+            return false
+        },
+        showFixed: function (q) {
+            var t = h(q.data("dropdown")), p;
+            if (!t.hasClass("layui-hide")) {
+                o.hideAll();
+                return
+            }
+            o.hideAll();
+            p = o.show(t);
+            if (p) {
+                t.addClass(d);
+                t.removeClass("layui-hide");
+                var s = o.getTopLeft(q, t, p);
+                s = o.checkPosition(t, q, p, s);
+                t.css(s);
+                h("body").addClass(b);
+                var r = (q.attr("no-shade") == "true");
+                h("body").append('<div class="' + (r ? (c + " " + g) : c) + ' layui-anim layui-anim-fadein"></div>');
+                q.parentsUntil("body").each(function () {
+                    var u = h(this).css("z-index");
+                    if (/[0-9]+/.test(u)) {
+                        h(this).addClass("dropdown-fix-parent")
+                    }
+                });
+                q.addClass(i)
+            }
+        },
+        forCenter: function (p, u) {
+            if (!p.hasClass(d)) {
+                var t = p.parent().outerWidth()
+                    , q = p.parent().outerHeight();
+                var s = p.outerWidth()
+                    , v = p.outerHeight();
+                var w = u.split("-")
+                    , r = w[0]
+                    , x = w[1];
+                if ((r == "top" || r == "bottom") && x == "center") {
+                    p.css("left", (t - s) / 2)
+                }
+                if ((r == "left" || r == "right") && x == "center") {
+                    p.css("top", (q - v) / 2)
+                }
+            }
+        },
+        getTopLeft: function (B, A, y) {
+            var w = B.outerWidth();
+            var u = B.outerHeight();
+            var p = A.outerWidth();
+            var x = A.outerHeight();
+            var z = B.offset().top - h(document).scrollTop();
+            var t = B.offset().left;
+            var D = t + w;
+            var C = 0
+                , s = 0;
+            var v = y.split("-");
+            var r = v[0];
+            var q = v[1];
+            if (r == "top" || r == "bottom") {
+                x += 8;
+                switch (q) {
+                    case "left":
+                        s = t;
+                        break;
+                    case "center":
+                        s = t - p / 2 + w / 2;
+                        break;
+                    case "right":
+                        s = D - p
+                }
+            }
+            if (r == "left" || r == "right") {
+                p += 8;
+                switch (q) {
+                    case "top":
+                        C = z + u - x;
+                        break;
+                    case "center":
+                        C = z - x / 2 + u / 2;
+                        break;
+                    case "bottom":
+                        C = z
+                }
+            }
+            switch (r) {
+                case "top":
+                    C = z - x;
+                    break;
+                case "right":
+                    s = t + w;
+                    break;
+                case "bottom":
+                    C = z + u;
+                    break;
+                case "left":
+                    s = t - p
+            }
+            return {
+                top: C,
+                left: s,
+                right: "auto",
+                bottom: "auto"
+            }
+        },
+        checkPosition: function (t, q, p, r) {
+            var s = p.split("-");
+            if ("bottom" == s[0]) {
+                if ((r.top + t.outerHeight()) > o.getPageHeight()) {
+                    r = o.getTopLeft(q, t, "top-" + s[1]);
+                    t.removeClass("dropdown-" + p);
+                    t.addClass("dropdown-top-" + s[1])
+                }
+            } else {
+                if ("top" == s[0]) {
+                    if (r.top < 0) {
+                        r = o.getTopLeft(q, t, "bottom-" + s[1]);
+                        t.removeClass("dropdown-" + p);
+                        t.addClass("dropdown-bottom-" + s[1])
+                    }
+                }
+            }
+            return r
+        },
+        getPageHeight: function () {
+            return document.documentElement.clientHeight || document.body.clientHeight
+        },
+        getPageWidth: function () {
+            return document.documentElement.clientWidth || document.body.clientWidth
         }
-    }
-    exports('dropdown', self);
-    layui.dropdown = self;
-    window.dropdown = self;
-}).addcss("modules/dropdown.css","skindropdowncss");
+    };
+    o.init();
+    f("dropdown", o)
+});

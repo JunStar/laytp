@@ -1,0 +1,9 @@
+这下面的目录和文件会复制到/public目录下
+客户端写安装脚本时，需要检测有些目录下的文件是系统自带的，除core插件外，其他插件中不允许出现系统自带的文件
+
+这里允许有的目录结构
+plugin/[插件名称]/   这个下面仅允许放html，如果他牵涉到后台界面的html，需要遵守文件路径与路由相匹配的规则
+static/plugin/[插件名称]/    这个下面放img css js data等等需要使用到的静态资源，html文件中链接调用，扩展js也可以使用
+library/layui/extends/      这个下面放layui的扩展js，如果需要使用到这个，一般是插件本身是一个表单元素插件
+library/layui/css/extends/  这个下面放layui扩展js需要使用到的css，css中如果需要使用图片，请自行使用图片的base64编码，或者调用static目录下的图片
+

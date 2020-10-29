@@ -28,8 +28,7 @@
         "topthink/think-migration": "^3.0",
         "topthink/think-helper": "^3.1",
         "topthink/think-captcha": "^3.0",
-        "topthink/think-ide-helper": "^1.0",
-        "topthink/think-swoole": "^3.0"
+      "topthink/think-ide-helper": "^1.0"
     },
     "require-dev": {
         "symfony/var-dumper": "^4.2",
@@ -38,7 +37,7 @@
     "autoload": {
         "psr-4": {
             "app\\": "app",
-            "addons\\": "addons"
+          "plugin\\": "plugin"
         },
         "psr-0": {
             "": "extend/"

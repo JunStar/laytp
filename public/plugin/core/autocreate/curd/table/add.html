@@ -1,0 +1,58 @@
+<div class="popup-content">
+    <form class="layui-form">
+        <div class="layui-form-item">
+            <label class="layui-form-label">
+                <text style="color:red;">*</text>
+                数据库</label>
+            <div class="layui-input-block">
+                <select name="database"
+                        data-source="/plugin/core/autocreate.curd/getDatabaseList"
+                        data-valueField="database"
+                        data-showField="database"
+                ></select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">
+                <text style="color:red;">*</text>
+                表名</label>
+            <div class="layui-input-block">
+                <input type="text" name="table" placeholder="请输入表名" class="layui-input" lay-verify="required"
+                       lay-verType="tips" autocomplete="off">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">
+                <text style="color:red;">*</text>
+                表注释</label>
+            <div class="layui-input-block">
+                <input type="text" name="comment" placeholder="请输入表注释" class="layui-input" lay-verify="required"
+                       lay-verType="tips" autocomplete="off">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">
+                <text style="color:red;">*</text>
+                存储引擎</label>
+            <div class="layui-input-block">
+                <input type="text" name="engine" placeholder="请输入存储引擎，例：InnoDB，MySIAM" class="layui-input"
+                       lay-verify="required"
+                       lay-verType="tips">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label" title="字符集(排序规则)">
+                <text style="color:red;">*</text>
+                字符集（排序规则）</label>
+            <div class="layui-input-block">
+                <input type="text" name="collation" placeholder="请输入字符集(排序规则)，例：utf8mb4_general_ci" class="layui-input"
+                       lay-verify="required"
+                       lay-verType="tips">
+            </div>
+        </div>
+    </form>
+</div>
