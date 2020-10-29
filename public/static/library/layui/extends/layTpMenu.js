@@ -21,9 +21,16 @@ layui.define([
         formatRule: function (rule) {
             rule = facade.trim(rule, "/");
             let ruleArr = rule.split("/");
-            appName = ruleArr[0];
-            controller = ruleArr[1];
-            action = ruleArr[2];
+            if (ruleArr[0] === "plugin") {
+                appName = ruleArr[0] + "/" + ruleArr[1];
+                controller = ruleArr[2];
+                action = ruleArr[3];
+            } else {
+                appName = ruleArr[0];
+                controller = ruleArr[1];
+                action = ruleArr[2];
+            }
+            apiPrefix = appName + "/" + controller + "/";
             return true;
         },
 
@@ -34,13 +41,13 @@ layui.define([
                 return false;
             }
             layTpMenu.formatRule(rule);
-            // var url = layTpMenu.getHtmlUrl(rule) + "?v="+Math.random();
-            var url = facade.getHtmlUrl(rule);
-            facade.editHistory("/a/index.html?ref=" + layTpMenuId);
+            let url = facade.getHtmlUrl(facade.url(rule));
+            facade.editHistory("/admin/index.html?ref=" + layTpMenuId + "&rule=" + rule);
             $.ajax({
                 url: url,
                 success: function (res) {
                     $("#box").html(res);
+                    layui.layTpForm.render();
                     layui.form.render();
                 },
                 error: function (xhr) {
@@ -50,6 +57,7 @@ layui.define([
                             break;
                         case 500:
                         case 502:
+                        case 504:
                             facade.error(xhr["responseText"], "异常提示");
                             break;
                     }
@@ -58,38 +66,25 @@ layui.define([
         },
 
         /**
-         * 内部使用方法，获取到能展示的所有菜单列表
-         */
-        getMenuJson: function (treeData) {
-            let key;
-            for (key in treeData) {
-                if (treeData[key]) {
-
-                }
-            }
-        },
-
-        /**
          * 渲染菜单，如果需要实时渲染菜单，可以使用此方法
          */
         render: function () {
-            //ajax请求接口，获取到能显示的菜单数据
-            facade.ajax({path: "/admin/auth.menu/getData", async: false, successAlert: false}).done(function (res) {
-                if (res["code"] === 0) {
-                    menuJson = res.data.treeData;
-                    authJson = res.data.listData;
-                    selectMenuIds = layTpMenu.getSelectMenuIds(authJson);
-                }
-            });
+            menuTree = menu.menuTree;//菜单树，用于渲染界面上的菜单
+            menuList = menu.menuList;//菜单列表，非树形结构，用于循环获取已经选择的菜单
+            if (menuList && menuList.length === 0) {
+                facade.error("您无任何权限，请联系管理员");
+            }
+            selectedMenuIds = layTpMenu.getSelectedMenuIds(menuList);
 
             //渲染菜单
             layTpMenu.renderMenu();
 
             //渲染右侧页面
-            let ref = parseInt(facade.getUrlParam('ref'));
-            for (k in authJson) {
-                if (authJson[k].id === ref) {
-                    layTpMenu.ajaxRenderPage(authJson[k].rule, ref);
+            let lastMenuId = selectedMenuIds[selectedMenuIds.length - 1];
+            let k;
+            for (k in menuList) {
+                if (menuList[k].id === lastMenuId) {
+                    layTpMenu.ajaxRenderPage(menuList[k].rule, lastMenuId);
                     break;
                 }
             }
@@ -99,33 +94,52 @@ layui.define([
          * 内部使用方法，根据Url中的ref参数，获取需要选中的菜单id数组
          * @returns {*|Array}
          */
-        getSelectMenuIds: function (authJson) {
+        getSelectedMenuIds: function (menuList) {
             let ref = parseInt(facade.getUrlParam('ref'));
             if (ref > 0) {
-                return layTpMenu.getSelectMenuPid(authJson, ref);
+                let selectedMenuIds = layTpMenu.getSelectedMenuPid(menuList, ref);
+                if (selectedMenuIds.length === 0) {
+                    return layTpMenu.getDefaultSelectedMenuPid(menuTree);
+                }
+                return selectedMenuIds;
             } else {
-
+                return layTpMenu.getDefaultSelectedMenuPid(menuTree);
             }
         },
 
         /**
          * 内部使用方法，当ref存在时，根据菜单原始数据和url的ref参数，设置应该选中的菜单id数组
-         * @param authJson
+         * @param menuList
          * @param ref
          * @returns {Array}
          */
-        getSelectMenuPid: function (authJson, ref) {
+        getSelectedMenuPid: function (menuList, ref) {
             let key;
-            for (key in authJson) {
-                if (authJson[key].id === ref) {
-                    selectMenuIds.push(ref);
-                    if (authJson[key].pid > 0) {
-                        layTpMenu.getSelectMenuPid(authJson, authJson[key].pid);
+            for (key in menuList) {
+                if (menuList[key].id === ref) {
+                    selectedMenuIds.unshift(ref);
+                    if (menuList[key].pid > 0) {
+                        layTpMenu.getSelectedMenuPid(menuList, menuList[key].pid);
                     }
                     break;
                 }
             }
-            return selectMenuIds;
+            return selectedMenuIds;
+        },
+
+        /**
+         * 内部使用方法，当ref不存在时，设置应该选中的菜单id数组
+         * @param menuTree
+         * @returns {Array}
+         */
+        getDefaultSelectedMenuPid: function (menuTree) {
+            if (menuTree && menuTree[0] && menuTree[0].id) {
+                selectedMenuIds.push(menuTree[0].id);
+                if (menuTree[0].children.length > 0) {
+                    layTpMenu.getDefaultSelectedMenuPid(menuTree[0].children);
+                }
+            }
+            return selectedMenuIds;
         },
 
         /**
@@ -134,23 +148,23 @@ layui.define([
         renderMenu: function () {
             let topMenuHtml = "";
             let menuClass = "";
-            let defaultLeftMenuJson;
+            let defaultLeftMenuTree;
             let key;
-            for (key in menuJson) {
-                if (menuJson[key]["pid"] === 0) {
-                    if (facade.inArray(menuJson[key]["id"], selectMenuIds)) {
-                        defaultLeftMenuJson = menuJson[key]["children"];
+            for (key in menuTree) {
+                if (menuTree[key]["pid"] === 0) {
+                    if (facade.inArray(menuTree[key]["id"], selectedMenuIds)) {
+                        defaultLeftMenuTree = menuTree[key]["children"];
                     }
-                    menuClass = (facade.inArray(menuJson[key]["id"], selectMenuIds)) ? "layui-nav-item layui-this" : "layui-nav-item";
+                    menuClass = (facade.inArray(menuTree[key]["id"], selectedMenuIds)) ? "layui-nav-item layui-this" : "layui-nav-item";
                     topMenuHtml += "<li class=\"" + menuClass + "\">" +
-                        "                <a href=\"javascript:;\" rule=\"" + menuJson[key]["rule"] + "\" menu_id=\"" + menuJson[key]["id"] + "\">" +
-                        "                    <i class=\"" + menuJson[key]["icon"] + "\"></i> " + menuJson[key]["name"] + "" +
+                        "                <a href=\"javascript:;\" rule=\"" + menuTree[key]["rule"] + "\" menu_id=\"" + menuTree[key]["id"] + "\">" +
+                        "                    <i class=\"" + menuTree[key]["icon"] + " margin-right5\"></i>" + menuTree[key]["name"] + "" +
                         "                </a>" +
                         "            </li>";
                 }
             }
             $('#layTpTopMenu').html(topMenuHtml);
-            layTpMenu.renderLeft(defaultLeftMenuJson);
+            layTpMenu.renderLeft(defaultLeftMenuTree);
         },
 
         /**
@@ -161,10 +175,10 @@ layui.define([
             let key;
             let menuClass = "";
             for (key in subMenu) {
-                menuClass = (facade.inArray(subMenu[key]["id"], selectMenuIds)) ? "layui-nav-item layui-nav-itemed" : "layui-nav-item";
+                menuClass = (facade.inArray(subMenu[key]["id"], selectedMenuIds)) ? "layui-nav-item layui-nav-itemed" : "layui-nav-item";
                 subStr += "<li class=\"" + menuClass + "\">";
                 subStr += "<a href=\"javascript:;\" rule=\"" + subMenu[key].rule + "\" menu_id=\"" + subMenu[key].id + "\">\n" +
-                    "       <i class=\"" + subMenu[key].icon + "\"></i> " + subMenu[key].name +
+                    "       <i class=\"" + subMenu[key].icon + " margin-right5\"></i>" + subMenu[key].name +
                     "       </a>";
                 if (subMenu[key].children != null && subMenu[key].children.length > 0) {
                     subStr += layTpMenu.getChildHtml(subMenu[key].children, 0);
@@ -190,18 +204,18 @@ layui.define([
             subStr += "<dl class=\"layui-nav-child\">\n";
             for (key in subMenu) {
                 if (subMenu[key].children != null && subMenu[key].children.length > 0) {
-                    menuClass = (facade.inArray(subMenu[key]["id"], selectMenuIds)) ? "layui-nav-item layui-nav-itemed" : "layui-nav-item";
+                    menuClass = (facade.inArray(subMenu[key]["id"], selectedMenuIds)) ? "layui-nav-item layui-nav-itemed" : "layui-nav-item";
                     subStr += "<dd class=\"" + menuClass + "\">\n" +
                         "       <a style=\"margin-Left:" + (num * childMenuMarginLeft) + "px\" href=\"javascript:;\" rule=\"" + subMenu[key].rule + "\" menu_id=\"" + subMenu[key].id + "\">\n" +
-                        "           <i class=\"" + subMenu[key].icon + "\"></i> " + subMenu[key].name + "\n" +
+                        "           <i class=\"" + subMenu[key].icon + " margin-right5\"></i>" + subMenu[key].name + "\n" +
                         "       </a>";
                     subStr += layTpMenu.getChildHtml(subMenu[key].children, num);
                     subStr += "</dd>";
                 } else {
-                    menuClass = (facade.inArray(subMenu[key]["id"], selectMenuIds)) ? "layui-nav-itemed" : "";
+                    menuClass = (facade.inArray(subMenu[key]["id"], selectedMenuIds)) ? "layui-nav-itemed" : "";
                     subStr += "<dd class=\"" + menuClass + "\">\n" +
                         "       <a style=\"margin-Left:" + (num * childMenuMarginLeft) + "px\" href=\"javascript:;\" rule=\"" + subMenu[key].rule + "\" menu_id=\"" + subMenu[key].id + "\">\n" +
-                        "       <i class=\"" + subMenu[key].icon + "\"></i> " + subMenu[key].name + "\n" +
+                        "       <i class=\"" + subMenu[key].icon + " margin-right5\"></i>" + subMenu[key].name + "\n" +
                         "       </a>\n" +
                         "   </dd>"
                 }

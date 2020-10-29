@@ -1,0 +1,34 @@
+/* 自定义主题方案,系统升级时此文件永远不会被覆盖
+ * 主题代码命名规则：只能使用字母、数字、下划线、破折号，且前后必须保留6个*号，以方便系统自动加载识别
+ * 系统默认主题代码命名采用100以内的纯数字，为避免冲突，请不要使用100以内的数字
+*/
+
+/*示例主题*/
+/******example******/
+.laytp-theme-item-example {
+    background-color: #336633
+}
+
+.laytp-theme-example {
+    --laytp-head-bg: #336633;
+    --laytp-side-bg: #eef1f5;
+    --laytp-layui-form-checked: #336633;
+    --laytp-layui-nav-bar: #336633;
+    --laytp-layui-nav-item-a-bg: #eff2f6;
+    --laytp-layui-nav-item-a-c: #48576a;
+    --laytp-layui-nav-child-a-bg: #e5e9f2;
+    --laytp-layui-nav-child-a-c: #48576a;
+    --laytp-layui-nav-child-a-c-hover: #d1dbe5;
+    --laytp-layui-side-i: #48566a;
+    --laytp-layui-side-layui-this-a: #336633;
+    --laytp-side-layui-nav-more: #48566a;
+    --laytp-layui-tab-title: #f9f9f9;
+    --laytp-layui-nav-bar: #336633;
+    --laytp-layui-btn-default: #336633;
+    --laytp-layui-btn-primary: #fff;
+    --laytp-layui-btn-primary-hover: #336633;
+    --laytp-layui-form-radio-hover: #336633;
+    --laytp-layui-laypage-em: #336633;
+    --laytp-border-color: #336633;
+    --laytp-layui-form-label: #666;
+}

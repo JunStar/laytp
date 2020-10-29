@@ -1,0 +1,42 @@
+<div class="layui-tab-content">
+    <table id="mysql-table" lay-filter="mysql-table"></table>
+</div>
+
+<script type="text/javascript" src="/static/plugin/autocreate/js/curd/table.js" charset="utf-8"></script>
+
+<!-- 数据库-数据表顶部按钮开始 -->
+<script type="text/html" id="mysql_table_toolbar">
+    {{# if(facade.hasAuth(apiPrefix + "add")){ }}
+    <a class="layui-btn layui-btn-default layui-btn-sm layui-icon layui-icon-add-1" lay-event="add">&nbsp;添 加</a>
+    {{# } }}
+    {{# if(facade.hasAuth(apiPrefix + "create")){ }}
+    <a class="layui-btn layui-btn-normal layui-btn-sm fa fa-bolt" lay-event="create">&nbsp;生成常规CURD</a>
+    {{# } }}
+    {{# if(facade.hasAuth(apiPrefix + "createCategory")){ }}
+    <a class="layui-btn layui-btn-sm fa fa-bolt" lay-event="createCategory">&nbsp;生成分类CURD</a>
+    {{# } }}
+    {{# if(facade.hasAuth(apiPrefix + "del")){ }}
+    <a class="layui-btn layui-btn-danger layui-btn-sm layui-icon layui-icon-delete" lay-event="del">&nbsp;删 除</a>
+    {{# } }}
+</script>
+<!-- 数据库-数据表顶部按钮结束 -->
+
+<!-- 数据库-数据表表格每行操作按钮开始 -->
+<script type="text/html" id="mysql_table_operation">
+    <div class="layui-btn-group">
+        {{# if(facade.hasAuth(apiPrefix + "fieldList")){ }}
+        <a class="layui-btn layui-btn-default layui-btn-xs fa fa-list-ul" lay-event="field-list">设置字段</a>
+        {{# } }}
+        {{# if(facade.hasAuth(apiPrefix + "create")){ }}
+        <a class="layui-btn layui-btn-normal layui-btn-xs fa fa-bolt" lay-event="create">&nbsp;生成常规CURD</a>
+        {{# } }}
+        {{# if(facade.hasAuth(apiPrefix + "createCategory")){ }}
+        <a class="layui-btn layui-btn-xs fa fa-bolt" lay-event="create-category">&nbsp;生成分类CURD</a>
+        {{# } }}
+        {{# if(facade.hasAuth(apiPrefix + "delTable")){ }}
+        <a class="layui-btn layui-btn-danger layui-btn-xs layui-icon layui-icon-delete"
+           lay-event="del-table">&nbsp;删除</a>
+        {{# } }}
+    </div>
+</script>
+<!-- 数据库-数据表表格每行操作按钮结束 -->

@@ -6,7 +6,7 @@ laytp2.0是基于ThinkPHP6和Layui的极速后台开发框架
 laytp官网：www.laytp.com
 
 #### 软件架构
-laytp2.0前后端完全分离
+软件架构说明
 
 
 #### 安装教程

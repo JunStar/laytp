@@ -1239,4 +1239,4 @@ layui.define([], function (exports) {
     exports('notice', $iziToast);
     layui.notice = $iziToast;
     window.notice = $iziToast;
-}).addcss("modules/notice.css","skinnoticecss");
+}).addcss("extends/notice.css", "skinnoticecss");

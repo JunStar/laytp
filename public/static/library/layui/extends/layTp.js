@@ -16,6 +16,7 @@ layui.define([
     , "notice"
     , "xmSelect"
     , "layTpUpload"
+    , "layTpIcon"
 ], function (exports) {
     const MOD_NAME = "layTp";
 
@@ -42,33 +43,124 @@ layui.define([
     /**
      * 监听数据表格顶部左侧默认按钮点击事件
      */
-    layTp.tableToolbar = function (obj) {
+    layTp.tableToolbar = function (obj, isTreeTable) {
         if (obj.event === "add") {
             let options = {};
             options.title = "添 加";
-            options.url = facade.url("/admin/" + controller + "/add");
+            options.path = apiPrefix + "add";
             options.data = obj.data;
             facade.popupDiv(options);
+        } else if (obj.event === "edit") {
+            let checkData;
+            if (isTreeTable) {
+                checkData = layTpTreeTable.checkStatus(false);
+            } else {
+                let checkStatus = layui.table.checkStatus(obj.config.id);
+                checkData = checkStatus.data;
+            }
+            if (checkData.length === 0) {
+                facade.error("请选择数据");
+                return false;
+            }
+            if (checkData.length >= 30) {
+                facade.error("选择数据量过多，最多选择30条数据，总共选择了" + checkData.length + "条数据");
+                return false;
+            }
+            let key;
+            for (key in checkData) {
+                facade.popupDiv({
+                    title: "编辑",
+                    path: apiPrefix + "edit",
+                    data: checkData[key],
+                });
+            }
+        } else if (obj.event === "del") {
+            let checkData;
+            if (isTreeTable) {
+                checkData = layTpTreeTable.checkStatus(false);
+            } else {
+                let checkStatus = layui.table.checkStatus(obj.config.id);
+                checkData = checkStatus.data;
+            }
+            if (checkData.length === 0) {
+                facade.error("请选择数据");
+                return false;
+            }
+            let ids = [];
+            let key;
+            for (key in checkData) {
+                ids.push(checkData[key].id);
+            }
+            facade.popupConfirm({text: "确定删除么?", path: apiPrefix + "del", params: {ids: ids.join(",")}});
         } else if (obj.event === "show-hidden-search-form") {
             if ($("#search-form").css("display") === "none") {
+                $("[lay-event='show-hidden-search-form']").html(" 隐藏搜索");
                 $("#search-form").show();
             } else {
+                $("[lay-event='show-hidden-search-form']").html(" 展开搜索");
                 $("#search-form").hide();
             }
         } else if (obj.event === "show-hidden-recycle-search-form") {
             if ($("#recycle-search-form").css("display") === "none") {
+                $("[lay-event='show-hidden-recycle-search-form']").html(" 隐藏搜索");
                 $("#recycle-search-form").show();
             } else {
+                $("[lay-event='show-hidden-recycle-search-form']").html(" 展开搜索");
                 $("#recycle-search-form").hide();
             }
         } else if (obj.event === "recycle") {
             let options = {};
             options.title = "回收站";
-            options.url = facade.url("/admin/" + controller + "/recycle");
-            options.data = obj.data;
+            options.path = apiPrefix + "recycle";
             options.btn = "";
             options.height = "80%";
             facade.popupDiv(options);
+        } else if (obj.event === "restore") {
+            let checkData;
+            if (isTreeTable) {
+                checkData = layTpTreeTable.checkStatus(false);
+            } else {
+                let checkStatus = layui.table.checkStatus(obj.config.id);
+                checkData = checkStatus.data;
+            }
+            if (checkData.length === 0) {
+                facade.error("请选择数据");
+                return false;
+            }
+            let key;
+            let ids = [];
+            for (key in checkData) {
+                ids.push(checkData[key].id);
+            }
+            facade.ajax({path: apiPrefix + "restore", params: {ids: ids.join(",")}}).done(function (res) {
+                if (res.code === 0) {
+                    funController.tableRender();
+                    funRecycleController.tableRender();
+                }
+            });
+        } else if (obj.event === "trueDel") {
+            let checkData;
+            if (isTreeTable) {
+                checkData = layTpTreeTable.checkStatus(false);
+            } else {
+                let checkStatus = layui.table.checkStatus(obj.config.id);
+                checkData = checkStatus.data;
+            }
+            if (checkData.length === 0) {
+                facade.error("请选择数据");
+                return false;
+            }
+
+            let key;
+            let ids = [];
+            for (key in checkData) {
+                ids.push(checkData[key].id);
+            }
+            facade.popupConfirm({
+                text: "真的在回收站删除么？此次删除将不能还原",
+                path: apiPrefix + "trueDel",
+                params: {ids: ids.join(",")}
+            });
         }
     };
 
@@ -77,22 +169,26 @@ layui.define([
      */
     layTp.tableTool = function (obj) {
         if (obj.event === "del") {
-            facade.popupConfirm({text:"真的删除么?", url:"/admin/" + controller + "/del", params:{ids: obj.data.id}});
+            facade.popupConfirm({text: "真的删除么?", path: apiPrefix + "del", params: {ids: obj.data.id}});
         } else if (obj.event === "edit") {
             let options = {};
             options.title = "编 辑";
-            options.url = facade.url("/admin/" + controller + "/edit");
+            options.path = apiPrefix + "edit";
             options.data = obj.data;
             facade.popupDiv(options);
         } else if (obj.event === "restore") {
-            facade.ajax({path: "admin/" + controller + "/restore", params: {ids: obj.data.id}}).done(function (res) {
+            facade.ajax({path: apiPrefix + "restore", params: {ids: obj.data.id}}).done(function (res) {
                 if (res.code === 0) {
-                    funcController.tableRender();
-                    funcRecycleController.tableRender();
+                    funController.tableRender();
+                    funRecycleController.tableRender();
                 }
             });
         } else if (obj.event === "trueDel") {
-            facade.popupConfirm({text:"真的删除么?", url:"/admin/" + controller + "/trueDel", params:{ids: obj.data.id}});
+            facade.popupConfirm({
+                text: "真的在回收站删除么？此次删除将不能还原",
+                path: apiPrefix + "trueDel",
+                params: {ids: obj.data.id}
+            });
         }
     };
 
@@ -104,38 +200,59 @@ layui.define([
          * - ajax过度效果设置
          */
         ajaxSet: function () {
-            var layTpAdminToken = facade.getCookie("laytp_admin_token");
-            var loading;
+            let loading;
             $.ajaxSetup({
+                timeout: 30000,
                 headers: {
-                    "LayTp-Admin-Token": layTpAdminToken
+                    "LayTp-Admin-Token": facade.getCookie("laytp_admin_token"),
+                    "Cache-Control": "no-cache"
                 },
                 beforeSend: function () {
                     loading = facade.loading();
                 },
-                complete: function (xhr) {
+                complete: function () {
                     layui.layer.close(loading);
                 }
             });
         },
 
         /**
+         * 获取所有缓存信息
+         */
+        config: function () {
+            if (facade.getCookie("laytp_admin_token")) {
+                facade.ajax({
+                    path: "plugin/core/common/getCache",
+                    async: false,
+                    successAlert: false
+                }).done(function (res) {
+                    sysConf = res.data["sysConf"] ? res.data["sysConf"] : "";
+                    user = res.data["user"] ? res.data["user"] : "";
+                    menu = res.data["menu"] ? res.data["menu"] : "";
+                    authList = menu.authList;
+                    //判断上传方式，设置访问上传资源的域名
+                    // if(sysConf.upload.type === "qiniu"){
+                    //     sysConf.upload.domain = "http://qiniuyun.com";
+                    // }
+                });
+            }
+        },
+
+        /**
          * 点击按钮弹出表单层 - 使用例子：数据表格顶部的添加按钮
          * 所有拥有popup-div类名的节点，点击后都会弹出层
-         *  data-name弹窗标题，默认为当前节点的html()
-         *  data-open弹窗展示的url地址，非必填，data-open或者data-action二选一必填,优先使用data-open
-         *  data-action弹窗展示的action地址，非必填，data-open或者data-type二选一必填,优先使用data-open，例：add
-         *  data-btn弹出层底部按钮，只有两种设置方式，1.不设置，表示弹出一个表单，底部展示['确定','取消']两个按钮，点击确定按钮可以提交表单。2.设置为空字符串，表示弹出一个非表单层，仅展示页面，底部没有按钮，其他复杂的弹出层，比如有三个或者三个以上按钮，请自行编写JS实现
-         *  data-width属性为弹窗的宽度百分比，非必填，默认值在/a/index.html中设置
-         *  data-height属性为弹窗的高度百分比，非必填，默认值在/a/index.html中设置
-         *  data-shade属性为弹窗背景阴影，非必填，默认值在/a/index.html中设置
-         *  data-params属性为节点id属性值，非必填，多个以逗号隔开，有这个值的话，会获取这些节点的值，拼接到url中，用途是当弹出层需要先使用表单填写一些数据然后再将填写的数据传入弹出层时使用
+         *  data-name 弹窗标题，默认为当前节点的html()
+         *  data-path 必填,弹窗展示的路由地址
+         *  data-params 属性为节点id属性值，非必填，多个以逗号隔开，有这个值的话，会获取这些节点的值，拼接到url中，用途是当弹出层需要先使用表单填写一些数据然后再将填写的数据传入弹出层时使用
+         *  data-btn 弹出层底部按钮，只有两种设置方式，1.不设置，表示弹出一个表单，底部展示['确定','取消']两个按钮，点击确定按钮可以提交表单。2.设置为空字符串，表示弹出一个非表单层，仅展示页面，底部没有按钮，其他复杂的弹出层，比如有三个或者三个以上按钮，请自行编写JS实现
+         *  data-width 属性为弹窗的宽度百分比，非必填，默认值在/a/index.html中设置
+         *  data-height 属性为弹窗的高度百分比，非必填，默认值在/a/index.html中设置
+         *  data-shade 属性为弹窗背景阴影，非必填，默认值在/a/index.html中设置
          */
         popupDiv: function () {
             $(document).off("click", ".popup-div").on("click", ".popup-div", function () {
-                var options = {};
+                let options = {};
                 options.title = $(this).data("title") ? $(this).data("title") : $(this).html();
-                let url = $(this).data("open") ? $(this).data("open") : "/a/" + controller + "/" + $(this).data("action") + ".html";
                 options.width = $(this).data("width");
                 if (options.width) options.width = defaultWidthPopupDiv;
                 options.height = $(this).data("height");
@@ -146,11 +263,13 @@ layui.define([
                 if (options.btn === "") {
                     options.btn = false;
                 }
+                options.path = $(this).data("path");
                 let paramsIds = $(this).data("params");
                 let params = {};
                 if (paramsIds) {
                     let labelTitle = "";
                     let arrParamsIds = paramsIds.split(",");
+                    let key;
                     for (key in arrParamsIds) {
                         if (!$("#" + arrParamsIds[key]).val()) {
                             facade.error("请输入" + labelTitle);
@@ -160,57 +279,69 @@ layui.define([
                         }
                     }
                 }
-                options.url = facade.url(url, params);
+                options.params = params;
                 facade.popupDiv(options);
             });
         },
 
         /**
          * 监听下拉菜单点击事件
+         * data-path 请求路由
+         * data-params 路由参数
+         * data-needData 是否需要选择数据表格的复选框
+         * data-tableId 数据表格id
+         * data-switchType 操作类型，popupDiv=弹出层，popupConfirm=弹出确认框，为空表示直接ajax请求路由地址
+         * data-width 弹出层宽度
+         * data-height 弹出层高度
+         * data-callback 回调函数名称
+         * data-callbackParam 回调函数参数
          */
         dropDownAction: function () {
             $(document).off("click", ".dropdown-action").on("click", ".dropdown-action", function () {
                 //执行callback
-                let callback = $(this).attr("callback");
+                let callback = $(this).data("callback");
                 if (callback !== undefined && callback !== "undefined" && callback !== "") {
-                    let param = $(this).attr("param");
-                    eval(callback + "(" + param + ")");
+                    let callbackParam = $(this).data("callbackparam");
+                    eval(callback + "(" + callbackParam + ")");
                     return true;
                 }
-                let uri = $(this).attr("uri");
-                if (uri === undefined) {
-                    return false;
+                let path = $(this).data("path");
+                if (path === undefined) {
+                    facade.error("dropDown插件的options.path参数未定义");
                 }
-                let field = $(this).attr("field");
-                let field_val = $(this).attr("field_val");
-                let need_data = $(this).attr("need_data");
-                let width = $(this).attr("width") ? $(this).attr("width") : defaultWidthPopupDiv;
-                let height = $(this).attr("height") ? $(this).attr("height") : defaultHeightPopupDiv;
-                let need_refresh = $(this).attr("need_refresh");
-                let table_id = $(this).attr("table_id");
+                let params = $(this).data("params") ? eval("(" + $(this).data("params") + ")") : {};
+                let needData = $(this).data("needdata");
+                let width = $(this).data("width") ? $(this).data("width") : defaultWidthPopupDiv;
+                let height = $(this).data("height") ? $(this).data("height") : defaultHeightPopupDiv;
+                let tableId = $(this).data("tableid");
                 let text = $(this).text();
-                let switch_type = $(this).attr("switch_type");
+                let switchType = $(this).data("switchtype");
                 let checkData;
-                if (need_data === "true") {
-                    if (table_id.indexOf("tree-table") !== -1) {
+                if (needData) {
+                    if (tableId.indexOf("tree-table") !== -1) {
                         checkData = layTpTreeTable.checkStatus(false);
                     } else {
-                        var checkStatus = layui.table.checkStatus(table_id);
+                        let checkStatus = layui.table.checkStatus(tableId);
                         checkData = checkStatus.data;
                     }
                     if (checkData.length === 0) {
                         facade.error("请选择数据");
                         return false;
                     }
+                    if (checkData.length >= 30) {
+                        facade.error("批量操作，选择了" + checkData.length + "条数据，最多同时选择30条数据");
+                        return false;
+                    }
                 }
                 let key;
-                switch (switch_type) {
+                switch (switchType) {
                     case "popupDiv":
-                        if (need_data === "true") {
+                        if (needData) {
                             for (key in checkData) {
                                 facade.popupDiv({
                                     title: text,
-                                    url: uri,
+                                    path: path,
+                                    params: params,
                                     data: checkData[key],
                                     width: width,
                                     height: height
@@ -219,45 +350,74 @@ layui.define([
                         } else {
                             facade.popupDiv({
                                 title: text,
-                                url: uri,
+                                path: path,
+                                params: params,
                                 width: width,
                                 height: height
                             });
                         }
                         break;
                     case "popupConfirm":
-                        let ids_arr = [];
-                        let data = {};
-                        if (need_data === "true") {
+                        let idsArr = [];
+                        let idParams = {};
+                        if (needData) {
                             for (key in checkData) {
-                                ids_arr.push(checkData[key].id);
+                                idsArr.push(checkData[key].id);
                             }
-                            let ids = ids_arr.join(",");
-                            data = {"ids": ids, "field": field, "field_val": field_val};
+                            idParams.ids = idsArr.join(",");
                         }
-                        facade.popupConfirm({text:"确定" + text + "么?", url:facade.url(uri), params:data});
+                        let popupConfirmText = "";
+                        if (text === "删除") {
+                            popupConfirmText = "真的在回收站删除么？此次删除将不能还原";
+                        } else {
+                            popupConfirmText = "确定" + text + "么?"
+                        }
+                        facade.popupConfirm({text: popupConfirmText, path: path, params: idParams});
                         break;
                     default:
-                        if (need_data === "true") {
-                            var ids = [];
+                        if (needData) {
+                            let ids = [];
                             for (key in checkData) {
                                 ids.push(checkData[key].id);
                             }
-                            facade.ajax({path: uri, params: {ids: ids.join(",")}}).done(function (res) {
+                            facade.ajax({path: path, params: {ids: ids.join(",")}}).done(function (res) {
                                 if (res.code === 0) {
-                                    funcController.tableRender();
-                                    if (typeof funcRecycleController !== "undefined") {
-                                        funcRecycleController.tableRender();
+                                    funController.tableRender();
+                                    if (typeof funRecycleController !== "undefined") {
+                                        funRecycleController.tableRender();
                                     }
                                 }
                             });
                         } else {
-                            facade.ajax({path: uri});
+                            facade.ajax({path: path, params: params});
                         }
                         break;
                 }
             });
-        }
+        },
+
+        /**
+         * 监听数据表格顶部，tab切换
+         *  只有数据表格顶部才有Tab切换，回收站的数据表格顶部不生成Tab切换
+         *  <li class="layui-this laytp-tab-click-search" data-field="is_super_manager" data-value="">全部</li>
+         <li class="laytp-tab-click-search" data-field="is_super_manager" data-value="1">超管</li>
+         <li class="laytp-tab-click-search" data-field="is_super_manager" data-value="2">非超管</li>
+         */
+        tabClickSearch: function () {
+            $(document).off("click", ".laytp-tab-click-search").on("click", ".laytp-tab-click-search", function () {
+                let field = $(this).data('field');
+                if (!field) facade.error("tab的字段名未定义");
+                let value = $(this).data('value');
+                $("#" + field).val(value);
+                layui.form.render('select');
+                $("[lay-filter=laytp-search-form]").click();
+                if ($("#search-form").css("display") === "none") {
+                    $("[lay-event='show-hidden-search-form']").html(" 展开搜索");
+                } else {
+                    $("[lay-event='show-hidden-search-form']").html(" 隐藏搜索");
+                }
+            });
+        },
     };
 
     layui.each(layTp.init, function (key, item) {

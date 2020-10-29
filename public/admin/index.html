@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>LayTp2.0后台开发框架</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <!--[if lt IE 9]>
+    <script src="/static/library/html5shiv.min.js"></script>
+    <script src="/static/library/respond.min.js"></script>
+    <![endif]-->
+    <!-- 开始加载公用css文件 -->
+    <link rel="stylesheet" href="/static/library/layui/css/layui.css">
+    <link rel="stylesheet" href="/static/plugin/core/css/style.css" media="all">
+    <link rel="stylesheet" href="/static/plugin/core/css/prettify.css" media="all">
+    <link rel="stylesheet" href="/static/plugin/core/font_icon/font-awesome-4.7.0/css/font-awesome.css" media="all">
+    <!-- 结束加载公用css文件 -->
+    <!-- 开始设置全局js常量 -->
+    <script type="text/javascript">
+        let apiDomain = '';//请求后台接口域名。前后端完全分离，后台绑定独立域名，修改此值即可，不要以/结尾。注意，如果域名分开，那么自动生成插件，生成的html和js部分，可能将不能直接生成到分开的域名下，这取决于域名指向的文件夹物理地址是否不相同
+        let user;//登录用户信息
+        let sysConf;//后台系统配置
+        let menu;//菜单数据，是一个数组["treeNodes"=>"树形结构，用于角色管理，设置用户权限列表展示","menuTree"=>"菜单树，用于渲染顶部和左侧菜单","menuList"=>"菜单列表，方便循环得到当前应该选中的菜单","authTree"=>"权限树，暂时没地方用","authList"=>"权限列表，用于鉴权"]
+        let menuTree;//当前登录者，拥有的菜单树，用于渲染顶部和左侧菜单，等于menu.menuTree
+        let menuList;//当前登录者，拥有的菜单列表，方便循环得到当前应该选中的菜单，等于menu.menuList
+        let authList;//当前登录者，拥有的权限列表，用于鉴权
+        let pluginConf;//后台插件配置
+        let appName = '';//访问后台url的应用名，菜单路由规则分解得到，如果访问的是插件地址，这个值为plugin/[插件名称]
+        let controller = '';//访问后台url的控制器,框架已经将.换成了/，举例auth/menu
+        let action = '';//访问后台url的方法名,举例index
+        let apiPrefix = '';//请求后台接口的前缀，值 = appName + "/" + controller + "/"，末尾有/
+        let defaultWidthPopupDiv = '720px'; //facade.popupDiv()方法弹出层的默认宽度，单位支持px和%
+        let defaultHeightPopupDiv = '500px'; //facade.popupDiv()方法弹出层的默认宽度，单位支持px和%
+        let defaultShadePopupDiv = 0.01; //facade.popupDiv()方法弹出层的默认阴影，如果你想在弹出层展示时，允许用户对弹出层底下的其他菜单进行操作，此处设置为0即可
+        let defaultTableToolbar = ['add', 'edit', 'del', 'show-hidden-search-form', 'show-hidden-recycle-search-form', 'recycle', 'restore', 'trueDel'];//数据表格顶部左侧按钮，默认的按钮监听事件,lay-event的值,包括添加、筛选、回收站、回收站筛选，批量操作按钮不能监听点击事件，需要在每个js页面中进行初始化渲染
+        let defaultTableTool = ['edit', 'del', 'restore', 'trueDel'];//数据表格操作列，默认的按钮监听事件,lay-event的值,包括编辑、删除、还原、真实删除
+        let layTpTreeTable;//无限极分类数据表格渲染后的赋值，用于获取选中的数据表格数据
+        let selectedMenuIds = [];//选中的菜单ID数组
+        let defaultTheme = 21;//默认主题
+    </script>
+    <!-- 结束设置全局js常量 -->
+    <!-- 开始加载第三方js库 -->
+    <script type="text/javascript" src="/static/library/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/static/library/layui/layuiConfig.js" charset="utf-8"></script>
+    <!-- 结束加载第三方js库 -->
+</head>
+<body class="layui-layout-body laytp-theme-23" style="display:none;">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header" style="z-index:99999!important;">
+        <div class="fl header-logo" title="LayTp2.0极速后台开发框架LayTp2.0极速后台开发框架">LayTp2.0极速后台开发框架LayTp2.0极速后台开发框架</div>
+        <ul class="layui-nav fl nobg main-nav" id="layTpTopMenu">
+            <li class="layui-nav-item layui-this">
+                <a href="javascript:;" rule="/plugin/core/dashboard/index" menu_id="1">
+                    <i class=""></i> 控制台
+                </a>
+            </li>
+            <li class="layui-nav-item" rule="/plugin/core/dashboard/index" menu_id="2">
+                <a href="javascript:;">
+                    <i class=""></i> 控制台1
+                </a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <i class="layui-icon layui-icon-align-left" style="font-size: 15px;"></i>
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="javascript:;"><i class=""></i> 更多的菜单</a></dd>
+                </dl>
+            </li>
+        </ul>
+        <ul class="layui-nav layui-layout-right head-info">
+            <li class="layui-nav-item">
+                <a href="javascript:void(0);" class="fa fa-trash" id="laytp_clear_cache" title="清缓存"></a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="javascript:void(0);" class="layui-icon layui-icon-theme" id="laytp_theme" title="主题"></a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="javascript:void(0);" class="fa fa-lock" id="lock_screen" title="锁屏"></a>
+            </li>
+            <li class="layui-nav-item" style="padding: 0 15px">
+                <a href="javascript:void(0);">
+                    <img src="/static/plugin/core/img/default_avatar.png" class="layui-nav-img">
+                    <span class="laytp-nickname">admin</span>
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">个人设置</a></dd>
+                    <dd><a href="javascript:void(0);" laytp-event="logout">安全退出</a></dd>
+                </dl>
+            </li>
+        </ul>
+    </div>
+
+    <div class="layui-side">
+        <div class="user-panel hidden-xs">
+            <div class="pull-left image">
+                <a href="" class="addtabsit"><img src="/static/plugin/core/img/default_avatar.png"
+                                                  class="img-circle"></a>
+            </div>
+            <div class="pull-left info">
+                <p class="laytp-nickname">admin</p>
+                <span class="layui-badge-dot"
+                      style="position: relative; top: -2px; left: -4px;background-color: #18bc9c"></span> 在线
+            </div>
+        </div>
+        <div id="layTpLeftMenu">
+            <ul class="layui-nav layui-nav-tree">
+                <li class="layui-nav-item">
+                    <a href="javascript:;" rule="/plugin/core/dashboard/index" menu_id="2">
+                        <i class="layui-icon layui-icon layui-icon-share"></i> 快捷菜单</span>
+                    </a>
+                    <dl class="layui-nav-child">
+                        <dd class="layui-nav-item">
+                            <a style="margin-Left:20px" href="javascript:;" rule="/plugin/core/dashboard/index"
+                               menu_id="3">
+                                <i class="layui-icon layui-icon layui-icon-star-fill"></i> 后台首页
+                            </a>
+                            <dl class="layui-nav-child">
+                                <dd class="layui-nav-item">
+                                    <a style="margin-Left:40px" href="javascript:;" rule="/plugin/core/dashboard/index"
+                                       menu_id="3">
+                                        <i class="layui-icon layui-icon layui-icon-star-fill"></i> 后台首页
+                                    </a>
+                                    <dl class="layui-nav-child">
+                                        <dd>
+                                            <a style="margin-Left:60px" href="javascript:;"
+                                               rule="/plugin/core/dashboard/index" menu_id="3">
+                                                <i class="layui-icon layui-icon layui-icon-star-fill"></i> 后台首页
+                                            </a>
+                                        </dd>
+                                        <dd>
+                                            <a style="margin-Left:60px" href="javascript:;"
+                                               rule="/plugin/core/dashboard/index" menu_id="3">
+                                                <i class="layui-icon layui-icon layui-icon-star-fill"></i> 后台首页
+                                            </a>
+                                        </dd>
+                                    </dl>
+                                </dd>
+                                <dd class="layui-nav-item">
+                                    <a style="margin-Left:40px" href="javascript:;" rule="/plugin/core/dashboard/index"
+                                       menu_id="3">
+                                        <i class="layui-icon layui-icon layui-icon-star-fill"></i> 后台首页
+                                    </a>
+                                    <dl class="layui-nav-child">
+                                        <dd>
+                                            <a style="margin-Left:60px" href="javascript:;"
+                                               rule="/plugin/core/dashboard/index" menu_id="3">
+                                                <i class="layui-icon layui-icon layui-icon-star-fill"></i> 后台首页
+                                            </a>
+                                        </dd>
+                                        <dd>
+                                            <a style="margin-Left:60px" href="javascript:;"
+                                               rule="/plugin/core/dashboard/index" menu_id="3">
+                                                <i class="layui-icon layui-icon layui-icon-star-fill"></i> 后台首页
+                                            </a>
+                                        </dd>
+                                    </dl>
+                                </dd>
+                            </dl>
+                        </dd>
+                        <dd class="layui-nav-item">
+                            <a style="margin-Left:20px" href="javascript:;" rule="/plugin/core/dashboard/index"
+                               menu_id="3">
+                                <i class="layui-icon layui-icon layui-icon-star-fill"></i> 后台首页
+                            </a>
+                            <dl class="layui-nav-child">
+                                <dd class="layui-nav-item">
+                                    <a style="margin-Left:40px" href="javascript:;" rule="/plugin/core/dashboard/index"
+                                       menu_id="3">
+                                        <i class="layui-icon layui-icon layui-icon-star-fill"></i> 后台首页
+                                    </a>
+                                    <dl class="layui-nav-child">
+                                        <dd>
+                                            <a style="margin-Left:60px" href="javascript:;"
+                                               rule="/plugin/core/dashboard/index" menu_id="3">
+                                                <i class="layui-icon layui-icon layui-icon-star-fill"></i> 后台首页
+                                            </a>
+                                        </dd>
+                                        <dd>
+                                            <a style="margin-Left:60px" href="javascript:;"
+                                               rule="/plugin/core/dashboard/index" menu_id="3">
+                                                <i class="layui-icon layui-icon layui-icon-star-fill"></i> 后台首页
+                                            </a>
+                                        </dd>
+                                    </dl>
+                                </dd>
+                                <dd class="layui-nav-item">
+                                    <a style="margin-Left:40px" href="javascript:;" rule="/plugin/core/dashboard/index"
+                                       menu_id="3">
+                                        <i class="layui-icon layui-icon layui-icon-star-fill"></i> 后台首页
+                                    </a>
+                                    <dl class="layui-nav-child">
+                                        <dd>
+                                            <a style="margin-Left:60px" href="javascript:;"
+                                               rule="/plugin/core/dashboard/index" menu_id="3">
+                                                <i class="layui-icon layui-icon layui-icon-star-fill"></i> 后台首页
+                                            </a>
+                                        </dd>
+                                        <dd>
+                                            <a style="margin-Left:60px" href="javascript:;"
+                                               rule="/plugin/core/dashboard/index" menu_id="3">
+                                                <i class="layui-icon layui-icon layui-icon-star-fill"></i> 后台首页
+                                            </a>
+                                        </dd>
+                                    </dl>
+                                </dd>
+                            </dl>
+                        </dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;" rule="plugin/core/auth.user/index" menu_id="4">
+                        <i class="layui-icon layui-icon layui-icon-share"></i> 权限管理</span>
+                    </a>
+                    <dl class="layui-nav-child">
+                        <dd class="layui-this">
+                            <a style="margin-Left:20px" href="javascript:;" rule="plugin/core/auth.user/index"
+                               menu_id="5">
+                                <i class="layui-icon layui-icon layui-icon-star-fill"></i> 后台管理员
+                            </a>
+                        </dd>
+                        <dd>
+                            <a style="margin-Left:20px" href="javascript:;" rule="plugin/core/auth.role/index"
+                               menu_id="6">
+                                <i class="layui-icon layui-icon layui-icon-templeate-1"></i> 角色管理
+                            </a>
+                        </dd>
+                        <dd>
+                            <a style="margin-Left:20px" href="javascript:;" rule="plugin/core/auth.menu/index"
+                               menu_id="7">
+                                <i class="layui-icon layui-icon layui-icon-tabs"></i> 菜单管理
+                            </a>
+                        </dd>
+                        <dd>
+                            <a style="margin-Left:20px" href="javascript:;" rule="plugin/core/auth.menu/index"
+                               menu_id="8">
+                                <i class="layui-icon layui-icon layui-icon-tabs"></i> 请求日志
+                            </a>
+                        </dd>
+                    </dl>
+                </li>
+                <span class="layui-nav-bar" style="top: 22.5px; height: 0px; opacity: 0;"></span>
+            </ul>
+        </div>
+    </div>
+    <div class="layui-body">
+        <ul class="bread-crumbs">
+            <li>控制台 - 快捷菜单 - 后台首页</li>
+        </ul>
+        <div class="page-body" style="width:100%;height: calc(100% - 50px);">
+            <div class="layui-layout layui-layout-admin" style="height:100%;">
+                <div class="page-body" style="height:100%;">
+                    <div class="page-tab-content" style="height:100%;">
+                        <blockquote class="laytp-elem-quote layui-text">
+                            菜单说明
+                        </blockquote>
+                        <div id="box"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 底部固定区域 -->
+    <div class="layui-footer">
+        © <a href="http://www.laytp.com" target="_blank">www.laytp.com</a>
+    </div>
+</div>
+<script type="text/javascript" src="/static/plugin/core/js/index.js" charset="utf-8"></script>
+
+<!-- 公用的表格顶部按钮开始 -->
+<script type="text/html" id="default_toolbar">
+    {{#
+    if(
+    facade.hasAuth(apiPrefix + "edit")
+    || facade.hasAuth(apiPrefix + "del")
+    ){
+    }}
+    <div class="dropdown-menu">
+        <a class="layui-btn layui-btn-danger layui-btn-sm layui-icon layui-icon-drop">&nbsp;批量操作</a>
+        <ul class="dropdown-menu-nav layui-anim-upbit dropdown-bottom-left layui-anim">
+            <div class="dropdown-anchor"></div>
+            {{# if(facade.hasAuth(apiPrefix + "edit")){ }}
+            <li><a lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a></li>
+            {{# } }}
+            {{# if(facade.hasAuth(apiPrefix + "del")){ }}
+            <li><a lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a></li>
+            {{# } }}
+        </ul>
+    </div>
+    {{# } }}
+    {{# if(facade.hasAuth(apiPrefix + "add")){ }}
+    <a class="layui-btn layui-btn-default layui-btn-sm layui-icon layui-icon-add-1" lay-event="add">&nbsp;添 加</a>
+    {{# } }}
+    <a class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-search"
+       lay-event="show-hidden-search-form">&nbsp;展开搜索
+    </a>
+    {{# if(facade.hasAuth(apiPrefix + "recycle")){ }}
+    <a class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-delete"
+       lay-event="recycle">&nbsp;回收站
+    </a>
+    {{# } }}
+</script>
+<!-- 公用的表格顶部按钮结束 -->
+
+<!-- 公用数据表格每行操作按钮开始 -->
+<script type="text/html" id="default_operation">
+    <div class="layui-btn-group">
+        {{# if(facade.hasAuth(apiPrefix + "edit")){ }}
+        <a class="layui-btn layui-btn-normal layui-btn-xs layui-icon layui-icon-edit" lay-event="edit"> 编辑</a>
+        {{# } }}
+        {{# if(facade.hasAuth(apiPrefix + "del")){ }}
+        <a class="layui-btn layui-btn-danger layui-btn-xs layui-icon layui-icon-delete" lay-event="del"> 删除</a>
+        {{# } }}
+    </div>
+</script>
+<!-- 公用数据表格每行操作按钮结束 -->
+
+<!-- 主题弹出层内容开始 -->
+<script type="text/html" id="theme">
+    <div class="layui-card-body laytp-setTheme">
+        <ul class="laytp-setTheme-color">
+            <li laytp-event="setTheme" data-index="0" data-alias="default" class="layui-this" title="default">
+                <div class="laytp-setTheme-header" style="background-color: #23262e;"></div>
+                <div class="laytp-setTheme-side" style="background-color: #eef1f5;">
+                    <div class="laytp-setTheme-logo" style="background-color: #23262e;"></div>
+                </div>
+            </li>
+            <li laytp-event="setTheme" data-index="1" data-alias="default" class="layui-this" title="default">
+                <div class="laytp-setTheme-header" style="background-color: #23262e;"></div>
+                <div class="laytp-setTheme-side" style="background-color: #222d32;">
+                    <div class="laytp-setTheme-logo" style="background-color: #23262e;"></div>
+                </div>
+            </li>
+            <li laytp-event="setTheme" data-index="2" data-alias="default" class="layui-this" title="default">
+                <div class="laytp-setTheme-header" style="background-color: #20a0ff;"></div>
+                <div class="laytp-setTheme-side" style="background-color: #eef1f5;">
+                    <div class="laytp-setTheme-logo" style="background-color: #20a0ff;"></div>
+                </div>
+            </li>
+            <li laytp-event="setTheme" data-index="3" data-alias="default" class="layui-this" title="default">
+                <div class="laytp-setTheme-header" style="background-color: #20a0ff;"></div>
+                <div class="laytp-setTheme-side" style="background-color: #222d32;">
+                    <div class="laytp-setTheme-logo" style="background-color: #20a0ff;"></div>
+                </div>
+            </li>
+            <li laytp-event="setTheme" data-index="4" data-alias="default" class="layui-this" title="default">
+                <div class="laytp-setTheme-header" style="background-color: #f78400;"></div>
+                <div class="laytp-setTheme-side" style="background-color: #eef1f5;">
+                    <div class="laytp-setTheme-logo" style="background-color: #f78400;"></div>
+                </div>
+            </li>
+            <li laytp-event="setTheme" data-index="5" data-alias="default" class="layui-this" title="default">
+                <div class="laytp-setTheme-header" style="background-color: #f78400;"></div>
+                <div class="laytp-setTheme-side" style="background-color: #222d32;">
+                    <div class="laytp-setTheme-logo" style="background-color: #f78400;"></div>
+                </div>
+            </li>
+            <li laytp-event="setTheme" data-index="6" data-alias="default" class="layui-this" title="default">
+                <div class="laytp-setTheme-header" style="background-color: #2f9688;"></div>
+                <div class="laytp-setTheme-side" style="background-color: #eef1f5;">
+                    <div class="laytp-setTheme-logo" style="background-color: #2f9688;"></div>
+                </div>
+            </li>
+            <li laytp-event="setTheme" data-index="7" data-alias="default" class="layui-this" title="default">
+                <div class="laytp-setTheme-header" style="background-color: #2f9688;"></div>
+                <div class="laytp-setTheme-side" style="background-color: #222d32;">
+                    <div class="laytp-setTheme-logo" style="background-color: #2f9688;"></div>
+                </div>
+            </li>
+            <li laytp-event="setTheme" data-index="8" data-alias="default" class="layui-this" title="default">
+                <div class="laytp-setTheme-header" style="background-color: #1fbddf;"></div>
+                <div class="laytp-setTheme-side" style="background-color: #eef1f5;">
+                    <div class="laytp-setTheme-logo" style="background-color: #1fbddf;"></div>
+                </div>
+            </li>
+            <li laytp-event="setTheme" data-index="9" data-alias="default" class="layui-this" title="default">
+                <div class="laytp-setTheme-header" style="background-color: #1fbddf;"></div>
+                <div class="laytp-setTheme-side" style="background-color: #222d32;">
+                    <div class="laytp-setTheme-logo" style="background-color: #1fbddf;"></div>
+                </div>
+            </li>
+            <li laytp-event="setTheme" data-index="10" data-alias="default" class="layui-this" title="default">
+                <div class="laytp-setTheme-header" style="background-color: #01479d;"></div>
+                <div class="laytp-setTheme-side" style="background-color: #eef1f5;">
+                    <div class="laytp-setTheme-logo" style="background-color: #01479d;"></div>
+                </div>
+            </li>
+            <li laytp-event="setTheme" data-index="11" data-alias="default" class="layui-this" title="default">
+                <div class="laytp-setTheme-header" style="background-color: #01479d;"></div>
+                <div class="laytp-setTheme-side" style="background-color: #222d32;">
+                    <div class="laytp-setTheme-logo" style="background-color: #01479d;"></div>
+                </div>
+            </li>
+            <li laytp-event="setTheme" data-index="12" data-alias="default" class="layui-this" title="default">
+                <div class="laytp-setTheme-header" style="background-color: #8858a0;"></div>
+                <div class="laytp-setTheme-side" style="background-color: #eef1f5;">
+                    <div class="laytp-setTheme-logo" style="background-color: #8858a0;"></div>
+                </div>
+            </li>
+            <li laytp-event="setTheme" data-index="13" data-alias="default" class="layui-this" title="default">
+                <div class="laytp-setTheme-header" style="background-color: #8858a0;"></div>
+                <div class="laytp-setTheme-side" style="background-color: #222d32;">
+                    <div class="laytp-setTheme-logo" style="background-color: #8858a0;"></div>
+                </div>
+            </li>
+            <li laytp-event="setTheme" data-index="14" data-alias="default" class="layui-this" title="default">
+                <div class="laytp-setTheme-header" style="background-color: #0078d7;"></div>
+                <div class="laytp-setTheme-side" style="background-color: #eef1f5;">
+                    <div class="laytp-setTheme-logo" style="background-color: #0078d7;"></div>
+                </div>
+            </li>
+            <li laytp-event="setTheme" data-index="15" data-alias="default" class="layui-this" title="default">
+                <div class="laytp-setTheme-header" style="background-color: #0078d7;"></div>
+                <div class="laytp-setTheme-side" style="background-color: #222d32;">
+                    <div class="laytp-setTheme-logo" style="background-color: #0078d7;"></div>
+                </div>
+            </li>
+            <li laytp-event="setTheme" data-index="16" data-alias="default" class="layui-this" title="default">
+                <div class="laytp-setTheme-header" style="background-color: #0185a6;"></div>
+                <div class="laytp-setTheme-side" style="background-color: #eef1f5;">
+                    <div class="laytp-setTheme-logo" style="background-color: #0185a6;"></div>
+                </div>
+            </li>
+            <li laytp-event="setTheme" data-index="17" data-alias="default" class="layui-this" title="default">
+                <div class="laytp-setTheme-header" style="background-color: #0185a6;"></div>
+                <div class="laytp-setTheme-side" style="background-color: #222d32;">
+                    <div class="laytp-setTheme-logo" style="background-color: #0185a6;"></div>
+                </div>
+            </li>
+            <li laytp-event="setTheme" data-index="18" data-alias="default" class="layui-this" title="default">
+                <div class="laytp-setTheme-header" style="background-color: #3c9;"></div>
+                <div class="laytp-setTheme-side" style="background-color: #eef1f5;">
+                    <div class="laytp-setTheme-logo" style="background-color: #3c9;"></div>
+                </div>
+            </li>
+            <li laytp-event="setTheme" data-index="19" data-alias="default" class="layui-this" title="default">
+                <div class="laytp-setTheme-header" style="background-color: #3c9;"></div>
+                <div class="laytp-setTheme-side" style="background-color: #222d32;">
+                    <div class="laytp-setTheme-logo" style="background-color: #3c9;"></div>
+                </div>
+            </li>
+            <li laytp-event="setTheme" data-index="20" data-alias="default" class="layui-this" title="default">
+                <div class="laytp-setTheme-header" style="background-color: #369;"></div>
+                <div class="laytp-setTheme-side" style="background-color: #eef1f5;">
+                    <div class="laytp-setTheme-logo" style="background-color: #369;"></div>
+                </div>
+            </li>
+            <li laytp-event="setTheme" data-index="21" data-alias="default" class="layui-this" title="default">
+                <div class="laytp-setTheme-header" style="background-color: #369;"></div>
+                <div class="laytp-setTheme-side" style="background-color: #222d32;">
+                    <div class="laytp-setTheme-logo" style="background-color: #369;"></div>
+                </div>
+            </li>
+            <li laytp-event="setTheme" data-index="22" data-alias="default" class="layui-this" title="default">
+                <div class="laytp-setTheme-header" style="background-color: #18bc9c;"></div>
+                <div class="laytp-setTheme-side" style="background-color: #eef1f5;">
+                    <div class="laytp-setTheme-logo" style="background-color: #18bc9c;"></div>
+                </div>
+            </li>
+            <li laytp-event="setTheme" data-index="23" data-alias="default" class="layui-this" title="default">
+                <div class="laytp-setTheme-header" style="background-color: #18bc9c;"></div>
+                <div class="laytp-setTheme-side" style="background-color: #222d32;">
+                    <div class="laytp-setTheme-logo" style="background-color: #18bc9c;"></div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</script>
+<!-- 主题弹出层内容结束 -->
+</body>
+</html>

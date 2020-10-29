@@ -1,0 +1,189 @@
+<style>
+    .layui-form-mid {
+        padding: 0 !important;
+    }
+
+    .layui-form-mid code {
+        color: #5FB878;
+    }
+
+    .layui-table {
+        color: #333 !important
+    }
+</style>
+<div class="layui-vertical-card">
+    <div class="layui-tab layui-tab-brief layui-tab-vertical">
+        <ul class="layui-tab-title" id="groupList">
+        </ul>
+        <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show" id="configContent"></div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="/static/plugin/core/js/conf.js" charset="utf-8"></script>
+
+<script type="text/html" id="configTemplate">
+    <form class="page-list-form layui-form" action="plugin/core/conf/set">
+        <input type="hidden" name="group" id="group" value="{{d.group}}"/>
+        <table class="layui-table" style="margin: 0;" lay-skin="nob">
+            <colgroup>
+                <col width="15%">
+                <col width="40%">
+                <col width="33%">
+                <col width="12%">
+            </colgroup>
+            <tbody>
+            {{# let k; }}
+            {{# for(k in d.list){ }}
+            <tr id="item-{{d.list[k].id}}">
+                <td style="text-align:right;">
+                    {{d.list[k].name}}
+                </td>
+                <td>
+                    {{# if(d.list[k].type === "input"){ }}
+                    <input type="text" name="{{d.list[k].key}}" class="layui-input" value="{{d.list[k].value}}"/>
+                    {{# }else if(d.list[k].type === "textarea"){ }}
+                    <textarea name="{{d.list[k].key}}" class="layui-textarea">{{d.list[k].value}}</textarea>
+                    {{# }else if(d.list[k].type === "select_single"){ }}
+                    {{# let num=0,content_k,dataSource = [],dataSelected = []; }}
+                    {{# let contentJson = JSON.parse(d.list[k].content); }}
+                    {{# for(content_k in contentJson){ }}
+                    {{# dataSource.push("{name:'" + contentJson[content_k]["text"] + "',value:'" +
+                    contentJson[content_k]["value"] + "'}"); }}
+                    {{# dataSelected.push(contentJson[content_k]["value"]); }}
+                    {{# } }}
+                    <div class="xmSelect"
+                         data-name="{{d.list[k].key}}"
+                         data-sourceType="data"
+                         data-source="[{{dataSource}}]"
+                         data-selected="{{d.list[k].value}}"
+                         data-radio="true"
+                    ></div>
+                    {{# }else if(d.list[k].type === "select_multi"){ }}
+                    {{# let num=0,content_k,dataSource = [],dataSelected = []; }}
+                    {{# let contentJson = JSON.parse(d.list[k].content); }}
+                    {{# for(content_k in contentJson){ }}
+                    {{# dataSource.push("{name:'" + contentJson[content_k]["text"] + "',value:'" +
+                    contentJson[content_k]["value"] + "'}"); }}
+                    {{# dataSelected.push(contentJson[content_k]["value"]); }}
+                    {{# } }}
+                    <div class="xmSelect"
+                         data-name="{{d.list[k].key}}"
+                         data-sourceType="data"
+                         data-source="[{{dataSource}}]"
+                         data-selected="{{d.list[k].value}}"
+                    ></div>
+                    {{# }else if(d.list[k].type === "switch"){ }}
+                    {{# let num=0,content_k,closeText,closeValue,openText,openValue; }}
+                    {{# let contentJson = JSON.parse(d.list[k].content); }}
+                    {{# for(content_k in contentJson){ }}
+                    {{# if(num===0){ }}
+                    {{# closeText=contentJson[content_k]["text"]; }}
+                    {{# closeValue=contentJson[content_k]["value"]; }}
+                    {{# }else{ }}
+                    {{# openText=contentJson[content_k]["text"]; }}
+                    {{# openValue=contentJson[content_k]["value"]; }}
+                    {{# } }}
+                    {{# num++; }}
+                    {{# } }}
+                    <!-- 隐藏域设置开关未选中时需要传递的参数值 -->
+                    <input type="hidden" name="{{d.list[k].key}}" value="{{closeValue}}"/>
+                    <input type="checkbox" name="{{d.list[k].key}}" lay-skin="switch"
+                           lay-text="{{openText}}|{{closeText}}"
+                           value="{{openValue}}"
+                           {{# if(d.list[k].value=== openValue){ }}checked="checked" {{# } }}/>
+                    {{# }else if(d.list[k].type === "image_single"){ }}
+                    {{# let contentJson = JSON.parse(d.list[k].content); }}
+                    <div class="layTpUpload"
+                         data-name="{{d.list[k].key}}"
+                         data-accept="image"
+                         data-uploaded="{{d.list[k].value}}"
+                         data-width="{{contentJson.width}}"
+                         data-height="{{contentJson.height}}"
+                         data-size="{{contentJson.size}}"
+                         data-mime="{{contentJson.mime}}"
+                    ></div>
+                    {{# }else if(d.list[k].type === "image_multi"){ }}
+                    {{# let contentJson = JSON.parse(d.list[k].content); }}
+                    <div class="layTpUpload"
+                         data-name="{{d.list[k].key}}"
+                         data-accept="image"
+                         data-uploaded="{{d.list[k].value}}"
+                         data-width="{{contentJson.width}}"
+                         data-height="{{contentJson.height}}"
+                         data-size="{{contentJson.size}}"
+                         data-mime="{{contentJson.mime}}"
+                         data-multi="true"
+                         data-max="{{contentJson.max}}"
+                    ></div>
+                    {{# }else if(d.list[k].type === "file_single"){ }}
+                    {{# let contentJson = JSON.parse(d.list[k].content); }}
+                    <div class="layTpUpload"
+                         data-name="{{d.list[k].key}}"
+                         data-accept="file"
+                         data-uploaded="{{d.list[k].value}}"
+                         data-size="{{contentJson.size}}"
+                         data-mime="{{contentJson.mime}}"
+                    ></div>
+                    {{# }else if(d.list[k].type === "file_multi"){ }}
+                    {{# let contentJson = JSON.parse(d.list[k].content); }}
+                    <div class="layTpUpload"
+                         data-name="{{d.list[k].key}}"
+                         data-accept="file"
+                         data-uploaded="{{d.list[k].value}}"
+                         data-size="{{contentJson.size}}"
+                         data-mime="{{contentJson.mime}}"
+                         data-multi="true"
+                         data-max="{{contentJson.max}}"
+                    ></div>
+                    {{# } }}
+                </td>
+                <td>
+                    <div class="layui-form-mid layui-word-aux">
+                        {{d.list[k].tip}}
+                        <br/>
+                        调用方式<code>Config::get('laytp.{{d.list[k].group}}.{{d.list[k].key}}')</code>
+                    </div>
+                </td>
+                <td>
+                    {{#
+                    if(!layui.facade.inArray(d.list[k].group+"."+d.list[k].key,["basic.siteName","basic.loginNeedCaptcha","basic.firstMenuNum","upload.domain","upload.size","upload.mime","upload.type"])){
+                    }}
+                    <div class="layui-btn-group">
+                        {{# if(facade.hasAuth(apiPrefix + "editConfig")){ }}
+                        <a href="javascript:void(0);" data-id="{{d.list[k].id}}"
+                           class="layui-btn layui-btn-normal layui-btn-xs layui-icon layui-icon-edit edit-config"
+                           title="编辑">编辑</a>
+                        {{# } }}
+                        {{# if(facade.hasAuth(apiPrefix + "delConfig")){ }}
+                        <a href="javascript:void(0);" data-id="{{d.list[k].id}}"
+                           class="layui-btn layui-btn-danger layui-btn-xs layui-icon layui-icon-delete delete-config"
+                           title="删除">删除</a>
+                        {{# } }}
+                    </div>
+                    {{# } }}
+                </td>
+            </tr>
+            {{# } }}
+            </tbody>
+        </table>
+        <div class="layui-input-block">
+            {{# if(layui.facade.hasAuth(apiPrefix + "set")){ }}
+            <button class="layui-btn layui-btn-default layui-btn-sm layui-icon layui-icon-set" lay-filter="laytp-form"
+                    lay-submit>&nbsp;保存配置
+            </button>
+            {{# } }}
+            {{# if(!layui.facade.inArray(d.group,["basic","upload"])){ }}
+            {{# if(layui.facade.hasAuth(apiPrefix + "delGroup")){ }}
+            <a class="layui-btn layui-btn-danger layui-btn-sm delete-group"><i
+                    class="layui-icon layui-icon-delete margin-right5"></i>删除分组</a>
+            {{# } }}
+            {{# if(layui.facade.hasAuth(apiPrefix + "editGroup")){ }}
+            <a class="layui-btn layui-btn-normal layui-btn-sm edit-group"><i
+                    class="layui-icon layui-icon-edit margin-right5"></i>编辑分组</a>
+            {{# } }}
+            {{# } }}
+        </div>
+    </form>
+</script>

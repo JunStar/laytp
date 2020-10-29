@@ -1,0 +1,171 @@
+<div class="popup-content">
+    <form class="layui-form">
+        <input type="hidden" name="id" value="{{d.id}}"/>
+        <div class="layui-form-item">
+            <label class="layui-form-label">
+                <text style="color: red;">*</text>
+                类型</label>
+            <div class="layui-input-block">
+                <div class="xmSelect"
+                     data-name="type"
+                     data-source="[{name:'单行文本输入框',value:'input'},{name:'文本域',value:'textarea'},{name:'单选下拉框',value:'select_single'},{name:'多选下拉框',value:'select_multi'},{name:'开关',value:'switch'},{name:'图片',value:'image_single'},{name:'图片（多个）',value:'image_multi'},{name:'文件',value:'file_single'},{name:'文件（多个）',value:'file_multi'}]"
+                     data-subTextField="value"
+                     data-layVerify="required"
+                     data-layVerType="tips"
+                     data-radio="true"
+                     data-placeholder="请选择类型"
+                     data-onchange="selectType"
+                     data-selected="{{d.type}}"
+                ></div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">
+                <text style="color: red;">*</text>
+                所属分组</label>
+            <div class="layui-input-block">
+                <div class="xmSelect"
+                     data-name="group"
+                     data-sourceType="url"
+                     data-source="plugin/core/conf/getGroup"
+                     data-subTextField="value"
+                     data-iconField="icon"
+                     data-layVerify="required"
+                     data-layVerType="tips"
+                     data-radio="true"
+                     data-placeholder="请选择所属分组"
+                     data-selected="{{d.group}}"
+                ></div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">
+                <text style="color: red;">*</text>
+                配置名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="name" value="{{d.name}}" placeholder="请输入变量标题" class="layui-input"
+                       lay-verify="required" lay-verType="tips" autocomplete="off"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">
+                <text style="color: red;">*</text>
+                配置说明</label>
+            <div class="layui-input-block">
+                <input type="text" name="tip" value="{{d.tip}}" placeholder="请输入配置说明" class="layui-input"
+                       lay-verify="required" lay-verType="tips" autocomplete="off"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">
+                <text style="color: red;">*</text>
+                变量名</label>
+            <div class="layui-input-block">
+                <input type="text" name="key" value="{{d.key}}" placeholder="请输入变量名" class="layui-input"
+                       lay-verify="required" lay-verType="tips" autocomplete="off"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">变量值</label>
+            <div class="layui-input-block">
+                <input type="text" name="value" value="{{d.value}}" placeholder="请输入变量值" class="layui-input"
+                       autocomplete="off"/>
+            </div>
+        </div>
+        <div class="layui-form-item" id="form-item-content" style="display: none;">
+            <label class="layui-form-label">数据列表</label>
+            <div class="layui-input-block">
+                <textarea name="content" placeholder="变量内容" class="layui-textarea">{{d.content}}</textarea>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    layui.use(['layTp'], function () {
+        let type = "{{d.type}}";
+        let content = '{{d.content}}';
+        let contentJson = content ? JSON.parse('{{d.content}}') : "";
+        window.selectType = function (params) {
+            let nowValue = params.arr[0].value;
+            window.showMoreConf(nowValue);
+        };
+
+        let contentArr = {
+            switch: "关闭状态值=关闭状态文本\n" +
+                "打开状态值=打开状态文本",
+            select_single: "value1=title1\n" +
+                "value2=title2",
+            select_multi: "value1=title1\n" +
+                "value2=title2",
+            checkbox: "value1=title1\n" +
+                "value2=title2",
+            image_single: "width=640\n" +
+                "height=400\n" +
+                "mime=jpg,jpeg,png,gif\n" +
+                "size=100mb",
+            image_multi: "width=640\n" +
+                "height=400\n" +
+                "mime=jpg,jpeg,png,gif\n" +
+                "max=5\n" +
+                "size=100mb",
+            file_single: "mime=*\n" +
+                "size=100mb",
+            file_multi: "max=5\n" +
+                "mime=*\n" +
+                "size=100mb"
+        };
+
+        contentArr[type] = formatContent(contentJson);
+
+        function formatContent(obj) {
+            let key, content = "";
+            if (facade.isArray(obj)) {
+                for (key in obj) {
+                    content += obj[key].value + "=" + obj[key].text + "\n";
+                }
+            } else {
+                for (key in obj) {
+                    content += key + "=" + obj[key] + "\n";
+                }
+            }
+            return facade.rtrim(content, "\n");
+        }
+
+        window.showMoreConf = function (nowValue) {
+            let array_content_types = ['select_single', 'select_multi', 'checkbox', 'switch'];
+            if (array_content_types.indexOf(nowValue) !== -1) {
+                if (nowValue === "switch") {
+                    $('#form-item-content').find("label").val("数据列表");
+                    $('#form-item-content').find("textarea").val(contentArr[nowValue]);
+                } else {
+                    $('#form-item-content').find("label").val("数据列表");
+                    $('#form-item-content').find("textarea").val(contentArr[nowValue]);
+                }
+                $('#form-item-content').show();
+            } else if (nowValue === "image_single") {
+                $('#form-item-content').find("label").html("上传配置");
+                $('#form-item-content').find("textarea").css("height", "100px").val(contentArr[nowValue]);
+                $('#form-item-content').show();
+            } else if (nowValue === "image_multi") {
+                $('#form-item-content').find("label").html("上传配置");
+                $('#form-item-content').find("textarea").css("height", "115px").val(contentArr[nowValue]);
+                $('#form-item-content').show();
+            } else if (nowValue === "file_single") {
+                $('#form-item-content').find("label").html("上传配置");
+                $('#form-item-content').find("textarea").css("height", "100px").val(contentArr[nowValue]);
+                $('#form-item-content').show();
+            } else if (nowValue === "file_multi") {
+                $('#form-item-content').find("label").html("上传配置");
+                $('#form-item-content').find("textarea").css("height", "100px").val(contentArr[nowValue]);
+                $('#form-item-content').show();
+            } else {
+                $('#form-item-content').hide();
+            }
+        };
+
+        $(document).ready(function () {
+            window.showMoreConf(type);
+        });
+    });
+</script>

@@ -1,5 +1,5 @@
 /**
- * 上传组件，基于layui.upload组件再次封装，html代码<div class="layTpUpload" data-id="id" data-name="name"></div>渲染成一个上传组件
+ * 上传组件，基于layui.upload组件进行封装，html代码<div class="layTpUpload" data-id="id" data-name="name"></div>渲染成一个上传组件
  *  - 允许上传图片、音频、视频和任意文件
  *  - input输入框的展示访问上传文件的url地址
  *  - 图片、音频、视频的预览和删除
@@ -11,19 +11,19 @@
  */
 layui.define(["jquery"], function (exports) {
     const MOD_NAME = "layTpUpload";
-    let $ = layui.$;
 
     let layTpUpload = {
+        splitStr: ", ",
         //展示input输入框和上传按钮的html内容
         uploadHtml: function (options) {
             let html =
-                "<div class=\"layui-upload\">\n" +
-                "   <div class=\"layui-inline\" style=\"width: 70%;\"><input type=\"text\" class=\"layui-input\" name=\"{{d.name}}\" id=\"input_{{d.id}}\" /></div>\n" +
-                "   <div class=\"layui-inline\">\n" +
-                "       <button type=\"button\" class=\"layui-btn layui-btn-sm layui-btn-primary pull-left\"\n" +
-                "           <i class=\"layui-icon\">&#xe62f;</i> 点击上传\n" +
-                "       </button>\n" +
-                "   </div>\n" +
+                "<div class=\"layui-upload\">" +
+                "   <div class=\"layui-inline\" style=\"width: " + options.inputWidth + ";\"><input type=\"text\" class=\"layui-input\" name=\"{{d.name}}\" id=\"input_{{d.name}}\" value='{{d.uploaded}}' lay-verify=\"{{d.layVerify}}\" lay-verType=\"{{d.layVerType}}\" /></div>" +
+                "   <div class=\"layui-inline\">" +
+                "       <a id='layTpUploadBtn_{{d.name}}' class=\"layui-btn layui-btn-default layui-btn-sm layui-icon layui-icon-upload-drag pull-left\">" +
+                "            点击上传" +
+                "       </a>" +
+                "   </div>" +
                 "   {{d.previewHtml}}" +
                 "</div>";
             return layui.laytpl(html).render(options);
@@ -32,24 +32,142 @@ layui.define(["jquery"], function (exports) {
         //预览图片的html内容
         imagePreviewHtml: function (options) {
             let html =
-                "<div class=\"pic-more\">\n" +
-                "   <ul class=\"pic-more-upload-list\" id=\"preview_\"></ul>\n" +
+                "<div class=\"pic-more\">" +
+                "   <ul class=\"pic-more-upload-list\" id=\"preview_{{d.name}}\">" +
+                "   {{# let uploaded=d.uploaded; }}" +
+                "   {{# if(typeof uploaded !== 'undefined' && uploaded){ let key,uploadedArr=uploaded.split(layTpUpload.splitStr); }}" +
+                "   {{# for(key in uploadedArr){ }}" +
+                "       <li class=\"item_img\">" +
+                "           <div class=\"operate\">" +
+                "               <i class=\"upload_img_close layui-icon\" data-file_url=\"{{uploadedArr[key]}}\" data-id=\"{{d.name}}\" data-layerDiv=\"{{d.layerDiv}}\"></i>" +
+                "           </div>" +
+                "           <img src=\"{{sysConf.upload.domain + uploadedArr[key]}}\" class=\"img\">" +
+                "       </li>" +
+                "   {{# } }}" +
+                "   {{# } }}" +
+                "   </ul>" +
                 "</div>";
+            return layui.laytpl(html).render(options);
+        },
+
+        //单个图片模板
+        singleImageHtml: function (options) {
+            let html =
+                '<li class="item_img">' +
+                '   <div class="operate">' +
+                '       <i class="upload_img_close layui-icon" data-file_url="{{d.data}}" data-id="{{d.name}}" data-layerDiv=\"{{d.layerDiv}}\"></i>' +
+                '   </div>' +
+                '   <img src="{{sysConf.upload.domain + d.data}}" class="img" />' +
+                '</li>';
+            return layui.laytpl(html).render(options);
+        },
+
+        //单个视频模板
+        singleVideoHtml: function (options) {
+            let html =
+                '<li class="item_video">' +
+                '   <video src="{{sysConf.upload.domain + d.data}}" controls="controls" width="200px" height="200px"></video>' +
+                '   <button class="layui-btn layui-btn-sm layui-btn-danger upload_delete" style="display: block; width: 100%;" data-file_url="{{d.data}}" data-id="{{d.name}}" data-layerDiv=\"{{d.layerDiv}}\"><i class="layui-icon">&#xe640;</i></button>' +
+                '</li>';
+            return layui.laytpl(html).render(options);
+        },
+
+        //单个音频模板
+        singleAudioHtml: function (options) {
+            let html =
+                '<li class="item_audio">' +
+                '   <audio src="{{sysConf.upload.domain + d.data}}" controls="controls" style="height:54px;"></audio>' +
+                '   <button class="layui-btn layui-btn-sm layui-btn-danger upload_delete" style="display: block; width: 100%;" data-file_url="{{d.data}}" data-id="{{d.name}}" data-layerDiv=\"{{d.layerDiv}}\"><i class="layui-icon">&#xe640;</i></button>' +
+                '</li>';
+            return layui.laytpl(html).render(options);
         },
 
         render: function (options) {
-            // layui.each($("div[class='layTpUpload']"), function (key, item) {
-                // options.id = $(item).data('id');
-                // options.name = $(item).data('name');
-                // options.accept = $(item).data('accept') ? $(item).data('accept') : "image";
-                // options.is_multiple = $(item).data('is_multiple') === "true";
-                // options.upload_dir = $(item).data('upload_dir') ? $(item).attr('upload_dir') : "";
-                // options.upload_url = $(item).data('upload_url') ? $(item).data('upload_url') : facade.url("admin/common/upload", {
-                //     'accept': options.accept,
-                //     'upload_dir': options.upload_dir
-                // });
-            // });
-            console.log(options);
+            let splitStr = layTpUpload.splitStr;
+            if (options.accept === "image") {
+                options.previewHtml = layTpUpload.imagePreviewHtml(options);
+            } else if (options.accept === "file") {
+                options.previewHtml = "";
+            }
+            $(options.el).after(layTpUpload.uploadHtml(options));
+            layui.upload.render({
+                elem: $("#layTpUploadBtn_" + options.name, "#layui-layer" + options.layerDiv),
+                url: options.url,
+                accept: options.accept,
+                multiple: options.multi,
+                data: options.params,
+                field: "layTpUploadFile",
+                done: function (res) {
+                    if (res.code === 10401) {
+                        facade.error(res["msg"], "重新登录提示", function () {
+                            facade.delCookie("laytp_admin_token");
+                            facade.redirect("/admin/login.html");
+                        });
+                        return;
+                    }
+                    if (res.code === 1) {
+                        facade.error(res["msg"], "失败提示");
+                        return;
+                    }
+                    options.data = res.data;
+                    if (options.multi) {
+                        //多个预览
+                        if (options.accept === "image") {
+                            $("#preview_" + options.name, "#layui-layer" + options.layerDiv).append(layTpUpload.singleImageHtml(options));
+                        } else if (options.accept === "video") {
+                            $("#preview_" + options.name, "#layui-layer" + options.layerDiv).append(layTpUpload.singleVideoHtml(options));
+                        } else if (options.accept === "audio") {
+                            $("#preview_" + options.name, "#layui-layer" + options.layerDiv).append(layTpUpload.singleAudioHtml(options));
+                        }
+                        //input框增加文件值
+                        let input_value = $("#input_" + options.name).val();
+                        if (input_value) {
+                            $("#input_" + options.name, "#layui-layer" + options.layerDiv).val(input_value + splitStr + res.data).focus();
+                        } else {
+                            $("#input_" + options.name, "#layui-layer" + options.layerDiv).val(res.data).focus();
+                        }
+                    } else {
+                        //单个预览
+                        if (options.accept === "image") {
+                            $("#preview_" + options.name, "#layui-layer" + options.layerDiv).html(layTpUpload.singleImageHtml(options));
+                        } else if (options.accept === "video") {
+                            $("#preview_" + options.name, "#layui-layer" + options.layerDiv).html(layTpUpload.singleVideoHtml(options));
+                        } else if (options.accept === "audio") {
+                            $("#preview_" + options.name, "#layui-layer" + options.layerDiv).html(layTpUpload.singleAudioHtml(options));
+                        }
+                        //input框增加文件值
+                        $("#input_" + options.name, "#layui-layer" + options.layerDiv).val(res.data).focus();
+                    }
+                    return facade.success(res.msg);
+                }
+            });
+
+            //删除已经上传的东西
+            $("body").on("click", ".upload_img_close, .upload_delete", function () {
+                let id = $(this).data("id");
+                let layerDiv = $(this).data('layerdiv');
+                if (options.multi) {
+                    let fileUrl = $(this).data("file_url");
+                    let inputValue = $("#input_" + id).val();
+                    let newInputValue = "";
+                    if (inputValue.indexOf(fileUrl + splitStr) !== -1) {
+                        let reg = new RegExp(fileUrl + splitStr);
+                        newInputValue = inputValue.replace(reg, "");
+                    } else {
+                        if (inputValue.indexOf(splitStr + fileUrl) !== -1) {
+                            let reg = new RegExp(splitStr + fileUrl);
+                            newInputValue = inputValue.replace(reg, "");
+                        } else {
+                            let reg = new RegExp(fileUrl);
+                            newInputValue = inputValue.replace(reg, "");
+                        }
+                    }
+                    $("#input_" + id, "#layui-layer" + layerDiv).val(newInputValue);
+                } else {
+                    $("#input_" + id, "#layui-layer" + layerDiv).val("");
+                }
+                $(this).closest("li").remove();
+            });
         }
     };
 
