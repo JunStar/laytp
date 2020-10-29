@@ -4,5 +4,5 @@
 *.log
 .env
 /public/api.html
-
+/runtime
 !.gitignore
