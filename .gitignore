@@ -6,3 +6,4 @@
 /public/api.html
 /runtime
 !.gitignore
+/public/uploads
