@@ -42,8 +42,8 @@ class PluginCoreConf extends Migrator
             ->addColumn('name', 'string', ['length' => 100, 'default' => '', 'comment' => '缓存名称'])
             ->addColumn('key', 'string', ['length' => 100, 'default' => '', 'comment' => '缓存key'])
             ->addColumn('value', 'text', ['comment' => '缓存值'])
-            ->addColumn('type', 'string', ['length' => 255, 'default' => '', 'comment' => '设置缓存使用的Html表单类型。{"input":"单行文本输入框","single_select":"单选下拉框","multi_select":"多选下拉框","checkbox":"复选框","radio":"单选按钮","single_image":"图片","multi_image":"图片(多个)","single_file":"文件"}'])
-            ->addColumn('tip', 'string', ['length' => 255, 'default' => '', 'comment' => '缓存描述'])
+            ->addColumn('type', 'string', ['length' => 100, 'default' => '', 'comment' => '设置缓存使用的Html表单类型。{"input":"单行文本输入框","single_select":"单选下拉框","multi_select":"多选下拉框","checkbox":"复选框","radio":"单选按钮","single_image":"图片","multi_image":"图片(多个)","single_file":"文件"}'])
+            ->addColumn('tip', 'string', ['length' => 100, 'default' => '', 'comment' => '缓存描述'])
             ->addColumn('content', 'text', ['comment' => '字典数据'])
             ->addIndex(['group', 'key'], ['unique' => true]);
 

@@ -423,7 +423,7 @@ layui.define(["jquery"], function (exports) {
                         layerDivConfig.skin = "laytp";
                     }
                     let layerDiv = layui.layer.open(layerDivConfig);
-                    layui.layTpForm.render(layerDiv);
+                    layui.layTpForm.render("#layui-layer" + layerDiv);
                 },
                 error: function (xhr) {
                     switch (xhr.status) {

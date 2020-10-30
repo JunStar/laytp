@@ -107,7 +107,7 @@ layui.use(["layTp"], function () {
             if (obj.event === "del") {
                 facade.popupConfirm({
                     text: "真的删除么?",
-                    path: "plugin/autocreate/curd.field/del",
+                    path: "plugin/core/autocreate.curd.field/del",
                     params: {ids: obj.data.id}
                 }, function () {
                     $("[lay-filter=laytp-search-form]").click();
@@ -187,6 +187,85 @@ layui.use(["layTp"], function () {
             let clickObj = $(this);
             clickObj.parent().parent().remove();
         });
+
+        layui.form.on('select(data-from)', function (data) {
+            if (data.value === "table") {
+                let xmSelectSetDataTable =
+                    '    <div class="layui-row margin-bottom6">' +
+                    '       <div class="layui-inline layui-col-lg5 layui-col-md5 layui-col-sm5 layui-col-xs5">' +
+                    '           <label class="layui-form-label layui-form-required">数据表</label>' +
+                    '           <div class="layui-input-block">' +
+                    '           <select class="layui-select" lay-filter="select-table"' +
+                    '                data-source="/plugin/core/autocreate.curd.table/index"' +
+                    '                data-showField="table"\n' +
+                    '                data-placeholder="请选择数据表"\n' +
+                    '           ></select>' +
+                    '           </div>' +
+                    '       </div>' +
+                    '       <div class="layui-inline layui-col-lg5 layui-col-md5 layui-col-sm5 layui-col-xs5">' +
+                    '           <label class="layui-form-label layui-form-required" title="默认不限制，仅多选有效">主标题字段</label>' +
+                    '           <div class="layui-input-block">' +
+                    '               <select class="layui-select" id="titleField">' +
+                    '                   <option value="">请选择字段</option>' +
+                    '               </select>' +
+                    '           </div>' +
+                    '       </div>' +
+                    '    </div>' +
+                    '    <div class="layui-row margin-bottom6">' +
+                    '       <div class="layui-inline layui-col-lg5 layui-col-md5 layui-col-sm5 layui-col-xs5">' +
+                    '           <label class="layui-form-label layui-form-required">副标题字段</label>' +
+                    '           <div class="layui-input-block">' +
+                    '               <select class="layui-select" id="subTitleField">' +
+                    '                   <option value="">请选择字段</option>' +
+                    '               </select>' +
+                    '           </div>' +
+                    '       </div>' +
+                    '       <div class="layui-inline layui-col-lg5 layui-col-md5 layui-col-sm5 layui-col-xs5">' +
+                    '           <label class="layui-form-label layui-form-required">图标字段</label>' +
+                    '           <div class="layui-input-block">' +
+                    '               <select class="layui-select" id="iconField">' +
+                    '                   <option value="">请选择字段</option>' +
+                    '               </select>' +
+                    '           </div>' +
+                    '       </div>' +
+                    '    </div>'
+                ;
+                $("#setData").html(xmSelectSetDataTable);
+                layui.form.render('select');
+                layui.layTpForm.render("#setData");
+            } else {
+
+            }
+        });
+
+        layui.form.on('select(select-table)', function (data) {
+            facade.ajax({
+                path: "/plugin/core/autocreate.curd/getFieldList",
+                params: {
+                    search_param: {
+                        table_id: {
+                            value: data.value,
+                            condition: "="
+                        }
+                    }
+                },
+                successAlert: false
+            }).then(function (res) {
+                if (res.code === 0) {
+                    $("#titleField").html('<option value="">请选择字段</option>');
+                    $("#subTitleField").html('<option value="">请选择字段</option>');
+                    $("#iconField").html('<option value="">请选择字段</option>');
+                    let key;
+                    let data = res.data.data;
+                    for (key in res.data.data) {
+                        $("#titleField").append("<option value='" + data[key]["id"] + "'>" + data[key]["field"] + "</option>");
+                        $("#subTitleField").append("<option value='" + data[key]["id"] + "'>" + data[key]["field"] + "</option>");
+                        $("#iconField").append("<option value='" + data[key]["id"] + "'>" + data[key]["field"] + "</option>");
+                    }
+                    layui.form.render('select');
+                }
+            });
+        });
     });
 
     function getTreeData(data) {
@@ -201,14 +280,13 @@ layui.use(["layTp"], function () {
     }
 
     window.formTypeChange = function (params) {
-        console.log(params);
         let formType = params.arr[0].value;
         //定义没有附加设置的表单元素数组
         let noHtmlArr = ["plugin_core_user_id", "password", "textarea"];
-        //定义只有一个输入框的表单元素数组
-        let onlyInputArr = ["select", "radio", "checkbox"];
-        //定义只有一个输入框的表单元素Html
-        let onlyInputHtml =
+        //定义有多个选项的表单元素数组
+        let optionsArr = ["select", "radio", "checkbox"];
+        //定义有多个选项的表单元素Html
+        let optionsHtml =
             '<table class="layui-table">' +
             '<thead>' +
             '<tr>' +
@@ -252,11 +330,11 @@ layui.use(["layTp"], function () {
             '<td align="right">输入验证</td>' +
             '<td><select name="additional[]">' +
             '<option value="">不限制</option>' +
-            '<option value="layTp_email">Email</option>' +
-            '<option value="layTp_phone">手机号码</option>' +
-            '<option value="layTp_number">数字</option>' +
-            '<option value="layTp_url">链接</option>' +
-            '<option value="layTp_identity">身份证</option>' +
+            '<option value="email">Email</option>' +
+            '<option value="phone">手机号码</option>' +
+            '<option value="number">数字</option>' +
+            '<option value="url">链接</option>' +
+            '<option value="identity">身份证</option>' +
             '</select>' +
             '</td>' +
             '</tr>' +
@@ -334,7 +412,7 @@ layui.use(["layTp"], function () {
             '       <div class="layui-inline layui-col-lg5 layui-col-md5 layui-col-sm5 layui-col-xs5">' +
             '           <label class="layui-form-label layui-form-required">数据来源方式</label>' +
             '           <div class="layui-input-block">' +
-            '               <select class="layui-select">' +
+            '               <select class="layui-select" lay-filter="data-from">' +
             '                   <option value="">请选择数据来源</option>' +
             '                   <option value="data">自定义</option>' +
             '                   <option value="table">数据表</option>' +
@@ -345,101 +423,15 @@ layui.use(["layTp"], function () {
             '  </div>' +
             '  <div class="layui-card-header">数据设置</div>' +
             '  <div class="layui-card-body" id="setData">' +
-            '    <div class="layui-row margin-bottom6">' +
-            '       <div class="layui-inline layui-col-lg5 layui-col-md5 layui-col-sm5 layui-col-xs5">' +
-            '           <label class="layui-form-label layui-form-required">单选还是多选</label>' +
-            '           <div class="layui-input-block">' +
-            '               <select class="layui-select">' +
-            '                   <option value="single">单选</option>' +
-            '                   <option value="multi">多选</option>' +
-            '               </select>' +
-            '           </div>' +
-            '       </div>' +
-            '       <div class="layui-inline layui-col-lg5 layui-col-md5 layui-col-sm5 layui-col-xs5">' +
-            '           <label class="layui-form-label layui-form-required" title="默认不限制，仅多选有效">最多可选个数</label>' +
-            '           <div class="layui-input-block">' +
-            '               <input type="text" class="layui-input" name="additional[]" placeholder="默认不限制，仅多选有效" />' +
-            '           </div>' +
-            '       </div>' +
-            '    </div>' +
-            '    <div class="layui-row margin-bottom6">' +
-            '       <div class="layui-inline layui-col-lg5 layui-col-md5 layui-col-sm5 layui-col-xs5">' +
-            '           <label class="layui-form-label layui-form-required">下拉方向</label>' +
-            '           <div class="layui-input-block">' +
-            '               <select class="layui-select">' +
-            '                   <option value="">自动</option>' +
-            '                   <option value="up">向上</option>' +
-            '                   <option value="down">向下</option>' +
-            '               </select>' +
-            '           </div>' +
-            '       </div>' +
-            '       <div class="layui-inline layui-col-lg5 layui-col-md5 layui-col-sm5 layui-col-xs5">' +
-            '           <label class="layui-form-label layui-form-required">数据来源方式</label>' +
-            '           <div class="layui-input-block">' +
-            '               <select class="layui-select">' +
-            '                   <option value="">请选择数据来源</option>' +
-            '                   <option value="data">自定义</option>' +
-            '                   <option value="table">数据表</option>' +
-            '               </select>' +
-            '           </div>' +
-            '       </div>' +
-            '    </div>' +
+            '   请选择数据来源方式' +
             '  </div>' +
             '</div>'
         ;
 
-        let xmSelectSetDataTable =
-            '    <div class="layui-row margin-bottom6">' +
-            '       <div class="layui-inline layui-col-lg5 layui-col-md5 layui-col-sm5 layui-col-xs5">' +
-            '           <label class="layui-form-label layui-form-required">数据表</label>' +
-            '           <div class="layui-input-block">' +
-            '           <div class="xmSelect"\n' +
-            '                data-name="table_id"\n' +
-            '                data-sourceType="url"\n' +
-            '                data-source="/plugin/core/autocreate.curd.table/index"\n' +
-            '                data-paging="true"\n' +
-            '                data-radio="true"\n' +
-            '                data-textField="table"\n' +
-            '                data-subTextField="database"\n' +
-            '                data-valueField="id"\n' +
-            '           ></div>' +
-            '           </div>' +
-            '       </div>' +
-            '       <div class="layui-inline layui-col-lg5 layui-col-md5 layui-col-sm5 layui-col-xs5">' +
-            '           <label class="layui-form-label layui-form-required" title="默认不限制，仅多选有效">主标题字段</label>' +
-            '           <div class="layui-input-block">' +
-            '               <input type="text" class="layui-input" name="additional[]" placeholder="默认不限制，仅多选有效" />' +
-            '           </div>' +
-            '       </div>' +
-            '    </div>' +
-            '    <div class="layui-row margin-bottom6">' +
-            '       <div class="layui-inline layui-col-lg5 layui-col-md5 layui-col-sm5 layui-col-xs5">' +
-            '           <label class="layui-form-label layui-form-required">副标题字段</label>' +
-            '           <div class="layui-input-block">' +
-            '               <select class="layui-select">' +
-            '                   <option value="">自动</option>' +
-            '                   <option value="up">向上</option>' +
-            '                   <option value="down">向下</option>' +
-            '               </select>' +
-            '           </div>' +
-            '       </div>' +
-            '       <div class="layui-inline layui-col-lg5 layui-col-md5 layui-col-sm5 layui-col-xs5">' +
-            '           <label class="layui-form-label layui-form-required">图标字段</label>' +
-            '           <div class="layui-input-block">' +
-            '               <select class="layui-select">' +
-            '                   <option value="">请选择字段</option>' +
-            '                   <option value="data">自定义</option>' +
-            '                   <option value="table">数据表</option>' +
-            '               </select>' +
-            '           </div>' +
-            '       </div>' +
-            '    </div>'
-        ;
-
         if (noHtmlArr.indexOf(formType) !== -1) {
             $("#additional").html("<div style=\"padding: 9px 5px;\">无</div>");
-        } else if (onlyInputArr.indexOf(formType) !== -1) {
-            $("#additional").html(onlyInputHtml);
+        } else if (optionsArr.indexOf(formType) !== -1) {
+            $("#additional").html(optionsHtml);
         } else {
             $("#additional").html(eval(formType + "Html"));
             layui.form.render();

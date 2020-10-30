@@ -45,7 +45,7 @@ class PluginCoreMenu extends Migrator
             ->addColumn('pid', 'integer', ['default' => 0, 'comment' => '上级ID'])
             ->addColumn('is_show', 'integer', ['default' => 1, 'comment' => '是否显示.2=隐藏,1=显示'])
             ->addColumn('icon', 'string', ['length' => 100, 'default' => '', 'comment' => '图标'])
-            ->addColumn('des', 'string', ['length' => 255, 'default' => '', 'comment' => '描述'])
+            ->addColumn('des', 'string', ['length' => 100, 'default' => '', 'comment' => '描述'])
             ->addColumn('create_time', 'integer', ['default' => 0, 'comment' => '创建时间'])
             ->addColumn('update_time', 'integer', ['default' => 0, 'comment' => '更新时间'])
             ->addColumn('delete_time', 'integer', ['default' => 0, 'comment' => '删除时间']);

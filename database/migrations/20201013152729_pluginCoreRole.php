@@ -38,7 +38,7 @@ class PluginCoreRole extends Migrator
         }
 
         $table
-            ->addColumn('name', 'string', ['length' => 255, 'default' => '', 'comment' => '名称'])
+            ->addColumn('name', 'string', ['length' => 100, 'default' => '', 'comment' => '名称'])
             ->addColumn('create_time', 'integer', ['length' => 11, 'default' => 0, 'comment' => '创建时间'])
             ->addColumn('update_time', 'integer', ['length' => 11, 'default' => 0, 'comment' => '更新时间'])
             ->addColumn('delete_time', 'integer', ['length' => 11, 'default' => 0, 'comment' => '删除时间'])
