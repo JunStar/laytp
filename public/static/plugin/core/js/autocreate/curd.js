@@ -107,7 +107,7 @@ layui.use(["layTp"], function () {
             if (obj.event === "del") {
                 facade.popupConfirm({
                     text: "真的删除么?",
-                    path: "plugin/autocreate/curd.field/del",
+                    path: "plugin/core/autocreate.curd.field/del",
                     params: {ids: obj.data.id}
                 }, function () {
                     $("[lay-filter=laytp-search-form]").click();
@@ -189,25 +189,25 @@ layui.use(["layTp"], function () {
         });
 
         layui.form.on('select(data-from)', function(data){
-            console.log(data.elem); //得到select原始DOM对象
-            console.log(data.value); //得到被选中的值
-            console.log(data.othis); //得到美化后的DOM对象
             if(data.value === "table"){
                 let xmSelectSetDataTable =
                     '    <div class="layui-row margin-bottom6">' +
                     '       <div class="layui-inline layui-col-lg5 layui-col-md5 layui-col-sm5 layui-col-xs5">' +
                     '           <label class="layui-form-label layui-form-required">数据表</label>' +
                     '           <div class="layui-input-block">' +
-                    '           <select class="layui-select"' +
+                    '           <select class="layui-select" lay-filter="select-table"' +
                     '                data-source="/plugin/core/autocreate.curd.table/index"' +
                     '                data-showField="table"\n' +
+                    '                data-placeholder="请选择数据表"\n' +
                     '           ></select>' +
                     '           </div>' +
                     '       </div>' +
                     '       <div class="layui-inline layui-col-lg5 layui-col-md5 layui-col-sm5 layui-col-xs5">' +
                     '           <label class="layui-form-label layui-form-required" title="默认不限制，仅多选有效">主标题字段</label>' +
                     '           <div class="layui-input-block">' +
-                    '               <input type="text" class="layui-input" name="additional[]" placeholder="默认不限制，仅多选有效" />' +
+                    '               <select class="layui-select" id="titleField">' +
+                    '                   <option value="">请选择字段</option>' +
+                    '               </select>' +
                     '           </div>' +
                     '       </div>' +
                     '    </div>' +
@@ -215,20 +215,16 @@ layui.use(["layTp"], function () {
                     '       <div class="layui-inline layui-col-lg5 layui-col-md5 layui-col-sm5 layui-col-xs5">' +
                     '           <label class="layui-form-label layui-form-required">副标题字段</label>' +
                     '           <div class="layui-input-block">' +
-                    '               <select class="layui-select">' +
-                    '                   <option value="">自动</option>' +
-                    '                   <option value="up">向上</option>' +
-                    '                   <option value="down">向下</option>' +
+                    '               <select class="layui-select" id="subTitleField">' +
+                    '                   <option value="">请选择字段</option>' +
                     '               </select>' +
                     '           </div>' +
                     '       </div>' +
                     '       <div class="layui-inline layui-col-lg5 layui-col-md5 layui-col-sm5 layui-col-xs5">' +
                     '           <label class="layui-form-label layui-form-required">图标字段</label>' +
                     '           <div class="layui-input-block">' +
-                    '               <select class="layui-select">' +
+                    '               <select class="layui-select" id="iconField">' +
                     '                   <option value="">请选择字段</option>' +
-                    '                   <option value="data">自定义</option>' +
-                    '                   <option value="table">数据表</option>' +
                     '               </select>' +
                     '           </div>' +
                     '       </div>' +
@@ -240,6 +236,35 @@ layui.use(["layTp"], function () {
             }else{
 
             }
+        });
+
+        layui.form.on('select(select-table)', function (data) {
+            facade.ajax({
+                path: "/plugin/core/autocreate.curd/getFieldList",
+                params: {
+                    search_param: {
+                        table_id: {
+                            value: data.value,
+                            condition: "="
+                        }
+                    }
+                },
+                successAlert: false
+            }).then(function (res) {
+                if (res.code === 0) {
+                    $("#titleField").html('<option value="">请选择字段</option>');
+                    $("#subTitleField").html('<option value="">请选择字段</option>');
+                    $("#iconField").html('<option value="">请选择字段</option>');
+                    let key;
+                    let data = res.data.data;
+                    for (key in res.data.data) {
+                        $("#titleField").append("<option value='" + data[key]["id"] + "'>" + data[key]["field"] + "</option>");
+                        $("#subTitleField").append("<option value='" + data[key]["id"] + "'>" + data[key]["field"] + "</option>");
+                        $("#iconField").append("<option value='" + data[key]["id"] + "'>" + data[key]["field"] + "</option>");
+                    }
+                    layui.form.render('select');
+                }
+            });
         });
     });
 
@@ -255,14 +280,13 @@ layui.use(["layTp"], function () {
     }
 
     window.formTypeChange = function (params) {
-        console.log(params);
         let formType = params.arr[0].value;
         //定义没有附加设置的表单元素数组
         let noHtmlArr = ["plugin_core_user_id", "password", "textarea"];
-        //定义只有一个输入框的表单元素数组
-        let onlyInputArr = ["select", "radio", "checkbox"];
-        //定义只有一个输入框的表单元素Html
-        let onlyInputHtml =
+        //定义有多个选项的表单元素数组
+        let optionsArr = ["select", "radio", "checkbox"];
+        //定义有多个选项的表单元素Html
+        let optionsHtml =
             '<table class="layui-table">' +
             '<thead>' +
             '<tr>' +
@@ -306,11 +330,11 @@ layui.use(["layTp"], function () {
             '<td align="right">输入验证</td>' +
             '<td><select name="additional[]">' +
             '<option value="">不限制</option>' +
-            '<option value="layTp_email">Email</option>' +
-            '<option value="layTp_phone">手机号码</option>' +
-            '<option value="layTp_number">数字</option>' +
-            '<option value="layTp_url">链接</option>' +
-            '<option value="layTp_identity">身份证</option>' +
+            '<option value="email">Email</option>' +
+            '<option value="phone">手机号码</option>' +
+            '<option value="number">数字</option>' +
+            '<option value="url">链接</option>' +
+            '<option value="identity">身份证</option>' +
             '</select>' +
             '</td>' +
             '</tr>' +
@@ -406,8 +430,8 @@ layui.use(["layTp"], function () {
 
         if (noHtmlArr.indexOf(formType) !== -1) {
             $("#additional").html("<div style=\"padding: 9px 5px;\">无</div>");
-        } else if (onlyInputArr.indexOf(formType) !== -1) {
-            $("#additional").html(onlyInputHtml);
+        } else if (optionsArr.indexOf(formType) !== -1) {
+            $("#additional").html(optionsHtml);
         } else {
             $("#additional").html(eval(formType + "Html"));
             layui.form.render();
