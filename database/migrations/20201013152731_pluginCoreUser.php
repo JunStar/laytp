@@ -38,10 +38,10 @@ class PluginCoreUser extends Migrator
         }
 
         $table
-            ->addColumn('username', 'string', ['length' => 255, 'default' => '', 'comment' => '用户名'])
-            ->addColumn('nickname', 'string', ['length' => 255, 'default' => '', 'comment' => '昵称'])
-            ->addColumn('password', 'string', ['length' => 255, 'default' => '', 'comment' => '密码'])
-            ->addColumn('avatar', 'string', ['length' => 255, 'default' => '', 'comment' => '头像'])
+            ->addColumn('username', 'string', ['length' => 100, 'default' => '', 'comment' => '用户名'])
+            ->addColumn('nickname', 'string', ['length' => 100, 'default' => '', 'comment' => '昵称'])
+            ->addColumn('password', 'string', ['length' => 100, 'default' => '', 'comment' => '密码'])
+            ->addColumn('avatar', 'string', ['length' => 100, 'default' => '', 'comment' => '头像'])
             ->addColumn('is_super_manager', 'boolean', ['length' => 4, 'default' => 2, 'comment' => '是否超管.2=否,1=是'])
             ->addColumn('status', 'boolean', ['length' => 4, 'default' => 1, 'comment' => '状态.2.禁用,1.正常'])
             ->addColumn('create_time', 'integer', ['default' => 0, 'comment' => '创建时间'])

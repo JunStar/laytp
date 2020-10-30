@@ -38,11 +38,11 @@ class PluginAutocreateCurdTable extends Migrator
         }
 
         $table
-            ->addColumn('database', 'string', ['length' => 255, 'default' => '', 'comment' => '数据库'])
-            ->addColumn('table', 'string', ['length' => 255, 'default' => '', 'comment' => '表名'])
-            ->addColumn('comment', 'string', ['length' => 255, 'default' => '', 'comment' => '表注释'])
-            ->addColumn('engine', 'string', ['length' => 255, 'default' => '', 'comment' => '存储引擎'])
-            ->addColumn('collation', 'string', ['length' => 255, 'default' => '', 'comment' => '字符集(排序规则)'])
+            ->addColumn('database', 'string', ['length' => 100, 'default' => '', 'comment' => '数据库'])
+            ->addColumn('table', 'string', ['length' => 100, 'default' => '', 'comment' => '表名'])
+            ->addColumn('comment', 'string', ['length' => 100, 'default' => '', 'comment' => '表注释'])
+            ->addColumn('engine', 'string', ['length' => 100, 'default' => '', 'comment' => '存储引擎'])
+            ->addColumn('collation', 'string', ['length' => 100, 'default' => '', 'comment' => '字符集(排序规则)'])
             ->addColumn('autocreate_time', 'integer', ['length' => 11, 'default' => 0, 'comment' => '生成时间']);
 
         $data = [
