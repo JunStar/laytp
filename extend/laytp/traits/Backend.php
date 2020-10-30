@@ -12,7 +12,12 @@ trait Backend
         $where = $this->buildSearchParams();
         $order = $this->buildOrder();
         $limit = $this->request->param('limit', 10);
-        $data = $this->model->where($where)->order($order)->paginate($limit);
+        $layui_select = $this->request->param('layui_select');
+        if($layui_select){
+            $data = $this->model->where($where)->order($order)->select();
+        }else{
+            $data = $this->model->where($where)->order($order)->paginate($limit);
+        }
         return $this->success('数据获取成功', $data);
     }
 

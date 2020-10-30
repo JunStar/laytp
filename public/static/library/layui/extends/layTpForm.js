@@ -35,8 +35,8 @@ layui.define(["jquery", "facade"], function (exports) {
          * </select>
          * @param layerDiv 弹出层标识
          */
-        select: function (layerDiv) {
-            let obj = (typeof layerDiv === "undefined") ? $("select") : $("select", "#layui-layer" + layerDiv);
+        select: function (parentElem) {
+            let obj = (typeof parentElem === "undefined") ? $("select") : $("select", parentElem);
             layui.each(obj, function (key, item) {
                 let source = $(item).data("source");
                 $(item).removeAttr("data-source");
@@ -115,8 +115,8 @@ layui.define(["jquery", "facade"], function (exports) {
          * ></div>
          * @param layerDiv
          */
-        xmSelect: function (layerDiv) {
-            let obj = (typeof layerDiv === "undefined") ? $(".xmSelect") : $(".xmSelect", "#layui-layer" + layerDiv);
+        xmSelect: function (parentElem) {
+            let obj = (typeof parentElem === "undefined") ? $(".xmSelect") : $(".xmSelect", parentElem);
             layui.each(obj, function (key, item) {
                 let name = $(item).data("name");
                 if (!name) facade.error("xmSelect组件未定义name属性");
@@ -243,13 +243,13 @@ layui.define(["jquery", "facade"], function (exports) {
          *      data-layVerType="tips"//非必设，与layui的lay-verType相同
          * ></div>
          */
-        upload: function (layerDiv) {
-            let obj = (typeof layerDiv === "undefined") ? $(".layTpUpload") : $(".layTpUpload", "#layui-layer" + layerDiv);
+        upload: function (parentElem) {
+            let obj = (typeof parentElem === "undefined") ? $(".layTpUpload") : $(".layTpUpload", parentElem);
             layui.each(obj, function (key, item) {
                 let name = $(item).data("name");
                 if (!name) facade.error("layTpUpload组件未定义name属性");
                 let options = {
-                    layerDiv: layerDiv
+                    parentElem: parentElem
                     , el: item
                     , name: name
                     , accept: $(item).data("accept") ? $(item).data("accept") : "image"
@@ -288,14 +288,14 @@ layui.define(["jquery", "facade"], function (exports) {
          *      data-layVerType="tips"//非必设，与layui的lay-verType相同
          * ></div>
          */
-        icon: function (layerDiv) {
-            let obj = (typeof layerDiv === "undefined") ? $(".layTpIcon") : $(".layTpIcon", "#layui-layer" + layerDiv);
+        icon: function (parentElem) {
+            let obj = (typeof parentElem === "undefined") ? $(".layTpIcon") : $(".layTpIcon", parentElem);
             layui.each(obj, function (key, item) {
                 let name = $(item).data("name");
                 if (!name) facade.error("layTpIcon组件未定义name属性");
                 let options = {
                     el: item
-                    , layerDiv: layerDiv
+                    , parentElem: parentElem
                     , name: name
                     , value: $(item).data("value") ? $(item).data("value") : ""
                     , placeholder: $(item).data("placeholder") ? $(item).data("placeholder") : "请选择"
@@ -319,8 +319,8 @@ layui.define(["jquery", "facade"], function (exports) {
          *  placeholder="请选择时间" //输入框为空时的提示文字
          *  />
          */
-        laydate: function (layerDiv) {
-            let obj = (typeof layerDiv === "undefined") ? $("input[type='text']").filter(".laydate") : $("input[type='text']", "#layui-layer" + layerDiv).filter(".laydate");
+        laydate: function (parentElem) {
+            let obj = (typeof parentElem === "undefined") ? $("input[type='text']").filter(".laydate") : $("input[type='text']", parentElem).filter(".laydate");
             layui.each(obj, function (key, item) {
                 let elem = item;
                 let type = $(item).data('type') ? $(item).data('type') : 'datetime';
@@ -337,11 +337,11 @@ layui.define(["jquery", "facade"], function (exports) {
     /**
      * 渲染所有的表单元素
      */
-    layTpForm.render = function (layerDiv) {
+    layTpForm.render = function (parentElem) {
         //执行表单初始化方法
         layui.each(layTpForm.initData, function (key, item) {
             if (typeof item == "function") {
-                item(layerDiv)
+                item(parentElem)
             }
         });
 
@@ -360,24 +360,24 @@ layui.define(["jquery", "facade"], function (exports) {
          * 开关类型单选
          * @param field 字段名
          * @param d 数据表格所有数据集合
-         * @param data_list 值举例：{"open":{"value":1,"text":"是"},"close":{"value":0,"text":"否"}}
+         * @param dataList 值举例：{"open":{"value":1,"text":"是"},"close":{"value":0,"text":"否"}}
          * @returns {string}
          */
-        switch: function (field, d, data_list) {
-            let lay_text = data_list.open.text + "|" + data_list.close.text;
-            return "<input open_value='" + data_list.open.value + "' close_value='" + data_list.close.value + "' id_val='" + d.id + "' type='checkbox' name='" + field + "' value='" + data_list.open.value + "' lay-skin='switch' lay-text='" + lay_text + "' lay-filter='laytp-table-switch' " + ((d[field] == data_list.open.value) ? "checked='checked'" : "") + " />";
+        switch: function (field, d, dataList) {
+            let layText = dataList.open.text + "|" + dataList.close.text;
+            return "<input openValue='" + dataList.open.value + "' closeValue='" + dataList.close.value + "' idVal='" + d.id + "' type='checkbox' name='" + field + "' value='" + dataList.open.value + "' lay-skin='switch' lay-text='" + layText + "' lay-filter='laytp-table-switch' " + ((d[field] == dataList.open.value) ? "checked='checked'" : "") + " />";
         },
 
         /**
          * 回收站开关类型单选，回收站开关和普通开关分开的原因是，回收站开关请求后台的url不同
          * @param field 字段名
          * @param d 数据表格所有数据集合
-         * @param data_list 值举例：{"open":{"value":1,"text":"是"},"close":{"value":0,"text":"否"}}
+         * @param dataList 值举例：{"open":{"value":1,"text":"是"},"close":{"value":0,"text":"否"}}
          * @returns {string}
          */
-        recycleSwitch: function (field, d, data_list) {
-            let lay_text = data_list.open.text + "|" + data_list.close.text;
-            return "<input open_value='" + data_list.open.value + "' close_value='" + data_list.close.value + "' id_val='" + d.id + "' type='checkbox' name='" + field + "' value='" + data_list.open.value + "' lay-skin='switch' lay-text='" + lay_text + "' lay-filter='laytp-recycle-table-switch' " + ((d[field] == data_list.open.value) ? "checked='checked'" : "") + " />";
+        recycleSwitch: function (field, d, dataList) {
+            let layText = dataList.open.text + "|" + dataList.close.text;
+            return "<input openValue='" + dataList.open.value + "' closeValue='" + dataList.close.value + "' idVal='" + d.id + "' type='checkbox' name='" + field + "' value='" + dataList.open.value + "' lay-skin='switch' lay-text='" + layText + "' lay-filter='laytp-recycle-table-switch' " + ((d[field] == dataList.open.value) ? "checked='checked'" : "") + " />";
         },
     };
 
@@ -391,16 +391,16 @@ layui.define(["jquery", "facade"], function (exports) {
         laytpTableSwitch: function () {
             layui.form.on("switch(laytp-table-switch)", function (obj) {
                 if (facade.hasAuth(apiPrefix + "tableEdit")) {
-                    let open_value = obj.elem.attributes["open_value"].nodeValue;
-                    let close_value = obj.elem.attributes["close_value"].nodeValue;
-                    let id_val = obj.elem.attributes["id_val"].nodeValue;
-                    let post_data = {};
+                    let openValue = obj.elem.attributes["openValue"].nodeValue;
+                    let closeValue = obj.elem.attributes["closeValue"].nodeValue;
+                    let idVal = obj.elem.attributes["idVal"].nodeValue;
+                    let postData = {};
                     if (obj.elem.checked) {
-                        post_data = {field: this.name, field_val: open_value, ids: id_val};
+                        postData = {field: this.name, field_val: openValue, ids: idVal};
                     } else {
-                        post_data = {field: this.name, field_val: close_value, ids: id_val};
+                        postData = {field: this.name, field_val: closeValue, ids: idVal};
                     }
-                    facade.ajax({path: apiPrefix + "tableEdit", params: post_data});
+                    facade.ajax({path: apiPrefix + "tableEdit", params: postData});
                 } else {
                     facade.error("无权进行此操作");
                 }
@@ -413,16 +413,16 @@ layui.define(["jquery", "facade"], function (exports) {
         laytpRecycleTableSwitch: function () {
             layui.form.on("switch(laytp-recycle-table-switch)", function (obj) {
                 if (facade.hasAuth(apiPrefix + "recycleTableEdit")) {
-                    let open_value = obj.elem.attributes["open_value"].nodeValue;
-                    let close_value = obj.elem.attributes["close_value"].nodeValue;
-                    let id_val = obj.elem.attributes["id_val"].nodeValue;
-                    let post_data = {};
+                    let openValue = obj.elem.attributes["openValue"].nodeValue;
+                    let closeValue = obj.elem.attributes["closeValue"].nodeValue;
+                    let idVal = obj.elem.attributes["idVal"].nodeValue;
+                    let postData = {};
                     if (obj.elem.checked) {
-                        post_data = {field: this.name, field_val: open_value, ids: id_val};
+                        postData = {field: this.name, field_val: openValue, ids: idVal};
                     } else {
-                        post_data = {field: this.name, field_val: close_value, ids: id_val};
+                        postData = {field: this.name, field_val: closeValue, ids: idVal};
                     }
-                    facade.ajax({path: appName + "/" + controller + "/recycleTableEdit", params: post_data});
+                    facade.ajax({path: appName + "/" + controller + "/recycleTableEdit", params: postData});
                 } else {
                     facade.error("无权进行此操作");
                 }

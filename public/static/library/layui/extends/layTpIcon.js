@@ -20,7 +20,7 @@ layui.define(["jquery"], function (exports) {
                 "    <i id=\"{{d.name}}_i\" class='{{d.value}}'></i>\n" +
                 "</div>\n" +
                 "<div class=\"layui-inline\">\n" +
-                "    <a class=\"layui-btn layui-btn-default layui-btn-sm\" id=\"select-icon-{{d.name}}\" data-layerDiv=\"{{d.layerDiv}}\">选择图标</a>\n" +
+                "    <a class=\"layui-btn layui-btn-default layui-btn-sm\" id=\"select-icon-{{d.name}}\" data-parentElem=\"{{d.parentElem}}\">选择图标</a>\n" +
                 "</div>";
 
             return layui.laytpl(template).render(options);
@@ -33,7 +33,7 @@ layui.define(["jquery"], function (exports) {
                 "   <div>\n" +
                 "       <ul class=\"list-inline\">\n" +
                 "       {{#  layui.each(d.data, function(index, item){ }}\n" +
-                "       <li class=\"pop-select-to-input\" data-inputValue=\"{{ item.name }}\" data-layerDiv=\"{{ d.layerDiv }}\">\n" +
+                "       <li class=\"pop-select-to-input\" data-inputValue=\"{{ item.name }}\" data-parentElem=\"{{ d.parentElem }}\">\n" +
                 "           <i class=\"{{ item.name }}\"></i>\n" +
                 "       </li>\n" +
                 "       {{#  }); }}\n" +
@@ -54,13 +54,13 @@ layui.define(["jquery"], function (exports) {
                 let left = (document.body.offsetWidth - 230 - facade.rtrim(width, "%") / 100 * document.body.offsetWidth) / 2 + 230;
                 let layuiIconsHtml = "";
                 let fontAwesomeIconsHtml = "";
-                let layerDiv = $(this).data("layerdiv");
+                let parentElem = $(this).data("parentelem");
                 $.ajax({
                     "url": apiDomain + "/static/plugin/core/data/layuiIcons.json",
                     "async": false,
                     "dataType": "json",
                     "success": function (res) {
-                        res.layerDiv = layerDiv;
+                        res.parentElem = parentElem;
                         layuiIconsHtml = layTpIcon.chooseIconHtml(res);
                     }
                 });
@@ -70,7 +70,7 @@ layui.define(["jquery"], function (exports) {
                     "async": false,
                     "dataType": "json",
                     "success": function (res) {
-                        res.layerDiv = layerDiv;
+                        res.parentElem = parentElem;
                         fontAwesomeIconsHtml = layTpIcon.chooseIconHtml(res);
                     }
                 });
@@ -92,9 +92,9 @@ layui.define(["jquery"], function (exports) {
             //监听点击某个图标事件，关闭弹出层，将值输入Input并把图标展示在input后面的i标签内
             $(document).off("click", ".pop-select-to-input").on("click", ".pop-select-to-input", function () {
                 let value = $(this).data("inputvalue");
-                let layerDiv = $(this).data("layerdiv");
-                $("#" + options.name + "_i", "#layui-layer" + layerDiv).attr("class", value);
-                $("#" + options.name, "#layui-layer" + layerDiv).val(value).focus();
+                let parentElem = $(this).data("parentelem");
+                $("#" + options.name + "_i", parentElem).attr("class", value);
+                $("#" + options.name, parentElem).val(value).focus();
                 layer.close(tabIndex);
             });
 

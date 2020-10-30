@@ -187,6 +187,60 @@ layui.use(["layTp"], function () {
             let clickObj = $(this);
             clickObj.parent().parent().remove();
         });
+
+        layui.form.on('select(data-from)', function(data){
+            console.log(data.elem); //得到select原始DOM对象
+            console.log(data.value); //得到被选中的值
+            console.log(data.othis); //得到美化后的DOM对象
+            if(data.value === "table"){
+                let xmSelectSetDataTable =
+                    '    <div class="layui-row margin-bottom6">' +
+                    '       <div class="layui-inline layui-col-lg5 layui-col-md5 layui-col-sm5 layui-col-xs5">' +
+                    '           <label class="layui-form-label layui-form-required">数据表</label>' +
+                    '           <div class="layui-input-block">' +
+                    '           <select class="layui-select"' +
+                    '                data-source="/plugin/core/autocreate.curd.table/index"' +
+                    '                data-showField="table"\n' +
+                    '           ></select>' +
+                    '           </div>' +
+                    '       </div>' +
+                    '       <div class="layui-inline layui-col-lg5 layui-col-md5 layui-col-sm5 layui-col-xs5">' +
+                    '           <label class="layui-form-label layui-form-required" title="默认不限制，仅多选有效">主标题字段</label>' +
+                    '           <div class="layui-input-block">' +
+                    '               <input type="text" class="layui-input" name="additional[]" placeholder="默认不限制，仅多选有效" />' +
+                    '           </div>' +
+                    '       </div>' +
+                    '    </div>' +
+                    '    <div class="layui-row margin-bottom6">' +
+                    '       <div class="layui-inline layui-col-lg5 layui-col-md5 layui-col-sm5 layui-col-xs5">' +
+                    '           <label class="layui-form-label layui-form-required">副标题字段</label>' +
+                    '           <div class="layui-input-block">' +
+                    '               <select class="layui-select">' +
+                    '                   <option value="">自动</option>' +
+                    '                   <option value="up">向上</option>' +
+                    '                   <option value="down">向下</option>' +
+                    '               </select>' +
+                    '           </div>' +
+                    '       </div>' +
+                    '       <div class="layui-inline layui-col-lg5 layui-col-md5 layui-col-sm5 layui-col-xs5">' +
+                    '           <label class="layui-form-label layui-form-required">图标字段</label>' +
+                    '           <div class="layui-input-block">' +
+                    '               <select class="layui-select">' +
+                    '                   <option value="">请选择字段</option>' +
+                    '                   <option value="data">自定义</option>' +
+                    '                   <option value="table">数据表</option>' +
+                    '               </select>' +
+                    '           </div>' +
+                    '       </div>' +
+                    '    </div>'
+                ;
+                $("#setData").html(xmSelectSetDataTable);
+                layui.form.render('select');
+                layui.layTpForm.render("#setData");
+            }else{
+
+            }
+        });
     });
 
     function getTreeData(data) {
@@ -334,7 +388,7 @@ layui.use(["layTp"], function () {
             '       <div class="layui-inline layui-col-lg5 layui-col-md5 layui-col-sm5 layui-col-xs5">' +
             '           <label class="layui-form-label layui-form-required">数据来源方式</label>' +
             '           <div class="layui-input-block">' +
-            '               <select class="layui-select">' +
+            '               <select class="layui-select" lay-filter="data-from">' +
             '                   <option value="">请选择数据来源</option>' +
             '                   <option value="data">自定义</option>' +
             '                   <option value="table">数据表</option>' +
@@ -345,95 +399,9 @@ layui.use(["layTp"], function () {
             '  </div>' +
             '  <div class="layui-card-header">数据设置</div>' +
             '  <div class="layui-card-body" id="setData">' +
-            '    <div class="layui-row margin-bottom6">' +
-            '       <div class="layui-inline layui-col-lg5 layui-col-md5 layui-col-sm5 layui-col-xs5">' +
-            '           <label class="layui-form-label layui-form-required">单选还是多选</label>' +
-            '           <div class="layui-input-block">' +
-            '               <select class="layui-select">' +
-            '                   <option value="single">单选</option>' +
-            '                   <option value="multi">多选</option>' +
-            '               </select>' +
-            '           </div>' +
-            '       </div>' +
-            '       <div class="layui-inline layui-col-lg5 layui-col-md5 layui-col-sm5 layui-col-xs5">' +
-            '           <label class="layui-form-label layui-form-required" title="默认不限制，仅多选有效">最多可选个数</label>' +
-            '           <div class="layui-input-block">' +
-            '               <input type="text" class="layui-input" name="additional[]" placeholder="默认不限制，仅多选有效" />' +
-            '           </div>' +
-            '       </div>' +
-            '    </div>' +
-            '    <div class="layui-row margin-bottom6">' +
-            '       <div class="layui-inline layui-col-lg5 layui-col-md5 layui-col-sm5 layui-col-xs5">' +
-            '           <label class="layui-form-label layui-form-required">下拉方向</label>' +
-            '           <div class="layui-input-block">' +
-            '               <select class="layui-select">' +
-            '                   <option value="">自动</option>' +
-            '                   <option value="up">向上</option>' +
-            '                   <option value="down">向下</option>' +
-            '               </select>' +
-            '           </div>' +
-            '       </div>' +
-            '       <div class="layui-inline layui-col-lg5 layui-col-md5 layui-col-sm5 layui-col-xs5">' +
-            '           <label class="layui-form-label layui-form-required">数据来源方式</label>' +
-            '           <div class="layui-input-block">' +
-            '               <select class="layui-select">' +
-            '                   <option value="">请选择数据来源</option>' +
-            '                   <option value="data">自定义</option>' +
-            '                   <option value="table">数据表</option>' +
-            '               </select>' +
-            '           </div>' +
-            '       </div>' +
-            '    </div>' +
+            '   请选择数据来源方式' +
             '  </div>' +
             '</div>'
-        ;
-
-        let xmSelectSetDataTable =
-            '    <div class="layui-row margin-bottom6">' +
-            '       <div class="layui-inline layui-col-lg5 layui-col-md5 layui-col-sm5 layui-col-xs5">' +
-            '           <label class="layui-form-label layui-form-required">数据表</label>' +
-            '           <div class="layui-input-block">' +
-            '           <div class="xmSelect"\n' +
-            '                data-name="table_id"\n' +
-            '                data-sourceType="url"\n' +
-            '                data-source="/plugin/core/autocreate.curd.table/index"\n' +
-            '                data-paging="true"\n' +
-            '                data-radio="true"\n' +
-            '                data-textField="table"\n' +
-            '                data-subTextField="database"\n' +
-            '                data-valueField="id"\n' +
-            '           ></div>' +
-            '           </div>' +
-            '       </div>' +
-            '       <div class="layui-inline layui-col-lg5 layui-col-md5 layui-col-sm5 layui-col-xs5">' +
-            '           <label class="layui-form-label layui-form-required" title="默认不限制，仅多选有效">主标题字段</label>' +
-            '           <div class="layui-input-block">' +
-            '               <input type="text" class="layui-input" name="additional[]" placeholder="默认不限制，仅多选有效" />' +
-            '           </div>' +
-            '       </div>' +
-            '    </div>' +
-            '    <div class="layui-row margin-bottom6">' +
-            '       <div class="layui-inline layui-col-lg5 layui-col-md5 layui-col-sm5 layui-col-xs5">' +
-            '           <label class="layui-form-label layui-form-required">副标题字段</label>' +
-            '           <div class="layui-input-block">' +
-            '               <select class="layui-select">' +
-            '                   <option value="">自动</option>' +
-            '                   <option value="up">向上</option>' +
-            '                   <option value="down">向下</option>' +
-            '               </select>' +
-            '           </div>' +
-            '       </div>' +
-            '       <div class="layui-inline layui-col-lg5 layui-col-md5 layui-col-sm5 layui-col-xs5">' +
-            '           <label class="layui-form-label layui-form-required">图标字段</label>' +
-            '           <div class="layui-input-block">' +
-            '               <select class="layui-select">' +
-            '                   <option value="">请选择字段</option>' +
-            '                   <option value="data">自定义</option>' +
-            '                   <option value="table">数据表</option>' +
-            '               </select>' +
-            '           </div>' +
-            '       </div>' +
-            '    </div>'
         ;
 
         if (noHtmlArr.indexOf(formType) !== -1) {

@@ -39,7 +39,7 @@ layui.define(["jquery"], function (exports) {
                 "   {{# for(key in uploadedArr){ }}" +
                 "       <li class=\"item_img\">" +
                 "           <div class=\"operate\">" +
-                "               <i class=\"upload_img_close layui-icon\" data-file_url=\"{{uploadedArr[key]}}\" data-id=\"{{d.name}}\" data-layerDiv=\"{{d.layerDiv}}\"></i>" +
+                "               <i class=\"upload_img_close layui-icon\" data-file_url=\"{{uploadedArr[key]}}\" data-id=\"{{d.name}}\" data-parentElem=\"{{d.parentElem}}\"></i>" +
                 "           </div>" +
                 "           <img src=\"{{sysConf.upload.domain + uploadedArr[key]}}\" class=\"img\">" +
                 "       </li>" +
@@ -55,7 +55,7 @@ layui.define(["jquery"], function (exports) {
             let html =
                 '<li class="item_img">' +
                 '   <div class="operate">' +
-                '       <i class="upload_img_close layui-icon" data-file_url="{{d.data}}" data-id="{{d.name}}" data-layerDiv=\"{{d.layerDiv}}\"></i>' +
+                '       <i class="upload_img_close layui-icon" data-file_url="{{d.data}}" data-id="{{d.name}}" data-parentElem=\"{{d.parentElem}}\"></i>' +
                 '   </div>' +
                 '   <img src="{{sysConf.upload.domain + d.data}}" class="img" />' +
                 '</li>';
@@ -67,7 +67,7 @@ layui.define(["jquery"], function (exports) {
             let html =
                 '<li class="item_video">' +
                 '   <video src="{{sysConf.upload.domain + d.data}}" controls="controls" width="200px" height="200px"></video>' +
-                '   <button class="layui-btn layui-btn-sm layui-btn-danger upload_delete" style="display: block; width: 100%;" data-file_url="{{d.data}}" data-id="{{d.name}}" data-layerDiv=\"{{d.layerDiv}}\"><i class="layui-icon">&#xe640;</i></button>' +
+                '   <button class="layui-btn layui-btn-sm layui-btn-danger upload_delete" style="display: block; width: 100%;" data-file_url="{{d.data}}" data-id="{{d.name}}" data-parentElem=\"{{d.parentElem}}\"><i class="layui-icon">&#xe640;</i></button>' +
                 '</li>';
             return layui.laytpl(html).render(options);
         },
@@ -77,7 +77,7 @@ layui.define(["jquery"], function (exports) {
             let html =
                 '<li class="item_audio">' +
                 '   <audio src="{{sysConf.upload.domain + d.data}}" controls="controls" style="height:54px;"></audio>' +
-                '   <button class="layui-btn layui-btn-sm layui-btn-danger upload_delete" style="display: block; width: 100%;" data-file_url="{{d.data}}" data-id="{{d.name}}" data-layerDiv=\"{{d.layerDiv}}\"><i class="layui-icon">&#xe640;</i></button>' +
+                '   <button class="layui-btn layui-btn-sm layui-btn-danger upload_delete" style="display: block; width: 100%;" data-file_url="{{d.data}}" data-id="{{d.name}}" data-parentElem=\"{{d.parentElem}}\"><i class="layui-icon">&#xe640;</i></button>' +
                 '</li>';
             return layui.laytpl(html).render(options);
         },
@@ -91,7 +91,7 @@ layui.define(["jquery"], function (exports) {
             }
             $(options.el).after(layTpUpload.uploadHtml(options));
             layui.upload.render({
-                elem: $("#layTpUploadBtn_" + options.name, "#layui-layer" + options.layerDiv),
+                elem: $("#layTpUploadBtn_" + options.name, options.parentElem),
                 url: options.url,
                 accept: options.accept,
                 multiple: options.multi,
@@ -113,30 +113,30 @@ layui.define(["jquery"], function (exports) {
                     if (options.multi) {
                         //多个预览
                         if (options.accept === "image") {
-                            $("#preview_" + options.name, "#layui-layer" + options.layerDiv).append(layTpUpload.singleImageHtml(options));
+                            $("#preview_" + options.name, options.parentElem).append(layTpUpload.singleImageHtml(options));
                         } else if (options.accept === "video") {
-                            $("#preview_" + options.name, "#layui-layer" + options.layerDiv).append(layTpUpload.singleVideoHtml(options));
+                            $("#preview_" + options.name, options.parentElem).append(layTpUpload.singleVideoHtml(options));
                         } else if (options.accept === "audio") {
-                            $("#preview_" + options.name, "#layui-layer" + options.layerDiv).append(layTpUpload.singleAudioHtml(options));
+                            $("#preview_" + options.name, options.parentElem).append(layTpUpload.singleAudioHtml(options));
                         }
                         //input框增加文件值
                         let input_value = $("#input_" + options.name).val();
                         if (input_value) {
-                            $("#input_" + options.name, "#layui-layer" + options.layerDiv).val(input_value + splitStr + res.data).focus();
+                            $("#input_" + options.name, options.parentElem).val(input_value + splitStr + res.data).focus();
                         } else {
-                            $("#input_" + options.name, "#layui-layer" + options.layerDiv).val(res.data).focus();
+                            $("#input_" + options.name, options.parentElem).val(res.data).focus();
                         }
                     } else {
                         //单个预览
                         if (options.accept === "image") {
-                            $("#preview_" + options.name, "#layui-layer" + options.layerDiv).html(layTpUpload.singleImageHtml(options));
+                            $("#preview_" + options.name, options.parentElem).html(layTpUpload.singleImageHtml(options));
                         } else if (options.accept === "video") {
-                            $("#preview_" + options.name, "#layui-layer" + options.layerDiv).html(layTpUpload.singleVideoHtml(options));
+                            $("#preview_" + options.name, options.parentElem).html(layTpUpload.singleVideoHtml(options));
                         } else if (options.accept === "audio") {
-                            $("#preview_" + options.name, "#layui-layer" + options.layerDiv).html(layTpUpload.singleAudioHtml(options));
+                            $("#preview_" + options.name, options.parentElem).html(layTpUpload.singleAudioHtml(options));
                         }
                         //input框增加文件值
-                        $("#input_" + options.name, "#layui-layer" + options.layerDiv).val(res.data).focus();
+                        $("#input_" + options.name, options.parentElem).val(res.data).focus();
                     }
                     return facade.success(res.msg);
                 }
@@ -145,7 +145,7 @@ layui.define(["jquery"], function (exports) {
             //删除已经上传的东西
             $("body").on("click", ".upload_img_close, .upload_delete", function () {
                 let id = $(this).data("id");
-                let layerDiv = $(this).data('layerdiv');
+                let parentElem = $(this).data('parentelem');
                 if (options.multi) {
                     let fileUrl = $(this).data("file_url");
                     let inputValue = $("#input_" + id).val();
@@ -162,9 +162,9 @@ layui.define(["jquery"], function (exports) {
                             newInputValue = inputValue.replace(reg, "");
                         }
                     }
-                    $("#input_" + id, "#layui-layer" + layerDiv).val(newInputValue);
+                    $("#input_" + id, parentElem).val(newInputValue);
                 } else {
-                    $("#input_" + id, "#layui-layer" + layerDiv).val("");
+                    $("#input_" + id, parentElem).val("");
                 }
                 $(this).closest("li").remove();
             });
