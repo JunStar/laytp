@@ -195,8 +195,7 @@ layui.use(["layTp"], function () {
                     '       <div class="layui-inline layui-col-lg5 layui-col-md5 layui-col-sm5 layui-col-xs5">' +
                     '           <label class="layui-form-label layui-form-required">数据表</label>' +
                     '           <div class="layui-input-block">' +
-                    '           <select class="layui-select" lay-filter="select-table"' +
-                    '                data-name="addition[table_id]"' +
+                    '           <select class="layui-select" name="addition[table_id]" lay-filter="select-table"' +
                     '                data-source="/plugin/core/autocreate.curd.table/index"' +
                     '                data-showField="table"\n' +
                     '                data-placeholder="请选择数据表"\n' +
