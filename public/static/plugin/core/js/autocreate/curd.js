@@ -172,10 +172,10 @@ layui.use(["layTp"], function () {
             let clickObj = $(this);
             clickObj.parent().parent().before('<tr>' +
                 '<td align="right">' +
-                '<input type="text" class="layui-input" name="additional[]" />' +
+                '<input type="text" class="layui-input" name="addition[]" />' +
                 '</td>' +
                 '<td>' +
-                '<input type="text" class="layui-input" name="additional[]" />' +
+                '<input type="text" class="layui-input" name="addition[]" />' +
                 '</td>' +
                 '<td>' +
                 '<a class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-delete del-item"></a>' +
@@ -196,6 +196,7 @@ layui.use(["layTp"], function () {
                     '           <label class="layui-form-label layui-form-required">数据表</label>' +
                     '           <div class="layui-input-block">' +
                     '           <select class="layui-select" lay-filter="select-table"' +
+                    '                data-name="addition[table_id]"' +
                     '                data-source="/plugin/core/autocreate.curd.table/index"' +
                     '                data-showField="table"\n' +
                     '                data-placeholder="请选择数据表"\n' +
@@ -205,7 +206,7 @@ layui.use(["layTp"], function () {
                     '       <div class="layui-inline layui-col-lg5 layui-col-md5 layui-col-sm5 layui-col-xs5">' +
                     '           <label class="layui-form-label layui-form-required" title="默认不限制，仅多选有效">主标题字段</label>' +
                     '           <div class="layui-input-block">' +
-                    '               <select class="layui-select" id="titleField">' +
+                    '               <select class="layui-select" name="addition[title_field]" id="titleField">' +
                     '                   <option value="">请选择字段</option>' +
                     '               </select>' +
                     '           </div>' +
@@ -215,7 +216,7 @@ layui.use(["layTp"], function () {
                     '       <div class="layui-inline layui-col-lg5 layui-col-md5 layui-col-sm5 layui-col-xs5">' +
                     '           <label class="layui-form-label layui-form-required">副标题字段</label>' +
                     '           <div class="layui-input-block">' +
-                    '               <select class="layui-select" id="subTitleField">' +
+                    '               <select class="layui-select" name="addition[sub_title_field]" id="subTitleField">' +
                     '                   <option value="">请选择字段</option>' +
                     '               </select>' +
                     '           </div>' +
@@ -223,7 +224,7 @@ layui.use(["layTp"], function () {
                     '       <div class="layui-inline layui-col-lg5 layui-col-md5 layui-col-sm5 layui-col-xs5">' +
                     '           <label class="layui-form-label layui-form-required">图标字段</label>' +
                     '           <div class="layui-input-block">' +
-                    '               <select class="layui-select" id="iconField">' +
+                    '               <select class="layui-select" name="addition[icon_field]" id="iconField">' +
                     '                   <option value="">请选择字段</option>' +
                     '               </select>' +
                     '           </div>' +
@@ -298,10 +299,10 @@ layui.use(["layTp"], function () {
             '<tbody>' +
             '<tr>' +
             '<td align="right">' +
-            '<input type="text" class="layui-input" name="additional[]" />' +
+            '<input type="text" class="layui-input" name="addition[value][]" />' +
             '</td>' +
             '<td>' +
-            '<input type="text" class="layui-input" name="additional[]" />' +
+            '<input type="text" class="layui-input" name="addition[text][]" />' +
             '</td>' +
             '<td>' +
             '<a class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-delete del-item"></a>' +
@@ -317,7 +318,7 @@ layui.use(["layTp"], function () {
             '默认选中项的值，多个以英文逗号隔开' +
             '</td>' +
             '<td colspan="2">' +
-            '<input type="text" class="layui-input" name="additional[]" />' +
+            '<input type="text" class="layui-input" name="addition[default]" />' +
             '</td>' +
             '</tr>' +
             '</tbody>' +
@@ -328,14 +329,15 @@ layui.use(["layTp"], function () {
             '<tbody>' +
             '<tr>' +
             '<td align="right">输入验证</td>' +
-            '<td><select name="additional[]">' +
-            '<option value="">不限制</option>' +
-            '<option value="email">Email</option>' +
-            '<option value="phone">手机号码</option>' +
-            '<option value="number">数字</option>' +
-            '<option value="url">链接</option>' +
-            '<option value="identity">身份证</option>' +
-            '</select>' +
+            '<td>' +
+            '   <select name="addition[verify]">' +
+            '       <option value="">不限制</option>' +
+            '       <option value="email">Email</option>' +
+            '       <option value="phone">手机号码</option>' +
+            '       <option value="number">数字</option>' +
+            '       <option value="url">链接</option>' +
+            '       <option value="identity">身份证</option>' +
+            '   </select>' +
             '</td>' +
             '</tr>' +
             '</tbody>' +
@@ -348,7 +350,7 @@ layui.use(["layTp"], function () {
             '关闭状态的值' +
             '</td>' +
             '<td>' +
-            '<input type="text" class="layui-input" name="additional[]" />' +
+            '<input type="text" class="layui-input" name="addition[close_value]" />' +
             '</td>' +
             '</tr>' +
             '<tr>' +
@@ -356,7 +358,7 @@ layui.use(["layTp"], function () {
             '关闭状态的文本' +
             '</td>' +
             '<td>' +
-            '<input type="text" class="layui-input" name="additional[]" />' +
+            '<input type="text" class="layui-input" name="addition[close_text]" />' +
             '</td>' +
             '</tr>' +
             '<tr>' +
@@ -364,7 +366,7 @@ layui.use(["layTp"], function () {
             '打开状态的值' +
             '</td>' +
             '<td>' +
-            '<input type="text" class="layui-input" name="additional[]" />' +
+            '<input type="text" class="layui-input" name="addition[open_value]" />' +
             '</td>' +
             '</tr>' +
             '<tr>' +
@@ -372,7 +374,7 @@ layui.use(["layTp"], function () {
             '打开状态的文本' +
             '</td>' +
             '<td>' +
-            '<input type="text" class="layui-input" name="additional[]" />' +
+            '<input type="text" class="layui-input" name="addition[open_text]" />' +
             '</td>' +
             '</tr>' +
             '</tbody>' +
@@ -385,7 +387,7 @@ layui.use(["layTp"], function () {
             '       <div class="layui-inline layui-col-lg5 layui-col-md5 layui-col-sm5 layui-col-xs5">' +
             '           <label class="layui-form-label layui-form-required">单选还是多选</label>' +
             '           <div class="layui-input-block">' +
-            '               <select class="layui-select">' +
+            '               <select class="layui-select" name="addition[single_multi_type]">' +
             '                   <option value="single">单选</option>' +
             '                   <option value="multi">多选</option>' +
             '               </select>' +
@@ -394,7 +396,7 @@ layui.use(["layTp"], function () {
             '       <div class="layui-inline layui-col-lg5 layui-col-md5 layui-col-sm5 layui-col-xs5">' +
             '           <label class="layui-form-label layui-form-required" title="默认不限制，仅多选有效">最多可选个数</label>' +
             '           <div class="layui-input-block">' +
-            '               <input type="text" class="layui-input" name="additional[]" placeholder="默认不限制，仅多选有效" />' +
+            '               <input type="text" class="layui-input" name="addition[max]" placeholder="默认不限制，仅多选有效" />' +
             '           </div>' +
             '       </div>' +
             '    </div>' +
@@ -402,7 +404,7 @@ layui.use(["layTp"], function () {
             '       <div class="layui-inline layui-col-lg5 layui-col-md5 layui-col-sm5 layui-col-xs5">' +
             '           <label class="layui-form-label layui-form-required">下拉方向</label>' +
             '           <div class="layui-input-block">' +
-            '               <select class="layui-select">' +
+            '               <select class="layui-select" name="addition[direction]">' +
             '                   <option value="">自动</option>' +
             '                   <option value="up">向上</option>' +
             '                   <option value="down">向下</option>' +
@@ -412,7 +414,7 @@ layui.use(["layTp"], function () {
             '       <div class="layui-inline layui-col-lg5 layui-col-md5 layui-col-sm5 layui-col-xs5">' +
             '           <label class="layui-form-label layui-form-required">数据来源方式</label>' +
             '           <div class="layui-input-block">' +
-            '               <select class="layui-select" lay-filter="data-from">' +
+            '               <select class="layui-select" name="addition[data_from_type]" lay-filter="data-from">' +
             '                   <option value="">请选择数据来源</option>' +
             '                   <option value="data">自定义</option>' +
             '                   <option value="table">数据表</option>' +
@@ -429,11 +431,11 @@ layui.use(["layTp"], function () {
         ;
 
         if (noHtmlArr.indexOf(formType) !== -1) {
-            $("#additional").html("<div style=\"padding: 9px 5px;\">无</div>");
+            $("#addition").html("<div style=\"padding: 9px 5px;\">无</div>");
         } else if (optionsArr.indexOf(formType) !== -1) {
-            $("#additional").html(optionsHtml);
+            $("#addition").html(optionsHtml);
         } else {
-            $("#additional").html(eval(formType + "Html"));
+            $("#addition").html(eval(formType + "Html"));
             layui.form.render();
         }
     }

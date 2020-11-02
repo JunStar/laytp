@@ -33,7 +33,7 @@ layui.define(["jquery", "facade"], function (exports) {
          *  data-placeholder="请选择"//类似placeholder，允许为空，没有默认值，当没有定义当前属性，或者当前属性的值定义为空时，将不会有提示行，默认会选中数据源中的第一个数据
          * >
          * </select>
-         * @param layerDiv 弹出层标识
+         * @param parentElem 父节点
          */
         select: function (parentElem) {
             let obj = (typeof parentElem === "undefined") ? $("select") : $("select", parentElem);
@@ -113,7 +113,7 @@ layui.define(["jquery", "facade"], function (exports) {
          isAdd: false
          __proto__: Object
          * ></div>
-         * @param layerDiv
+         * @param parentElem
          */
         xmSelect: function (parentElem) {
             let obj = (typeof parentElem === "undefined") ? $(".xmSelect") : $(".xmSelect", parentElem);

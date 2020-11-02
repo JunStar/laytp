@@ -89,7 +89,7 @@
                                     默认查询排序</label>
                                 <div class="layui-input-block">
                                     <select class="layui-select" name="default_select_sort">
-                                        <option value="">请选择</option>
+                                        <option value="">不设置</option>
                                         <option value="asc">ASC</option>
                                         <option value="desc">DESC</option>
                                     </select>
@@ -102,13 +102,13 @@
                         <label class="layui-form-label" title="显示位置">
                             显示位置</label>
                         <div class="layui-input-block">
-                            <input type="checkbox" checked="checked" name="show_search" id="show_search" value="1"
+                            <input type="checkbox" checked="checked" name="search_show" id="search_show" value="1"
                                    title="搜索表单"/>
-                            <input type="checkbox" checked="checked" name="show_table" id="show_table" value="1"
+                            <input type="checkbox" checked="checked" name="table_show" id="table_show" value="1"
                                    title="数据列表"/>
-                            <input type="checkbox" checked="checked" name="show_add" id="show_add" value="1"
+                            <input type="checkbox" checked="checked" name="add_show" id="add_show" value="1"
                                    title="添加表单"/>
-                            <input type="checkbox" checked="checked" name="show_edit" id="show_edit" value="1"
+                            <input type="checkbox" checked="checked" name="edit_show" id="edit_show" value="1"
                                    title="编辑表单"/>
                         </div>
                     </div>
@@ -119,6 +119,7 @@
                             显示排序</label>
                         <div class="layui-input-block">
                             <input type="text" name="show_sort" placeholder="请输入数字，倒序生成字段展示位置" class="layui-input"
+                                   value="0"
                                    lay-verify="required|number"
                                    lay-verType="tips">
                         </div>
@@ -147,7 +148,7 @@
                         <label class="layui-form-label" title="附加设置">
                             <text style="color:red;">*</text>
                             附加设置</label>
-                        <div class="layui-input-block" id="additional">
+                        <div class="layui-input-block" id="addition">
                             <div style="padding: 9px 5px;">请先选择表单元素</div>
                         </div>
                     </div>
