@@ -10,7 +10,7 @@ use think\facade\Request;
 /**
  * 后台权限服务实现者
  * Class Auth
- * @package app\common\model_service\admin
+ * @package plugin\core\service
  */
 class Auth
 {

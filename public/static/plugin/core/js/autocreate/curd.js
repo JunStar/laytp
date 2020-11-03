@@ -96,7 +96,6 @@ layui.use(["layTp"], function () {
                                 $("[lay-filter=laytp-search-form]").click();
                             }
                         });
-                        // var element =
                         break;
                 }
             }
@@ -113,26 +112,18 @@ layui.use(["layTp"], function () {
                     $("[lay-filter=laytp-search-form]").click();
                 });
             } else if (obj.event === "edit") {
+                //弹出编辑层
                 facade.popupDiv({
-                    title: "添加字段",
+                    title: "编辑字段",
                     path: "/plugin/core/autocreate.curd.field/edit",
                     data: obj.data,
                     callback: function () {
                         $("[lay-filter=laytp-search-form]").click();
                     }
                 });
+                formTypeChangePrivate(obj.data.form_type, obj.data);
+                selectDataFrom(obj.data.addition.data_from_type);
             }
-            // if (defaultTableTool.indexOf(obj.event) !== -1) {
-            //     layTp.tableTool(obj);
-            // } else {
-            //     // //自定义按钮点击事件
-            //     // switch(obj.event){
-            //     // //自定义按钮点击事件
-            //     // case "":
-            //     //
-            //     //     break;
-            //     // }
-            // }
         });
 
         //监听鼠标双击行事件，双击行表示进行编辑
@@ -151,7 +142,6 @@ layui.use(["layTp"], function () {
 
         //添加表，绑定点击事件
         $("a[lay-event='addTable']").on("click", function () {
-            console.log("添加表");
             facade.popupDiv({
                 title: "添加表"
                 , path: "plugin/core/autocreate.curd.table/add"
@@ -189,53 +179,7 @@ layui.use(["layTp"], function () {
         });
 
         layui.form.on('select(data-from)', function(data){
-            if(data.value === "table"){
-                let xmSelectSetDataTable =
-                    '    <div class="layui-row margin-bottom6">' +
-                    '       <div class="layui-inline layui-col-lg5 layui-col-md5 layui-col-sm5 layui-col-xs5">' +
-                    '           <label class="layui-form-label layui-form-required">数据表</label>' +
-                    '           <div class="layui-input-block">' +
-                    '           <select class="layui-select" name="addition[table_id]" lay-filter="select-table"' +
-                    '                data-source="/plugin/core/autocreate.curd.table/index"' +
-                    '                data-showField="table"\n' +
-                    '                data-placeholder="请选择数据表"\n' +
-                    '           ></select>' +
-                    '           </div>' +
-                    '       </div>' +
-                    '       <div class="layui-inline layui-col-lg5 layui-col-md5 layui-col-sm5 layui-col-xs5">' +
-                    '           <label class="layui-form-label layui-form-required" title="默认不限制，仅多选有效">主标题字段</label>' +
-                    '           <div class="layui-input-block">' +
-                    '               <select class="layui-select" name="addition[title_field]" id="titleField">' +
-                    '                   <option value="">请选择字段</option>' +
-                    '               </select>' +
-                    '           </div>' +
-                    '       </div>' +
-                    '    </div>' +
-                    '    <div class="layui-row margin-bottom6">' +
-                    '       <div class="layui-inline layui-col-lg5 layui-col-md5 layui-col-sm5 layui-col-xs5">' +
-                    '           <label class="layui-form-label layui-form-required">副标题字段</label>' +
-                    '           <div class="layui-input-block">' +
-                    '               <select class="layui-select" name="addition[sub_title_field]" id="subTitleField">' +
-                    '                   <option value="">请选择字段</option>' +
-                    '               </select>' +
-                    '           </div>' +
-                    '       </div>' +
-                    '       <div class="layui-inline layui-col-lg5 layui-col-md5 layui-col-sm5 layui-col-xs5">' +
-                    '           <label class="layui-form-label layui-form-required">图标字段</label>' +
-                    '           <div class="layui-input-block">' +
-                    '               <select class="layui-select" name="addition[icon_field]" id="iconField">' +
-                    '                   <option value="">请选择字段</option>' +
-                    '               </select>' +
-                    '           </div>' +
-                    '       </div>' +
-                    '    </div>'
-                ;
-                $("#setData").html(xmSelectSetDataTable);
-                layui.form.render('select');
-                layui.layTpForm.render("#setData");
-            }else{
-
-            }
+            selectDataFrom(data.value);
         });
 
         layui.form.on('select(select-table)', function (data) {
@@ -268,6 +212,58 @@ layui.use(["layTp"], function () {
         });
     });
 
+    function selectDataFrom(value, editData) {
+        if (value === "table") {
+            let xmSelectSetDataTable =
+                '    <div class="layui-row margin-bottom6">' +
+                '       <div class="layui-inline layui-col-lg5 layui-col-md5 layui-col-sm5 layui-col-xs5">' +
+                '           <label class="layui-form-label layui-form-required">数据表</label>' +
+                '           <div class="layui-input-block">' +
+                '           <select class="layui-select" name="addition[table_id]" lay-filter="select-table"' +
+                '                data-source="/plugin/core/autocreate.curd.table/index"' +
+                '                data-showField="table"\n' +
+                '                data-placeholder="请选择数据表"\n' +
+                '                data-selected="{{ d.table_id }}"\n' +
+                '           ></select>' +
+                '           </div>' +
+                '       </div>' +
+                '       <div class="layui-inline layui-col-lg5 layui-col-md5 layui-col-sm5 layui-col-xs5">' +
+                '           <label class="layui-form-label layui-form-required" title="默认不限制，仅多选有效">主标题字段</label>' +
+                '           <div class="layui-input-block">' +
+                '               <select class="layui-select" name="addition[title_field]" id="titleField">' +
+                '                   <option value="">请选择字段</option>' +
+                '               </select>' +
+                '           </div>' +
+                '       </div>' +
+                '    </div>' +
+                '    <div class="layui-row margin-bottom6">' +
+                '       <div class="layui-inline layui-col-lg5 layui-col-md5 layui-col-sm5 layui-col-xs5">' +
+                '           <label class="layui-form-label layui-form-required">副标题字段</label>' +
+                '           <div class="layui-input-block">' +
+                '               <select class="layui-select" name="addition[sub_title_field]" id="subTitleField">' +
+                '                   <option value="">请选择字段</option>' +
+                '               </select>' +
+                '           </div>' +
+                '       </div>' +
+                '       <div class="layui-inline layui-col-lg5 layui-col-md5 layui-col-sm5 layui-col-xs5">' +
+                '           <label class="layui-form-label layui-form-required">图标字段</label>' +
+                '           <div class="layui-input-block">' +
+                '               <select class="layui-select" name="addition[icon_field]" id="iconField">' +
+                '                   <option value="">请选择字段</option>' +
+                '               </select>' +
+                '           </div>' +
+                '       </div>' +
+                '    </div>'
+            ;
+            $("#setData").html(xmSelectSetDataTable);
+            layui.laytpl().render();
+            layui.form.render('select');
+            layui.layTpForm.render("#setData");
+        } else {
+
+        }
+    }
+
     function getTreeData(data) {
         let key;
         for (key in data) {
@@ -279,8 +275,14 @@ layui.use(["layTp"], function () {
         return data;
     }
 
-    window.formTypeChange = function (params) {
-        let formType = params.arr[0].value;
+    window.formTypeChangePrivate = function (formType, editData) {
+        if (typeof editData === "undefined") {
+            editData = {
+                addition: {
+                    max: "",
+                }
+            };
+        }
         //定义没有附加设置的表单元素数组
         let noHtmlArr = ["plugin_core_user_id", "password", "textarea"];
         //定义有多个选项的表单元素数组
@@ -378,7 +380,7 @@ layui.use(["layTp"], function () {
             '</tr>' +
             '</tbody>' +
             '</table>';
-        let xm_selectHtml =
+        let xm_selectTemplate =
             '<div class="layui-card">' +
             '  <div class="layui-card-header">基础设置</div>' +
             '  <div class="layui-card-body">' +
@@ -387,15 +389,15 @@ layui.use(["layTp"], function () {
             '           <label class="layui-form-label layui-form-required">单选还是多选</label>' +
             '           <div class="layui-input-block">' +
             '               <select class="layui-select" name="addition[single_multi_type]">' +
-            '                   <option value="single">单选</option>' +
-            '                   <option value="multi">多选</option>' +
+            '                   <option value="single" {{# if(d.addition.single_multi_type === "single"){ }}selected="selected"{{# } }}>单选</option>' +
+            '                   <option value="multi" {{# if(d.addition.single_multi_type === "multi"){ }}selected="selected"{{# } }}>多选</option>' +
             '               </select>' +
             '           </div>' +
             '       </div>' +
             '       <div class="layui-inline layui-col-lg5 layui-col-md5 layui-col-sm5 layui-col-xs5">' +
             '           <label class="layui-form-label layui-form-required" title="默认不限制，仅多选有效">最多可选个数</label>' +
             '           <div class="layui-input-block">' +
-            '               <input type="text" class="layui-input" name="addition[max]" placeholder="默认不限制，仅多选有效" />' +
+            '               <input type="text" class="layui-input" name="addition[max]" value="{{ d.addition.max }}" placeholder="默认不限制，仅多选有效" />' +
             '           </div>' +
             '       </div>' +
             '    </div>' +
@@ -405,8 +407,8 @@ layui.use(["layTp"], function () {
             '           <div class="layui-input-block">' +
             '               <select class="layui-select" name="addition[direction]">' +
             '                   <option value="">自动</option>' +
-            '                   <option value="up">向上</option>' +
-            '                   <option value="down">向下</option>' +
+            '                   <option value="up" {{# if(d.addition.direction === "up"){ }}selected="selected"{{# } }}>向上</option>' +
+            '                   <option value="down" {{# if(d.addition.direction === "down"){ }}selected="selected"{{# } }}>向下</option>' +
             '               </select>' +
             '           </div>' +
             '       </div>' +
@@ -415,8 +417,8 @@ layui.use(["layTp"], function () {
             '           <div class="layui-input-block">' +
             '               <select class="layui-select" name="addition[data_from_type]" lay-filter="data-from">' +
             '                   <option value="">请选择数据来源</option>' +
-            '                   <option value="data">自定义</option>' +
-            '                   <option value="table">数据表</option>' +
+            '                   <option value="data" {{# if(d.addition.data_from_type === "data"){ }}selected="selected"{{# } }}>自定义</option>' +
+            '                   <option value="table" {{# if(d.addition.data_from_type === "table"){ }}selected="selected"{{# } }}>数据表</option>' +
             '               </select>' +
             '           </div>' +
             '       </div>' +
@@ -428,6 +430,8 @@ layui.use(["layTp"], function () {
             '  </div>' +
             '</div>'
         ;
+        console.log(editData);
+        let xm_selectHtml = layui.laytpl(xm_selectTemplate).render(editData);
 
         if (noHtmlArr.indexOf(formType) !== -1) {
             $("#addition").html("<div style=\"padding: 9px 5px;\">无</div>");
@@ -437,5 +441,10 @@ layui.use(["layTp"], function () {
             $("#addition").html(eval(formType + "Html"));
             layui.form.render();
         }
+    };
+
+    window.formTypeChange = function (params) {
+        let formType = params.arr[0].value;
+        formTypeChangePrivate(formType);
     }
 });

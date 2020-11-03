@@ -1,136 +1,161 @@
 <div class="popup-content">
     <form class="layui-form">
-        <div class="layui-row margin-bottom6">
-            <div class="layui-inline layui-col-lg12 layui-col-md12 layui-col-sm12 layui-col-xs12">
-                <div class="layui-form-item">
-                    <label class="layui-form-label">
-                        <text style="color:red;">*</text>
-                        所属表</label>
-                    <div class="layui-input-block">
-                        <div class="xmSelect"
-                             data-name="table_id"
-                             data-sourceType="url"
-                             data-source="/plugin/core/autocreate.curd.table/index"
-                             data-paging="true"
-                             data-radio="true"
-                             data-textField="table"
-                             data-subTextField="database"
-                             data-valueField="id"
-                             data-selected="{{d.table_id}}"
-                        ></div>
+        <div class="layui-tab layui-tab-brief">
+            <ul class="layui-tab-title">
+                <li class="layui-this">基础设置</li>
+                <li>表单元素</li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                    <div class="layui-row margin-bottom6">
+                        <div class="layui-inline layui-col-lg12 layui-col-md12 layui-col-sm12 layui-col-xs12">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">
+                                    <text style="color:red;">*</text>
+                                    所属表</label>
+                                <div class="layui-input-block">
+                                    <div class="xmSelect"
+                                         data-name="table_id"
+                                         data-sourceType="url"
+                                         data-source="/plugin/core/autocreate.curd.table/index"
+                                         data-paging="true"
+                                         data-radio="true"
+                                         data-textField="table"
+                                         data-subTextField="database"
+                                         data-valueField="id"
+                                         data-selected="{{d.table_id}}"
+                                    ></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-row margin-bottom6">
+                        <div class="layui-inline layui-col-lg6 layui-col-md6 layui-col-sm6 layui-col-xs6">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">
+                                    <text style="color:red;">*</text>
+                                    字段名称</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="field" value="{{d.field}}" placeholder="请输入字段名称"
+                                           class="layui-input"
+                                           lay-verify="required"
+                                           lay-verType="tips" autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="layui-inline layui-col-lg6 layui-col-md6 layui-col-sm6 layui-col-xs6">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">
+                                    <text style="color:red;">*</text>
+                                    字段注释</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="comment" value="{{d.comment}}" placeholder="请输入字段注释"
+                                           class="layui-input"
+                                           lay-verify="required"
+                                           lay-verType="tips" autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-row margin-bottom6">
+                        <div class="layui-inline layui-col-lg4 layui-col-md4 layui-col-sm4 layui-col-xs4">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label" title="允许为空">
+                                    允许为空</label>
+                                <div class="layui-input-block">
+                                    <input type="checkbox" name="is_empty" id="is_empty" value="2"
+                                           title="允许"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="layui-inline layui-col-lg4 layui-col-md4 layui-col-sm4 layui-col-xs4">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label" title="点击表头排序">
+                                    点击表头排序</label>
+                                <div class="layui-input-block">
+                                    <input type="checkbox" checked="checked" name="is_thead_sort"
+                                           id="is_thead_sort"
+                                           value="1"
+                                           title="表头排序"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="layui-inline layui-col-lg4 layui-col-md4 layui-col-sm4 layui-col-xs4">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label" title="默认查询排序">
+                                    默认查询排序</label>
+                                <div class="layui-input-block">
+                                    <select class="layui-select" name="default_select_sort">
+                                        <option value="">不设置</option>
+                                        <option value="asc">ASC</option>
+                                        <option value="desc">DESC</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label" title="显示位置">
+                            显示位置</label>
+                        <div class="layui-input-block">
+                            <input type="checkbox" checked="checked" name="search_show" id="search_show" value="1"
+                                   title="搜索表单"/>
+                            <input type="checkbox" checked="checked" name="table_show" id="table_show" value="1"
+                                   title="数据列表"/>
+                            <input type="checkbox" checked="checked" name="add_show" id="add_show" value="1"
+                                   title="添加表单"/>
+                            <input type="checkbox" checked="checked" name="edit_show" id="edit_show" value="1"
+                                   title="编辑表单"/>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label" title="显示排序">
+                            <text style="color:red;">*</text>
+                            显示排序</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="show_sort" placeholder="请输入数字，倒序生成字段展示位置" class="layui-input"
+                                   value="0"
+                                   lay-verify="required|number"
+                                   lay-verType="tips">
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
+                <div class="layui-tab-item">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">
+                            <text style="color:red;">*</text>
+                            表单元素</label>
+                        <div class="layui-input-block">
+                            <div class="xmSelect"
+                                 data-name="form_type"
+                                 data-source="[{name:'单行文本输入框',value:'input'},{name:'当前登录者ID',value:'plugin_core_user_id'},{name:'密码输入框',value:'password'},{name:'普通文本域',value:'textarea'},{name:'单选按钮',value:'radio'},{name:'开关单选',value:'switch'},{name:'复选框',value:'checkbox'},{name:'普通单选下拉框',value:'select'},{name:'xm-select下拉框',value:'xm_select'},{name:'联动下拉框',value:'linkage_select'},{name:'时间选择器',value:'date'},{name:'颜色选择器',value:'color_picker'},{name:'上传控件',value:'upload'},{name:'富文本编辑器',value:'editor'}]"
+                                 data-subTextField="value"
+                                 data-layVerify="required"
+                                 data-layVerType="tips"
+                                 data-radio="true"
+                                 data-placeholder="请选择表单元素"
+                                 data-onchange="formTypeChange"
+                                 data-selected="{{d.form_type}}"
+                            ></div>
+                        </div>
+                    </div>
 
-        <div class="layui-row margin-bottom6">
-            <div class="layui-inline layui-col-lg6 layui-col-md6 layui-col-sm6 layui-col-xs6">
-                <div class="layui-form-item">
-                    <label class="layui-form-label">
-                        <text style="color:red;">*</text>
-                        字段名称</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="field" value="{{d.field}}" placeholder="请输入字段名称" class="layui-input"
-                               lay-verify="required"
-                               lay-verType="tips" autocomplete="off">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label" title="附加设置">
+                            <text style="color:red;">*</text>
+                            附加设置</label>
+                        <div class="layui-input-block" id="addition">
+                            <div style="padding: 9px 5px;">请先选择表单元素</div>
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="layui-inline layui-col-lg6 layui-col-md6 layui-col-sm6 layui-col-xs6">
-                <div class="layui-form-item">
-                    <label class="layui-form-label">
-                        <text style="color:red;">*</text>
-                        字段注释</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="comment" value="{{d.comment}}" placeholder="请输入表注释" class="layui-input"
-                               lay-verify="required"
-                               lay-verType="tips" autocomplete="off">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="layui-form-item">
-            <label class="layui-form-label">
-                <text style="color:red;">*</text>
-                表单元素</label>
-            <div class="layui-input-block">
-                <div class="xmSelect"
-                     data-name="form_type"
-                     data-source="[{name:'单行文本输入框',value:'input'},{name:'当前登录者ID',value:'plugin_core_user_id'},{name:'密码输入框',value:'password'},{name:'普通文本域',value:'textarea'},{name:'单选按钮',value:'radio'},{name:'开关单选',value:'switch'},{name:'复选框',value:'checkbox'},{name:'下拉框',value:'select'},{name:'搜索下拉框',value:'search_select'},{name:'联动下拉框',value:'linkage'},{name:'时间选择器',value:'laydate'},{name:'颜色选择器',value:'colorpicker'},{name:'上传控件',value:'upload'},{name:'富文本编辑器',value:'editor'}]"
-                     data-subTextField="value"
-                     data-layVerify="required"
-                     data-layVerType="tips"
-                     data-radio="true"
-                     data-placeholder="请选择表单元素"
-                     data-selected="{{d.form_type}}"
-                     data-onchange="formTypeChange"
-                ></div>
-            </div>
-        </div>
-
-        <div class="layui-form-item">
-            <label class="layui-form-label" title="附加设置">
-                <text style="color:red;">*</text>
-                附加设置</label>
-            <div class="layui-input-block">
-                <input type="text" name="additional" value="{{d.additional}}" placeholder="请输入附加设置" class="layui-input"
-                       lay-verify="required"
-                       lay-verType="tips">
-            </div>
-        </div>
-
-        <div class="layui-row margin-bottom6">
-            <div class="layui-inline layui-col-lg6 layui-col-md6 layui-col-sm6 layui-col-xs6">
-                <div class="layui-form-item">
-                    <label class="layui-form-label" title="允许为空">
-                        允许为空</label>
-                    <div class="layui-input-block">
-                        <input type="checkbox" {{# if(d.required=== 1){ }}checked="checked" {{# } }} name="required"
-                               id="required" value="1" title="允许"/>
-                    </div>
-                </div>
-            </div>
-
-            <div class="layui-inline layui-col-lg6 layui-col-md6 layui-col-sm6 layui-col-xs6">
-                <div class="layui-form-item">
-                    <label class="layui-form-label" title="表头排序">
-                        表头排序</label>
-                    <div class="layui-input-block">
-                        <input type="checkbox" {{# if(d.click_thead_order=== 1){ }}checked="checked" {{# } }}
-                               name="click_thead_order" id="click_thead_order"
-                               value="1"
-                               title="表头排序"/>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="layui-form-item">
-            <label class="layui-form-label" title="显示位置">
-                显示位置</label>
-            <div class="layui-input-block">
-                <input type="checkbox" {{# if(d.show_search=== 1){ }}checked="checked" {{# } }} name="show_search"
-                       id="show_search" value="1" title="搜索表单"/>
-                <input type="checkbox" {{# if(d.show_table=== 1){ }}checked="checked" {{# } }} name="show_table"
-                       id="show_table" value="1" title="数据表格"/>
-                <input type="checkbox" {{# if(d.show_add=== 1){ }}checked="checked" {{# } }} name="show_add"
-                       id="show_add" value="1" title="添加表单"/>
-                <input type="checkbox" {{# if(d.show_edit=== 1){ }}checked="checked" {{# } }} name="show_edit"
-                       id="show_edit" value="1" title="编辑表单"/>
-            </div>
-        </div>
-
-        <div class="layui-form-item">
-            <label class="layui-form-label" title="排序">
-                <text style="color:red;">*</text>
-                排序</label>
-            <div class="layui-input-block">
-                <input type="text" name="sort" value="{{d.sort}}" placeholder="请输入排序数字，倒序生成字段展示位置" class="layui-input"
-                       lay-verify="required"
-                       lay-verType="tips">
             </div>
         </div>
     </form>

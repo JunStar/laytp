@@ -130,8 +130,8 @@ layui.define(["jquery", "facade"], function (exports) {
                     , filterable: true
                     , radio: $(item).data("radio") === true
                     , searchTips: "输入关键字进行搜索"
-                    , maxMethod: function (selected) {
-                        facade.error("最多可选" + selected.length + "个数据");
+                    , maxMethod: function (selectedData) {
+                        facade.error("最多可选" + selectedData.length + "个数据");
                     }
                     , layVerify: $(item).data("layverify") ? $(item).data("layverify") : ""
                     , layVerType: $(item).data("layvertype") ? $(item).data("layvertype") : ""

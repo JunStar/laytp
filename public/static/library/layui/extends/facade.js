@@ -359,6 +359,7 @@ layui.define(["jquery"], function (exports) {
             }
             let top = (clientHeight - layerHeight) / 2;
             $.ajax({
+                async: false,//最好设置成同步请求，这样，在执行完popupDiv后，如果需要再对弹出层的元素进行处理，就不会出现BUG
                 url: facade.getHtmlUrl(facade.url(options.path)),
                 success: function (res) {
                     let content = res;

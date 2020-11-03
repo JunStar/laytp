@@ -7,8 +7,7 @@ use laytp\traits\Error;
 
 /**
  * 后台用户服务实现者
- * Class Auth
- * @package app\common\model_service\admin
+ * @package plugin\core\service
  */
 class User
 {

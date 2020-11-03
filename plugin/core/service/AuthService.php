@@ -8,7 +8,7 @@ use think\Service;
 /**
  * 后台权限服务提供者
  * Class AuthService
- * @package app\common\model_service\admin
+ * @package plugin\core\service
  */
 class AuthService extends Service
 {

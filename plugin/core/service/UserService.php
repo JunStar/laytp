@@ -7,8 +7,8 @@ use think\Service;
 
 /**
  * 后台用户服务提供者
- * Class AuthService
- * @package app\common\model_service\admin
+ * Class UserService
+ * @package plugin\core\service
  */
 class UserService extends Service
 {

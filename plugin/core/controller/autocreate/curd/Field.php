@@ -25,4 +25,28 @@ class Field extends Backend
             return $this->error('操作失败');
         }
     }
+
+    //编辑
+    public function edit()
+    {
+        $id = $this->request->param('id');
+        $info = $this->model->get($id);
+        $post = $this->request->post();
+        $post['addition'] = json_encode($post['addition'], JSON_UNESCAPED_UNICODE);
+        foreach ($post as $k => $v) {
+            $info->$k = $v;
+        }
+        try {
+            $updateRes = $info->save();
+            if ($updateRes) {
+                return $this->success('编辑成功');
+            } else if ($updateRes === 0) {
+                return $this->success('未做修改');
+            } else if ($updateRes === null) {
+                return $this->error('操作失败');
+            }
+        } catch (\Exception $e) {
+            return $this->error($e->getMessage());
+        }
+    }
 }
