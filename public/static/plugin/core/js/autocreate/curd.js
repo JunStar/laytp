@@ -165,10 +165,10 @@ layui.use(["layTp"], function () {
             let clickObj = $(this);
             clickObj.parent().parent().before('<tr>' +
                 '<td align="right">' +
-                '<input type="text" class="layui-input" name="addition[]" />' +
+                '<input type="text" class="layui-input" name="addition[value][]" />' +
                 '</td>' +
                 '<td>' +
-                '<input type="text" class="layui-input" name="addition[]" />' +
+                '<input type="text" class="layui-input" name="addition[text][]" />' +
                 '</td>' +
                 '<td>' +
                 '<a class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-delete del-item"></a>' +
@@ -191,6 +191,14 @@ layui.use(["layTp"], function () {
     });
 
     function selectDataFrom(value, editData) {
+        console.log(editData);
+        if (typeof editData === "undefined") {
+            editData = {
+                addition: {
+                    table_id: "",
+                }
+            }
+        }
         if (value === "table") {
             let xmSelectSetDataTable =
                 '    <div class="layui-row margin-bottom6">' +
@@ -242,6 +250,15 @@ layui.use(["layTp"], function () {
     }
 
     function selectDataFromTable(table_id, editData) {
+        if (typeof editData === "undefined") {
+            editData = {
+                addition: {
+                    title_field: "",
+                    sub_title_field: "",
+                    icon_field: ""
+                }
+            }
+        }
         facade.ajax({
             path: "/plugin/core/autocreate.curd/getFieldList",
             params: {
@@ -299,6 +316,11 @@ layui.use(["layTp"], function () {
             editData = {
                 addition: {
                     max: "",
+                    default: "",
+                    close_value: "",
+                    close_text: "",
+                    open_value: "",
+                    open_text: "",
                 }
             };
         }
@@ -317,17 +339,20 @@ layui.use(["layTp"], function () {
             '</tr>' +
             '</thead>' +
             '<tbody>' +
+            '{{# let key; }}' +
+            '{{# for(key in d.addition.value){ }}' +
             '<tr>' +
             '<td align="right">' +
-            '<input type="text" class="layui-input" name="addition[value][]" />' +
+            '<input type="text" class="layui-input" name="addition[value][]" value="{{d.addition.value[key]}}" />' +
             '</td>' +
             '<td>' +
-            '<input type="text" class="layui-input" name="addition[text][]" />' +
+            '<input type="text" class="layui-input" name="addition[text][]" value="{{d.addition.text[key]}}" />' +
             '</td>' +
             '<td>' +
             '<a class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-delete del-item"></a>' +
             '</td>' +
             '</tr>' +
+            '{{# } }}' +
             '<tr>' +
             '<td colspan="3">' +
             '<a class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-add-1 add-item">追加选项</a>' +
@@ -338,7 +363,7 @@ layui.use(["layTp"], function () {
             '默认选中项的值，多个以英文逗号隔开' +
             '</td>' +
             '<td colspan="2">' +
-            '<input type="text" class="layui-input" name="addition[default]" />' +
+            '<input type="text" class="layui-input" name="addition[default]" value="{{d.addition.default}}" />' +
             '</td>' +
             '</tr>' +
             '</tbody>' +
@@ -370,7 +395,7 @@ layui.use(["layTp"], function () {
             '关闭状态的值' +
             '</td>' +
             '<td>' +
-            '<input type="text" class="layui-input" name="addition[close_value]" />' +
+            '<input type="text" class="layui-input" name="addition[close_value]" value="{{d.addition.close_value}}" />' +
             '</td>' +
             '</tr>' +
             '<tr>' +
@@ -378,7 +403,7 @@ layui.use(["layTp"], function () {
             '关闭状态的文本' +
             '</td>' +
             '<td>' +
-            '<input type="text" class="layui-input" name="addition[close_text]" />' +
+            '<input type="text" class="layui-input" name="addition[close_text]" value="{{d.addition.close_text}}" />' +
             '</td>' +
             '</tr>' +
             '<tr>' +
@@ -386,7 +411,7 @@ layui.use(["layTp"], function () {
             '打开状态的值' +
             '</td>' +
             '<td>' +
-            '<input type="text" class="layui-input" name="addition[open_value]" />' +
+            '<input type="text" class="layui-input" name="addition[open_value]" value="{{d.addition.open_value}}" />' +
             '</td>' +
             '</tr>' +
             '<tr>' +
@@ -394,7 +419,7 @@ layui.use(["layTp"], function () {
             '打开状态的文本' +
             '</td>' +
             '<td>' +
-            '<input type="text" class="layui-input" name="addition[open_text]" />' +
+            '<input type="text" class="layui-input" name="addition[open_text]" value="{{d.addition.open_text}}" />' +
             '</td>' +
             '</tr>' +
             '</tbody>' +

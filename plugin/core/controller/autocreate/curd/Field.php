@@ -18,7 +18,11 @@ class Field extends Backend
     public function add()
     {
         $post = $this->request->post();
-        array_key_exists('addition', $post) && $post['addition'] = json_encode($post['addition'], JSON_UNESCAPED_UNICODE);
+        if (array_key_exists('addition', $post)) {
+            $post['addition'] = json_encode($post['addition'], JSON_UNESCAPED_UNICODE);
+        } else {
+            $post['addition'] = '';
+        }
         if ($this->model->create($post)) {
             return $this->success('添加成功', $post);
         } else {
