@@ -36,7 +36,7 @@ trait Backend
     public function edit()
     {
         $id = $this->request->param('id');
-        $info = $this->model->get($id);
+        $info = $this->model->find($id);
         $post = filter_post_data($this->request->post());
         foreach ($post as $k => $v) {
             $info->$k = $v;

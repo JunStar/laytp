@@ -18,7 +18,7 @@ class Field extends Backend
     public function add()
     {
         $post = $this->request->post();
-        $post['addition'] = json_encode($post['addition'], JSON_UNESCAPED_UNICODE);
+        array_key_exists('addition', $post) && $post['addition'] = json_encode($post['addition'], JSON_UNESCAPED_UNICODE);
         if ($this->model->create($post)) {
             return $this->success('添加成功', $post);
         } else {
@@ -30,9 +30,13 @@ class Field extends Backend
     public function edit()
     {
         $id = $this->request->param('id');
-        $info = $this->model->get($id);
+        $info = $this->model->find($id);
         $post = $this->request->post();
-        $post['addition'] = json_encode($post['addition'], JSON_UNESCAPED_UNICODE);
+        if (array_key_exists('addition', $post)) {
+            $post['addition'] = json_encode($post['addition'], JSON_UNESCAPED_UNICODE);
+        } else {
+            $post['addition'] = '';
+        }
         foreach ($post as $k => $v) {
             $info->$k = $v;
         }

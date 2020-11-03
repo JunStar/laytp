@@ -122,7 +122,10 @@ layui.use(["layTp"], function () {
                     }
                 });
                 formTypeChangePrivate(obj.data.form_type, obj.data);
-                selectDataFrom(obj.data.addition.data_from_type);
+                if (obj.data.form_type === 'xm_select') {
+                    selectDataFrom(obj.data.addition.data_from_type, obj.data);
+                    selectDataFromTable(obj.data.addition.table_id, obj.data);
+                }
             }
         });
 
@@ -183,32 +186,7 @@ layui.use(["layTp"], function () {
         });
 
         layui.form.on('select(select-table)', function (data) {
-            facade.ajax({
-                path: "/plugin/core/autocreate.curd/getFieldList",
-                params: {
-                    search_param: {
-                        table_id: {
-                            value: data.value,
-                            condition: "="
-                        }
-                    }
-                },
-                successAlert: false
-            }).then(function (res) {
-                if (res.code === 0) {
-                    $("#titleField").html('<option value="">请选择字段</option>');
-                    $("#subTitleField").html('<option value="">请选择字段</option>');
-                    $("#iconField").html('<option value="">请选择字段</option>');
-                    let key;
-                    let data = res.data.data;
-                    for (key in res.data.data) {
-                        $("#titleField").append("<option value='" + data[key]["id"] + "'>" + data[key]["field"] + "</option>");
-                        $("#subTitleField").append("<option value='" + data[key]["id"] + "'>" + data[key]["field"] + "</option>");
-                        $("#iconField").append("<option value='" + data[key]["id"] + "'>" + data[key]["field"] + "</option>");
-                    }
-                    layui.form.render('select');
-                }
-            });
+            selectDataFromTable(data.value);
         });
     });
 
@@ -223,7 +201,7 @@ layui.use(["layTp"], function () {
                 '                data-source="/plugin/core/autocreate.curd.table/index"' +
                 '                data-showField="table"\n' +
                 '                data-placeholder="请选择数据表"\n' +
-                '                data-selected="{{ d.table_id }}"\n' +
+                '                data-selected="{{ d.addition.table_id }}"\n' +
                 '           ></select>' +
                 '           </div>' +
                 '       </div>' +
@@ -255,13 +233,53 @@ layui.use(["layTp"], function () {
                 '       </div>' +
                 '    </div>'
             ;
-            $("#setData").html(xmSelectSetDataTable);
-            layui.laytpl().render();
+            $("#setData").html(layui.laytpl(xmSelectSetDataTable).render(editData));
             layui.form.render('select');
             layui.layTpForm.render("#setData");
         } else {
 
         }
+    }
+
+    function selectDataFromTable(table_id, editData) {
+        facade.ajax({
+            path: "/plugin/core/autocreate.curd/getFieldList",
+            params: {
+                search_param: {
+                    table_id: {
+                        value: table_id,
+                        condition: "="
+                    }
+                }
+            },
+            successAlert: false
+        }).then(function (res) {
+            if (res.code === 0) {
+                $("#titleField").html('<option value="">请选择字段</option>');
+                $("#subTitleField").html('<option value="">请选择字段</option>');
+                $("#iconField").html('<option value="">请选择字段</option>');
+                let key;
+                let data = res.data.data;
+                for (key in res.data.data) {
+                    if (parseInt(editData.addition.title_field) === data[key]["id"]) {
+                        $("#titleField").append("<option value='" + data[key]["id"] + "' selected='selected'>" + data[key]["field"] + "</option>");
+                    } else {
+                        $("#titleField").append("<option value='" + data[key]["id"] + "'>" + data[key]["field"] + "</option>");
+                    }
+                    if (parseInt(editData.addition.sub_title_field) === data[key]["id"]) {
+                        $("#subTitleField").append("<option value='" + data[key]["id"] + "' selected='selected'>" + data[key]["field"] + "</option>");
+                    } else {
+                        $("#subTitleField").append("<option value='" + data[key]["id"] + "'>" + data[key]["field"] + "</option>");
+                    }
+                    if (parseInt(editData.addition.icon_field) === data[key]["id"]) {
+                        $("#iconField").append("<option value='" + data[key]["id"] + "' selected='selected'>" + data[key]["field"] + "</option>");
+                    } else {
+                        $("#iconField").append("<option value='" + data[key]["id"] + "'>" + data[key]["field"] + "</option>");
+                    }
+                }
+                layui.form.render('select');
+            }
+        });
     }
 
     function getTreeData(data) {
@@ -276,6 +294,7 @@ layui.use(["layTp"], function () {
     }
 
     window.formTypeChangePrivate = function (formType, editData) {
+        console.log(editData);
         if (typeof editData === "undefined") {
             editData = {
                 addition: {
@@ -288,7 +307,7 @@ layui.use(["layTp"], function () {
         //定义有多个选项的表单元素数组
         let optionsArr = ["select", "radio", "checkbox"];
         //定义有多个选项的表单元素Html
-        let optionsHtml =
+        let optionsTemplate =
             '<table class="layui-table">' +
             '<thead>' +
             '<tr>' +
@@ -325,7 +344,7 @@ layui.use(["layTp"], function () {
             '</tbody>' +
             '</table>';
         //定义有附加设置的表单元素数组具体的附加设置的html
-        let inputHtml =
+        let inputTemplate =
             '<table class="layui-table">' +
             '<tbody>' +
             '<tr>' +
@@ -333,17 +352,17 @@ layui.use(["layTp"], function () {
             '<td>' +
             '   <select name="addition[verify]">' +
             '       <option value="">不限制</option>' +
-            '       <option value="email">Email</option>' +
-            '       <option value="phone">手机号码</option>' +
-            '       <option value="number">数字</option>' +
-            '       <option value="url">链接</option>' +
-            '       <option value="identity">身份证</option>' +
+            '       <option value="email" {{# if(d.addition.verify === "email"){ }}selected="selected"{{# } }}>Email</option>' +
+            '       <option value="phone" {{# if(d.addition.verify === "phone"){ }}selected="selected"{{# } }}>手机号码</option>' +
+            '       <option value="number" {{# if(d.addition.verify === "number"){ }}selected="selected"{{# } }}>数字</option>' +
+            '       <option value="url" {{# if(d.addition.verify === "url"){ }}selected="selected"{{# } }}>链接</option>' +
+            '       <option value="identity" {{# if(d.addition.verify === "identity"){ }}selected="selected"{{# } }}>身份证</option>' +
             '   </select>' +
             '</td>' +
             '</tr>' +
             '</tbody>' +
             '</table>';
-        let switchHtml =
+        let switchTemplate =
             '<table class="layui-table">' +
             '<tbody>' +
             '<tr>' +
@@ -430,15 +449,13 @@ layui.use(["layTp"], function () {
             '  </div>' +
             '</div>'
         ;
-        console.log(editData);
-        let xm_selectHtml = layui.laytpl(xm_selectTemplate).render(editData);
 
         if (noHtmlArr.indexOf(formType) !== -1) {
             $("#addition").html("<div style=\"padding: 9px 5px;\">无</div>");
         } else if (optionsArr.indexOf(formType) !== -1) {
-            $("#addition").html(optionsHtml);
+            $("#addition").html(layui.laytpl(optionsTemplate).render(editData));
         } else {
-            $("#addition").html(eval(formType + "Html"));
+            $("#addition").html(layui.laytpl(eval(formType + "Template")).render(editData));
             layui.form.render();
         }
     };
