@@ -9,6 +9,7 @@ layui.use(["layTp"], function () {
     let nowTableId = "";
 
     defaultHeightPopupDiv = "85%";
+    defaultWidthPopupDiv = "760px";
 
     funController.getTreeTable = function () {
         facade.ajax({
@@ -88,6 +89,7 @@ layui.use(["layTp"], function () {
                 switch (obj.event) {
                     //自定义按钮点击事件
                     case "addField":
+                        table_id = nowTableId;
                         facade.popupDiv({
                             title: "添加字段",
                             path: "/plugin/core/autocreate.curd.field/add",
@@ -200,8 +202,12 @@ layui.use(["layTp"], function () {
         });
     });
 
+    let table_id;
+    window.setTableId = function (params) {
+        table_id = params.arr[0].value;
+    };
+
     function selectDataFrom(value, editData) {
-        console.log(editData);
         if (typeof editData === "undefined") {
             editData = {
                 addition: {
@@ -212,7 +218,7 @@ layui.use(["layTp"], function () {
         if (value === "table") {
             let xmSelectSetDataTable =
                 '    <div class="layui-row margin-bottom6">' +
-                '       <div class="layui-inline layui-col-lg5 layui-col-md5 layui-col-sm5 layui-col-xs5">' +
+                '       <div class="layui-col-lg6 layui-col-md6 layui-col-sm6 layui-col-xs6">' +
                 '           <label class="layui-form-label layui-form-required">数据表</label>' +
                 '           <div class="layui-input-block">' +
                 '           <select class="layui-select" name="addition[table_id]" lay-filter="select-table"' +
@@ -223,7 +229,7 @@ layui.use(["layTp"], function () {
                 '           ></select>' +
                 '           </div>' +
                 '       </div>' +
-                '       <div class="layui-inline layui-col-lg5 layui-col-md5 layui-col-sm5 layui-col-xs5">' +
+                '       <div class="layui-col-lg6 layui-col-md6 layui-col-sm6 layui-col-xs6">' +
                 '           <label class="layui-form-label layui-form-required" title="默认不限制，仅多选有效">主标题字段</label>' +
                 '           <div class="layui-input-block">' +
                 '               <select class="layui-select" name="addition[title_field]" id="titleField">' +
@@ -233,7 +239,7 @@ layui.use(["layTp"], function () {
                 '       </div>' +
                 '    </div>' +
                 '    <div class="layui-row margin-bottom6">' +
-                '       <div class="layui-inline layui-col-lg5 layui-col-md5 layui-col-sm5 layui-col-xs5">' +
+                '       <div class="layui-col-lg6 layui-col-md6 layui-col-sm6 layui-col-xs6">' +
                 '           <label class="layui-form-label layui-form-required">副标题字段</label>' +
                 '           <div class="layui-input-block">' +
                 '               <select class="layui-select" name="addition[sub_title_field]" id="subTitleField">' +
@@ -241,7 +247,7 @@ layui.use(["layTp"], function () {
                 '               </select>' +
                 '           </div>' +
                 '       </div>' +
-                '       <div class="layui-inline layui-col-lg5 layui-col-md5 layui-col-sm5 layui-col-xs5">' +
+                '       <div class="layui-col-lg6 layui-col-md6 layui-col-sm6 layui-col-xs6">' +
                 '           <label class="layui-form-label layui-form-required">图标字段</label>' +
                 '           <div class="layui-input-block">' +
                 '               <select class="layui-select" name="addition[icon_field]" id="iconField">' +
@@ -259,7 +265,7 @@ layui.use(["layTp"], function () {
         }
     }
 
-    function selectDataFromTable(table_id, editData) {
+    function selectDataFromTable(table_id_param, editData) {
         if (typeof editData === "undefined") {
             editData = {
                 addition: {
@@ -274,7 +280,7 @@ layui.use(["layTp"], function () {
             params: {
                 search_param: {
                     table_id: {
-                        value: table_id,
+                        value: table_id_param,
                         condition: "="
                     }
                 }
@@ -383,6 +389,9 @@ layui.use(["layTp"], function () {
                     close_text: "",
                     open_value: "",
                     open_text: "",
+                    group_name: "",
+                    left_linkage_field: "",
+                    right_linkage_field: "",
                 }
             };
         }
@@ -487,7 +496,7 @@ layui.use(["layTp"], function () {
             '  <div class="layui-card-header">基础设置</div>' +
             '  <div class="layui-card-body">' +
             '    <div class="layui-row margin-bottom6">' +
-            '       <div class="layui-inline layui-col-lg5 layui-col-md5 layui-col-sm5 layui-col-xs5">' +
+            '       <div class="layui-col-lg6 layui-col-md6 layui-col-sm6 layui-col-xs6">' +
             '           <label class="layui-form-label layui-form-required">单选还是多选</label>' +
             '           <div class="layui-input-block">' +
             '               <select class="layui-select" name="addition[single_multi_type]">' +
@@ -496,7 +505,7 @@ layui.use(["layTp"], function () {
             '               </select>' +
             '           </div>' +
             '       </div>' +
-            '       <div class="layui-inline layui-col-lg5 layui-col-md5 layui-col-sm5 layui-col-xs5">' +
+            '       <div class="layui-col-lg6 layui-col-md6 layui-col-sm6 layui-col-xs6">' +
             '           <label class="layui-form-label layui-form-required" title="默认不限制，仅多选有效">最多可选个数</label>' +
             '           <div class="layui-input-block">' +
             '               <input type="text" class="layui-input" name="addition[max]" value="{{ d.addition.max }}" placeholder="默认不限制，仅多选有效" />' +
@@ -504,7 +513,7 @@ layui.use(["layTp"], function () {
             '       </div>' +
             '    </div>' +
             '    <div class="layui-row margin-bottom6">' +
-            '       <div class="layui-inline layui-col-lg5 layui-col-md5 layui-col-sm5 layui-col-xs5">' +
+            '       <div class="layui-col-lg6 layui-col-md6 layui-col-sm6 layui-col-xs6">' +
             '           <label class="layui-form-label layui-form-required">下拉方向</label>' +
             '           <div class="layui-input-block">' +
             '               <select class="layui-select" name="addition[direction]">' +
@@ -514,7 +523,7 @@ layui.use(["layTp"], function () {
             '               </select>' +
             '           </div>' +
             '       </div>' +
-            '       <div class="layui-inline layui-col-lg5 layui-col-md5 layui-col-sm5 layui-col-xs5">' +
+            '       <div class="layui-col-lg6 layui-col-md6 layui-col-sm6 layui-col-xs6">' +
             '           <label class="layui-form-label layui-form-required">数据来源方式</label>' +
             '           <div class="layui-input-block">' +
             '               <select class="layui-select" name="addition[data_from_type]" lay-filter="data-from">' +
@@ -534,61 +543,123 @@ layui.use(["layTp"], function () {
         ;
 
         let linkage_selectTemplate =
-            '<table class="layui-table">' +
-            '<tbody>' +
-            '<tr>' +
-            '<td align="right">' +
-            '分组名' +
-            '</td>' +
-            '<td>' +
-            '<input type="text" class="layui-input" name="addition[close_value]" value="{{d.addition.close_value}}" lay-verify="required"\n' +
-            '                                           lay-verType="tips" autocomplete="off" placeholder="分组名，例:地区设置。相同分组名在同一个表单item中" />' +
-            '</td>' +
-            '</tr>' +
-            '<tr>' +
-            '<td align="right">' +
-            '搜索的表名' +
-            '</td>' +
-            '<td>' +
-            '           <select class="layui-select" name="addition[table_id]" lay-filter="linkage-select-table"' +
-            '                data-source="/plugin/core/autocreate.curd.table/index"' +
-            '                data-showField="table"\n' +
-            '                data-placeholder="请选择数据表"\n' +
-            '                data-selected="{{ d.addition.table_id }}"\n' +
-            '           ></select>' +
-            '</td>' +
-            '</tr>' +
-            '<tr>' +
-            '<td align="right">' +
-            '左关联字段' +
-            '</td>' +
-            '<td>' +
-            '<select class="layui-select" name="addition[left_linkage_field]" id="leftLinkageField">' +
-            '   <option value="">请选择字段</option>' +
-            '</select>' +
-            '</td>' +
-            '</tr>' +
-            '<tr>' +
-            '<td align="right">' +
-            '右联动字段' +
-            '</td>' +
-            '<td>' +
-            '<select class="layui-select" name="addition[right_linkage_field]" id="rightLinkageField">' +
-            '   <option value="">请选择字段</option>' +
-            '</select>' +
-            '</td>' +
-            '</tr>' +
-            '</tbody>' +
-            '</table>';
+            '<div class="layui-card">' +
+            '  <div class="layui-card-header">基础设置</div>' +
+            '  <div class="layui-card-body">' +
+            '    <div class="layui-row margin-bottom6">' +
+            '       <div>' +
+            '           <label class="layui-form-label layui-form-required">分组名</label>' +
+            '           <div class="layui-input-block">' +
+            '               <input type="text" class="layui-input" name="addition[group_name]" placeholder="分组名，例：地区设置。相同分组名在同一个表单item中" value="{{d.addition.group_name}}" />' +
+            '           </div>' +
+            '       </div>' +
+            '    </div>' +
+            '    <div class="layui-row margin-bottom6">' +
+            '       <div>' +
+            '           <label class="layui-form-label layui-form-required">左关联字段</label>' +
+            '           <div class="layui-input-block">' +
+            '               <select class="layui-select" name="addition[left_linkage_field]" id="leftLinkageField">' +
+            '                   <option value="">请选择字段，不选表示当前字段为联动下拉框中第一个下拉框</option>' +
+            '               </select>' +
+            '           </div>' +
+            '       </div>' +
+            '    </div>' +
+            '    <div class="layui-row margin-bottom6">' +
+            '       <div>' +
+            '           <label class="layui-form-label layui-form-required">右关联字段</label>' +
+            '           <div class="layui-input-block">' +
+            '               <select class="layui-select" name="addition[left_linkage_field]" id="rightLinkageField">' +
+            '                   <option value="">请选择字段，不选表示当前字段为联动下拉框中最后一个下拉框</option>' +
+            '               </select>' +
+            '           </div>' +
+            '       </div>' +
+            '    </div>' +
+            '  </div>' +
+            '  <div class="layui-card-header">下拉搜索设置</div>' +
+            '  <div class="layui-card-body">' +
+            '    <div class="layui-row margin-bottom6">' +
+            '       <div class="layui-col-lg6 layui-col-md6 layui-col-sm6 layui-col-xs6">' +
+            '           <label class="layui-form-label layui-form-required">搜索的表名</label>' +
+            '           <div class="layui-input-block">' +
+            '               <select class="layui-select" name="addition[left_linkage_field]">' +
+            '                   <option value="">请选择数据表</option>' +
+            '               </select>' +
+            '           </div>' +
+            '       </div>' +
+            '       <div class="layui-col-lg6 layui-col-md6 layui-col-sm6 layui-col-xs6">' +
+            '           <label class="layui-form-label layui-form-required">主标题字段</label>' +
+            '           <div class="layui-input-block">' +
+            '               <select class="layui-select" name="addition[title_field]">' +
+            '                   <option value="">请选择字段（同时用于搜索）</option>' +
+            '               </select>' +
+            '           </div>' +
+            '       </div>' +
+            '    </div>' +
+            '    <div class="layui-row margin-bottom6">' +
+            '       <div class="layui-col-lg6 layui-col-md6 layui-col-sm6 layui-col-xs6">' +
+            '           <label class="layui-form-label layui-form-required">副标题字段</label>' +
+            '           <div class="layui-input-block">' +
+            '               <select class="layui-select" name="addition[sub_title_field]">' +
+            '                   <option value="">请选择数据表</option>' +
+            '               </select>' +
+            '           </div>' +
+            '       </div>' +
+            '       <div class="layui-col-lg6 layui-col-md6 layui-col-sm6 layui-col-xs6">' +
+            '           <label class="layui-form-label layui-form-required">图标字段</label>' +
+            '           <div class="layui-input-block">' +
+            '               <select class="layui-select" name="addition[icon_field]">' +
+            '                   <option value="">请选择字段</option>' +
+            '               </select>' +
+            '           </div>' +
+            '       </div>' +
+            '    </div>' +
+            '  </div>' +
+            '</div>'
+        ;
 
         if (noHtmlArr.indexOf(formType) !== -1) {
             $("#addition").html("<div style=\"padding: 9px 5px;\">无</div>");
         } else if (optionsArr.indexOf(formType) !== -1) {
             $("#addition").html(layui.laytpl(optionsTemplate).render(editData));
             layui.form.render();
-            layui.layTpForm.render("#addition");
         } else {
             $("#addition").html(layui.laytpl(eval(formType + "Template")).render(editData));
+
+            if (formType === "linkage_select") {
+                facade.ajax({
+                    path: "/plugin/core/autocreate.curd/getFieldList",
+                    params: {
+                        search_param: {
+                            table_id: {
+                                value: table_id,
+                                condition: "="
+                            }
+                        }
+                    },
+                    successAlert: false
+                }).then(function (res) {
+                    if (res.code === 0) {
+                        $("#leftLinkageField").html('<option value="">请选择字段，不选表示当前字段为联动下拉框中第一个下拉框</option>');
+                        $("#rightLinkageField").html('<option value="">请选择字段，不选表示当前字段为联动下拉框中最后一个下拉框</option>');
+                        let key;
+                        let data = res.data.data;
+                        for (key in res.data.data) {
+                            if (parseInt(editData.addition.left_linkage_field) === data[key]["id"]) {
+                                $("#leftLinkageField").append("<option value='" + data[key]["id"] + "' selected='selected'>" + data[key]["field"] + "</option>");
+                            } else {
+                                $("#leftLinkageField").append("<option value='" + data[key]["id"] + "'>" + data[key]["field"] + "</option>");
+                            }
+                            if (parseInt(editData.addition.right_linkage_field) === data[key]["id"]) {
+                                $("#rightLinkageField").append("<option value='" + data[key]["id"] + "' selected='selected'>" + data[key]["field"] + "</option>");
+                            } else {
+                                $("#rightLinkageField").append("<option value='" + data[key]["id"] + "'>" + data[key]["field"] + "</option>");
+                            }
+                        }
+                        layui.form.render('select');
+                    }
+                });
+            }
+
             layui.form.render();
             layui.layTpForm.render("#addition");
         }
@@ -597,5 +668,5 @@ layui.use(["layTp"], function () {
     window.formTypeChange = function (params) {
         let formType = params.arr[0].value;
         formTypeChangePrivate(formType);
-    }
+    };
 });
