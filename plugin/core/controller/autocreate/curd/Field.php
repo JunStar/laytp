@@ -19,6 +19,21 @@ class Field extends Backend
     {
         $post = $this->request->post();
         if (array_key_exists('addition', $post)) {
+            if ($post['form_type'] === 'checkbox') {
+                foreach ($post['addition']['value'] as $k => $v) {
+                    if (isset($post['addition']['default'][$k])) {
+                        $post['addition']['default'][$k] = $post['addition']['value'][$k];
+                    }
+                }
+            } else if (in_array($post['form_type'], ['radio', 'select'])) {
+                $default = 0;
+                foreach ($post['addition']['value'] as $k => $v) {
+                    if (isset($post['addition']['default'][$k])) {
+                        $default = $post['addition']['value'][$k];
+                    }
+                }
+                $post['addition']['default'] = $default;
+            }
             $post['addition'] = json_encode($post['addition'], JSON_UNESCAPED_UNICODE);
         } else {
             $post['addition'] = '';
@@ -37,6 +52,21 @@ class Field extends Backend
         $info = $this->model->find($id);
         $post = $this->request->post();
         if (array_key_exists('addition', $post)) {
+            if ($post['form_type'] === 'checkbox') {
+                foreach ($post['addition']['value'] as $k => $v) {
+                    if (isset($post['addition']['default'][$k])) {
+                        $post['addition']['default'][$k] = $post['addition']['value'][$k];
+                    }
+                }
+            } else if (in_array($post['form_type'], ['radio', 'select'])) {
+                $default = 0;
+                foreach ($post['addition']['value'] as $k => $v) {
+                    if (isset($post['addition']['default'][$k])) {
+                        $default = $post['addition']['value'][$k];
+                    }
+                }
+                $post['addition']['default'] = $default;
+            }
             $post['addition'] = json_encode($post['addition'], JSON_UNESCAPED_UNICODE);
         } else {
             $post['addition'] = '';

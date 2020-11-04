@@ -163,17 +163,23 @@ layui.use(["layTp"], function () {
 
         $(document).off("click", ".add-item").on("click", ".add-item", function () {
             let clickObj = $(this);
-            clickObj.parent().parent().before('<tr>' +
+            let template = '<tr>' +
                 '<td align="right">' +
                 '<input type="text" class="layui-input" name="addition[value][]" />' +
                 '</td>' +
                 '<td>' +
                 '<input type="text" class="layui-input" name="addition[text][]" />' +
                 '</td>' +
+                '<td align="center">' +
+                '<input {{# if(d.formType === "checkbox"){ }}type="checkbox"{{# }else{ }}type="radio"{{# } }} lay-skin="primary" name="addition[default][]" /> ' +
+                '</td>' +
                 '<td>' +
                 '<a class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-delete del-item"></a>' +
                 '</td>' +
-                '</tr>');
+                '</tr>';
+            clickObj.parent().parent().before(layui.laytpl(template).render({formType: formType}));
+            layui.form.render('radio');
+            layui.form.render('checkbox');
         });
 
         $(document).off("click", ".del-item").on("click", ".del-item", function () {
@@ -187,6 +193,10 @@ layui.use(["layTp"], function () {
 
         layui.form.on('select(select-table)', function (data) {
             selectDataFromTable(data.value);
+        });
+
+        layui.form.on('select(linkage-select-table)', function (data) {
+            linkageField(data.value);
         });
     });
 
@@ -299,6 +309,56 @@ layui.use(["layTp"], function () {
         });
     }
 
+    function linkageField(table_id, editData) {
+        if (typeof editData === "undefined") {
+            editData = {
+                addition: {
+                    title_field: "",
+                    sub_title_field: "",
+                    icon_field: ""
+                }
+            }
+        }
+        facade.ajax({
+            path: "/plugin/core/autocreate.curd/getFieldList",
+            params: {
+                search_param: {
+                    table_id: {
+                        value: table_id,
+                        condition: "="
+                    }
+                }
+            },
+            successAlert: false
+        }).then(function (res) {
+            if (res.code === 0) {
+                $("#titleField").html('<option value="">请选择字段</option>');
+                $("#subTitleField").html('<option value="">请选择字段</option>');
+                $("#iconField").html('<option value="">请选择字段</option>');
+                let key;
+                let data = res.data.data;
+                for (key in res.data.data) {
+                    if (parseInt(editData.addition.title_field) === data[key]["id"]) {
+                        $("#titleField").append("<option value='" + data[key]["id"] + "' selected='selected'>" + data[key]["field"] + "</option>");
+                    } else {
+                        $("#titleField").append("<option value='" + data[key]["id"] + "'>" + data[key]["field"] + "</option>");
+                    }
+                    if (parseInt(editData.addition.sub_title_field) === data[key]["id"]) {
+                        $("#subTitleField").append("<option value='" + data[key]["id"] + "' selected='selected'>" + data[key]["field"] + "</option>");
+                    } else {
+                        $("#subTitleField").append("<option value='" + data[key]["id"] + "'>" + data[key]["field"] + "</option>");
+                    }
+                    if (parseInt(editData.addition.icon_field) === data[key]["id"]) {
+                        $("#iconField").append("<option value='" + data[key]["id"] + "' selected='selected'>" + data[key]["field"] + "</option>");
+                    } else {
+                        $("#iconField").append("<option value='" + data[key]["id"] + "'>" + data[key]["field"] + "</option>");
+                    }
+                }
+                layui.form.render('select');
+            }
+        });
+    }
+
     function getTreeData(data) {
         let key;
         for (key in data) {
@@ -310,7 +370,9 @@ layui.use(["layTp"], function () {
         return data;
     }
 
-    window.formTypeChangePrivate = function (formType, editData) {
+    let formType;
+    window.formTypeChangePrivate = function (formTypeParam, editData) {
+        formType = formTypeParam;
         console.log(editData);
         if (typeof editData === "undefined") {
             editData = {
@@ -335,7 +397,8 @@ layui.use(["layTp"], function () {
             '<tr>' +
             '<th>待选项的值</th>' +
             '<th>待选项的文本</th>' +
-            '<th>操作</th>' +
+            '<th>默认选中</th>' +
+            '<th>删除</th>' +
             '</tr>' +
             '</thead>' +
             '<tbody>' +
@@ -349,21 +412,16 @@ layui.use(["layTp"], function () {
             '<input type="text" class="layui-input" name="addition[text][]" value="{{d.addition.text[key]}}" />' +
             '</td>' +
             '<td>' +
+            '<input {{# if(d.form_type === "checkbox"){ }}type="checkbox" {{# if(d.addition.value[key] === d.addition.default[key]){ }}checked="checked"{{# } }}{{# }else{ }}type="radio" {{# if(d.addition.value[key] === d.addition.default){ }}checked="checked"{{# } }}{{# } }} name="addition[default][]" lay-skin="primary" /> ' +
+            '</td>' +
+            '<td>' +
             '<a class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-delete del-item"></a>' +
             '</td>' +
             '</tr>' +
             '{{# } }}' +
             '<tr>' +
-            '<td colspan="3">' +
+            '<td colspan="4">' +
             '<a class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-add-1 add-item">追加选项</a>' +
-            '</td>' +
-            '</tr>' +
-            '<tr>' +
-            '<td align="right">' +
-            '默认选中项的值，多个以英文逗号隔开' +
-            '</td>' +
-            '<td colspan="2">' +
-            '<input type="text" class="layui-input" name="addition[default]" value="{{d.addition.default}}" />' +
             '</td>' +
             '</tr>' +
             '</tbody>' +
@@ -475,13 +533,64 @@ layui.use(["layTp"], function () {
             '</div>'
         ;
 
+        let linkage_selectTemplate =
+            '<table class="layui-table">' +
+            '<tbody>' +
+            '<tr>' +
+            '<td align="right">' +
+            '分组名' +
+            '</td>' +
+            '<td>' +
+            '<input type="text" class="layui-input" name="addition[close_value]" value="{{d.addition.close_value}}" lay-verify="required"\n' +
+            '                                           lay-verType="tips" autocomplete="off" placeholder="分组名，例:地区设置。相同分组名在同一个表单item中" />' +
+            '</td>' +
+            '</tr>' +
+            '<tr>' +
+            '<td align="right">' +
+            '搜索的表名' +
+            '</td>' +
+            '<td>' +
+            '           <select class="layui-select" name="addition[table_id]" lay-filter="linkage-select-table"' +
+            '                data-source="/plugin/core/autocreate.curd.table/index"' +
+            '                data-showField="table"\n' +
+            '                data-placeholder="请选择数据表"\n' +
+            '                data-selected="{{ d.addition.table_id }}"\n' +
+            '           ></select>' +
+            '</td>' +
+            '</tr>' +
+            '<tr>' +
+            '<td align="right">' +
+            '左关联字段' +
+            '</td>' +
+            '<td>' +
+            '<select class="layui-select" name="addition[left_linkage_field]" id="leftLinkageField">' +
+            '   <option value="">请选择字段</option>' +
+            '</select>' +
+            '</td>' +
+            '</tr>' +
+            '<tr>' +
+            '<td align="right">' +
+            '右联动字段' +
+            '</td>' +
+            '<td>' +
+            '<select class="layui-select" name="addition[right_linkage_field]" id="rightLinkageField">' +
+            '   <option value="">请选择字段</option>' +
+            '</select>' +
+            '</td>' +
+            '</tr>' +
+            '</tbody>' +
+            '</table>';
+
         if (noHtmlArr.indexOf(formType) !== -1) {
             $("#addition").html("<div style=\"padding: 9px 5px;\">无</div>");
         } else if (optionsArr.indexOf(formType) !== -1) {
             $("#addition").html(layui.laytpl(optionsTemplate).render(editData));
+            layui.form.render();
+            layui.layTpForm.render("#addition");
         } else {
             $("#addition").html(layui.laytpl(eval(formType + "Template")).render(editData));
             layui.form.render();
+            layui.layTpForm.render("#addition");
         }
     };
 
