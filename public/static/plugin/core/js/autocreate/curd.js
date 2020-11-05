@@ -128,6 +128,9 @@ layui.use(["layTp"], function () {
                     selectDataFrom(obj.data.addition.data_from_type, obj.data);
                     selectDataFromTable(obj.data.addition.table_id, obj.data);
                 }
+                if (obj.data.form_type === 'linkage_select') {
+                    linkageField(obj.data.addition.table_id, obj.data);
+                }
             }
         });
 
@@ -315,7 +318,7 @@ layui.use(["layTp"], function () {
         });
     }
 
-    function linkageField(table_id, editData) {
+    function linkageField(table_id_param, editData) {
         if (typeof editData === "undefined") {
             editData = {
                 addition: {
@@ -330,7 +333,7 @@ layui.use(["layTp"], function () {
             params: {
                 search_param: {
                     table_id: {
-                        value: table_id,
+                        value: table_id_param,
                         condition: "="
                     }
                 }
@@ -568,7 +571,7 @@ layui.use(["layTp"], function () {
             '       <div>' +
             '           <label class="layui-form-label layui-form-required">右关联字段</label>' +
             '           <div class="layui-input-block">' +
-            '               <select class="layui-select" name="addition[left_linkage_field]" id="rightLinkageField">' +
+            '               <select class="layui-select" name="addition[right_linkage_field]" id="rightLinkageField">' +
             '                   <option value="">请选择字段，不选表示当前字段为联动下拉框中最后一个下拉框</option>' +
             '               </select>' +
             '           </div>' +
