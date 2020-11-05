@@ -338,26 +338,26 @@ layui.use(["layTp"], function () {
             successAlert: false
         }).then(function (res) {
             if (res.code === 0) {
-                $("#titleField").html('<option value="">请选择字段</option>');
-                $("#subTitleField").html('<option value="">请选择字段</option>');
-                $("#iconField").html('<option value="">请选择字段</option>');
+                $("#linkageTitleField").html('<option value="">请选择字段</option>');
+                $("#linkageSubTitleField").html('<option value="">请选择字段</option>');
+                $("#linkageIconField").html('<option value="">请选择字段</option>');
                 let key;
                 let data = res.data.data;
                 for (key in res.data.data) {
                     if (parseInt(editData.addition.title_field) === data[key]["id"]) {
-                        $("#titleField").append("<option value='" + data[key]["id"] + "' selected='selected'>" + data[key]["field"] + "</option>");
+                        $("#linkageTitleField").append("<option value='" + data[key]["id"] + "' selected='selected'>" + data[key]["field"] + "</option>");
                     } else {
-                        $("#titleField").append("<option value='" + data[key]["id"] + "'>" + data[key]["field"] + "</option>");
+                        $("#linkageTitleField").append("<option value='" + data[key]["id"] + "'>" + data[key]["field"] + "</option>");
                     }
                     if (parseInt(editData.addition.sub_title_field) === data[key]["id"]) {
-                        $("#subTitleField").append("<option value='" + data[key]["id"] + "' selected='selected'>" + data[key]["field"] + "</option>");
+                        $("#linkageSubTitleField").append("<option value='" + data[key]["id"] + "' selected='selected'>" + data[key]["field"] + "</option>");
                     } else {
-                        $("#subTitleField").append("<option value='" + data[key]["id"] + "'>" + data[key]["field"] + "</option>");
+                        $("#linkageSubTitleField").append("<option value='" + data[key]["id"] + "'>" + data[key]["field"] + "</option>");
                     }
                     if (parseInt(editData.addition.icon_field) === data[key]["id"]) {
-                        $("#iconField").append("<option value='" + data[key]["id"] + "' selected='selected'>" + data[key]["field"] + "</option>");
+                        $("#linkageIconField").append("<option value='" + data[key]["id"] + "' selected='selected'>" + data[key]["field"] + "</option>");
                     } else {
-                        $("#iconField").append("<option value='" + data[key]["id"] + "'>" + data[key]["field"] + "</option>");
+                        $("#linkageIconField").append("<option value='" + data[key]["id"] + "'>" + data[key]["field"] + "</option>");
                     }
                 }
                 layui.form.render('select');
@@ -581,15 +581,18 @@ layui.use(["layTp"], function () {
             '       <div class="layui-col-lg6 layui-col-md6 layui-col-sm6 layui-col-xs6">' +
             '           <label class="layui-form-label layui-form-required">搜索的表名</label>' +
             '           <div class="layui-input-block">' +
-            '               <select class="layui-select" name="addition[left_linkage_field]">' +
-            '                   <option value="">请选择数据表</option>' +
-            '               </select>' +
+            '           <select class="layui-select" name="addition[table_id]" lay-filter="linkage-select-table"' +
+            '                data-source="/plugin/core/autocreate.curd.table/index"' +
+            '                data-showField="table"\n' +
+            '                data-placeholder="请选择数据表"\n' +
+            '                data-selected="{{ d.addition.table_id }}"\n' +
+            '           ></select>' +
             '           </div>' +
             '       </div>' +
             '       <div class="layui-col-lg6 layui-col-md6 layui-col-sm6 layui-col-xs6">' +
             '           <label class="layui-form-label layui-form-required">主标题字段</label>' +
             '           <div class="layui-input-block">' +
-            '               <select class="layui-select" name="addition[title_field]">' +
+            '               <select class="layui-select" name="addition[title_field]" id="linkageTitleField">' +
             '                   <option value="">请选择字段（同时用于搜索）</option>' +
             '               </select>' +
             '           </div>' +
@@ -599,7 +602,7 @@ layui.use(["layTp"], function () {
             '       <div class="layui-col-lg6 layui-col-md6 layui-col-sm6 layui-col-xs6">' +
             '           <label class="layui-form-label layui-form-required">副标题字段</label>' +
             '           <div class="layui-input-block">' +
-            '               <select class="layui-select" name="addition[sub_title_field]">' +
+            '               <select class="layui-select" name="addition[sub_title_field]" id="linkageSubTitleField">' +
             '                   <option value="">请选择数据表</option>' +
             '               </select>' +
             '           </div>' +
@@ -607,7 +610,7 @@ layui.use(["layTp"], function () {
             '       <div class="layui-col-lg6 layui-col-md6 layui-col-sm6 layui-col-xs6">' +
             '           <label class="layui-form-label layui-form-required">图标字段</label>' +
             '           <div class="layui-input-block">' +
-            '               <select class="layui-select" name="addition[icon_field]">' +
+            '               <select class="layui-select" name="addition[icon_field]" id="linkageIconField">' +
             '                   <option value="">请选择字段</option>' +
             '               </select>' +
             '           </div>' +
@@ -658,6 +661,8 @@ layui.use(["layTp"], function () {
                         layui.form.render('select');
                     }
                 });
+
+
             }
 
             layui.form.render();
