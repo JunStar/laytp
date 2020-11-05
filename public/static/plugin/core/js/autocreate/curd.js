@@ -472,7 +472,8 @@ layui.use(["layTp"], function () {
             '</td>' +
             '</tr>' +
             '</tbody>' +
-            '</table>';
+            '</table>'
+        ;
         //定义有附加设置的表单元素数组具体的附加设置的html
         let inputTemplate =
             '<table class="layui-table">' +
@@ -674,7 +675,89 @@ layui.use(["layTp"], function () {
             '</td>' +
             '</tr>' +
             '</tbody>' +
-            '</table>';
+            '</table>'
+        ;
+
+        let color_pickerTemplate =
+            '<div class="layui-card">' +
+            '  <div class="layui-card-header">基础设置</div>' +
+            '  <div class="layui-card-body">' +
+            '    <div class="layui-row margin-bottom6">' +
+            '       <div>' +
+            '           <label class="layui-form-label layui-form-required">默认颜色</label>' +
+            '           <div class="layui-input-block colorPicker"' +
+            '                data-name="addition[color]"' +
+            '                data-id="addition_color"' +
+            '           ></div>' +
+            '       </div>' +
+            '    </div>' +
+            '    <div class="layui-row margin-bottom6">' +
+            '       <div class="layui-col-lg6 layui-col-md6 layui-col-sm6 layui-col-xs6">' +
+            '           <label class="layui-form-label layui-form-required">颜色格式</label>' +
+            '           <div class="layui-input-block">' +
+            '               <select class="layui-select" name="addition[format]" id="leftLinkageField">' +
+            '                   <option value="hex">hex</option>' +
+            '                   <option value="rgb">rgb</option>' +
+            '               </select>' +
+            '           </div>' +
+            '       </div>' +
+            '       <div class="layui-col-lg6 layui-col-md6 layui-col-sm6 layui-col-xs6">' +
+            '           <label class="layui-form-label layui-form-required">开启透明度</label>' +
+            '           <div class="layui-input-block">' +
+            '               <input type="checkbox" name="addition[alpha]" value="1" title="开启">' +
+            '           </div>' +
+            '       </div>' +
+            '    </div>' +
+            '  </div>' +
+            '  <div class="layui-card-header">预定义颜色设置</div>' +
+            '  <div class="layui-card-body">' +
+            '    <div class="layui-row margin-bottom6">' +
+            '       <div>' +
+            '           <label class="layui-form-label layui-form-required">开启预定义</label>' +
+            '           <div class="layui-input-block">' +
+            '               <input type="checkbox" name="addition[predefine]" value="1" title="开启">' +
+            '           </div>' +
+            '       </div>' +
+            '    </div>' +
+            '    <div class="layui-row margin-bottom6">' +
+            '       <div>' +
+            '           <label class="layui-form-label layui-form-required">待选颜色</label>' +
+            '               <table class="layui-table">' +
+            '               <thead>' +
+            '                   <tr>' +
+            '                       <th>颜色值</th>' +
+            '                       <th>删除</th>' +
+            '                   </tr>' +
+            '               </thead>' +
+            '               <tbody>' +
+            '               {{# let key; }}' +
+            '               {{# for(key in d.addition.value){ }}' +
+            '                   <tr>' +
+            '                       <td align="right">' +
+            '                           <input type="text" class="layui-input" name="addition[value][]" value="{{d.addition.value[key]}}" />' +
+            '                       </td>' +
+            '                       <td>' +
+            '                           <input type="text" class="layui-input" name="addition[text][]" value="{{d.addition.text[key]}}" />' +
+            '                       </td>' +
+            '                       <td>' +
+            '                           <input {{# if(d.form_type === "checkbox"){ }}type="checkbox" {{# if(d.addition.value[key] === d.addition.default[key]){ }}checked="checked"{{# } }}{{# }else{ }}type="radio" {{# if(d.addition.value[key] === d.addition.default){ }}checked="checked"{{# } }}{{# } }} name="addition[default][]" lay-skin="primary" /> ' +
+            '                       </td>' +
+            '                       <td>' +
+            '                           <a class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-delete del-item"></a>' +
+            '                       </td>' +
+            '                   </tr>' +
+            '               {{# } }}' +
+            '                   <tr>' +
+            '                       <td colspan="4">' +
+            '                           <a class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-add-1 add-item">追加选项</a>' +
+            '                       </td>' +
+            '                   </tr>' +
+            '               </tbody>' +
+            '           </table>' +
+            '       </div>' +
+            '    </div>' +
+            '  </div>' +
+            '</div>'
         ;
 
         if (noHtmlArr.indexOf(formType) !== -1) {

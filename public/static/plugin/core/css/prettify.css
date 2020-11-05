@@ -124,7 +124,7 @@ audio {
 }
 
 .layui-form-item .layui-inline {
-    margin: 2px 10px;
+    margin-bottom: 0;
 }
 
 .layui-colorpicker {

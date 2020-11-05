@@ -333,6 +333,58 @@ layui.define(["jquery", "facade"], function (exports) {
                     , range: isRange
                 });
             });
+        },
+
+        /**
+         * 颜色选择器
+         * <div class="colorPicker"
+         *  data-id="color_picker"//输入框的id属性值，默认和name相同，当name有中括号时，jquery获取不到对象，需要单独设置id值
+         *  data-name="color_picker"//提交表单的name
+         *  data-color="#000"//默认颜色
+         *  data-format="hex"//颜色格式，hex(16进制色值，例:#000)，rgb(例：rgb(255,255,255))
+         *  data-alpha="true"//开启透明度，默认false
+         *  data-predefine="true"//是否开启预定义颜色
+         *  data-colors="['#ff4500','#1e90ff','rgba(255, 69, 0, 0.68)','rgb(255, 120, 0)']"//开启预定义颜色后，设置预定义颜色的数组
+         * ></div>
+         */
+        colorPicker: function (parentElem) {
+            let obj = (typeof parentElem === "undefined") ? $("div").filter(".colorPicker") : $("div", parentElem).filter(".colorPicker");
+            layui.each(obj, function (key, item) {
+                let name = $(item).data("name");
+                let id = $(item).data("id") ? $(item).data("id") : name;
+                let colorPickerTemplate =
+                    '<div class="layui-input-inline" style="margin-right: -1px;">' +
+                    '   <input type="text" class="layui-input" id="' + id + '" name="' + name + '" />' +
+                    '</div>' +
+                    '<div class="layui-inline">' +
+                    '   <div id="color_picker_' + id + '"></div>' +
+                    '</div>'
+                ;
+                $(item).html(colorPickerTemplate);
+
+                let options = {};
+                options.elem = "#color_picker_" + id;
+                let color = $(item).data("color");
+                if (color) {
+                    options.color = color;
+                    $("#" + id).val(color);
+                }
+                let format = $(item).data("format");
+                if (format) options.format = format;
+                let alpha = $(item).data("alpha");
+                if (alpha) options.alpha = alpha;
+                let predefine = $(item).data("predefine");
+                if (predefine) options.predefine = predefine;
+                let colors = $(item).data("colors");
+                if (colors) options.colors = eval(colors);
+                options.size = 'xs';
+
+                options.done = function (color) {
+                    $("#" + id).val(color);
+                };
+                console.log(options);
+                layui.colorpicker.render(options);
+            });
         }
     };
 
