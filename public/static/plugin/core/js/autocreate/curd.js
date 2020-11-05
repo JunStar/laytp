@@ -418,7 +418,6 @@ layui.use(["layTp"], function () {
     let formType;
     window.formTypeChangePrivate = function (formTypeParam, editData) {
         formType = formTypeParam;
-        console.log(editData);
         if (typeof editData === "undefined") {
             editData = {
                 addition: {
@@ -657,6 +656,25 @@ layui.use(["layTp"], function () {
             '    </div>' +
             '  </div>' +
             '</div>'
+        ;
+
+        let laydateTemplate =
+            '<table class="layui-table">' +
+            '<tbody>' +
+            '<tr>' +
+            '<td align="right">时间格式</td>' +
+            '<td>' +
+            '   <select name="addition[date_type]">' +
+            '       <option value="datetime" {{# if(d.addition.date_type === "datetime"){ }}selected="selected"{{# } }}>年-月-日 时:分:秒</option>' +
+            '       <option value="date" {{# if(d.addition.date_type === "date"){ }}selected="selected"{{# } }}>年-月-日</option>' +
+            '       <option value="time" {{# if(d.addition.date_type === "time"){ }}selected="selected"{{# } }}>时:分:秒</option>' +
+            '       <option value="month" {{# if(d.addition.date_type === "month"){ }}selected="selected"{{# } }}>年-月</option>' +
+            '       <option value="year" {{# if(d.addition.date_type === "year"){ }}selected="selected"{{# } }}>年</option>' +
+            '   </select>' +
+            '</td>' +
+            '</tr>' +
+            '</tbody>' +
+            '</table>';
         ;
 
         if (noHtmlArr.indexOf(formType) !== -1) {
