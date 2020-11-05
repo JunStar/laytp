@@ -232,15 +232,15 @@ layui.define(["jquery", "facade"], function (exports) {
          * <div class="layTpUpload"//class="layTpUpload"是上传组件渲染的标识
          *      data-name="name"//必设，提交表单时的name
          *      data-accept="image"//非必设，允许上传的类型，image=图片，video=视频，audio=音频，file=任意文件，默认为image
-         *      data-width="500"//非必设，accept="image"时，要求上传图片的最大宽度，默认不限制
-         *      data-height="300"//非必设，accept="image"时，要求上传图片的最大高度，默认不限制
+         *      data-width="500"//非必设，accept="image"时，允许上传图片的最大宽度，单位px，默认不限制
+         *      data-height="300"//非必设，accept="image"时，允许上传图片的最大高度，单位px，默认不限制
          *      data-multi="true"//非必设，多文件模式，true=开启多文件模式，false=关闭多文件模式，默认false
          *      data-max="2"//非必设，多文件模式下有效的参数，设置允许最多上传的文件个数，默认不限制个数
          *      data-dir=""//非必设，上传的目录，允许不传，不传就传到storage目录下，如果不为空，则在storage目录下创建对应的目录，允许使用/指明多级目录
-         *      data-url=""//非必设，文件上传请求的后台地址，默认为facade.url("plugin/core/common/upload", {'accept': options.accept, 'upload_dir': options.upload_dir})，自定义的url返回数据格式要和admin/common/upload保持一致
+         *      data-url=""//非必设，文件上传请求的后台地址，默认为facade.url("plugin/core/common/upload", {'accept': options.accept, 'upload_dir': options.upload_dir})，自定义的url返回数据格式要和plugin/core/common/upload保持一致
          *      data-uploaded=""//非必设，已经上传的文件列表，多个以英文半角的逗号+空格进行分割，用于编辑页面展示已经上传过的文件
-         *      data-mime="*"//非必设，允许上传的文件类型，同时检测后缀和文件实际类型，为空使用系统默认配置
-         *      data-size="100mb"//非必设，允许上传的文件大小，单位b,k,kb,m,mb,g,gb，为空使用系统默认配置
+         *      data-mime="*"//非必设，允许上传的文件类型，同时检测后缀和文件实际类型，为空使用后台常规管理->系统配置->上传配置设置mime的值
+         *      data-size="100mb"//非必设，允许上传的文件大小，单位b,k,kb,m,mb,g,gb，为空使用后台常规管理->系统配置->上传配置设置size的值
          *      data-layVerify="required"//非必设，与layui的lay-verify相同
          *      data-layVerType="tips"//非必设，与layui的lay-verType相同
          * ></div>

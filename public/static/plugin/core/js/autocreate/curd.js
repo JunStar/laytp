@@ -710,6 +710,7 @@ layui.use(["layTp"], function () {
             '           <div class="layui-input-block colorPicker"' +
             '                data-name="addition[color]"' +
             '                data-id="addition_color"' +
+            '                data-color="{{d.addition.color}}"' +
             '           ></div>' +
             '       </div>' +
             '    </div>' +
@@ -726,7 +727,7 @@ layui.use(["layTp"], function () {
             '       <div class="layui-col-lg6 layui-col-md6 layui-col-sm6 layui-col-xs6">' +
             '           <label class="layui-form-label layui-form-required">开启透明度</label>' +
             '           <div class="layui-input-block">' +
-            '               <input type="checkbox" name="addition[alpha]" value="1" title="开启">' +
+            '               <input type="checkbox" name="addition[alpha]" value="1" title="开启" {{# if(d.addition.alpha === "1"){ }}checked="checked"{{# } }} />' +
             '           </div>' +
             '       </div>' +
             '    </div>' +
@@ -737,7 +738,7 @@ layui.use(["layTp"], function () {
             '       <div>' +
             '           <label class="layui-form-label layui-form-required">开启预定义</label>' +
             '           <div class="layui-input-block">' +
-            '               <input type="checkbox" name="addition[predefine]" value="1" title="开启">' +
+            '               <input type="checkbox" name="addition[predefine]" value="1" title="开启" {{# if(d.addition.predefine === "1"){ }}checked="checked"{{# } }} />' +
             '           </div>' +
             '       </div>' +
             '    </div>' +
@@ -755,10 +756,11 @@ layui.use(["layTp"], function () {
             '               {{# let key; }}' +
             '               {{# for(key in d.addition.colors){ }}' +
             '                   <tr>' +
-            '                       <td align="right">' +
+            '                       <td>' +
             '                           <div class="colorPicker"' +
             '                                data-name="addition[colors][]"' +
             '                                data-id="addition_colors_{{key}}"' +
+            '                                data-color="{{d.addition.colors[key]}}"' +
             '                           ></div>' +
             '                       </td>' +
             '                       <td>' +
