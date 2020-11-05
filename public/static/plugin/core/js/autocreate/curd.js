@@ -188,6 +188,28 @@ layui.use(["layTp"], function () {
             layui.form.render('checkbox');
         });
 
+        $(document).off("click", ".add-color-picker").on("click", ".add-color-picker", function () {
+            let clickObj = $(this);
+            let template =
+                '<tr>' +
+                '   <td>' +
+                '       <div class="colorPicker"' +
+                '           data-name="addition[colors][]"' +
+                '           data-id="addition_colors_{{d.randomKey}}"' +
+                '       ></div>' +
+                '   </td>' +
+                '   <td>' +
+                '       <a class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-delete del-item"></a>' +
+                '   </td>' +
+                '</tr>'
+            ;
+            clickObj.parent().parent().before(layui.laytpl(template).render({
+                formType: formType,
+                randomKey: Math.random() * 10000000000000000000
+            }));
+            layui.layTpForm.render(clickObj.parent().parent().prev());
+        });
+
         $(document).off("click", ".del-item").on("click", ".del-item", function () {
             let clickObj = $(this);
             clickObj.parent().parent().remove();
@@ -722,7 +744,7 @@ layui.use(["layTp"], function () {
             '    <div class="layui-row margin-bottom6">' +
             '       <div>' +
             '           <label class="layui-form-label layui-form-required">待选颜色</label>' +
-            '               <table class="layui-table">' +
+            '           <table class="layui-table">' +
             '               <thead>' +
             '                   <tr>' +
             '                       <th>颜色值</th>' +
@@ -731,16 +753,13 @@ layui.use(["layTp"], function () {
             '               </thead>' +
             '               <tbody>' +
             '               {{# let key; }}' +
-            '               {{# for(key in d.addition.value){ }}' +
+            '               {{# for(key in d.addition.colors){ }}' +
             '                   <tr>' +
             '                       <td align="right">' +
-            '                           <input type="text" class="layui-input" name="addition[value][]" value="{{d.addition.value[key]}}" />' +
-            '                       </td>' +
-            '                       <td>' +
-            '                           <input type="text" class="layui-input" name="addition[text][]" value="{{d.addition.text[key]}}" />' +
-            '                       </td>' +
-            '                       <td>' +
-            '                           <input {{# if(d.form_type === "checkbox"){ }}type="checkbox" {{# if(d.addition.value[key] === d.addition.default[key]){ }}checked="checked"{{# } }}{{# }else{ }}type="radio" {{# if(d.addition.value[key] === d.addition.default){ }}checked="checked"{{# } }}{{# } }} name="addition[default][]" lay-skin="primary" /> ' +
+            '                           <div class="colorPicker"' +
+            '                                data-name="addition[colors][]"' +
+            '                                data-id="addition_colors_{{key}}"' +
+            '                           ></div>' +
             '                       </td>' +
             '                       <td>' +
             '                           <a class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-delete del-item"></a>' +
@@ -749,7 +768,7 @@ layui.use(["layTp"], function () {
             '               {{# } }}' +
             '                   <tr>' +
             '                       <td colspan="4">' +
-            '                           <a class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-add-1 add-item">追加选项</a>' +
+            '                           <a class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-add-1 add-color-picker">追加选项</a>' +
             '                       </td>' +
             '                   </tr>' +
             '               </tbody>' +
