@@ -26,11 +26,13 @@ layui.define(["jquery", "facade"], function (exports) {
         /**
          * 默认下拉框
          * <select
+         *  name="name"//提交表单时的name
+         *  id="id"//节点的id值
          *  data-source="/plugin/core/auth.menu/getSelectOptionData" //数据源，插件自动拼接参数layui_select=1
          *  data-valueField="id" //option中value属性使用列表的哪个字段，默认为id
          *  data-showField="name" //option中，文本显示使用列表中哪个字段，默认为name
          *  data-selected="1" //选中项的valueField的值，如果data-valueField属性的值为id，那么当前属性data-selected的值就是数据源中某一个选项的id值，用于添加表单表单元素的默认选中值
-         *  data-placeholder="请选择"//类似placeholder，允许为空，没有默认值，当没有定义当前属性，或者当前属性的值定义为空时，将不会有提示行，默认会选中数据源中的第一个数据
+         *  data-placeholder="请选择" //类似placeholder，允许为空，没有默认值，当没有定义当前属性，或者当前属性的值定义为空时，将不会有提示行，默认会选中数据源中的第一个数据
          * >
          * </select>
          * @param parentElem 父节点
@@ -310,8 +312,8 @@ layui.define(["jquery", "facade"], function (exports) {
          * 时间选择器
          * <input //必须为input元素
          *  type="text" //type必须等于text，单行输入框
-         *  class="layui-input laydate" //class中有colorPicker表示这个单行输入框需要渲染成时间选择器
-         *  date-type="month" //data-type表示时间选择器的类型，默认为datetime，year=年选择器，只提供年列表选择，month=年月选择器，只提供年、月选择，date=日期选择器，可选择：年、月、日，time=时间选择器，只提供时、分、秒选择，datetime=日期时间选择器，可选择：年、月、日、时、分、秒
+         *  class="layui-input laydate" //class中有laydate表示这个单行输入框需要渲染成时间选择器
+         *  date-type="month" //data-type表示时间选择器的类型，默认为datetime，year=年选择器，只提供年列表选择，month=年月选择器，只提供年-月选择，date=日期选择器，可选择格式：年-月-日，time=时间选择器，可选择格式为时:分:秒，datetime=日期时间选择器，可选择格式为：年-月-日 时:分:秒
          *  date-isRange="false" // 表示是否为范围选择器，默认为false
          *  name="date" //提交表单时的name
          *  id="date" //元素的id值
