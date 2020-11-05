@@ -129,7 +129,8 @@ layui.use(["layTp"], function () {
                     selectDataFromTable(obj.data.addition.table_id, obj.data);
                 }
                 if (obj.data.form_type === 'linkage_select') {
-                    linkageField(obj.data.addition.table_id, obj.data);
+                    linkageField(nowTableId, obj.data);
+                    selectLinkageSearchTable(obj.data.addition.table_id, obj.data);
                 }
             }
         });
@@ -319,6 +320,41 @@ layui.use(["layTp"], function () {
     }
 
     function linkageField(table_id_param, editData) {
+        facade.ajax({
+            path: "/plugin/core/autocreate.curd/getFieldList",
+            params: {
+                search_param: {
+                    table_id: {
+                        value: table_id_param,
+                        condition: "="
+                    }
+                }
+            },
+            successAlert: false
+        }).then(function (res) {
+            if (res.code === 0) {
+                $("#leftLinkageField").html('<option value="">请选择字段，不选表示当前字段为联动下拉框中第一个下拉框</option>');
+                $("#rightLinkageField").html('<option value="">请选择字段，不选表示当前字段为联动下拉框中最后一个下拉框</option>');
+                let key;
+                let data = res.data.data;
+                for (key in res.data.data) {
+                    if (parseInt(editData.addition.left_linkage_field) === data[key]["id"]) {
+                        $("#leftLinkageField").append("<option value='" + data[key]["id"] + "' selected='selected'>" + data[key]["field"] + "</option>");
+                    } else {
+                        $("#leftLinkageField").append("<option value='" + data[key]["id"] + "'>" + data[key]["field"] + "</option>");
+                    }
+                    if (parseInt(editData.addition.right_linkage_field) === data[key]["id"]) {
+                        $("#rightLinkageField").append("<option value='" + data[key]["id"] + "' selected='selected'>" + data[key]["field"] + "</option>");
+                    } else {
+                        $("#rightLinkageField").append("<option value='" + data[key]["id"] + "'>" + data[key]["field"] + "</option>");
+                    }
+                }
+                layui.form.render('select');
+            }
+        });
+    }
+
+    function selectLinkageSearchTable(table_id_param, editData) {
         if (typeof editData === "undefined") {
             editData = {
                 addition: {
@@ -630,44 +666,6 @@ layui.use(["layTp"], function () {
             layui.form.render();
         } else {
             $("#addition").html(layui.laytpl(eval(formType + "Template")).render(editData));
-
-            if (formType === "linkage_select") {
-                facade.ajax({
-                    path: "/plugin/core/autocreate.curd/getFieldList",
-                    params: {
-                        search_param: {
-                            table_id: {
-                                value: table_id,
-                                condition: "="
-                            }
-                        }
-                    },
-                    successAlert: false
-                }).then(function (res) {
-                    if (res.code === 0) {
-                        $("#leftLinkageField").html('<option value="">请选择字段，不选表示当前字段为联动下拉框中第一个下拉框</option>');
-                        $("#rightLinkageField").html('<option value="">请选择字段，不选表示当前字段为联动下拉框中最后一个下拉框</option>');
-                        let key;
-                        let data = res.data.data;
-                        for (key in res.data.data) {
-                            if (parseInt(editData.addition.left_linkage_field) === data[key]["id"]) {
-                                $("#leftLinkageField").append("<option value='" + data[key]["id"] + "' selected='selected'>" + data[key]["field"] + "</option>");
-                            } else {
-                                $("#leftLinkageField").append("<option value='" + data[key]["id"] + "'>" + data[key]["field"] + "</option>");
-                            }
-                            if (parseInt(editData.addition.right_linkage_field) === data[key]["id"]) {
-                                $("#rightLinkageField").append("<option value='" + data[key]["id"] + "' selected='selected'>" + data[key]["field"] + "</option>");
-                            } else {
-                                $("#rightLinkageField").append("<option value='" + data[key]["id"] + "'>" + data[key]["field"] + "</option>");
-                            }
-                        }
-                        layui.form.render('select');
-                    }
-                });
-
-
-            }
-
             layui.form.render();
             layui.layTpForm.render("#addition");
         }
