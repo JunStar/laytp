@@ -224,7 +224,7 @@ layui.use(["layTp"], function () {
         });
 
         layui.form.on('select(linkage-select-table)', function (data) {
-            linkageField(data.value);
+            selectLinkageSearchTable(data.value);
         });
     });
 
@@ -788,6 +788,9 @@ layui.use(["layTp"], function () {
             layui.form.render();
         } else {
             $("#addition").html(layui.laytpl(eval(formType + "Template")).render(editData));
+            if (formType === 'linkage_select') {
+                linkageField(nowTableId, editData);
+            }
             layui.form.render();
             layui.layTpForm.render("#addition");
         }
