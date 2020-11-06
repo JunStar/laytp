@@ -33,6 +33,9 @@ class Field extends Backend
                     }
                 }
                 $post['addition']['default'] = $default;
+            } else if ($post['form_type'] === 'upload') {
+                $post['addition']['width'] = intval($post['addition']['width']);
+                $post['addition']['height'] = intval($post['addition']['height']);
             }
             $post['addition'] = json_encode($post['addition'], JSON_UNESCAPED_UNICODE);
         } else {
@@ -66,6 +69,9 @@ class Field extends Backend
                     }
                 }
                 $post['addition']['default'] = $default;
+            } else if ($post['form_type'] === 'upload') {
+                $post['addition']['width'] = intval($post['addition']['width']);
+                $post['addition']['height'] = intval($post['addition']['height']);
             }
             $post['addition'] = json_encode($post['addition'], JSON_UNESCAPED_UNICODE);
         } else {

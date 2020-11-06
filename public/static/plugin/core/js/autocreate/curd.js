@@ -452,6 +452,12 @@ layui.use(["layTp"], function () {
                     group_name: "",
                     left_linkage_field: "",
                     right_linkage_field: "",
+                    width: "",
+                    height: "",
+                    dir: "",
+                    url: "",
+                    mime: "",
+                    size: "",
                 }
             };
         }
@@ -775,6 +781,86 @@ layui.use(["layTp"], function () {
             '                   </tr>' +
             '               </tbody>' +
             '           </table>' +
+            '       </div>' +
+            '    </div>' +
+            '  </div>' +
+            '</div>'
+        ;
+
+        let uploadTemplate =
+            '<div class="layui-card">' +
+            '  <div class="layui-card-header">附加设置</div>' +
+            '  <div class="layui-card-body">' +
+            '    <div class="layui-row margin-bottom6">' +
+            '       <div>' +
+            '           <label class="layui-form-label layui-form-required">文件类型</label>' +
+            '           <div class="layui-input-block">' +
+            '           <select name="addition[accept]">' +
+            '               <option value="file">任意文件</option>' +
+            '               <option value="image">图片</option>' +
+            '               <option value="video">视频</option>' +
+            '               <option value="audio">音频</option>' +
+            '           </select>' +
+            '           </div>' +
+            '       </div>' +
+            '    </div>' +
+            '    <div class="layui-row margin-bottom6">' +
+            '       <div>' +
+            '           <label class="layui-form-label layui-form-required">最大宽度</label>' +
+            '           <div class="layui-input-block">' +
+            '               <input type="text" class="layui-input" name="addition[width]" value="{{d.addition.width}}" placeholder="允许上传图片的最大宽度，单位px，默认不限制" />' +
+            '           </div>' +
+            '       </div>' +
+            '       <div>' +
+            '           <label class="layui-form-label layui-form-required">最大高度</label>' +
+            '           <div class="layui-input-block">' +
+            '               <input type="text" class="layui-input" name="addition[height]" value="{{d.addition.height}}" placeholder="允许上传图片的最大高度，单位px，默认不限制" />' +
+            '           </div>' +
+            '       </div>' +
+            '    </div>' +
+            '    <div class="layui-row margin-bottom6">' +
+            '       <div>' +
+            '           <label class="layui-form-label layui-form-required">多文件模式</label>' +
+            '           <div class="layui-input-block">' +
+            '               <select class="layui-select" name="addition[multi]">' +
+            '                   <option value="single">单个文件</option>' +
+            '                   <option value="multi">多个文件</option>' +
+            '               </select>' +
+            '           </div>' +
+            '       </div>' +
+            '       <div>' +
+            '           <label class="layui-form-label layui-form-required">最大文件数</label>' +
+            '           <div class="layui-input-block">' +
+            '               <input type="text" class="layui-input" name="addition[max]" value="{{d.addition.max}}" placeholder="多文件模式下最多允许上传的文件个数" />' +
+            '           </div>' +
+            '       </div>' +
+            '    </div>' +
+            '    <div class="layui-row margin-bottom6">' +
+            '       <div>' +
+            '           <label class="layui-form-label layui-form-required">上传目录</label>' +
+            '           <div class="layui-input-block">' +
+            '               <input type="text" class="layui-input" name="addition[dir]" value="{{d.addition.dir}}" placeholder="storage目录下的子目录，允许使用/指定多级目录" />' +
+            '           </div>' +
+            '       </div>' +
+            '       <div>' +
+            '           <label class="layui-form-label layui-form-required">文件上传地址</label>' +
+            '           <div class="layui-input-block">' +
+            '               <input type="text" class="layui-input" name="addition[url]" value="{{d.addition.url}}" placeholder="上传文件后端处理的路由地址，默认为plugin/core/common/upload" />' +
+            '           </div>' +
+            '       </div>' +
+            '    </div>' +
+            '    <div class="layui-row margin-bottom6">' +
+            '       <div>' +
+            '           <label class="layui-form-label layui-form-required">mime类型</label>' +
+            '           <div class="layui-input-block">' +
+            '               <input type="text" class="layui-input" name="addition[mime]" value="{{d.addition.mime}}" placeholder="允许上传的mime类型，*代表所有mime类型，多个以英文半角逗号隔开" />' +
+            '           </div>' +
+            '       </div>' +
+            '       <div>' +
+            '           <label class="layui-form-label layui-form-required">文件size大小</label>' +
+            '           <div class="layui-input-block">' +
+            '               <input type="text" class="layui-input" name="addition[size]" value="{{d.addition.size}}" placeholder="允许上传的最大文件大小，单位b,k,kb,m,mb,g,gb" />' +
+            '           </div>' +
             '       </div>' +
             '    </div>' +
             '  </div>' +
