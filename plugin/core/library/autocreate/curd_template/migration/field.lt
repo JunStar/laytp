@@ -1,0 +1,1 @@
+->addColumn('table_id', 'integer', ['length' => 11, 'default' => 0, 'comment' => '表ID'])

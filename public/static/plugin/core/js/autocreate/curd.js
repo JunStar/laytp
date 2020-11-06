@@ -99,6 +99,13 @@ layui.use(["layTp"], function () {
                             }
                         });
                         break;
+                    case "createNormalCurd":
+                        console.log("生成常规CURD");
+                        facade.ajax({
+                            path: "plugin/core/autocreate.curd/createNormalCurd",
+                            params: {table_id: nowTableId}
+                        });
+                        break;
                 }
             }
         });

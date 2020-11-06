@@ -69,28 +69,34 @@
 </div>
 
 <script type="text/html" id="curd_field_toolbar">
-    {{#
-    if(
-    facade.hasAuth("plugin/autocreate/curd.field/edit")
-    || facade.hasAuth("plugin/autocreate/curd.field/del")
-    ){
-    }}
+    {{# if(
+    facade.hasAuth("plugin/core/autocreate.curd.field/edit")
+    || facade.hasAuth("plugin/core/autocreate.curd.field/del")
+    ){ }}
     <div class="dropdown-menu">
         <a class="layui-btn layui-btn-danger layui-btn-sm layui-icon layui-icon-drop">&nbsp;批量操作</a>
         <ul class="dropdown-menu-nav layui-anim-upbit dropdown-bottom-left layui-anim">
             <div class="dropdown-anchor"></div>
-            {{# if(facade.hasAuth("plugin/autocreate/curd.field/edit")){ }}
+            {{# if(facade.hasAuth("plugin/core/autocreate.curd.field/edit")){ }}
             <li><a lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a></li>
             {{# } }}
-            {{# if(facade.hasAuth("plugin/autocreate/curd.field/del")){ }}
+            {{# if(facade.hasAuth("plugin/core/autocreate.curd.field/del")){ }}
             <li><a lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a></li>
             {{# } }}
         </ul>
     </div>
     {{# } }}
-    {{# if(facade.hasAuth("plugin/autocreate/curd.field/add")){ }}
+    {{# if(facade.hasAuth("plugin/core/autocreate.curd.field/add")){ }}
     <a class="layui-btn layui-btn-default layui-btn-sm layui-icon layui-icon-add-1"
        lay-event="addField">&nbsp;添加字段</a>
+    {{# } }}
+    {{# if(facade.hasAuth("plugin/core/autocreate.curd/createNormalCurd")){ }}
+    <a class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-rate-solid"
+       lay-event="createNormalCurd">&nbsp;生成常规CURD</a>
+    {{# } }}
+    {{# if(facade.hasAuth("plugin/core/autocreate.curd/createCategoryCurd")){ }}
+    <a class="layui-btn layui-btn-sm layui-icon layui-icon-rate-solid"
+       lay-event="createCategoryCurd">&nbsp;生成无限分类CURD</a>
     {{# } }}
 </script>
 

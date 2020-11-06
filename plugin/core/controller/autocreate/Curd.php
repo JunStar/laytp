@@ -57,4 +57,16 @@ class Curd extends Backend
         $data = Field::where($where)->order($order)->paginate($limit)->toArray();
         return $this->success('数据获取成功', $data);
     }
+
+    //生成常规CURD
+    public function createNormalCurd()
+    {
+        $tableId = $this->request->param('table_id');
+        $curd = new \plugin\core\library\autocreate\Curd($tableId);
+        if ($curd->execute()) {
+            return $this->success('生成成功');
+        } else {
+            return $this->error($curd->getError());
+        }
+    }
 }

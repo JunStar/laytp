@@ -158,11 +158,11 @@ layui.define(["jquery"], function (exports) {
         },
 
         /**
-         * 向后台请求数据
+         * ajax封装
          * @param options
          *  options.path          请求地址
          *  options.params        请求地址参数
-         *  options.method        请求方式
+         *  options.method        请求方式,默认为POST
          *  options.async         是否异步请求，默认为true，是异步请求
          *  options.successAlert  请求成功是否弹窗提示
          * @returns {PromiseLike<T | never> | Promise<T | never> | *}
@@ -201,7 +201,11 @@ layui.define(["jquery"], function (exports) {
                 // contentType:"application/json",
                 type: options.method,
                 dataType: "json",
-                success: function (res) {
+                success: function (res, statusText, xhr) {
+                    if (xhr.status === 204) {
+                        facade.error("后端接口没有返回结果", "异常提示");
+                        return;
+                    }
                     if (res.code === 10401) {
                         facade.error(res["msg"], "重新登录提示", function () {
                             facade.delCookie("laytp_admin_token");
