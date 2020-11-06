@@ -55,7 +55,21 @@ class PluginAutocreateCurdField extends Migrator
         $data = [
             ['table_id' => 1, 'field' => 'name', 'comment' => '分类名', 'form_type' => 'input'],
 
-//            ['table_id' => 2, 'field' => 'name', 'comment' => '分类名', 'form_type' => 'input', 'sort' => 0],
+            [
+                'table_id' => 2,
+                'field' => 'title',
+                'comment' => '标题',
+                'is_empty' => 1,
+                'is_thead_sort' => 1,
+                'default_select_sort' => '',
+                'show_search' => 2,
+                'show_table' => 2,
+                'show_add' => 2,
+                'show_edit' => 2,
+                'show_sort' => 0,
+                'form_type' => 'input',
+                'addition' => json_encode(['verify' => ''], JSON_UNESCAPED_UNICODE)
+            ],
         ];
 
         $table->setData($data)->create();

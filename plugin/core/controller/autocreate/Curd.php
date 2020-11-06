@@ -19,7 +19,7 @@ class Curd extends Backend
             $temp = [
                 'title' => $conf['database'],
                 'id' => $conf['database'],
-                'children' => Table::where('database', '=', $conf['database'])->field('id,`table` as title')->select()
+                'children' => Table::where('database', '=', $conf['database'])->field('id,`table` as title')->order('id', 'desc')->select()
             ];
             $result[] = $temp;
         }
