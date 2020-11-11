@@ -56,6 +56,60 @@
                     <div class="layui-row margin-bottom6">
                         <div class="layui-inline layui-col-lg4 layui-col-md4 layui-col-sm4 layui-col-xs4">
                             <div class="layui-form-item">
+                                <label class="layui-form-label">
+                                    <text style="color:red;">*</text>
+                                    存储类型</label>
+                                <div class="layui-input-block">
+                                    <select name="data_type" class="layui-select" lay-verify="required">
+                                        <option value="">请选择存储类型</option>
+                                        <option value="integer">integer</option>
+                                        <option value="biginteger">biginteger</option>
+                                        <option value="binary">binary</option>
+                                        <option value="boolean">boolean</option>
+                                        <option value="date">date</option>
+                                        <option value="datetime">datetime</option>
+                                        <option value="decimal">decimal</option>
+                                        <option value="float">float</option>
+                                        <option value="string">string</option>
+                                        <option value="text">text</option>
+                                        <option value="time">time</option>
+                                        <option value="timestamp">timestamp</option>
+                                        <option value="uuid">uuid</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="layui-inline layui-col-lg4 layui-col-md4 layui-col-sm4 layui-col-xs4">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">
+                                    <text style="color:red;">*</text>
+                                    存储长度</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="length" placeholder="请输入字段长度" class="layui-input"
+                                           lay-verify="required"
+                                           lay-verType="tips" autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="layui-inline layui-col-lg4 layui-col-md4 layui-col-sm4 layui-col-xs4">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">
+                                    <text style="color:red;">*</text>
+                                    默认值</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="default" placeholder="请输入字段默认值" class="layui-input"
+                                           lay-verify="required"
+                                           lay-verType="tips" autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-row margin-bottom6">
+                        <div class="layui-inline layui-col-lg4 layui-col-md4 layui-col-sm4 layui-col-xs4">
+                            <div class="layui-form-item">
                                 <label class="layui-form-label" title="允许为空">
                                     允许为空</label>
                                 <div class="layui-input-block">

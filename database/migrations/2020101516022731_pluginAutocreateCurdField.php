@@ -41,6 +41,9 @@ class PluginAutocreateCurdField extends Migrator
             ->addColumn('table_id', 'integer', ['length' => 11, 'default' => 0, 'comment' => '表ID'])
             ->addColumn('field', 'string', ['length' => 100, 'default' => '', 'comment' => '字段名'])
             ->addColumn('comment', 'string', ['length' => 100, 'default' => '', 'comment' => '字段注释'])
+            ->addColumn('data_type', 'string', ['length' => 100, 'default' => '', 'comment' => '存储类型'])
+            ->addColumn('length', 'integer', ['length' => 11, 'default' => '100', 'comment' => '存储长度'])
+            ->addColumn('default', 'string', ['length' => 100, 'default' => '', 'comment' => '默认值'])
             ->addColumn('is_empty', 'boolean', ['limit' => 1, 'default' => 2, 'comment' => '是否允许为空，1=允许，2=不允许'])
             ->addColumn('is_thead_sort', 'boolean', ['limit' => 1, 'default' => 2, 'comment' => '是否允许点击表头进行排序，1=允许，2=不允许'])
             ->addColumn('default_select_sort', 'string', ['limit' => 100, 'default' => '', 'comment' => '默认查询排序，asc正序，desc倒序'])
@@ -53,12 +56,14 @@ class PluginAutocreateCurdField extends Migrator
             ->addColumn('addition', 'text', ['null' => 1, 'comment' => '附加设置']);
 
         $data = [
-            ['table_id' => 1, 'field' => 'name', 'comment' => '分类名', 'form_type' => 'input'],
+            ['table_id' => 1, 'field' => 'name', 'comment' => '分类名', 'data_type' => 'string', 'length' => 100, 'form_type' => 'input'],
 
             [
                 'table_id' => 2,
                 'field' => 'title',
                 'comment' => '标题',
+                'data_type' => 'string',
+                'length' => 100,
                 'is_empty' => 1,
                 'is_thead_sort' => 1,
                 'default_select_sort' => '',
