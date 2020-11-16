@@ -3,6 +3,7 @@
 namespace plugin\core\library\autocreate;
 
 use laytp\traits\Error;
+use plugin\core\model\autocreate\curd\Field;
 use plugin\core\model\autocreate\curd\Table;
 use think\facade\Config;
 
@@ -14,8 +15,13 @@ class Curd
         $database, //要生成的表名链接数据库的标识
         $tableName, //要生成的表名
         $tableComment, //要生成的表注释
+        $engine, //要生成的表存储引擎
+        $collation, //要生成的表字符集
+        $fields, //字段列表
         $midName, //中间名称，比如表名为lt_test_a_b那么这里的midName就是/test/a/B,拼接控制器和模型文件的路径和namespace都需要用到
         $controllerModelClassName, //控制器和模型的类名
+        $migrationClassName, //要生成的数据迁移文件类名
+        $migrationFileName, //要生成的数据迁移文件名
         $controllerFileName, //要生成的控制器文件名
         $modelFileName, //要生成的模型文件名
         $jsFileName, //要生成的js文件名
@@ -23,6 +29,7 @@ class Curd
         $htmlAddFileName, //要生成的添加html文件名
         $htmlEditFileName, //要生成的编辑html文件名
         $htmlRecycleFileName, //要生成的回收站html文件名
+        $migrationParam, //生成数据迁移文件，模板需要用到的参数数组
         $controllerParam, //生成controller文件，模板需要用到的参数数组
         $modelParam //生成model文件，模板需要用到的参数数组
     ;
@@ -45,8 +52,17 @@ class Curd
         $this->database = $table->database;
         $this->tableName = $table->table;
         $this->tableComment = $table->tableComment;
+        $this->engine = $table->engine;
+        $this->collation = $table->collation;
+
+        $this->fields = Field::where('table_id', '=', $this->tableId)->select();
+        if (!$this->fields) {
+            $this->setError($this->tableName . '还没有字段，请先添加字段');
+            return false;
+        }
 
         $this->setParam();
+        $this->create();
         return true;
     }
 
@@ -56,11 +72,21 @@ class Curd
     public function setParam()
     {
         $this->setMidFileName();
+        $this->setMigrationFileName();
         $this->setFileName();
-        $this->setControllerParam();
-        $this->setModelParam();
+        $this->setMigrationParam();
+//        $this->setControllerParam();
+//        $this->setModelParam();
 //        $this->set_js_param();
 //        $this->set_html_param();
+    }
+
+    /**
+     * 生成静态文件、控制器和模型文件
+     */
+    public function create()
+    {
+        $this->createMigration();
     }
 
     /**
@@ -81,6 +107,18 @@ class Curd
         $this->midName = $strTable;
     }
 
+    //设置需要生成的数据迁移文件名
+    protected function setMigrationFileName()
+    {
+        $arrTable = explode('_', $this->tableName);
+        array_shift($arrTable);
+        foreach ($arrTable as $k => $name) {
+            $arrTable[$k] = ucfirst($name);
+        }
+        $this->migrationClassName = implode('', $arrTable);
+        $this->migrationFileName = app()->getRootPath() . 'database' . DS . 'migrations' . DS . date('YmdHis') . '_' . lcfirst(implode('', $arrTable)) . '.php';
+    }
+
     //设置所有需要生成的文件名
     protected function setFileName()
     {
@@ -91,6 +129,34 @@ class Curd
         $this->htmlAddFileName = app()->getAppPath() . 'public' . DS . 'admin' . DS . strtolower($this->midName) . DS . 'add.html';
         $this->htmlEditFileName = app()->getAppPath() . 'public' . DS . 'admin' . DS . strtolower($this->midName) . DS . 'edit.html';
         $this->htmlRecycleFileName = app()->getAppPath() . 'public' . DS . 'admin' . DS . strtolower($this->midName) . DS . 'recycle.html';
+    }
+
+    //设置生成migration需要的参数
+    protected function setMigrationParam()
+    {
+        $tplName = 'migration' . DS . 'base';
+        $data['className'] = $this->migrationClassName;
+        $data['tableName'] = $this->tableName;
+        $data['engine'] = $this->engine;
+        $fields = '';
+        foreach ($this->fields as $field) {
+            $fieldData['field'] = $field->field;
+            $fieldData['dataType'] = $field->data_type;
+            $fieldData['length'] = $field->length;
+            $fieldData['null'] = ($field->is_empty == 2) ? false : true;
+            $fieldData['default'] = $field->default;
+            $fieldData['comment'] = $field->comment;
+            $fields .= $this->getReplacedTpl('migration' . DS . 'field', $fieldData);
+        }
+        $data['fields'] = $fields;
+        $this->migrationParam = ['tplName' => $tplName, 'data' => $data, 'fileName' => $this->migrationFileName];
+    }
+
+    //生成数据迁移文件
+    protected function createMigration()
+    {
+        dump($this->migrationParam);
+        $this->writeToFile($this->migrationParam['tplName'], $this->migrationParam['data'], $this->migrationParam['fileName']);
     }
 
     /**
@@ -109,7 +175,7 @@ class Curd
         $data['modelName'] = strtolower(str_replace('/', '_', $this->midName));
         $data['modelClassName'] = $this->controllerModelClassName;
         $data['modelNamespace'] = str_replace('/', '\\', dirname('app/' . $this->model_app_name . '/model/' . $this->midName));
-        $data['controllerClassName'] = $this->controller_model_class_name;
+        $data['controllerClassName'] = $this->controllerModelClassName;
 //        $data['indexFunction'] = $this->set_relation_index_function_html();
 //        $data['recycleFunction'] = $this->set_relation_recycle_function_html();
         $this->controllerParam = ['tplName' => $tplName, 'data' => $data, 'fileName' => $this->controllerFileName];
@@ -176,5 +242,87 @@ class Curd
         } else {
             return '';
         }
+    }
+
+    //生成controller层
+    protected function createController()
+    {
+        if (!empty($this->controller_array_const)) {
+            $this->controllerParam['data']['arrayConstAssign'] = implode("\n\t\t", $this->controller_array_const);
+            $this->controllerParam['data']['arrayConstAssign'] .= "\n\t\t" . '$this->assign($assign);';
+        } else {
+            $this->controllerParam['data']['arrayConstAssign'] = '';
+        }
+
+        //是否拥有删除功能
+        if (isset($this->curd_config['global']['hide_del']) && $this->curd_config['global']['hide_del']) {
+            $this->controllerParam['data']['has_del'] = "\n\tpublic \$has_del=0;//是否拥有删除功能";
+        } else {
+            $this->controllerParam['data']['has_del'] = "\n\tpublic \$has_del=1;//是否拥有删除功能";
+        }
+        $this->controllerParam['data']['has_soft_del'] = "\n\tpublic \$has_soft_del=0;//是否拥有软删除功能";
+        //是否拥有软删除功能
+        foreach ($this->curd_config['global']['all_fields'] as $k => $v) {
+            if ($v['field_name'] == 'delete_time') {
+                $this->controllerParam['data']['has_soft_del'] = "\n\tpublic \$has_soft_del=1;//是否拥有软删除功能";
+                break;
+            }
+        }
+
+        $this->writeToFile($this->controllerParam['tpl_name'], $this->controllerParam['data'], $this->controllerParam['c_file_name']);
+    }
+
+    /**
+     * 写入到文件
+     * @param string $name 模板文件名
+     * @param array $data key=>value形式的替换数组
+     * @param string $pathname 生成的绝对文件名
+     * @return mixed
+     */
+    protected function writeToFile($name, $data, $pathname)
+    {
+        foreach ($data as $index => &$datum) {
+            $datum = is_array($datum) ? '' : $datum;
+        }
+        unset($datum);
+        $content = $this->getReplacedTpl($name, $data);
+
+        if (!is_dir(dirname($pathname))) {
+            mkdir(dirname($pathname), 0777, true);
+        }
+        return file_put_contents($pathname, $content);
+    }
+
+    /**
+     * 获取替换后的数据
+     * @param string $name 模板文件名
+     * @param array $data key=>value形式的替换数组
+     * @return string
+     */
+    protected function getReplacedTpl($name, $data = [])
+    {
+        foreach ($data as $index => &$datum) {
+            $datum = is_array($datum) ? '' : $datum;
+        }
+        unset($datum);
+        $search = $replace = [];
+        foreach ($data as $k => $v) {
+            $search[] = "{%{$k}%}";
+            $replace[] = $v;
+        }
+        $tplTrueName = $this->getTplTrueName($name);
+        $tpl = file_get_contents($tplTrueName);
+        $content = str_replace($search, $replace, $tpl);
+        return $content;
+    }
+
+    /**
+     * 获取模板文件真实路径
+     * @param string $name 举例： $name = 'controller' . DS . 'edit';
+     * @return string
+     */
+    protected function getTplTrueName($name)
+    {
+        return app()->getRootPath() . DS . 'plugin' . DS . 'core' . DS . 'library' . DS . 'autocreate' . DS . 'curd_template' . DS . $name . '.lt';
     }
 }

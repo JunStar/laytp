@@ -2,12 +2,12 @@
 
 use think\migration\Migrator;
 
-class {%className%} extends Migrator
+class Test extends Migrator
 {
     public function change()
     {
-        $table = $this->table('{%tableName%}', [
-            'engine' => '{%engine%}',
+        $table = $this->table('lt_test', [
+            'engine' => 'InnoDB',
             'comment' => '{%tableComment%}',
             'collation' => '{%collation%}'
         ]);
@@ -18,8 +18,7 @@ class {%className%} extends Migrator
         }
 
         $table
-            {%fields%}
-        ;
+            ->addColumn('title', 'string', ['length' => 100, 'null' => 1, 'default' => '', 'comment' => '标题']);
 
         $table->create();
     }

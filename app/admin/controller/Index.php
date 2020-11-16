@@ -1,15 +1,14 @@
 <?php
 namespace app\admin\controller;
 
-use laytp\controller\Backend;
+use laytp\BaseController;
 
-class Index extends Backend
+class Index extends BaseController
 {
     /**
-     * 后台首页
-     *  此方法是为了用户在使用http(s)://yourDomain/admin访问时，能自动进入后台
-     * @return string
-     * @throws \Exception
+     * 首页
+     *  默认的laytp使用http(s)://yourDomain访问时，直接进入后台
+     * @return \think\response\Redirect
      */
     public function index(){
         return redirect('/admin/index.html');
