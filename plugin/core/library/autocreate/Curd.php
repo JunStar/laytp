@@ -6,6 +6,7 @@ use laytp\traits\Error;
 use plugin\core\model\autocreate\curd\Field;
 use plugin\core\model\autocreate\curd\Table;
 use think\facade\Config;
+use think\facade\Db;
 
 class Curd
 {
@@ -48,7 +49,6 @@ class Curd
         }
 
         //这里来删除lt_migrations表对当前表的记录
-
         $this->database = $table->database;
         $this->tableName = $table->table;
         $this->tableComment = $table->tableComment;
@@ -64,6 +64,12 @@ class Curd
         $this->setParam();
         $this->create();
         return true;
+    }
+
+    //清空migration的记录，并删除旧的数据表
+    public function cleanMigration()
+    {
+        return Db::table(Config::get('') . 'migrations')->where()->delete();
     }
 
     /**
@@ -138,6 +144,8 @@ class Curd
         $data['className'] = $this->migrationClassName;
         $data['tableName'] = $this->tableName;
         $data['engine'] = $this->engine;
+        $data['comment'] = $this->comment;
+        $data['collation'] = $this->collation;
         $fields = '';
         foreach ($this->fields as $field) {
             $fieldData['field'] = $field->field;

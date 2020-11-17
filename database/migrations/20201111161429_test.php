@@ -6,10 +6,10 @@ class Test extends Migrator
 {
     public function change()
     {
-        $table = $this->table('lt_test', [
+        $table = $this->table('test', [
             'engine' => 'InnoDB',
-            'comment' => '{%tableComment%}',
-            'collation' => '{%collation%}'
+            'comment' => 'test',
+            'collation' => 'utf8mb4_general_ci'
         ]);
 
         //删除表
@@ -18,7 +18,8 @@ class Test extends Migrator
         }
 
         $table
-            ->addColumn('title', 'string', ['length' => 100, 'null' => 1, 'default' => '', 'comment' => '标题']);
+            ->addColumn('title', 'string', ['length' => 100, 'null' => 1, 'default' => '', 'comment' => '标题'])
+            ->addColumn('title1', 'string', ['length' => 100, 'null' => 1, 'default' => '', 'comment' => '标题']);
 
         $table->create();
     }
