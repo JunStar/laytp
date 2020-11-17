@@ -7,7 +7,6 @@ use plugin\core\model\autocreate\curd\Field;
 use plugin\core\model\autocreate\curd\Table;
 use plugin\core\model\Migrations;
 use think\facade\Config;
-use think\facade\Db;
 
 class Curd
 {
@@ -77,7 +76,6 @@ class Curd
         $this->setMigrationFileName();
         $this->setFileName();
         $this->setMigrationParam();
-
         $this->cleanMigration();
 
 //        $this->setControllerParam();
@@ -130,8 +128,9 @@ class Curd
         $migrations = new Migrations();
         $migration = $migrations->where('migration_name', '=', ucfirst($this->migrationClassName))->find();
         if ($migration) {
-            $migrationFile = app()->getRootPath() . 'database' . DS . 'migrations' . DS . $migration->version . '_' . lcfirst(implode('', $migration->migration_name)) . '.php';
-            @unlink($migrationFile);
+            $migrationFile = app()->getRootPath() . 'database' . DS . 'migrations' . DS . $migration->version . '_' . lcfirst($migration->migration_name) . '.php';
+            unlink($migrationFile);
+            $migration->delete();
         }
     }
 
@@ -174,6 +173,8 @@ class Curd
     protected function createMigration()
     {
         $this->writeToFile($this->migrationParam['tplName'], $this->migrationParam['data'], $this->migrationParam['fileName']);
+        sleep(1);
+        system('cd ' . app()->getRootPath() . '&& php think migrate:run', $return);
     }
 
     /**
