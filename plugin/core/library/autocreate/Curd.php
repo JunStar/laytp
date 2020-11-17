@@ -5,6 +5,7 @@ namespace plugin\core\library\autocreate;
 use laytp\traits\Error;
 use plugin\core\model\autocreate\curd\Field;
 use plugin\core\model\autocreate\curd\Table;
+use plugin\core\model\Migrations;
 use think\facade\Config;
 use think\facade\Db;
 
@@ -51,7 +52,7 @@ class Curd
         //这里来删除lt_migrations表对当前表的记录
         $this->database = $table->database;
         $this->tableName = $table->table;
-        $this->tableComment = $table->tableComment;
+        $this->tableComment = $table->comment;
         $this->engine = $table->engine;
         $this->collation = $table->collation;
 
@@ -61,15 +62,10 @@ class Curd
             return false;
         }
 
+
         $this->setParam();
         $this->create();
         return true;
-    }
-
-    //清空migration的记录，并删除旧的数据表
-    public function cleanMigration()
-    {
-        return Db::table(Config::get('') . 'migrations')->where()->delete();
     }
 
     /**
@@ -81,6 +77,9 @@ class Curd
         $this->setMigrationFileName();
         $this->setFileName();
         $this->setMigrationParam();
+
+        $this->cleanMigration();
+
 //        $this->setControllerParam();
 //        $this->setModelParam();
 //        $this->set_js_param();
@@ -125,6 +124,17 @@ class Curd
         $this->migrationFileName = app()->getRootPath() . 'database' . DS . 'migrations' . DS . date('YmdHis') . '_' . lcfirst(implode('', $arrTable)) . '.php';
     }
 
+    //清空migration的记录，并删除旧的数据表
+    public function cleanMigration()
+    {
+        $migrations = new Migrations();
+        $migration = $migrations->where('migration_name', '=', ucfirst($this->migrationClassName))->find();
+        if ($migration) {
+            $migrationFile = app()->getRootPath() . 'database' . DS . 'migrations' . DS . $migration->version . '_' . lcfirst(implode('', $migration->migration_name)) . '.php';
+            @unlink($migrationFile);
+        }
+    }
+
     //设置所有需要生成的文件名
     protected function setFileName()
     {
@@ -144,7 +154,7 @@ class Curd
         $data['className'] = $this->migrationClassName;
         $data['tableName'] = $this->tableName;
         $data['engine'] = $this->engine;
-        $data['comment'] = $this->comment;
+        $data['tableComment'] = $this->tableComment;
         $data['collation'] = $this->collation;
         $fields = '';
         foreach ($this->fields as $field) {
@@ -163,7 +173,6 @@ class Curd
     //生成数据迁移文件
     protected function createMigration()
     {
-        dump($this->migrationParam);
         $this->writeToFile($this->migrationParam['tplName'], $this->migrationParam['data'], $this->migrationParam['fileName']);
     }
 

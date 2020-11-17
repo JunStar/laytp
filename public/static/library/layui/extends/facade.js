@@ -223,11 +223,11 @@ layui.define(["jquery"], function (exports) {
                     }
                     return res;
                 },
-                error: function (xhr) {
+                error: function (xhr, a, b, c) {
                     if (xhr["responseJSON"] === undefined) {
                         facade.error(xhr["responseText"], "异常提示");
                     } else {
-                        facade.error(xhr["responseJSON"]["message"], "异常提示");
+                        facade.error("[Message:]" + xhr["responseJSON"]["message"] + "<br /><br />[File:]" + xhr["responseJSON"]["traces"][0]["file"] + "<br /><br />[Line:]" + xhr["responseJSON"]["traces"][0]["line"], "异常提示");
                     }
                     $("[class='laytp-hidden-submitBtn']").attr("disabled", false);
                 }
