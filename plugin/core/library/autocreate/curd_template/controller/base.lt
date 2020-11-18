@@ -2,7 +2,7 @@
 
 namespace {%controllerNamespace%};
 
-use controller\Backend;
+use laytp\controller\Backend;
 
 /**
  * {%tableComment%}

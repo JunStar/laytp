@@ -58,6 +58,73 @@
                     <div class="layui-row margin-bottom6">
                         <div class="layui-inline layui-col-lg4 layui-col-md4 layui-col-sm4 layui-col-xs4">
                             <div class="layui-form-item">
+                                <label class="layui-form-label">
+                                    <text style="color:red;">*</text>
+                                    存储类型</label>
+                                <div class="layui-input-block">
+                                    <select name="data_type" class="layui-select" lay-verify="required">
+                                        <option value="">请选择存储类型</option>
+                                        <option value="integer" {{# if(d.data_type===
+                                        "integer"){ }}selected="selected"{{# } }}>integer</option>
+                                        <option value="biginteger" {{# if(d.data_type===
+                                        "biginteger"){ }}selected="selected"{{# } }}>biginteger</option>
+                                        <option value="binary" {{# if(d.data_type===
+                                        "binary"){ }}selected="selected"{{# } }}>binary</option>
+                                        <option value="boolean" {{# if(d.data_type===
+                                        "boolean"){ }}selected="selected"{{# } }}>boolean</option>
+                                        <option value="date" {{# if(d.data_type===
+                                        "date"){ }}selected="selected"{{# } }}>date</option>
+                                        <option value="datetime" {{# if(d.data_type===
+                                        "datetime"){ }}selected="selected"{{# } }}>datetime</option>
+                                        <option value="decimal" {{# if(d.data_type===
+                                        "decimal"){ }}selected="selected"{{# } }}>decimal</option>
+                                        <option value="float" {{# if(d.data_type===
+                                        "float"){ }}selected="selected"{{# } }}>float</option>
+                                        <option value="string" {{# if(d.data_type===
+                                        "string"){ }}selected="selected"{{# } }}>string</option>
+                                        <option value="text" {{# if(d.data_type===
+                                        "text"){ }}selected="selected"{{# } }}>text</option>
+                                        <option value="time" {{# if(d.data_type===
+                                        "time"){ }}selected="selected"{{# } }}>time</option>
+                                        <option value="timestamp" {{# if(d.data_type===
+                                        "timestamp"){ }}selected="selected"{{# } }}>timestamp</option>
+                                        <option value="uuid" {{# if(d.data_type===
+                                        "uuid"){ }}selected="selected"{{# } }}>uuid</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="layui-inline layui-col-lg4 layui-col-md4 layui-col-sm4 layui-col-xs4">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">
+                                    <text style="color:red;">*</text>
+                                    存储长度</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="length" value="{{d.length}}" placeholder="请输入字段长度"
+                                           class="layui-input"
+                                           lay-verify="required"
+                                           lay-verType="tips" autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="layui-inline layui-col-lg4 layui-col-md4 layui-col-sm4 layui-col-xs4">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">
+                                    默认值</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="default" value="{{d.default}}" placeholder="请输入字段默认值"
+                                           class="layui-input"
+                                           autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-row margin-bottom6">
+                        <div class="layui-inline layui-col-lg4 layui-col-md4 layui-col-sm4 layui-col-xs4">
+                            <div class="layui-form-item">
                                 <label class="layui-form-label" title="允许为空">
                                     允许为空</label>
                                 <div class="layui-input-block">
