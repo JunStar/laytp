@@ -9,17 +9,17 @@ use think\facade\Config;
 
 class Curd extends Backend
 {
-    protected $noNeedAuth = ['getDatabaseList', 'getTableList', 'getFieldList'];
+    protected $noNeedAuth = ['getConnections', 'getTableList', 'getFieldList'];
 
     public function getTreeTableList()
     {
         $databaseConf = Config::get('database.connections');
         $result = [];
-        foreach ($databaseConf as $conf) {
+        foreach ($databaseConf as $connection => $conf) {
             $temp = [
                 'title' => $conf['database'],
                 'id' => $conf['database'],
-                'children' => Table::where('database', '=', $conf['database'])->field('id,`table` as title')->order('id', 'desc')->select()
+                'children' => Table::where('connection', '=', $connection)->field('id,`table` as title')->order('id', 'desc')->select()
             ];
             $result[] = $temp;
         }
@@ -27,14 +27,14 @@ class Curd extends Backend
     }
 
     //获取数据库列表
-    public function getDatabaseList()
+    public function getConnections()
     {
         $databaseConf = Config::get('database.connections');
-        $databaseList = [];
-        foreach ($databaseConf as $conf) {
-            $databaseList[]['database'] = $conf['database'];
+        $connections = [];
+        foreach ($databaseConf as $connection => $conf) {
+            $connections[]['connection'] = $connection;
         }
-        return $this->success('数据获取成功', $databaseList);
+        return $this->success('数据获取成功', $connections);
     }
 
     //获取数据表列表

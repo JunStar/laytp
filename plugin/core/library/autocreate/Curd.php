@@ -163,7 +163,7 @@ class Curd
             $fieldData['null'] = ($field->is_empty == 2) ? false : true;
             $fieldData['default'] = $field->default;
             $fieldData['comment'] = $field->comment;
-            $fields .= $this->getReplacedTpl('migration' . DS . 'field', $fieldData);
+            $fields .= $this->getReplacedTpl('migration' . DS . 'field', $fieldData) . "\n\t\t\t";
         }
         $data['fields'] = $fields;
         $this->migrationParam = ['tplName' => $tplName, 'data' => $data, 'fileName' => $this->migrationFileName];
