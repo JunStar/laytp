@@ -7,7 +7,6 @@ use think\Facade;
 /**
  * 后台权限服务门面
  * @package plugin\core\service
- * @package app\common\model_service\admin
  * @method static mixed setNoNeedLogin()        设置不需要登录的方法名数组
  * @method static mixed setNoNeedAuth()         设置不需要鉴权的方法名数组
  * @method static mixed needLogin()             当前节点是否需要登录

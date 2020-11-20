@@ -30,9 +30,6 @@ class Backend extends BaseController
 
     /**
      * 基类初始化方法
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
      */
     protected function initialize()
     {
