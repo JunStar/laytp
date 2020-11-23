@@ -23,7 +23,6 @@ class User extends Backend
 
     /**
      * 根据token获取登录用户信息
-     * @param \plugin\core\service\User $user
      * @return \think\response\Json
      */
     public function info()
@@ -36,8 +35,7 @@ class User extends Backend
     {
         $where = $this->buildSearchParams();
         $order = $this->buildOrder();
-        $select_page = $this->request->param('select_page');
-        $limit = $select_page ? $this->request->param('pageSize') : $this->request->param('limit');
+        $limit = $this->request->param('limit');
         $data = $this->model->with(['role_ids'])->where($where)->order($order)->paginate($limit)->toArray();
         $data = \plugin\core\resource\auth\User::index($data);
         return $this->success('数据获取成功', $data);
@@ -139,14 +137,14 @@ class User extends Backend
     public function tableEdit()
     {
         $field = $this->request->param('field');
-        $field_val = $this->request->param('field_val');
+        $fieldVal = $this->request->param('field_val');
         $ids = $this->request->param('ids');
         $idsArr = explode(',', $ids);
         if (in_array(1, $idsArr)) {
-            if ($field == 'is_super_manager' && $field_val == 2) {
+            if ($field == 'is_super_manager' && $fieldVal == 2) {
                 return $this->error('不允许将初始化账号设置成非超管');
             }
-            if ($field == 'status' && $field_val == 2) {
+            if ($field == 'status' && $fieldVal == 2) {
                 return $this->error('不允许禁用初始化账号');
             }
         }

@@ -30,8 +30,8 @@ class Menu extends Backend
         $menuTreeObj = Tree::instance();
         $menuTreeObj->init($sourceData);
         $data = $menuTreeObj->getTreeArray(0);
-        $layuiSelect = $this->request->param('layui_select');
-        if ($layuiSelect) {
+        $noPage = $this->request->param('no_page');
+        if ($noPage) {
             $data = $menuTreeObj->getTreeList($data);
         }
         return $this->success('获取成功', $data);

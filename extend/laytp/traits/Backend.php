@@ -6,17 +6,22 @@ use think\facade\Db;
 
 trait Backend
 {
-    //查看
+    /**
+     * 查看
+     *  no_page参数表示是否进行分页，默认不传表示进行分页查询
+     * @return mixed
+     */
     public function index()
     {
         $where = $this->buildSearchParams();
         $order = $this->buildOrder();
-        $limit = $this->request->param('limit', 10);
-        $layui_select = $this->request->param('layui_select');
-        if($layui_select){
-            $data = $this->model->where($where)->order($order)->select();
+        $noPage = $this->request->param('no_page');
+        $data = $this->model->where($where)->order($order);
+        if ($noPage) {
+            $data = $data->select();
         }else{
-            $data = $this->model->where($where)->order($order)->paginate($limit);
+            $limit = $this->request->param('limit', 10);
+            $data = $data->paginate($limit);
         }
         return $this->success('数据获取成功', $data);
     }

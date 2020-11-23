@@ -77,8 +77,7 @@ class Curd
         $this->setFileName();
         $this->setMigrationParam();
         $this->cleanMigration();
-
-//        $this->setControllerParam();
+        $this->setControllerParam();
 //        $this->setModelParam();
 //        $this->set_js_param();
 //        $this->set_html_param();
@@ -90,6 +89,7 @@ class Curd
     public function create()
     {
         $this->createMigration();
+        $this->createController();
     }
 
     /**
@@ -151,7 +151,7 @@ class Curd
     {
         $tplName = 'migration' . DS . 'base';
         $data['className'] = $this->migrationClassName;
-        $data['tableName'] = $this->tableName;
+        $data['tableName'] = str_replace(Config::get("database.connections." . Config::get("database.default") . ".prefix"), '', $this->tableName);
         $data['engine'] = $this->engine;
         $data['tableComment'] = $this->tableComment;
         $data['collation'] = $this->collation;
@@ -169,12 +169,12 @@ class Curd
         $this->migrationParam = ['tplName' => $tplName, 'data' => $data, 'fileName' => $this->migrationFileName];
     }
 
-    //生成数据迁移文件
+    //生成数据迁移文件并执行数据库迁移命令，生成数据表
     protected function createMigration()
     {
         $this->writeToFile($this->migrationParam['tplName'], $this->migrationParam['data'], $this->migrationParam['fileName']);
         sleep(1);
-        system('cd ' . app()->getRootPath() . '&& php think migrate:run', $return);
+        system('cd ' . app()->getRootPath() . '&& php think migrate:run > /dev/null', $return);
     }
 
     /**
@@ -182,7 +182,7 @@ class Curd
      * [
      *  'tplName'=>模板名,
      *  'data' => '执行替换模板的key=>value数组',
-     *  'c_file_name' => '要生成的文件名'
+     *  'fileName' => '要生成的文件名'
      * ]
      */
     protected function setControllerParam()

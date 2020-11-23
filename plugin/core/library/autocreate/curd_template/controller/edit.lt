@@ -1,18 +1,22 @@
 
     //编辑
     public function edit(){
-        $edit_where['id'] = $this->request->param('id');
-
-        if( $this->request->isAjax() && $this->request->isPost() ){
-            $post = $this->request->post("row/a");
-            if( $this->model->where($edit_where)->update($post) ){
-                return $this->success('操作成功');
-            }else{
+        $id = $this->request->param('id');
+        $info = $this->model->find($id);
+        $post = filter_post_data($this->request->post());
+        foreach ($post as $k => $v) {
+            $info->$k = $v;
+        }
+        try {
+            $updateRes = $info->save();
+            if ($updateRes) {
+                return $this->success('编辑成功');
+            } else if ($updateRes === 0) {
+                return $this->success('未做修改');
+            } else if ($updateRes === null) {
                 return $this->error('操作失败');
             }
+        } catch (\Exception $e) {
+            return $this->error($e->getMessage());
         }
-
-        $assign = $this->model->where($edit_where)->find()->toArray();
-        $this->assign($assign);
-        return $this->fetch();
     }

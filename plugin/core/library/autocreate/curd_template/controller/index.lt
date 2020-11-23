@@ -1,14 +1,15 @@
 
     //查看
     public function index(){
-        if( $this->request->isAjax() ){
-            $where = $this->build_params();
-            $select_page = $this->request->param('select_page');
-            $limit = $select_page ? $this->request->param('pageSize') : $this->request->param('limit');
-            $data = $this->model
-                {%with_relation%}
-                ->where($where)->order('id desc')->paginate($limit)->toArray();
-            return layui_table_page_data($data);
+        $where = $this->buildSearchParams();
+        $order = $this->buildOrder();
+        $noPage = $this->request->param('no_page');
+        $data = $this->model->where($where)->order($order){%with_relation%};
+        if($noPage){
+            $data = $data->select();
+        }else{
+            $limit = $this->request->param('limit', 10);
+            $data = $data->paginate($limit);
         }
-        return $this->fetch();
+        return $this->success('数据获取成功', $data);
     }

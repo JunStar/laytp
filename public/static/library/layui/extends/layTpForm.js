@@ -28,7 +28,7 @@ layui.define(["jquery", "facade"], function (exports) {
          * <select
          *  name="name"//提交表单时的name
          *  id="id"//节点的id值
-         *  data-source="/plugin/core/auth.menu/getSelectOptionData" //数据源，插件自动拼接参数layui_select=1
+         *  data-source="/plugin/core/auth.menu/getSelectOptionData" //数据源，插件自动拼接参数no_page=1
          *  data-valueField="id" //option中value属性使用列表的哪个字段，默认为id
          *  data-showField="name" //option中，文本显示使用列表中哪个字段，默认为name
          *  data-selected="1" //选中项的valueField的值，如果data-valueField属性的值为id，那么当前属性data-selected的值就是数据源中某一个选项的id值，用于添加表单表单元素的默认选中值
@@ -51,7 +51,7 @@ layui.define(["jquery", "facade"], function (exports) {
                     defArr.push(
                         facade.ajax({
                             path: source,
-                            params: {"layui_select": 1},
+                            params: {"no_page": 1},
                             successAlert: false
                         }).then(function (res) {
                             if (placeholder) {

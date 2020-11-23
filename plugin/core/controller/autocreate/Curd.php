@@ -32,8 +32,7 @@ class Curd extends Backend
     {
         $where = $this->buildSearchParams();
         $order = $this->buildOrder();
-        $select_page = $this->request->param('select_page');
-        $limit = $select_page ? $this->request->param('pageSize') : $this->request->param('limit');
+        $limit = $this->request->param('limit');
         $data = Field::where($where)->order($order)->paginate($limit)->toArray();
         return $this->success('数据获取成功', $data);
     }

@@ -1,9 +1,12 @@
     //删除
     public function del(){
-        $del_where['id'] = $this->request->param('id');
-        if( $this->model->where($del_where)->delete() ){
-            return $this->success('操作成功');
-        }else{
-            return $this->error('操作失败');
+        $ids = array_filter(explode(',', $this->request->param('ids')));
+        if (!$ids) {
+            return $this->error('参数ids不能为空');
+        }
+        if ($this->model->destroy($ids)) {
+            return $this->success('数据删除成功');
+        } else {
+            return $this->error('数据删除失败');
         }
     }
