@@ -38,7 +38,6 @@ class PluginAutocreateCurdTable extends Migrator
         }
 
         $table
-            ->addColumn('connection', 'string', ['length' => 100, 'default' => '', 'comment' => '数据库连接'])
             ->addColumn('table', 'string', ['length' => 100, 'default' => '', 'comment' => '表名'])
             ->addColumn('comment', 'string', ['length' => 100, 'default' => '', 'comment' => '表注释'])
             ->addColumn('engine', 'string', ['length' => 100, 'default' => '', 'comment' => '存储引擎'])
