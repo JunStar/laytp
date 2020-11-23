@@ -194,8 +194,8 @@ class Curd
         $data['modelClassName'] = $this->controllerModelClassName;
         $data['modelNamespace'] = str_replace('/', '\\', dirname('app/' . $this->model_app_name . '/model/' . $this->midName));
         $data['controllerClassName'] = $this->controllerModelClassName;
-//        $data['indexFunction'] = $this->set_relation_index_function_html();
-//        $data['recycleFunction'] = $this->set_relation_recycle_function_html();
+        $data['indexFunction'] = "";
+        $data['recycleFunction'] = "";
         $this->controllerParam = ['tplName' => $tplName, 'data' => $data, 'fileName' => $this->controllerFileName];
     }
 
