@@ -17,7 +17,7 @@ layui.use(["layTp"], function () {
             successAlert: false,
             async: false
         }).done(function (res) {
-            nowTableId = res.data[0].children[0].id;
+            nowTableId = res.data[0].id;
             let treeData = getTreeData(res.data);
 
             tree.render({

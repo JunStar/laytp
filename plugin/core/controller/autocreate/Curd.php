@@ -13,28 +13,8 @@ class Curd extends Backend
 
     public function getTreeTableList()
     {
-        $databaseConf = Config::get('database.connections');
-        $result = [];
-        foreach ($databaseConf as $connection => $conf) {
-            $temp = [
-                'title' => $conf['database'],
-                'id' => $conf['database'],
-                'children' => Table::where('connection', '=', $connection)->field('id,`table` as title')->order('id', 'desc')->select()
-            ];
-            $result[] = $temp;
-        }
-        return $this->success('数据获取成功', $result);
-    }
-
-    //获取数据库列表
-    public function getConnections()
-    {
-        $databaseConf = Config::get('database.connections');
-        $connections = [];
-        foreach ($databaseConf as $connection => $conf) {
-            $connections[]['connection'] = $connection;
-        }
-        return $this->success('数据获取成功', $connections);
+        $tables = Table::field('id,`table` as title')->order('id', 'desc')->select()->toArray();
+        return $this->success('数据获取成功', $tables);
     }
 
     //获取数据表列表
