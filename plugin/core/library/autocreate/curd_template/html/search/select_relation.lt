@@ -2,7 +2,6 @@
                     <select
                         linkage="true"
                         lay-filter="{%field_name%}"
-                        lay-verType="tips"
                         placeholder="请选择{%field_comment%}"
                         name="search_param[{%field_name%}][value]"
                         id="{%field_name%}"

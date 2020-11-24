@@ -3,7 +3,6 @@
                     linkage="true"
                     lay-filter="{%field_name%}"
                     lay-verify="{%verify%}"
-                    lay-verType="tips"
                     placeholder="请选择{%field_comment%}"
                     name="row[{%field_name%}]"
                     id="{%field_name%}"

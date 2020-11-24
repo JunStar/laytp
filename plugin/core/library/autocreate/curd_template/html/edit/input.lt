@@ -1,1 +1,1 @@
-<input autocomplete="off" type="text" name="row[{%field_name%}]" id="{%field_name%}" placeholder="请输入{%field_comment%}" value="{${%field_name%}}" class="layui-input" lay-verify="{%verify%}" lay-verType="tips">
+<input autocomplete="off" type="text" name="row[{%field_name%}]" id="{%field_name%}" placeholder="请输入{%field_comment%}" value="{${%field_name%}}" class="layui-input" lay-verify="{%verify%}">
