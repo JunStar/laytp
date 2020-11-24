@@ -100,7 +100,7 @@ class PluginRoute extends Route
         $url = $request->url();
         $url_arr = array_filter(explode('/', $url));
 
-        $class = 'plugin\\' . $plugin . '\\controller\\' . $controller;
+        $class = 'plugin\\' . $plugin . '\\controller\\' . ucfirst($controller);
 
         if (!class_exists($class)) {
             throw new HttpException(404, $class . '类不存在');
