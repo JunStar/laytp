@@ -65,11 +65,10 @@ layui.use(["layTp"], function () {
         facade.popupDiv({
             title: "添加分组"
             , path: "plugin/core/conf/addGroup"
-            , callback: function (data) {
-                let groupHtml = "<li class=\"groupLi\" data-group=\"" + data.group + "\"><i class='" + data.icon + " margin-right5'></i>" + data.group_name + "</li>";
-                $("#groupList").append(groupHtml);
-                layTp.init.config();
-            }
+        }, function (data) {
+            let groupHtml = "<li class=\"groupLi\" data-group=\"" + data.group + "\"><i class='" + data.icon + " margin-right5'></i>" + data.group_name + "</li>";
+            $("#groupList").append(groupHtml);
+            layTp.init.config();
         });
     });
 
@@ -100,11 +99,10 @@ layui.use(["layTp"], function () {
         facade.popupDiv({
             title: "编辑分组",
             path: "plugin/core/conf/editGroup",
-            data: {group: nowGroup, group_name: groupName, icon: icon},
-            callback: function (data) {
-                $("li[class='groupLi layui-this']", "#groupList").html("<i class='" + data.icon + " margin-right5'></i>" + data.group_name);
-                layTp.init.config();
-            }
+            data: {group: nowGroup, group_name: groupName, icon: icon}
+        }, function (data) {
+            $("li[class='groupLi layui-this']", "#groupList").html("<i class='" + data.icon + " margin-right5'></i>" + data.group_name);
+            layTp.init.config();
         });
     });
 
@@ -112,13 +110,12 @@ layui.use(["layTp"], function () {
     $(document).off("click", ".add-config").on("click", ".add-config", function () {
         facade.popupDiv({
             title: "添加配置",
-            path: "plugin/core/conf/addConfig",
-            callback: function (data) {
-                if (data.group === nowGroup.toString()) {
-                    funController.showGroup(nowGroup);
-                }
-                layTp.init.config();
+            path: "plugin/core/conf/addConfig"
+        }, function (data) {
+            if (data.group === nowGroup.toString()) {
+                funController.showGroup(nowGroup);
             }
+            layTp.init.config();
         });
     });
 

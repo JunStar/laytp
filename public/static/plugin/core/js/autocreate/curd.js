@@ -81,32 +81,63 @@ layui.use(["layTp"], function () {
 
         //监听数据表格顶部左侧按钮点击事件
         layui.table.on("toolbar(laytp-table)", function (obj) {
-            if (defaultTableToolbar.indexOf(obj.event) !== -1) {
-                //默认按钮点击事件
-                layTp.tableToolbar(obj);
-            } else {
-                //自定义按钮点击事件
-                switch (obj.event) {
-                    //自定义按钮点击事件
-                    case "addField":
-                        table_id = nowTableId;
+            let checkData, key;
+            let checkStatus = layui.table.checkStatus(obj.config.id);
+            switch (obj.event) {
+                case "edit":
+                    checkData = checkStatus.data;
+                    if (checkData.length === 0) {
+                        facade.error("请选择数据");
+                        return false;
+                    }
+                    if (checkData.length >= 30) {
+                        facade.error("选择数据量过多，最多选择30条数据，总共选择了" + checkData.length + "条数据");
+                        return false;
+                    }
+                    for (key in checkData) {
                         facade.popupDiv({
-                            title: "添加字段",
-                            path: "/plugin/core/autocreate.curd.field/add",
-                            data: {table_id: nowTableId},
-                            callback: function () {
-                                $("[lay-filter=laytp-search-form]").click();
-                            }
+                            title: "编辑",
+                            path: "/plugin/core/autocreate.curd.field/edit",
+                            data: checkData[key],
                         });
-                        break;
-                    case "createNormalCurd":
-                        console.log("生成常规CURD");
-                        facade.ajax({
-                            path: "plugin/core/autocreate.curd/createNormalCurd",
-                            params: {table_id: nowTableId}
-                        });
-                        break;
-                }
+                    }
+                    break;
+                case "del":
+                    checkData = checkStatus.data;
+                    if (checkData.length === 0) {
+                        facade.error("请选择数据");
+                        return false;
+                    }
+                    let ids = [];
+                    for (key in checkData) {
+                        ids.push(checkData[key].id);
+                    }
+                    facade.popupConfirm({
+                        text: "确定删除么?",
+                        path: "/plugin/core/autocreate.curd.field/del",
+                        params: {ids: ids.join(",")}
+                    }, function () {
+                        $("[lay-filter=laytp-search-form]").click();
+                    });
+                    break;
+                //自定义按钮点击事件
+                case "addField":
+                    table_id = nowTableId;
+                    facade.popupDiv({
+                        title: "添加字段",
+                        path: "/plugin/core/autocreate.curd.field/add",
+                        data: {table_id: nowTableId}
+                    }, function () {
+                        $("[lay-filter=laytp-search-form]").click();
+                    });
+                    break;
+                case "createNormalCurd":
+                    console.log("生成常规CURD");
+                    facade.ajax({
+                        path: "plugin/core/autocreate.curd/createNormalCurd",
+                        params: {table_id: nowTableId}
+                    });
+                    break;
             }
         });
 
@@ -125,10 +156,9 @@ layui.use(["layTp"], function () {
                 facade.popupDiv({
                     title: "编辑字段",
                     path: "/plugin/core/autocreate.curd.field/edit",
-                    data: obj.data,
-                    callback: function () {
-                        $("[lay-filter=laytp-search-form]").click();
-                    }
+                    data: obj.data
+                }, function () {
+                    $("[lay-filter=laytp-search-form]").click();
                 });
                 formTypeChangePrivate(obj.data.form_type, obj.data);
                 if (obj.data.form_type === 'xm_select') {
@@ -162,9 +192,8 @@ layui.use(["layTp"], function () {
                 title: "添加表"
                 , path: "plugin/core/autocreate.curd.table/add"
                 , height: "400px"
-                , callback: function () {
-                    funController.getTreeTable();
-                }
+            }, function () {
+                funController.getTreeTable();
             });
         });
 

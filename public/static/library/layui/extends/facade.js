@@ -317,13 +317,14 @@ layui.define(["jquery"], function (exports) {
          *  width 非必设，弹出层占用屏幕宽度，默认:50%，默认值在/a/index.html中设置
          *  height 非必设，弹出层占用屏幕高度，默认:50%，默认值在/a/index.html中设置
          *  shade 非必设，弹出层背景阴影，默认:0.1，默认值在/a/index.html中设置
-         *  callback 非必设，匿名回调函数，定义了回调函数，数据表格将不会自动刷新，需要自己在回调函数中调用funController.tableRender();刷新
+         * }
+         * @param callback
+         * callback 非必设，匿名回调函数，定义了回调函数，数据表格将不会自动刷新，需要自己在回调函数中调用funController.tableRender();刷新
          *      执行匿名回调函数的条件：
          *          - 弹出层为表单层
          *          - 点击确定按钮，提交表单后，后端返回结果code=0
-         * }
          */
-        popupDiv: function (options) {
+        popupDiv: function (options, callback) {
             if (!options.title) {
                 facade.error("facade.popupDiv()没有设置title");
                 return false;
@@ -391,8 +392,8 @@ layui.define(["jquery"], function (exports) {
                                 async: false
                             }).done(function (res) {
                                 if (res.code === 0) {
-                                    if (typeof options.callback === "function") {
-                                        options.callback(data.field);
+                                    if (typeof callback === "function") {
+                                        callback(data.field);
                                     } else {
                                         if (typeof funController !== "undefined" && typeof funController.tableRender === "function") {
                                             funController.tableRender();
