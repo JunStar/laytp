@@ -48,8 +48,24 @@ class PluginAutocreateCurdTable extends Migrator
             ->addColumn('autocreate_time', 'integer', ['length' => 11, 'default' => 0, 'comment' => '生成时间']);
 
         $data = [
-            ['connection' => 'mysql', 'table' => 'lt_test_category', 'comment' => '官方举例，生成分类CURD', 'engine' => 'InnoDB', 'collation' => 'utf8mb4_general_ci'],
-            ['connection' => 'mysql1', 'table' => 'lt_test', 'comment' => '官方举例，生成常规CURD', 'engine' => 'InnoDB', 'collation' => 'utf8mb4_general_ci'],
+            [
+                'table' => 'lt_test_category',
+                'comment' => '官方举例，生成分类CURD',
+                'engine' => 'InnoDB',
+                'collation' => 'utf8mb4_general_ci',
+                'is_hide_del' => 2,
+                'is_hide_pk' => 2,
+                'is_create_number' => 2,
+            ],
+            [
+                'table' => 'lt_test',
+                'comment' => '官方举例，生成常规CURD',
+                'engine' => 'InnoDB',
+                'collation' => 'utf8mb4_general_ci',
+                'is_hide_del' => 2,
+                'is_hide_pk' => 2,
+                'is_create_number' => 2,
+            ],
         ];
 
         $table->setData($data)->create();

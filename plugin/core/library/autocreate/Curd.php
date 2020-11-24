@@ -18,6 +18,9 @@ class Curd
         $tableComment, //要生成的表注释
         $engine, //要生成的表存储引擎
         $collation, //要生成的表字符集
+        $isHideDel, //是否隐藏删除按钮.2=不隐藏,1=隐藏
+        $isHidePk, //是否隐藏主键列.2=不隐藏,1=隐藏
+        $isCreateNumber, //是否生成序号列.2=不生成,1=生成
         $fields, //字段列表
         $midName, //中间名称，比如表名为lt_test_a_b那么这里的midName就是/test/a/B,拼接控制器和模型文件的路径和namespace都需要用到
         $controllerModelClassName, //控制器和模型的类名
@@ -54,6 +57,9 @@ class Curd
         $this->tableComment = $table->comment;
         $this->engine = $table->engine;
         $this->collation = $table->collation;
+        $this->isHideDel = $table->is_hide_del;
+        $this->isHidePk = $table->is_hide_pk;
+        $this->isCreateNumber = $table->is_create_number;
 
         $this->fields = Field::where('table_id', '=', $this->tableId)->select();
         if (!$this->fields) {

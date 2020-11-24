@@ -43,9 +43,9 @@ layui.use(["layTp"], function () {
                 }
             });
 
-            $('.layui-tree-txt').eq(1).css('color', 'var(--laytp-head-bg)');
-            $('.layui-tree-txt').eq(1).css('font-size', '14px');
-            $('.layui-tree-txt').eq(1).css('font-weight', 'bold');
+            $('.layui-tree-txt').eq(0).css('color', 'var(--laytp-head-bg)');
+            $('.layui-tree-txt').eq(0).css('font-size', '14px');
+            $('.layui-tree-txt').eq(0).css('font-weight', 'bold');
         });
     };
 
