@@ -26,6 +26,13 @@ trait Backend
         return $this->success('数据获取成功', $data);
     }
 
+    public function info()
+    {
+        $id = $this->request->param('id');
+        $info = $this->model->find($id);
+        return $this->success('获取成功', $info);
+    }
+
     //添加
     public function add()
     {

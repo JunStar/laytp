@@ -1,0 +1,64 @@
+<div class="popup-content">
+    <form class="layui-form">
+        <input type="hidden" name="id" value="{{d.id}}"/>
+        <div class="layui-form-item">
+            <label class="layui-form-label">
+                <text style="color:red;">*</text>
+                表名</label>
+            <div class="layui-input-block">
+                <input type="text" name="table" value="{{d.table}}" placeholder="请输入表名，表前缀可输可不输"
+                       class="layui-input layui-disabled"
+                       lay-verify="required" readonly autocomplete="off">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">
+                <text style="color:red;">*</text>
+                表注释</label>
+            <div class="layui-input-block">
+                <input type="text" name="comment" value="{{d.comment}}" placeholder="请输入表注释" class="layui-input"
+                       lay-verify="required"
+                       autocomplete="off">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">
+                <text style="color:red;">*</text>
+                存储引擎</label>
+            <div class="layui-input-block">
+                <input type="text" name="engine" value="{{d.engine}}" placeholder="请输入存储引擎，例：InnoDB，MySIAM"
+                       class="layui-input"
+                       lay-verify="required">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label" title="字符集(排序规则)">
+                <text style="color:red;">*</text>
+                字符集（排序规则）</label>
+            <div class="layui-input-block">
+                <input type="text" name="collation" value="{{d.collation}}"
+                       placeholder="请输入字符集(排序规则)，例：utf8mb4_general_ci" class="layui-input"
+                       lay-verify="required">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label" title="其他设置">
+                其他设置</label>
+            <div class="layui-input-block">
+                <input type="checkbox" name="is_hide_del" id="is_hide_del" value="1" {{# if(d.is_hide_del== 1){
+                       }}checked{{# } }}
+                       title="隐藏删除按钮"/>
+                <input type="checkbox" name="is_hide_pk" id="is_hide_pk" value="1" {{# if(d.is_hide_pk== 1){
+                       }}checked{{# } }}
+                       title="隐藏主键列"/>
+                <input type="checkbox" name="is_create_number" id="is_create_number" value="1" {{#
+                       if(d.is_create_number== 1){ }}checked{{# } }}
+                       title="生成序号列"/>
+            </div>
+        </div>
+    </form>
+</div>

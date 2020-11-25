@@ -40,6 +40,27 @@ layui.use(["layTp"], function () {
                         $("#table_id").val(nowTableId);
                         $("[lay-filter=laytp-search-form]").click();
                     }
+                }, operate: function (obj) {
+                    let type = obj.type; //得到操作类型：add、edit、del
+                    let data = obj.data; //得到当前节点的数据
+                    let elem = obj.elem; //得到当前节点元素
+                    if (type === "del") {
+                        facade.ajax({
+                            path: "/plugin/core/autocreate.curd.table/del"
+                            , params: {ids: data.id}
+                        }).done(function (res) {
+                            tree.reload('#tableList', {
+                                data: getTreeData(res.data)
+                            });
+                            $('.layui-tree-txt').eq(0).css('color', 'var(--laytp-head-bg)');
+                            $('.layui-tree-txt').eq(0).css('font-size', '14px');
+                            $('.layui-tree-txt').eq(0).css('font-weight', 'bold');
+
+                            nowTableId = res.data[0].id;
+                            $("#table_id").val(nowTableId);
+                            $("[lay-filter=laytp-search-form]").click();
+                        });
+                    }
                 }
             });
 
@@ -194,6 +215,24 @@ layui.use(["layTp"], function () {
                 , height: "400px"
             }, function () {
                 funController.getTreeTable();
+            });
+        });
+
+        //编辑表，绑定点击事件
+        $("a[lay-event='editTable']").on("click", function () {
+            facade.ajax({
+                path: "plugin/core/autocreate.curd.table/info",
+                params: {"id": nowTableId},
+                successAlert: false
+            }).done(function (res) {
+                facade.popupDiv({
+                    title: "编辑表"
+                    , path: "plugin/core/autocreate.curd.table/edit"
+                    , data: res.data
+                    , height: "400px"
+                }, function () {
+                    funController.getTreeTable();
+                });
             });
         });
 

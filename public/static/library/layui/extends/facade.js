@@ -311,7 +311,6 @@ layui.define(["jquery"], function (exports) {
          * {
          *  title 必设，弹出层标题
          *  path 必设，请求的路由，例:plugin/core/auth.menu/add，会自动转并请求http://yourDomain/plugin/core/auth.menu/add.html页面作为弹出层内容，并且如果是表单内容，表单的提交地址就是http://yourDomain/plugin/core/auth.menu/add
-         *  params 非必设，路由参数
          *  data 非必设，需要渲染的数据，用于弹出编辑表单，将ajax得到的静态html作为模板，通过laytpl的模板引擎把数据渲染到界面
          *  btn 非必设，弹出层底部按钮，只有两种设置方式，1.不设置，表示弹出一个表单，底部展示['确定','取消']两个按钮，点击确定按钮可以提交表单。2.设置为空字符串，表示弹出一个非表单层，仅展示页面，底部没有按钮，其他复杂的弹出层，比如有三个或者三个以上按钮，请自行编写JS实现
          *  width 非必设，弹出层占用屏幕宽度，默认:50%，默认值在/a/index.html中设置
@@ -332,9 +331,6 @@ layui.define(["jquery"], function (exports) {
             if (!options.path) {
                 facade.error("facade.popupDiv()没有设置path");
                 return false;
-            }
-            if (!options.params) {
-                options.params = {};
             }
             let defaultBtnPopupDiv = ['确定', '取消']; //facade.popupDiv()方法弹出层默认按钮
             let isFormDiv = true;//默认为弹出表单层
@@ -434,7 +430,7 @@ layui.define(["jquery"], function (exports) {
                 error: function (xhr) {
                     switch (xhr.status) {
                         case 404:
-                            facade.error("文件 " + facade.getHtmlUrl(facade.url(options.path, options.params)) + " 不存在");
+                            facade.error("文件 " + facade.getHtmlUrl(facade.url(options.path)) + " 不存在");
                             break;
                         case 500:
                         case 502:
