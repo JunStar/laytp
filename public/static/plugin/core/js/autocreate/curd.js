@@ -17,7 +17,7 @@ layui.use(["layTp"], function () {
             successAlert: false,
             async: false
         }).done(function (res) {
-            nowTableId = res.data[0].id;
+            nowTableId = res.data.length > 0 ? res.data[0].id : 0;
             let treeData = getTreeData(res.data);
 
             tree.render({
@@ -43,22 +43,27 @@ layui.use(["layTp"], function () {
                 }, operate: function (obj) {
                     let type = obj.type; //得到操作类型：add、edit、del
                     let data = obj.data; //得到当前节点的数据
-                    let elem = obj.elem; //得到当前节点元素
                     if (type === "del") {
                         facade.ajax({
                             path: "/plugin/core/autocreate.curd.table/del"
                             , params: {ids: data.id}
-                        }).done(function (res) {
-                            tree.reload('#tableList', {
-                                data: getTreeData(res.data)
-                            });
-                            $('.layui-tree-txt').eq(0).css('color', 'var(--laytp-head-bg)');
-                            $('.layui-tree-txt').eq(0).css('font-size', '14px');
-                            $('.layui-tree-txt').eq(0).css('font-weight', 'bold');
+                        }).done(function () {
+                            facade.ajax({
+                                path: "plugin/core/autocreate.curd/getTreeTableList",
+                                successAlert: false,
+                                async: false
+                            }).done(function (res) {
+                                tree.render('#tableList', {
+                                    data: getTreeData(res.data)
+                                });
+                                $('.layui-tree-txt').eq(0).css('color', 'var(--laytp-head-bg)');
+                                $('.layui-tree-txt').eq(0).css('font-size', '14px');
+                                $('.layui-tree-txt').eq(0).css('font-weight', 'bold');
 
-                            nowTableId = res.data[0].id;
-                            $("#table_id").val(nowTableId);
-                            $("[lay-filter=laytp-search-form]").click();
+                                nowTableId = res.data.length > 0 ? res.data[0].id : 0;
+                                $("#table_id").val(nowTableId);
+                                $("[lay-filter=laytp-search-form]").click();
+                            });
                         });
                     }
                 }
