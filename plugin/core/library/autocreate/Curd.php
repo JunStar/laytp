@@ -18,7 +18,6 @@ class Curd
         $tableComment, //要生成的表注释
         $engine, //要生成的表存储引擎
         $collation, //要生成的表字符集
-        $isHideDel, //是否隐藏删除按钮.2=不隐藏,1=隐藏
         $isHidePk, //是否隐藏主键列.2=不隐藏,1=隐藏
         $isCreateNumber, //是否生成序号列.2=不生成,1=生成
         $fields, //字段列表
@@ -35,7 +34,8 @@ class Curd
         $htmlRecycleFileName, //要生成的回收站html文件名
         $migrationParam, //生成数据迁移文件，模板需要用到的参数数组
         $controllerParam, //生成controller文件，模板需要用到的参数数组
-        $modelParam //生成model文件，模板需要用到的参数数组
+        $modelParam, //生成model文件，模板需要用到的参数数组
+        $jsParam //生成js文件，模板需要用到的参数数组
     ;
 
     public function __construct($tableId)
@@ -57,7 +57,6 @@ class Curd
         $this->tableComment = $table->comment;
         $this->engine = $table->engine;
         $this->collation = $table->collation;
-        $this->isHideDel = $table->is_hide_del;
         $this->isHidePk = $table->is_hide_pk;
         $this->isCreateNumber = $table->is_create_number;
 
@@ -85,7 +84,7 @@ class Curd
         $this->cleanMigration();
         $this->setControllerParam();
         $this->setModelParam();
-//        $this->set_js_param();
+        $this->setJsParam();
 //        $this->set_html_param();
     }
 
@@ -97,6 +96,7 @@ class Curd
         $this->createMigration();
         $this->createController();
         $this->createModel();
+        $this->createJs();
     }
 
     /**
@@ -316,6 +316,135 @@ class Curd
 //            }
 //        }
         $this->writeToFile($this->modelParam['tplName'], $this->modelParam['data'], $this->modelParam['fileName']);
+    }
+
+    protected function setJsParam()
+    {
+        $tplName = 'js';
+        $cols = "{type:'checkbox'}\n\t\t\t\t";
+        $hasFirstCols = true;//是否已经有了正常的第一行数据
+        //是否隐藏主键列
+        if (!$this->isHidePk) {
+            $hasFirstCols = true;
+            $temp = ",{field:'id',title:'ID',align:'center',width:80}\n";
+            $cols .= $temp;
+        } else {
+            $temp = "//,{field:'id',title:'ID',align:'center',width:80}\n";
+            $cols .= $temp;
+        }
+        //是否生成序号列
+        if ($this->isCreateNumber) {
+            if ($hasFirstCols) {
+                $temp = "\t\t\t\t,{field:'layui_number',title:'序号',align:'center',width:80,type:'numbers'}\n";
+                $cols .= $temp;
+            } else {
+                $temp = "\t\t\t\t{field:'layui_number',title:'序号',align:'center',width:80,type:'numbers'}\n";
+                $cols .= $temp;
+            }
+            if (!$hasFirstCols) $hasFirstCols = true;
+        }
+        foreach ($this->fields as $k => $v) {
+            if ($v['show_table'] == 2) continue;
+            if (!$hasFirstCols) {
+                $hasFirstCols = true;
+                $temp = "\t\t\t\t{field:'{$v['field']}',title:'{$v['comment']}'";
+            } else {
+                $temp = "\t\t\t\t,{field:'{$v['field']}',title:'{$v['comment']}'";
+            }
+            $temp .= ",align:'center'";
+            //列表排序
+            if ($v['show_sort'] == 1) {
+                $temp .= ",sort:true";
+            }
+//            if($relation_info = $this->is_relation_key($v['field_name'])){
+//                $relation_show_field = explode(',',$relation_info['show_field']);
+//                $templet = [];
+//                foreach($relation_show_field as $field){
+//                    $templet[] = "{{# if(d.".$relation_info['relation_function_name']."){ }}{{d.".$relation_info['relation_function_name'].".".$field."}}{{# }else{ }}-{{# } }}";
+//                }
+//                $temp .= ",templet:'<div>".implode(',',$templet)."</div>'";
+//            }
+            //2个选项的单选按钮 渲染成switch模板 3个及3个以上选项单选按钮渲染成status模板
+            if ($v['form_type'] == 'radio') {
+                $arr = $this->getArrayByString($v['addition']);
+                if (count($arr) > 2) {
+                    $json_obj = json_encode($this->getArrayByString($v['addition']), JSON_UNESCAPED_UNICODE);
+                    $temp .= ",templet:function(d){\n\t\t\t\t\treturn layTp.tableFormatter.status('{$v['field']}',d.{$v['field']},{$json_obj});\n\t\t\t\t}";
+                } else if (count($arr) == 2) {
+                    $arr = $this->getArrayByString($v['addition']);
+                    $keys_arr = array_keys($arr);
+                    $values_arr = array_values($arr);
+                    $json_arr = [
+                        'open' => ['value' => $keys_arr[1], 'text' => $values_arr[1]],
+                        'close' => ['value' => $keys_arr[0], 'text' => $values_arr[0]]
+                    ];
+                    $json_obj = json_encode($json_arr, JSON_UNESCAPED_UNICODE);
+                    $temp .= ",templet:function(d){\n\t\t\t\t\treturn layTpForm.tableForm.switch('{$v['field']}',d,{$json_obj});\n\t\t\t\t}";
+                }
+            }
+            //3个及3个以上选项单选按钮 和 单选下拉框渲染成status的模板
+            if ($v['form_type'] == 'select' && $v['addition']['single_multi'] == 'single') {
+                $json_obj = json_encode($this->getArrayByString($v['addition']['values']), JSON_UNESCAPED_UNICODE);
+                $temp .= ",templet:function(d){\n\t\t\t\t\treturn layTp.tableFormatter.status('{$v['field']}',d.{$v['field']},{$json_obj});\n\t\t\t\t}";
+            }
+            //复选框和多选下拉框渲染成flag的模板
+            if ($v['form_type'] == 'checkbox' || ($v['form_type'] == 'select' && $v['addition']['single_multi'] == 'multi')) {
+                if ($v['form_type'] == 'checkbox') {
+                    $json_obj = json_encode($this->getArrayByString($v['addition']), JSON_UNESCAPED_UNICODE);
+                } else {
+                    $json_obj = json_encode($this->getArrayByString($v['addition']['values']), JSON_UNESCAPED_UNICODE);
+                }
+                $temp .= ",templet:function(d){\n\t\t\t\t\treturn layTp.tableFormatter.flag(d.{$v['field_name']},{$json_obj});\n\t\t\t\t}";
+            }
+            //image模板
+            if ($v['form_type'] == 'upload' && $v['addition']['accept'] == 'images') {
+                $temp .= ",templet:function(d){\n\t\t\t\t\treturn layTp.tableFormatter.images(d.{$v['field_name']});\n\t\t\t\t}";
+            }
+            //video模板
+            if ($v['form_type'] == 'upload' && $v['addition']['accept'] == 'video') {
+                $temp .= ",templet:function(d){\n\t\t\t\t\treturn layTp.tableFormatter.video(d.{$v['field_name']});\n\t\t\t\t}";
+            }
+            //audio模板
+            if ($v['form_type'] == 'upload' && $v['addition']['accept'] == 'audio') {
+                $temp .= ",templet:function(d){\n\t\t\t\t\treturn layTp.tableFormatter.audio(d.{$v['field_name']});\n\t\t\t\t}";
+            }
+            //file模板
+            if ($v['form_type'] == 'upload' && $v['addition']['accept'] == 'file') {
+                $temp .= ",templet:function(d){\n\t\t\t\t\treturn layTp.tableFormatter.file(d.{$v['field_name']});\n\t\t\t\t}";
+            }
+            $temp .= "}\n";
+            $cols .= $temp;
+        }
+        $temp = "\t\t\t\t,{field:'operation',title:'操作',align:'center',toolbar:'#operation',width:100,fixed:'right'}";
+        $cols .= $temp;
+        $data['cols'] = $cols;
+//        $this->recycle_cols = $cols;
+        $data['cellMinWidth'] = 80;
+        $this->jsParam = ['tplName' => $tplName, 'data' => $data, 'fileName' => $this->jsFileName];
+    }
+
+    /**
+     * 获取一个数组，根据传入的参数，这个参数string的格式类似于:0=游泳,1=下棋,2=游戏,3=乒乓球,4=羽毛,5=跑步,6=爬山,7=美食,default=0;1;2
+     * @param $string
+     * @return array
+     */
+    public function getArrayByString($string)
+    {
+        $items = explode(",", $string);
+        $radio_items = [];//待选项数组
+        foreach ($items as $k => $v) {
+            $temp = explode('=', $v);
+            if ($temp[0] != 'default') {
+                $radio_items[$temp[0]] = $temp[1];
+            }
+        }
+        return $radio_items;
+    }
+
+    //生成js文件
+    protected function createJs()
+    {
+        $this->writeToFile($this->jsParam['tplName'], $this->jsParam['data'], $this->jsParam['fileName']);
     }
 
     /**
