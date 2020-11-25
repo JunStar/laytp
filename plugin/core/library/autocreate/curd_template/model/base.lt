@@ -4,10 +4,10 @@
  */
 namespace {%modelNamespace%};
 
-use model\Base;{%soft_del_package%}
+use laytp\BaseModel;{%softDelPackage%}
 
-class {%modelClassName%} extends Base
-{{%use_soft_del%}{%defaultSoftDelete%}
+class {%modelClassName%} extends BaseModel
+{{%useSoftDel%}{%defaultSoftDelete%}
     //模型名
     protected $name = '{%modelName%}';
 

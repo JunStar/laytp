@@ -84,7 +84,7 @@ class Curd
         $this->setMigrationParam();
         $this->cleanMigration();
         $this->setControllerParam();
-//        $this->setModelParam();
+        $this->setModelParam();
 //        $this->set_js_param();
 //        $this->set_html_param();
     }
@@ -96,6 +96,7 @@ class Curd
     {
         $this->createMigration();
         $this->createController();
+        $this->createModel();
     }
 
     /**
@@ -198,40 +199,11 @@ class Curd
         $data['tableComment'] = $this->tableComment;
         $data['modelName'] = strtolower(str_replace('/', '_', $this->midName));
         $data['modelClassName'] = $this->controllerModelClassName;
-        $data['modelNamespace'] = str_replace('/', '\\', dirname('app/' . $this->model_app_name . '/model/' . $this->midName));
+        $data['modelNamespace'] = str_replace('/', '\\', dirname('app/common/model/' . $this->midName));
         $data['controllerClassName'] = $this->controllerModelClassName;
         $data['indexFunction'] = "";
         $data['recycleFunction'] = "";
         $this->controllerParam = ['tplName' => $tplName, 'data' => $data, 'fileName' => $this->controllerFileName];
-    }
-
-    /**
-     * 设置生成model需要的参数
-     * [
-     *  'tplName'=>模板名,
-     *  'data' => '执行替换模板的key=>value数组',
-     *  'c_file_name' => '要生成的文件名'
-     * ]
-     */
-    protected function setModelParam()
-    {
-        $tplName = 'model' . DS . 'base';
-        $arrTableName = explode('_', $this->tableName);
-        $tablePrefix = $arrTableName['0'] . '_';
-        $data['tableName'] = '';
-        if ($tablePrefix != Config::get('database.prefix')) {
-            $data['tableName'] = 'protected $table = \'' . $this->tableName . '\';';
-        }
-        $data['tableComment'] = $this->tableComment;
-        $data['modelName'] = strtolower(str_replace('/', '_', $this->midName));
-        $data['modelClassName'] = $this->controllerModelClassName;
-        $data['modelNamespace'] = str_replace('/', '\\', dirname('app/common/model/' . $this->midName));
-//        $data['relationModel'] = $this->set_relation_model();
-        $data['autoTimeFormat'] = $this->autoTimeFormat();
-//        $data['autoCreateTime'] = $this->set_auto_write_create_time();
-//        $data['autoUpdateTime'] = $this->set_auto_write_update_time();
-//        $data['autoDeleteTime'] = $this->set_auto_write_delete_time();
-        $this->modelParam = ['tplName' => $tplName, 'data' => $data, 'c_file_name' => $this->model_c_file_name];
     }
 
     //时间选择器，int类型，自动类型转换
@@ -271,29 +243,79 @@ class Curd
     //生成controller层
     protected function createController()
     {
-        if (!empty($this->controller_array_const)) {
-            $this->controllerParam['data']['arrayConstAssign'] = implode("\n\t\t", $this->controller_array_const);
-            $this->controllerParam['data']['arrayConstAssign'] .= "\n\t\t" . '$this->assign($assign);';
-        } else {
-            $this->controllerParam['data']['arrayConstAssign'] = '';
-        }
-
         //是否拥有删除功能
-        if (isset($this->curd_config['global']['hide_del']) && $this->curd_config['global']['hide_del']) {
-            $this->controllerParam['data']['has_del'] = "\n\tpublic \$has_del=0;//是否拥有删除功能";
-        } else {
-            $this->controllerParam['data']['has_del'] = "\n\tpublic \$has_del=1;//是否拥有删除功能";
-        }
-        $this->controllerParam['data']['has_soft_del'] = "\n\tpublic \$has_soft_del=0;//是否拥有软删除功能";
-        //是否拥有软删除功能
-        foreach ($this->curd_config['global']['all_fields'] as $k => $v) {
-            if ($v['field_name'] == 'delete_time') {
-                $this->controllerParam['data']['has_soft_del'] = "\n\tpublic \$has_soft_del=1;//是否拥有软删除功能";
-                break;
-            }
-        }
+//        if (isset($this->curd_config['global']['hide_del']) && $this->curd_config['global']['hide_del']) {
+//            $this->controllerParam['data']['has_del'] = "\n\tpublic \$has_del=0;//是否拥有删除功能";
+//        } else {
+//            $this->controllerParam['data']['has_del'] = "\n\tpublic \$has_del=1;//是否拥有删除功能";
+//        }
+//        $this->controllerParam['data']['has_soft_del'] = "\n\tpublic \$has_soft_del=0;//是否拥有软删除功能";
+//        //是否拥有软删除功能
+//        foreach ($this->curd_config['global']['all_fields'] as $k => $v) {
+//            if ($v['field_name'] == 'delete_time') {
+//                $this->controllerParam['data']['has_soft_del'] = "\n\tpublic \$has_soft_del=1;//是否拥有软删除功能";
+//                break;
+//            }
+//        }
 
-        $this->writeToFile($this->controllerParam['tpl_name'], $this->controllerParam['data'], $this->controllerParam['c_file_name']);
+        $this->controllerParam['data']['hasDel'] = "";
+        $this->controllerParam['data']['hasSoftDel'] = "";
+        $this->controllerParam['data']['arrayConstAssign'] = "";
+
+        $this->writeToFile($this->controllerParam['tplName'], $this->controllerParam['data'], $this->controllerParam['fileName']);
+    }
+
+    /**
+     * 设置生成model需要的参数
+     * [
+     *  'tplName'=>模板名,
+     *  'data' => '执行替换模板的key=>value数组',
+     *  'fileName' => '要生成的文件名'
+     * ]
+     */
+    protected function setModelParam()
+    {
+        $tplName = 'model' . DS . 'base';
+        $arrTableName = explode('_', $this->tableName);
+        $tablePrefix = $arrTableName['0'] . '_';
+        $data['tableName'] = '';
+        if ($tablePrefix != Config::get('database.connections.' . Config::get('database.default') . '.prefix')) {
+            $data['tableName'] = 'protected $table = \'' . $this->tableName . '\';';
+        }
+        $data['tableComment'] = $this->tableComment;
+        $data['modelName'] = strtolower(str_replace('/', '_', $this->midName));
+        $data['modelClassName'] = $this->controllerModelClassName;
+        $data['modelNamespace'] = str_replace('/', '\\', dirname('app/common/model/' . $this->midName));
+        $data['relationModel'] = "";//$this->set_relation_model();
+        $data['autoTimeFormat'] = "";//$this->autoTimeFormat();
+        $data['autoCreateTime'] = "";//$this->set_auto_write_create_time();
+        $data['autoUpdateTime'] = "";//$this->set_auto_write_update_time();
+        $data['autoDeleteTime'] = "";//$this->set_auto_write_delete_time();
+        $this->modelParam = ['tplName' => $tplName, 'data' => $data, 'fileName' => $this->modelFileName];
+    }
+
+    protected function createModel()
+    {
+//        if(!empty($this->model_array_const)){
+//            $this->modelParam['data']['arrayConst'] = implode("\n\n", $this->model_array_const);
+//        }else{
+        $this->modelParam['data']['arrayConst'] = '';
+//        }
+        //是否拥有软删除功能
+        $this->modelParam['data']['softDelPackage'] = "";
+        $this->modelParam['data']['useSoftDel'] = "";
+        $this->modelParam['data']['defaultSoftDelete'] = "";
+//        foreach($this->curd_config['global']['all_fields'] as $k=>$v){
+//            if($v['field_name'] == 'delete_time'){
+//                $this->modelParam['data']['soft_del_package'] = "\nuse think\model\concern\SoftDelete;";
+//                $this->modelParam['data']['use_soft_del'] = "\n\tuse SoftDelete;";
+//                if($v['column_default'] !== null){
+//                    $this->modelParam['data']['defaultSoftDelete'] = "\n\tprotected \$defaultSoftDelete='{$v['column_default']}';";
+//                }
+//                break;
+//            }
+//        }
+        $this->writeToFile($this->modelParam['tplName'], $this->modelParam['data'], $this->modelParam['fileName']);
     }
 
     /**

@@ -12,9 +12,9 @@ class {%controllerClassName%} extends Backend
 
     /**
      * {%modelName%}模型对象
-     * @var {%modelNamespace%}\{%modelClassName%}
+     * @var \{%modelNamespace%}\{%modelClassName%}
      */
-    protected $model;{%has_del%}{%has_soft_del%}
+    protected $model;{%hasDel%}{%hasSoftDel%}
 
     public function initialize()
     {
