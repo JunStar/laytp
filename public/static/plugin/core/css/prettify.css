@@ -588,7 +588,7 @@ body .layui-layer-page.laytp .layui-layer-btn {
 }
 
 .search-btn {
-    line-height: 30px;
+    margin-bottom: 8px;
 }
 
 .layui-form-select .layui-input {
