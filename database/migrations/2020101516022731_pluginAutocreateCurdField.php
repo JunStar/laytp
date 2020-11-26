@@ -52,6 +52,7 @@ class PluginAutocreateCurdField extends Migrator
             ->addColumn('add_show', 'boolean', ['limit' => 1, 'default' => 2, 'comment' => '是否在添加表单中显示，1=显示，2=不显示'])
             ->addColumn('edit_show', 'boolean', ['limit' => 1, 'default' => 2, 'comment' => '是否在编辑表单中显示，1=显示，2=不显示'])
             ->addColumn('show_sort', 'integer', ['length' => 11, 'default' => 0, 'comment' => '显示排序'])
+            ->addColumn('is_create_tab', 'boolean', ['length' => 1, 'default' => 2, 'comment' => '是否创建Tab切换，1=创建，2=不创建'])
             ->addColumn('form_type', 'string', ['length' => 100, 'default' => '', 'comment' => '表单元素'])
             ->addColumn('addition', 'text', ['null' => 1, 'comment' => '附加设置']);
 
@@ -70,6 +71,7 @@ class PluginAutocreateCurdField extends Migrator
                 'add_show' => 1,
                 'edit_show' => 1,
                 'show_sort' => 0,
+                'is_create_tab' => 2,
                 'form_type' => 'input',
                 'addition' => json_encode(['verify' => ''], JSON_UNESCAPED_UNICODE)
             ],
@@ -87,6 +89,7 @@ class PluginAutocreateCurdField extends Migrator
                 'add_show' => 1,
                 'edit_show' => 1,
                 'show_sort' => 0,
+                'is_create_tab' => 2,
                 'form_type' => 'input',
                 'addition' => json_encode(['verify' => ''], JSON_UNESCAPED_UNICODE)
             ],

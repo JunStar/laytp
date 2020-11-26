@@ -1,10 +1,6 @@
-{block name="tabs"}
-<div class="layui-card">
 <div class="layui-tab layui-tab-brief">
-<ul class="layui-tab-title">
-    <li class="layui-this" click_search="true" field="{%field_name%}" field_val="">全部</li>
-    {%tab_list%}
-</ul>
+    <ul class="layui-tab-title">
+        <li class="layui-this laytp-tab-click-search" data-field="is_super_manager" data-value="">全部</li>
+        {%tabList%}
+    </ul>
 </div>
-</div>
-{/block}

@@ -35,7 +35,12 @@ class Curd
         $migrationParam, //生成数据迁移文件，模板需要用到的参数数组
         $controllerParam, //生成controller文件，模板需要用到的参数数组
         $modelParam, //生成model文件，模板需要用到的参数数组
-        $jsParam //生成js文件，模板需要用到的参数数组
+        $jsParam, //生成js文件，模板需要用到的参数数组
+        $htmlIndexParam, //生成index.html，模板需要用到的参数数组
+        $htmlAddParam, //生成add.html，模板需要用到的参数数组
+        $htmlEditParam, //生成edit.html，模板需要用到的参数数组
+        $htmlRecycleParam, //生成recycle.html，模板需要用到的参数数组
+        $recycleCols //回收站需要的js字段列表
     ;
 
     public function __construct($tableId)
@@ -85,7 +90,7 @@ class Curd
         $this->setControllerParam();
         $this->setModelParam();
         $this->setJsParam();
-//        $this->set_html_param();
+        $this->setHtmlParam();
     }
 
     /**
@@ -97,6 +102,7 @@ class Curd
         $this->createController();
         $this->createModel();
         $this->createJs();
+        $this->createHtml();
     }
 
     /**
@@ -147,10 +153,10 @@ class Curd
         $this->controllerFileName = app()->getAppPath() . 'admin' . DS . 'controller' . DS . $this->midName . '.php';
         $this->modelFileName = app()->getAppPath() . 'common' . DS . 'model' . DS . $this->midName . '.php';
         $this->jsFileName = app()->getRootPath() . 'public' . DS . 'static' . DS . 'admin' . DS . 'js' . DS . strtolower($this->midName) . '.js';
-        $this->htmlIndexFileName = app()->getAppPath() . 'public' . DS . 'admin' . DS . strtolower($this->midName) . DS . 'index.html';
-        $this->htmlAddFileName = app()->getAppPath() . 'public' . DS . 'admin' . DS . strtolower($this->midName) . DS . 'add.html';
-        $this->htmlEditFileName = app()->getAppPath() . 'public' . DS . 'admin' . DS . strtolower($this->midName) . DS . 'edit.html';
-        $this->htmlRecycleFileName = app()->getAppPath() . 'public' . DS . 'admin' . DS . strtolower($this->midName) . DS . 'recycle.html';
+        $this->htmlIndexFileName = app()->getRootPath() . 'public' . DS . 'admin' . DS . strtolower($this->midName) . DS . 'index.html';
+        $this->htmlAddFileName = app()->getRootPath() . 'public' . DS . 'admin' . DS . strtolower($this->midName) . DS . 'add.html';
+        $this->htmlEditFileName = app()->getRootPath() . 'public' . DS . 'admin' . DS . strtolower($this->midName) . DS . 'edit.html';
+        $this->htmlRecycleFileName = app()->getRootPath() . 'public' . DS . 'admin' . DS . strtolower($this->midName) . DS . 'recycle.html';
     }
 
     //设置生成migration需要的参数
@@ -352,8 +358,8 @@ class Curd
                 $temp = "\t\t\t\t,{field:'{$v['field']}',title:'{$v['comment']}'";
             }
             $temp .= ",align:'center'";
-            //列表排序
-            if ($v['click_thead_sort'] == 1) {
+            //表头排序
+            if ($v['is_thead_sort'] == 1) {
                 $temp .= ",sort:true";
             }
 //            if($relation_info = $this->is_relation_key($v['field_name'])){
@@ -418,7 +424,7 @@ class Curd
         $temp = "\t\t\t\t,{field:'operation',title:'操作',align:'center',toolbar:'#operation',width:100,fixed:'right'}";
         $cols .= $temp;
         $data['cols'] = $cols;
-//        $this->recycle_cols = $cols;
+        $this->recycleCols = $cols;
         $data['cellMinWidth'] = 80;
         $this->jsParam = ['tplName' => $tplName, 'data' => $data, 'fileName' => $this->jsFileName];
     }
@@ -445,6 +451,209 @@ class Curd
     protected function createJs()
     {
         $this->writeToFile($this->jsParam['tplName'], $this->jsParam['data'], $this->jsParam['fileName']);
+    }
+
+    protected function setHtmlParam()
+    {
+        $indexTplName = 'html' . DS . 'index';
+        $indexData['jsFileName'] = strtolower(strtolower($this->midName));
+        $indexData['tabs'] = '';
+        $indexSearchForm = [];
+        $linkageSelectSearchHtml = [];
+        $unSearchType = ['password', 'upload'];
+        foreach ($this->fields as $k => $v) {
+            if (!$v['show_search']) {
+                continue;
+            }
+            if (!in_array($v['form_type'], $unSearchType)) {
+                if (in_array($v['form_type'], ['linkage_select'])) {
+                    $linkageSelectSearchHtml[$v['form_type']][$v['addition']['group_name']][] = $this->getSearchFormContent($v);
+                } else {
+                    $searchItemContent = $this->getSearchFormContent($v);
+                    $indexSearchForm[] = $this->getSearchFormItem($v, $searchItemContent);
+                }
+            }
+            if ($v['is_create_tab'] == 1) {
+                $items = [];
+                if ($v['form_type'] == 'radio') {
+                    $items = $this->getArrayByString($v['addition']);
+                }
+                if ($v['form_type'] == 'select' && $v['addition']['single_multi'] == 'single') {
+                    $items = $this->getArrayByString($v['addition']['values']);
+                }
+                $tabsTplName = 'html' . DS . 'tabs';
+                $tabs['fieldName'] = $v['field'];
+                $tabList = [];
+                foreach ($items as $i => $j) {
+                    $tabList[] = '<li class="laytp-tab-click-search" data-field="' . $v['field'] . '" data-val="' . $i . '">' . $j . '</li>';
+                }
+                $tabs['tabList'] = implode("\n\t", $tabList);
+                $index_data['tabs'] = "\n\n" . $this->getReplacedTpl($tabsTplName, $tabs);
+            }
+        }
+
+        if (count($linkageSelectSearchHtml)) {
+            foreach ($linkageSelectSearchHtml as $formType => $groupList) {
+                foreach ($groupList as $groupName => $item) {
+                    $indexSearchForm[] = $this->getLinkageSelectSearchFormGroup($groupName, join("\n\t\t\t\t", $item));
+                }
+            }
+        }
+
+        $indexSearchForm[] = <<<EOT
+<div class="layui-col-md3 layui-col-sm3 search-btn">
+                    <div class="layui-input-block">
+                        <button class="layui-btn layui-btn-default layui-btn-sm layui-icon layui-icon-search" lay-submit
+                                lay-filter="laytp-search-form"> 确 定
+                        </button>
+                        <a class="layui-btn layui-btn-sm layui-btn-primary layui-icon layui-icon-refresh laytp-search-form-reset">
+                            重 置</a>
+                    </div>
+                </div>
+EOT;
+
+//        $indexData['searchForm'] = implode("\n\n\t\t", $indexSearchForm);
+        $indexData['searchForm'] = $this->getSearchForm($indexSearchForm);
+
+        $this->htmlIndexParam = ['tplName' => $indexTplName, 'data' => $indexData, 'fileName' => $this->htmlIndexFileName];
+
+        $addData = [];
+        $editData = [];
+        $recycleData = [];
+        $linkageSelectAddHtml = [];
+        $linkageSelectEditHtml = [];
+        foreach ($this->fields as $k => $v) {
+            if (in_array($v['form_type'], ['linkage_select'])) {
+                if ($v['show_add']) {
+                    $linkageSelectAddHtml[$v['form_type']][$v['addition']['group_name']][] = $this->getFormItem($v, 'add');
+                }
+                if ($v['field_show_edit']) {
+                    $linkageSelectEditHtml[$v['form_type']][$v['form_additional']['group_name']][] = $this->getFormItem($v, 'edit');
+                }
+            } else if (in_array($v['form_type'], ['admin_id'])) {
+                $addData[] = $this->getFormItem($v, 'add');
+                $editData[] = $this->getFormItem($v, 'edit');
+            } else {
+                if ($v['field_show_add']) {
+                    $add_item_content = $this->getFormItem($v, 'add');
+                    $addData[] = $this->getFormGroup($v['field_comment'], $add_item_content, $v['form_empty']);
+                }
+                if ($v['field_show_edit']) {
+                    $edit_item_content = $this->getFormItem($v, 'edit');
+                    $editData[] = $this->getFormGroup($v['field_comment'], $edit_item_content, $v['form_empty']);
+                }
+            }
+        }
+
+        if (count($linkageSelectAddHtml)) {
+            foreach ($linkageSelectAddHtml as $form_type => $group_list) {
+                foreach ($group_list as $group_name => $item) {
+                    $addData[] = $this->getFormGroup($group_name, join("\n\t\t\t", $item));
+                }
+            }
+        }
+
+        if (count($linkageSelectEditHtml)) {
+            foreach ($linkageSelectEditHtml as $form_type => $group_list) {
+                foreach ($group_list as $group_name => $item) {
+                    $editData[] = $this->getFormGroup($group_name, join("\n\t\t\t", $item));
+                }
+            }
+        }
+
+        $addTplName = 'html' . DS . 'add';
+        $addForm['formContent'] = implode("\n\n", $addData);
+        $this->htmlAddParam = ['tplName' => $addTplName, 'data' => $addForm, 'fileName' => $this->htmlAddFileName];
+
+        $editTplName = 'html' . DS . 'edit';
+        $editData['formContent'] = implode("\n\n", $editData);
+        $this->htmlEditParam = ['tplName' => $editTplName, 'data' => $editData, 'fileName' => $this->htmlEditFileName];
+
+        $recycleTplName = 'html' . DS . 'recycle';
+        $recycleData['searchForm'] = $indexData['searchForm'];
+        $recycleData['cols'] = $this->recycleCols;
+        $this->htmlRecycleParam = ['tplName' => $recycleTplName, 'data' => $recycleData, 'fileName' => $this->htmlRecycleFileName];
+    }
+
+    //生成html模板文件
+    protected function createHtml()
+    {
+        $this->writeToFile($this->htmlIndexParam['tplName'], $this->htmlIndexParam['data'], $this->htmlIndexParam['fileName']);
+        $this->writeToFile($this->htmlAddParam['tplName'], $this->htmlAddParam['data'], $this->htmlAddParam['fileName']);
+        $this->writeToFile($this->htmlEditParam['tplName'], $this->htmlEditParam['data'], $this->htmlEditParam['fileName']);
+        //是否拥有软删除功能
+        foreach ($this->fields as $k => $v) {
+            if ($v['field'] == 'delete_time') {
+                $this->writeToFile($this->htmlRecycleParam['tplName'], $this->htmlRecycleParam['data'], $this->htmlRecycleParam['fileName']);
+                break;
+            }
+        }
+    }
+
+    protected function getFormItem($info, $type = 'add')
+    {
+        $func = 'get' . ucfirst($info['form_type']) . 'Html';
+        return $this->$func($info, $type);
+    }
+
+    /**
+     * 获取表单分组数据
+     * @param string $field
+     * @param string $content
+     * @param boolean $formEmpty
+     * @return string
+     */
+    protected function getFormGroup($field, $content, $formEmpty = false)
+    {
+        if (!$formEmpty) {
+            $requiredHtml = " <text title=\"必填项\" style=\"color:red;\">*</text>";
+        } else {
+            $requiredHtml = "";
+        }
+        return <<<EOD
+    <div class="layui-form-item">
+        <label class="layui-form-label" title="{$field}">{$field}{$requiredHtml}</label>
+        <div class="layui-input-block">
+            {$content}
+        </div>
+    </div>
+EOD;
+    }
+
+    protected function getSearchFormContent($info)
+    {
+        $func = 'getSearch' . ucfirst($info['form_type']) . 'Html';
+        return $this->$func($info);
+    }
+
+    protected function getSearchFormItem($info, $content)
+    {
+        $fieldComment = $info['comment'];
+        return <<<EOD
+    <div class="layui-col-md3 layui-col-sm3">
+        <div class="layui-form-item layui-inline">
+                <label class="layui-form-label" title="{$fieldComment}">{$fieldComment}</label>
+                <div class="layui-input-inline">
+                    {$content}
+                </div>
+            </div>
+    </div>
+EOD;
+    }
+
+    protected function getSearchForm($arrSearchFormItem)
+    {
+
+    }
+
+    protected function getLinkageSelectSearchFormGroup($field, $content)
+    {
+        return <<<EOD
+    <div class="layui-form-item layui-inline">
+                <label class="layui-form-label" title="{$field}">{$field}</label>
+                {$content}
+            </div>
+EOD;
     }
 
     /**

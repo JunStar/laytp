@@ -1,15 +1,9 @@
-<div class="layui-tab layui-tab-brief">
-    <ul class="layui-tab-title">
-        <li class="layui-this laytp-tab-click-search" data-field="is_super_manager" data-value="">全部</li>
-        <li class="laytp-tab-click-search" data-field="is_super_manager" data-value="1">超管</li>
-        <li class="laytp-tab-click-search" data-field="is_super_manager" data-value="2">非超管</li>
-    </ul>
-</div>
+{%tabs%}
 <div class="layui-tab-content">
     <div class="search-form-page-tab-content" id="search-form" style="display:none;">
         <form class="layui-form" style="margin-bottom:0px;">
             <div class="layui-row margin-bottom6">
-                <div class="layui-inline layui-col-md3 layui-col-sm3">
+                <div class="layui-col-md3 layui-col-sm3">
                     <label class="layui-form-label" title="ID">ID</label>
                     <div class="layui-input-block">
                         <input type="text" name="search_param[id][value]" id="id" placeholder="请输入ID"
@@ -18,7 +12,7 @@
                     </div>
                 </div>
 
-                <div class="layui-inline layui-col-md3 layui-col-sm3">
+                <div class="layui-col-md3 layui-col-sm3">
                     <label class="layui-form-label" title="用户名">用户名</label>
                     <div class="layui-input-block">
                         <input type="text" name="search_param[username][value]" id="username" placeholder="请输入用户名"
@@ -27,7 +21,7 @@
                     </div>
                 </div>
 
-                <div class="layui-inline layui-col-md3 layui-col-sm3">
+                <div class="layui-col-md3 layui-col-sm3">
                     <label class="layui-form-label" title="昵称">昵称</label>
                     <div class="layui-input-block">
                         <input type="text" name="search_param[nickname][value]" id="nickname" placeholder="请输入昵称"
@@ -36,7 +30,7 @@
                     </div>
                 </div>
 
-                <div class="layui-inline layui-col-md3 layui-col-sm3">
+                <div class="layui-col-md3 layui-col-sm3">
                     <label class="layui-form-label" title="是否超管">是否超管</label>
                     <div class="layui-input-block">
                         <select name="search_param[is_super_manager][value]" id="is_super_manager"
@@ -51,7 +45,7 @@
             </div>
 
             <div class="layui-row margin-bottom6">
-                <div class="layui-inline layui-col-md3 layui-col-sm3">
+                <div class="layui-col-md3 layui-col-sm3">
                     <label class="layui-form-label" title="是否超管">账号状态</label>
                     <div class="layui-input-block">
                         <select name="search_param[status][value]" id="status" placeholder="请输入账号状态">
@@ -63,7 +57,7 @@
                     </div>
                 </div>
 
-                <div class="layui-inline layui-col-md3 layui-col-sm3">
+                <div class="layui-col-md3 layui-col-sm3">
                     <label class="layui-form-label" title="创建时间">创建时间</label>
                     <div class="layui-input-block">
                         <input type="text" class="layui-input laydate" id="create_time"
@@ -73,7 +67,7 @@
                     </div>
                 </div>
 
-                <div class="layui-inline layui-col-md3 layui-col-sm3 search-btn">
+                <div class="layui-col-md3 layui-col-sm3 search-btn">
                     <div class="layui-input-block">
                         <button class="layui-btn layui-btn-default layui-btn-sm layui-icon layui-icon-search" lay-submit
                                 lay-filter="laytp-search-form"> 确 定
@@ -90,4 +84,4 @@
 
 </div>
 
-<script type="text/javascript" src="/static/plugin/core/js/auth/user.js" charset="utf-8"></script>
+<script type="text/javascript" src="/static/admin/js/{%jsFileName%}.js" charset="utf-8"></script>
