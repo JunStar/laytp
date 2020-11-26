@@ -47,17 +47,32 @@ class PluginAutocreateCurdField extends Migrator
             ->addColumn('is_empty', 'boolean', ['limit' => 1, 'default' => 2, 'comment' => '是否允许为空，1=允许，2=不允许'])
             ->addColumn('is_thead_sort', 'boolean', ['limit' => 1, 'default' => 2, 'comment' => '是否允许点击表头进行排序，1=允许，2=不允许'])
             ->addColumn('default_select_sort', 'string', ['limit' => 100, 'default' => '', 'comment' => '默认查询排序，asc正序，desc倒序'])
-            ->addColumn('show_search', 'boolean', ['limit' => 1, 'default' => 2, 'comment' => '是否在搜索表单显示，1=显示，2=不显示'])
-            ->addColumn('show_table', 'boolean', ['limit' => 1, 'default' => 2, 'comment' => '是否在数据表格显示，1=显示，2=不显示'])
-            ->addColumn('show_add', 'boolean', ['limit' => 1, 'default' => 2, 'comment' => '是否在添加表单中显示，1=显示，2=不显示'])
-            ->addColumn('show_edit', 'boolean', ['limit' => 1, 'default' => 2, 'comment' => '是否在编辑表单中显示，1=显示，2=不显示'])
+            ->addColumn('search_show', 'boolean', ['limit' => 1, 'default' => 2, 'comment' => '是否在搜索表单显示，1=显示，2=不显示'])
+            ->addColumn('table_show', 'boolean', ['limit' => 1, 'default' => 2, 'comment' => '是否在数据表格显示，1=显示，2=不显示'])
+            ->addColumn('add_show', 'boolean', ['limit' => 1, 'default' => 2, 'comment' => '是否在添加表单中显示，1=显示，2=不显示'])
+            ->addColumn('edit_show', 'boolean', ['limit' => 1, 'default' => 2, 'comment' => '是否在编辑表单中显示，1=显示，2=不显示'])
             ->addColumn('show_sort', 'integer', ['length' => 11, 'default' => 0, 'comment' => '显示排序'])
             ->addColumn('form_type', 'string', ['length' => 100, 'default' => '', 'comment' => '表单元素'])
             ->addColumn('addition', 'text', ['null' => 1, 'comment' => '附加设置']);
 
         $data = [
-            ['table_id' => 1, 'field' => 'name', 'comment' => '分类名', 'data_type' => 'string', 'length' => 100, 'form_type' => 'input'],
-
+            [
+                'table_id' => 1,
+                'field' => 'name',
+                'comment' => '分类名',
+                'data_type' => 'string',
+                'length' => 100,
+                'is_empty' => 1,
+                'is_thead_sort' => 1,
+                'default_select_sort' => '',
+                'search_show' => 1,
+                'table_show' => 1,
+                'add_show' => 1,
+                'edit_show' => 1,
+                'show_sort' => 0,
+                'form_type' => 'input',
+                'addition' => json_encode(['verify' => ''], JSON_UNESCAPED_UNICODE)
+            ],
             [
                 'table_id' => 2,
                 'field' => 'title',
@@ -67,10 +82,10 @@ class PluginAutocreateCurdField extends Migrator
                 'is_empty' => 1,
                 'is_thead_sort' => 1,
                 'default_select_sort' => '',
-                'show_search' => 2,
-                'show_table' => 2,
-                'show_add' => 2,
-                'show_edit' => 2,
+                'search_show' => 1,
+                'table_show' => 1,
+                'add_show' => 1,
+                'edit_show' => 1,
                 'show_sort' => 0,
                 'form_type' => 'input',
                 'addition' => json_encode(['verify' => ''], JSON_UNESCAPED_UNICODE)

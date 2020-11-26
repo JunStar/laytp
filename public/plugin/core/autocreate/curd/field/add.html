@@ -161,13 +161,21 @@
                     </div>
 
                     <div class="layui-form-item">
-                        <label class="layui-form-label" title="显示排序">
+                        <label class="layui-form-label" title="搜索表单，数据列表，添加表单，编辑表单等显示排序">
                             <text style="color:red;">*</text>
                             显示排序</label>
                         <div class="layui-input-block">
                             <input type="text" name="show_sort" placeholder="请输入数字，倒序生成字段展示位置" class="layui-input"
-                                   value="0"
                                    lay-verify="required|number">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label" title="搜索表单，数据列表，添加表单，编辑表单等显示排序">
+                            表头排序</label>
+                        <div class="layui-input-block">
+                            <input type="checkbox" name="click_thead_sort" id="click_thead_sort" value="1"
+                                   title="是否允许，在数据列表中，点击表头进行排序"/>
                         </div>
                     </div>
                 </div>

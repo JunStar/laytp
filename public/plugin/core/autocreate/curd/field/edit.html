@@ -128,7 +128,8 @@
                                 <label class="layui-form-label" title="允许为空">
                                     允许为空</label>
                                 <div class="layui-input-block">
-                                    <input type="checkbox" name="is_empty" id="is_empty" value="1"
+                                    <input type="checkbox" {{# if(d.is_empty== 1){ }}checked="checked" {{# } }}
+                                           name="is_empty" id="is_empty" value="1"
                                            title="允许"/>
                                 </div>
                             </div>
@@ -139,7 +140,8 @@
                                 <label class="layui-form-label" title="点击表头排序">
                                     点击表头排序</label>
                                 <div class="layui-input-block">
-                                    <input type="checkbox" checked="checked" name="is_thead_sort"
+                                    <input type="checkbox" {{# if(d.is_thead_sort== 1){ }}checked="checked" {{# } }}
+                                           name="is_thead_sort"
                                            id="is_thead_sort"
                                            value="1"
                                            title="表头排序"/>
@@ -154,8 +156,10 @@
                                 <div class="layui-input-block">
                                     <select class="layui-select" name="default_select_sort">
                                         <option value="">不设置</option>
-                                        <option value="asc">ASC</option>
-                                        <option value="desc">DESC</option>
+                                        <option value="asc" {{# if(d.default_select_sort===
+                                        "asc"){ }}selected="selected"{{# } }}>ASC</option>
+                                        <option value="desc" {{# if(d.default_select_sort===
+                                        "desc"){ }}selected="selected"{{# } }}>DESC</option>
                                     </select>
                                 </div>
                             </div>
@@ -166,13 +170,17 @@
                         <label class="layui-form-label" title="显示位置">
                             显示位置</label>
                         <div class="layui-input-block">
-                            <input type="checkbox" checked="checked" name="search_show" id="search_show" value="1"
+                            <input type="checkbox" {{# if(d.search_show){ }}checked="checked" {{# } }}
+                                   name="search_show" id="search_show" value="1"
                                    title="搜索表单"/>
-                            <input type="checkbox" checked="checked" name="table_show" id="table_show" value="1"
+                            <input type="checkbox" {{# if(d.table_show){ }}checked="checked" {{# } }} name="table_show"
+                                   id="table_show" value="1"
                                    title="数据列表"/>
-                            <input type="checkbox" checked="checked" name="add_show" id="add_show" value="1"
+                            <input type="checkbox" {{# if(d.add_show){ }}checked="checked" {{# } }} name="add_show"
+                                   id="add_show" value="1"
                                    title="添加表单"/>
-                            <input type="checkbox" checked="checked" name="edit_show" id="edit_show" value="1"
+                            <input type="checkbox" {{# if(d.edit_show){ }}checked="checked" {{# } }} name="edit_show"
+                                   id="edit_show" value="1"
                                    title="编辑表单"/>
                         </div>
                     </div>
@@ -183,8 +191,18 @@
                             显示排序</label>
                         <div class="layui-input-block">
                             <input type="text" name="show_sort" placeholder="请输入数字，倒序生成字段展示位置" class="layui-input"
-                                   value="0"
+                                   value="{{d.show_sort}}"
                                    lay-verify="required|number">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label" title="搜索表单，数据列表，添加表单，编辑表单等显示排序">
+                            表头排序</label>
+                        <div class="layui-input-block">
+                            <input type="checkbox" {{# if(d.click_thead_sort){ }}checked="checked" {{# } }}
+                                   name="click_thead_sort" id="click_thead_sort" value="1"
+                                   title="是否允许，在数据列表中，点击表头进行排序"/>
                         </div>
                     </div>
                 </div>

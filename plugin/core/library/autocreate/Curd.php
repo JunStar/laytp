@@ -324,7 +324,7 @@ class Curd
         $cols = "{type:'checkbox'}\n\t\t\t\t";
         $hasFirstCols = true;//是否已经有了正常的第一行数据
         //是否隐藏主键列
-        if (!$this->isHidePk) {
+        if (!$this->isHidePk == 1) {
             $hasFirstCols = true;
             $temp = ",{field:'id',title:'ID',align:'center',width:80}\n";
             $cols .= $temp;
@@ -333,7 +333,7 @@ class Curd
             $cols .= $temp;
         }
         //是否生成序号列
-        if ($this->isCreateNumber) {
+        if ($this->isCreateNumber == 1) {
             if ($hasFirstCols) {
                 $temp = "\t\t\t\t,{field:'layui_number',title:'序号',align:'center',width:80,type:'numbers'}\n";
                 $cols .= $temp;
@@ -344,7 +344,7 @@ class Curd
             if (!$hasFirstCols) $hasFirstCols = true;
         }
         foreach ($this->fields as $k => $v) {
-            if ($v['show_table'] == 2) continue;
+            if ($v['table_show'] == 2) continue;
             if (!$hasFirstCols) {
                 $hasFirstCols = true;
                 $temp = "\t\t\t\t{field:'{$v['field']}',title:'{$v['comment']}'";
@@ -353,7 +353,7 @@ class Curd
             }
             $temp .= ",align:'center'";
             //列表排序
-            if ($v['show_sort'] == 1) {
+            if ($v['click_thead_sort'] == 1) {
                 $temp .= ",sort:true";
             }
 //            if($relation_info = $this->is_relation_key($v['field_name'])){
