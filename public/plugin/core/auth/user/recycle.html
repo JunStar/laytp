@@ -1,80 +1,75 @@
 <div class="layui-tab-content">
     <div class="search-form-page-tab-content" id="recycle-search-form" style="display:none;">
         <form class="layui-form" style="margin-bottom:0px;">
-            <div class="layui-row margin-bottom6">
-                <div class="layui-inline layui-col-lg4 layui-col-md4 layui-col-sm4 layui-col-xs4">
-                    <label class="layui-form-label" title="用户名">ID</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="search_param[id][value]" id="id" placeholder="请输入ID"
-                               class="layui-input" autocomplete="off">
-                        <input type="hidden" name="search_param[id][condition]" value="=">
-                    </div>
-                </div>
-
-                <div class="layui-inline layui-col-lg4 layui-col-md4 layui-col-sm4 layui-col-xs4">
-                    <label class="layui-form-label" title="用户名">用户名</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="search_param[username][value]" id="username" placeholder="请输入用户名"
-                               class="layui-input" autocomplete="off">
-                        <input type="hidden" name="search_param[username][condition]" value="LIKE">
-                    </div>
-                </div>
-
-                <div class="layui-inline layui-col-lg4 layui-col-md4 layui-col-sm4 layui-col-xs4">
-                    <label class="layui-form-label" title="昵称">昵称</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="search_param[nickname][value]" id="nickname" placeholder="请输入昵称"
-                               class="layui-input" autocomplete="off">
-                        <input type="hidden" name="search_param[nickname][condition]" value="LIKE">
-                    </div>
+            <div class="layui-form-item layui-inline">
+                <label class="layui-form-label" title="用户名">ID</label>
+                <div class="layui-inline">
+                    <input type="text" name="search_param[id][value]" id="id" placeholder="请输入ID"
+                           class="layui-input" autocomplete="off">
+                    <input type="hidden" name="search_param[id][condition]" value="=">
                 </div>
             </div>
 
-            <div class="layui-row margin-bottom6">
-                <div class="layui-inline layui-col-lg4 layui-col-md4 layui-col-sm4 layui-col-xs4">
-                    <label class="layui-form-label" title="是否超管">是否超管</label>
-                    <div class="layui-input-block">
-                        <select name="search_param[is_super_manager][value]" id="is_super_manager"
-                                placeholder="请输入是否超管">
-                            <option value=""></option>
-                            <option value="2">否</option>
-                            <option value="1">是</option>
-                        </select>
-                        <input type="hidden" name="search_param[is_super_manager][condition]" value="=">
-                    </div>
-                </div>
-
-                <div class="layui-inline layui-col-lg4 layui-col-md4 layui-col-sm4 layui-col-xs4">
-                    <label class="layui-form-label" title="是否超管">账号状态</label>
-                    <div class="layui-input-block">
-                        <select name="search_param[status][value]" id="status" placeholder="请输入账号状态">
-                            <option value=""></option>
-                            <option value="2">禁用</option>
-                            <option value="1">正常</option>
-                        </select>
-                        <input type="hidden" name="search_param[status][condition]" value="=">
-                    </div>
-                </div>
-                <div class="layui-inline layui-col-lg4 layui-col-md4 layui-col-sm4 layui-col-xs4">
-                    <label class="layui-form-label" title="创建时间">创建时间</label>
-                    <div class="layui-input-block">
-                        <input class="layui-input laydate" data-isRange="true" data-type="datetime" id="create_time"
-                               id="create_time" name="search_param[create_time][value]" type="text"
-                               placeholder="请选择时间" autocomplete="off">
-                        <input name="search_param[create_time][condition]" type="hidden" value="BETWEEN_STRTOTIME">
-                    </div>
+            <div class="layui-form-item layui-inline">
+                <label class="layui-form-label" title="用户名">用户名</label>
+                <div class="layui-inline">
+                    <input type="text" name="search_param[username][value]" id="username" placeholder="请输入用户名"
+                           class="layui-input" autocomplete="off">
+                    <input type="hidden" name="search_param[username][condition]" value="LIKE">
                 </div>
             </div>
 
-            <div class="layui-row margin-bottom6">
-                <div class="layui-inline layui-col-lg4 layui-col-md4 layui-col-sm4 layui-col-xs4 search-btn">
-                    <div class="layui-input-block">
-                        <button class="layui-btn layui-btn-default layui-btn-sm layui-icon layui-icon-search" lay-submit
-                                lay-filter="laytp-recycle-search-form"> 确 定
-                        </button>
-                        <a class="layui-btn layui-btn-sm layui-btn-primary layui-icon layui-icon-refresh laytp-recycle-search-form-reset">
-                            重 置</a>
-                    </div>
+            <div class="layui-form-item layui-inline">
+                <label class="layui-form-label" title="昵称">昵称</label>
+                <div class="layui-inline">
+                    <input type="text" name="search_param[nickname][value]" id="nickname" placeholder="请输入昵称"
+                           class="layui-input" autocomplete="off">
+                    <input type="hidden" name="search_param[nickname][condition]" value="LIKE">
+                </div>
+            </div>
+
+            <div class="layui-form-item layui-inline">
+                <label class="layui-form-label" title="是否超管">是否超管</label>
+                <div class="layui-inline">
+                    <select name="search_param[is_super_manager][value]" id="is_super_manager"
+                            placeholder="请输入是否超管">
+                        <option value=""></option>
+                        <option value="2">否</option>
+                        <option value="1">是</option>
+                    </select>
+                    <input type="hidden" name="search_param[is_super_manager][condition]" value="=">
+                </div>
+            </div>
+
+            <div class="layui-form-item layui-inline">
+                <label class="layui-form-label" title="是否超管">账号状态</label>
+                <div class="layui-inline">
+                    <select name="search_param[status][value]" id="status" placeholder="请输入账号状态">
+                        <option value=""></option>
+                        <option value="2">禁用</option>
+                        <option value="1">正常</option>
+                    </select>
+                    <input type="hidden" name="search_param[status][condition]" value="=">
+                </div>
+            </div>
+
+            <div class="layui-form-item layui-inline">
+                <label class="layui-form-label" title="创建时间">创建时间</label>
+                <div class="layui-inline">
+                    <input class="layui-input laydate" data-isRange="true" data-type="datetime" id="create_time"
+                           id="create_time" name="search_param[create_time][value]" type="text"
+                           placeholder="请选择时间" autocomplete="off">
+                    <input name="search_param[create_time][condition]" type="hidden" value="BETWEEN_STRTOTIME">
+                </div>
+            </div>
+
+            <div class="layui-form-item layui-inline search-btn">
+                <div class="layui-inline">
+                    <button class="layui-btn layui-btn-default layui-btn-sm layui-icon layui-icon-search" lay-submit
+                            lay-filter="laytp-recycle-search-form"> 确 定
+                    </button>
+                    <a class="layui-btn layui-btn-sm layui-btn-primary layui-icon layui-icon-refresh laytp-recycle-search-form-reset">
+                        重 置</a>
                 </div>
             </div>
         </form>
