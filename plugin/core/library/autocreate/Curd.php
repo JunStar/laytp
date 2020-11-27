@@ -462,7 +462,7 @@ class Curd
         $linkageSelectSearchHtml = [];
         $unSearchType = ['password', 'upload'];
         foreach ($this->fields as $k => $v) {
-            if (!$v['show_search']) {
+            if ($v['search_show'] == 2) {
                 continue;
             }
             if (!in_array($v['form_type'], $unSearchType)) {
@@ -500,20 +500,7 @@ class Curd
             }
         }
 
-        $indexSearchForm[] = <<<EOT
-<div class="layui-col-md3 layui-col-sm3 search-btn">
-                    <div class="layui-input-block">
-                        <button class="layui-btn layui-btn-default layui-btn-sm layui-icon layui-icon-search" lay-submit
-                                lay-filter="laytp-search-form"> 确 定
-                        </button>
-                        <a class="layui-btn layui-btn-sm layui-btn-primary layui-icon layui-icon-refresh laytp-search-form-reset">
-                            重 置</a>
-                    </div>
-                </div>
-EOT;
-
-//        $indexData['searchForm'] = implode("\n\n\t\t", $indexSearchForm);
-        $indexData['searchForm'] = $this->getSearchForm($indexSearchForm);
+        $indexData['searchForm'] = implode("\n\n\t\t", $indexSearchForm);
 
         $this->htmlIndexParam = ['tplName' => $indexTplName, 'data' => $indexData, 'fileName' => $this->htmlIndexFileName];
 
@@ -630,20 +617,13 @@ EOD;
     {
         $fieldComment = $info['comment'];
         return <<<EOD
-    <div class="layui-col-md3 layui-col-sm3">
-        <div class="layui-form-item layui-inline">
+<div class="layui-form-item layui-inline">
                 <label class="layui-form-label" title="{$fieldComment}">{$fieldComment}</label>
                 <div class="layui-input-inline">
                     {$content}
                 </div>
             </div>
-    </div>
 EOD;
-    }
-
-    protected function getSearchForm($arrSearchFormItem)
-    {
-
     }
 
     protected function getLinkageSelectSearchFormGroup($field, $content)
@@ -654,6 +634,19 @@ EOD;
                 {$content}
             </div>
 EOD;
+    }
+
+    /**
+     * 获取input需要生成的html，在生成搜索表单时用到
+     * @param $info
+     * @return string
+     */
+    protected function getSearchInputHtml($info)
+    {
+        $name = 'html' . DS . 'search' . DS . 'input';
+        $data['field'] = $info['field'];
+        $data['comment'] = $info['comment'];
+        return $this->getReplacedTpl($name, $data);
     }
 
     /**
