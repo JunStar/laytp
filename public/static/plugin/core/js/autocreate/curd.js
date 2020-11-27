@@ -337,6 +337,12 @@ layui.use(["layTp"], function () {
                 $("input[name='precision']").removeAttr('lay-verify', 'required');
                 $("#scaleDiv").hide();
             }
+
+            if (facade.inArray(obj.value, ["float", "decimal", "integer", "biginteger"])) {
+                $("input[name='default']").val(0);
+            } else {
+                $("input[name='default']").val("");
+            }
         });
     });
 
