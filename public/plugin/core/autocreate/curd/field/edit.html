@@ -62,7 +62,8 @@
                                     <text style="color:red;">*</text>
                                     存储类型</label>
                                 <div class="layui-input-block">
-                                    <select name="data_type" class="layui-select" lay-verify="required">
+                                    <select name="data_type" class="layui-select" lay-verify="required"
+                                            lay-filter="select-data-type">
                                         <option value="">请选择存储类型</option>
                                         <option value="integer" {{# if(d.data_type===
                                         "integer"){ }}selected="selected"{{# } }}>integer</option>
@@ -95,13 +96,14 @@
                             </div>
                         </div>
 
-                        <div class="layui-inline layui-col-lg4 layui-col-md4 layui-col-sm4 layui-col-xs4">
+                        <div class="layui-inline layui-col-lg4 layui-col-md4 layui-col-sm4 layui-col-xs4"
+                             id="lengthDiv">
                             <div class="layui-form-item">
                                 <label class="layui-form-label">
                                     <text style="color:red;">*</text>
                                     存储长度</label>
                                 <div class="layui-input-block">
-                                    <input type="text" name="length" value="{{d.length}}" placeholder="请输入字段长度"
+                                    <input type="text" name="limit" value="{{d.limit}}" placeholder="请输入字段长度"
                                            class="layui-input"
                                            lay-verify="required"
                                            autocomplete="off">
@@ -109,16 +111,41 @@
                             </div>
                         </div>
 
-                        <div class="layui-inline layui-col-lg4 layui-col-md4 layui-col-sm4 layui-col-xs4">
+                        <div class="layui-inline layui-col-lg4 layui-col-md4 layui-col-sm4 layui-col-xs4"
+                             id="precisionDiv">
                             <div class="layui-form-item">
                                 <label class="layui-form-label">
-                                    默认值</label>
+                                    <text style="color:red;">*</text>
+                                    整数部分长度</label>
                                 <div class="layui-input-block">
-                                    <input type="text" name="default" value="{{d.default}}" placeholder="请输入字段默认值"
+                                    <input type="text" name="precision" value="{{d.precision}}" placeholder="请输入整数部分长度"
+                                           class="layui-input"
+                                           lay-verify="required"
+                                           autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="layui-inline layui-col-lg4 layui-col-md4 layui-col-sm4 layui-col-xs4" id="scaleDiv">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">
+                                    保留小数位</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="scale" value="{{d.scale}}" placeholder="请输入保留小数位"
                                            class="layui-input"
                                            autocomplete="off">
                                 </div>
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">
+                            默认值</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="default" value="{{d.default}}" placeholder="请输入字段默认值"
+                                   class="layui-input"
+                                   autocomplete="off">
                         </div>
                     </div>
 
@@ -151,15 +178,15 @@
 
                         <div class="layui-inline layui-col-lg4 layui-col-md4 layui-col-sm4 layui-col-xs4">
                             <div class="layui-form-item">
-                                <label class="layui-form-label" title="默认查询排序">
-                                    默认查询排序</label>
+                                <label class="layui-form-label" title="默认排序规则">
+                                    默认排序规则</label>
                                 <div class="layui-input-block">
                                     <select class="layui-select" name="default_select_sort">
                                         <option value="">不设置</option>
                                         <option value="asc" {{# if(d.default_select_sort===
-                                        "asc"){ }}selected="selected"{{# } }}>ASC</option>
+                                        "asc"){ }}selected="selected"{{# } }}>从小到大 - asc</option>
                                         <option value="desc" {{# if(d.default_select_sort===
-                                        "desc"){ }}selected="selected"{{# } }}>DESC</option>
+                                        "desc"){ }}selected="selected"{{# } }}>从大到小 - desc</option>
                                     </select>
                                 </div>
                             </div>
@@ -189,12 +216,10 @@
 
                     <div class="layui-form-item">
                         <label class="layui-form-label" title="显示排序">
-                            <text style="color:red;">*</text>
                             显示排序</label>
                         <div class="layui-input-block">
                             <input type="text" name="show_sort" placeholder="请输入数字，倒序生成字段展示位置" class="layui-input"
-                                   value="{{d.show_sort}}"
-                                   lay-verify="required|number">
+                                   value="{{d.show_sort}}">
                         </div>
                     </div>
 

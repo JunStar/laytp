@@ -42,7 +42,9 @@ class PluginAutocreateCurdField extends Migrator
             ->addColumn('field', 'string', ['length' => 100, 'default' => '', 'comment' => '字段名'])
             ->addColumn('comment', 'string', ['length' => 100, 'default' => '', 'comment' => '字段注释'])
             ->addColumn('data_type', 'string', ['length' => 100, 'default' => '', 'comment' => '存储类型'])
-            ->addColumn('length', 'integer', ['length' => 11, 'default' => '100', 'comment' => '存储长度'])
+            ->addColumn('limit', 'integer', ['length' => 11, 'default' => '100', 'comment' => '存储长度'])
+            ->addColumn('precision', 'integer', ['length' => 11, 'default' => '11', 'comment' => '整数部分长度'])
+            ->addColumn('scale', 'integer', ['length' => 11, 'default' => '2', 'comment' => '小数部分长度'])
             ->addColumn('default', 'string', ['length' => 100, 'default' => '', 'comment' => '默认值'])
             ->addColumn('is_empty', 'boolean', ['limit' => 1, 'default' => 2, 'comment' => '是否允许为空，1=允许，2=不允许'])
             ->addColumn('is_thead_sort', 'boolean', ['limit' => 1, 'default' => 2, 'comment' => '是否允许点击表头进行排序，1=允许，2=不允许'])
@@ -62,7 +64,7 @@ class PluginAutocreateCurdField extends Migrator
                 'field' => 'name',
                 'comment' => '分类名',
                 'data_type' => 'string',
-                'length' => 100,
+                'limit' => 100,
                 'is_empty' => 1,
                 'is_thead_sort' => 1,
                 'default_select_sort' => '',
@@ -80,7 +82,7 @@ class PluginAutocreateCurdField extends Migrator
                 'field' => 'title',
                 'comment' => '标题',
                 'data_type' => 'string',
-                'length' => 100,
+                'limit' => 100,
                 'is_empty' => 1,
                 'is_thead_sort' => 1,
                 'default_select_sort' => '',

@@ -60,7 +60,8 @@
                                     <text style="color:red;">*</text>
                                     存储类型</label>
                                 <div class="layui-input-block">
-                                    <select name="data_type" class="layui-select" lay-verify="required">
+                                    <select name="data_type" class="layui-select" lay-verify="required"
+                                            lay-filter="select-data-type">
                                         <option value="">请选择存储类型</option>
                                         <option value="integer">integer</option>
                                         <option value="biginteger">biginteger</option>
@@ -80,28 +81,56 @@
                             </div>
                         </div>
 
-                        <div class="layui-inline layui-col-lg4 layui-col-md4 layui-col-sm4 layui-col-xs4">
+                        <div class="layui-inline layui-col-lg4 layui-col-md4 layui-col-sm4 layui-col-xs4"
+                             id="lengthDiv">
                             <div class="layui-form-item">
                                 <label class="layui-form-label">
                                     <text style="color:red;">*</text>
                                     存储长度</label>
                                 <div class="layui-input-block">
-                                    <input type="text" name="length" placeholder="请输入字段长度" class="layui-input"
+                                    <input type="text" name="limit" placeholder="请输入字段长度" class="layui-input"
                                            lay-verify="required"
                                            autocomplete="off">
                                 </div>
                             </div>
                         </div>
 
-                        <div class="layui-inline layui-col-lg4 layui-col-md4 layui-col-sm4 layui-col-xs4">
+                        <div class="layui-inline layui-col-lg4 layui-col-md4 layui-col-sm4 layui-col-xs4"
+                             id="precisionDiv" style="display:none;">
                             <div class="layui-form-item">
                                 <label class="layui-form-label">
-                                    默认值</label>
+                                    <text style="color:red;">*</text>
+                                    整数部分长度</label>
                                 <div class="layui-input-block">
-                                    <input type="text" name="default" placeholder="请输入字段默认值" class="layui-input"
+                                    <input type="text" name="precision" placeholder="请输入整数部分长度"
+                                           class="layui-input"
+                                           lay-verify="required"
                                            autocomplete="off">
                                 </div>
                             </div>
+                        </div>
+
+                        <div class="layui-inline layui-col-lg4 layui-col-md4 layui-col-sm4 layui-col-xs4" id="scaleDiv"
+                             style="display:none;">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">
+                                    保留小数位</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="scale" placeholder="请输入保留小数位"
+                                           class="layui-input"
+                                           autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">
+                            默认值</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="default" placeholder="请输入字段默认值"
+                                   class="layui-input"
+                                   autocomplete="off">
                         </div>
                     </div>
 
@@ -162,11 +191,9 @@
 
                     <div class="layui-form-item">
                         <label class="layui-form-label" title="搜索表单，数据列表，添加表单，编辑表单等显示排序">
-                            <text style="color:red;">*</text>
                             显示排序</label>
                         <div class="layui-input-block">
-                            <input type="text" name="show_sort" placeholder="请输入数字，倒序生成字段展示位置" class="layui-input"
-                                   lay-verify="required|number">
+                            <input type="text" name="show_sort" placeholder="请输入数字，倒序生成字段展示位置" class="layui-input">
                         </div>
                     </div>
 

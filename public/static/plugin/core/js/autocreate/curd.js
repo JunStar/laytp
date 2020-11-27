@@ -197,6 +197,19 @@ layui.use(["layTp"], function () {
                     linkageField(nowTableId, obj.data);
                     selectLinkageSearchTable(obj.data.addition.table_id, obj.data);
                 }
+                if (facade.inArray(obj.data.data_type, ["float", "decimal"])) {
+                    $("#lengthDiv").hide();
+                    $("input[name='limit']").removeAttr('lay-verify');
+                    $("#precisionDiv").show();
+                    $("input[name='precision']").attr('lay-verify', 'required');
+                    $("#scaleDiv").show();
+                } else {
+                    $("#lengthDiv").show();
+                    $("input[name='limit']").attr('lay-verify', 'required');
+                    $("#precisionDiv").hide();
+                    $("input[name='precision']").removeAttr('lay-verify', 'required');
+                    $("#scaleDiv").hide();
+                }
             }
         });
 
@@ -307,6 +320,23 @@ layui.use(["layTp"], function () {
 
         layui.form.on('select(linkage-select-table)', function (data) {
             selectLinkageSearchTable(data.value);
+        });
+
+        //选择数据存储类型
+        layui.form.on('select(select-data-type)', function (obj) {
+            if (facade.inArray(obj.value, ["float", "decimal"])) {
+                $("#lengthDiv").hide();
+                $("input[name='limit']").removeAttr('lay-verify');
+                $("#precisionDiv").show();
+                $("input[name='precision']").attr('lay-verify', 'required');
+                $("#scaleDiv").show();
+            } else {
+                $("#lengthDiv").show();
+                $("input[name='limit']").attr('lay-verify', 'required');
+                $("#precisionDiv").hide();
+                $("input[name='precision']").removeAttr('lay-verify', 'required');
+                $("#scaleDiv").hide();
+            }
         });
     });
 

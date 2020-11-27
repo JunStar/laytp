@@ -172,10 +172,15 @@ class Curd
         foreach ($this->fields as $field) {
             $fieldData['field'] = $field->field;
             $fieldData['dataType'] = $field->data_type;
-            $fieldData['length'] = $field->length;
+//            $fieldData['limit'] = $field->limit;
             $fieldData['null'] = ($field->is_empty == 2) ? false : true;
             $fieldData['default'] = $field->default;
             $fieldData['comment'] = $field->comment;
+            if (in_array($field->data_type, ["float", "decimal"])) {
+                $fieldData['limitPrecisionScale'] = "'precision' => {$field->precision}, 'scale' => {$field->scale}";
+            } else {
+                $fieldData['limitPrecisionScale'] = "'limit' => {$field->limit}";
+            }
             $fields .= $this->getReplacedTpl('migration' . DS . 'field', $fieldData) . "\n\t\t\t";
         }
         $data['fields'] = $fields;
