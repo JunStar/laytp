@@ -1,6 +1,5 @@
-{extend name="admin@public/layout/popup_form"}
-
-{block name="form"}
-    <input type="hidden" name="row[__token__]" value="{$Request.token}" id="__token__" class="layui-input">
+<div class="popup-content">
+    <form class="layui-form" method="post" action="{%action%}">
 {%formContent%}
-{/block}
+    </form>
+</div>

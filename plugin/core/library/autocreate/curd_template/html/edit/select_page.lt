@@ -1,4 +1,4 @@
-<input lay-verify="{%verify%}" autocomplete="off" type="text" value="{${%field_name%}}" name="row[{%field_name%}]" id="{%field_name%}" placeholder="请选择" class="layui-input selectPage"
+<input lay-verify="{%verify%}" autocomplete="off" type="text" value="{${%field%}}" name="row[{%field%}]" id="{%field%}" placeholder="请选择" class="layui-input selectPage"
                 search-field="{%search_field%}"
                 search-url="{%search_url%}"
                 show-field="{%show_field%}"

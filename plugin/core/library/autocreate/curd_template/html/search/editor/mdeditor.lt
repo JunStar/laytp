@@ -1,2 +1,2 @@
-<input autocomplete="off" type="text" name="search_param[{%field_name%}][value]" id="{%field_name%}" placeholder="请输入{%field_comment%}" class="layui-input">
-                    <input type="hidden" name="search_param[{%field_name%}][condition]" value="LIKE">
+<input autocomplete="off" type="text" name="search_param[{%field%}][value]" id="{%field%}" placeholder="请输入{%comment%}" class="layui-input">
+                    <input type="hidden" name="search_param[{%field%}][condition]" value="LIKE">

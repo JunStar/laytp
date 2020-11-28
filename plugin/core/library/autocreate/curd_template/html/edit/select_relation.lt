@@ -1,11 +1,11 @@
 <div class="layui-input-inline">
                 <select
                     linkage="true"
-                    lay-filter="{%field_name%}"
+                    lay-filter="{%field%}"
                     lay-verify="{%verify%}"
-                    placeholder="请选择{%field_comment%}"
-                    name="row[{%field_name%}]"
-                    id="{%field_name%}"
+                    placeholder="请选择{%comment%}"
+                    name="row[{%field%}]"
+                    id="{%field%}"
                     table_name="{%table_name%}"
                     search_field="pid"
                     search_field_val="{${%left_field%}}"
@@ -14,6 +14,6 @@
                     left_field="{%left_field%}"
                     right_field="{%right_field%}"
                 >
-                    <option value="">请选择{%field_comment%}</option>
+                    <option value="">请选择{%comment%}</option>
                 </select>
             </div>

@@ -141,7 +141,7 @@ class Curd
         $migrations = new Migrations();
         $migration = $migrations->where('migration_name', '=', ucfirst($this->migrationClassName))->find();
         if ($migration) {
-            $migrationFile = app()->getRootPath() . 'database' . DS . 'migrations' . DS . $migration->version . '_' . lcfirst($migration->migration_name) . '.php';
+            $migrationFile = app()->getRootPath() . 'database' . DS . 'migrations' . DS . $migration->version . '_' . ucfirst($migration->migration_name) . '.php';
             unlink($migrationFile);
             $migration->delete();
         }
@@ -526,13 +526,13 @@ class Curd
                 $addData[] = $this->getFormItem($v, 'add');
                 $editData[] = $this->getFormItem($v, 'edit');
             } else {
-                if ($v['field_show_add']) {
-                    $add_item_content = $this->getFormItem($v, 'add');
-                    $addData[] = $this->getFormGroup($v['field_comment'], $add_item_content, $v['form_empty']);
+                if ($v['add_show']) {
+                    $addItemContent = $this->getFormItem($v, 'add');
+                    $addData[] = $this->getFormGroup($v['comment'], $addItemContent, $v['form_empty']);
                 }
-                if ($v['field_show_edit']) {
-                    $edit_item_content = $this->getFormItem($v, 'edit');
-                    $editData[] = $this->getFormGroup($v['field_comment'], $edit_item_content, $v['form_empty']);
+                if ($v['edit_show']) {
+                    $editItemContent = $this->getFormItem($v, 'edit');
+                    $editData[] = $this->getFormGroup($v['comment'], $editItemContent, $v['form_empty']);
                 }
             }
         }
@@ -555,6 +555,7 @@ class Curd
 
         $addTplName = 'html' . DS . 'add';
         $addForm['formContent'] = implode("\n\n", $addData);
+        $addForm['action'] = '/admin/' . str_replace('/', '.', strtolower($this->midName)) . '/add';
         $this->htmlAddParam = ['tplName' => $addTplName, 'data' => $addForm, 'fileName' => $this->htmlAddFileName];
 
         $editTplName = 'html' . DS . 'edit';
@@ -639,6 +640,23 @@ EOD;
                 {$content}
             </div>
 EOD;
+    }
+
+    /**
+     * 获取input需要生成的html，在生成add和edit表单的时候可以用到
+     * @param $info
+     * @param $type string 类型，add或者edit
+     * @return string
+     */
+    protected function getInputHtml($info, $type)
+    {
+        $name = 'html' . DS . $type . DS . 'input';
+        $data['field'] = $info['field'];
+        $data['comment'] = $info['comment'];
+        if (!$info['form_empty']) {
+            $data['verify'] = $info['addition']['verify'] ? 'required|' . $info['addition']['verify'] : 'required';
+        }
+        return $this->getReplacedTpl($name, $data);
     }
 
     /**

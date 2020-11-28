@@ -1,1 +1,1 @@
-<input type="hidden" name="row[{%field_name%}]" value="{$laytp_admin_user.id}" id="{%field_name%}" placeholder="请输入{%field_comment%}" class="layui-input">
+<input type="hidden" name="row[{%field%}]" value="{$laytp_admin_user.id}" id="{%field%}" placeholder="请输入{%comment%}" class="layui-input">

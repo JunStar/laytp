@@ -1,1 +1,1 @@
-<div editor="true" type="mdeditor" id="{%field_name%}" name="row[{%field_name%}]" type="text/plain"></div>
+<div editor="true" type="mdeditor" id="{%field%}" name="row[{%field%}]" type="text/plain"></div>
