@@ -363,10 +363,13 @@ layui.define(["jquery"], function (exports) {
                 async: false,//最好设置成同步请求，这样，在执行完popupDiv后，如果需要再对弹出层的元素进行处理，就不会出现BUG
                 url: facade.getHtmlUrl(facade.url(options.path)),
                 success: function (res) {
-                    let content = res;
-                    if (options.data !== undefined) {
-                        content = layui.laytpl(res).render(options.data);
+                    if (typeof options.data === "undefined") {
+                        options.data = {layTpUser: user};
+                    } else {
+                        options.data.layTpUser = user;
                     }
+
+                    let content = layui.laytpl(res).render(options.data);
 
                     let filter;
                     if (isFormDiv) {

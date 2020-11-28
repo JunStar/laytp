@@ -426,7 +426,7 @@ class Curd
             $temp .= "}\n";
             $cols .= $temp;
         }
-        $temp = "\t\t\t\t,{field:'operation',title:'操作',align:'center',toolbar:'#operation',width:100,fixed:'right'}";
+        $temp = "\t\t\t\t,{field:'operation',title:'操作',align:'center',toolbar:'#default_operation',width:140,fixed:'right'}";
         $cols .= $temp;
         $data['cols'] = $cols;
         $this->recycleCols = $cols;
@@ -519,10 +519,10 @@ class Curd
                 if ($v['show_add']) {
                     $linkageSelectAddHtml[$v['form_type']][$v['addition']['group_name']][] = $this->getFormItem($v, 'add');
                 }
-                if ($v['field_show_edit']) {
+                if ($v['show_edit']) {
                     $linkageSelectEditHtml[$v['form_type']][$v['form_additional']['group_name']][] = $this->getFormItem($v, 'edit');
                 }
-            } else if (in_array($v['form_type'], ['admin_id'])) {
+            } else if (in_array($v['form_type'], ['plugin_core_user_id'])) {
                 $addData[] = $this->getFormItem($v, 'add');
                 $editData[] = $this->getFormItem($v, 'edit');
             } else {
@@ -585,7 +585,7 @@ class Curd
 
     protected function getFormItem($info, $type = 'add')
     {
-        $func = 'get' . ucfirst($info['form_type']) . 'Html';
+        $func = 'get' . ucfirst($this->convertUnderline($info['form_type'])) . 'Html';
         return $this->$func($info, $type);
     }
 
@@ -615,7 +615,7 @@ EOD;
 
     protected function getSearchFormContent($info)
     {
-        $func = 'getSearch' . ucfirst($info['form_type']) . 'Html';
+        $func = 'getSearch' . ucfirst($this->convertUnderline($info['form_type'])) . 'Html';
         return $this->$func($info);
     }
 
@@ -643,6 +643,10 @@ EOD;
     }
 
     /**
+     * 接下来是html的各种控件模板内容生成，比如input、select、upload等等
+     */
+
+    /**
      * 获取input需要生成的html，在生成add和edit表单的时候可以用到
      * @param $info
      * @param $type string 类型，add或者edit
@@ -667,6 +671,33 @@ EOD;
     protected function getSearchInputHtml($info)
     {
         $name = 'html' . DS . 'search' . DS . 'input';
+        $data['field'] = $info['field'];
+        $data['comment'] = $info['comment'];
+        return $this->getReplacedTpl($name, $data);
+    }
+
+    /**
+     * admin_id类型模板
+     * @param $info
+     * @param $type
+     * @return string
+     */
+    protected function getPluginCoreUserIdHtml($info, $type)
+    {
+        $name = 'html' . DS . $type . DS . 'admin_id';
+        $data['field'] = $info['field'];
+        $data['comment'] = $info['comment'];
+        return $this->getReplacedTpl($name, $data);
+    }
+
+    /**
+     * admin_id类型模板
+     * @param $info
+     * @return string
+     */
+    protected function getSearchPluginCoreUserIdHtml($info)
+    {
+        $name = 'html' . DS . 'search' . DS . 'admin_id';
         $data['field'] = $info['field'];
         $data['comment'] = $info['comment'];
         return $this->getReplacedTpl($name, $data);
@@ -724,5 +755,18 @@ EOD;
     protected function getTplTrueName($name)
     {
         return app()->getRootPath() . DS . 'plugin' . DS . 'core' . DS . 'library' . DS . 'autocreate' . DS . 'curd_template' . DS . $name . '.lt';
+    }
+
+    /**
+     * 下划线转驼峰
+     * @param $str
+     * @return string|string[]|null
+     */
+    protected function convertUnderline($str)
+    {
+        $str = preg_replace_callback('/([-_]+([a-z]{1}))/i', function ($matches) {
+            return strtoupper($matches[2]);
+        }, $str);
+        return $str;
     }
 }
