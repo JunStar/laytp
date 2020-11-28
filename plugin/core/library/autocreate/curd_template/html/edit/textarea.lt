@@ -1,1 +1,1 @@
-<textarea name="row[{%field%}]" id="{%field%}" placeholder="请输入{%comment%}" class="layui-textarea" lay-verify="{%verify%}">{${%field%}}</textarea>
+<textarea name="{%field%}" id="{%field%}" placeholder="请输入{%comment%}" class="layui-textarea" lay-verify="{%verify%}">{{d.{%field%}}}</textarea>

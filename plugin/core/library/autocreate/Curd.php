@@ -704,6 +704,34 @@ EOD;
     }
 
     /**
+     * 获取input需要生成的html，在生成add和edit表单的时候可以用到
+     * @param $info
+     * @param $type string 类型，add或者edit
+     * @return string
+     */
+    protected function getTextareaHtml($info, $type)
+    {
+        $name = 'html' . DS . $type . DS . 'textarea';
+        $data['field'] = $info['field'];
+        $data['comment'] = $info['comment'];
+        $data['verify'] = $info['form_empty'] ? '' : 'required';
+        return $this->getReplacedTpl($name, $data);
+    }
+
+    /**
+     * 获取input需要生成的html，在生成搜索表单时用到
+     * @param $info
+     * @return string
+     */
+    protected function getSearchTextareaHtml($info)
+    {
+        $name = 'html' . DS . 'search' . DS . 'textarea';
+        $data['field'] = $info['field'];
+        $data['comment'] = $info['comment'];
+        return $this->getReplacedTpl($name, $data);
+    }
+
+    /**
      * 写入到文件
      * @param string $name 模板文件名
      * @param array $data key=>value形式的替换数组
