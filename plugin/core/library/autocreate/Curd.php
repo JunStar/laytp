@@ -335,7 +335,7 @@ class Curd
         $cols = "{type:'checkbox'}\n\t\t\t\t";
         $hasFirstCols = true;//是否已经有了正常的第一行数据
         //是否隐藏主键列
-        if (!$this->isHidePk == 1) {
+        if ($this->isHidePk != 1) {
             $hasFirstCols = true;
             $temp = ",{field:'id',title:'ID',align:'center',width:80}\n";
             $cols .= $temp;
