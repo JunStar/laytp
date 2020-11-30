@@ -41,6 +41,11 @@ class Field extends Backend
         } else {
             $post['addition'] = '';
         }
+
+        if ($post['is_create_tab'] == 1) {
+            $this->model->where('table_id', '=', $post['table_id'])->save(['is_create_tab' => 2]);
+        }
+
         if ($this->model->create($post)) {
             return $this->success('添加成功', $post);
         } else {

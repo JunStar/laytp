@@ -647,7 +647,7 @@ layui.use(["layTp"], function () {
             '关闭状态的值' +
             '</td>' +
             '<td>' +
-            '<input type="text" class="layui-input" name="addition[close_value]" value="{{d.addition.close_value}}" />' +
+            '<input type="text" class="layui-input" name="addition[close_value]" value="{{d.addition.close_value}}" autocomplete="off" />' +
             '</td>' +
             '</tr>' +
             '<tr>' +
@@ -655,7 +655,7 @@ layui.use(["layTp"], function () {
             '关闭状态的文本' +
             '</td>' +
             '<td>' +
-            '<input type="text" class="layui-input" name="addition[close_text]" value="{{d.addition.close_text}}" />' +
+            '<input type="text" class="layui-input" name="addition[close_text]" value="{{d.addition.close_text}}" autocomplete="off" />' +
             '</td>' +
             '</tr>' +
             '<tr>' +
@@ -663,7 +663,7 @@ layui.use(["layTp"], function () {
             '打开状态的值' +
             '</td>' +
             '<td>' +
-            '<input type="text" class="layui-input" name="addition[open_value]" value="{{d.addition.open_value}}" />' +
+            '<input type="text" class="layui-input" name="addition[open_value]" value="{{d.addition.open_value}}" autocomplete="off" />' +
             '</td>' +
             '</tr>' +
             '<tr>' +
@@ -671,7 +671,18 @@ layui.use(["layTp"], function () {
             '打开状态的文本' +
             '</td>' +
             '<td>' +
-            '<input type="text" class="layui-input" name="addition[open_text]" value="{{d.addition.open_text}}" />' +
+            '<input type="text" class="layui-input" name="addition[open_text]" value="{{d.addition.open_text}}" autocomplete="off" />' +
+            '</td>' +
+            '</tr>' +
+            '<tr>' +
+            '<td align="right">' +
+            '默认状态' +
+            '</td>' +
+            '<td>' +
+            '<select name="addition[default_status]">' +
+            '<option value="close">关闭</option>' +
+            '<option value="open">打开</option>' +
+            '</select>' +
             '</td>' +
             '</tr>' +
             '</tbody>' +
