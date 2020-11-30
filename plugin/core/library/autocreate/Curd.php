@@ -381,22 +381,21 @@ class Curd
             //2个选项的单选按钮 渲染成switch模板 3个及3个以上选项单选按钮渲染成status模板
             if ($v['form_type'] == 'radio') {
                 $items = $v['addition'];
-                if (count($items['value']) > 2) {
-                    $jsonArr['value'] = $items['value'];
-                    $jsonArr['text'] = $items['text'];
-                    $jsonObj = json_encode($jsonArr, JSON_UNESCAPED_UNICODE);
-                    $temp .= ",templet:function(d){\n\t\t\t\t\treturn layTp.tableFormatter.status('{$v['field']}',d.{$v['field']},{$jsonObj});\n\t\t\t\t}";
-                } else if (count($items['value']) == 2) {
-                    $items = json_decode($v['addition'], true);
-                    $valueArr = $items['value'];
-                    $textArr = $items['text'];
-                    $jsonArr = [
-                        'open' => ['value' => $valueArr[1], 'text' => $textArr[1]],
-                        'close' => ['value' => $valueArr[0], 'text' => $textArr[0]]
-                    ];
-                    $jsonObj = json_encode($jsonArr, JSON_UNESCAPED_UNICODE);
-                    $temp .= ",templet:function(d){\n\t\t\t\t\treturn layTpForm.tableForm.switch('{$v['field']}',d,{$jsonObj});\n\t\t\t\t}";
-                }
+                $jsonArr['value'] = $items['value'];
+                $jsonArr['text'] = $items['text'];
+                $jsonObj = json_encode($jsonArr, JSON_UNESCAPED_UNICODE);
+                $temp .= ",templet:function(d){
+                    return layTp.tableFormatter.status('{$v['field']}',d.{$v['field']},{$jsonObj});
+                }";
+            }
+            if ($v['form_type'] == 'switch') {
+                $items = $v['addition'];
+                $temp .= ",templet:function(d){
+                    return layTpForm.tableForm.switch(\"status\", d, {
+                        \"open\": {\"value\": {$items['open_value']}, \"text\": \"{$items['open_text']}\"},
+                        \"close\": {\"value\": {$items['close_value']}, \"text\": \"{$items['close_text']}\"}
+                    });
+                }";
             }
             //3个及3个以上选项单选按钮 和 单选下拉框渲染成status的模板
             if ($v['form_type'] == 'select' && $v['addition']['single_multi'] == 'single') {
