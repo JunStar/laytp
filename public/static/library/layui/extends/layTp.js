@@ -42,7 +42,7 @@ layui.define([
             let customIndex = 0, key;
             for (key in json['value']) {
                 if (value == json['value'][key]) {
-                    return '<a class="clickSearch layerTips layui-icon layui-icon-circle-dot" data-field="' + field + '" data-val="' + value + '" data-text="点击搜索 ' + json['text'][key] + '" data-tipsColor="#393D49" style="color:' + layTp.tableFormatter.custom[customIndex] + ';font-size:14px;">' + json['text'][key] + '</a>';
+                    return '<a class="layTpClickSearch layerTips layui-icon layui-icon-circle-dot" data-field="' + field + '" data-val="' + value + '" data-text="点击搜索 ' + json['text'][key] + '" data-tipsColor="#393D49" style="color:' + layTp.tableFormatter.custom[customIndex] + ';font-size:14px;">' + json['text'][key] + '</a>';
                 }
                 customIndex++;
             }
@@ -407,20 +407,16 @@ layui.define([
         },
 
         /**
-         * 监听数据表格顶部，tab切换
-         *  只有数据表格顶部才有Tab切换，回收站的数据表格顶部不生成Tab切换
-         *  <li class="layui-this laytp-tab-click-search" data-field="is_super_manager" data-value="">全部</li>
-         <li class="laytp-tab-click-search" data-field="is_super_manager" data-value="1">超管</li>
-         <li class="laytp-tab-click-search" data-field="is_super_manager" data-value="2">非超管</li>
+         * 监听拥有layTpClickSearch样式的节点，点击进行表单搜索
          */
-        tabClickSearch: function () {
-            $(document).off("click", ".layerTips").on("click", ".laytp-tab-click-search", function () {
+        layTpClickSearch: function () {
+            $(document).off("click", ".layTpClickSearch").on("click", ".layTpClickSearch", function () {
                 let field = $(this).data('field');
                 if (!field) facade.error("tab的字段名未定义");
-                let value = $(this).data('value');
+                let value = $(this).data('val');
                 $("#" + field).val(value);
                 layui.form.render('select');
-                $("[lay-filter=laytp-search-form]").click();
+                $("button[lay-filter=laytp-search-form]").click();
                 if ($("#search-form").css("display") === "none") {
                     $("[lay-event='show-hidden-search-form']").html(" 展开搜索");
                 } else {

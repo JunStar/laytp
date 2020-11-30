@@ -483,19 +483,19 @@ class Curd
             if ($v['is_create_tab'] == 1) {
                 $items = [];
                 if ($v['form_type'] == 'radio') {
-                    $items = $this->getArrayByString($v['addition']);
+                    $items = $v['addition']['value'];
                 }
                 if ($v['form_type'] == 'select' && $v['addition']['single_multi'] == 'single') {
                     $items = $this->getArrayByString($v['addition']['values']);
                 }
                 $tabsTplName = 'html' . DS . 'tabs';
-                $tabs['fieldName'] = $v['field'];
+                $tabs['field'] = $v['field'];
                 $tabList = [];
                 foreach ($items as $i => $j) {
-                    $tabList[] = '<li class="laytp-tab-click-search" data-field="' . $v['field'] . '" data-val="' . $i . '">' . $j . '</li>';
+                    $tabList[] = '<li class="layTpClickSearch" data-field="' . $v['field'] . '" data-val="' . $j . '">' . $v['addition']['text'][$i] . '</li>';
                 }
                 $tabs['tabList'] = implode("\n\t", $tabList);
-                $index_data['tabs'] = "\n\n" . $this->getReplacedTpl($tabsTplName, $tabs);
+                $indexData['tabs'] = "\n\n" . $this->getReplacedTpl($tabsTplName, $tabs);
             }
         }
 
@@ -561,9 +561,9 @@ class Curd
         $this->htmlAddParam = ['tplName' => $addTplName, 'data' => $addForm, 'fileName' => $this->htmlAddFileName];
 
         $editTplName = 'html' . DS . 'edit';
-        $editData['formContent'] = implode("\n\n", $editData);
-        $addForm['action'] = '/admin/' . str_replace('/', '.', strtolower($this->midName)) . '/edit';
-        $this->htmlEditParam = ['tplName' => $editTplName, 'data' => $editData, 'fileName' => $this->htmlEditFileName];
+        $editForm['formContent'] = implode("\n\n", $editData);
+        $editForm['action'] = '/admin/' . str_replace('/', '.', strtolower($this->midName)) . '/edit';
+        $this->htmlEditParam = ['tplName' => $editTplName, 'data' => $editForm, 'fileName' => $this->htmlEditFileName];
 
         $recycleTplName = 'html' . DS . 'recycle';
         $recycleData['searchForm'] = $indexData['searchForm'];
