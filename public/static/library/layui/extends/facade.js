@@ -367,6 +367,7 @@ layui.define(["jquery"], function (exports) {
                         options.data = {layTpUser: user};
                     } else {
                         options.data.layTpUser = user;
+                        console.log(options.data);
                     }
 
                     let content = layui.laytpl(res).render(options.data);
