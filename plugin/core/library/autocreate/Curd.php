@@ -173,7 +173,7 @@ class Curd
             $fieldData['field'] = $field->field;
             $fieldData['dataType'] = $field->data_type;
 //            $fieldData['limit'] = $field->limit;
-            $fieldData['null'] = ($field->is_empty == 2) ? false : true;
+            $fieldData['null'] = ($field->is_empty == 2) ? 0 : 1;
             $fieldData['default'] = $field->default;
             $fieldData['comment'] = $field->comment;
             if (in_array($field->data_type, ["float", "decimal"])) {
@@ -377,20 +377,22 @@ class Curd
 //            }
             //2个选项的单选按钮 渲染成switch模板 3个及3个以上选项单选按钮渲染成status模板
             if ($v['form_type'] == 'radio') {
-                $arr = $this->getArrayByString($v['addition']);
-                if (count($arr) > 2) {
-                    $json_obj = json_encode($this->getArrayByString($v['addition']), JSON_UNESCAPED_UNICODE);
-                    $temp .= ",templet:function(d){\n\t\t\t\t\treturn layTp.tableFormatter.status('{$v['field']}',d.{$v['field']},{$json_obj});\n\t\t\t\t}";
-                } else if (count($arr) == 2) {
-                    $arr = $this->getArrayByString($v['addition']);
-                    $keys_arr = array_keys($arr);
-                    $values_arr = array_values($arr);
-                    $json_arr = [
-                        'open' => ['value' => $keys_arr[1], 'text' => $values_arr[1]],
-                        'close' => ['value' => $keys_arr[0], 'text' => $values_arr[0]]
+                $items = $v['addition'];
+                if (count($items['value']) > 2) {
+                    $jsonArr['value'] = $items['value'];
+                    $jsonArr['text'] = $items['text'];
+                    $jsonObj = json_encode($jsonArr, JSON_UNESCAPED_UNICODE);
+                    $temp .= ",templet:function(d){\n\t\t\t\t\treturn layTp.tableFormatter.status('{$v['field']}',d.{$v['field']},{$jsonObj});\n\t\t\t\t}";
+                } else if (count($items['value']) == 2) {
+                    $items = json_decode($v['addition'], true);
+                    $valueArr = $items['value'];
+                    $textArr = $items['text'];
+                    $jsonArr = [
+                        'open' => ['value' => $valueArr[1], 'text' => $textArr[1]],
+                        'close' => ['value' => $valueArr[0], 'text' => $textArr[0]]
                     ];
-                    $json_obj = json_encode($json_arr, JSON_UNESCAPED_UNICODE);
-                    $temp .= ",templet:function(d){\n\t\t\t\t\treturn layTpForm.tableForm.switch('{$v['field']}',d,{$json_obj});\n\t\t\t\t}";
+                    $jsonObj = json_encode($jsonArr, JSON_UNESCAPED_UNICODE);
+                    $temp .= ",templet:function(d){\n\t\t\t\t\treturn layTpForm.tableForm.switch('{$v['field']}',d,{$jsonObj});\n\t\t\t\t}";
                 }
             }
             //3个及3个以上选项单选按钮 和 单选下拉框渲染成status的模板
@@ -528,11 +530,11 @@ class Curd
             } else {
                 if ($v['add_show']) {
                     $addItemContent = $this->getFormItem($v, 'add');
-                    $addData[] = $this->getFormGroup($v['comment'], $addItemContent, $v['form_empty']);
+                    $addData[] = $this->getFormGroup($v['comment'], $addItemContent, $v['is_empty']);
                 }
                 if ($v['edit_show']) {
                     $editItemContent = $this->getFormItem($v, 'edit');
-                    $editData[] = $this->getFormGroup($v['comment'], $editItemContent, $v['form_empty']);
+                    $editData[] = $this->getFormGroup($v['comment'], $editItemContent, $v['is_empty']);
                 }
             }
         }
@@ -560,6 +562,7 @@ class Curd
 
         $editTplName = 'html' . DS . 'edit';
         $editData['formContent'] = implode("\n\n", $editData);
+        $addForm['action'] = '/admin/' . str_replace('/', '.', strtolower($this->midName)) . '/edit';
         $this->htmlEditParam = ['tplName' => $editTplName, 'data' => $editData, 'fileName' => $this->htmlEditFileName];
 
         $recycleTplName = 'html' . DS . 'recycle';
@@ -593,12 +596,12 @@ class Curd
      * 获取表单分组数据
      * @param string $field
      * @param string $content
-     * @param boolean $formEmpty
+     * @param integer $isEmpty
      * @return string
      */
-    protected function getFormGroup($field, $content, $formEmpty = false)
+    protected function getFormGroup($field, $content, $isEmpty)
     {
-        if (!$formEmpty) {
+        if ($isEmpty != 1) {
             $requiredHtml = " <text title=\"必填项\" style=\"color:red;\">*</text>";
         } else {
             $requiredHtml = "";
@@ -727,6 +730,78 @@ EOD;
     {
         $name = 'html' . DS . 'search' . DS . 'textarea';
         $data['field'] = $info['field'];
+        $data['comment'] = $info['comment'];
+        return $this->getReplacedTpl($name, $data);
+    }
+
+    /**
+     * 获取input需要生成的html，在生成add和edit表单的时候可以用到
+     * @param $info
+     * @param $type string 类型，add或者edit
+     * @return string
+     */
+    protected function getRadioHtml($info, $type)
+    {
+        $items = $info['addition'];
+//        $radioItems = $items['value'];//待选项数组
+//        $default_value = '';//默认值
+//        $model_array_const = [];
+//        foreach($items as $k=>$v){
+//            $temp = explode('=', $v);
+//            if($k==0){
+//                $default_value = $temp[0];
+//            }
+//
+//            if($temp[0]=='default'){
+//                $default_value = $temp[1];
+//            }else{
+//                $radio_items[] = ['value'=>$temp[0], 'text'=>$temp[1]];
+//                $model_array_const[(string)$temp[0]] = $temp[1];
+//            }
+//        }
+        /**
+         * 待选项数组个数和默认值对表单元素展示的影响：
+         *  1.待选项数组个数为2时
+         *      表单元素为开关形式展示方式，默认值为非选中状态
+         *  2.待选项个数超过2时
+         *      表单元素为普通单选按钮展示方式，默认值为选中状态
+         */
+//        if(count($items['value']) == 2){
+//            $name = 'html' . DS . $type . DS . 'radio_switch';
+//            $data['field_name'] = $info['field_name'];
+//            $data['un_checked_value'] = $items['value'][0];
+//            $data['checked_value'] = $radio_items[1]['value'];
+//            $data['checked_status'] = ($data['checked_value'] == $default_value) ? 'checked="checked"' : '';
+//            $data['lay_text'] = $radio_items[1]['text'] . '|' . $radio_items[0]['text'];
+//            $this->set_model_array_const($info['field_name'], $model_array_const);
+//            return $this->get_replaced_tpl($name, $data);
+//        }else if(count($radio_items) > 2){
+        $name = 'html' . DS . $type . DS . 'radio';
+        $radioHtml = '';
+        foreach ($items['value'] as $k => $v) {
+            $tempData['field'] = $info['field'];
+            $tempData['value'] = $items['value'][$k];
+            $tempData['title'] = $items['text'][$k];
+            $tempData['checkedStatus'] = ($items['value'][$k] == $items['default']) ? 'checked="checked"' : '';
+            $radioHtml .= $this->getReplacedTpl($name, $tempData) . "\n\t\t\t";
+        }
+        $radioHtml = rtrim($radioHtml, "\n\t\t\t");
+//            $this->set_model_array_const($info['field_name'], $model_array_const);
+        return $radioHtml;
+//        }
+    }
+
+    protected function getSearchRadioHtml($info)
+    {
+        $name = 'html' . DS . 'search' . DS . 'radio';
+        $data['field'] = $info['field'];
+        $items = $info['addition'];
+        $options = '';
+        foreach ($items['value'] as $k => $v) {
+            $options .= "\t\t\t\t\t\t" . '<option value="' . $items['value'][$k] . '">' . $items['text'][$k] . '</option>' . "\n";
+        }
+        $options = "\t\t\t\t" . '<option value=""></option>' . "\n" . rtrim($options, "\n");
+        $data['options'] = $options;
         $data['comment'] = $info['comment'];
         return $this->getReplacedTpl($name, $data);
     }

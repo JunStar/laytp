@@ -1,1 +1,1 @@
-<input type="radio" name="row[{%field%}]" id="{%field%}-{%value%}" value="{%value%}" title="{%title%}" {if ${%field%} == '{%value%}'}checked="checked"{/if} />
+<input type="radio" name="{%field%}" id="{%field%}-{%value%}" value="{%value%}" title="{%title%}" {{#if (d.{%field%} == '{%value%}'){ }}checked="checked"{{# } }} />

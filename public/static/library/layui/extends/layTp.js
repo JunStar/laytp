@@ -38,6 +38,16 @@ layui.define([
             }
             return html;
         },
+        status: function (field, value, json) {
+            let customIndex = 0, key;
+            for (key in json['value']) {
+                if (value == json['value'][key]) {
+                    return '<a class="clickSearch layerTips layui-icon layui-icon-circle-dot" data-field="' + field + '" data-val="' + value + '" data-text="点击搜索 ' + json['text'][key] + '" data-tipsColor="#393D49" style="color:' + layTp.tableFormatter.custom[customIndex] + ';font-size:14px;">' + json['text'][key] + '</a>';
+                }
+                customIndex++;
+            }
+            return '';
+        }
     };
 
     /**
@@ -404,7 +414,7 @@ layui.define([
          <li class="laytp-tab-click-search" data-field="is_super_manager" data-value="2">非超管</li>
          */
         tabClickSearch: function () {
-            $(document).off("click", ".laytp-tab-click-search").on("click", ".laytp-tab-click-search", function () {
+            $(document).off("click", ".layerTips").on("click", ".laytp-tab-click-search", function () {
                 let field = $(this).data('field');
                 if (!field) facade.error("tab的字段名未定义");
                 let value = $(this).data('value');
@@ -416,6 +426,22 @@ layui.define([
                 } else {
                     $("[lay-event='show-hidden-search-form']").html(" 隐藏搜索");
                 }
+            });
+        },
+
+        /**
+         * 监听拥有layerTips样式的节点，渲染layerTips组件
+         */
+        layerTips: function () {
+            $(document).on('mouseover', '.layerTips', function () {
+                let obj = $(this);
+                let color = (typeof obj.attr('color') != 'undefined') ? obj.attr('color') : '#3595CC';
+                let time = (typeof obj.attr('time') != 'undefined') ? obj.attr('time') : 800;
+                let text = $(this).data('text');
+                layui.layer.tips(text, this, {
+                    tips: [1, color],
+                    time: time
+                });
             });
         },
     };
