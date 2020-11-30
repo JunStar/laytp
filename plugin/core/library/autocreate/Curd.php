@@ -174,6 +174,9 @@ class Curd
             $fieldData['dataType'] = $field->data_type;
 //            $fieldData['limit'] = $field->limit;
             $fieldData['null'] = ($field->is_empty == 2) ? 0 : 1;
+            if (in_array($field->data_type, ['integer', 'biginteger', 'boolean', 'decimal', 'float'])) {
+                $field->default = intval($field->default);
+            }
             $fieldData['default'] = $field->default;
             $fieldData['comment'] = $field->comment;
             if (in_array($field->data_type, ["float", "decimal"])) {
