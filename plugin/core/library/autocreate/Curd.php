@@ -494,6 +494,11 @@ class Curd
                 foreach ($items as $i => $j) {
                     $tabList[] = '<li class="layTpClickSearch" data-field="' . $v['field'] . '" data-val="' . $j . '">' . $v['addition']['text'][$i] . '</li>';
                 }
+                if ($v['form_type'] == 'switch') {
+                    $tabList = [];
+                    $tabList[] = '<li class="layTpClickSearch" data-field="' . $v['field'] . '" data-val="' . $v['addition']['close_value'] . '">' . $v['addition']['close_text'] . '</li>';
+                    $tabList[] = '<li class="layTpClickSearch" data-field="' . $v['field'] . '" data-val="' . $v['addition']['open_value'] . '">' . $v['addition']['open_text'] . '</li>';
+                }
                 $tabs['tabList'] = implode("\n\t", $tabList);
                 $indexData['tabs'] = "\n\n" . $this->getReplacedTpl($tabsTplName, $tabs);
             }
@@ -743,39 +748,6 @@ EOD;
     protected function getRadioHtml($info, $type)
     {
         $items = $info['addition'];
-//        $radioItems = $items['value'];//待选项数组
-//        $default_value = '';//默认值
-//        $model_array_const = [];
-//        foreach($items as $k=>$v){
-//            $temp = explode('=', $v);
-//            if($k==0){
-//                $default_value = $temp[0];
-//            }
-//
-//            if($temp[0]=='default'){
-//                $default_value = $temp[1];
-//            }else{
-//                $radio_items[] = ['value'=>$temp[0], 'text'=>$temp[1]];
-//                $model_array_const[(string)$temp[0]] = $temp[1];
-//            }
-//        }
-        /**
-         * 待选项数组个数和默认值对表单元素展示的影响：
-         *  1.待选项数组个数为2时
-         *      表单元素为开关形式展示方式，默认值为非选中状态
-         *  2.待选项个数超过2时
-         *      表单元素为普通单选按钮展示方式，默认值为选中状态
-         */
-//        if(count($items['value']) == 2){
-//            $name = 'html' . DS . $type . DS . 'radio_switch';
-//            $data['field_name'] = $info['field_name'];
-//            $data['un_checked_value'] = $items['value'][0];
-//            $data['checked_value'] = $radio_items[1]['value'];
-//            $data['checked_status'] = ($data['checked_value'] == $default_value) ? 'checked="checked"' : '';
-//            $data['lay_text'] = $radio_items[1]['text'] . '|' . $radio_items[0]['text'];
-//            $this->set_model_array_const($info['field_name'], $model_array_const);
-//            return $this->get_replaced_tpl($name, $data);
-//        }else if(count($radio_items) > 2){
         $name = 'html' . DS . $type . DS . 'radio';
         $radioHtml = '';
         foreach ($items['value'] as $k => $v) {
@@ -788,7 +760,6 @@ EOD;
         $radioHtml = rtrim($radioHtml, "\n\t\t\t");
 //            $this->set_model_array_const($info['field_name'], $model_array_const);
         return $radioHtml;
-//        }
     }
 
     protected function getSearchRadioHtml($info)
@@ -801,6 +772,32 @@ EOD;
             $options .= "\t\t\t\t\t\t" . '<option value="' . $items['value'][$k] . '">' . $items['text'][$k] . '</option>' . "\n";
         }
         $options = "\t\t\t\t" . '<option value=""></option>' . "\n" . rtrim($options, "\n");
+        $data['options'] = $options;
+        $data['comment'] = $info['comment'];
+        return $this->getReplacedTpl($name, $data);
+    }
+
+    protected function getSwitchHtml($info, $type)
+    {
+        $items = $info['addition'];
+        $name = 'html' . DS . $type . DS . 'switch';
+        $data['field'] = $info['field'];
+        $data['close_value'] = $items['close_value'];
+        $data['open_value'] = $items['open_value'];
+        $data['checked_status'] = ($items['default_status'] == 'open') ? 'checked="checked"' : '';
+        $data['lay_text'] = $items['open_text'] . '|' . $items['close_text'];
+//        $this->set_model_array_const($info['field_name'], $model_array_const);
+        return $this->getReplacedTpl($name, $data);
+    }
+
+    protected function getSearchSwitchHtml($info)
+    {
+        $name = 'html' . DS . 'search' . DS . 'radio';
+        $data['field'] = $info['field'];
+        $items = $info['addition'];
+        $options = '';
+        $options .= "\t\t\t\t\t\t" . '<option value="' . $items['close_value'] . '">' . $items['close_text'] . '</option>' . "\n";
+        $options .= "\t\t\t\t\t\t" . '<option value="' . $items['open_value'] . '">' . $items['open_text'] . '</option>' . "\n";
         $data['options'] = $options;
         $data['comment'] = $info['comment'];
         return $this->getReplacedTpl($name, $data);
