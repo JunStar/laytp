@@ -1,2 +1,5 @@
-<div id="{%field%}" name="search_param[{%field%}][value]" class="select_multi"></div>
+<div class="xmSelect" id="{%field%}"
+     data-name="search_param[{%field%}][value]"
+     data-source="{%source%}"
+></div>
             <input type="hidden" name="search_param[{%field%}][condition]" value="FIND_IN_SET">

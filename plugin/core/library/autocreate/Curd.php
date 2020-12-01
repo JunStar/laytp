@@ -803,16 +803,17 @@ EOD;
 
     protected function getSearchCheckboxHtml($info)
     {
-        $name = 'html' . DS . 'search' . DS . 'select_multi';
+        $name = 'html' . DS . 'search' . DS . 'checkbox';
         $data['field'] = $info['field'];
         $items = $info['addition'];
         $data['max'] = count($items);
         $optionItems = [];
 //        $model_array_const = [];
         foreach ($items['value'] as $k => $v) {
-            $optionItems[] = ['id' => $items['value'][$k], 'name' => $items['text'][$k]];
+            $optionItems[] = ['value' => $items['value'][$k], 'name' => $items['text'][$k]];
 //            $model_array_const[(string)$temp[0]] = $temp[1];
         }
+        $data['source'] = str_replace("\"", "'", json_encode($optionItems, JSON_UNESCAPED_UNICODE));
 //        $this->set_controller_array_const($info['field_name'], $model_array_const);
         return $this->getReplacedTpl($name, $data);
     }

@@ -282,8 +282,15 @@ layui.define(["jquery"], function (exports) {
          * @returns {boolean}
          */
         inArray: function (value, array) {
-            let index = $.inArray(value, array);
-            return index >= 0;
+            let key;
+            for (key in array) {
+                if (array[key] == value) {
+                    return true;
+                }
+            }
+            return false;
+            // let index = $.inArray(value, array);
+            // return index >= 0;
         },
 
         /**

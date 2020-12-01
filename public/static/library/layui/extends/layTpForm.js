@@ -73,7 +73,7 @@ layui.define(["jquery", "facade"], function (exports) {
         },
 
         /**
-         * xmSelect下拉多选组件
+         * xmSelect下拉选择组件
          * <div class="xmSelect"//class="xmSelect"是xmSelect组件渲染的标识
          *      data-name="name"//必设，提交表单时的name
          *      data-sourceType="url"//非必设，默认为data，标注数据类型，url表示ajax请求数据，data表示直接解析数据

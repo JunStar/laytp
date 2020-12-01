@@ -51,11 +51,11 @@ layui.define([
         //form_type=checkbox
         flag: function (value, dataList) {
             let html = '';
-            let customIndex = 0, key;
+            let customIndex = 0, key, v;
             let valueArr = value.split(',');
             for (key in dataList.value) {
                 for (v in valueArr) {
-                    if (valueArr[v] == key) {
+                    if (valueArr[v] === dataList.value[key]) {
                         customIndex = key % layTp.tableFormatter.custom.length;
                         html += '<span class="layui-btn layui-btn-xs" style="background-color: ' + layTp.tableFormatter.custom[customIndex] + '">' + dataList.text[key] + '</span>';
                     }
