@@ -53,11 +53,11 @@ layui.define([
             let html = '';
             let customIndex = 0, key;
             let valueArr = value.split(',');
-            for (key in dataList) {
+            for (key in dataList.value) {
                 for (v in valueArr) {
                     if (valueArr[v] == key) {
                         customIndex = key % layTp.tableFormatter.custom.length;
-                        html += '<span class="layui-btn layui-btn-sm-1" style="background-color: ' + layTp.tableFormatter.custom[customIndex] + '">' + dataList[key] + '</span>';
+                        html += '<span class="layui-btn layui-btn-xs" style="background-color: ' + layTp.tableFormatter.custom[customIndex] + '">' + dataList.text[key] + '</span>';
                     }
                 }
             }

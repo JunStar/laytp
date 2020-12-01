@@ -822,24 +822,14 @@ EOD;
         $name = 'html' . DS . $type . DS . 'checkbox';
         $data['field'] = $info['field'];
         $items = $info['addition'];
-//        $defaultValue = '';
         $optionItems = [];
 //        $model_array_const = [];
         $checkboxHtml = '';
         foreach ($items['value'] as $k => $v) {
-//            $temp = explode('=', $v);
-//            if($temp[0]=='default'){
-//                $defaultValue = $temp[1];
-//            }else{
             $optionItems[] = ['value' => $items['value'][$k], 'text' => $items['text'][$k]];
-//                $model_array_const[(string)$temp[0]] = $temp[1];
-//            }
         }
 
         $defaultValueArr = isset($items['default']) ? $items['default'] : [];
-//        if($defaultValue){
-//            $defaultValueArr = explode(';', $defaultValue);
-//        }
 
         foreach ($optionItems as $k => $v) {
             if ($type == 'add') {
