@@ -605,7 +605,7 @@ layui.use(["layTp"], function () {
             '<input type="text" class="layui-input" name="addition[text][]" value="{{d.addition.text[key]}}" />' +
             '</td>' +
             '<td>' +
-            '<input {{# if(d.form_type === "checkbox"){ }}type="checkbox" {{# if(d.addition.value[key] === d.addition.default[key]){ }}checked="checked"{{# } }}{{# }else{ }}type="radio" {{# if(d.addition.value[key] === d.addition.default){ }}checked="checked"{{# } }}{{# } }} name="addition[default][]" lay-skin="primary" /> ' +
+            '<input {{# if(d.form_type === "checkbox"){ }}type="checkbox" {{# if(typeof d.addition.default != "undefined" && d.addition.value[key] === d.addition.default[key]){ }}checked="checked"{{# } }}{{# }else{ }}type="radio" {{# if(d.addition.value[key] === d.addition.default){ }}checked="checked"{{# } }}{{# } }} name="addition[default][]" lay-skin="primary" /> ' +
             '</td>' +
             '<td>' +
             '<a class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-delete del-item"></a>' +
