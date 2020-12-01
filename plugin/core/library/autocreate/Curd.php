@@ -227,13 +227,13 @@ class Curd
         $field_list_map = $this->field_list_map;
         foreach ($this->curd_config['field_list'] as $k => $v) {
             if ($v['form_type'] == 'time') {
-                if ($field_list_map[$v['field_name']]['DATA_TYPE'] == 'int') {
+                if ($field_list_map[$v['field']]['DATA_TYPE'] == 'int') {
                     if ($v['form_additional'] == 'datetime') {
-                        $time_set[$v['field_name']] = "\n\t\t" . '\'' . $v['field_name'] . '\'  =>  \'timestamp:Y-m-d H:i:s\',';
+                        $time_set[$v['field']] = "\n\t\t" . '\'' . $v['field'] . '\'  =>  \'timestamp:Y-m-d H:i:s\',';
                     } else if ($v['form_additional'] == 'month') {
-                        $time_set[$v['field_name']] = "\n\t\t" . '\'' . $v['field_name'] . '\'  =>  \'timestamp:Y-m\',';
+                        $time_set[$v['field']] = "\n\t\t" . '\'' . $v['field'] . '\'  =>  \'timestamp:Y-m\',';
                     } else if ($v['form_additional'] == 'date') {
-                        $time_set[$v['field_name']] = "\n\t\t" . '\'' . $v['field_name'] . '\'  =>  \'timestamp:Y-m-d\',';
+                        $time_set[$v['field']] = "\n\t\t" . '\'' . $v['field'] . '\'  =>  \'timestamp:Y-m-d\',';
                     }
                 }
             }
@@ -266,7 +266,7 @@ class Curd
 //        $this->controllerParam['data']['has_soft_del'] = "\n\tpublic \$has_soft_del=0;//是否拥有软删除功能";
 //        //是否拥有软删除功能
 //        foreach ($this->curd_config['global']['all_fields'] as $k => $v) {
-//            if ($v['field_name'] == 'delete_time') {
+//            if ($v['field'] == 'delete_time') {
 //                $this->controllerParam['data']['has_soft_del'] = "\n\tpublic \$has_soft_del=1;//是否拥有软删除功能";
 //                break;
 //            }
@@ -320,7 +320,7 @@ class Curd
         $this->modelParam['data']['useSoftDel'] = "";
         $this->modelParam['data']['defaultSoftDelete'] = "";
 //        foreach($this->curd_config['global']['all_fields'] as $k=>$v){
-//            if($v['field_name'] == 'delete_time'){
+//            if($v['field'] == 'delete_time'){
 //                $this->modelParam['data']['soft_del_package'] = "\nuse think\model\concern\SoftDelete;";
 //                $this->modelParam['data']['use_soft_del'] = "\n\tuse SoftDelete;";
 //                if($v['column_default'] !== null){
@@ -370,7 +370,7 @@ class Curd
             if ($v['is_thead_sort'] == 1) {
                 $temp .= ",sort:true";
             }
-//            if($relation_info = $this->is_relation_key($v['field_name'])){
+//            if($relation_info = $this->is_relation_key($v['field'])){
 //                $relation_show_field = explode(',',$relation_info['show_field']);
 //                $templet = [];
 //                foreach($relation_show_field as $field){
@@ -399,33 +399,29 @@ class Curd
             }
             //3个及3个以上选项单选按钮 和 单选下拉框渲染成status的模板
             if ($v['form_type'] == 'select' && $v['addition']['single_multi'] == 'single') {
-                $json_obj = json_encode($this->getArrayByString($v['addition']['values']), JSON_UNESCAPED_UNICODE);
-                $temp .= ",templet:function(d){\n\t\t\t\t\treturn layTp.tableFormatter.status('{$v['field']}',d.{$v['field']},{$json_obj});\n\t\t\t\t}";
+                $jsonObj = json_encode($this->getArrayByString($v['addition']['values']), JSON_UNESCAPED_UNICODE);
+                $temp .= ",templet:function(d){\n\t\t\t\t\treturn layTp.tableFormatter.status('{$v['field']}',d.{$v['field']},{$jsonObj});\n\t\t\t\t}";
             }
-            //复选框和多选下拉框渲染成flag的模板
-            if ($v['form_type'] == 'checkbox' || ($v['form_type'] == 'select' && $v['addition']['single_multi'] == 'multi')) {
-                if ($v['form_type'] == 'checkbox') {
-                    $json_obj = json_encode($this->getArrayByString($v['addition']), JSON_UNESCAPED_UNICODE);
-                } else {
-                    $json_obj = json_encode($this->getArrayByString($v['addition']['values']), JSON_UNESCAPED_UNICODE);
-                }
-                $temp .= ",templet:function(d){\n\t\t\t\t\treturn layTp.tableFormatter.flag(d.{$v['field_name']},{$json_obj});\n\t\t\t\t}";
+            //复选框渲染成flag的模板
+            if ($v['form_type'] == 'checkbox') {
+                $jsonObj = json_encode($v['addition'], JSON_UNESCAPED_UNICODE);
+                $temp .= ",templet:function(d){\n\t\t\t\t\treturn layTp.tableFormatter.flag(d.{$v['field']},{$jsonObj});\n\t\t\t\t}";
             }
             //image模板
             if ($v['form_type'] == 'upload' && $v['addition']['accept'] == 'images') {
-                $temp .= ",templet:function(d){\n\t\t\t\t\treturn layTp.tableFormatter.images(d.{$v['field_name']});\n\t\t\t\t}";
+                $temp .= ",templet:function(d){\n\t\t\t\t\treturn layTp.tableFormatter.images(d.{$v['field']});\n\t\t\t\t}";
             }
             //video模板
             if ($v['form_type'] == 'upload' && $v['addition']['accept'] == 'video') {
-                $temp .= ",templet:function(d){\n\t\t\t\t\treturn layTp.tableFormatter.video(d.{$v['field_name']});\n\t\t\t\t}";
+                $temp .= ",templet:function(d){\n\t\t\t\t\treturn layTp.tableFormatter.video(d.{$v['field']});\n\t\t\t\t}";
             }
             //audio模板
             if ($v['form_type'] == 'upload' && $v['addition']['accept'] == 'audio') {
-                $temp .= ",templet:function(d){\n\t\t\t\t\treturn layTp.tableFormatter.audio(d.{$v['field_name']});\n\t\t\t\t}";
+                $temp .= ",templet:function(d){\n\t\t\t\t\treturn layTp.tableFormatter.audio(d.{$v['field']});\n\t\t\t\t}";
             }
             //file模板
             if ($v['form_type'] == 'upload' && $v['addition']['accept'] == 'file') {
-                $temp .= ",templet:function(d){\n\t\t\t\t\treturn layTp.tableFormatter.file(d.{$v['field_name']});\n\t\t\t\t}";
+                $temp .= ",templet:function(d){\n\t\t\t\t\treturn layTp.tableFormatter.file(d.{$v['field']});\n\t\t\t\t}";
             }
             $temp .= "}\n";
             $cols .= $temp;
@@ -803,6 +799,60 @@ EOD;
         $data['options'] = $options;
         $data['comment'] = $info['comment'];
         return $this->getReplacedTpl($name, $data);
+    }
+
+    protected function getSearchCheckboxHtml($info)
+    {
+        $name = 'html' . DS . 'search' . DS . 'select_multi';
+        $data['field'] = $info['field'];
+        $items = $info['addition'];
+        $data['max'] = count($items);
+        $optionItems = [];
+//        $model_array_const = [];
+        foreach ($items['value'] as $k => $v) {
+            $optionItems[] = ['id' => $items['value'][$k], 'name' => $items['text'][$k]];
+//            $model_array_const[(string)$temp[0]] = $temp[1];
+        }
+//        $this->set_controller_array_const($info['field_name'], $model_array_const);
+        return $this->getReplacedTpl($name, $data);
+    }
+
+    protected function getCheckboxHtml($info, $type)
+    {
+        $name = 'html' . DS . $type . DS . 'checkbox';
+        $data['field'] = $info['field'];
+        $items = $info['addition'];
+//        $defaultValue = '';
+        $optionItems = [];
+//        $model_array_const = [];
+        $checkboxHtml = '';
+        foreach ($items['value'] as $k => $v) {
+//            $temp = explode('=', $v);
+//            if($temp[0]=='default'){
+//                $defaultValue = $temp[1];
+//            }else{
+            $optionItems[] = ['value' => $items['value'][$k], 'text' => $items['text'][$k]];
+//                $model_array_const[(string)$temp[0]] = $temp[1];
+//            }
+        }
+
+        $defaultValueArr = isset($items['default']) ? $items['default'] : [];
+//        if($defaultValue){
+//            $defaultValueArr = explode(';', $defaultValue);
+//        }
+
+        foreach ($optionItems as $k => $v) {
+            if ($type == 'add') {
+                $data['checked'] = in_array($v['value'], $defaultValueArr) ? 'checked="checked"' : '';
+            }
+            $data['value'] = $v['value'];
+            $data['text'] = $v['text'];
+            $checkboxHtml .= $this->getReplacedTpl($name, $data) . "\n\t\t\t";
+        }
+        $checkboxHtml = rtrim($checkboxHtml, "\n\t\t\t");
+
+//        $this->set_model_array_const($info['field_name'], $model_array_const);
+        return $checkboxHtml;
     }
 
     /**

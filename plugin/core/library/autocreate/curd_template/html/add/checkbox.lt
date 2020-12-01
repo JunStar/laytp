@@ -1,1 +1,1 @@
-<input autocomplete="off" type="checkbox" name="row[{%field%}][]" id="{%field%}-{%value%}" value="{%value%}" title="{%text%}" {%checked%}/>
+<input autocomplete="off" type="checkbox" name="{%field%}[]" id="{%field%}-{%value%}" value="{%value%}" title="{%text%}" {%checked%}/>

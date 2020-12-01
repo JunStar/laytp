@@ -47,7 +47,22 @@ layui.define([
                 customIndex++;
             }
             return '';
-        }
+        },
+        //form_type=checkbox
+        flag: function (value, dataList) {
+            let html = '';
+            let customIndex = 0, key;
+            let valueArr = value.split(',');
+            for (key in dataList) {
+                for (v in valueArr) {
+                    if (valueArr[v] == key) {
+                        customIndex = key % layTp.tableFormatter.custom.length;
+                        html += '<span class="layui-btn layui-btn-sm-1" style="background-color: ' + layTp.tableFormatter.custom[customIndex] + '">' + dataList[key] + '</span>';
+                    }
+                }
+            }
+            return html;
+        },
     };
 
     /**
