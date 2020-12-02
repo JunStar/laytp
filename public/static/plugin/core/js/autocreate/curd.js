@@ -191,7 +191,9 @@ layui.use(["layTp"], function () {
                 formTypeChangePrivate(obj.data.form_type, obj.data);
                 if (obj.data.form_type === 'xm_select') {
                     selectDataFrom(obj.data.addition.data_from_type, obj.data);
-                    selectDataFromTable(obj.data.addition.table_id, obj.data);
+                    if (obj.data.addtion.data_from === "table") {
+                        selectDataFromTable(obj.data.addition.table_id, obj.data);
+                    }
                 }
                 if (obj.data.form_type === 'linkage_select') {
                     linkageField(nowTableId, obj.data);
@@ -310,6 +312,27 @@ layui.use(["layTp"], function () {
             layui.form.render('checkbox');
         });
 
+        $(document).off("click", ".add-xm-select-item").on("click", ".add-xm-select-item", function () {
+            let clickObj = $(this);
+            let template = '<tr>' +
+                '<td align="right">' +
+                '<input type="text" class="layui-input" name="addition[value][]" />' +
+                '</td>' +
+                '<td>' +
+                '<input type="text" class="layui-input" name="addition[text][]" />' +
+                '</td>' +
+                '<td align="center">' +
+                '<input {{# if(d.single_multi_type === "multi"){ }}type="checkbox"{{# }else{ }}type="radio"{{# } }} lay-skin="primary" name="addition[default][]" /> ' +
+                '</td>' +
+                '<td>' +
+                '<a class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-delete del-item"></a>' +
+                '</td>' +
+                '</tr>';
+            clickObj.parent().parent().before(layui.laytpl(template).render({single_multi_type: $("#single_multi_type").val()}));
+            layui.form.render('radio');
+            layui.form.render('checkbox');
+        });
+
         $(document).off("click", ".add-color-picker").on("click", ".add-color-picker", function () {
             let clickObj = $(this);
             let template =
@@ -383,6 +406,7 @@ layui.use(["layTp"], function () {
             editData = {
                 addition: {
                     table_id: "",
+                    single_multi_type: $('#single_multi_type').val()
                 }
             }
         }
@@ -431,8 +455,48 @@ layui.use(["layTp"], function () {
             $("#setData").html(layui.laytpl(xmSelectSetDataTable).render(editData));
             layui.form.render('select');
             layui.layTpForm.render("#setData");
-        } else {
+        } else if (value === "data") {
+            //定义有多个选项的表单元素Html
+            let optionsTemplate =
+                '<table class="layui-table">' +
+                '<thead>' +
+                '<tr>' +
+                '<th>待选项的值</th>' +
+                '<th>待选项的文本</th>' +
+                '<th>默认选中</th>' +
+                '<th>删除</th>' +
+                '</tr>' +
+                '</thead>' +
+                '<tbody>' +
+                '{{# let key; }}' +
+                '{{# for(key in d.addition.value){ }}' +
+                '<tr>' +
+                '<td align="right">' +
+                '<input type="text" class="layui-input" name="addition[value][]" value="{{d.addition.value[key]}}" />' +
+                '</td>' +
+                '<td>' +
+                '<input type="text" class="layui-input" name="addition[text][]" value="{{d.addition.text[key]}}" />' +
+                '</td>' +
+                '<td>' +
+                '<input {{# if(d.addition.single_multi_type === "multi"){ }}type="checkbox"{{# }else{ }}type="radio"{{# } }} {{# if(facade.inArray(d.addition.value[key], d.addition.default)){ }}checked="checked"{{# } }}  name="addition[default][]" lay-skin="primary" /> ' +
+                '</td>' +
+                '<td>' +
+                '<a class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-delete del-item"></a>' +
+                '</td>' +
+                '</tr>' +
+                '{{# } }}' +
+                '<tr>' +
+                '<td colspan="4">' +
+                '<a class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-add-1 add-xm-select-item">追加选项</a>' +
+                '</td>' +
+                '</tr>' +
+                '</tbody>' +
+                '</table>'
+            ;
 
+            $("#setData").html(layui.laytpl(optionsTemplate).render(editData));
+            layui.form.render('radio');
+            layui.form.render('checkbox');
         }
     }
 
@@ -722,7 +786,7 @@ layui.use(["layTp"], function () {
             '       <div class="layui-col-lg6 layui-col-md6 layui-col-sm6 layui-col-xs6">' +
             '           <label class="layui-form-label layui-form-required">单选还是多选</label>' +
             '           <div class="layui-input-block">' +
-            '               <select class="layui-select" name="addition[single_multi_type]">' +
+            '               <select class="layui-select" id="single_multi_type" name="addition[single_multi_type]">' +
             '                   <option value="single" {{# if(d.addition.single_multi_type === "single"){ }}selected="selected"{{# } }}>单选</option>' +
             '                   <option value="multi" {{# if(d.addition.single_multi_type === "multi"){ }}selected="selected"{{# } }}>多选</option>' +
             '               </select>' +

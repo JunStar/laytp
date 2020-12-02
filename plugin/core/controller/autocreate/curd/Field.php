@@ -20,11 +20,14 @@ class Field extends Backend
         $post = $this->request->post();
         if (array_key_exists('addition', $post)) {
             if ($post['form_type'] === 'checkbox') {
+                $default = [];
                 foreach ($post['addition']['value'] as $k => $v) {
                     if (isset($post['addition']['default'][$k])) {
-                        $post['addition']['default'][$k] = $post['addition']['value'][$k];
+                        $default[$k] = $post['addition']['value'][$k];
                     }
                 }
+                sort($default);
+                $post['addition']['default'] = $default;
             } else if (in_array($post['form_type'], ['radio', 'select'])) {
                 $default = 0;
                 foreach ($post['addition']['value'] as $k => $v) {
@@ -36,6 +39,14 @@ class Field extends Backend
             } else if ($post['form_type'] === 'upload') {
                 $post['addition']['width'] = intval($post['addition']['width']);
                 $post['addition']['height'] = intval($post['addition']['height']);
+            } else if ($post['form_type'] === 'xm_select' && $post['addition']['data_from'] === 'data') {
+                $default = [];
+                foreach ($post['addition']['value'] as $k => $v) {
+                    if (isset($post['addition']['default'][$k])) {
+                        $default[] = $post['addition']['value'][$k];
+                    }
+                }
+                $post['addition']['default'] = $default;
             }
             $post['addition'] = json_encode($post['addition'], JSON_UNESCAPED_UNICODE);
         } else {
@@ -61,11 +72,14 @@ class Field extends Backend
         $post = $this->request->post();
         if (array_key_exists('addition', $post)) {
             if ($post['form_type'] === 'checkbox') {
+                $default = [];
                 foreach ($post['addition']['value'] as $k => $v) {
                     if (isset($post['addition']['default'][$k])) {
-                        $post['addition']['default'][$k] = $post['addition']['value'][$k];
+                        $default[$k] = $post['addition']['value'][$k];
                     }
                 }
+                sort($default);
+                $post['addition']['default'] = $default;
             } else if (in_array($post['form_type'], ['radio', 'select'])) {
                 $default = 0;
                 foreach ($post['addition']['value'] as $k => $v) {
@@ -77,6 +91,14 @@ class Field extends Backend
             } else if ($post['form_type'] === 'upload') {
                 $post['addition']['width'] = intval($post['addition']['width']);
                 $post['addition']['height'] = intval($post['addition']['height']);
+            } else if ($post['form_type'] === 'xm_select' && $post['addition']['data_from_type'] === 'data') {
+                $default = [];
+                foreach ($post['addition']['value'] as $k => $v) {
+                    if (isset($post['addition']['default'][$k])) {
+                        $default[] = $post['addition']['value'][$k];
+                    }
+                }
+                $post['addition']['default'] = $default;
             }
             $post['addition'] = json_encode($post['addition'], JSON_UNESCAPED_UNICODE);
         } else {

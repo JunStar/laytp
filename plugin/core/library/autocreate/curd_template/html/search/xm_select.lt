@@ -1,0 +1,18 @@
+<div class="xmSelect"
+            data-name="search_param[{%field%}][value]"
+            data-sourceType="{%sourceType%}"
+            data-source="{%source%}"
+            {%sourceTree%}
+            data-paging="{%paging%}"
+            data-textField="{%textField%}"
+            data-subTextField="{%subTextField%}"
+            data-valueField="{%valueField%}"
+            data-iconField="{%icon%}"
+            data-radio="{%radio%}"
+            data-selected="{%selected%}"
+            data-max="{%max%}"
+            data-placeholder="请选择{%comment%}"
+            data-layVerify="{%layVerify%}"
+            data-direction="{%direction%}"
+            ></div>
+            <input type="hidden" name="search_param[{%field%}][condition]" value="{%condition%}">

@@ -884,6 +884,27 @@ EOD;
         return $radioHtml;
     }
 
+    protected function getSearchXmSelectHtml($info, $type)
+    {
+        $name = 'html' . DS . 'search' . DS . 'xm_select';
+        $data['field'] = $info['field'];
+        $data['sourceType'] = $info['addition'][''];
+        $items = $info['addition'];
+        $options = '';
+        foreach ($items['value'] as $k => $v) {
+            $options .= "\t\t\t\t\t\t" . '<option value="' . $items['value'][$k] . '">' . $items['text'][$k] . '</option>' . "\n";
+        }
+        $options = "\t\t\t\t" . '<option value=""></option>' . "\n" . rtrim($options, "\n");
+        $data['options'] = $options;
+        $data['comment'] = $info['comment'];
+        return $this->getReplacedTpl($name, $data);
+    }
+
+    protected function getXmSelectHtml($info, $type)
+    {
+
+    }
+
     /**
      * 写入到文件
      * @param string $name 模板文件名
