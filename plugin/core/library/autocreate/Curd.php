@@ -483,8 +483,8 @@ class Curd
                 if ($v['form_type'] == 'radio') {
                     $items = $v['addition']['value'];
                 }
-                if ($v['form_type'] == 'select' && $v['addition']['single_multi'] == 'single') {
-                    $items = $this->getArrayByString($v['addition']['values']);
+                if ($v['form_type'] == 'select') {
+                    $items = $v['addition']['value'];
                 }
                 $tabsTplName = 'html' . DS . 'tabs';
                 $tabs['field'] = $v['field'];
@@ -844,6 +844,44 @@ EOD;
 
 //        $this->set_model_array_const($info['field_name'], $model_array_const);
         return $checkboxHtml;
+    }
+
+    protected function getSearchSelectHtml($info)
+    {
+        $name = 'html' . DS . 'search' . DS . 'radio';
+        $data['field'] = $info['field'];
+        $items = $info['addition'];
+        $options = '';
+        foreach ($items['value'] as $k => $v) {
+            $options .= "\t\t\t\t\t\t" . '<option value="' . $items['value'][$k] . '">' . $items['text'][$k] . '</option>' . "\n";
+        }
+        $options = "\t\t\t\t" . '<option value=""></option>' . "\n" . rtrim($options, "\n");
+        $data['options'] = $options;
+        $data['comment'] = $info['comment'];
+        return $this->getReplacedTpl($name, $data);
+    }
+
+    /**
+     * 获取select需要生成的html，在生成add和edit表单的时候可以用到
+     * @param $info
+     * @param $type string 类型，add或者edit
+     * @return string
+     */
+    protected function getSelectHtml($info, $type)
+    {
+        $items = $info['addition'];
+        $name = 'html' . DS . $type . DS . 'radio';
+        $radioHtml = '';
+        foreach ($items['value'] as $k => $v) {
+            $tempData['field'] = $info['field'];
+            $tempData['value'] = $items['value'][$k];
+            $tempData['title'] = $items['text'][$k];
+            $tempData['checkedStatus'] = ($items['value'][$k] == $items['default']) ? 'checked="checked"' : '';
+            $radioHtml .= $this->getReplacedTpl($name, $tempData) . "\n\t\t\t";
+        }
+        $radioHtml = rtrim($radioHtml, "\n\t\t\t");
+//            $this->set_model_array_const($info['field_name'], $model_array_const);
+        return $radioHtml;
     }
 
     /**
