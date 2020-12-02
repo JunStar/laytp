@@ -398,8 +398,8 @@ class Curd
                 }";
             }
             //3个及3个以上选项单选按钮 和 单选下拉框渲染成status的模板
-            if ($v['form_type'] == 'select' && $v['addition']['single_multi'] == 'single') {
-                $jsonObj = json_encode($this->getArrayByString($v['addition']['values']), JSON_UNESCAPED_UNICODE);
+            if ($v['form_type'] == 'select') {
+                $jsonObj = json_encode($v['addition'], JSON_UNESCAPED_UNICODE);
                 $temp .= ",templet:function(d){\n\t\t\t\t\treturn layTp.tableFormatter.status('{$v['field']}',d.{$v['field']},{$jsonObj});\n\t\t\t\t}";
             }
             //复选框渲染成flag的模板

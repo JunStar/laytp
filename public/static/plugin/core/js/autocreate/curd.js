@@ -215,8 +215,35 @@ layui.use(["layTp"], function () {
 
         //监听鼠标双击行事件，双击行表示进行编辑
         layui.table.on("rowDouble(laytp-table)", function (obj) {
-            obj.event = "edit";
-            layTp.tableTool(obj);
+            facade.popupDiv({
+                title: "编辑字段",
+                path: "/plugin/core/autocreate.curd.field/edit",
+                data: obj.data
+            }, function () {
+                $("[lay-filter=laytp-search-form]").click();
+            });
+            formTypeChangePrivate(obj.data.form_type, obj.data);
+            if (obj.data.form_type === 'xm_select') {
+                selectDataFrom(obj.data.addition.data_from_type, obj.data);
+                selectDataFromTable(obj.data.addition.table_id, obj.data);
+            }
+            if (obj.data.form_type === 'linkage_select') {
+                linkageField(nowTableId, obj.data);
+                selectLinkageSearchTable(obj.data.addition.table_id, obj.data);
+            }
+            if (facade.inArray(obj.data.data_type, ["float", "decimal"])) {
+                $("#lengthDiv").hide();
+                $("input[name='limit']").removeAttr('lay-verify');
+                $("#precisionDiv").show();
+                $("input[name='precision']").attr('lay-verify', 'required');
+                $("#scaleDiv").show();
+            } else {
+                $("#lengthDiv").show();
+                $("input[name='limit']").attr('lay-verify', 'required');
+                $("#precisionDiv").hide();
+                $("input[name='precision']").removeAttr('lay-verify', 'required');
+                $("#scaleDiv").hide();
+            }
         });
     };
 
