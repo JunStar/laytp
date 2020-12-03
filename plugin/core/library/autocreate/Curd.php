@@ -123,6 +123,26 @@ class Curd
         $this->midName = $strTable;
     }
 
+    /**
+     * 根据表名获取中间名
+     * @param $tableName
+     * @return string
+     */
+    protected function getMidName($tableName)
+    {
+        $arrTable = explode('_', $tableName);
+        $basename = ucfirst($arrTable[count($arrTable) - 1]);
+        $this->controllerModelClassName = $basename;
+        array_shift($arrTable);
+        array_pop($arrTable);
+        if (count($arrTable)) {
+            $strTable = implode(DS, $arrTable) . '/' . $basename;
+        } else {
+            $strTable = $basename;
+        }
+        return $strTable;
+    }
+
     //设置需要生成的数据迁移文件名
     protected function setMigrationFileName()
     {
@@ -545,7 +565,7 @@ class Curd
         if (count($linkageSelectAddHtml)) {
             foreach ($linkageSelectAddHtml as $form_type => $group_list) {
                 foreach ($group_list as $group_name => $item) {
-                    $addData[] = $this->getFormGroup($group_name, join("\n\t\t\t", $item));
+                    $addData[] = $this->getFormGroup($group_name, join("\n\t\t\t", $item), 0);
                 }
             }
         }
@@ -553,7 +573,7 @@ class Curd
         if (count($linkageSelectEditHtml)) {
             foreach ($linkageSelectEditHtml as $form_type => $group_list) {
                 foreach ($group_list as $group_name => $item) {
-                    $editData[] = $this->getFormGroup($group_name, join("\n\t\t\t", $item));
+                    $editData[] = $this->getFormGroup($group_name, join("\n\t\t\t", $item), 0);
                 }
             }
         }
@@ -663,8 +683,10 @@ EOD;
         $name = 'html' . DS . $type . DS . 'input';
         $data['field'] = $info['field'];
         $data['comment'] = $info['comment'];
-        if (!$info['form_empty']) {
+        if ($info['is_empty'] == 2) {
             $data['verify'] = $info['addition']['verify'] ? 'required|' . $info['addition']['verify'] : 'required';
+        } else {
+            $data['verify'] = $info['addition']['verify'];
         }
         return $this->getReplacedTpl($name, $data);
     }
@@ -720,7 +742,7 @@ EOD;
         $name = 'html' . DS . $type . DS . 'textarea';
         $data['field'] = $info['field'];
         $data['comment'] = $info['comment'];
-        $data['verify'] = $info['form_empty'] ? '' : 'required';
+        $data['verify'] = $info['is_empty'] == 1 ? '' : 'required';
         return $this->getReplacedTpl($name, $data);
     }
 
@@ -884,25 +906,88 @@ EOD;
         return $radioHtml;
     }
 
-    protected function getSearchXmSelectHtml($info, $type)
+    protected function getSearchXmSelectHtml($info)
     {
         $name = 'html' . DS . 'search' . DS . 'xm_select';
         $data['field'] = $info['field'];
-        $data['sourceType'] = $info['addition'][''];
-        $items = $info['addition'];
-        $options = '';
-        foreach ($items['value'] as $k => $v) {
-            $options .= "\t\t\t\t\t\t" . '<option value="' . $items['value'][$k] . '">' . $items['text'][$k] . '</option>' . "\n";
+        if ($info['addition']['data_from_type'] === "data") {
+            $data['sourceType'] = "data";
+            $source = [];
+            foreach ($info['addition']['value'] as $k => $v) {
+                $source[] = ['name' => $info['addition']['text'][$k], 'value' => $info['addition']['value'][$k]];
+            }
+            $data['source'] = str_replace('"', '\'', json_encode($source, JSON_UNESCAPED_UNICODE));
+            $data['sourceTree'] = "false";
+            $data['paging'] = "false";
+            $data['textField'] = "";
+            $data['subTextField'] = "";
+            $data['iconField'] = "";
+        } else {
+            $data['sourceType'] = "url";
+            $tableId = $info['addition']['table_id'];
+            $table = Table::find($tableId);
+            $tableName = $table->table;
+            $midName = str_replace('/', '.', $this->getMidName($tableName));
+            $data['source'] = 'admin/' . $midName . '/index';
+            $table_is_tree = 0;//取到数据表是否为无限极分类模型
+            if ($table_is_tree) {
+                $data['sourceTree'] = "true";
+                $data['paging'] = "false";
+            } else {
+                $data['sourceTree'] = "false";
+                $data['paging'] = "true";
+            }
+            $data['textField'] = $info['addition']['title_field'];
+            $data['subTextField'] = $info['addition']['sub_title_field'];
+            $data['iconField'] = $info['addition']['icon_field'];
         }
-        $options = "\t\t\t\t" . '<option value=""></option>' . "\n" . rtrim($options, "\n");
-        $data['options'] = $options;
+        $data['layVerify'] = ($info['is_empty'] == 1) ? "" : "required";
         $data['comment'] = $info['comment'];
+        $data['direction'] = $info['addition']['direction'];
         return $this->getReplacedTpl($name, $data);
     }
 
     protected function getXmSelectHtml($info, $type)
     {
-
+        $name = 'html' . DS . $type . DS . 'xm_select';
+        $data['field'] = $info['field'];
+        if ($info['addition']['data_from_type'] === "data") {
+            $data['sourceType'] = "data";
+            $source = [];
+            foreach ($info['addition']['value'] as $k => $v) {
+                $source[] = ['name' => $info['addition']['text'][$k], 'value' => $info['addition']['value'][$k]];
+            }
+            $data['source'] = str_replace('"', '\'', json_encode($source, JSON_UNESCAPED_UNICODE));
+            $data['sourceTree'] = "false";
+            $data['paging'] = "false";
+            $data['textField'] = "";
+            $data['subTextField'] = "";
+            $data['iconField'] = "";
+        } else {
+            $data['sourceType'] = "url";
+            $tableId = $info['addition']['table_id'];
+            $table = Table::find($tableId);
+            $tableName = $table->table;
+            $midName = str_replace('/', '.', $this->getMidName($tableName));
+            $data['source'] = 'admin/' . $midName . '/index';
+            $table_is_tree = 0;//取到数据表是否为无限极分类模型
+            if ($table_is_tree) {
+                $data['sourceTree'] = "true";
+                $data['paging'] = "false";
+            } else {
+                $data['sourceTree'] = "false";
+                $data['paging'] = "true";
+            }
+            $data['textField'] = $info['addition']['title_field'];
+            $data['subTextField'] = $info['addition']['sub_title_field'];
+            $data['iconField'] = $info['addition']['icon_field'];
+        }
+        $data['layVerify'] = ($info['is_empty'] == 1) ? "" : "required";
+        $data['comment'] = $info['comment'];
+        $data['direction'] = $info['addition']['direction'];
+        $data['radio'] = ($info['addition']['single_multi_type'] === 'single') ? "true" : "false";
+        $data['max'] = $info['addition']['max'];
+        return $this->getReplacedTpl($name, $data);
     }
 
     /**

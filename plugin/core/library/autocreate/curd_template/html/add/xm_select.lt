@@ -4,6 +4,8 @@
                         data-source="{%source%}"
                         data-sourceTree="{%sourceTree%}"
                         data-paging="{%paging%}"
+                        data-radio="{%radio%}"
+                        data-max="{%max%}"
                         data-textField="{%textField%}"
                         data-subTextField="{%subTextField%}"
                         data-valueField="id"
@@ -12,4 +14,3 @@
                         data-layVerify="{%layVerify%}"
                         data-direction="{%direction%}"
                         ></div>
-                        <input type="hidden" name="search_param[{%field%}][condition]" value="FIND_IN_SET">

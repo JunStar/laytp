@@ -191,7 +191,7 @@ layui.use(["layTp"], function () {
                 formTypeChangePrivate(obj.data.form_type, obj.data);
                 if (obj.data.form_type === 'xm_select') {
                     selectDataFrom(obj.data.addition.data_from_type, obj.data);
-                    if (obj.data.addtion.data_from === "table") {
+                    if (obj.data.addition.data_from_type === "table") {
                         selectDataFromTable(obj.data.addition.table_id, obj.data);
                     }
                 }

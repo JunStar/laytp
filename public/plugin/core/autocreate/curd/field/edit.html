@@ -155,8 +155,9 @@
                                 <label class="layui-form-label" title="允许为空">
                                     允许为空</label>
                                 <div class="layui-input-block">
+                                    <input type="hidden" name="is_empty" id="is_empty-2" value="2"/>
                                     <input type="checkbox" {{# if(d.is_empty== 1){ }}checked="checked" {{# } }}
-                                           name="is_empty" id="is_empty" value="1"
+                                           name="is_empty" id="is_empty-1" value="1"
                                            title="允许"/>
                                 </div>
                             </div>
@@ -167,9 +168,10 @@
                                 <label class="layui-form-label" title="点击表头排序">
                                     点击表头排序</label>
                                 <div class="layui-input-block">
+                                    <input type="hidden" name="is_thead_sort" id="is_thead_sort-2" value="2"/>
                                     <input type="checkbox" {{# if(d.is_thead_sort== 1){ }}checked="checked" {{# } }}
                                            name="is_thead_sort"
-                                           id="is_thead_sort"
+                                           id="is_thead_sort-1"
                                            value="1"
                                            title="表头排序"/>
                                 </div>
@@ -197,16 +199,20 @@
                         <label class="layui-form-label" title="显示位置">
                             显示位置</label>
                         <div class="layui-input-block">
+                            <input type="hidden" name="search_show" id="search_show-2" value="2"/>
                             <input type="checkbox" {{# if(d.search_show== 1){ }}checked="checked" {{# } }}
                                    name="search_show" id="search_show" value="1"
                                    title="搜索表单"/>
+                            <input type="hidden" name="table_show" id="table_show-2" value="2"/>
                             <input type="checkbox" {{# if(d.table_show== 1){ }}checked="checked" {{# } }}
                                    name="table_show"
                                    id="table_show" value="1"
                                    title="数据列表"/>
+                            <input type="hidden" name="add_show" id="add_show-2" value="2"/>
                             <input type="checkbox" {{# if(d.add_show== 1){ }}checked="checked" {{# } }} name="add_show"
                                    id="add_show" value="1"
                                    title="添加表单"/>
+                            <input type="hidden" name="edit_show" id="edit_show-2" value="2"/>
                             <input type="checkbox" {{# if(d.edit_show== 1){ }}checked="checked" {{# } }}
                                    name="edit_show"
                                    id="edit_show" value="1"

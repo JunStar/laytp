@@ -39,7 +39,7 @@ class Field extends Backend
             } else if ($post['form_type'] === 'upload') {
                 $post['addition']['width'] = intval($post['addition']['width']);
                 $post['addition']['height'] = intval($post['addition']['height']);
-            } else if ($post['form_type'] === 'xm_select' && $post['addition']['data_from'] === 'data') {
+            } else if ($post['form_type'] === 'xm_select' && $post['addition']['data_from_type'] === 'data') {
                 $default = [];
                 foreach ($post['addition']['value'] as $k => $v) {
                     if (isset($post['addition']['default'][$k])) {

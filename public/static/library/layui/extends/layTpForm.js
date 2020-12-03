@@ -123,7 +123,12 @@ layui.define(["jquery", "facade"], function (exports) {
                 let name = $(item).data("name");
                 if (!name) facade.error("xmSelect组件未定义name属性");
                 let sourceType = $(item).data("sourcetype") ? $(item).data("sourcetype") : "data";
-                let source = $(item).data("source").toString();
+                let source = $(item).data("source");
+                if (!source) {
+                    facade.error('xmSelect插件未定义source');
+                    return false;
+                }
+                source = source.toString();
                 let options = {
                     el: item
                     , name: name
