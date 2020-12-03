@@ -922,6 +922,7 @@ EOD;
             $data['textField'] = "";
             $data['subTextField'] = "";
             $data['iconField'] = "";
+            $data['valueField'] = "";
         } else {
             $data['sourceType'] = "url";
             $tableId = $info['addition']['table_id'];
@@ -940,6 +941,7 @@ EOD;
             $data['textField'] = $info['addition']['title_field'];
             $data['subTextField'] = $info['addition']['sub_title_field'];
             $data['iconField'] = $info['addition']['icon_field'];
+            $data['valueField'] = "id";
         }
         $data['layVerify'] = ($info['is_empty'] == 1) ? "" : "required";
         $data['comment'] = $info['comment'];
@@ -963,6 +965,7 @@ EOD;
             $data['textField'] = "";
             $data['subTextField'] = "";
             $data['iconField'] = "";
+            $data['valueField'] = "";
         } else {
             $data['sourceType'] = "url";
             $tableId = $info['addition']['table_id'];
@@ -981,6 +984,7 @@ EOD;
             $data['textField'] = $info['addition']['title_field'];
             $data['subTextField'] = $info['addition']['sub_title_field'];
             $data['iconField'] = $info['addition']['icon_field'];
+            $data['valueField'] = "id";
         }
         $data['layVerify'] = ($info['is_empty'] == 1) ? "" : "required";
         $data['comment'] = $info['comment'];

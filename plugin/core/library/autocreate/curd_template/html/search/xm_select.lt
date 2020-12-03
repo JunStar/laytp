@@ -6,7 +6,7 @@
                         data-paging="{%paging%}"
                         data-textField="{%textField%}"
                         data-subTextField="{%subTextField%}"
-                        data-valueField="id"
+                        data-valueField="{%valueField%}"
                         data-iconField="{%iconField%}"
                         data-placeholder="请选择{%comment%}"
                         data-layVerify="{%layVerify%}"
