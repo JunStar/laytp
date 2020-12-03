@@ -11,7 +11,7 @@ layui.use(["layTp"], function () {
             , where: where
             , even: true
             , method: "POST"
-            , cellMinWidth: 80
+            , cellMinWidth: {%cellMinWidth%}
             , loading: false
             , page: {
                 curr: page

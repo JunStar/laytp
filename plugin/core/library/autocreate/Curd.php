@@ -355,12 +355,12 @@ class Curd
     protected function setJsParam()
     {
         $tplName = 'js';
-        $cols = "{type:'checkbox'}\n\t\t\t\t";
+        $cols = "{type:'checkbox',fixed:'left'}\n\t\t\t\t";
         $hasFirstCols = true;//是否已经有了正常的第一行数据
         //是否隐藏主键列
         if ($this->isHidePk != 1) {
             $hasFirstCols = true;
-            $temp = ",{field:'id',title:'ID',align:'center',width:80}\n";
+            $temp = ",{field:'id',title:'ID',align:'center',width:80,fixed:'left'}\n";
             $cols .= $temp;
         } else {
             $temp = "//,{field:'id',title:'ID',align:'center',width:80}\n";
@@ -384,6 +384,9 @@ class Curd
                 $temp = "\t\t\t\t{field:'{$v['field']}',title:'{$v['comment']}'";
             } else {
                 $temp = "\t\t\t\t,{field:'{$v['field']}',title:'{$v['comment']}'";
+            }
+            if ($v['cell_width']) {
+                $temp .= ",width:{$v['cell_width']}";
             }
             $temp .= ",align:'center'";
             //表头排序
@@ -427,6 +430,22 @@ class Curd
                 $jsonObj = json_encode($v['addition'], JSON_UNESCAPED_UNICODE);
                 $temp .= ",templet:function(d){\n\t\t\t\t\treturn layTp.tableFormatter.flag(d.{$v['field']},{$jsonObj});\n\t\t\t\t}";
             }
+            //xmSelect，数据来源=data，单选，渲染成status
+            if ($v['form_type'] == 'xm_select' && $v['addition']['data_from_type'] == 'data' && $v['addition']['single_multi_type'] == 'single') {
+                $jsonArr['value'] = $v['addition']['value'];
+                $jsonArr['text'] = $v['addition']['text'];
+                $jsonArr['default'] = $v['addition']['default'];
+                $jsonObj = json_encode($jsonArr, JSON_UNESCAPED_UNICODE);
+                $temp .= ",templet:function(d){\n\t\t\t\t\treturn layTp.tableFormatter.status('{$v['field']}',d.{$v['field']},{$jsonObj});\n\t\t\t\t}";
+            }
+            //xmSelect，数据来源=data，多选，渲染成flag
+            if ($v['form_type'] == 'xm_select' && $v['addition']['data_from_type'] == 'data' && $v['addition']['single_multi_type'] == 'multi') {
+                $jsonArr['value'] = $v['addition']['value'];
+                $jsonArr['text'] = $v['addition']['text'];
+                $jsonArr['default'] = $v['addition']['default'];
+                $jsonObj = json_encode($jsonArr, JSON_UNESCAPED_UNICODE);
+                $temp .= ",templet:function(d){\n\t\t\t\t\treturn layTp.tableFormatter.flag(d.{$v['field']},{$jsonObj});\n\t\t\t\t}";
+            }
             //image模板
             if ($v['form_type'] == 'upload' && $v['addition']['accept'] == 'images') {
                 $temp .= ",templet:function(d){\n\t\t\t\t\treturn layTp.tableFormatter.images(d.{$v['field']});\n\t\t\t\t}";
@@ -450,7 +469,7 @@ class Curd
         $cols .= $temp;
         $data['cols'] = $cols;
         $this->recycleCols = $cols;
-        $data['cellMinWidth'] = 80;
+        $data['cellMinWidth'] = 100;
         $this->jsParam = ['tplName' => $tplName, 'data' => $data, 'fileName' => $this->jsFileName];
     }
 
