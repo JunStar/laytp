@@ -2,7 +2,6 @@
 /**
  * 地区管理模型
  */
-
 namespace app\common\model;
 
 use laytp\BaseModel;

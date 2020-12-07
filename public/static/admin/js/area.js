@@ -11,7 +11,7 @@ layui.use(["layTp"], function () {
             , where: where
             , even: true
             , method: "POST"
-            , cellMinWidth: 80
+            , cellMinWidth: 100
             , loading: false
             , page: {
                 curr: page
@@ -27,11 +27,11 @@ layui.use(["layTp"], function () {
             , cols: [[
                 {type: 'checkbox', fixed: 'left'}
                 , {field: 'id', title: 'ID', align: 'center', width: 80, fixed: 'left'}
-                , {field: 'pid', title: '父id', align: 'center', sort: true}
+                , {field: 'pid', title: '父id', width: 80, align: 'center', sort: true}
                 , {field: 'short_name', title: '简称', width: 110, align: 'center', sort: true}
                 , {field: 'merge_name', title: '全称', width: 260, align: 'center', sort: true}
                 , {
-                    field: 'level', title: '层级', align: 'center', sort: true, templet: function (d) {
+                    field: 'level', title: '层级', width: 100, align: 'center', sort: true, templet: function (d) {
                         return layTp.tableFormatter.status('level', d.level, {
                             "value": ["1", "2", "3"],
                             "text": ["省", "市", "区"]
@@ -40,7 +40,7 @@ layui.use(["layTp"], function () {
                 }
                 , {field: 'pinyin', title: '拼音', width: 170, align: 'center', sort: true}
                 , {field: 'code', title: '长途区号', width: 100, align: 'center', sort: true}
-                , {field: 'zip', title: '邮编', align: 'center', sort: true}
+                , {field: 'zip', title: '邮编', width: 80, align: 'center', sort: true}
                 , {field: 'first', title: '首字母', width: 90, align: 'center', sort: true}
                 , {field: 'lng', title: '经度', width: 100, align: 'center', sort: true}
                 , {field: 'lat', title: '纬度', width: 100, align: 'center', sort: true}
