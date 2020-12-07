@@ -591,7 +591,8 @@ layui.use(["layTp"], function () {
                 addition: {
                     title_field: "",
                     sub_title_field: "",
-                    icon_field: ""
+                    icon_field: "",
+                    pid_field: ""
                 }
             }
         }
@@ -611,6 +612,7 @@ layui.use(["layTp"], function () {
                 $("#linkageTitleField").html('<option value="">请选择字段</option>');
                 $("#linkageSubTitleField").html('<option value="">请选择字段</option>');
                 $("#linkageIconField").html('<option value="">请选择字段</option>');
+                $("#linkagePidField").html('<option value="">请选择字段</option>');
                 let key;
                 let data = res.data.data;
                 for (key in res.data.data) {
@@ -628,6 +630,11 @@ layui.use(["layTp"], function () {
                         $("#linkageIconField").append("<option value='" + data[key]["id"] + "' selected='selected'>" + data[key]["field"] + "</option>");
                     } else {
                         $("#linkageIconField").append("<option value='" + data[key]["id"] + "'>" + data[key]["field"] + "</option>");
+                    }
+                    if (parseInt(editData.addition.pid_field) === data[key]["id"]) {
+                        $("#linkagePidField").append("<option value='" + data[key]["id"] + "' selected='selected'>" + data[key]["field"] + "</option>");
+                    } else {
+                        $("#linkagePidField").append("<option value='" + data[key]["id"] + "'>" + data[key]["field"] + "</option>");
                     }
                 }
                 layui.form.render('select');
@@ -898,6 +905,16 @@ layui.use(["layTp"], function () {
             '           <label class="layui-form-label layui-form-required">图标字段</label>' +
             '           <div class="layui-input-block">' +
             '               <select class="layui-select" name="addition[icon_field]" id="linkageIconField">' +
+            '                   <option value="">请选择字段</option>' +
+            '               </select>' +
+            '           </div>' +
+            '       </div>' +
+            '    </div>' +
+            '    <div class="layui-row margin-bottom6">' +
+            '       <div>' +
+            '           <label class="layui-form-label layui-form-required">父ID字段</label>' +
+            '           <div class="layui-input-block">' +
+            '               <select class="layui-select" name="addition[pid_field]" id="linkagePidField">' +
             '                   <option value="">请选择字段</option>' +
             '               </select>' +
             '           </div>' +
