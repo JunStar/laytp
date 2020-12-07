@@ -1,0 +1,132 @@
+<div class="layui-tab layui-tab-brief">
+    <ul class="layui-tab-title">
+        <li class="layTpClickSearch layui-this" data-field="level" data-val="">全部</li>
+        <li class="layTpClickSearch" data-field="level" data-val="1">省</li>
+        <li class="layTpClickSearch" data-field="level" data-val="2">市</li>
+        <li class="layTpClickSearch" data-field="level" data-val="3">区</li>
+    </ul>
+</div>
+<div class="layui-tab-content">
+    <div class="search-form-page-tab-content" id="search-form" style="display:none;">
+        <form class="layui-form" style="margin-bottom:0px;">
+            <div class="layui-form-item layui-inline">
+                <label class="layui-form-label" title="ID">ID</label>
+                <div class="layui-input-inline">
+                    <input autocomplete="off" type="text" id="id" name="search_param[id][value]" id="id"
+                           placeholder="请输入ID" class="layui-input">
+                    <input type="hidden" name="search_param[id][condition]" value="=">
+                </div>
+            </div>
+
+            <div class="layui-form-item layui-inline">
+                <label class="layui-form-label" title="父id">父id</label>
+                <div class="layui-input-inline">
+                    <input autocomplete="off" type="text" id="pid" name="search_param[pid][value]" placeholder="请输入父id"
+                           class="layui-input">
+                    <input type="hidden" name="search_param[pid][condition]" value="LIKE">
+                </div>
+            </div>
+
+            <div class="layui-form-item layui-inline">
+                <label class="layui-form-label" title="简称">简称</label>
+                <div class="layui-input-inline">
+                    <input autocomplete="off" type="text" id="short_name" name="search_param[short_name][value]"
+                           placeholder="请输入简称" class="layui-input">
+                    <input type="hidden" name="search_param[short_name][condition]" value="LIKE">
+                </div>
+            </div>
+
+            <div class="layui-form-item layui-inline">
+                <label class="layui-form-label" title="全称">全称</label>
+                <div class="layui-input-inline">
+                    <input autocomplete="off" type="text" id="merge_name" name="search_param[merge_name][value]"
+                           placeholder="请输入全称" class="layui-input">
+                    <input type="hidden" name="search_param[merge_name][condition]" value="LIKE">
+                </div>
+            </div>
+
+            <div class="layui-form-item layui-inline">
+                <label class="layui-form-label" title="层级">层级</label>
+                <div class="layui-input-inline">
+                    <select id="level" name="search_param[level][value]">
+                        <option value="">请选择层级</option>
+                        <option value=""></option>
+                        <option value="1">省</option>
+                        <option value="2">市</option>
+                        <option value="3">区</option>
+                    </select>
+                    <input type="hidden" name="search_param[level][condition]" value="=">
+                </div>
+            </div>
+
+            <div class="layui-form-item layui-inline">
+                <label class="layui-form-label" title="拼音">拼音</label>
+                <div class="layui-input-inline">
+                    <input autocomplete="off" type="text" id="pinyin" name="search_param[pinyin][value]"
+                           placeholder="请输入拼音" class="layui-input">
+                    <input type="hidden" name="search_param[pinyin][condition]" value="LIKE">
+                </div>
+            </div>
+
+            <div class="layui-form-item layui-inline">
+                <label class="layui-form-label" title="长途区号">长途区号</label>
+                <div class="layui-input-inline">
+                    <input autocomplete="off" type="text" id="code" name="search_param[code][value]"
+                           placeholder="请输入长途区号" class="layui-input">
+                    <input type="hidden" name="search_param[code][condition]" value="LIKE">
+                </div>
+            </div>
+
+            <div class="layui-form-item layui-inline">
+                <label class="layui-form-label" title="邮编">邮编</label>
+                <div class="layui-input-inline">
+                    <input autocomplete="off" type="text" id="zip" name="search_param[zip][value]" placeholder="请输入邮编"
+                           class="layui-input">
+                    <input type="hidden" name="search_param[zip][condition]" value="LIKE">
+                </div>
+            </div>
+
+            <div class="layui-form-item layui-inline">
+                <label class="layui-form-label" title="首字母">首字母</label>
+                <div class="layui-input-inline">
+                    <input autocomplete="off" type="text" id="first" name="search_param[first][value]"
+                           placeholder="请输入首字母" class="layui-input">
+                    <input type="hidden" name="search_param[first][condition]" value="LIKE">
+                </div>
+            </div>
+
+            <div class="layui-form-item layui-inline">
+                <label class="layui-form-label" title="经度">经度</label>
+                <div class="layui-input-inline">
+                    <input autocomplete="off" type="text" id="lng" name="search_param[lng][value]" placeholder="请输入经度"
+                           class="layui-input">
+                    <input type="hidden" name="search_param[lng][condition]" value="LIKE">
+                </div>
+            </div>
+
+            <div class="layui-form-item layui-inline">
+                <label class="layui-form-label" title="纬度">纬度</label>
+                <div class="layui-input-inline">
+                    <input autocomplete="off" type="text" id="lat" name="search_param[lat][value]" placeholder="请输入纬度"
+                           class="layui-input">
+                    <input type="hidden" name="search_param[lat][condition]" value="LIKE">
+                </div>
+            </div>
+
+            <div class="layui-form-item layui-inline search-btn">
+                <div class="layui-input-inline">
+                    <button class="layui-btn layui-btn-default layui-btn-sm layui-icon layui-icon-search" lay-submit
+                            lay-filter="laytp-search-form"> 确 定
+                    </button>
+                    <a class="layui-btn layui-btn-sm layui-btn-primary layui-icon layui-icon-refresh laytp-search-form-reset">
+                        重 置</a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <table id="laytp-table" lay-filter="laytp-table"></table>
+
+</div>
+
+<script type="text/javascript" src="/static/admin/js/area.js" charset="utf-8"></script>

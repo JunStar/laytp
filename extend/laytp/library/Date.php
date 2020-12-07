@@ -19,16 +19,15 @@ class Date
 
     /**
      * 计算两个时区间相差的时长,单位为秒
+     *  $seconds = self::offset('America/Chicago', 'GMT');
+     *  [!!] A list of time zones that PHP supports can be found at
+     *  <http://php.net/timezones>.
      *
-     * $seconds = self::offset('America/Chicago', 'GMT');
-     *
-     * [!!] A list of time zones that PHP supports can be found at
-     * <http://php.net/timezones>.
-     *
-     * @param   string $remote timezone that to find the offset of
-     * @param   string $local  timezone used as the baseline
-     * @param   mixed  $now    UNIX timestamp or date string
-     * @return  integer
+     * @param $remote
+     * @param null $local
+     * @param null $now
+     * @return int
+     * @throws \Exception
      */
     public static function offset($remote, $local = null, $now = null)
     {

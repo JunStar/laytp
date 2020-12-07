@@ -665,10 +665,6 @@ body .layui-btn-xs .fa {
     font-size: 16px;
 }
 
-.layui-table-fixed .layui-table-body tr {
-    height: 40px;
-}
-
 .layui-table-fixed-r {
     right: 0 !important;
 }

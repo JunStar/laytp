@@ -233,6 +233,27 @@ layui.define(["jquery", "facade"], function (exports) {
         },
 
         /**
+         * 联动下拉框，linkage的下拉框会渲染成xm-select下拉框组件
+         * <div class="linkageSelect"
+         *      data-leftField=""//左关联字段，为空表示联动下拉框的第一个下拉框
+         *      data-rightField=""//右关联字段，为空表示联动下拉框的最后一个下拉框
+         *      data-url=""//下拉框数据源url地址，对应一个数据表的index
+         *      data-searchField=""//数据源搜索字段
+         *      data-searchCondition=""//数据源搜索条件，默认为=
+         *      data-searchVal=""//数据源搜索值
+         *      data-textField=""//显示的文本字段
+         *      data-subTextField=""//显示的副文本字段
+         *      data-iconField=""//显示的图标字段
+         * ></div>
+         */
+        linkageSelect: function (parentElem) {
+            let obj = (typeof parentElem === "undefined") ? $(".linkageSelect") : $(".linkageSelect", parentElem);
+            layui.each(obj, function (key, item) {
+
+            });
+        },
+
+        /**
          * 上传组件
          * <div class="layTpUpload"//class="layTpUpload"是上传组件渲染的标识
          *      data-name="name"//必设，提交表单时的name
