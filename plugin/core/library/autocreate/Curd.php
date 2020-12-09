@@ -560,11 +560,11 @@ class Curd
         $linkageSelectEditHtml = [];
         foreach ($this->fields as $k => $v) {
             if (in_array($v['form_type'], ['linkage_select'])) {
-                if ($v['show_add']) {
+                if ($v['add_show']) {
                     $linkageSelectAddHtml[$v['form_type']][$v['addition']['group_name']][] = $this->getFormItem($v, 'add');
                 }
-                if ($v['show_edit']) {
-                    $linkageSelectEditHtml[$v['form_type']][$v['form_additional']['group_name']][] = $this->getFormItem($v, 'edit');
+                if ($v['edit_show']) {
+                    $linkageSelectEditHtml[$v['form_type']][$v['addition']['group_name']][] = $this->getFormItem($v, 'edit');
                 }
             } else if (in_array($v['form_type'], ['plugin_core_user_id'])) {
                 $addData[] = $this->getFormItem($v, 'add');
@@ -1010,6 +1010,41 @@ EOD;
         $data['direction'] = $info['addition']['direction'];
         $data['radio'] = ($info['addition']['single_multi_type'] === 'single') ? "true" : "false";
         $data['max'] = $info['addition']['max'];
+        return $this->getReplacedTpl($name, $data);
+    }
+
+    public function getSearchLinkageSelectHtml($info)
+    {
+        $name = 'html' . DS . 'search' . DS . 'linkage_select';
+        $data['field'] = $info['field'];
+        $data['comment'] = $info['comment'];
+        $searchTable = Table::find($info['addition']['table_id']);
+        $midName = str_replace('/', '.', $this->getMidName($searchTable->table));
+        $data['url'] = 'admin/' . $midName . '/index';
+        $data['leftField'] = $info['addition']['left_field'];
+        $data['rightField'] = $info['addition']['right_field'];
+        $data['showField'] = $info['addition']['show_field'];
+        $data['searchField'] = $info['addition']['search_field'];
+        $data['searchCondition'] = $info['addition']['search_condition'];
+        $data['searchVal'] = $info['addition']['search_val'];
+        return $this->getReplacedTpl($name, $data);
+    }
+
+    public function getLinkageSelectHtml($info, $type)
+    {
+        $name = 'html' . DS . $type . DS . 'linkage_select';
+        $data['field'] = $info['field'];
+        $data['verify'] = ($info['is_empty'] == 1) ? "" : "required";
+        $data['comment'] = $info['comment'];
+        $searchTable = Table::find($info['addition']['table_id']);
+        $midName = str_replace('/', '.', $this->getMidName($searchTable->table));
+        $data['url'] = 'admin/' . $midName . '/index';
+        $data['leftField'] = $info['addition']['left_field'];
+        $data['rightField'] = $info['addition']['right_field'];
+        $data['showField'] = $info['addition']['show_field'];
+        $data['searchField'] = $info['addition']['search_field'];
+        $data['searchCondition'] = $info['addition']['search_condition'];
+        $data['searchVal'] = $info['addition']['search_val'];
         return $this->getReplacedTpl($name, $data);
     }
 

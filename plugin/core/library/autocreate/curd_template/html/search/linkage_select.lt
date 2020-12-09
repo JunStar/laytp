@@ -1,0 +1,18 @@
+<div class="layui-input-inline">
+                <select class="linkageSelect"
+                        lay-search="true"
+                        lay-filter="{%field%}"
+                        id="{%field%}"
+                        name="search_param[{%field%}][value]"
+                        data-leftField="{%leftField%}"
+                        data-rightField="{%rightField%}"
+                        data-url="{%url%}"
+                        data-showField="{%showField%}"
+                        data-searchField="{%searchField%}"
+                        data-searchCondition="{%searchCondition%}"
+                        data-searchVal="{%searchVal%}"
+                >
+                    <option value="">请选择{%comment%}</option>
+                </select>
+                <input type="hidden" name="search_param[{%field%}][condition]" value="=">
+            </div>

@@ -1,0 +1,18 @@
+<div class="layui-input-inline">
+                <select class="linkageSelect"
+                        lay-search="true"
+                        lay-filter="{%field%}"
+                        lay-verify="{%verify%}"
+                        id="{%field%}"
+                        name="{%field%}"
+                        data-leftField="{%leftField%}"
+                        data-rightField="{%rightField%}"
+                        data-url="{%url%}"
+                        data-showField="{%showField%}"
+                        data-searchField="{%searchField%}"
+                        data-searchCondition="{%searchCondition%}"
+                        data-searchVal="{%searchVal%}"
+                >
+                    <option value="">请选择{%comment%}</option>
+                </select>
+            </div>

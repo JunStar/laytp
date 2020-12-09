@@ -564,20 +564,20 @@ layui.use(["layTp"], function () {
             successAlert: false
         }).then(function (res) {
             if (res.code === 0) {
-                $("#leftLinkageField").html('<option value="">请选择字段，不选表示当前字段为联动下拉框中第一个下拉框</option>');
-                $("#rightLinkageField").html('<option value="">请选择字段，不选表示当前字段为联动下拉框中最后一个下拉框</option>');
+                $("#leftField").html('<option value="">请选择字段，不选表示当前字段为联动下拉框中第一个下拉框</option>');
+                $("#rightField").html('<option value="">请选择字段，不选表示当前字段为联动下拉框中最后一个下拉框</option>');
                 let key;
                 let data = res.data.data;
                 for (key in res.data.data) {
-                    if (parseInt(editData.addition.left_linkage_field) === data[key]["id"]) {
-                        $("#leftLinkageField").append("<option value='" + data[key]["id"] + "' selected='selected'>" + data[key]["field"] + "</option>");
+                    if (editData.addition.left_field === data[key]["field"]) {
+                        $("#leftField").append("<option value='" + data[key]["field"] + "' selected='selected'>" + data[key]["field"] + "</option>");
                     } else {
-                        $("#leftLinkageField").append("<option value='" + data[key]["id"] + "'>" + data[key]["field"] + "</option>");
+                        $("#leftField").append("<option value='" + data[key]["field"] + "'>" + data[key]["field"] + "</option>");
                     }
-                    if (parseInt(editData.addition.right_linkage_field) === data[key]["id"]) {
-                        $("#rightLinkageField").append("<option value='" + data[key]["id"] + "' selected='selected'>" + data[key]["field"] + "</option>");
+                    if (parseInt(editData.addition.right_field) === data[key]["field"]) {
+                        $("#rightField").append("<option value='" + data[key]["field"] + "' selected='selected'>" + data[key]["field"] + "</option>");
                     } else {
-                        $("#rightLinkageField").append("<option value='" + data[key]["id"] + "'>" + data[key]["field"] + "</option>");
+                        $("#rightField").append("<option value='" + data[key]["field"] + "'>" + data[key]["field"] + "</option>");
                     }
                 }
                 layui.form.render('select');
@@ -589,10 +589,8 @@ layui.use(["layTp"], function () {
         if (typeof editData === "undefined") {
             editData = {
                 addition: {
-                    title_field: "",
-                    sub_title_field: "",
-                    icon_field: "",
-                    pid_field: ""
+                    show_field: "",
+                    search_field: ""
                 }
             }
         }
@@ -609,32 +607,20 @@ layui.use(["layTp"], function () {
             successAlert: false
         }).then(function (res) {
             if (res.code === 0) {
-                $("#linkageTitleField").html('<option value="">请选择字段</option>');
-                $("#linkageSubTitleField").html('<option value="">请选择字段</option>');
-                $("#linkageIconField").html('<option value="">请选择字段</option>');
-                $("#linkagePidField").html('<option value="">请选择字段</option>');
+                $("#linkageShowField").html('<option value="">请选择字段</option>');
+                $("#linkageSearchField").html('<option value="">请选择字段</option>');
                 let key;
                 let data = res.data.data;
                 for (key in res.data.data) {
-                    if (parseInt(editData.addition.title_field) === data[key]["id"]) {
-                        $("#linkageTitleField").append("<option value='" + data[key]["id"] + "' selected='selected'>" + data[key]["field"] + "</option>");
+                    if (editData.addition.show_field === data[key]["field"]) {
+                        $("#linkageShowField").append("<option value='" + data[key]["field"] + "' selected='selected'>" + data[key]["field"] + "</option>");
                     } else {
-                        $("#linkageTitleField").append("<option value='" + data[key]["id"] + "'>" + data[key]["field"] + "</option>");
+                        $("#linkageShowField").append("<option value='" + data[key]["field"] + "'>" + data[key]["field"] + "</option>");
                     }
-                    if (parseInt(editData.addition.sub_title_field) === data[key]["id"]) {
-                        $("#linkageSubTitleField").append("<option value='" + data[key]["id"] + "' selected='selected'>" + data[key]["field"] + "</option>");
+                    if (parseInt(editData.addition.search_field) === data[key]["id"]) {
+                        $("#linkageSearchField").append("<option value='" + data[key]["field"] + "' selected='selected'>" + data[key]["field"] + "</option>");
                     } else {
-                        $("#linkageSubTitleField").append("<option value='" + data[key]["id"] + "'>" + data[key]["field"] + "</option>");
-                    }
-                    if (parseInt(editData.addition.icon_field) === data[key]["id"]) {
-                        $("#linkageIconField").append("<option value='" + data[key]["id"] + "' selected='selected'>" + data[key]["field"] + "</option>");
-                    } else {
-                        $("#linkageIconField").append("<option value='" + data[key]["id"] + "'>" + data[key]["field"] + "</option>");
-                    }
-                    if (parseInt(editData.addition.pid_field) === data[key]["id"]) {
-                        $("#linkagePidField").append("<option value='" + data[key]["id"] + "' selected='selected'>" + data[key]["field"] + "</option>");
-                    } else {
-                        $("#linkagePidField").append("<option value='" + data[key]["id"] + "'>" + data[key]["field"] + "</option>");
+                        $("#linkageSearchField").append("<option value='" + data[key]["field"] + "'>" + data[key]["field"] + "</option>");
                     }
                 }
                 layui.form.render('select');
@@ -666,8 +652,8 @@ layui.use(["layTp"], function () {
                     open_value: "",
                     open_text: "",
                     group_name: "",
-                    left_linkage_field: "",
-                    right_linkage_field: "",
+                    left_field: "",
+                    right_field: "",
                     width: "",
                     height: "",
                     dir: "",
@@ -852,7 +838,7 @@ layui.use(["layTp"], function () {
             '       <div>' +
             '           <label class="layui-form-label layui-form-required">左关联字段</label>' +
             '           <div class="layui-input-block">' +
-            '               <select class="layui-select" name="addition[left_linkage_field]" id="leftLinkageField">' +
+            '               <select class="layui-select" name="addition[left_field]" id="leftField">' +
             '                   <option value="">请选择字段，不选表示当前字段为联动下拉框中第一个下拉框</option>' +
             '               </select>' +
             '           </div>' +
@@ -862,7 +848,7 @@ layui.use(["layTp"], function () {
             '       <div>' +
             '           <label class="layui-form-label layui-form-required">右关联字段</label>' +
             '           <div class="layui-input-block">' +
-            '               <select class="layui-select" name="addition[right_linkage_field]" id="rightLinkageField">' +
+            '               <select class="layui-select" name="addition[right_field]" id="rightField">' +
             '                   <option value="">请选择字段，不选表示当前字段为联动下拉框中最后一个下拉框</option>' +
             '               </select>' +
             '           </div>' +
@@ -884,39 +870,39 @@ layui.use(["layTp"], function () {
             '           </div>' +
             '       </div>' +
             '       <div class="layui-col-lg6 layui-col-md6 layui-col-sm6 layui-col-xs6">' +
-            '           <label class="layui-form-label layui-form-required">主标题字段</label>' +
+            '           <label class="layui-form-label layui-form-required">显示字段</label>' +
             '           <div class="layui-input-block">' +
-            '               <select class="layui-select" name="addition[title_field]" id="linkageTitleField">' +
-            '                   <option value="">请选择字段（同时用于搜索）</option>' +
+            '               <select class="layui-select" name="addition[show_field]" id="linkageShowField">' +
+            '                   <option value="">请选择字段</option>' +
             '               </select>' +
             '           </div>' +
             '       </div>' +
             '    </div>' +
             '    <div class="layui-row margin-bottom6">' +
             '       <div class="layui-col-lg6 layui-col-md6 layui-col-sm6 layui-col-xs6">' +
-            '           <label class="layui-form-label layui-form-required">副标题字段</label>' +
+            '           <label class="layui-form-label layui-form-required">搜索字段</label>' +
             '           <div class="layui-input-block">' +
-            '               <select class="layui-select" name="addition[sub_title_field]" id="linkageSubTitleField">' +
-            '                   <option value="">请选择数据表</option>' +
+            '               <select class="layui-select" name="addition[search_field]" id="linkageSearchField">' +
+            '                   <option value="">请选择字段</option>' +
             '               </select>' +
             '           </div>' +
             '       </div>' +
             '       <div class="layui-col-lg6 layui-col-md6 layui-col-sm6 layui-col-xs6">' +
-            '           <label class="layui-form-label layui-form-required">图标字段</label>' +
+            '           <label class="layui-form-label layui-form-required">搜索条件</label>' +
             '           <div class="layui-input-block">' +
-            '               <select class="layui-select" name="addition[icon_field]" id="linkageIconField">' +
-            '                   <option value="">请选择字段</option>' +
+            '               <select class="layui-select" name="addition[search_condition]" id="searchCondition">' +
+            '                   <option value="=" {{# if(d.addition.search_condition === "="){ }}selected="selected"{{# } }}>=</option>' +
+            '                   <option value="LIKE" {{# if(d.addition.search_condition === "LIKE"){ }}selected="selected"{{# } }}>LIKE</option>' +
+            '                   <option value="IN" {{# if(d.addition.search_condition === "IN"){ }}selected="selected"{{# } }}>IN</option>' +
             '               </select>' +
             '           </div>' +
             '       </div>' +
             '    </div>' +
             '    <div class="layui-row margin-bottom6">' +
             '       <div>' +
-            '           <label class="layui-form-label layui-form-required">父ID字段</label>' +
+            '           <label class="layui-form-label layui-form-required">搜索的值</label>' +
             '           <div class="layui-input-block">' +
-            '               <select class="layui-select" name="addition[pid_field]" id="linkagePidField">' +
-            '                   <option value="">请选择字段</option>' +
-            '               </select>' +
+            '               <input class="layui-input" name="addition[search_val]" id="linkageSearchVal" value="{{d.addition.search_val}}" placeholder="请输入搜索的值，默认0，仅第一个下拉框有效" />' +
             '           </div>' +
             '       </div>' +
             '    </div>' +
@@ -961,7 +947,7 @@ layui.use(["layTp"], function () {
             '       <div class="layui-col-lg6 layui-col-md6 layui-col-sm6 layui-col-xs6">' +
             '           <label class="layui-form-label layui-form-required">颜色格式</label>' +
             '           <div class="layui-input-block">' +
-            '               <select class="layui-select" name="addition[format]" id="leftLinkageField">' +
+            '               <select class="layui-select" name="addition[format]" id="leftField">' +
             '                   <option value="hex">hex</option>' +
             '                   <option value="rgb">rgb</option>' +
             '               </select>' +

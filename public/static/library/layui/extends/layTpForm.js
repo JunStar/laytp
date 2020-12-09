@@ -185,7 +185,7 @@ layui.define(["jquery", "facade"], function (exports) {
                 updateOptions.model.icon = ($(item).data("radio") === true && !options.sourceTree) ? "hidden" : "show";
                 //template是设置下拉框的模板
                 updateOptions.template = function (item) {
-                    let template = item.name;
+                    let template = item.item[options.textField];
                     template = options.iconField ? '<i class="' + item.item[options.iconField] + ' margin-right5"></i>' + template : template;
                     template = options.subTextField ? template + '<span style="position: absolute; right: 10px; color: #8799a3">' + item.item[options.subTextField] + '</span>' : template;
                     return template;
@@ -234,22 +234,129 @@ layui.define(["jquery", "facade"], function (exports) {
 
         /**
          * 联动下拉框，linkage的下拉框会渲染成xm-select下拉框组件
-         * <div class="linkageSelect"
-         *      data-leftField=""//左关联字段，为空表示联动下拉框的第一个下拉框
-         *      data-rightField=""//右关联字段，为空表示联动下拉框的最后一个下拉框
-         *      data-url=""//下拉框数据源url地址，对应一个数据表的index
-         *      data-searchField=""//数据源搜索字段
-         *      data-searchCondition=""//数据源搜索条件，默认为=
-         *      data-searchVal=""//数据源搜索值
-         *      data-textField=""//显示的文本字段
-         *      data-subTextField=""//显示的副文本字段
-         *      data-iconField=""//显示的图标字段
-         * ></div>
+         * <select class="linkageSelect"
+         *         lay-search="true"
+         *         lay-filter="id"
+         *         id="id"
+         *         name="id"
+         *         data-leftField=""//左关联字段，为空表示联动下拉框的第一个下拉框
+         *         data-rightField=""//右关联字段，为空表示联动下拉框的最后一个下拉框
+         *         data-url=""//下拉框数据源url地址，对应一个数据表的index
+         *         data-showField="short_name"
+         *         data-searchField="pid"//数据源搜索字段
+         *         data-searchCondition="="//数据源搜索条件，默认为=
+         *         data-searchVal="0"//数据源搜索值
+         *         data-selectedVal=""//已选中的值，编辑页面
+         * ></select>
          */
         linkageSelect: function (parentElem) {
             let obj = (typeof parentElem === "undefined") ? $(".linkageSelect") : $(".linkageSelect", parentElem);
             layui.each(obj, function (key, item) {
+                let id = $(item).attr('id');//id属性，必须
+                if (!id) {
+                    facade.error('linkageSelect组件未定义id属性');
+                }
+                let showField = $(item).data('showfield') ? $(item).data('showfield') : 'name';//显示的字段，默认是name
+                let url = $(item).data('url');//下拉框数据源url地址，对应一个数据表的index
+                let searchField = $(item).data('searchfield') ? $(item).data('searchfield') : 'pid';//搜索的字段，默认是pid
+                let searchCondition = $(item).data('searchcondition') ? $(item).data('searchcondition') : '=';
+                let searchVal = $(item).data('searchval') ? $(item).data('searchval') : 0;//搜索字段的值，默认0,如果只想选某个省下面的城市和地区可以设置这个值
+                let selectedVal = $(item).data('selectedval');//选中的值，非必填
+                let leftField = $(item).data('leftfield');//左关联字段，为空或者不设置时，表示第一个下拉框
+                let rightField = $(item).data('rightfield');//右关联字段，为空或者不设置时，表示最后一个下拉框
+                //填充联动的第一个下拉框数据
+                if (leftField === "" || leftField === undefined) {
+                    let searchParam = {};
+                    searchParam[searchField] = {};
+                    searchParam[searchField].value = searchVal;
+                    searchParam[searchField].condition = searchCondition;
+                    facade.ajax({
+                        path: url,
+                        params: {search_param: searchParam, no_page: 1},
+                        successAlert: false
+                    }).done(function (res) {
+                        let optionTips = $(item).children().first().prop("outerHTML");
+                        $(item).empty();
+                        $(item).append(optionTips);
+                        let optionHtml, key;
+                        for (key in res.data) {
+                            if (selectedVal === res.data[key]['id']) {
+                                optionHtml = '<option value="' + res.data[key]['id'] + '" selected="selected">' + res.data[key][showField] + '</option>';
+                            } else {
+                                optionHtml = '<option value="' + res.data[key]['id'] + '">' + res.data[key][showField] + '</option>';
+                            }
 
+                            $(item).append(optionHtml);
+                        }
+
+                        layui.form.render('select');
+                    });
+                }
+                //监听所有下拉框onchange事件
+                if (rightField) {
+                    layui.form.on('select(' + id + ')', function (data) {
+                        let rightSearchUrl = $("#" + rightField, parentElem).data('url');
+                        let rightSearchField = $("#" + rightField, parentElem).data('searchfield') ? $(item).data('searchfield') : 'pid';//搜索的字段，默认是pid
+                        let rightSearchParam = {};
+                        rightSearchParam[rightSearchField] = {};
+                        rightSearchParam[rightSearchField].value = data.value;
+                        rightSearchParam[rightSearchField].condition = $("#" + rightField, parentElem).data('searchcondition') ? $("#" + rightField, parentElem).data('searchcondition') : "=";
+                        facade.ajax({
+                            path: rightSearchUrl,
+                            params: {search_param: rightSearchParam, no_page: 1},
+                            successAlert: false
+                        }).done(function (res) {
+                            let rightOptionTips = $("#" + rightField, parentElem).children().first().prop("outerHTML");
+                            $("#" + rightField, parentElem).empty();
+                            $("#" + rightField, parentElem).append(rightOptionTips);
+                            let rightOptionHtml, key;
+                            for (key in res.data) {
+                                rightOptionHtml = '<option value="' + res.data[key]['id'] + '">' + res.data[key]['name'] + '</option>';
+                                $("#" + rightField, parentElem).append(rightOptionHtml);
+                            }
+
+                            let nextRightField = $("#" + rightField, parentElem).data('rightfield');
+                            let nextOptionTips = "";
+                            while (nextRightField !== "" && nextRightField !== undefined) {
+                                nextOptionTips = $("#" + nextRightField, parentElem).children().first().prop("outerHTML");
+                                $("#" + nextRightField, parentElem).empty();
+                                $("#" + nextRightField, parentElem).append(nextOptionTips);
+                                nextRightField = $("#" + nextRightField, parentElem).data('rightField');
+                            }
+                            layui.form.render('select');
+                        });
+                    });
+                }
+                //如果有选中值，就请求渲染右侧下拉框
+                if (selectedVal !== "" && selectedVal !== undefined) {
+                    if (rightField !== "" && rightField !== undefined) {
+                        let selectedRightSearchUrl = $("#" + rightField, parentElem).data('url');
+                        let selectedRightSearchField = $("#" + rightField, parentElem).data('searchfield') ? $(item).data('searchfield') : 'pid';//搜索的字段，默认是pid
+                        let selectedRightSearchParam = {};
+                        selectedRightSearchParam[selectedRightSearchField] = {};
+                        selectedRightSearchParam[selectedRightSearchField].value = selectedVal;
+                        selectedRightSearchParam[selectedRightSearchField].condition = $("#" + selectedRightSearchField).data('searchcondition') ? $("#" + selectedRightSearchField).data('searchcondition') : "=";
+                        facade.ajax({
+                            path: selectedRightSearchUrl,
+                            params: {search_param: selectedRightSearchParam, no_page: 1},
+                            successAlert: false
+                        }).done(function (res) {
+                            let selectedRightOptionTips = $("#" + rightField, parentElem).children().first().prop("outerHTML");
+                            $("#" + rightField, parentElem).empty();
+                            $("#" + rightField, parentElem).append(selectedRightOptionTips);
+                            let selectedOptionHtml, key;
+                            for (key in res.data) {
+                                if (selectedVal === res.data[key]['id']) {
+                                    selectedOptionHtml = '<option value="' + res.data[key]['id'] + '" selected="selected">' + res.data[key][showField] + '</option>';
+                                } else {
+                                    selectedOptionHtml = '<option value="' + res.data[key]['id'] + '">' + res.data[key][showField] + '</option>';
+                                }
+                                $("#" + rightField, parentElem).append(selectedOptionHtml);
+                            }
+                            layui.form.render('select');
+                        });
+                    }
+                }
             });
         },
 
