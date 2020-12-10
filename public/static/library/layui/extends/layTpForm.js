@@ -335,7 +335,7 @@ layui.define(["jquery", "facade"], function (exports) {
                         let selectedRightSearchParam = {};
                         selectedRightSearchParam[selectedRightSearchField] = {};
                         selectedRightSearchParam[selectedRightSearchField].value = selectedVal;
-                        selectedRightSearchParam[selectedRightSearchField].condition = $("#" + selectedRightSearchField).data('searchcondition') ? $("#" + selectedRightSearchField).data('searchcondition') : "=";
+                        selectedRightSearchParam[selectedRightSearchField].condition = $("#" + selectedRightSearchField, parentElem).data('searchcondition') ? $("#" + selectedRightSearchField).data('searchcondition') : "=";
                         facade.ajax({
                             path: selectedRightSearchUrl,
                             params: {search_param: selectedRightSearchParam, no_page: 1},
@@ -344,9 +344,10 @@ layui.define(["jquery", "facade"], function (exports) {
                             let selectedRightOptionTips = $("#" + rightField, parentElem).children().first().prop("outerHTML");
                             $("#" + rightField, parentElem).empty();
                             $("#" + rightField, parentElem).append(selectedRightOptionTips);
+                            let rightSelectedVal = $("#" + rightField, parentElem).data('selectedval');
                             let selectedOptionHtml, key;
                             for (key in res.data) {
-                                if (selectedVal === res.data[key]['id']) {
+                                if (rightSelectedVal === res.data[key]['id']) {
                                     selectedOptionHtml = '<option value="' + res.data[key]['id'] + '" selected="selected">' + res.data[key][showField] + '</option>';
                                 } else {
                                     selectedOptionHtml = '<option value="' + res.data[key]['id'] + '">' + res.data[key][showField] + '</option>';

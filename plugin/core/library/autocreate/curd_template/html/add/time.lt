@@ -1,1 +1,0 @@
-<input type="text" class="layui-input" name="row[{%field%}]" id="{%field%}" autocomplete="off" laydate="true" laydate_type="{%laydate_type%}" placeholder="请选择时间">

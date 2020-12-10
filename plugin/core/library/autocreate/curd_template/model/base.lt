@@ -10,6 +10,8 @@ class {%modelClassName%} extends BaseModel
 {{%useSoftDel%}{%defaultSoftDelete%}
     //模型名
     protected $name = '{%modelName%}';
+    //新增的属性
+    {%append%}
 
     //时间戳字段转换
     {%autoTimeFormat%}
@@ -30,4 +32,7 @@ class {%modelClassName%} extends BaseModel
 
     //关联模型
     {%relationModel%}
+
+    //新增属性的方法
+    {%getAttrFun%}
 }

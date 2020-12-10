@@ -240,40 +240,6 @@ class Curd
         $this->controllerParam = ['tplName' => $tplName, 'data' => $data, 'fileName' => $this->controllerFileName];
     }
 
-    //时间选择器，int类型，自动类型转换
-    protected function autoTimeFormat()
-    {
-        $time_set = [];
-        $field_list_map = $this->field_list_map;
-        foreach ($this->curd_config['field_list'] as $k => $v) {
-            if ($v['form_type'] == 'time') {
-                if ($field_list_map[$v['field']]['DATA_TYPE'] == 'int') {
-                    if ($v['form_additional'] == 'datetime') {
-                        $time_set[$v['field']] = "\n\t\t" . '\'' . $v['field'] . '\'  =>  \'timestamp:Y-m-d H:i:s\',';
-                    } else if ($v['form_additional'] == 'month') {
-                        $time_set[$v['field']] = "\n\t\t" . '\'' . $v['field'] . '\'  =>  \'timestamp:Y-m\',';
-                    } else if ($v['form_additional'] == 'date') {
-                        $time_set[$v['field']] = "\n\t\t" . '\'' . $v['field'] . '\'  =>  \'timestamp:Y-m-d\',';
-                    }
-                }
-            }
-        }
-        if ($field_list_map['create_time']['DATA_TYPE'] == 'int') {
-            $time_set['create_time'] = "\n\t\t" . '\'create_time\'  =>  \'timestamp:Y-m-d H:i:s\',';
-        }
-        if ($field_list_map['update_time']['DATA_TYPE'] == 'int') {
-            $time_set['update_time'] = "\n\t\t" . '\'update_time\'  =>  \'timestamp:Y-m-d H:i:s\',';
-        }
-        if ($field_list_map['delete_time']['DATA_TYPE'] == 'int') {
-            $time_set['delete_time'] = "\n\t\t" . '\'delete_time\'  =>  \'timestamp:Y-m-d H:i:s\',';
-        }
-        if ($time_set) {
-            return 'protected $type = [' . implode('', $time_set) . "\n\t];";
-        } else {
-            return '';
-        }
-    }
-
     //生成controller层
     protected function createController()
     {
@@ -321,11 +287,74 @@ class Curd
         $data['modelClassName'] = $this->controllerModelClassName;
         $data['modelNamespace'] = str_replace('/', '\\', dirname('app/common/model/' . $this->midName));
         $data['relationModel'] = "";//$this->set_relation_model();
-        $data['autoTimeFormat'] = "";//$this->autoTimeFormat();
-        $data['autoCreateTime'] = "";//$this->set_auto_write_create_time();
-        $data['autoUpdateTime'] = "";//$this->set_auto_write_update_time();
-        $data['autoDeleteTime'] = "";//$this->set_auto_write_delete_time();
+        $data['autoTimeFormat'] = $this->autoTimeFormat();
+        $data['append'] = $this->modelAppend();
+        $data['getAttrFun'] = $this->getAttrFun();
+        $data['autoCreateTime'] = "";//$this->setAutoWriteCreateTime();
+        $data['autoUpdateTime'] = "";//$this->setAutoWriteUpdateTime();
+        $data['autoDeleteTime'] = "";//$this->setAutoWriteDeleteTime();
         $this->modelParam = ['tplName' => $tplName, 'data' => $data, 'fileName' => $this->modelFileName];
+    }
+
+    //时间选择器，int类型，自动类型转换
+    protected function autoTimeFormat()
+    {
+        $timeSet = [];
+        foreach ($this->fields as $k => $v) {
+            if ($v['form_type'] == 'laydate' && $v['data_type'] == 'integer') {
+                if ($v['addition']['date_type'] == 'datetime') {
+                    $timeSet[$v['field']] = "\n\t\t" . '\'' . $v['field'] . '\'  =>  \'timestamp:Y-m-d H:i:s\',';
+                } else if ($v['addition']['date_type'] == 'month') {
+                    $timeSet[$v['field']] = "\n\t\t" . '\'' . $v['field'] . '\'  =>  \'timestamp:Y-m\',';
+                } else if ($v['addition']['date_type'] == 'date') {
+                    $timeSet[$v['field']] = "\n\t\t" . '\'' . $v['field'] . '\'  =>  \'timestamp:Y-m-d\',';
+                }
+            }
+        }
+        if ($timeSet) {
+            return 'protected $type = [' . implode('', $timeSet) . "\n\t];";
+        } else {
+            return '';
+        }
+    }
+
+    /**
+     * 模型需要新增的属性
+     *  目前仅当integer类型的字段存储时间戳时，由于后台需要进行自动时间戳转换，但是有时候接口可能需要使用原始的整型时间戳，此时需要把数据库原始值查询出来
+     *  这里我们把数据库的原始值字段增加后缀 _database
+     * @return string
+     */
+    protected function modelAppend()
+    {
+        $append = [];
+        foreach ($this->fields as $k => $v) {
+            if ($v['form_type'] == 'laydate' && $v['data_type'] == 'integer') {
+                $append[] = '\'' . $v['field'] . '_database\',';
+            }
+        }
+        if ($append) {
+            return 'protected $append = [' . implode('', $append) . "];";
+        } else {
+            return '';
+        }
+    }
+
+    protected function getAttrFun()
+    {
+        $fun = [];
+        foreach ($this->fields as $k => $v) {
+            if ($v['form_type'] == 'laydate' && $v['data_type'] == 'integer') {
+                $fun[] = 'public function get' . ucfirst($this->convertUnderline($v['field'])) . 'DatabaseAttr($value, $data)' . "\n" .
+                    '{' . "\n\t\t" .
+                    'return strtotime($data[\'int_time\']);' . "\n\t" .
+                    '}';
+            }
+        }
+        if ($fun) {
+            return implode('', $fun) . "\n\t";
+        } else {
+            return '';
+        }
     }
 
     protected function createModel()
@@ -1045,6 +1074,33 @@ EOD;
         $data['searchField'] = $info['addition']['search_field'];
         $data['searchCondition'] = $info['addition']['search_condition'];
         $data['searchVal'] = $info['addition']['search_val'];
+        return $this->getReplacedTpl($name, $data);
+    }
+
+    public function getSearchLaydateHtml($info)
+    {
+        $name = 'html' . DS . 'search' . DS . 'laydate';
+        $data['field'] = $info['field'];
+        $data['comment'] = $info['comment'];
+        $data['laydateType'] = $info['addition']['date_type'];
+        if ($info['data_type'] == 'integer') {
+            if (in_array($info['form_type'], ['datetime', 'month', 'date'])) {
+                $data['searchType'] = 'BETWEEN_STRTOTIME';
+            } else {
+                $data['searchType'] = 'BETWEEN';
+            }
+        } else {
+            $data['searchType'] = 'BETWEEN';
+        }
+        return $this->getReplacedTpl($name, $data);
+    }
+
+    public function getLaydateHtml($info, $type)
+    {
+        $name = 'html' . DS . $type . DS . 'laydate';
+        $data['field'] = $info['field'];
+        $data['comment'] = $info['comment'];
+        $data['laydateType'] = $info['addition']['date_type'];
         return $this->getReplacedTpl($name, $data);
     }
 

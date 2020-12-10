@@ -49,6 +49,9 @@ trait Backend
     {
         $id = $this->request->param('id');
         $info = $this->model->find($id);
+        if (!$info) {
+            return $this->error('ID参数错误');
+        }
         $post = filter_post_data($this->request->post());
         foreach ($post as $k => $v) {
             $info->$k = $v;

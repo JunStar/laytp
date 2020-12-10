@@ -1,2 +1,0 @@
-<input type="text" class="layui-input" id="{%field%}" name="search_param[{%field%}][value]" laydate="true" laydate_type="{%laydate_type%}" laydate_range="true" placeholder="请选择时间">
-<input type="hidden" name="search_param[{%field%}][condition]" value="{%search_type%}">
