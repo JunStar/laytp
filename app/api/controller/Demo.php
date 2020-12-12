@@ -10,7 +10,7 @@ use laytp\controller\Api;
 class Demo extends Api
 {
     // 无需无需登录的接口，*表示全部
-    public $no_need_login = ['test1'];
+    public $noNeedLogin = ['test1'];
 
     /**
      * @ApiTitle    (需要登录的接口)
@@ -39,7 +39,7 @@ class Demo extends Api
      */
     public function test()
     {
-        $this->success('返回成功', $this->request->param());
+        return $this->success('返回成功', $this->request->param());
     }
 
     /**
@@ -64,6 +64,6 @@ class Demo extends Api
      */
     public function test1()
     {
-        $this->success('返回成功', ['action' => 'test1']);
+        return $this->success('返回成功', ['action' => 'test1']);
     }
 }
