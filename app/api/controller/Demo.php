@@ -27,15 +27,15 @@ class Demo extends Api
      * @ApiReturnParams   (name="data.id", type="string", description="参数id的值")
      * @ApiReturnParams   (name="data.name", type="string", description="参数name的值")
      * @ApiReturn
-     * ({
-     * "err_code": 0,
-     * "msg": "返回成功",
-     * "time": 1591168410,
-     * "data": {
-     * "id": "",
-     * "name": ""
-     * }
-     * })
+({
+    "err_code": 0,
+    "msg": "返回成功",
+    "time": 1591168410,
+    "data": {
+        "id": "",
+        "name": ""
+    }
+})
      */
     public function test()
     {
