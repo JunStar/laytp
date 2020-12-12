@@ -1,14 +1,15 @@
 <?php
 
-namespace plugin\core\service;
+namespace app\api\service;
 
 use think\Facade;
 
 /**
- * 后台用户服务门面
+ * Api用户服务门面
  * @package plugin\core\service
  * @method static mixed init() 初始化
  * @method static mixed getError() 获取错误信息
+ * @method static mixed emailRegLogin() 邮箱密码注册登录
  * @method static mixed logout() 退出登录
  * @method static mixed getUserInfo() 获取登录用户信息
  * @method static mixed getUser() 获取User模型

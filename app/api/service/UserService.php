@@ -1,14 +1,14 @@
 <?php
 declare (strict_types=1);
 
-namespace plugin\core\service;
+namespace app\api\service;
 
 use think\Service;
 
 /**
- * 后台用户服务提供者
+ * Api用户服务提供者
  * Class UserService
- * @package plugin\core\service
+ * @package app\api\service
  */
 class UserService extends Service
 {
@@ -19,7 +19,7 @@ class UserService extends Service
      */
     public function register()
     {
-        $this->app->bind('PluginCoreUser', User::class);
+        $this->app->bind('ApiUser', User::class);
     }
 
 
