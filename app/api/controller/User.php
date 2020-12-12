@@ -159,7 +159,7 @@ class User extends Api
     /*@formatter:on*/
     public function logout()
     {
-        if ($this->service_user->logout()) {
+        if (UserServiceFacade::logout()) {
             $this->success('注销成功');
         } else {
             $this->error($this->auth->getError());
