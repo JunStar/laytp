@@ -12,6 +12,7 @@ class Token extends Api
 {
     public $no_need_login = [];
 
+    /*@formatter:off*/
     /**
      * @ApiTitle    (检测Token是否过期)
      * @ApiSummary  (检测Token是否过期)
@@ -25,16 +26,17 @@ class Token extends Api
      * @ApiReturnParams   (name="data.token", type="string", description="用户登录凭证，token")
      * @ApiReturnParams   (name="data.expires_in", type="integer", description="token有效时间，单位秒")
      * @ApiReturn
-     * ({
-     * "err_code": 0,
-     * "msg": "Token有效",
-     * "time": 1591167181,
-     * "data": {
-     * "token": "827fb87e-2064-45c8-839a-128e195a7411",
-     * "expires_in": 1789
-     * }
-     * })
+({
+    "err_code": 0,
+    "msg": "Token有效",
+    "time": 1591167181,
+    "data": {
+        "token": "827fb87e-2064-45c8-839a-128e195a7411",
+        "expires_in": 1789
+    }
+})
      */
+    /*@formatter:on*/
     public function check()
     {
         $token = $this->service_user->getToken();
@@ -42,6 +44,7 @@ class Token extends Api
         $this->success('Token有效', ['token' => $tokenInfo['token'], 'expires_in' => $tokenInfo['expires_in']]);
     }
 
+    /*@formatter:off*/
     /**
      * @ApiTitle    (刷新Token)
      * @ApiSummary  (刷新Token)
@@ -55,16 +58,17 @@ class Token extends Api
      * @ApiReturnParams   (name="data.token", type="string", description="用户登录凭证，token")
      * @ApiReturnParams   (name="data.expires_in", type="integer", description="token有效时间，单位秒")
      * @ApiReturn
-     * ({
-     * "err_code": 0,
-     * "msg": "成功刷新Token",
-     * "time": 1591167423,
-     * "data": {
-     * "token": "e356df60-ff03-4f15-bb66-c0e3ef37f335",
-     * "expires_in": 1800
-    * }
-* })
+({
+    "err_code": 0,
+    "msg": "成功刷新Token",
+    "time": 1591167423,
+    "data": {
+        "token": "e356df60-ff03-4f15-bb66-c0e3ef37f335",
+        "expires_in": 1800
+    }
+})
      */
+    /*@formatter:on*/
     public function refresh()
     {
         //删除源Token

@@ -14,9 +14,10 @@ use laytp\controller\Api;
 class User extends Api
 {
     public $noNeedLogin = [
-        'emailLogin'
+        'emailLogin',
     ];
 
+    /*@formatter:off*/
     /**
      * @ApiTitle    (根据token获取用户信息)
      * @ApiSummary  (根据token获取用户信息)
@@ -33,26 +34,28 @@ class User extends Api
      * @ApiReturnParams   (name="data.avatar", type="string", description="头像")
      * @ApiReturnParams   (name="data.token", type="string", description="用户登录凭证,Token")
      * @ApiReturn
-     * ({
-     * "err_code": 0,
-     * "msg": "获取成功",
-     * "time": 1591149171,
-     * "data": {
-     * "id": 4,
-     * "mobile": "17603005414",
-     * "email": "",
-     * "username": "",
-     * "nickname": "",
-     * "avatar": "http://local.laytp.com/static/index/image/default.png",
-     * "token": "d32e5210-050d-4902-b4b2-0173da12e191"
-    * }
-* })
+({
+    "err_code": 0,
+    "msg": "获取成功",
+    "time": 1591149171,
+    "data": {
+        "id": 4,
+        "mobile": "17603005414",
+        "email": "",
+        "username": "",
+        "nickname": "",
+        "avatar": "http://local.laytp.com/static/index/image/default.png",
+        "token": "d32e5210-050d-4902-b4b2-0173da12e191"
+    }
+})
      */
+    /*@formatter:on*/
     public function info()
     {
         $this->success('获取成功', UserServiceFacade::getUserInfo());
     }
 
+    /*@formatter:off*/
     /**
      * @ApiTitle    (邮箱注册)
      * @ApiSummary  (邮箱注册)
@@ -66,19 +69,20 @@ class User extends Api
      * @ApiReturnParams   (name="time", type="integer", description="请求时间，Unix时间戳，单位秒")
      * @ApiReturnParams   (name="data.token", type="string", description="用户登录后得到的凭证，token")
      * @ApiReturn
-     * ({
-     * "err_code": 0,
-     * "msg": "操作成功",
-     * "time": 1584513627,
-     * "data": {
-     * "token": "b58ea1f0-e856-4ec4-b2b3-d852b9af86b5"
-    * }
-* })
+({
+    "err_code": 0,
+    "msg": "操作成功",
+    "time": 1584513627,
+    "data": {
+        "token": "b58ea1f0-e856-4ec4-b2b3-d852b9af86b5"
+    }
+})
      */
+    /*@formatter:on*/
     public function emailReg()
     {
-        $param['email'] = $this->request->param('email');
-        $param['password'] = $this->request->param('password');
+        $param['email']      = $this->request->param('email');
+        $param['password']   = $this->request->param('password');
         $param['repassword'] = $this->request->param('repassword');
 
         $validate = new EmailReg();
@@ -89,10 +93,11 @@ class User extends Api
                 $this->error('注册失败', UserServiceFacade::getError());
             }
         } else {
-            $this->error('注册失败',$validate->getError());
+            $this->error('注册失败', $validate->getError());
         }
     }
 
+    /*@formatter:off*/
     /**
      * @ApiTitle    (邮箱密码登录)
      * @ApiSummary  (邮箱密码登录)
@@ -105,17 +110,19 @@ class User extends Api
      * @ApiReturnParams   (name="time", type="integer", description="请求时间，Unix时间戳，单位秒")
      * @ApiReturnParams   (name="data.token", type="string", description="用户登录后得到的凭证，token")
      * @ApiReturn
-     * ({
-     * "err_code": 0,
-     * "msg": "操作成功",
-     * "time": 1584513627,
-     * "data": {
-     * "token": "b58ea1f0-e856-4ec4-b2b3-d852b9af86b5"
-    * }
-* })
+({
+    "err_code": 0,
+    "msg": "操作成功",
+    "time": 1584513627,
+    "data": {
+        "token": "b58ea1f0-e856-4ec4-b2b3-d852b9af86b5"
+    }
+})
      */
-    public function emailLogin(){
-        $param['email'] = $this->request->param('email');
+    /*@formatter:on*/
+    public function emailLogin()
+    {
+        $param['email']    = $this->request->param('email');
         $param['password'] = $this->request->param('password');
 
         $validate = new EmailLogin();
@@ -125,11 +132,12 @@ class User extends Api
             } else {
                 $this->error('登录失败', UserServiceFacade::getError());
             }
-        } else{
-            $this->error('登录失败',$validate->getError());
+        } else {
+            $this->error('登录失败', $validate->getError());
         }
     }
 
+    /*@formatter:off*/
     /**
      * @ApiTitle    (注销登录)
      * @ApiSummary  (注销登录信息)
@@ -141,13 +149,14 @@ class User extends Api
      * @ApiReturnParams   (name="time", type="integer", description="请求时间，Unix时间戳，单位秒")
      * @ApiReturnParams   (name="data", type="null", description="只会返回null")
      * @ApiReturn
-     * ({
-     * "err_code": 0,
-     * "msg": "注销成功",
-    * "time": 1584513627,
-    * "data": null
-* })
+({
+    "err_code": 0,
+    "msg": "注销成功",
+    "time": 1584513627,
+    "data": null
+})
      */
+    /*@formatter:on*/
     public function logout()
     {
         if ($this->service_user->logout()) {

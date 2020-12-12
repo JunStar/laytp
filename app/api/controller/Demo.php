@@ -12,8 +12,9 @@ class Demo extends Api
     // 无需无需登录的接口，*表示全部
     public $noNeedLogin = ['test1'];
 
+    /*@formatter:off*/
     /**
-     * @formatter:off
+     *
      * @ApiTitle    (需要登录的接口)
      * @ApiSummary  (需要登录的接口详细描述)
      * @ApiMethod   (POST)
@@ -28,22 +29,24 @@ class Demo extends Api
      * @ApiReturnParams   (name="data.id", type="string", description="参数id的值")
      * @ApiReturnParams   (name="data.name", type="string", description="参数name的值")
      * @ApiReturn
-* ({
-    * "err_code": 0,
-    * "msg": "返回成功",
-    * "time": 1591168410,
-    * "data": {
-        * "id": "",
-        * "name": ""
-     * }
-     * })
-     * @formatter:on
+
+({
+    "err_code": 0,
+    "msg": "返回成功",
+    "time": 1591168410,
+    "data": {
+        "id": "",
+        "name": ""
+    }
+})
      */
+    /*@formatter:on*/
     public function test()
     {
         return $this->success('返回成功', $this->request->param());
     }
 
+    /*@formatter:off*/
     /**
      * @ApiTitle    (无需登录的接口)
      * @ApiSummary  (无需登录的接口详细描述)
@@ -55,15 +58,16 @@ class Demo extends Api
      * @ApiReturnParams   (name="data", type="object", description="返回的数据对象")
      * @ApiReturnParams   (name="data.action", type="string", description="固定返回test1")
      * @ApiReturn
-     * ({
-     * "err_code": 0,
-     * "msg": "返回成功",
-     * "time": 1591168410,
-     * "data": {
-     * "action": "test1"
-    * }
-* })
+({
+    "err_code": 0,
+    "msg": "返回成功",
+    "time": 1591168410,
+    "data": {
+        "action": "test1"
+    }
+})
      */
+    /*@formatter:on*/
     public function test1()
     {
         return $this->success('返回成功', ['action' => 'test1']);
