@@ -5,6 +5,7 @@
 
 namespace laytp\controller;
 
+use api\middleware\Auth;
 use laytp\BaseController;
 use laytp\traits\JsonReturn;
 use think\facade\Cookie;
@@ -20,34 +21,20 @@ class Api extends BaseController
     protected $noNeedLogin = [];
 
     /**
-     * 用户数据逻辑层
-     * @var User
+     * 中间件
+     * @var array
      */
-    protected $logicUser = null;
+    protected $middleware = [
+        Auth::class
+    ];
 
     protected function initialize()
     {
-        $this->logicUser = User::instance();
-        if ($this->logicUser->isNeedLogin($this->noNeedLogin)) {
-            $token = $this->request->server('HTTP_TOKEN', $this->request->request('token', Cookie::get('token')));
-            $this->logicUser->init($token);
-            if (!$this->logicUser->isLogin()) {
-                return $this->error('请先登录', 10401);
-            }
-        }
-
+        //将无需登录的方法名数组设置到权限服务中
+        AuthServiceFacade::setNoNeedLogin($this->noNeedLogin);
         $this->_initialize();
     }
 
     // 初始化
     protected function _initialize(){}
-
-    //获取请求参数,兼容application/json和application/x-www-form-urlencoded的content-type
-    protected function getRequestParams(){
-        if($this->request->isJson()){
-            return $this->request->put();
-        }else{
-            return $this->request->param();
-        }
-    }
 }
