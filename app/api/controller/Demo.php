@@ -2,7 +2,7 @@
 
 namespace app\api\controller;
 
-use controller\Api;
+use laytp\controller\Api;
 
 /**
  * 示例接口

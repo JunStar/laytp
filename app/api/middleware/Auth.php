@@ -1,6 +1,6 @@
 <?php
 
-namespace api\middleware;
+namespace app\api\middleware;
 
 use plugin\core\service\AuthServiceFacade;
 use plugin\core\service\UserServiceFacade;

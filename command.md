@@ -21,7 +21,7 @@ php think migrate:run
 php think seed:create Laytp
 #执行数据插入
 php think seed:run
-#安装tp模板引擎
+#安装tp模板引擎，一键生成Api文档需要使用到
 composer require topthink/think-view
 #验证码库
 composer require topthink/think-captcha

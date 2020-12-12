@@ -5,10 +5,10 @@
 
 namespace laytp\controller;
 
-use api\middleware\Auth;
+use app\api\middleware\Auth;
+use app\api\service\AuthServiceFacade;
 use laytp\BaseController;
 use laytp\traits\JsonReturn;
-use think\facade\Cookie;
 
 class Api extends BaseController
 {

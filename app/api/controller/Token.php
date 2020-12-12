@@ -2,8 +2,8 @@
 
 namespace app\api\controller;
 
-use controller\Api;
-use library\Random;
+use laytp\controller\Api;
+use laytp\library\Random;
 
 /**
  * Token相关

@@ -4,7 +4,6 @@ namespace laytp\library;
 
 use think\exception\HttpException;
 use think\facade\Config;
-use think\facade\Env;
 use think\facade\Middleware;
 use think\facade\Request;
 use think\Response;
@@ -34,13 +33,13 @@ class PluginRoute extends Route
             define('LT_PLUGIN', $plugin);
         }
         $controller = $controller ? str_replace('.', '\\', trim($controller)) : 'Index';
-        $classAndAction = $this->getAddonClassAndAction($plugin, $controller);
+        $classAndAction = $this->getPluginClassAndAction($plugin, $controller);
 
         $this->request->setController($controller)->setAction($classAndAction['action']);
 
-        $common_func_file = Env::get('root_path') . DS . 'plugin' . DS . $plugin . DS . 'common.php';
+        $common_func_file = app()->getRootPath() . DS . 'plugin' . DS . $plugin . DS . 'common.php';
         if (file_exists($common_func_file)) {
-            include_once Env::get('root_path') . DS . 'plugin' . DS . $plugin . DS . 'common.php';
+            include_once app()->getRootPath() . DS . 'plugin' . DS . $plugin . DS . 'common.php';
         }
 
         $class = $classAndAction['class'];
@@ -94,7 +93,7 @@ class PluginRoute extends Route
      * @param $controller
      * @return array
      */
-    public function getAddonClassAndAction($plugin, $controller)
+    public function getPluginClassAndAction($plugin, $controller)
     {
         $request = Request::instance();
         $url = $request->url();
