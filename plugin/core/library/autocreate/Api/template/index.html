@@ -389,7 +389,7 @@
 
         var now_host = '';
         if (plugin) {
-            now_host = storage.getItem('{$plugin}api_url') ? storage.getItem('{$plugin}api_url') : '/plugins/{$plugin}';
+            now_host = storage.getItem('{$plugin}api_url') ? storage.getItem('{$plugin}api_url') : '/plugin/{$plugin}';
         } else {
             now_host = storage.getItem('{$plugin}api_url') ? storage.getItem('{$plugin}api_url') : window.location.protocol + "//" + window.location.host;
         }
@@ -397,27 +397,15 @@
         layui.form.on('submit({$plugin}api_url)', function (data) {
             if (storage) {
                 storage.setItem('token', data.field.token);
-                storage.setItem('{$plugin}api_url', data.field.
-                {
-                    $plugin
-                }
-                api_url
+                storage.setItem('{$plugin}api_url', data.field.{$plugin}api_url
             )
                 ;
                 layui.each($(".api-url"), function (key, item) {
                     var route = $(item).attr('route');
-                    var api_url = data.field.
-                    {
-                        $plugin
-                    }
-                    api_url;
+                    var api_url = data.field.{$plugin}api_url;
                     var complete_url = '';
                     if (api_url) {
-                        complete_url = data.field.
-                        {
-                            $plugin
-                        }
-                        api_url + route;
+                        complete_url = data.field.{$plugin}api_url + route;
                     } else {
                         complete_url = now_host + route;
                     }
@@ -455,7 +443,7 @@
                 }
             });
             if (plugin) {
-                var url = storage.getItem('{$plugin}api_url') ? storage.getItem('{$plugin}api_url') + $('#test_inline_' + id).attr('route') : '/plugins/{$plugin}' + $('#test_inline_' + id).attr('route');
+                var url = storage.getItem('{$plugin}api_url') ? storage.getItem('{$plugin}api_url') + $('#test_inline_' + id).attr('route') : '/plugin/{$plugin}' + $('#test_inline_' + id).attr('route');
             } else {
                 var url = storage.getItem('{$plugin}api_url') ? storage.getItem('{$plugin}api_url') + $('#test_inline_' + id).attr('route') : $('#test_inline_' + id).attr('route');
             }
