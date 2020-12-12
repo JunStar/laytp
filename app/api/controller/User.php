@@ -20,6 +20,7 @@ class User extends Api
     /**
      * @ApiTitle    (根据token获取用户信息)
      * @ApiSummary  (根据token获取用户信息)
+     * @ApiMethod   (GET)
      * @ApiHeaders  (name="token", type="string", required="true", description="用户登录后得到的Token")
      * @ApiReturnParams   (name="err_code", type="integer", description="错误码.0=没有错误，表示操作成功；1=常规错误码，客户端仅需提示msg；其他错误码与具体业务相关，其他错误码举例：10401。前端需要跳转至登录界面。")
      * @ApiReturnParams   (name="msg", type="string", description="返回描述")
@@ -44,8 +45,8 @@ class User extends Api
      * "nickname": "",
      * "avatar": "http://local.laytp.com/static/index/image/default.png",
      * "token": "d32e5210-050d-4902-b4b2-0173da12e191"
-     * }
-     * })
+    * }
+* })
      */
     public function info()
     {
@@ -71,8 +72,8 @@ class User extends Api
      * "time": 1584513627,
      * "data": {
      * "token": "b58ea1f0-e856-4ec4-b2b3-d852b9af86b5"
-     * }
-     * })
+    * }
+* })
      */
     public function emailReg()
     {
@@ -110,8 +111,8 @@ class User extends Api
      * "time": 1584513627,
      * "data": {
      * "token": "b58ea1f0-e856-4ec4-b2b3-d852b9af86b5"
-     * }
-     * })
+    * }
+* })
      */
     public function emailLogin(){
         $param['email'] = $this->request->param('email');
@@ -143,9 +144,9 @@ class User extends Api
      * ({
      * "err_code": 0,
      * "msg": "注销成功",
-     * "time": 1584513627,
-     * "data": null
-     * })
+    * "time": 1584513627,
+    * "data": null
+* })
      */
     public function logout()
     {

@@ -62,8 +62,8 @@ class Token extends Api
      * "data": {
      * "token": "e356df60-ff03-4f15-bb66-c0e3ef37f335",
      * "expires_in": 1800
-     * }
-     * })
+    * }
+* })
      */
     public function refresh()
     {
