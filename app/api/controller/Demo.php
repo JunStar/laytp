@@ -13,6 +13,7 @@ class Demo extends Api
     public $noNeedLogin = ['test1'];
 
     /**
+     * @formatter:off
      * @ApiTitle    (需要登录的接口)
      * @ApiSummary  (需要登录的接口详细描述)
      * @ApiMethod   (POST)
@@ -27,15 +28,16 @@ class Demo extends Api
      * @ApiReturnParams   (name="data.id", type="string", description="参数id的值")
      * @ApiReturnParams   (name="data.name", type="string", description="参数name的值")
      * @ApiReturn
-({
-    "err_code": 0,
-    "msg": "返回成功",
-    "time": 1591168410,
-    "data": {
-        "id": "",
-        "name": ""
-    }
-})
+* ({
+    * "err_code": 0,
+    * "msg": "返回成功",
+    * "time": 1591168410,
+    * "data": {
+        * "id": "",
+        * "name": ""
+     * }
+     * })
+     * @formatter:on
      */
     public function test()
     {
