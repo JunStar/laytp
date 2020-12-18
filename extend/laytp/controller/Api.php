@@ -1,8 +1,4 @@
 <?php
-/**
- * Api基类
- */
-
 namespace laytp\controller;
 
 use app\api\middleware\Auth;
@@ -10,6 +6,10 @@ use app\api\service\AuthServiceFacade;
 use laytp\BaseController;
 use laytp\traits\JsonReturn;
 
+/**
+ * Api应用控制器基类
+ * @package laytp\controller
+ */
 class Api extends BaseController
 {
     use JsonReturn;

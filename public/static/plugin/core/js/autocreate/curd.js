@@ -660,6 +660,7 @@ layui.use(["layTp"], function () {
                     url: "",
                     mime: "",
                     size: "",
+                    color: "",
                 }
             };
         }
@@ -974,6 +975,7 @@ layui.use(["layTp"], function () {
             '    <div class="layui-row margin-bottom6">' +
             '       <div>' +
             '           <label class="layui-form-label layui-form-required">待选颜色</label>' +
+            '           <div class="layui-input-block">' +
             '           <table class="layui-table">' +
             '               <thead>' +
             '                   <tr>' +
@@ -1004,6 +1006,7 @@ layui.use(["layTp"], function () {
             '                   </tr>' +
             '               </tbody>' +
             '           </table>' +
+            '           </div>' +
             '       </div>' +
             '    </div>' +
             '  </div>' +

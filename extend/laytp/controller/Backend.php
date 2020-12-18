@@ -1,14 +1,14 @@
 <?php
-/**
- * 后台控制器基类
- */
-
 namespace laytp\controller;
 
 use plugin\core\middleware\Auth;
 use plugin\core\service\AuthServiceFacade;
 use laytp\BaseController;
 
+/**
+ * 后台应用admin控制器基类
+ * @package laytp\controller
+ */
 class Backend extends BaseController
 {
     use \laytp\traits\Backend;
