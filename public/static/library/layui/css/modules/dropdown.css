@@ -1,4 +1,4 @@
-.layui-dropdown .layui-dropdown-option:hover{
+.layui-dropdown .layui-dropdown-option:hover {
     color: #5a8bff !important;
 }
 
@@ -19,15 +19,18 @@
     top: -6px;
     left: 10px;
 }
+
 .layui-dropdown-right .layui-dropdown-arrow-up {
     left: auto;
     right: 10px;
 }
+
 .layui-dropdown .layui-dropdown-select {
     border-radius: 3px;
     border: 1px solid #f1f1f1;
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
 }
+
 .layui-dropdown .layui-dropdown-option {
     position: relative;
     height: 38px;
@@ -36,6 +39,7 @@
     cursor: pointer;
     transition: all 0.3s ease;
 }
+
 .layui-dropdown .layui-dropdown-option .layui-icon {
     margin-right: 10px;
     font-size: 14px;
@@ -51,12 +55,15 @@
     top: 0;
     display: none;
 }
+
 .layui-dropdown .layui-dropdown-option:hover {
     background: #f6f9ff;
 }
+
 .layui-dropdown .layui-dropdown-option:hover > .layui-dropdown-select {
     display: block;
 }
+
 .layui-dropdown .layui-icon-right {
     float: right;
     position: absolute;
@@ -64,6 +71,7 @@
     top: 0;
     color: #aaa;
 }
+
 .layui-dropdown .layui-dropdown-title {
     padding-right: 20px;
 }

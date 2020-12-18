@@ -50,7 +50,7 @@ class Auth
             return true;
         }
         $noNeedLogin = array_map('strtolower', $noNeedLogin);
-        $request = Request::instance();
+        $request     = Request::instance();
         //判断当前请求的操作名是否存在于不需要登录的方法名数组中，如果存在，表明不需要登录，返回false
         if (in_array(strtolower($request->action()), $noNeedLogin) || in_array('*', $noNeedLogin)) {
             return false;
@@ -113,17 +113,17 @@ class Auth
     {
 //        $where[] = ['is_menu', '=', 1];
         $where[] = ['is_show', '=', 1];
-        $user = UserServiceFacade::getUser();
+        $user    = UserServiceFacade::getUser();
         //当前登录者如果是超级管理员，则拥有所有的权限列表
         if ($user->is_super_manager === 1) {
             $result = Menu::where($where)->select()->toArray();
         } else {
             //当前登录者如果不是超级管理员，先查询拥有哪些角色，通过角色查询出权限节点列表
             $plugin_core_user_id = UserServiceFacade::getUser()->id;
-            $role_ids = Role::where('plugin_core_user_id', '=', $plugin_core_user_id)->column('plugin_core_role_id');
-            $menu_ids = \plugin\core\model\role\Menu::where('plugin_core_role_id', 'in', $role_ids)->column('plugin_core_menu_id');
-            $where[] = ['id', 'in', $menu_ids];
-            $result = Menu::where($where)->select()->toArray();
+            $role_ids            = Role::where('plugin_core_user_id', '=', $plugin_core_user_id)->column('plugin_core_role_id');
+            $menu_ids            = \plugin\core\model\role\Menu::where('plugin_core_role_id', 'in', $role_ids)->column('plugin_core_menu_id');
+            $where[]             = ['id', 'in', $menu_ids];
+            $result              = Menu::where($where)->select()->toArray();
         }
         return $result;
     }
@@ -141,7 +141,7 @@ class Auth
     {
         if (!$user_id || !$node) return false;
         $authList = $this->getAuthList($user_id);
-        $authArr = [];
+        $authArr  = [];
         foreach ($authList as $k => $v) {
             $authArr[] = trim($v['rule'], '/');
         }

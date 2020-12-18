@@ -20,13 +20,13 @@ class User extends BaseModel
     //数组常量
     public $const = [
         'is_super_manager' => [
-            '2' => '否'
-            , '1' => '是'
+            '2'   => '否'
+            , '1' => '是',
         ],
-        'status' => [
-            '2' => '禁用'
-            , '1' => '正常'
-        ]
+        'status'           => [
+            '2'   => '禁用'
+            , '1' => '正常',
+        ],
     ];
 
     /**

@@ -38,16 +38,16 @@ class Api
         );
 
         $weighs = [];
-        $k = 0;
+        $k      = 0;
         foreach ($files as $name => $file) {
             if (!$file->isDir()) {
-                $filePath = $file->getRealPath();
-                $className = $this->getClassFromFile($filePath);
+                $filePath         = $file->getRealPath();
+                $className        = $this->getClassFromFile($filePath);
                 $classAnnotations = Extractor::getClassAnnotations($className);
                 if (isset($classAnnotations['ApiInternal'])) {
                     continue;
                 }
-                $weigh = isset($classAnnotations['ApiWeigh']) ? intval($classAnnotations['ApiWeigh'][0]) : $k;
+                $weigh                                      = isset($classAnnotations['ApiWeigh']) ? intval($classAnnotations['ApiWeigh'][0]) : $k;
                 $weighs[$this->getClassFromFile($filePath)] = $weigh;
                 $k++;
             }
@@ -59,15 +59,16 @@ class Api
 
         $classes = array_flip($weighs);
 
-        $builder = new Builder($classes);
-        $apiDir = __DIR__ . DS . 'Api' . DS;
-        $templateDir = $apiDir . 'template' . DS;
-        $templateFile = $templateDir . $this->template;
-        $var['plugin'] = '';
-        $var['title'] = $title;
-        $content = $builder->render($templateFile, $var);
+        $builder           = new Builder($classes);
+        $apiDir            = __DIR__ . DS . 'Api' . DS;
+        $templateDir       = $apiDir . 'template' . DS;
+        $templateFile      = $templateDir . $this->template;
+        $var['plugin']     = '';
+        $var['title']      = $title;
+        $var['api_domain'] = Env::get('domain.api_domain');
+        $content           = $builder->render($templateFile, $var);
 
-        $outputDir = app()->getRootPath() . DS . 'public' . DS;
+        $outputDir  = app()->getRootPath() . DS . 'public' . DS;
         $outputFile = $outputDir . $this->output;
         DirFile::createDir(dirname($outputFile));
         if (!file_put_contents($outputFile, $content)) {

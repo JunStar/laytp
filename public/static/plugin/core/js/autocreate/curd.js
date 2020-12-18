@@ -360,7 +360,7 @@ layui.use(["layTp"], function () {
             clickObj.parent().parent().remove();
         });
 
-        layui.form.on('select(data-from)', function(data){
+        layui.form.on('select(data-from)', function (data) {
             selectDataFrom(data.value);
         });
 

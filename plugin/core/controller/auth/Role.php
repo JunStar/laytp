@@ -30,22 +30,22 @@ class Role extends Backend
     {
         Db::startTrans();
         try {
-            $post = filter_post_data($this->request->post());
+            $post     = filter_post_data($this->request->post());
             $roleInfo = $this->model->getByName($post['name']);
             if ($roleInfo) {
                 return $this->error('角色名已存在');
             }
             $menuIds = explode(',', $post['menu_ids']);
             unset($post['menu_ids']);
-            $result[] = $this->model->save($post);
+            $result[]    = $this->model->save($post);
             $saveAllData = [];
             foreach ($menuIds as $menu_id) {
                 $saveAllData[] = [
                     'plugin_core_role_id' => $this->model->id,
-                    'plugin_core_menu_id' => $menu_id
+                    'plugin_core_menu_id' => $menu_id,
                 ];
             }
-            $menu = new Menu();
+            $menu     = new Menu();
             $result[] = $menu->saveAll($saveAllData);
             if (check_res($result)) {
                 Db::commit();
@@ -69,7 +69,7 @@ class Role extends Backend
         $id = $this->request->param('id');
 
         $postData = Request::only(['id', 'name', 'menu_ids']);
-        $post = filter_post_data($postData);
+        $post     = filter_post_data($postData);
 
         $roleInfo = $this->model->getByName($post['name']);
         if ($roleInfo && ($roleInfo['id'] != $id)) {
@@ -87,15 +87,15 @@ class Role extends Backend
                 $result[] = false;
             }
 
-            $result[] = Menu::where('plugin_core_role_id', '=', $id)->delete();
+            $result[]    = Menu::where('plugin_core_role_id', '=', $id)->delete();
             $saveAllData = [];
             foreach ($menuIds as $menu_id) {
                 $saveAllData[] = [
                     'plugin_core_role_id' => $id,
-                    'plugin_core_menu_id' => $menu_id
+                    'plugin_core_menu_id' => $menu_id,
                 ];
             }
-            $menu = new Menu();
+            $menu     = new Menu();
             $result[] = $menu->saveAll($saveAllData);
 
             if (check_res($result)) {
@@ -123,7 +123,7 @@ class Role extends Backend
         try {
             $idsArr = explode(',', $ids);
             $result = [];
-            $roles = $this->model->onlyTrashed()->where('id', 'in', $ids)->select();
+            $roles  = $this->model->onlyTrashed()->where('id', 'in', $ids)->select();
             foreach ($roles as $key => $item) {
                 $result[] = $item->force()->delete();
             }
@@ -152,9 +152,9 @@ class Role extends Backend
      */
     public function getMenuIds()
     {
-        $id = $this->request->param('id');
+        $id      = $this->request->param('id');
         $menuIds = Menu::where('plugin_core_role_id', '=', $id)->column('plugin_core_menu_id');
-        $auth = [];
+        $auth    = [];
         foreach ($menuIds as $menuId) {
             $hasChild = \plugin\core\model\Menu::where('pid', '=', $menuId)->find() ? true : false;
             if (!$hasChild) {

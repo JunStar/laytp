@@ -25,9 +25,9 @@ class Conf extends Backend
      */
     public function getGroup()
     {
-        $config = $this->model->where([
+        $config   = $this->model->where([
             ['group', '=', 'layTpSys'],
-            ['key', '=', 'configGroup']
+            ['key', '=', 'configGroup'],
         ])->value('value');
         $layTpSys = json_decode($config, true);
         unset($layTpSys['layTpSys']);
@@ -50,10 +50,10 @@ class Conf extends Backend
      */
     public function addGroup()
     {
-        $post = filter_post_data($this->request->post());
-        $config = $this->model->where([
+        $post     = filter_post_data($this->request->post());
+        $config   = $this->model->where([
             ['group', '=', 'layTpSys'],
-            ['key', '=', 'configGroup']
+            ['key', '=', 'configGroup'],
         ])->value('value');
         $layTpSys = json_decode($config, true);
         foreach ($layTpSys as $k => $v) {
@@ -65,12 +65,12 @@ class Conf extends Backend
             }
         }
         $layTpSys[] = [
-            'name' => $post['group_name']
+            'name'    => $post['group_name']
             , 'value' => $post['group']
-            , 'icon' => $post['icon']
+            , 'icon'  => $post['icon'],
         ];
-        $value = json_encode($layTpSys, JSON_UNESCAPED_UNICODE);
-        $update = $this->model
+        $value      = json_encode($layTpSys, JSON_UNESCAPED_UNICODE);
+        $update     = $this->model
             ->where('group', '=', 'layTpSys')
             ->where('key', '=', 'configGroup')
             ->update(['value' => $value]);
@@ -86,15 +86,15 @@ class Conf extends Backend
      */
     public function editGroup()
     {
-        $group = $this->request->param('group');
+        $group      = $this->request->param('group');
         $group_name = $this->request->param('group_name');
-        $icon = $this->request->param('icon');
+        $icon       = $this->request->param('icon');
         if (!$group) {
             return $this->error('group不能为空');
         }
-        $config = $this->model->where([
+        $config   = $this->model->where([
             ['group', '=', 'layTpSys'],
-            ['key', '=', 'configGroup']
+            ['key', '=', 'configGroup'],
         ])->value('value');
         $layTpSys = json_decode($config, true);
         foreach ($layTpSys as $k => $v) {
@@ -103,7 +103,7 @@ class Conf extends Backend
                 $layTpSys[$k]['icon'] = $icon;
             }
         }
-        $value = json_encode($layTpSys, JSON_UNESCAPED_UNICODE);
+        $value  = json_encode($layTpSys, JSON_UNESCAPED_UNICODE);
         $update = $this->model
             ->where('group', '=', 'layTpSys')
             ->where('key', '=', 'configGroup')
@@ -118,10 +118,10 @@ class Conf extends Backend
     //删除分组
     public function delGroup()
     {
-        $group = $this->request->param('group');
-        $config = $this->model->where([
+        $group    = $this->request->param('group');
+        $config   = $this->model->where([
             ['group', '=', 'layTpSys'],
-            ['key', '=', 'configGroup']
+            ['key', '=', 'configGroup'],
         ])->value('value');
         $layTpSys = json_decode($config, true);
         if (in_array($group, ['basic', 'upload'])) {
@@ -135,13 +135,13 @@ class Conf extends Backend
         }
         Db::startTrans();
         try {
-            $value = json_encode($layTpSys, JSON_UNESCAPED_UNICODE);
+            $value    = json_encode($layTpSys, JSON_UNESCAPED_UNICODE);
             $result[] = $this->model
                 ->where('group', '=', 'layTpSys')
                 ->where('key', '=', 'configGroup')
                 ->update(['value' => $value]);
-            $res = $this->model->where([
-                ['group', '=', $group]
+            $res      = $this->model->where([
+                ['group', '=', $group],
             ])->delete();
             $result[] = $res === false ? false : true;
             if (check_res($result)) {
@@ -166,14 +166,14 @@ class Conf extends Backend
         //检测group,key是否存在
         $keyExist = $this->model->where([
             ['group', '=', $post['group']],
-            ['key', '=', $post['key']]
+            ['key', '=', $post['key']],
         ])->find();
         if ($keyExist) {
             return $this->error('变量名' . $post['key'] . '已存在');
         }
         $keyExist = $this->model->where([
             ['group', '=', $post['group']],
-            ['name', '=', $post['name']]
+            ['name', '=', $post['name']],
         ])->find();
         if ($keyExist) {
             return $this->error('配置名称' . $post['name'] . '已存在');
@@ -181,17 +181,17 @@ class Conf extends Backend
         //处理content字段值
         if (in_array($post['type'], ['select_single', 'select_multi', 'checkbox', 'switch'])) {
             $content = array_filter(explode("\n", $post['content']));
-            $return = [];
+            $return  = [];
             foreach ($content as $v) {
-                $temp = explode('=', $v);
+                $temp     = explode('=', $v);
                 $return[] = ['value' => $temp[0], 'text' => $temp[1]];
             }
             $post['content'] = json_encode($return, JSON_UNESCAPED_UNICODE);
         } else if (in_array($post['type'], ['image_single', 'image_multi', 'file_single', 'file_multi'])) {
             $content = array_filter(explode("\n", $post['content']));
-            $return = [];
+            $return  = [];
             foreach ($content as $v) {
-                $temp = explode('=', $v);
+                $temp             = explode('=', $v);
                 $return[$temp[0]] = $temp[1];
             }
             $post['content'] = json_encode($return, JSON_UNESCAPED_UNICODE);
@@ -209,7 +209,7 @@ class Conf extends Backend
     //编辑配置项
     public function editConfig()
     {
-        $id = $this->request->param('id', 0, 'intval');
+        $id     = $this->request->param('id', 0, 'intval');
         $config = $this->model->find($id);
         if (!$config) {
             return $this->error('id参数错误');
@@ -222,17 +222,17 @@ class Conf extends Backend
             //处理content字段值
             if (in_array($post['type'], ['select_single', 'select_multi', 'checkbox', 'switch'])) {
                 $content = array_filter(explode("\n", $post['content']));
-                $return = [];
+                $return  = [];
                 foreach ($content as $v) {
-                    $temp = explode('=', $v);
+                    $temp     = explode('=', $v);
                     $return[] = ['value' => $temp[0], 'text' => $temp[1]];
                 }
                 $post['content'] = json_encode($return, JSON_UNESCAPED_UNICODE);
             } else if (in_array($post['type'], ['image_single', 'image_multi', 'file_single', 'file_multi'])) {
                 $content = array_filter(explode("\n", $post['content']));
-                $return = [];
+                $return  = [];
                 foreach ($content as $v) {
-                    $temp = explode('=', $v);
+                    $temp             = explode('=', $v);
                     $return[$temp[0]] = $temp[1];
                 }
                 $post['content'] = json_encode($return, JSON_UNESCAPED_UNICODE);
@@ -262,7 +262,7 @@ class Conf extends Backend
         }
         if (in_array($config->group . '.' . $config->key, [
             'basic.siteName', 'basic.loginNeedCaptcha', 'basic.firstMenuNum',
-            'upload.domain', 'upload.size', 'upload.mime', 'upload.type'
+            'upload.domain', 'upload.size', 'upload.mime', 'upload.type',
         ])) {
             return $this->error('不允许删除此配置');
         }
@@ -277,7 +277,7 @@ class Conf extends Backend
     //保存配置
     public function set()
     {
-        $post = $this->request->post();
+        $post  = $this->request->post();
         $group = $post['group'];
         unset($post['group']);
         foreach ($post as $k => $v) {
@@ -317,8 +317,8 @@ class Conf extends Backend
     {
         try {
             //写入配置文件
-            $fileName = root_path() . DS . 'config' . DS . 'laytp.php';
-            $config = $this->model->field('group,key,value,type')->select()->toArray();
+            $fileName     = root_path() . DS . 'config' . DS . 'laytp.php';
+            $config       = $this->model->field('group,key,value,type')->select()->toArray();
             $resultConfig = [];
             foreach ($config as $k => $v) {
                 if ($v['type'] == 'array') {

@@ -75,14 +75,12 @@
         margin-top: 0px;
         margin-bottom: 16px;
     }
-
     .layui-tab-content ul li {
         margin-top: 5px;
         margin-left: 35px;
         margin-bottom: 16px;
         list-style-type: disc;
     }
-
     li {
         display: list-item;
         text-align: -webkit-match-parent;
@@ -134,17 +132,17 @@
                 </div>
                 <label class="layui-form-label" style="color: #ffffff!important;">ApiUrl:</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="{$plugin}api_url" id="{$plugin}api_url" lay-verify="{$plugin}api_url"
+                    <input type="text" name="{$plugin}ApiUrl" id="{$plugin}ApiUrl" lay-verify="{$plugin}ApiUrl"
                            autocomplete="off" placeholder="http://www.domain.com/" class="layui-input">
                 </div>
-                <button class="layui-btn layui-btn-primary" lay-submit="" lay-filter="{$plugin}api_url">保存</button>
+                <button class="layui-btn layui-btn-primary" lay-submit="" lay-filter="{$plugin}ApiUrl">保存</button>
             </div>
         </div>
     </div>
 </div>
 <div class="layui-container laytp-theme-10" style="top: 60px;">
     <div class="layui-row layui-col-space10">
-        <div class="layui-col-md2" style="position:fixed;max-height:85%;overflow:auto">
+        <div class="layui-col-md3" style="position:fixed;max-height:85%;overflow:auto">
             <div class="layui-collapse" lay-accordion>
                 {foreach $docslist as $k=>$v}
                 <div class="layui-colla-item">
@@ -158,8 +156,8 @@
                 {/foreach}
             </div>
         </div>
-        <div class="layui-col-md2">&nbsp;</div>
-        <div class="layui-col-md10">
+        <div class="layui-col-md3">&nbsp;</div>
+        <div class="layui-col-md9">
             <div class="layui-collapse" lay-accordion>
                 {foreach $docslist as $k=>$v}
                 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
@@ -361,7 +359,9 @@
 </div>
 </body>
 <script>
-    layui.use(['element', 'code', 'form'], function () {
+    let apiDomain = "{$api_domain}";
+    /*@formatter:off*/
+    layui.use(['element','code','form','facade'], function(){
         let element = layui.element;
         let $ = layui.$;
 
@@ -381,35 +381,23 @@
 
         if (storage) {
             $('#token').val(storage.getItem('token'));
-            $('#{$plugin}api_url').val(storage.getItem('{$plugin}api_url'));
+            $('#{$plugin}ApiUrl').val(storage.getItem('{$plugin}ApiUrl'));
         } else {
             alert('Your browser does not support local storage');
         }
 
-        var now_host = '';
-        if (plugin) {
-            now_host = storage.getItem('{$plugin}api_url') ? storage.getItem('{$plugin}api_url') : '/plugin/{$plugin}';
-        } else {
-            now_host = storage.getItem('{$plugin}api_url') ? storage.getItem('{$plugin}api_url') : window.location.protocol + "//" + window.location.host;
+        var nowHost = '';
+        if(plugin){
+            nowHost = storage.getItem('{$plugin}ApiUrl') ? storage.getItem('{$plugin}ApiUrl') : '/plugins/{$plugin}';
+        }else{
+            nowHost = storage.getItem('{$plugin}ApiUrl') ? storage.getItem('{$plugin}ApiUrl') : window.location.protocol + "//" + window.location.host;
         }
 
-        layui.form.on('submit({$plugin}api_url)', function (data) {
+        layui.form.on('submit({$plugin}ApiUrl)', function(data){
             if (storage) {
                 storage.setItem('token', data.field.token);
-                storage.setItem('{$plugin}api_url', data.field.{$plugin}api_url
-            )
-                ;
-                layui.each($(".api-url"), function (key, item) {
-                    var route = $(item).attr('route');
-                    var api_url = data.field.{$plugin}api_url;
-                    var complete_url = '';
-                    if (api_url) {
-                        complete_url = data.field.{$plugin}api_url + route;
-                    } else {
-                        complete_url = now_host + route;
-                    }
-                    $(item).html(complete_url);
-                });
+                storage.setItem('{$plugin}ApiUrl', data.field.{$plugin}ApiUrl);
+                api.formatRoute();
             } else {
                 alert('Your browser does not support local storage');
             }
@@ -417,34 +405,64 @@
 
         var api = {};
 
-        $(document).ready(function () {
-            layui.each($(".api-url"), function (key, item) {
-                var html = $(item).html();
-                var complete_url = now_host + html;
-                $(item).html(complete_url);
+        api.formatRoute = function(){
+            layui.each($(".api-url"),function(key,item) {
+                var route = $(item).attr('route');
+                if(location.host === apiDomain){
+                    route = facade.ltrim(route, "/");
+                    route = facade.ltrim(route, "api");
+                }
+                var apiUrl = storage.getItem('{$plugin}ApiUrl');
+                var completeUrl = '';
+                if(apiUrl){
+                    completeUrl = apiUrl + route;
+                }else{
+                    completeUrl = nowHost + route;
+                }
+                $(item).html(completeUrl);
             });
+            layui.each($(".api-route"),function(key,item) {
+                var route = $(item).html();
+                if(location.host === apiDomain){
+                    route = facade.ltrim(route, "/");
+                    route = facade.ltrim(route, "api");
+                }
+                $(item).html(route);
+            });
+        };
+
+        $(document).ready(function(){
+            api.formatRoute();
         });
 
-        api.show = function (id) {
-            let css = $('#' + id + '_content').attr('class');
-            if (css.indexOf('layui-show') == -1) {
-                $('#' + id).click();
+        api.show = function(id){
+            let css = $('#'+id+'_content').attr('class');
+            if( css.indexOf('layui-show') === -1 ){
+                $('#'+id).click();
             }
         };
 
-        api.test_inline = function (id) {
+        api.test_inline = function(id){
             let formData = new FormData();
-            $('#test_inline_' + id).find('input').each(function (i, input) {
-                if ($(input).attr('type') == 'file') {
+            $('#test_inline_'+id).find('input').each(function (i, input) {
+                if ($(input).attr('type') === 'file') {
                     formData.append($(input).attr('name'), $(input)[0].files[0]);
                 } else {
                     formData.append($(input).attr('name'), $(input).val())
                 }
             });
-            if (plugin) {
-                var url = storage.getItem('{$plugin}api_url') ? storage.getItem('{$plugin}api_url') + $('#test_inline_' + id).attr('route') : '/plugin/{$plugin}' + $('#test_inline_' + id).attr('route');
-            } else {
-                var url = storage.getItem('{$plugin}api_url') ? storage.getItem('{$plugin}api_url') + $('#test_inline_' + id).attr('route') : $('#test_inline_' + id).attr('route');
+
+            var route = $('#test_inline_'+id).attr('route');
+            if(location.host === apiDomain){
+                route = facade.ltrim(route, "/");
+                route = facade.ltrim(route, "api");
+            }
+            var apiUrl = storage.getItem('{$plugin}ApiUrl');
+            var url = '';
+            if(apiUrl){
+                url = apiUrl + route;
+            }else{
+                url = nowHost + route;
             }
 
             let headers = {};
@@ -454,7 +472,7 @@
                 headers['token'] = token;
             }
 
-            $("#test_inline_headers_" + id + " input[type=text]").each(function () {
+            $("#test_inline_headers_"+id+" input[type=text]").each(function () {
                 val = $(this).val();
                 if (val.length > 0) {
                     headers[$(this).prop('name')] = val;
@@ -463,8 +481,8 @@
 
             $.ajax({
                 url: url,
-                data: $('#test_inline_' + id).prop('method').toLowerCase() == 'get' ? $('#test_inline_' + id).serialize() : formData,
-                type: $('#test_inline_' + id).prop('method') + '',
+                data: $('#test_inline_'+id).prop('method').toLowerCase() == 'get' ? $('#test_inline_'+id).serialize() : formData,
+                type: $('#test_inline_'+id).prop('method') + '',
                 dataType: 'json',
                 headers: headers,
                 contentType: false,
@@ -473,12 +491,12 @@
                     console.log(data);
                     if (typeof data === 'object') {
                         var str = JSON.stringify(data, null, 2);
-                        $('#response_' + id).html(hljs.highlightAuto(str).value);
+                        $('#response_'+id).html(hljs.highlightAuto(str).value);
                     } else {
-                        $('#response_' + id).html(data || '');
+                        $('#response_'+id).html(data || '');
                     }
-                    $('#response_headers_' + id).html('HTTP ' + xhr.status + ' ' + xhr.statusText + '<br/><br/>' + xhr.getAllResponseHeaders());
-                    $('#response_card_' + id).show();
+                    $('#response_headers_'+id).html('HTTP ' + xhr.status + ' ' + xhr.statusText + '<br/><br/>' + xhr.getAllResponseHeaders());
+                    $('#response_card_'+id).show();
                 },
                 error: function (xhr) {
                     try {
@@ -486,9 +504,9 @@
                     } catch (e) {
                         var str = xhr.responseText;
                     }
-                    $('#response_headers_' + id).html('HTTP ' + xhr.status + ' ' + xhr.statusText + '<br/><br/>' + xhr.getAllResponseHeaders());
-                    $('#response_' + id).html(hljs.highlightAuto(str).value);
-                    $('#response_card_' + id).show();
+                    $('#response_headers_'+id).html('HTTP ' + xhr.status + ' ' + xhr.statusText + '<br/><br/>' + xhr.getAllResponseHeaders());
+                    $('#response_'+id).html(hljs.highlightAuto(str).value);
+                    $('#response_card_'+id).show();
                 }
             });
             return false;
@@ -497,10 +515,10 @@
         window.api = api;
 
         //点击目录滑动跳转
-        $('.navItems').click(function () {
+        $('.navItems').click(function() {
             var navto = $(this).attr('navto');
             api.show(navto);
-            if (navto != "#") {
+            if(navto != "#") {
                 var $div = $('#' + navto);
                 var top = $div.offset().top || 0;
                 $('html,body').animate({
@@ -515,5 +533,6 @@
 
         });
     });
+    /*@formatter:on*/
 </script>
 </html>

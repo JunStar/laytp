@@ -26,7 +26,7 @@ class Login extends Backend
         }
         //设置登录信息
         $user_id = User::where('username', '=', $param['username'])->value('id');
-        $token = Random::uuid();
+        $token   = Random::uuid();
         Token::set($token, $user_id, 24 * 60 * 60 * 3);
         return $this->success('登录成功', ['laytp_admin_token' => $token]);
     }

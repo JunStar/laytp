@@ -37,7 +37,7 @@ class Field extends Backend
                 }
                 $post['addition']['default'] = $default;
             } else if ($post['form_type'] === 'upload') {
-                $post['addition']['width'] = intval($post['addition']['width']);
+                $post['addition']['width']  = intval($post['addition']['width']);
                 $post['addition']['height'] = intval($post['addition']['height']);
             } else if ($post['form_type'] === 'xm_select' && $post['addition']['data_from_type'] === 'data') {
                 $default = [];
@@ -67,7 +67,7 @@ class Field extends Backend
     //编辑
     public function edit()
     {
-        $id = $this->request->param('id');
+        $id   = $this->request->param('id');
         $info = $this->model->find($id);
         $post = $this->request->post();
         if (array_key_exists('addition', $post)) {
@@ -89,7 +89,7 @@ class Field extends Backend
                 }
                 $post['addition']['default'] = $default;
             } else if ($post['form_type'] === 'upload') {
-                $post['addition']['width'] = intval($post['addition']['width']);
+                $post['addition']['width']  = intval($post['addition']['width']);
                 $post['addition']['height'] = intval($post['addition']['height']);
             } else if ($post['form_type'] === 'xm_select' && $post['addition']['data_from_type'] === 'data') {
                 $default = [];

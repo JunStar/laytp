@@ -30,8 +30,8 @@ class Auth extends BaseMiddleware
             if (AuthServiceFacade::needAuth()) {
                 $user = UserServiceFacade::getUser();
                 if (!$user->is_super_manager) {
-                    $user_id = $user->id;
-                    $plugin = defined('LT_PLUGIN') ? LT_PLUGIN : '';
+                    $user_id    = $user->id;
+                    $plugin     = defined('LT_PLUGIN') ? LT_PLUGIN : '';
                     $controller = str_replace("\\", ".", $request->controller());
                     if ($plugin) {
                         $node = 'plugin/' . $plugin . '/' . $controller . '/' . $request->action();

@@ -26,10 +26,10 @@ class Menu extends Backend
      */
     public function index()
     {
-        $sourceData = $this->model->order($this->order)->select()->toArray();
+        $sourceData  = $this->model->order($this->order)->select()->toArray();
         $menuTreeObj = Tree::instance();
         $menuTreeObj->init($sourceData);
-        $data = $menuTreeObj->getTreeArray(0);
+        $data   = $menuTreeObj->getTreeArray(0);
         $noPage = $this->request->param('no_page');
         if ($noPage) {
             $data = $menuTreeObj->getTreeList($data);
@@ -43,7 +43,7 @@ class Menu extends Backend
     public function getData()
     {
         //当前登录者拥有的权限节点列表数据
-        $sourceData = $this->model->order($this->order)->select()->toArray();
+        $sourceData  = $this->model->order($this->order)->select()->toArray();
         $menuTreeObj = Tree::instance();
         $menuTreeObj->init($sourceData);
         //由列表数据转化成树形结构数据
@@ -54,7 +54,7 @@ class Menu extends Backend
     //编辑
     public function edit()
     {
-        $id = $this->request->param('id');
+        $id   = $this->request->param('id');
         $info = $this->model->find($id);
         if ($this->request->isAjax() && $this->request->isPost()) {
             $post = filter_post_data($this->request->post());

@@ -52,9 +52,9 @@ class User
                 $this->setError('账号被禁用，请联系管理员');
                 return false;
             }
-            $this->_user = $user;
+            $this->_user    = $user;
             $this->_isLogin = true;
-            $this->_token = $token;
+            $this->_token   = $token;
             return true;
         } else {
             $this->setError('账号不存在，请重新登录');
@@ -94,10 +94,10 @@ class User
      */
     public function getUserInfo()
     {
-        $data = $this->_user->toArray();
+        $data        = $this->_user->toArray();
         $allowFields = $this->getAllowFields();
-        $userInfo = array_intersect_key($data, array_flip($allowFields));
-        $userInfo = array_merge($userInfo, ['token' => $this->_token]);
+        $userInfo    = array_intersect_key($data, array_flip($allowFields));
+        $userInfo    = array_merge($userInfo, ['token' => $this->_token]);
         return $userInfo;
     }
 

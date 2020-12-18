@@ -13,17 +13,17 @@ class Profile extends Validate
         'username' => 'require|length:2,30|checkUsername:',
         'nickname' => 'require|length:2,30|checkNickname:',
         'password' => 'length:6,30|confirm:re_password',
-        'avatar' => 'require',
+        'avatar'   => 'require',
     ];
 
     //定义内置方法检验失败后返回的字符
     protected $message = [
         'username.require' => '用户名不能为空',
-        'username.length' => '用户名长度2-30',
+        'username.length'  => '用户名长度2-30',
         'nickname.require' => '昵称不能为空',
-        'nickname.length' => '昵称长度2-30',
+        'nickname.length'  => '昵称长度2-30',
         'password.confirm' => '两次密码输入不相同',
-        'avatar.require' => '请上传头像',
+        'avatar.require'   => '请上传头像',
     ];
 
     //检测用户名

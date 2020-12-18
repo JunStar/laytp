@@ -48,15 +48,15 @@ class Builder
             return [];
         }
 
-        $headerslist = array();
+        $headerslist = [];
         foreach ($docs['ApiHeaders'] as $params) {
-            $tr = array(
-                'name' => $params['name'],
-                'type' => $params['type'],
-                'sample' => isset($params['sample']) ? $params['sample'] : '',
-                'required' => isset($params['required']) ? $params['required'] : false,
+            $tr            = [
+                'name'        => $params['name'],
+                'type'        => $params['type'],
+                'sample'      => isset($params['sample']) ? $params['sample'] : '',
+                'required'    => isset($params['required']) ? $params['required'] : false,
                 'description' => isset($params['description']) ? $params['description'] : '',
-            );
+            ];
             $headerslist[] = $tr;
         }
 
@@ -69,15 +69,15 @@ class Builder
             return [];
         }
 
-        $paramslist = array();
+        $paramslist = [];
         foreach ($docs['ApiParams'] as $params) {
-            $tr = array(
-                'name' => $params['name'],
-                'type' => isset($params['type']) ? $params['type'] : 'string',
-                'sample' => isset($params['sample']) ? $params['sample'] : '',
-                'required' => isset($params['required']) ? $params['required'] : true,
+            $tr           = [
+                'name'        => $params['name'],
+                'type'        => isset($params['type']) ? $params['type'] : 'string',
+                'sample'      => isset($params['sample']) ? $params['sample'] : '',
+                'required'    => isset($params['required']) ? $params['required'] : true,
                 'description' => isset($params['description']) ? $params['description'] : '',
-            );
+            ];
             $paramslist[] = $tr;
         }
 
@@ -90,15 +90,15 @@ class Builder
             return [];
         }
 
-        $headerslist = array();
+        $headerslist = [];
         foreach ($docs['ApiReturnHeaders'] as $params) {
-            $tr = array(
-                'name' => $params['name'],
-                'type' => 'string',
-                'sample' => isset($params['sample']) ? $params['sample'] : '',
-                'required' => isset($params['required']) && $params['required'] ? 'Yes' : 'No',
+            $tr            = [
+                'name'        => $params['name'],
+                'type'        => 'string',
+                'sample'      => isset($params['sample']) ? $params['sample'] : '',
+                'required'    => isset($params['required']) && $params['required'] ? 'Yes' : 'No',
                 'description' => isset($params['description']) ? $params['description'] : '',
-            );
+            ];
             $headerslist[] = $tr;
         }
 
@@ -111,14 +111,14 @@ class Builder
             return [];
         }
 
-        $paramslist = array();
+        $paramslist = [];
         foreach ($st_params['ApiReturnParams'] as $params) {
-            $tr = array(
-                'name' => $params['name'],
-                'type' => isset($params['type']) ? $params['type'] : 'string',
-                'sample' => isset($params['sample']) ? $params['sample'] : '',
+            $tr           = [
+                'name'        => $params['name'],
+                'type'        => isset($params['type']) ? $params['type'] : 'string',
+                'sample'      => isset($params['sample']) ? $params['sample'] : '',
                 'description' => isset($params['description']) ? $params['description'] : '',
-            );
+            ];
             $paramslist[] = $tr;
         }
 
@@ -128,14 +128,14 @@ class Builder
     protected function generateBadgeForMethod($data)
     {
         $method = strtoupper(is_array($data['ApiMethod'][0]) ? $data['ApiMethod'][0]['data'] : $data['ApiMethod'][0]);
-        $labes = array(
-            'POST' => 'label-primary',
-            'GET' => 'label-success',
-            'PUT' => 'label-warning',
-            'DELETE' => 'label-danger',
-            'PATCH' => 'label-default',
-            'OPTIONS' => 'label-info'
-        );
+        $labes  = [
+            'POST'    => 'label-primary',
+            'GET'     => 'label-success',
+            'PUT'     => 'label-warning',
+            'DELETE'  => 'label-danger',
+            'PATCH'   => 'label-default',
+            'OPTIONS' => 'label-info',
+        ];
 
         return isset($labes[$method]) ? $labes[$method] : $labes['GET'];
     }
@@ -144,8 +144,8 @@ class Builder
     {
         $annotations = $this->extractAnnotations();
 
-        $counter = 0;
-        $section = null;
+        $counter  = 0;
+        $section  = null;
         $docslist = [];
         foreach ($annotations as $class => $methods) {
             foreach ($methods as $name => $docs) {
@@ -159,19 +159,19 @@ class Builder
                 }
 
                 $docslist[$section][] = [
-                    'id' => $counter,
-                    'title' => $docs['ApiTitle'][0],
-                    'method' => is_array($docs['ApiMethod'][0]) ? $docs['ApiMethod'][0]['data'] : $docs['ApiMethod'][0],
-                    'method_label' => $this->generateBadgeForMethod($docs),
-                    'section' => $section,
-                    'route' => is_array($docs['ApiRoute'][0]) ? $docs['ApiRoute'][0]['data'] : $docs['ApiRoute'][0],
-                    'summary' => is_array($docs['ApiSummary'][0]) ? $docs['ApiSummary'][0]['data'] : $docs['ApiSummary'][0],
-                    'body' => isset($docs['ApiBody'][0]) ? is_array($docs['ApiBody'][0]) ? $docs['ApiBody'][0]['data'] : $docs['ApiBody'][0] : '',
-                    'headerslist' => $this->generateHeadersTemplate($docs),
-                    'paramslist' => $this->generateParamsTemplate($docs),
+                    'id'                => $counter,
+                    'title'             => $docs['ApiTitle'][0],
+                    'method'            => is_array($docs['ApiMethod'][0]) ? $docs['ApiMethod'][0]['data'] : $docs['ApiMethod'][0],
+                    'method_label'      => $this->generateBadgeForMethod($docs),
+                    'section'           => $section,
+                    'route'             => is_array($docs['ApiRoute'][0]) ? $docs['ApiRoute'][0]['data'] : $docs['ApiRoute'][0],
+                    'summary'           => is_array($docs['ApiSummary'][0]) ? $docs['ApiSummary'][0]['data'] : $docs['ApiSummary'][0],
+                    'body'              => isset($docs['ApiBody'][0]) ? is_array($docs['ApiBody'][0]) ? $docs['ApiBody'][0]['data'] : $docs['ApiBody'][0] : '',
+                    'headerslist'       => $this->generateHeadersTemplate($docs),
+                    'paramslist'        => $this->generateParamsTemplate($docs),
                     'returnheaderslist' => $this->generateReturnHeadersTemplate($docs),
-                    'returnparamslist' => $this->generateReturnParamsTemplate($docs),
-                    'return' => isset($docs['ApiReturn']) ? is_array($docs['ApiReturn'][0]) ? $docs['ApiReturn'][0]['data'] : $docs['ApiReturn'][0] : '',
+                    'returnparamslist'  => $this->generateReturnParamsTemplate($docs),
+                    'return'            => isset($docs['ApiReturn']) ? is_array($docs['ApiReturn'][0]) ? $docs['ApiReturn'][0]['data'] : $docs['ApiReturn'][0] : '',
                 ];
                 $counter++;
             }
@@ -194,7 +194,7 @@ class Builder
     public function render($template, $vars = [])
     {
         $docslist = $this->parse();
-        $ids = [];
+        $ids      = [];
         foreach ($docslist as $v) {
             foreach ($v as $api) {
                 $ids[] = $api['id'];

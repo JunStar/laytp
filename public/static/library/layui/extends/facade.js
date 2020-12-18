@@ -377,6 +377,7 @@ layui.define(["jquery"], function (exports) {
                     }
 
                     let content = layui.laytpl(res).render(options.data);
+                    // let content = res;
 
                     let filter;
                     if (isFormDiv) {

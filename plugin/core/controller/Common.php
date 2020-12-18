@@ -34,7 +34,7 @@ class Common extends Backend
         $menuTreeObj = Tree::instance();
         //获取所有权限节点列表，目前仅角色管理，设置用户权限能用到这个缓存数据
         $where[] = ['is_show', '=', 1];
-        $menus = Menu::where($where)->select();
+        $menus   = Menu::where($where)->select();
         $menuTreeObj->init($menus);
         $treeNodes = $menuTreeObj->getTreeArray(0);
         //当前登录者拥有的权限节点列表数据
@@ -59,8 +59,8 @@ class Common extends Backend
 
         return $this->success('获取成功', [
             'sysConf' => Config::get('laytp'),
-            'menu' => ['treeNodes' => $treeNodes, 'menuTree' => $menuTree, 'menuList' => $menuList, 'authTree' => $authTree, 'authList' => $authArr],
-            'user' => UserServiceFacade::getUserInfo()
+            'menu'    => ['treeNodes' => $treeNodes, 'menuTree' => $menuTree, 'menuList' => $menuList, 'authTree' => $authTree, 'authList' => $authArr],
+            'user'    => UserServiceFacade::getUserInfo(),
         ]);
     }
 
@@ -69,26 +69,26 @@ class Common extends Backend
     {
         try {
             $uploadType = Config::get("laytp.upload.type");
-            $file = $this->request->file('layTpUploadFile'); // 获取上传的文件
+            $file       = $this->request->file('layTpUploadFile'); // 获取上传的文件
             if (!$file) {
                 return $this->error('上传失败,请选择需要上传的文件');
             }
-            $fileExt = strtolower($file->getOriginalExtension());
-            $saveName = date("Ymd") . "/" . md5(uniqid(mt_rand())) . ".{$fileExt}";
+            $fileExt   = strtolower($file->getOriginalExtension());
+            $saveName  = date("Ymd") . "/" . md5(uniqid(mt_rand())) . ".{$fileExt}";
             $uploadDir = $this->request->param('dir', '/');
-            $object = $uploadDir . $saveName;//上传至阿里云或者七牛云的文件名
-            $upload = Config::get('laytp.upload');
-            $size = $this->request->param('size', $upload['size']);
+            $object    = $uploadDir . $saveName;//上传至阿里云或者七牛云的文件名
+            $upload    = Config::get('laytp.upload');
+            $size      = $this->request->param('size', $upload['size']);
             preg_match('/(\d+)(\w+)/', $size, $matches);
-            $type = strtolower($matches[2]);
+            $type     = strtolower($matches[2]);
             $typeDict = ['b' => 0, 'k' => 1, 'kb' => 1, 'm' => 2, 'mb' => 2, 'gb' => 3, 'g' => 3];
-            $size = (int)$size * pow(1024, isset($typeDict[$type]) ? $typeDict[$type] : 0);
+            $size     = (int)$size * pow(1024, isset($typeDict[$type]) ? $typeDict[$type] : 0);
             if ($file->getSize() > $size) {
                 return $this->error('上传失败，文件大小超过' . $size);
             }
 
             $allowMime = $this->request->param('mime', $upload['mime']);
-            $mimeArr = explode(',', strtolower($allowMime));
+            $mimeArr   = explode(',', strtolower($allowMime));
             //禁止上传PHP和HTML文件
             if (in_array($file->getMime(), ['text/x-php', 'text/html']) || in_array($fileExt, ['php', 'html', 'htm'])) {
                 return $this->error('上传失败，禁止上传php和html文件');
@@ -112,7 +112,7 @@ class Common extends Backend
             //如果上传的是图片，验证图片的宽和高
             $accept = $this->request->param('accept');
             if ($accept == "image") {
-                $width = $this->request->param('width');
+                $width  = $this->request->param('width');
                 $height = $this->request->param('height');
                 if ($width || $height) {
                     $imageInfo = getimagesize($file->getFileInfo());
@@ -142,8 +142,8 @@ class Common extends Backend
 
             //本地上传
             if ($uploadType == 'local') {
-                $saveName = Filesystem::putFileAs($uploadDir, $file, $object);
-                $saveName = str_replace('\\', '/', $saveName);
+                $saveName   = Filesystem::putFileAs($uploadDir, $file, $object);
+                $saveName   = str_replace('\\', '/', $saveName);
                 $inputValue = '/storage/' . $saveName;
             }
             return $this->success('上传成功', $inputValue);

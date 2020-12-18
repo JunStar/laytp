@@ -11,7 +11,7 @@ class General extends Backend
 {
     public function profile()
     {
-        $post = filter_post_data($this->request->post());
+        $post     = filter_post_data($this->request->post());
         $validate = new Profile();
         if (!$validate->check($post)) {
             return $this->error($validate->getError());

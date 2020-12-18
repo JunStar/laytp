@@ -36,8 +36,8 @@ class User extends Backend
         $where = $this->buildSearchParams();
         $order = $this->buildOrder();
         $limit = $this->request->param('limit');
-        $data = $this->model->with(['role_ids'])->where($where)->order($order)->paginate($limit)->toArray();
-        $data = \plugin\core\resource\auth\User::index($data);
+        $data  = $this->model->with(['role_ids'])->where($where)->order($order)->paginate($limit)->toArray();
+        $data  = \plugin\core\resource\auth\User::index($data);
         return $this->success('数据获取成功', $data);
     }
 
@@ -46,18 +46,18 @@ class User extends Backend
     {
         Db::startTrans();
         try {
-            $post = filter_post_data($this->request->post());
+            $post     = filter_post_data($this->request->post());
             $validate = new Add();
             if (!$validate->check($post)) {
                 return $this->error($validate->getError());
             }
             $post['password'] = password_hash(md5($post['password']), PASSWORD_DEFAULT);
-            $post['avatar'] = $post['avatar'] ? $post['avatar'] : '/static/plugin/core/img/default_avatar.png';
-            $result[] = $this->model->save($post);
+            $post['avatar']   = $post['avatar'] ? $post['avatar'] : '/static/plugin/core/img/default_avatar.png';
+            $result[]         = $this->model->save($post);
 
             if ($post['role_ids']) {
                 $roleIds = explode(',', $post['role_ids']);
-                $data = [];
+                $data    = [];
                 foreach ($roleIds as $k => $v) {
                     $data[] = ['plugin_core_role_id' => $v, 'plugin_core_user_id' => $this->model->id];
                 }
@@ -97,13 +97,13 @@ class User extends Backend
                 unset($post['password']);
                 unset($post['re_password']);
             }
-            $result[] = $user->update($post);
-            $roleUser = new \plugin\core\model\user\Role();
+            $result[]  = $user->update($post);
+            $roleUser  = new \plugin\core\model\user\Role();
             $deleteRes = $roleUser->where("plugin_core_user_id", '=', $post['id'])->delete();
-            $result[] = ($deleteRes || $deleteRes === 0) ? true : false;
+            $result[]  = ($deleteRes || $deleteRes === 0) ? true : false;
             if ($post['role_ids']) {
                 $roleIds = explode(',', $post['role_ids']);
-                $data = [];
+                $data    = [];
                 foreach ($roleIds as $k => $v) {
                     $data[] = ['plugin_core_role_id' => $v, 'plugin_core_user_id' => $user->id];
                 }
@@ -136,10 +136,10 @@ class User extends Backend
     //表格编辑
     public function tableEdit()
     {
-        $field = $this->request->param('field');
+        $field    = $this->request->param('field');
         $fieldVal = $this->request->param('field_val');
-        $ids = $this->request->param('ids');
-        $idsArr = explode(',', $ids);
+        $ids      = $this->request->param('ids');
+        $idsArr   = explode(',', $ids);
         if (in_array(1, $idsArr)) {
             if ($field == 'is_super_manager' && $fieldVal == 2) {
                 return $this->error('不允许将初始化账号设置成非超管');

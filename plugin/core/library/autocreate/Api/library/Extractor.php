@@ -68,7 +68,7 @@ class Extractor
     public static function getClassAnnotations($className)
     {
         if (!isset(self::$annotationCache[$className])) {
-            $class = new \ReflectionClass($className);
+            $class                             = new \ReflectionClass($className);
             self::$annotationCache[$className] = self::parseAnnotations($class->getDocComment());
         }
 
@@ -98,18 +98,18 @@ class Extractor
         if (!isset(self::$annotationCache[$className . '::' . $methodName])) {
             try {
                 $method = new \ReflectionMethod($className, $methodName);
-                $class = new \ReflectionClass($className);
+                $class  = new \ReflectionClass($className);
                 if ($className == $method->class) {
                     if (!$method->isPublic() || $method->isConstructor()) {
-                        $annotations = array();
+                        $annotations = [];
                     } else {
                         $annotations = self::consolidateAnnotations($method, $class);
                     }
                 } else {
-                    $annotations = array();
+                    $annotations = [];
                 }
             } catch (\ReflectionException $e) {
-                $annotations = array();
+                $annotations = [];
             }
 
             self::$annotationCache[$className . '::' . $methodName] = $annotations;
@@ -129,13 +129,13 @@ class Extractor
     public function getMethodAnnotationsObjects($className, $methodName)
     {
         $annotations = $this->getMethodAnnotations($className, $methodName);
-        $objects = array();
+        $objects     = [];
 
         $i = 0;
 
         foreach ($annotations as $annotationClass => $listParams) {
             $annotationClass = ucfirst($annotationClass);
-            $class = $this->defaultNamespace . $annotationClass . 'Annotation';
+            $class           = $this->defaultNamespace . $annotationClass . 'Annotation';
 
             // verify is the annotation class exists, depending if Annotations::strict is true
             // if not, just skip the annotation instance creation.
@@ -170,15 +170,15 @@ class Extractor
     {
         $dockblockClass = $class->getDocComment();
         $docblockMethod = $method->getDocComment();
-        $methodName = $method->getName();
+        $methodName     = $method->getName();
 
         $methodAnnotations = self::parseAnnotations($docblockMethod);
-        $classAnnotations = self::parseAnnotations($dockblockClass);
+        $classAnnotations  = self::parseAnnotations($dockblockClass);
         if (isset($methodAnnotations['ApiInternal']) || $methodName == '_initialize' || $methodName == '_empty') {
             return [];
         }
 
-        $properties = $class->getDefaultProperties();
+        $properties  = $class->getDefaultProperties();
         $noNeedLogin = isset($properties['noNeedLogin']) ? is_array($properties['noNeedLogin']) ? $properties['noNeedLogin'] : [$properties['noNeedLogin']] : [];
         $noNeedRight = isset($properties['noNeedRight']) ? is_array($properties['noNeedRight']) ? $properties['noNeedRight'] : [$properties['noNeedRight']] : [];
 
@@ -186,7 +186,7 @@ class Extractor
         preg_match_all("/\*[\s]+(.*)(\\r\\n|\\r|\\n)/U", str_replace('/**', '', $dockblockClass), $classArr);
 
         $methodTitle = isset($methodArr[1]) && isset($methodArr[1][0]) ? $methodArr[1][0] : '';
-        $classTitle = isset($classArr[1]) && isset($classArr[1][0]) ? $classArr[1][0] : '';
+        $classTitle  = isset($classArr[1]) && isset($classArr[1][0]) ? $classArr[1][0] : '';
 
         if (!isset($methodAnnotations['ApiMethod'])) {
             $methodAnnotations['ApiMethod'] = ['get'];
@@ -217,7 +217,7 @@ class Extractor
             $methodAnnotations['ApiTitle'] = [$methodTitle];
         }
         if (!isset($methodAnnotations['ApiRoute'])) {
-            $urlArr = [];
+            $urlArr    = [];
             $className = $class->getName();
 
             list($prefix, $suffix) = explode('\\controller\\', $className);
@@ -226,16 +226,16 @@ class Extractor
             if ($prefixArr[0] == 'app') {
                 $prefixArr[0] = '';
             } else if ($prefixArr[0] == 'plugin') {
-                $tempPrefixArr = [];
+                $tempPrefixArr    = [];
                 $tempPrefixArr[0] = '';
                 $tempPrefixArr[1] = $prefixArr[2];
-                $prefixArr = $tempPrefixArr;
+                $prefixArr        = $tempPrefixArr;
             }
-            $urlArr = array_merge($urlArr, $prefixArr);
-            $urlArr[] = implode('.', array_map(function ($item) {
+            $urlArr                        = array_merge($urlArr, $prefixArr);
+            $urlArr[]                      = implode('.', array_map(function ($item) {
                 return self::parseName($item);
             }, $suffixArr));
-            $urlArr[] = $method->getName();
+            $urlArr[]                      = $method->getName();
             $methodAnnotations['ApiRoute'] = [implode('/', $urlArr)];
         }
         if (!isset($methodAnnotations['ApiSector'])) {
@@ -244,12 +244,12 @@ class Extractor
         if (!isset($methodAnnotations['ApiParams'])) {
             $params = self::parseCustomAnnotations($docblockMethod, 'param');
             foreach ($params as $k => $v) {
-                $arr = explode(' ', preg_replace("/[\s]+/", " ", $v));
+                $arr                              = explode(' ', preg_replace("/[\s]+/", " ", $v));
                 $methodAnnotations['ApiParams'][] = [
-                    'name' => isset($arr[1]) ? str_replace('$', '', $arr[1]) : '',
-                    'nullable' => false,
-                    'type' => isset($arr[0]) ? $arr[0] : 'string',
-                    'description' => isset($arr[2]) ? $arr[2] : ''
+                    'name'        => isset($arr[1]) ? str_replace('$', '', $arr[1]) : '',
+                    'nullable'    => false,
+                    'type'        => isset($arr[0]) ? $arr[0] : 'string',
+                    'description' => isset($arr[2]) ? $arr[2] : '',
                 ];
             }
         }
@@ -288,7 +288,7 @@ class Extractor
      */
     private static function parseCustomAnnotations($docblock, $name = 'param')
     {
-        $annotations = array();
+        $annotations = [];
 
         $docblock = substr($docblock, 3, -2);
         if (preg_match_all('/@' . $name . '(?:\s*(?:\(\s*)?(.*?)(?:\s*\))?)??\s*(?:\n|\*\/)/', $docblock, $matches)) {
@@ -307,7 +307,7 @@ class Extractor
      */
     private static function parseAnnotations($docblock)
     {
-        $annotations = array();
+        $annotations = [];
 
         // Strip away the docblock header and footer to ease parsing of one line annotations
         $docblock = substr($docblock, 3, -2);
@@ -317,18 +317,18 @@ class Extractor
                 // annotations has arguments
                 if (isset($matches['args'][$i])) {
                     $argsParts = trim($matches['args'][$i]);
-                    $name = $matches['name'][$i];
+                    $name      = $matches['name'][$i];
                     if ($name == 'ApiReturn') {
                         $value = $argsParts;
                     } else {
                         $argsParts = preg_replace("/\{(\w+)\}/", '#$1#', $argsParts);
-                        $value = self::parseArgs($argsParts);
+                        $value     = self::parseArgs($argsParts);
                         if (is_string($value)) {
                             $value = preg_replace("/\#(\w+)\#/", '{$1}', $argsParts);
                         }
                     }
                 } else {
-                    $value = array();
+                    $value = [];
                 }
 
                 $annotations[$name][] = $value;
@@ -349,34 +349,34 @@ class Extractor
         // Replace initial stars
         $content = preg_replace('/^\s*\*/m', '', $content);
 
-        $data = array();
-        $len = strlen($content);
-        $i = 0;
-        $var = '';
-        $val = '';
+        $data  = [];
+        $len   = strlen($content);
+        $i     = 0;
+        $var   = '';
+        $val   = '';
         $level = 1;
 
         $prevDelimiter = '';
         $nextDelimiter = '';
-        $nextToken = '';
-        $composing = false;
-        $type = 'plain';
-        $delimiter = null;
-        $quoted = false;
-        $tokens = array('"', '"', '{', '}', ',', '=');
+        $nextToken     = '';
+        $composing     = false;
+        $type          = 'plain';
+        $delimiter     = null;
+        $quoted        = false;
+        $tokens        = ['"', '"', '{', '}', ',', '='];
 
         while ($i <= $len) {
             $prev_c = substr($content, $i - 1, 1);
-            $c = substr($content, $i++, 1);
+            $c      = substr($content, $i++, 1);
 
             if ($c === '"' && $prev_c !== "\\") {
                 $delimiter = $c;
                 //open delimiter
                 if (!$composing && empty($prevDelimiter) && empty($nextDelimiter)) {
                     $prevDelimiter = $nextDelimiter = $delimiter;
-                    $val = '';
-                    $composing = true;
-                    $quoted = true;
+                    $val           = '';
+                    $composing     = true;
+                    $quoted        = true;
                 } else {
                     // close delimiter
                     if ($c !== $nextDelimiter) {
@@ -395,17 +395,17 @@ class Extractor
                     }
 
                     $prevDelimiter = $nextDelimiter = '';
-                    $composing = false;
-                    $delimiter = null;
+                    $composing     = false;
+                    $delimiter     = null;
                 }
             } elseif (!$composing && in_array($c, $tokens)) {
                 switch ($c) {
                     case '=':
                         $prevDelimiter = $nextDelimiter = '';
-                        $level = 2;
-                        $composing = false;
-                        $type = 'assoc';
-                        $quoted = false;
+                        $level         = 2;
+                        $composing     = false;
+                        $type          = 'assoc';
+                        $quoted        = false;
                         break;
                     case ',':
                         $level = 3;
@@ -421,7 +421,7 @@ class Extractor
                         $prevDelimiter = $nextDelimiter = '';
                         break;
                     case '{':
-                        $subc = '';
+                        $subc         = '';
                         $subComposing = true;
 
                         while ($i <= $len) {
@@ -465,10 +465,10 @@ class Extractor
                     $data[trim($var)] = self::castValue($val, !$quoted);
                 }
 
-                $level = 1;
-                $var = $val = '';
+                $level     = 1;
+                $var       = $val = '';
                 $composing = false;
-                $quoted = false;
+                $quoted    = false;
             }
         }
 
