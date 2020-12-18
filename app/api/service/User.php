@@ -71,7 +71,7 @@ class User
     public function emailRegLogin($params)
     {
         try {
-            $user = \app\common\model\User::get(['email' => $params['email']]);
+            $user = \app\common\model\User::where('email', '=', $params['email'])->find();
             if (!$user) {
                 $data = [
                     'email' => $params['email'],
@@ -79,8 +79,8 @@ class User
                     'login_ip' => request()->ip()
                 ];
 
-                $user = \app\common\model\User::create($data, true);
-                $this->_user = \app\common\model\User::get($user->id);
+                $user        = \app\common\model\User::create($data);
+                $this->_user = \app\common\model\User::find($user->id);
             } else {
                 $this->_user = $user;
             }
