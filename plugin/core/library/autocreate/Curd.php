@@ -1112,10 +1112,33 @@ EOD;
         $data['field']     = $info['field'];
         $data['comment']   = $info['comment'];
         $data['color']     = $info['addition']['color'];
-        $data['predefine'] = $info['addition']['predefine'] ? true : false;
+        $data['predefine'] = $info['addition']['predefine'] ? "true" : "false";
         $data['colors']    = json_encode($info['addition']['colors'], JSON_UNESCAPED_UNICODE);
-        $data['alpha']     = (isset($info['addition']['alpha']) && $info['addition']['alpha']) ? true : false;
+        $data['alpha']     = (isset($info['addition']['alpha']) && $info['addition']['alpha']) ? "true" : "false";
         $data['format']    = $info['addition']['format'];
+        return $this->getReplacedTpl($name, $data);
+    }
+
+    public function getSearchUploadHtml()
+    {
+        return "";
+    }
+
+    public function getUploadHtml($info, $type)
+    {
+        $name            = 'html' . DS . $type . DS . 'upload';
+        $data['field']   = $info['field'];
+        $data['comment'] = $info['comment'];
+        $data['accept']  = $info['addition']['accept'];
+        $data['width']   = ($info['addition']['accept'] == 'image' && $info['addition']['width']) ? "\n\t\t\t\t\t\t\t\tdata-width=\"" . $info['addition']['width'] . "\"" : "";
+        $data['height']  = ($info['addition']['accept'] == 'image' && $info['addition']['height']) ? "\n\t\t\t\t\t\t\t\tdata-height=\"" . $info['addition']['height'] . "\"" : "";
+        $data['multi']   = ($info['addition']['multi'] == 'single') ? "false" : "true";
+        $data['max']     = intval($info['addition']['max']);
+        $data['dir']     = $info['addition']['dir'];
+        $data['url']     = $info['addition']['url'];
+        $data['mime']    = $info['addition']['mime'];
+        $data['size']    = $info['addition']['size'];
+        $data['verify']  = ($info['is_empty'] == 1) ? "" : "required";
         return $this->getReplacedTpl($name, $data);
     }
 

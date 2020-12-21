@@ -28,16 +28,6 @@ layui.define([
     //数据表格，格式化展示数据
     layTp.tableFormatter = {
         custom: ["#FF5722", "#009688", "#FFB800", "#2F4056", "#1E9FFF", "#393D49", "#999999", "#0b1bf8", "#7a0bf8", "#f00bf8", "#5FB878", "#1E9FFF", "#2F4056"],
-        images: function (value) {
-            let html = "";
-            if (value) {
-                let value_arr = value.split(",");
-                for (key in value_arr) {
-                    html += "<a target='_blank' href='" + value_arr[key] + "'><img src='" + value_arr[key] + "' style='width:30px;height:30px;' /></a> ";
-                }
-            }
-            return html;
-        },
         status: function (field, value, json) {
             let customIndex = 0, key;
             for (key in json['value']) {
@@ -59,6 +49,50 @@ layui.define([
                         customIndex = key % layTp.tableFormatter.custom.length;
                         html += '<span class="layui-btn layui-btn-xs" style="background-color: ' + layTp.tableFormatter.custom[customIndex] + '">' + dataList.text[key] + '</span>';
                     }
+                }
+            }
+            return html;
+        },
+        images: function (value) {
+            let html = "";
+            if (value) {
+                let valueArr = value.split(","), key;
+                for (key in valueArr) {
+                    html += "<a target='_blank' href='" + valueArr[key] + "'><img src='" + valueArr[key] + "' style='width:30px;height:30px;' /></a> ";
+                }
+            }
+            return html;
+        },
+        video: function (value) {
+            let html = '';
+            if (value) {
+                let i = 1;
+                let valueArr = value.split(','), key;
+                for (key in valueArr) {
+                    html += '<a href="javascript:void(0);" class="popup-frame" data-name="查看视频" data-open="' + layTp.facade.url('admin/ajax/showVideo', {'path': window.btoa(valueArr[key])}) + '">视频' + i + '</a> ';
+                    i++;
+                }
+            }
+            return html;
+        },
+        audio: function (value) {
+            let html = '';
+            if (value) {
+                let valueArr = value.split(','), key;
+                for (key in valueArr) {
+                    html += '<audio src="' + valueArr[key] + '" width="200px" height="30px" controls="controls"></audio>';
+                }
+            }
+            return html;
+        },
+        file: function (value) {
+            let html = '';
+            if (value) {
+                let i = 1;
+                let valueArr = value.split(','), key;
+                for (key in valueArr) {
+                    html += '<a href="javascript:void(0);" download="' + valueArr[key] + '" title="点击下载" class="layui-table-link">文件' + i + '</a> ';
+                    i++;
                 }
             }
             return html;

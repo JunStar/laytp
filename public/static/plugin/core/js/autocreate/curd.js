@@ -1069,13 +1069,13 @@ layui.use(["layTp"], function () {
             '    </div>' +
             '    <div class="layui-row margin-bottom6">' +
             '       <div>' +
-            '           <label class="layui-form-label layui-form-required">最大宽度</label>' +
+            '           <label class="layui-form-label layui-form-required">(图片)最大宽度</label>' +
             '           <div class="layui-input-block">' +
             '               <input type="text" class="layui-input" name="addition[width]" value="{{d.addition.width}}" placeholder="允许上传图片的最大宽度，单位px，默认不限制" />' +
             '           </div>' +
             '       </div>' +
             '       <div>' +
-            '           <label class="layui-form-label layui-form-required">最大高度</label>' +
+            '           <label class="layui-form-label layui-form-required">(图片)最大高度</label>' +
             '           <div class="layui-input-block">' +
             '               <input type="text" class="layui-input" name="addition[height]" value="{{d.addition.height}}" placeholder="允许上传图片的最大高度，单位px，默认不限制" />' +
             '           </div>' +

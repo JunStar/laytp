@@ -371,7 +371,7 @@ layui.define(["jquery", "facade"], function (exports) {
          *      data-multi="true"//非必设，多文件模式，true=开启多文件模式，false=关闭多文件模式，默认false
          *      data-max="2"//非必设，多文件模式下有效的参数，设置允许最多上传的文件个数，默认不限制个数
          *      data-dir=""//非必设，上传的目录，允许不传，不传就传到storage目录下，如果不为空，则在storage目录下创建对应的目录，允许使用/指明多级目录
-         *      data-url=""//非必设，文件上传请求的后台地址，默认为facade.url("plugin/core/common/upload", {'accept': options.accept, 'upload_dir': options.upload_dir})，自定义的url返回数据格式要和plugin/core/common/upload保持一致
+         *      data-url=""//非必设，文件上传请求的后台地址，默认为facade.url("plugin/core/common/upload")，自定义的url返回数据格式要和plugin/core/common/upload保持一致
          *      data-uploaded=""//非必设，已经上传的文件列表，多个以英文半角的逗号+空格进行分割，用于编辑页面展示已经上传过的文件
          *      data-mime="*"//非必设，允许上传的文件类型，同时检测后缀和文件实际类型，为空使用后台常规管理->系统配置->上传配置设置mime的值
          *      data-size="100mb"//非必设，允许上传的文件大小，单位b,k,kb,m,mb,g,gb，为空使用后台常规管理->系统配置->上传配置设置size的值
