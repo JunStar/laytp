@@ -364,6 +364,40 @@ layui.use(["layTp"], function () {
             selectDataFrom(data.value);
         });
 
+        layui.form.on('select(colorType)', function (data) {
+            layui.each($('.colorPicker'), function (key, item) {
+                if (data.value === "hex") {
+                    $(item).data('alpha', false);
+                }
+                $(item).data('format', data.value);
+                layTpForm.initData.colorPicker();
+                setTimeout(function () {
+                    $('[class="layui-icon layui-colorpicker-trigger-i layui-icon-down"]', '#color_picker_' + $(item).data('id')).click();
+                    $('button[class="layui-btn layui-btn-sm"][colorpicker-events="confirm"]').click();
+                }, 1);
+            });
+            if (data.value === "hex") {
+                $('input[lay-filter="openAlpha"]').prop('checked', false);
+                layui.form.render('checkbox');
+            }
+        });
+
+        layui.form.on('checkbox(openAlpha)', function (data) {
+            layui.each($('.colorPicker'), function (key, item) {
+                $(item).data('alpha', data.elem.checked);
+                $(item).data('format', 'rgb');
+                $(item).data('format', 'rgb');
+                $('#colorType').html("<option value=\"hex\">hex</option>" +
+                    "<option value=\"rgb\" selected=\"selected\">rgb</option>");
+                layui.form.render('select');
+                layTpForm.initData.colorPicker();
+                setTimeout(function () {
+                    $('[class="layui-icon layui-colorpicker-trigger-i layui-icon-down"]', '#color_picker_' + $(item).data('id')).click();
+                    $('button[class="layui-btn layui-btn-sm"][colorpicker-events="confirm"]').click();
+                }, 1);
+            });
+        });
+
         layui.form.on('select(select-table)', function (data) {
             selectDataFromTable(data.value);
         });
@@ -371,6 +405,8 @@ layui.use(["layTp"], function () {
         layui.form.on('select(linkage-select-table)', function (data) {
             selectLinkageSearchTable(data.value);
         });
+
+        //openAlpha
 
         //选择数据存储类型
         layui.form.on('select(select-data-type)', function (obj) {
@@ -948,16 +984,16 @@ layui.use(["layTp"], function () {
             '       <div class="layui-col-lg6 layui-col-md6 layui-col-sm6 layui-col-xs6">' +
             '           <label class="layui-form-label layui-form-required">颜色格式</label>' +
             '           <div class="layui-input-block">' +
-            '               <select class="layui-select" name="addition[format]" id="leftField">' +
-            '                   <option value="hex">hex</option>' +
-            '                   <option value="rgb">rgb</option>' +
+            '               <select class="layui-select" name="addition[format]" id="colorType" lay-filter="colorType">' +
+            '                   <option value="hex" {{# if(d.addition.format === "hex"){ }}selected="selected"{{# } }}>hex</option>' +
+            '                   <option value="rgb" {{# if(d.addition.format === "rgb"){ }}selected="selected"{{# } }}>rgb</option>' +
             '               </select>' +
             '           </div>' +
             '       </div>' +
             '       <div class="layui-col-lg6 layui-col-md6 layui-col-sm6 layui-col-xs6">' +
             '           <label class="layui-form-label layui-form-required">开启透明度</label>' +
             '           <div class="layui-input-block">' +
-            '               <input type="checkbox" name="addition[alpha]" value="1" title="开启" {{# if(d.addition.alpha === "1"){ }}checked="checked"{{# } }} />' +
+            '               <input lay-filter="openAlpha" type="checkbox" name="addition[alpha]" value="1" title="开启" {{# if(d.addition.alpha === "1"){ }}checked="checked"{{# } }} />' +
             '           </div>' +
             '       </div>' +
             '    </div>' +
@@ -992,6 +1028,7 @@ layui.use(["layTp"], function () {
             '                                data-name="addition[colors][]"' +
             '                                data-id="addition_colors_{{key}}"' +
             '                                data-color="{{d.addition.colors[key]}}"' +
+            '                                data-format="{{d.addition.format}}"' +
             '                           ></div>' +
             '                       </td>' +
             '                       <td>' +

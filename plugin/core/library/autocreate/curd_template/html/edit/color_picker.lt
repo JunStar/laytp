@@ -1,0 +1,9 @@
+<div class="colorPicker"
+                data-id="{%field%}"
+                data-name="{%field%}"
+                data-color="{{d.{%field%}}}"
+                data-format="{%format%}"
+                data-alpha="{%alpha%}"
+                data-predefine="{%predefine%}"
+                data-colors='{%colors%}''
+            ></div>

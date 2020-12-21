@@ -342,7 +342,7 @@ class Curd
             if ($v['form_type'] == 'laydate' && $v['data_type'] == 'integer') {
                 $fun[] = 'public function get' . ucfirst($this->convertUnderline($v['field'])) . 'DatabaseAttr($value, $data)' . "\n\t" .
                     '{' . "\n\t\t" .
-                    'return $data[\'vip_time\'] ? strtotime($data[\'' . $v['field'] . '\']) : 0;' . "\n\t" .
+                    'return $data[\'' . $v['field'] . '\'] ? strtotime($data[\'' . $v['field'] . '\']) : 0;' . "\n\t" .
                     '}';
             }
         }
@@ -1098,6 +1098,24 @@ EOD;
         $data['comment']     = $info['comment'];
         $data['laydateType'] = $info['addition']['date_type'];
         $data['verify']      = ($info['is_empty'] == 1) ? "" : "required";
+        return $this->getReplacedTpl($name, $data);
+    }
+
+    public function getSearchColorPickerHtml()
+    {
+        return "";
+    }
+
+    public function getColorPickerHtml($info, $type)
+    {
+        $name              = 'html' . DS . $type . DS . 'color_picker';
+        $data['field']     = $info['field'];
+        $data['comment']   = $info['comment'];
+        $data['color']     = $info['addition']['color'];
+        $data['predefine'] = $info['addition']['predefine'] ? true : false;
+        $data['colors']    = json_encode($info['addition']['colors'], JSON_UNESCAPED_UNICODE);
+        $data['alpha']     = (isset($info['addition']['alpha']) && $info['addition']['alpha']) ? true : false;
+        $data['format']    = $info['addition']['format'];
         return $this->getReplacedTpl($name, $data);
     }
 

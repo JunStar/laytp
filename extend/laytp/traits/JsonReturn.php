@@ -22,7 +22,7 @@ trait JsonReturn
             'data' => $data
         ];
         //使用json函数，http的response返回的Content-Type:application/json; charset=utf-8，当代码中使用dump函数进行调试时，使用浏览器单独访问接口地址不会友好的展示dump的html
-        return json($result);
+        return json($result, JSON_UNESCAPED_UNICODE);
         //response返回的Content-Type:text/html; charset=utf-8，使用浏览器单独访问接口地址方便调试，
         //但是注意在javascript进行ajax请求时，要设置dataType: "json"，
         //这样,javascript得到字符串后，会自动使用JSON.parse对字符串进行解析
@@ -43,7 +43,7 @@ trait JsonReturn
             'time' => time(),
             'data' => $data
         ];
-        return json($result);
+        return json($result, JSON_UNESCAPED_UNICODE);
 //        return response(json_encode($result, JSON_UNESCAPED_UNICODE));
     }
 }
