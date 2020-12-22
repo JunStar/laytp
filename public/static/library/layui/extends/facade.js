@@ -152,6 +152,33 @@ layui.define(["jquery"], function (exports) {
             return apiDomain + path + params;
         },
 
+        //组装成插件url
+        pluginUrl: function (plugin, path, params) {
+            let count = 0;
+            let k;
+            for (k in params) {
+                if (params.hasOwnProperty(k)) {
+                    count++;
+                }
+            }
+            if (typeof params !== "undefined" && count > 0) {
+                let urlParams = {}, key;
+                for (key in params) {
+                    if (params[key]) urlParams[key] = params[key];
+                }
+                params = $.param(urlParams);
+                let reg = new RegExp("=", "g");
+                params = params.replace(reg, "/");
+                let reg_1 = new RegExp("&", "g");
+                params = params.replace(reg_1, "/");
+                params = "/" + params;
+            } else {
+                params = "";
+            }
+            path = "/" + path.replace(/(^\/)|(\/$)/, "");
+            return apiDomain + "/plugin/" + plugin + path + params;
+        },
+
         //跳转页面
         redirect: function (url) {
             window.location.href = url;

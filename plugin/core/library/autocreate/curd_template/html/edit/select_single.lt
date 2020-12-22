@@ -1,3 +1,0 @@
-<select name="row[{%field%}]" id="{%field%}" lay-verify="{%verify%}" placeholder="请输入{%comment%}">
-{%options%}
-            </select>

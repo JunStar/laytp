@@ -518,7 +518,21 @@ layui.define(["jquery", "facade"], function (exports) {
                 };
                 layui.colorpicker.render(options);
             });
-        }
+        },
+
+        /**
+         * 编辑器
+         */
+        editorRender: function (parentElem) {
+            let obj = (typeof parentElem === "undefined") ? $(".editor") : $(".editor", parentElem);
+            layui.each(obj, function (key, item) {
+                let type = $(item).data('type');
+                let id = $(item).attr('id');
+                layui.use(type, function () {
+                    layui[type].render(id, parentElem);
+                });
+            });
+        },
     };
 
     /**

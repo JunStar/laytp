@@ -1146,6 +1146,11 @@ layui.use(["layTp"], function () {
 
     window.formTypeChange = function (params) {
         let formType = params.arr[0].value;
-        formTypeChangePrivate(formType);
+        console.log(formType);
+        if (formType === "editor") {
+
+        } else {
+            formTypeChangePrivate(formType);
+        }
     };
 });
