@@ -50,6 +50,42 @@ layui.define(["jquery"], function (exports) {
             return layui.laytpl(html).render(options);
         },
 
+        videoPreviewHtml: function (options) {
+            let html =
+                "<div class=\"pic-more\">" +
+                "   <ul class=\"pic-more-upload-list\" id=\"preview_{{d.name}}\">" +
+                "   {{# let uploaded=d.uploaded; }}" +
+                "   {{# if(typeof uploaded !== 'undefined' && uploaded){ let key,uploadedArr=uploaded.split(layTpUpload.splitStr); }}" +
+                "   {{# for(key in uploadedArr){ }}" +
+                "       <li class=\"item_img\">" +
+                "           <video src=\"{{sysConf.upload.domain + uploadedArr[key]}}\" controls=\"controls\" width=\"200px\" height=\"200px\"></video>" +
+                "           <button class=\"layui-btn layui-btn-sm layui-btn-danger upload_delete\" style=\"display: block; width: 100%;\" fileUrlData=\"{{sysConf.upload.domain + uploadedArr[key]}}\" node=\"" + id + "\"><i class=\"layui-icon\">&#xe640;</i></button>" +
+                "       </li>" +
+                "   {{# } }}" +
+                "   {{# } }}" +
+                "   </ul>" +
+                "</div>";
+            return layui.laytpl(html).render(options);
+        },
+
+        audioPreviewHtml: function (options) {
+            let html =
+                "<div class=\"pic-more\">" +
+                "   <ul class=\"pic-more-upload-list\" id=\"preview_{{d.name}}\">" +
+                "   {{# let uploaded=d.uploaded; }}" +
+                "   {{# if(typeof uploaded !== 'undefined' && uploaded){ let key,uploadedArr=uploaded.split(layTpUpload.splitStr); }}" +
+                "   {{# for(key in uploadedArr){ }}" +
+                "       <li class=\"item_img\">" +
+                "           <audio src=\"{{sysConf.upload.domain + uploadedArr[key]}}\" controls=\"controls\" style=\"height:54px;\"></audio>" +
+                "           <button class=\"layui-btn layui-btn-sm layui-btn-danger upload_delete\" style=\"display: block; width: 100%;\" fileUrlData=\"{{sysConf.upload.domain + uploadedArr[key]}}\" node=\"" + id + "\"><i class=\"layui-icon\">&#xe640;</i></button>" +
+                "       </li>" +
+                "   {{# } }}" +
+                "   {{# } }}" +
+                "   </ul>" +
+                "</div>";
+            return layui.laytpl(html).render(options);
+        },
+
         //单个图片模板
         singleImageHtml: function (options) {
             let html =
@@ -88,6 +124,10 @@ layui.define(["jquery"], function (exports) {
                 options.previewHtml = layTpUpload.imagePreviewHtml(options);
             } else if (options.accept === "file") {
                 options.previewHtml = "";
+            } else if (options.accept === "video") {
+                options.previewHtml = layTpUpload.videoPreviewHtml(options);
+            } else if (options.accept === "audio") {
+                options.previewHtml = layTpUpload.audioPreviewHtml(options);
             }
             $(options.el).after(layTpUpload.uploadHtml(options));
             layui.upload.render({

@@ -6,7 +6,6 @@ use laytp\traits\Error;
 use plugin\core\library\autocreate\Api\library\Builder;
 use plugin\core\library\autocreate\Api\library\Extractor;
 use laytp\library\DirFile;
-use think\facade\Config;
 use think\facade\Env;
 
 class Api
@@ -60,7 +59,7 @@ class Api
         $classes = array_flip($weighs);
 
         $builder           = new Builder($classes);
-        $apiDir            = __DIR__ . DS . 'Api' . DS;
+        $apiDir            = __DIR__ . DS . 'api' . DS;
         $templateDir       = $apiDir . 'template' . DS;
         $templateFile      = $templateDir . $this->template;
         $var['plugin']     = '';

@@ -516,7 +516,6 @@ layui.define(["jquery", "facade"], function (exports) {
                 options.done = function (color) {
                     $("#" + id).val(color);
                 };
-                console.log(options);
                 layui.colorpicker.render(options);
             });
         }

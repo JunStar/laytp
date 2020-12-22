@@ -160,7 +160,6 @@ layui.use(["layTp"], function () {
                     });
                     break;
                 case "createNormalCurd":
-                    console.log("生成常规CURD");
                     facade.ajax({
                         path: "plugin/core/autocreate.curd/createNormalCurd",
                         params: {table_id: nowTableId}
@@ -1059,10 +1058,10 @@ layui.use(["layTp"], function () {
             '           <label class="layui-form-label layui-form-required">文件类型</label>' +
             '           <div class="layui-input-block">' +
             '           <select name="addition[accept]">' +
-            '               <option value="file">任意文件</option>' +
-            '               <option value="image">图片</option>' +
-            '               <option value="video">视频</option>' +
-            '               <option value="audio">音频</option>' +
+            '               <option value="file" {{# if(d.addition.accept==="file"){ }}selected="selected"{{# } }}>任意文件</option>' +
+            '               <option value="image" {{# if(d.addition.accept==="image"){ }}selected="selected"{{# } }}>图片</option>' +
+            '               <option value="video" {{# if(d.addition.accept==="video"){ }}selected="selected"{{# } }}>视频</option>' +
+            '               <option value="audio" {{# if(d.addition.accept==="audio"){ }}selected="selected"{{# } }}>音频</option>' +
             '           </select>' +
             '           </div>' +
             '       </div>' +
@@ -1086,8 +1085,8 @@ layui.use(["layTp"], function () {
             '           <label class="layui-form-label layui-form-required">多文件模式</label>' +
             '           <div class="layui-input-block">' +
             '               <select class="layui-select" name="addition[multi]">' +
-            '                   <option value="single">单个文件</option>' +
-            '                   <option value="multi">多个文件</option>' +
+            '                   <option value="single" {{# if(d.addition.multi==="single"){ }}selected="selected"{{# } }}>单个文件</option>' +
+            '                   <option value="multi" {{# if(d.addition.multi==="multi"){ }}selected="selected"{{# } }}>多个文件</option>' +
             '               </select>' +
             '           </div>' +
             '       </div>' +

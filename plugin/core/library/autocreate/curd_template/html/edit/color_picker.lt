@@ -5,5 +5,5 @@
                 data-format="{%format%}"
                 data-alpha="{%alpha%}"
                 data-predefine="{%predefine%}"
-                data-colors='{%colors%}''
+                data-colors='{%colors%}'
             ></div>
