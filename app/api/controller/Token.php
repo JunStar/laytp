@@ -19,7 +19,7 @@ class Token extends Api
      * @ApiMethod   (POST)
      * @ApiRoute    (/api/token/check)
      * @ApiHeaders  (name="token", type="string", required="true", description="用户登录后得到的Token")
-     * @ApiReturnParams   (name="err_code", type="integer", description="错误码.0=没有错误，表示操作成功；1=常规错误码，客户端仅需提示msg；其他错误码与具体业务相关，其他错误码举例：10401。前端需要跳转至登录界面。")
+     * @ApiReturnParams   (name="code", type="integer", description="错误码.0=没有错误，表示操作成功；1=常规错误码，客户端仅需提示msg；其他错误码与具体业务相关，其他错误码举例：10401。前端需要跳转至登录界面。")
      * @ApiReturnParams   (name="msg", type="string", description="返回描述")
      * @ApiReturnParams   (name="time", type="integer", description="请求时间，Unix时间戳，单位秒")
      * @ApiReturnParams   (name="data", type="object", description="返回的数据对象")
@@ -27,7 +27,7 @@ class Token extends Api
      * @ApiReturnParams   (name="data.expires_in", type="integer", description="token有效时间，单位秒")
      * @ApiReturn
 ({
-    "err_code": 0,
+    "code": 0,
     "msg": "Token有效",
     "time": 1591167181,
     "data": {
@@ -51,7 +51,7 @@ class Token extends Api
      * @ApiMethod   (POST)
      * @ApiRoute    (/api/token/refresh)
      * @ApiHeaders  (name="token", type="string", required="true", description="用户登录后得到的Token")
-     * @ApiReturnParams   (name="err_code", type="integer", description="错误码.0=没有错误，表示操作成功；1=常规错误码，客户端仅需提示msg；其他错误码与具体业务相关，其他错误码举例：10401。前端需要跳转至登录界面。")
+     * @ApiReturnParams   (name="code", type="integer", description="错误码.0=没有错误，表示操作成功；1=常规错误码，客户端仅需提示msg；其他错误码与具体业务相关，其他错误码举例：10401。前端需要跳转至登录界面。")
      * @ApiReturnParams   (name="msg", type="string", description="返回描述")
      * @ApiReturnParams   (name="time", type="integer", description="请求时间，Unix时间戳，单位秒")
      * @ApiReturnParams   (name="data", type="object", description="返回的数据对象")
@@ -59,7 +59,7 @@ class Token extends Api
      * @ApiReturnParams   (name="data.expires_in", type="integer", description="token有效时间，单位秒")
      * @ApiReturn
 ({
-    "err_code": 0,
+    "code": 0,
     "msg": "成功刷新Token",
     "time": 1591167423,
     "data": {

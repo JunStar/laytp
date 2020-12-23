@@ -22,7 +22,7 @@ class Demo extends Api
      * @ApiHeaders  (name="token", type="string", required="true", description="请求的Token")
      * @ApiParams   (name="id", type="integer", required="true", description="会员ID")
      * @ApiParams   (name="name", type="string", required="true", description="用户名")
-     * @ApiReturnParams   (name="err_code", type="integer", description="错误码.0=没有错误，表示操作成功；1=常规错误码，客户端仅需提示msg；其他错误码与具体业务相关，其他错误码举例：10401。前端需要跳转至登录界面。")
+     * @ApiReturnParams   (name="code", type="integer", description="错误码.0=没有错误，表示操作成功；1=常规错误码，客户端仅需提示msg；其他错误码与具体业务相关，其他错误码举例：10401。前端需要跳转至登录界面。")
      * @ApiReturnParams   (name="msg", type="string", description="返回描述")
      * @ApiReturnParams   (name="time", type="integer", description="请求时间，Unix时间戳，单位秒")
      * @ApiReturnParams   (name="data", type="object", description="返回的数据对象")
@@ -31,7 +31,7 @@ class Demo extends Api
      * @ApiReturn
 
 ({
-    "err_code": 0,
+    "code": 0,
     "msg": "返回成功",
     "time": 1591168410,
     "data": {
@@ -52,14 +52,14 @@ class Demo extends Api
      * @ApiSummary  (无需登录的接口详细描述)
      * @ApiMethod   (POST)
      * @ApiRoute    (/api/demo/test1)
-     * @ApiReturnParams   (name="err_code", type="integer", description="错误码.0=没有错误，表示操作成功；1=常规错误码，客户端仅需提示msg；其他错误码与具体业务相关，其他错误码举例：10401。前端需要跳转至登录界面。")
+     * @ApiReturnParams   (name="code", type="integer", description="错误码.0=没有错误，表示操作成功；1=常规错误码，客户端仅需提示msg；其他错误码与具体业务相关，其他错误码举例：10401。前端需要跳转至登录界面。")
      * @ApiReturnParams   (name="msg", type="string", description="返回描述")
      * @ApiReturnParams   (name="time", type="integer", description="请求时间，Unix时间戳，单位秒")
      * @ApiReturnParams   (name="data", type="object", description="返回的数据对象")
      * @ApiReturnParams   (name="data.action", type="string", description="固定返回test1")
      * @ApiReturn
 ({
-    "err_code": 0,
+    "code": 0,
     "msg": "返回成功",
     "time": 1591168410,
     "data": {
