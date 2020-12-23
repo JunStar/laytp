@@ -1142,6 +1142,22 @@ EOD;
         return $this->getReplacedTpl($name, $data);
     }
 
+    public function getSearchEditorHtml($info)
+    {
+        $name            = 'html' . DS . 'search' . DS . 'editor' . DS . $info['addition']['type'];
+        $data['field']   = $info['field'];
+        $data['comment'] = $info['comment'];
+        return $this->getReplacedTpl($name, $data);
+    }
+
+    public function getEditorHtml($info, $type)
+    {
+        $name            = 'html' . DS . $type . DS . 'editor' . DS . $info['addition']['type'];
+        $data['field']   = $info['field'];
+        $data['comment'] = $info['comment'];
+        return $this->getReplacedTpl($name, $data);
+    }
+
     /**
      * 写入到文件
      * @param string $name 模板文件名

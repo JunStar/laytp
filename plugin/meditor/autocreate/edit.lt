@@ -1,1 +1,1 @@
-<div editor="true" type="mdeditor" id="{%field_name%}" name="row[{%field_name%}]" type="text/plain">{${%field_name%}|raw}</div>
+<div class="editor" type="meditor" id="{%field%}" name="{%field%}">{{d.{%field%}}}</div>

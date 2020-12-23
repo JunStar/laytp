@@ -58,9 +58,10 @@ class Common extends Backend
         sort($authArr);
 
         return $this->success('获取成功', [
-            'sysConf' => Config::get('laytp'),
-            'menu'    => ['treeNodes' => $treeNodes, 'menuTree' => $menuTree, 'menuList' => $menuList, 'authTree' => $authTree, 'authList' => $authArr],
-            'user'    => UserServiceFacade::getUserInfo(),
+            'sysConf'    => Config::get('laytp'),
+            'menu'       => ['treeNodes' => $treeNodes, 'menuTree' => $menuTree, 'menuList' => $menuList, 'authTree' => $authTree, 'authList' => $authArr],
+            'user'       => UserServiceFacade::getUserInfo(),
+            'pluginConf' => Config::get('plugin'),
         ]);
     }
 

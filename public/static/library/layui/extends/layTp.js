@@ -288,6 +288,7 @@ layui.define([
                     sysConf = res.data["sysConf"] ? res.data["sysConf"] : "";
                     user = res.data["user"] ? res.data["user"] : "";
                     menu = res.data["menu"] ? res.data["menu"] : "";
+                    pluginConf = res.data["pluginConf"] ? res.data["pluginConf"] : "";
                     authList = menu.authList;
                     //判断上传方式，设置访问上传资源的域名
                     // if(sysConf.upload.type === "qiniu"){

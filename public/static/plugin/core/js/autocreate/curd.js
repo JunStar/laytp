@@ -696,8 +696,11 @@ layui.use(["layTp"], function () {
                     mime: "",
                     size: "",
                     color: "",
-                }
+                },
+                pluginConf: pluginConf
             };
+        } else {
+            editData.pluginConf = pluginConf;
         }
         //定义没有附加设置的表单元素数组
         let noHtmlArr = ["plugin_core_user_id", "password", "textarea"];
@@ -759,6 +762,7 @@ layui.use(["layTp"], function () {
             '</tr>' +
             '</tbody>' +
             '</table>';
+
         let switchTemplate =
             '<table class="layui-table">' +
             '<tbody>' +
@@ -807,6 +811,7 @@ layui.use(["layTp"], function () {
             '</tr>' +
             '</tbody>' +
             '</table>';
+
         let xm_selectTemplate =
             '<div class="layui-card">' +
             '  <div class="layui-card-header">基础设置</div>' +
@@ -1129,6 +1134,22 @@ layui.use(["layTp"], function () {
             '</div>'
         ;
 
+        let editorTemplate =
+            '<table class="layui-table">' +
+            '<tbody>' +
+            '<tr>' +
+            '<td align="right">编辑器类型</td>' +
+            '<td>' +
+            '   <select name="addition[type]">' +
+            '       {{# let key;for(key in d.pluginConf.editor){ }}' +
+            '       <option value="{{d.pluginConf.editor[key]}}">{{d.pluginConf.editor[key]}}</option>' +
+            '       {{# } }}' +
+            '   </select>' +
+            '</td>' +
+            '</tr>' +
+            '</tbody>' +
+            '</table>';
+
         if (noHtmlArr.indexOf(formType) !== -1) {
             $("#addition").html("<div style=\"padding: 9px 5px;\">无</div>");
         } else if (optionsArr.indexOf(formType) !== -1) {
@@ -1136,6 +1157,9 @@ layui.use(["layTp"], function () {
             layui.form.render();
         } else {
             $("#addition").html(layui.laytpl(eval(formType + "Template")).render(editData));
+            if (!pluginConf) {
+                facade.error('请先安装一种编辑器');
+            }
             if (formType === 'linkage_select') {
                 linkageField(nowTableId, editData);
             }
@@ -1147,10 +1171,6 @@ layui.use(["layTp"], function () {
     window.formTypeChange = function (params) {
         let formType = params.arr[0].value;
         console.log(formType);
-        if (formType === "editor") {
-
-        } else {
-            formTypeChangePrivate(formType);
-        }
+        formTypeChangePrivate(formType);
     };
 });

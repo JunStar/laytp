@@ -1,0 +1,4 @@
+<?php
+return [
+    'editor' => ['meditor'],
+];
