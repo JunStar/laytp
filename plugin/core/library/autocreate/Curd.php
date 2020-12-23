@@ -529,7 +529,7 @@ class Curd
         $indexData['tabs']       = '';
         $indexSearchForm         = [];
         $linkageSelectSearchHtml = [];
-        $unSearchType            = ['password', 'upload'];
+        $unSearchType            = ['password', 'upload', 'color_picker'];
         foreach ($this->fields as $k => $v) {
             if ($v['search_show'] == 2) {
                 continue;
