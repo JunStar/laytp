@@ -8,11 +8,11 @@ namespace plugin\ueditor\controller;
 
 use addons\aliyun_oss\service\Oss;
 use addons\qiniu_kodo\service\Kodo;
-use laytp\controller\Backend;
+use laytp\BaseController;
 use think\facade\Config;
 use think\facade\Filesystem;
 
-class Common extends Backend
+class Common extends BaseController
 {
     protected $no_need_login = ['*'];
 
