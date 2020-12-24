@@ -1,1 +1,1 @@
-<script editor="true" type="ueditor" id="{%field%}" name="row[{%field%}]" type="text/plain"></script>
+<script class="editor" id="{%field%}UEditor" data-type="ueditor" data-name="{%field%}" type="text/plain"></script>

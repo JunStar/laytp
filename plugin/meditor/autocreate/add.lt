@@ -1,1 +1,1 @@
-<div class="editor" type="meditor" id="{%field%}" name="{%field%}"></div>
+<div class="editor" id="{%field%}" data-type="meditor" data-name="{%field%}"></div>
