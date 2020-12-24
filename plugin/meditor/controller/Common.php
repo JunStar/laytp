@@ -4,7 +4,7 @@
  * mdeditor上传图片接口
  */
 
-namespace addons\mdeditor\api\controller;
+namespace plugin\meditor\controller;
 
 use addons\aliyun_oss\service\Oss;
 use addons\qiniu_kodo\service\Kodo;
@@ -21,7 +21,7 @@ class Common extends BaseController
     {
         try {
             $uploadType = Config::get("laytp.upload.type");
-            $file       = $this->request->file('layTpUploadFile'); // 获取上传的文件
+            $file       = $this->request->file('editormd-image-file'); // 获取上传的文件
             if (!$file) {
                 return $this->error('上传失败,请选择需要上传的文件');
             }

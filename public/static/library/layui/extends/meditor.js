@@ -26,7 +26,10 @@ layui.define(['jquery'], function (exports) {
                 sequenceDiagram: true, // 默认不解析
                 imageUpload: true,
                 imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp", "JPG", "JPEG", "GIF", "PNG", "BMP", "WEBP"],
-                imageUploadURL: layui.facade.pluginUrl('core', '/common/upload', {'accept': 'file', 'dir': 'meditor'})
+                imageUploadURL: layui.facade.pluginUrl('meditor', '/common/upload', {
+                    'accept': 'file',
+                    'dir': 'meditor'
+                })
             });
         };
 
