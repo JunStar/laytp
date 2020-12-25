@@ -1,4 +1,4 @@
 <input type="text" class="layui-input laydate"
     id="{%field%}" name="search_param[{%field%}][value]"
-    date-type="{%laydateType%}" date-isRange="true" placeholder="请选择{%comment%}">
-<input type="hidden" name="search_param[{%field%}][condition]" value="{%search_type%}">
+    data-type="{%laydateType%}" data-isRange="true" placeholder="请选择{%comment%}">
+<input type="hidden" name="search_param[{%field%}][condition]" value="{%searchType%}">
