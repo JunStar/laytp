@@ -284,11 +284,7 @@ class Curd
         $data['modelNamespace'] = str_replace('/', '\\', dirname('app/common/model/' . $this->midName));
         $data['relationModel']  = "";//$this->set_relation_model();
         $data['autoTimeFormat'] = $this->autoTimeFormat();
-        $data['append']         = $this->modelAppend();
         $data['getAttrFun']     = $this->getAttrFun();
-        $data['autoCreateTime'] = "";//$this->setAutoWriteCreateTime();
-        $data['autoUpdateTime'] = "";//$this->setAutoWriteUpdateTime();
-        $data['autoDeleteTime'] = "";//$this->setAutoWriteDeleteTime();
         $this->modelParam       = ['tplName' => $tplName, 'data' => $data, 'fileName' => $this->modelFileName];
     }
 
@@ -318,10 +314,12 @@ class Curd
      * 模型需要新增的属性
      *  目前仅当integer类型的字段存储时间戳时，由于后台需要进行自动时间戳转换，但是有时候接口可能需要使用原始的整型时间戳，此时需要把数据库原始值查询出来
      *  这里我们把数据库的原始值字段增加后缀 _database
+     *  - 修改记录：自动生成的model，append属性不需要，只需要生成新增属性的方法，在需要新增属性时，自行调用append方法进行新增展示
      * @return string
      */
     protected function modelAppend()
     {
+        return '';
         $append = [];
         foreach ($this->fields as $k => $v) {
             if ($v['form_type'] == 'laydate' && $v['data_type'] == 'integer') {
@@ -342,12 +340,18 @@ class Curd
             if ($v['form_type'] == 'laydate' && $v['data_type'] == 'integer') {
                 $fun[] = 'public function get' . ucfirst($this->convertUnderline($v['field'])) . 'DatabaseAttr($value, $data)' . "\n\t" .
                     '{' . "\n\t\t" .
+                    'return $data[\'' . $v['field'] . '\'] ? $data[\'' . $v['field'] . '\'] : 0;' . "\n\t" .
+                    '}';
+            }
+            if ($v['form_type'] == 'laydate' && $v['data_type'] == 'datetime') {
+                $fun[] = 'public function get' . ucfirst($this->convertUnderline($v['field'])) . 'DatabaseAttr($value, $data)' . "\n\t" .
+                    '{' . "\n\t\t" .
                     'return $data[\'' . $v['field'] . '\'] ? strtotime($data[\'' . $v['field'] . '\']) : 0;' . "\n\t" .
                     '}';
             }
         }
         if ($fun) {
-            return implode('', $fun) . "\n\t";
+            return implode("\n\n\t", $fun);
         } else {
             return '';
         }
@@ -368,6 +372,9 @@ class Curd
             if ($v['field'] == 'delete_time') {
                 $this->modelParam['data']['softDelPackage'] = "\nuse think\model\concern\SoftDelete;";
                 $this->modelParam['data']['useSoftDel']     = "\n\tuse SoftDelete;";
+                if ($v['default'] !== null) {
+                    $this->modelParam['data']['defaultSoftDelete'] = "\n\tprotected \$defaultSoftDelete='{$v['default']}';";
+                }
                 break;
             }
         }
@@ -469,7 +476,7 @@ class Curd
                 $temp               .= ",templet:function(d){\n\t\t\t\t\treturn layTp.tableFormatter.flag(d.{$v['field']},{$jsonObj});\n\t\t\t\t}";
             }
             //image模板
-            if ($v['form_type'] == 'upload' && $v['addition']['accept'] == 'images') {
+            if ($v['form_type'] == 'upload' && $v['addition']['accept'] == 'image') {
                 $temp .= ",templet:function(d){\n\t\t\t\t\treturn layTp.tableFormatter.images(d.{$v['field']});\n\t\t\t\t}";
             }
             //video模板
