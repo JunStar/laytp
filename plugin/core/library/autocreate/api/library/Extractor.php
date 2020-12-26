@@ -1,6 +1,6 @@
 <?php
 
-namespace plugin\core\library\autocreate\Api\library;
+namespace plugin\core\library\autocreate\api\library;
 
 use Exception;
 

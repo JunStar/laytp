@@ -3,8 +3,8 @@
 namespace plugin\core\library\autocreate;
 
 use laytp\traits\Error;
-use plugin\core\library\autocreate\Api\library\Builder;
-use plugin\core\library\autocreate\Api\library\Extractor;
+use plugin\core\library\autocreate\api\library\Builder;
+use plugin\core\library\autocreate\api\library\Extractor;
 use laytp\library\DirFile;
 use think\facade\Env;
 
