@@ -67,7 +67,7 @@ class Curd
         $this->isHidePk       = $table->is_hide_pk;
         $this->isCreateNumber = $table->is_create_number;
 
-        $this->fields = Field::where('table_id', '=', $this->tableId)->select();
+        $this->fields = Field::where('table_id', '=', $this->tableId)->order(['show_sort' => 'desc', 'id' => 'desc'])->select();
         if (!$this->fields) {
             $this->setError($this->tableName . '还没有字段，请先添加字段');
             return false;
