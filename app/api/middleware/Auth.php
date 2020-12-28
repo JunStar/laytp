@@ -23,6 +23,9 @@ class Auth extends BaseMiddleware
             if (!UserServiceFacade::isLogin()) {
                 return $this->error('登录信息已过期', 10401);
             }
+        } else {
+            //不需要登录的接口，也可能需要获取登录用户的信息
+            UserServiceFacade::init($request->header('token'));
         }
         return $next($request);
     }
