@@ -79,6 +79,9 @@ class Common extends Backend
             $uploadDir = $this->request->param('dir', '/');
             $object    = $uploadDir . $saveName;//上传至阿里云或者七牛云的文件名
             $upload    = Config::get('laytp.upload');
+            if (!$upload) {
+                return $this->error('上传配置未保存，请到[控制台 - 常规管理 - 系统配置 - 上传配置]，点击保存配置');
+            }
             $size      = $this->request->param('size', $upload['size']);
             preg_match('/(\d+)(\w+)/', $size, $matches);
             $type     = strtolower($matches[2]);
