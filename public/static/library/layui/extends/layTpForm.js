@@ -28,7 +28,7 @@ layui.define(["jquery", "facade"], function (exports) {
          * <select
          *  name="name"//提交表单时的name
          *  id="id"//节点的id值
-         *  data-source="/plugin/core/auth.menu/getSelectOptionData" //数据源，插件自动拼接参数no_page=1
+         *  data-source="/plugin/core/auth.menu/getSelectOptionData" //数据源，插件自动拼接参数all_data=1
          *  data-valueField="id" //option中value属性使用列表的哪个字段，默认为id
          *  data-showField="name" //option中，文本显示使用列表中哪个字段，默认为name
          *  data-selected="1" //选中项的valueField的值，如果data-valueField属性的值为id，那么当前属性data-selected的值就是数据源中某一个选项的id值，用于添加表单表单元素的默认选中值
@@ -51,7 +51,7 @@ layui.define(["jquery", "facade"], function (exports) {
                     defArr.push(
                         facade.ajax({
                             path: source,
-                            params: {"no_page": 1},
+                            params: {"all_data": 1},
                             successAlert: false
                         }).then(function (res) {
                             if (placeholder) {
@@ -82,6 +82,7 @@ layui.define(["jquery", "facade"], function (exports) {
          *      data-source="[{text:'唱歌',id:'1'},{text:'跳舞',id:'2'},{text:'朗诵',id:'3'},{text:'武术',id:'4'}]"//这种，对应的data-sourceType="data"，需要指定data-textField="text"，data-valueField="id"
          *      data-source="{1:唱歌,2:跳舞,3:朗诵,4:武术}"//这种，对应的data-sourceType="data"，key就是表单提交的值，value就是展示的文本
          *      data-source="plugin/core/auth.menu/getTreeList" //这种，对应的data-sourceType="url"，这里是一个Api接口地址，返回的数据结构是数组或者对象，具体请参考当data-sourceType="data"时，data-source的说明
+         *      data-params="{"only_menu":1}"//请求后台接口地址时，需要传递的参数，json字符串，这个在自动生成时，不会用到
          *      data-sourceTree="true"//非必设，是否展示成树形结构，与data-source连用，当为true时，需要展示data-source的值是树形结构的数据
          *      data-textField="name"//非必设，默认为name，当数据源的数据结构是一个数组时，显示的文本字段名称，当数据源数据结构是一个对象时，此设置无意义
          *      data-subTextField="value"//非必设，附属的文本字段名称，仅在下拉框列表中展示
@@ -201,7 +202,7 @@ layui.define(["jquery", "facade"], function (exports) {
                         //是否展示三角图标
                         showFolderIcon: true,
                         //是否显示虚线
-                        showLine: false,
+                        showLine: true,
                         //间距
                         indent: 20,
                         //默认展开节点的数组, 为 true 时, 展开所有节点
@@ -214,8 +215,17 @@ layui.define(["jquery", "facade"], function (exports) {
                 }
                 if (sourceType === "url") {
                     //这个ajax请求无需存入延迟对象数组，因为xmSelect是一个一个进行渲染的，不像layui.form.render()方法，xmSelect没有全局统一方法一次性渲染所有的xmSelect
-                    //xmSelect的分页效果由js实现，不管分页与否，都查询出所有数据集，参数传递no_page即为查询所有数据集
-                    facade.ajax({path: source, params: {no_page: 1}, successAlert: false}).done(function (res) {
+                    //xmSelect的分页效果由js实现，不管分页与否，都查询出所有数据集，参数传递all_data即为查询出所有数据集
+                    let params = $(item).data("params");
+                    let ajaxParams = {};
+                    ajaxParams.all_data = 1;
+                    if (params) {
+                        params = eval(params);
+                        for (key in params) {
+                            ajaxParams[key] = params[key];
+                        }
+                    }
+                    facade.ajax({path: source, params: ajaxParams, successAlert: false}).done(function (res) {
                         let paging = $(item).data("paging") === true;
                         if (paging) {
                             updateOptions.paging = true;
@@ -271,7 +281,7 @@ layui.define(["jquery", "facade"], function (exports) {
                     searchParam[searchField].condition = searchCondition;
                     facade.ajax({
                         path: url,
-                        params: {search_param: searchParam, no_page: 1},
+                        params: {search_param: searchParam, all_data: 1},
                         successAlert: false
                     }).done(function (res) {
                         let optionTips = $(item).children().first().prop("outerHTML");
@@ -302,7 +312,7 @@ layui.define(["jquery", "facade"], function (exports) {
                         rightSearchParam[rightSearchField].condition = $("#" + rightField, parentElem).data('searchcondition') ? $("#" + rightField, parentElem).data('searchcondition') : "=";
                         facade.ajax({
                             path: rightSearchUrl,
-                            params: {search_param: rightSearchParam, no_page: 1},
+                            params: {search_param: rightSearchParam, all_data: 1},
                             successAlert: false
                         }).done(function (res) {
                             let rightOptionTips = $("#" + rightField, parentElem).children().first().prop("outerHTML");
@@ -337,7 +347,7 @@ layui.define(["jquery", "facade"], function (exports) {
                         selectedRightSearchParam[selectedRightSearchField].condition = $("#" + selectedRightSearchField, parentElem).data('searchcondition') ? $("#" + selectedRightSearchField).data('searchcondition') : "=";
                         facade.ajax({
                             path: selectedRightSearchUrl,
-                            params: {search_param: selectedRightSearchParam, no_page: 1},
+                            params: {search_param: selectedRightSearchParam, all_data: 1},
                             successAlert: false
                         }).done(function (res) {
                             let selectedRightOptionTips = $("#" + rightField, parentElem).children().first().prop("outerHTML");

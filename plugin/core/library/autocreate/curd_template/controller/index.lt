@@ -3,7 +3,7 @@
     public function index(){
         $where = $this->buildSearchParams();
         $order = $this->buildOrder();
-        $noPage = $this->request->param('no_page');
+        $noPage = $this->request->param('all_data');
         $data = $this->model->where($where)->order($order){%with_relation%};
         if($noPage){
             $data = $data->select();

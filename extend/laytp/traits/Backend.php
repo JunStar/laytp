@@ -8,15 +8,15 @@ trait Backend
 {
     /**
      * 查看
-     *  no_page参数表示是否进行分页，默认不传表示进行分页查询
+     *  all_data参数的值为true时，表示查询表中所有数据集，否则进行分页查询
      * @return mixed
      */
     public function index()
     {
-        $where = $this->buildSearchParams();
-        $order = $this->buildOrder();
-        $noPage = $this->request->param('no_page');
-        $data = $this->model->where($where)->order($order);
+        $where  = $this->buildSearchParams();
+        $order  = $this->buildOrder();
+        $noPage = $this->request->param('all_data');
+        $data   = $this->model->where($where)->order($order);
         if ($noPage) {
             $data = $data->select();
         }else{

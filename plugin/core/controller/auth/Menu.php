@@ -26,14 +26,15 @@ class Menu extends Backend
      */
     public function index()
     {
-        $sourceData  = $this->model->order($this->order)->select()->toArray();
+        $onlyMenu = $this->request->param('only_menu');
+        if ($onlyMenu) {
+            $sourceData = $this->model->order($this->order)->where('is_menu', '=', 1)->select()->toArray();
+        } else {
+            $sourceData = $this->model->order($this->order)->select()->toArray();
+        }
         $menuTreeObj = Tree::instance();
         $menuTreeObj->init($sourceData);
-        $data   = $menuTreeObj->getTreeArray(0);
-        $noPage = $this->request->param('no_page');
-        if ($noPage) {
-            $data = $menuTreeObj->getTreeList($data);
-        }
+        $data = $menuTreeObj->getTreeArray(0);
         return $this->success('获取成功', $data);
     }
 
