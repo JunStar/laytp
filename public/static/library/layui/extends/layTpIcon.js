@@ -49,43 +49,54 @@ layui.define(["jquery"], function (exports) {
             $(options.el).after(layTpIcon.renderHtml(options));
             //选择图标按钮点击事件
             $(document).off("click", "#select-icon-" + options.name).on("click", "#select-icon-" + options.name, function () {
+                layui.facade.loading();
+
                 let width = "45%";
                 let height = "50%";
                 let left = (document.body.offsetWidth - 230 - facade.rtrim(width, "%") / 100 * document.body.offsetWidth) / 2 + 230;
                 let layuiIconsHtml = "";
                 let fontAwesomeIconsHtml = "";
                 let parentElem = $(this).data("parentelem");
-                $.ajax({
-                    "url": apiDomain + "/static/plugin/core/data/layuiIcons.json",
-                    "async": false,
-                    "dataType": "json",
-                    "success": function (res) {
-                        res.parentElem = parentElem;
-                        layuiIconsHtml = layTpIcon.chooseIconHtml(res);
-                    }
-                });
 
-                $.ajax({
-                    "url": apiDomain + "/static/plugin/core/data/fontAwesomeIcons.json",
-                    "async": false,
-                    "dataType": "json",
-                    "success": function (res) {
-                        res.parentElem = parentElem;
-                        fontAwesomeIconsHtml = layTpIcon.chooseIconHtml(res);
-                    }
-                });
+                let defAjaxArr = [];
 
-                tabIndex = layer.tab({
-                    area: [width, height]
-                    , shade: 0.1
-                    , offset: ["", left + "px"]
-                    , tab: [{
-                        title: "LayUI",
-                        content: layuiIconsHtml
-                    }, {
-                        title: "font-awesome",
-                        content: fontAwesomeIconsHtml
-                    }]
+                defAjaxArr.push(
+                    $.ajax({
+                        "url": apiDomain + "/static/plugin/core/data/layuiIcons.json",
+                        "async": true,
+                        "dataType": "json",
+                        "success": function (res) {
+                            res.parentElem = parentElem;
+                            layuiIconsHtml = layTpIcon.chooseIconHtml(res);
+                        }
+                    })
+                );
+
+                defAjaxArr.push(
+                    $.ajax({
+                        "url": apiDomain + "/static/plugin/core/data/fontAwesomeIcons.json",
+                        "async": true,
+                        "dataType": "json",
+                        "success": function (res) {
+                            res.parentElem = parentElem;
+                            fontAwesomeIconsHtml = layTpIcon.chooseIconHtml(res);
+                        }
+                    })
+                );
+
+                $.when.apply($, defAjaxArr).done(function () {
+                    tabIndex = layer.tab({
+                        area: [width, height]
+                        , shade: 0.1
+                        , offset: ["", left + "px"]
+                        , tab: [{
+                            title: "LayUI",
+                            content: layuiIconsHtml
+                        }, {
+                            title: "font-awesome",
+                            content: fontAwesomeIconsHtml
+                        }]
+                    });
                 });
             });
 
