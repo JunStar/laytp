@@ -211,7 +211,10 @@ layui.define(["jquery", "facade"], function (exports) {
                         strict: false,
                         //是否开启极简模式
                         simple: true,
+                        clickExpand: false,
+                        clickCheck: true,
                     };
+                    console.log(updateOptions.tree);
                 }
                 if (sourceType === "url") {
                     //这个ajax请求无需存入延迟对象数组，因为xmSelect是一个一个进行渲染的，不像layui.form.render()方法，xmSelect没有全局统一方法一次性渲染所有的xmSelect

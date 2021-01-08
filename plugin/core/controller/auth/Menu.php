@@ -35,6 +35,9 @@ class Menu extends Backend
         $menuTreeObj = Tree::instance();
         $menuTreeObj->init($sourceData);
         $data = $menuTreeObj->getTreeArray(0);
+//        if ($onlyMenu) {
+//            $data = $menuTreeObj->getTreeList($data);
+//        }
         return $this->success('获取成功', $data);
     }
 
