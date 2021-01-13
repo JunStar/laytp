@@ -1,1 +1,0 @@
-<div class="editor" type="meditor" id="{%field%}" name="{%field%}">{{d.{%field%}}}</div>

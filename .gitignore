@@ -1,8 +1,0 @@
-/.git
-/.gitee
-/.idea
-/.vscode
-/vendor
-*.log
-.env
-/public/api.html

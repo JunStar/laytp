@@ -1,5 +1,0 @@
-<div class="popup-content">
-    <form class="layui-form" method="post" action="{%action%}">
-{%formContent%}
-    </form>
-</div>

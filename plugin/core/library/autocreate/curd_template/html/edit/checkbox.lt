@@ -1,3 +1,0 @@
-<input autocomplete="off" type="checkbox" name="{%field%}[]"
-    id="{%field%}-{%value%}" value="{%value%}" title="{%text%}"
-    {{# let {%field%}ValueArr{%value%} = d.{%field%}.split(','); if(facade.inArray({%value%},{%field%}ValueArr{%value%})){ }}checked="checked"{{# } }}>

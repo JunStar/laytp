@@ -1,1 +1,0 @@
-->addColumn('{%field%}', '{%dataType%}', [{%limitPrecisionScale%}, 'null' => {%null%},{%default%}'comment' => '{%comment%}'])

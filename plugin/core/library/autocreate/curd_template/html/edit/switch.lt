@@ -1,3 +1,0 @@
-<!-- 隐藏域设置开关未选中时需要传递的参数值 -->
-            <input type="hidden" name="{%field%}" id="{%field%}-{%close_value%}" value="{%close_value%}" />
-            <input type="checkbox" name="{%field%}" id="{%field%}-{%open_value%}" lay-skin="switch" lay-text="{%lay_text%}" value="{%open_value%}" {{# if({%open_value%} == d.{%field%}){ }}checked="checked"{{# } }} />

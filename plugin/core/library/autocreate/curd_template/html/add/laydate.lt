@@ -1,3 +1,0 @@
-<input type="text" class="layui-input laydate"
-       name="{%field%}" id="{%field%}" date-type="{%laydateType%}"
-       autocomplete="off" laydate="true" placeholder="请选择{%comment%}" lay-verify="{%verify%}" />

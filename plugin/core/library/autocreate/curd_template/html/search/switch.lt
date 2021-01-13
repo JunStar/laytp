@@ -1,5 +1,0 @@
-<select id="{%field%}" name="search_param[{%field%}][value]">
-        <option value="">请选择{%comment%}</option>
-        {%options%}
-                    </select>
-                    <input type="hidden" name="search_param[{%field%}][condition]" value="=">

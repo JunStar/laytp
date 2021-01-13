@@ -1,6 +1,0 @@
-<div class="popup-content">
-    <form class="layui-form" method="post" action="{%action%}">
-    <input type="hidden" name="id" value="{{d.id}}"/>
-{%formContent%}
-    </form>
-</div>

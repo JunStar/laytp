@@ -1,1 +1,0 @@
-<input type="radio" name="{%field%}" id="{%field%}-{%value%}" value="{%value%}" title="{%title%}" {%checkedStatus%} />
