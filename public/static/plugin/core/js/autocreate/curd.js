@@ -12,68 +12,68 @@ layui.use(["layTp"], function () {
     defaultWidthPopupDiv = "760px";
 
     funController.getTreeTable = function () {
-        facade.ajax({
-            path: "plugin/core/autocreate.curd/getTreeTableList",
-            successAlert: false,
-            async: false
-        }).done(function (res) {
-            nowTableId = res.data.length > 0 ? res.data[0].id : 0;
-            let treeData = getTreeData(res.data);
+        layui.$.ajax({
+            url: "/plugin/core/autocreate.curd/getTreeTableList",
+            async: false,
+            success: function (res) {
+                nowTableId = res.data.length > 0 ? res.data[0].id : 0;
+                let treeData = getTreeData(res.data);
 
-            tree.render({
-                elem: '#tableList'
-                , data: treeData
-                , showCheckbox: false
-                , accordion: true
-                , id: 'tableList'
-                , edit: ['del']
-                , onlyIconControl: true
-                , click: function (obj) {
-                    if (typeof obj.data.children === "undefined") {
-                        $('.layui-tree-txt').css('color', '');
-                        $('.layui-tree-txt').css('font-size', '12px');
-                        $('.layui-tree-txt').css('font-weight', 'normal');
-                        $('.layui-tree-txt', obj.elem).css('color', 'var(--laytp-head-bg)');
-                        $('.layui-tree-txt', obj.elem).css('font-size', '14px');
-                        $('.layui-tree-txt', obj.elem).css('font-weight', 'bold');
-                        nowTableId = obj.data.id;
-                        $("#table_id").val(nowTableId);
-                        $("[lay-filter=laytp-search-form]").click();
-                    }
-                }, operate: function (obj) {
-                    let type = obj.type; //得到操作类型：add、edit、del
-                    let data = obj.data; //得到当前节点的数据
-                    if (type === "del") {
-                        facade.ajax({
-                            path: "/plugin/core/autocreate.curd.table/del"
-                            , params: {ids: data.id}
-                        }).done(function () {
-                            if (obj.data.id === nowTableId) {
-                                facade.ajax({
-                                    path: "plugin/core/autocreate.curd/getTreeTableList",
-                                    successAlert: false,
-                                    async: false
-                                }).done(function (res) {
-                                    tree.render('#tableList', {
-                                        data: getTreeData(res.data)
+                tree.render({
+                    elem: '#tableList'
+                    , data: treeData
+                    , showCheckbox: false
+                    , accordion: true
+                    , id: 'tableList'
+                    , edit: ['del']
+                    , onlyIconControl: true
+                    , click: function (obj) {
+                        if (typeof obj.data.children === "undefined") {
+                            $('.layui-tree-txt').css('color', '');
+                            $('.layui-tree-txt').css('font-size', '12px');
+                            $('.layui-tree-txt').css('font-weight', 'normal');
+                            $('.layui-tree-txt', obj.elem).css('color', 'var(--laytp-head-bg)');
+                            $('.layui-tree-txt', obj.elem).css('font-size', '14px');
+                            $('.layui-tree-txt', obj.elem).css('font-weight', 'bold');
+                            nowTableId = obj.data.id;
+                            $("#table_id").val(nowTableId);
+                            $("[lay-filter=laytp-search-form]").click();
+                        }
+                    }, operate: function (obj) {
+                        let type = obj.type; //得到操作类型：add、edit、del
+                        let data = obj.data; //得到当前节点的数据
+                        if (type === "del") {
+                            facade.ajax({
+                                path: "/plugin/core/autocreate.curd.table/del"
+                                , params: {ids: data.id}
+                            }).done(function () {
+                                if (obj.data.id === nowTableId) {
+                                    facade.ajax({
+                                        path: "plugin/core/autocreate.curd/getTreeTableList",
+                                        successAlert: false,
+                                        async: false
+                                    }).done(function (res) {
+                                        tree.render('#tableList', {
+                                            data: getTreeData(res.data)
+                                        });
+                                        $('.layui-tree-txt').eq(0).css('color', 'var(--laytp-head-bg)');
+                                        $('.layui-tree-txt').eq(0).css('font-size', '14px');
+                                        $('.layui-tree-txt').eq(0).css('font-weight', 'bold');
+
+                                        nowTableId = res.data.length > 0 ? res.data[0].id : 0;
+                                        $("#table_id").val(nowTableId);
+                                        $("[lay-filter=laytp-search-form]").click();
                                     });
-                                    $('.layui-tree-txt').eq(0).css('color', 'var(--laytp-head-bg)');
-                                    $('.layui-tree-txt').eq(0).css('font-size', '14px');
-                                    $('.layui-tree-txt').eq(0).css('font-weight', 'bold');
-
-                                    nowTableId = res.data.length > 0 ? res.data[0].id : 0;
-                                    $("#table_id").val(nowTableId);
-                                    $("[lay-filter=laytp-search-form]").click();
-                                });
-                            }
-                        });
+                                }
+                            });
+                        }
                     }
-                }
-            });
+                });
 
-            $('.layui-tree-txt').eq(0).css('color', 'var(--laytp-head-bg)');
-            $('.layui-tree-txt').eq(0).css('font-size', '14px');
-            $('.layui-tree-txt').eq(0).css('font-weight', 'bold');
+                $('.layui-tree-txt').eq(0).css('color', 'var(--laytp-head-bg)');
+                $('.layui-tree-txt').eq(0).css('font-size', '14px');
+                $('.layui-tree-txt').eq(0).css('font-weight', 'bold');
+            }
         });
     };
 
