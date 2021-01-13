@@ -146,6 +146,9 @@ layui.define(["jquery", "facade"], function (exports) {
                     , clickClose: $(item).data("radio") === true
                     , tips: $(item).data("placeholder") ? $(item).data("placeholder") : "请选择"
                     , toolbar: {show: !($(item).data("radio") === true)}
+                    , theme: {
+                        color: 'var(--laytp-border-color)'
+                    }
                 };
                 let max = $(item).data("max");
                 if (max) options.max = max;
@@ -214,7 +217,6 @@ layui.define(["jquery", "facade"], function (exports) {
                         clickExpand: false,
                         clickCheck: true,
                     };
-                    console.log(updateOptions.tree);
                 }
                 if (sourceType === "url") {
                     //这个ajax请求无需存入延迟对象数组，因为xmSelect是一个一个进行渲染的，不像layui.form.render()方法，xmSelect没有全局统一方法一次性渲染所有的xmSelect
