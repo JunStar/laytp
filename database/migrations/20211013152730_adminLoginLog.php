@@ -18,7 +18,7 @@ class AdminLoginLog extends Migrator
         }
 
         $table
-            ->addColumn('log_status', 'boolean', ['limit' => 4, 'default' => '0', 'comment' => '登录状态.1=成功,2=失败'])
+            ->addColumn('login_status', 'boolean', ['limit' => 4, 'default' => '0', 'comment' => '登录状态.1=成功,2=失败'])
             ->addColumn('admin_id', 'integer', ['limit' => 11, 'default' => '0', 'comment' => '登录者'])
             ->addColumn('request_body', 'text', ['comment' => 'body参数'])
             ->addColumn('request_header', 'text', ['comment' => 'header参数'])
