@@ -821,7 +821,7 @@ class Area extends Migrator
                     'pinyin' => 'gaocheng',
                     'code' => '0311',
                     'zip' => '052160',
-                    'first' => NULL,
+                    'first' => '',
                     'lng' => '114.84671',
                     'lat' => '38.02162',
                     'create_time' => '2021-12-11 13:32:21',
