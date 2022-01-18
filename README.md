@@ -8,9 +8,7 @@ laytp1.0完全免费，无任何商业授权版本，只是需要保留laytp的�
 http://www.laytp.com
 
 #### 演示
-- 地址:http://demo.laytp.com
-- 账号:demo
-- 密码:123456
+不再提供
 
 #### 联系方式
 - LayTp交流①群:843093362
@@ -40,7 +38,7 @@ http://www.laytp.com
 
 #### 使用文档
 
-http://www.laytp.com/document/index/id/2.html
+不再提供
 
 #### 参与贡献
 
@@ -51,4 +49,4 @@ http://www.laytp.com/document/index/id/2.html
 
 #### 更新日志
 
-http://www.laytp.com/document/index/id/38.html
+不再提供
