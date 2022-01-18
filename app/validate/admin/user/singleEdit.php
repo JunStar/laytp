@@ -13,7 +13,6 @@ class singleEdit extends Validate
         'nickname'         => 'require|length:2,30',
         'old_password'     => 'length:6,30|checkOldPassword:',
         'password'         => 'length:6,30|confirm:re_password',
-        'avatar'           => 'require',
     ];
 
     //定义内置方法检验失败后返回的字符
@@ -24,7 +23,6 @@ class singleEdit extends Validate
         'old_password.length'   => '旧密码长度6-30',
         'password.length'       => '新密码长度6-30',
         'password.confirm'      => '两次新密码输入不相同',
-        'avatar.require'        => '请上传头像',
     ];
 
     //验证旧密码是否正确
