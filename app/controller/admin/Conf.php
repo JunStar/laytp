@@ -20,7 +20,7 @@ class Conf extends Backend
 
     public function _initialize()
     {
-        $this->model = new \app\model\admin\Conf();
+        $this->model = new \app\model\Conf();
     }
 
     /**
