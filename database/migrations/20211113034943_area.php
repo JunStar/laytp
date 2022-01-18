@@ -30,8 +30,7 @@ class Area extends Migrator
 			->addColumn('first', 'string', ['limit' => 255, 'default' => '','comment' => '首字母'])
 			->addColumn('lng', 'string', ['limit' => 255, 'default' => '','comment' => '经度'])
 			->addColumn('lat', 'string', ['limit' => 255, 'default' => '','comment' => '纬度'])
-			->addColumn('sort', 'integer', ['limit' => 11, 'default' => '0','comment' => '排序'])
-            ->addColumn('create_time', 'datetime', ['null' => 1, 'comment' => '创建时间'])
+			->addColumn('create_time', 'datetime', ['null' => 1, 'comment' => '创建时间'])
             ->addColumn('update_time', 'datetime', ['null' => 1, 'comment' => '更新时间'])
             ->addColumn('delete_time', 'datetime', ['null' => 1, 'comment' => '删除时间'])
         ;
