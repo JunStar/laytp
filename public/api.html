@@ -1,0 +1,2575 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Cache" content="no-cache">
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Api文档</title>
+    <!-- 依 赖 样 式 -->
+    <link rel="stylesheet" href="/static/component/laytp/css/laytp.css" />
+    <!-- 加 载 样 式-->
+    <link rel="stylesheet" href="/static/admin/css/load.css" />
+    <!-- 布 局 样 式 -->
+    <link rel="stylesheet" href="/static/admin/css/apidoc.css" />
+</head>
+<style>
+    .api-page-tab-content {
+        background-color: #fff;
+        overflow: auto;
+        min-height: 100%;
+    }
+
+    .api-url {
+        /*position: relative;*/
+        color: rgb(221, 17, 68);
+        background: #f6f6f6;
+        border: 1px solid #ddd;
+    }
+
+    .layui-form-pane .layui-form-label {
+        width: 280px;
+        /*height: 34px;*/
+        padding: 6px 15px;
+    }
+
+    .layui-form-pane .layui-input-block {
+        margin-left: 280px;
+    }
+
+    .editormd-preview-container, .editormd-html-preview {
+        width: 98% !important;
+        font-size: 16px;
+    }
+
+    .markdown-body li {
+        /* 使md编辑器中的li取消样式none   */
+        list-style: unset;
+    }
+
+    .api-tab-title {
+        position: fixed;
+        left: 230px;
+        right: 0;
+        top: 61px;
+        z-index: 999999;
+        background-color: #fff;
+    }
+
+    .layui-layout-admin .layui-body {
+        top: 96px;
+    }
+
+    .layui-tab-title {
+        height: 45px;
+    }
+
+    .layui-tab-title .layui-this:after {
+        height: 46px;
+    }
+
+    .layui-tab-title li {
+        line-height: 46px;
+    }
+
+    .layui-card-header{
+        position: static;
+    }
+
+    .layui-card-body .layui-table{
+        margin: 0;
+    }
+</style>
+<!-- 结 构 代 码 -->
+<body class="layui-layout-body laytp-admin">
+<!-- 布 局 框 架 -->
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <!-- 顶 部 左 侧 功 能 -->
+        <ul class="layui-nav layui-layout-left">
+            <li class="collaspe layui-nav-item"><a href="javascript:void(0);" class="layui-icon layui-icon-shrink-right"></a></li>
+        </ul>
+        <!-- 顶 部 右 侧 菜 单 -->
+        <div id="control" class="layui-layout-control"></div>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item layui-hide-xs"><a href="javascript:void(0);" class="fullScreen layui-icon layui-icon-screen-full"></a></li>
+            <!-- 主 题 配 置 -->
+            <li class="layui-nav-item apiSet"><a href="javascript:void(0);" class="layui-icon layui-icon-set"></a></li>
+            <li class="layui-nav-item setting"><a href="javascript:void(0);" class="layui-icon layui-icon-more-vertical"></a></li>
+        </ul>
+    </div>
+    <!-- 侧 边 区 域 -->
+    <div class="layui-side layui-bg-black">
+        <!-- 菜 单 顶 部 -->
+        <div class="layui-logo">
+            <!-- 图 标 -->
+            <img class="logo" />
+            <!-- 标 题 -->
+            <span class="title"></span>
+        </div>
+        <!-- 菜 单 内 容 -->
+        <div>
+            <ul class="layui-nav arrow layui-nav-tree laytp-nav-tree" style="display: block;">
+                <li class="layui-nav-item">
+                    <div class="search">
+                        <input type="text" class="layui-input search-menu" placeholder="搜索文档">
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="layui-side-scroll">
+            <div id="sideMenu"></div>
+        </div>
+    </div>
+    <!-- 视 图 页 面 -->
+    <div class="layui-body">
+                <div class="api-page-tab-content" id="meditor_1" style="display:none;">
+            <div class="layui-tab layui-tab-brief">
+                <ul class="layui-tab-title api-tab-title">
+                    <li class="layui-this">
+                        文档更新                    </li>
+                </ul>
+                <div class="layui-tab-content meditorContent api-content" id="meditor_1_content">
+                    <textarea style="display:none;">本文档分为两个部分，`全局说明文档`和`其他文档`。
+
+# 全局说明文档
+全局说明下的文档在后台生成Api文档菜单中进行添加，添加完成后点击生成Api文档按钮即可在本文档中看见
+
+# 其他文档
+其他文档使用PHP程序，通过PHP的类反射机制，获取到`app/controller/api/`目录下所有文件的注解来进行生成。
+
+注解规则请查阅`laytp.com`官网手册或者框架`app/controller/api/Demo.php`文件。
+
+如果后端程序员更新了`api`接口程序，并且使用了相应的注解规则，在后台点击`生成Api文档`按钮即可在本文档看到最新的Api文档
+
+# 注意点
+由于文档使用的是静态html展示，而浏览器对html页面是有缓存的。所以如果文档进行了更新。可能需要强制刷新页面才能看到最新的文档。</textarea>
+                </div>
+            </div>
+        </div>
+                <div class="api-page-tab-content" id="meditor_2" style="display:none;">
+            <div class="layui-tab layui-tab-brief">
+                <ul class="layui-tab-title api-tab-title">
+                    <li class="layui-this">
+                        在线测试功能使用                    </li>
+                </ul>
+                <div class="layui-tab-content meditorContent api-content" id="meditor_2_content">
+                    <textarea style="display:none;">本文档使用`Laytp极速后台开发框架 - 生成Api文档插件`进行生成。
+如果需要使用本文档的在线测试功能，需要先进行Api文档配置。
+
+### Api文档配置
+点击本文档右上角配置图标会弹出配置层。
+配置项包括：Api请求域名、签名开关、Header参数。
+
+#### Api请求域名
+后台使用单域名部署模式，则无需修改，使用默认值即可。
+后台使用多域名部署模式，则后端程序员需要提供请求Api的域名地址。使用者不要以/结尾，将请求Api的域名地址填入此处
+
+#### 签名开关
+请求Api有签名中间件，签名中间件是否启用要根据后台[系统配置 - 基础配置 - Api签名开关]是否开启的配置来决定。如果后台配置[Api签名开关]开启了，此处也要开启。此处开启后，使用本文档的在线测试功能时，在ajax请求头部会自动添加request-time和sign两个参数。至于签名具体如何生成，请查阅[签名相关]章节说明
+
+#### Header参数
+此处填入后端程序员自定义的请求头部参数。框架自定义的请求头部参数有用户登录凭证token，请求时间戳request-time，签名sign三个。一个复杂的系统，一般还会在Header头部定义一些公用参数。比如平台标识，代理标识等等。这些公用参数根据需求不同由后端程序员定义，在使用本文档时，自行在此处进行添加
+
+### 配置保存
+点击保存按钮，或者点击页面阴影部分遮罩层，配置都会进行保存
+
+### 配置持久化
+Api文档配置使用的是localStorage存储在浏览器端进行持久化的。无需担心页面关闭后，配置不存在的问题</textarea>
+                </div>
+            </div>
+        </div>
+                <div class="api-page-tab-content" id="meditor_3" style="display:none;">
+            <div class="layui-tab layui-tab-brief">
+                <ul class="layui-tab-title api-tab-title">
+                    <li class="layui-this">
+                        统一说明                    </li>
+                </ul>
+                <div class="layui-tab-content meditorContent api-content" id="meditor_3_content">
+                    <textarea style="display:none;"># 请求方式
+默认使用POST方式进行请求
+
+# 请求头Content-Type
+请求头的Content-Type定义请求参数的数据类型。ThinkPHP6兼容多种常用请求头方式。比如`application/json`、`application/form-data`和 `application/x-www-form-urlencoded`。
+
+一般的接口，客户端可以使用`application/json`，自行将参数定义成`json`格式进行参数传递。
+
+文件上传不支持`json`方式上传文件`Base64`内容，需要使用提交表单方式上传文件。
+
+# 接口域名
+- 正式环境
+由后端程序员提供
+
+- 测试环境
+由后端程序员提供
+
+# 后台地址
+- 正式环境
+    - 访问地址
+        由后端程序员提供
+    - 账号
+        admin
+    - 密码
+        123456
+- 测试环境
+    - 访问地址
+        由后端程序员提供
+    - 账号
+        admin
+    - 密码
+        123456</textarea>
+                </div>
+            </div>
+        </div>
+                <div class="api-page-tab-content" id="meditor_4" style="display:none;">
+            <div class="layui-tab layui-tab-brief">
+                <ul class="layui-tab-title api-tab-title">
+                    <li class="layui-this">
+                        签名相关                    </li>
+                </ul>
+                <div class="layui-tab-content meditorContent api-content" id="meditor_4_content">
+                    <textarea style="display:none;">客户端请求Api接口程序，后端有签名中间件对请求进行拦截。
+
+签名中间件是否启用要根据后台[系统配置 - 基础配置 - Api签名开关]是否开启的配置来决定。
+
+如果后台配置[Api签名开关]开启了，那么客户端在请求Api接口时，需要在Header部分传递两个参数`request-time`和`sign`。
+
+`request-time`的值由客户端自行定义为当前Unix时间戳。
+
+`sign`的值由签名生成规则计算生成。
+
+# 签名生成规则
+- 客户端自行定义request-time的值为当前Unix时间戳，并经过`md5`运算得到`stringA`
+
+- 后台系统配置 - 基础配置 - Api签名Key的值为生成签名的Key，并经过`md5`运算得到`stringB`
+
+- 连接`stringA`和`stringB`后经过`md5`运算得到`stringC`
+
+- 最后将`stringC`全部转成大写即是客户端需要在请求头部分传递的`sign`值</textarea>
+                </div>
+            </div>
+        </div>
+                <div class="api-page-tab-content" id="meditor_5" style="display:none;">
+            <div class="layui-tab layui-tab-brief">
+                <ul class="layui-tab-title api-tab-title">
+                    <li class="layui-this">
+                        接口返回                    </li>
+                </ul>
+                <div class="layui-tab-content meditorContent api-content" id="meditor_5_content">
+                    <textarea style="display:none;">接口统一返回`json`格式的数据。
+
+# 返回说明
+                
+|参数名|必然存在|类型|说明|
+|:----    |:---|:----- |-----   |
+|code |是  |integer |接口返回码.0=常规正确码，表示常规操作成功；1=常规错误码，客户端仅需提示message；其他返回码与具体业务相关。框架实现了的唯一其他返回码：10401，前端需要跳转至登录界面。在一个复杂的交互过程中，你可能需要自行定义其他返回码|
+|msg |是  |string | 接口返回文字描述    |
+|time |是  |integer | 接口返回时间戳，单位秒 |
+|data |是  |object/array | 附加数据。单条数据是对象，多条数据是数组。当为空时，会返回一个空对象{}|
+ 
+# 返回示例
+ ``` 
+ {
+ 	&quot;code&quot;:1,
+ 	&quot;msg&quot;:&quot;签名错误&quot;,
+ 	&quot;time&quot;:1613628412,
+ 	&quot;data&quot;:{}
+ }
+ ```</textarea>
+                </div>
+            </div>
+        </div>
+                <div class="api-page-tab-content" id="api_7" style="display:none;">
+            <div class="layui-tab layui-tab-brief">
+                <ul class="layui-tab-title api-tab-title">
+                    <li class="layui-this">接口说明</li>
+                    <li>在线测试</li>
+                </ul>
+                <div class="layui-tab-content markdown-body api-content">
+                    <div class="layui-tab-item layui-show editormd-html-preview">
+                        <p><strong>简要说明</strong></p>
+                        <ul>
+                            <li>文件上传，兼容阿里云OSS、七牛云KODO和本地上传，需在后台[系统配置 - 上传配置]选择上传方式</li>
+                        </ul>
+                        <p><strong>请求地址</strong></p>
+                        <ul>
+                            <li><code class="api-url" route="/api.common/upload">/api.common/upload</code></li>
+                        </ul>
+                        <p><strong>Headers参数</strong></p>
+                                                <div style="width: 100%;overflow-x: auto;">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th style="text-align: left;">名称</th>
+                                    <th style="text-align: left;">类型</th>
+                                    <th style="text-align: left;">必选</th>
+                                    <th style="text-align: left;">描述</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                <tr>
+                                    <td style="text-align:left">token</td>
+                                    <td style="text-align:left">string</td>
+                                    <td style="text-align:left">是</td>
+                                    <td>用户登录后得到的Token</td>
+                                </tr>
+                                                                </tbody>
+                            </table>
+                        </div>
+                                                <p><strong>Body参数</strong></p>
+                                                <div style="width: 100%;overflow-x: auto;">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th style="text-align: left;">名称</th>
+                                    <th style="text-align: left;">类型</th>
+                                    <th style="text-align: left;">必选</th>
+                                    <th style="text-align: left;">描述</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                <tr>
+                                    <td style="text-align:left">file</td>
+                                    <td style="text-align:left">file</td>
+                                    <td style="text-align:left">是</td>
+                                    <td>文件                                    </td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">upload_dir</td>
+                                    <td style="text-align:left">string</td>
+                                    <td style="text-align:left">否</td>
+                                    <td>上传目录，允许为空 -
+                                        例:avatar                                    </td>
+                                </tr>
+                                                                </tbody>
+                            </table>
+                        </div>
+                                                <p><strong>返回示例</strong></p>
+                                                <pre><code class="json">{
+    'code':0,
+    'msg':'上传成功',
+    'time':'15632654875',
+    'data':null
+}</code></pre>
+                                                <p><strong>返回说明</strong></p>
+                                                <div style="width: 100%;overflow-x: auto;">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th style="text-align: left;">名称</th>
+                                    <th style="text-align: left;">类型</th>
+                                    <th style="text-align: left;">描述</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                <tr>
+                                    <td style="text-align:left">code</td>
+                                    <td style="text-align:left">integer</td>
+                                    <td style="text-align:left">错误码.0=没有错误，表示操作成功；1=常规错误码，客户端仅需提示msg；其他错误码与具体业务相关，其他错误码举例：10401。前端需要跳转至登录界面。</td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">msg</td>
+                                    <td style="text-align:left">string</td>
+                                    <td style="text-align:left">返回描述</td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">time</td>
+                                    <td style="text-align:left">integer</td>
+                                    <td style="text-align:left">请求时间，Unix时间戳，单位秒</td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">data</td>
+                                    <td style="text-align:left">null</td>
+                                    <td style="text-align:left">null</td>
+                                </tr>
+                                                                </tbody>
+                            </table>
+                        </div>
+                                            </div>
+                    <div class="layui-tab-item editormd-html-preview">
+                        <div class="layui-card">
+                            <div class="layui-card-header" style="background-color: #F2F2F2;">Body传参</div>
+                            <div class="layui-card-body main-container">
+                                <form class="layui-form layui-form-pane" method="POST"
+                                      route="/api.common/upload"
+                                      lay-filter="test_inline_7" id="test_inline_7">
+                                                                        <div class="layui-form-item">
+                                        <label class="layui-form-label">file</label>
+                                        <div class="layui-input-block">
+                                                                                        <input type="file"
+                                                   name="file" autocomplete="off"
+                                                   placeholder="请输入文件"
+                                                   class="layui-input">
+                                                                                    </div>
+                                    </div>
+                                                                        <div class="layui-form-item">
+                                        <label class="layui-form-label">upload_dir</label>
+                                        <div class="layui-input-block">
+                                                                                        <input type="text"
+                                                   name="upload_dir" autocomplete="off"
+                                                   placeholder="上传目录，允许为空 - 例:avatar"
+                                                   class="layui-input">
+                                                                                    </div>
+                                    </div>
+                                                                        <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <button type="button" class="laytp-btn laytp-btn-primary"
+                                                    href="javascript:void(0);"
+                                                    onclick="api.testInline(7)">提 交
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="layui-card" id="response_card_7">
+                            <div class="layui-card-header" style="background-color: #F2F2F2;">响应输出</div>
+                            <div class="layui-card-body">
+                                <pre><code class="json" id="response_7"></code></pre>
+                                <pre class="layui-code" id="response_headers_7"></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                <div class="api-page-tab-content" id="api_8" style="display:none;">
+            <div class="layui-tab layui-tab-brief">
+                <ul class="layui-tab-title api-tab-title">
+                    <li class="layui-this">接口说明</li>
+                    <li>在线测试</li>
+                </ul>
+                <div class="layui-tab-content markdown-body api-content">
+                    <div class="layui-tab-item layui-show editormd-html-preview">
+                        <p><strong>简要说明</strong></p>
+                        <ul>
+                            <li>发送邮箱验证码</li>
+                        </ul>
+                        <p><strong>请求地址</strong></p>
+                        <ul>
+                            <li><code class="api-url" route="/api.common/sendEmailCode">/api.common/sendEmailCode</code></li>
+                        </ul>
+                        <p><strong>Headers参数</strong></p>
+                                                <ul>
+                            <li>无</li>
+                        </ul>
+                                                <p><strong>Body参数</strong></p>
+                                                <div style="width: 100%;overflow-x: auto;">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th style="text-align: left;">名称</th>
+                                    <th style="text-align: left;">类型</th>
+                                    <th style="text-align: left;">必选</th>
+                                    <th style="text-align: left;">描述</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                <tr>
+                                    <td style="text-align:left">email</td>
+                                    <td style="text-align:left">string</td>
+                                    <td style="text-align:left">是</td>
+                                    <td>邮箱                                    </td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">event</td>
+                                    <td style="text-align:left">string</td>
+                                    <td style="text-align:left">是</td>
+                                    <td>事件名称 -
+                                        例:register                                    </td>
+                                </tr>
+                                                                </tbody>
+                            </table>
+                        </div>
+                                                <p><strong>返回示例</strong></p>
+                                                <pre><code class="json">{
+    'code':0,
+    'msg':'发送成功',
+    'time':'15632654875',
+    'data':null
+}</code></pre>
+                                                <p><strong>返回说明</strong></p>
+                                                <div style="width: 100%;overflow-x: auto;">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th style="text-align: left;">名称</th>
+                                    <th style="text-align: left;">类型</th>
+                                    <th style="text-align: left;">描述</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                <tr>
+                                    <td style="text-align:left">code</td>
+                                    <td style="text-align:left">integer</td>
+                                    <td style="text-align:left">错误码.0=没有错误，表示操作成功；1=常规错误码，客户端仅需提示msg；其他错误码与具体业务相关，其他错误码举例：10401。前端需要跳转至登录界面。</td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">msg</td>
+                                    <td style="text-align:left">string</td>
+                                    <td style="text-align:left">返回描述</td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">time</td>
+                                    <td style="text-align:left">integer</td>
+                                    <td style="text-align:left">请求时间，Unix时间戳，单位秒</td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">data</td>
+                                    <td style="text-align:left">null</td>
+                                    <td style="text-align:left">null</td>
+                                </tr>
+                                                                </tbody>
+                            </table>
+                        </div>
+                                            </div>
+                    <div class="layui-tab-item editormd-html-preview">
+                        <div class="layui-card">
+                            <div class="layui-card-header" style="background-color: #F2F2F2;">Body传参</div>
+                            <div class="layui-card-body main-container">
+                                <form class="layui-form layui-form-pane" method="POST"
+                                      route="/api.common/sendEmailCode"
+                                      lay-filter="test_inline_8" id="test_inline_8">
+                                                                        <div class="layui-form-item">
+                                        <label class="layui-form-label">email</label>
+                                        <div class="layui-input-block">
+                                                                                        <input type="text"
+                                                   name="email" autocomplete="off"
+                                                   placeholder="请输入邮箱"
+                                                   class="layui-input">
+                                                                                    </div>
+                                    </div>
+                                                                        <div class="layui-form-item">
+                                        <label class="layui-form-label">event</label>
+                                        <div class="layui-input-block">
+                                                                                        <input type="text"
+                                                   name="event" autocomplete="off"
+                                                   placeholder="事件名称 - 例:register"
+                                                   class="layui-input">
+                                                                                    </div>
+                                    </div>
+                                                                        <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <button type="button" class="laytp-btn laytp-btn-primary"
+                                                    href="javascript:void(0);"
+                                                    onclick="api.testInline(8)">提 交
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="layui-card" id="response_card_8">
+                            <div class="layui-card-header" style="background-color: #F2F2F2;">响应输出</div>
+                            <div class="layui-card-body">
+                                <pre><code class="json" id="response_8"></code></pre>
+                                <pre class="layui-code" id="response_headers_8"></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                <div class="api-page-tab-content" id="api_9" style="display:none;">
+            <div class="layui-tab layui-tab-brief">
+                <ul class="layui-tab-title api-tab-title">
+                    <li class="layui-this">接口说明</li>
+                    <li>在线测试</li>
+                </ul>
+                <div class="layui-tab-content markdown-body api-content">
+                    <div class="layui-tab-item layui-show editormd-html-preview">
+                        <p><strong>简要说明</strong></p>
+                        <ul>
+                            <li>验证邮箱验证码</li>
+                        </ul>
+                        <p><strong>请求地址</strong></p>
+                        <ul>
+                            <li><code class="api-url" route="/api.common/checkEmailCode">/api.common/checkEmailCode</code></li>
+                        </ul>
+                        <p><strong>Headers参数</strong></p>
+                                                <ul>
+                            <li>无</li>
+                        </ul>
+                                                <p><strong>Body参数</strong></p>
+                                                <div style="width: 100%;overflow-x: auto;">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th style="text-align: left;">名称</th>
+                                    <th style="text-align: left;">类型</th>
+                                    <th style="text-align: left;">必选</th>
+                                    <th style="text-align: left;">描述</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                <tr>
+                                    <td style="text-align:left">email</td>
+                                    <td style="text-align:left">string</td>
+                                    <td style="text-align:left">是</td>
+                                    <td>邮箱                                    </td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">event</td>
+                                    <td style="text-align:left">string</td>
+                                    <td style="text-align:left">是</td>
+                                    <td>事件名称 -
+                                        例:register                                    </td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">code</td>
+                                    <td style="text-align:left">string</td>
+                                    <td style="text-align:left">是</td>
+                                    <td>邮箱验证码 -
+                                        例:register                                    </td>
+                                </tr>
+                                                                </tbody>
+                            </table>
+                        </div>
+                                                <p><strong>返回示例</strong></p>
+                                                <pre><code class="json">{
+    'code':0,
+    'msg':'发送成功',
+    'time':'15632654875',
+    'data':null
+}</code></pre>
+                                                <p><strong>返回说明</strong></p>
+                                                <div style="width: 100%;overflow-x: auto;">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th style="text-align: left;">名称</th>
+                                    <th style="text-align: left;">类型</th>
+                                    <th style="text-align: left;">描述</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                <tr>
+                                    <td style="text-align:left">code</td>
+                                    <td style="text-align:left">integer</td>
+                                    <td style="text-align:left">错误码.0=没有错误，表示操作成功；1=常规错误码，客户端仅需提示msg；其他错误码与具体业务相关，其他错误码举例：10401。前端需要跳转至登录界面。</td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">msg</td>
+                                    <td style="text-align:left">string</td>
+                                    <td style="text-align:left">返回描述</td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">time</td>
+                                    <td style="text-align:left">integer</td>
+                                    <td style="text-align:left">请求时间，Unix时间戳，单位秒</td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">data</td>
+                                    <td style="text-align:left">null</td>
+                                    <td style="text-align:left">null</td>
+                                </tr>
+                                                                </tbody>
+                            </table>
+                        </div>
+                                            </div>
+                    <div class="layui-tab-item editormd-html-preview">
+                        <div class="layui-card">
+                            <div class="layui-card-header" style="background-color: #F2F2F2;">Body传参</div>
+                            <div class="layui-card-body main-container">
+                                <form class="layui-form layui-form-pane" method="POST"
+                                      route="/api.common/checkEmailCode"
+                                      lay-filter="test_inline_9" id="test_inline_9">
+                                                                        <div class="layui-form-item">
+                                        <label class="layui-form-label">email</label>
+                                        <div class="layui-input-block">
+                                                                                        <input type="text"
+                                                   name="email" autocomplete="off"
+                                                   placeholder="请输入邮箱"
+                                                   class="layui-input">
+                                                                                    </div>
+                                    </div>
+                                                                        <div class="layui-form-item">
+                                        <label class="layui-form-label">event</label>
+                                        <div class="layui-input-block">
+                                                                                        <input type="text"
+                                                   name="event" autocomplete="off"
+                                                   placeholder="事件名称 - 例:register"
+                                                   class="layui-input">
+                                                                                    </div>
+                                    </div>
+                                                                        <div class="layui-form-item">
+                                        <label class="layui-form-label">code</label>
+                                        <div class="layui-input-block">
+                                                                                        <input type="text"
+                                                   name="code" autocomplete="off"
+                                                   placeholder="邮箱验证码 - 例:register"
+                                                   class="layui-input">
+                                                                                    </div>
+                                    </div>
+                                                                        <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <button type="button" class="laytp-btn laytp-btn-primary"
+                                                    href="javascript:void(0);"
+                                                    onclick="api.testInline(9)">提 交
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="layui-card" id="response_card_9">
+                            <div class="layui-card-header" style="background-color: #F2F2F2;">响应输出</div>
+                            <div class="layui-card-body">
+                                <pre><code class="json" id="response_9"></code></pre>
+                                <pre class="layui-code" id="response_headers_9"></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                <div class="api-page-tab-content" id="api_10" style="display:none;">
+            <div class="layui-tab layui-tab-brief">
+                <ul class="layui-tab-title api-tab-title">
+                    <li class="layui-this">接口说明</li>
+                    <li>在线测试</li>
+                </ul>
+                <div class="layui-tab-content markdown-body api-content">
+                    <div class="layui-tab-item layui-show editormd-html-preview">
+                        <p><strong>简要说明</strong></p>
+                        <ul>
+                            <li>发送手机验证码</li>
+                        </ul>
+                        <p><strong>请求地址</strong></p>
+                        <ul>
+                            <li><code class="api-url" route="/api.common/sendMobileCode">/api.common/sendMobileCode</code></li>
+                        </ul>
+                        <p><strong>Headers参数</strong></p>
+                                                <div style="width: 100%;overflow-x: auto;">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th style="text-align: left;">名称</th>
+                                    <th style="text-align: left;">类型</th>
+                                    <th style="text-align: left;">必选</th>
+                                    <th style="text-align: left;">描述</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                <tr>
+                                    <td style="text-align:left">token</td>
+                                    <td style="text-align:left">string</td>
+                                    <td style="text-align:left">是</td>
+                                    <td>用户登录后得到的Token</td>
+                                </tr>
+                                                                </tbody>
+                            </table>
+                        </div>
+                                                <p><strong>Body参数</strong></p>
+                                                <div style="width: 100%;overflow-x: auto;">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th style="text-align: left;">名称</th>
+                                    <th style="text-align: left;">类型</th>
+                                    <th style="text-align: left;">必选</th>
+                                    <th style="text-align: left;">描述</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                <tr>
+                                    <td style="text-align:left">mobile</td>
+                                    <td style="text-align:left">string</td>
+                                    <td style="text-align:left">是</td>
+                                    <td>手机号码                                    </td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">event</td>
+                                    <td style="text-align:left">string</td>
+                                    <td style="text-align:left">是</td>
+                                    <td>事件名称，reg_login=使用手机号+验证码的方式进行注册或登录 -
+                                        例:reg_login                                    </td>
+                                </tr>
+                                                                </tbody>
+                            </table>
+                        </div>
+                                                <p><strong>返回示例</strong></p>
+                                                <pre><code class="json">{
+    &quot;code&quot;: 1,
+    &quot;msg&quot;: &quot;发送失败,触发分钟级流控Permits:1&quot;,
+    &quot;time&quot;: 1584667483,
+    &quot;data&quot;: null
+}</code></pre>
+                                                <p><strong>返回说明</strong></p>
+                                                <div style="width: 100%;overflow-x: auto;">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th style="text-align: left;">名称</th>
+                                    <th style="text-align: left;">类型</th>
+                                    <th style="text-align: left;">描述</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                <tr>
+                                    <td style="text-align:left">code</td>
+                                    <td style="text-align:left">integer</td>
+                                    <td style="text-align:left"></td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">msg</td>
+                                    <td style="text-align:left">string</td>
+                                    <td style="text-align:left"></td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">time</td>
+                                    <td style="text-align:left">integer</td>
+                                    <td style="text-align:left">请求时间，Unix时间戳，单位秒</td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">data</td>
+                                    <td style="text-align:left">null</td>
+                                    <td style="text-align:left">只会返回null</td>
+                                </tr>
+                                                                </tbody>
+                            </table>
+                        </div>
+                                            </div>
+                    <div class="layui-tab-item editormd-html-preview">
+                        <div class="layui-card">
+                            <div class="layui-card-header" style="background-color: #F2F2F2;">Body传参</div>
+                            <div class="layui-card-body main-container">
+                                <form class="layui-form layui-form-pane" method="POST"
+                                      route="/api.common/sendMobileCode"
+                                      lay-filter="test_inline_10" id="test_inline_10">
+                                                                        <div class="layui-form-item">
+                                        <label class="layui-form-label">mobile</label>
+                                        <div class="layui-input-block">
+                                                                                        <input type="text"
+                                                   name="mobile" autocomplete="off"
+                                                   placeholder="请输入手机号码"
+                                                   class="layui-input">
+                                                                                    </div>
+                                    </div>
+                                                                        <div class="layui-form-item">
+                                        <label class="layui-form-label">event</label>
+                                        <div class="layui-input-block">
+                                                                                        <input type="text"
+                                                   name="event" autocomplete="off"
+                                                   placeholder="事件名称，reg_login=使用手机号+验证码的方式进行注册或登录 - 例:reg_login"
+                                                   class="layui-input">
+                                                                                    </div>
+                                    </div>
+                                                                        <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <button type="button" class="laytp-btn laytp-btn-primary"
+                                                    href="javascript:void(0);"
+                                                    onclick="api.testInline(10)">提 交
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="layui-card" id="response_card_10">
+                            <div class="layui-card-header" style="background-color: #F2F2F2;">响应输出</div>
+                            <div class="layui-card-body">
+                                <pre><code class="json" id="response_10"></code></pre>
+                                <pre class="layui-code" id="response_headers_10"></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                        <div class="api-page-tab-content" id="api_12" style="display:none;">
+            <div class="layui-tab layui-tab-brief">
+                <ul class="layui-tab-title api-tab-title">
+                    <li class="layui-this">接口说明</li>
+                    <li>在线测试</li>
+                </ul>
+                <div class="layui-tab-content markdown-body api-content">
+                    <div class="layui-tab-item layui-show editormd-html-preview">
+                        <p><strong>简要说明</strong></p>
+                        <ul>
+                            <li>根据token获取用户信息</li>
+                        </ul>
+                        <p><strong>请求地址</strong></p>
+                        <ul>
+                            <li><code class="api-url" route="/api.user/info">/api.user/info</code></li>
+                        </ul>
+                        <p><strong>Headers参数</strong></p>
+                                                <div style="width: 100%;overflow-x: auto;">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th style="text-align: left;">名称</th>
+                                    <th style="text-align: left;">类型</th>
+                                    <th style="text-align: left;">必选</th>
+                                    <th style="text-align: left;">描述</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                <tr>
+                                    <td style="text-align:left">token</td>
+                                    <td style="text-align:left">string</td>
+                                    <td style="text-align:left">是</td>
+                                    <td>用户登录后得到的Token</td>
+                                </tr>
+                                                                </tbody>
+                            </table>
+                        </div>
+                                                <p><strong>Body参数</strong></p>
+                                                <ul>
+                            <li>无</li>
+                        </ul>
+                                                <p><strong>返回示例</strong></p>
+                                                <pre><code class="json">{
+    &quot;code&quot;: 0,
+    &quot;msg&quot;: &quot;获取成功&quot;,
+    &quot;time&quot;: 1591149171,
+    &quot;data&quot;: {
+        &quot;id&quot;: 4,
+        &quot;mobile&quot;: &quot;17603005414&quot;,
+        &quot;email&quot;: &quot;&quot;,
+        &quot;username&quot;: &quot;&quot;,
+        &quot;nickname&quot;: &quot;&quot;,
+        &quot;avatar&quot;: &quot;http://local.laytp.com/static/index/image/default.png&quot;,
+        &quot;token&quot;: &quot;d32e5210-050d-4902-b4b2-0173da12e191&quot;
+    }
+}</code></pre>
+                                                <p><strong>返回说明</strong></p>
+                                                <div style="width: 100%;overflow-x: auto;">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th style="text-align: left;">名称</th>
+                                    <th style="text-align: left;">类型</th>
+                                    <th style="text-align: left;">描述</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                <tr>
+                                    <td style="text-align:left">code</td>
+                                    <td style="text-align:left">integer</td>
+                                    <td style="text-align:left">接口返回码.0=常规正确码，表示常规操作成功；1=常规错误码，客户端仅需提示msg；其他返回码与具体业务相关。框架实现了的唯一其他返回码：10401，前端需要跳转至登录界面。在一个复杂的交互过程中，你可能需要自行定义其他返回码</td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">msg</td>
+                                    <td style="text-align:left">string</td>
+                                    <td style="text-align:left">返回描述</td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">time</td>
+                                    <td style="text-align:left">integer</td>
+                                    <td style="text-align:left">请求时间，Unix时间戳，单位秒</td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">data.id</td>
+                                    <td style="text-align:left">integer</td>
+                                    <td style="text-align:left">用户主键ID</td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">data.mobile</td>
+                                    <td style="text-align:left">string</td>
+                                    <td style="text-align:left">手机号</td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">data.email</td>
+                                    <td style="text-align:left">string</td>
+                                    <td style="text-align:left">邮箱</td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">data.username</td>
+                                    <td style="text-align:left">string</td>
+                                    <td style="text-align:left">用户名</td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">data.nickname</td>
+                                    <td style="text-align:left">string</td>
+                                    <td style="text-align:left">昵称</td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">data.avatar</td>
+                                    <td style="text-align:left">string</td>
+                                    <td style="text-align:left">头像</td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">data.token</td>
+                                    <td style="text-align:left">string</td>
+                                    <td style="text-align:left">用户登录凭证,Token</td>
+                                </tr>
+                                                                </tbody>
+                            </table>
+                        </div>
+                                            </div>
+                    <div class="layui-tab-item editormd-html-preview">
+                        <div class="layui-card">
+                            <div class="layui-card-header" style="background-color: #F2F2F2;">Body传参</div>
+                            <div class="layui-card-body main-container">
+                                <form class="layui-form layui-form-pane" method="GET"
+                                      route="/api.user/info"
+                                      lay-filter="test_inline_12" id="test_inline_12">
+                                                                        <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <button type="button" class="laytp-btn laytp-btn-primary"
+                                                    href="javascript:void(0);"
+                                                    onclick="api.testInline(12)">提 交
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="layui-card" id="response_card_12">
+                            <div class="layui-card-header" style="background-color: #F2F2F2;">响应输出</div>
+                            <div class="layui-card-body">
+                                <pre><code class="json" id="response_12"></code></pre>
+                                <pre class="layui-code" id="response_headers_12"></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                <div class="api-page-tab-content" id="api_13" style="display:none;">
+            <div class="layui-tab layui-tab-brief">
+                <ul class="layui-tab-title api-tab-title">
+                    <li class="layui-this">接口说明</li>
+                    <li>在线测试</li>
+                </ul>
+                <div class="layui-tab-content markdown-body api-content">
+                    <div class="layui-tab-item layui-show editormd-html-preview">
+                        <p><strong>简要说明</strong></p>
+                        <ul>
+                            <li>邮箱注册</li>
+                        </ul>
+                        <p><strong>请求地址</strong></p>
+                        <ul>
+                            <li><code class="api-url" route="/api.user/emailReg">/api.user/emailReg</code></li>
+                        </ul>
+                        <p><strong>Headers参数</strong></p>
+                                                <ul>
+                            <li>无</li>
+                        </ul>
+                                                <p><strong>Body参数</strong></p>
+                                                <div style="width: 100%;overflow-x: auto;">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th style="text-align: left;">名称</th>
+                                    <th style="text-align: left;">类型</th>
+                                    <th style="text-align: left;">必选</th>
+                                    <th style="text-align: left;">描述</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                <tr>
+                                    <td style="text-align:left">email</td>
+                                    <td style="text-align:left">string</td>
+                                    <td style="text-align:left">是</td>
+                                    <td>邮箱                                    </td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">password</td>
+                                    <td style="text-align:left">string</td>
+                                    <td style="text-align:left">是</td>
+                                    <td>密码                                    </td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">repassword</td>
+                                    <td style="text-align:left">string</td>
+                                    <td style="text-align:left">是</td>
+                                    <td>重复密码                                    </td>
+                                </tr>
+                                                                </tbody>
+                            </table>
+                        </div>
+                                                <p><strong>返回示例</strong></p>
+                                                <pre><code class="json">{
+    &quot;code&quot;: 0,
+    &quot;msg&quot;: &quot;操作成功&quot;,
+    &quot;time&quot;: 1584513627,
+    &quot;data&quot;: {
+        &quot;token&quot;: &quot;b58ea1f0-e856-4ec4-b2b3-d852b9af86b5&quot;
+    }
+}</code></pre>
+                                                <p><strong>返回说明</strong></p>
+                                                <div style="width: 100%;overflow-x: auto;">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th style="text-align: left;">名称</th>
+                                    <th style="text-align: left;">类型</th>
+                                    <th style="text-align: left;">描述</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                <tr>
+                                    <td style="text-align:left">code</td>
+                                    <td style="text-align:left">integer</td>
+                                    <td style="text-align:left">接口返回码.0=常规正确码，表示常规操作成功；1=常规错误码，客户端仅需提示msg；其他返回码与具体业务相关。框架实现了的唯一其他返回码：10401，前端需要跳转至登录界面。在一个复杂的交互过程中，你可能需要自行定义其他返回码</td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">msg</td>
+                                    <td style="text-align:left">string</td>
+                                    <td style="text-align:left">返回描述</td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">time</td>
+                                    <td style="text-align:left">integer</td>
+                                    <td style="text-align:left">请求时间，Unix时间戳，单位秒</td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">data.token</td>
+                                    <td style="text-align:left">string</td>
+                                    <td style="text-align:left">用户登录后得到的凭证，token</td>
+                                </tr>
+                                                                </tbody>
+                            </table>
+                        </div>
+                                            </div>
+                    <div class="layui-tab-item editormd-html-preview">
+                        <div class="layui-card">
+                            <div class="layui-card-header" style="background-color: #F2F2F2;">Body传参</div>
+                            <div class="layui-card-body main-container">
+                                <form class="layui-form layui-form-pane" method="POST"
+                                      route="/api.user/emailReg"
+                                      lay-filter="test_inline_13" id="test_inline_13">
+                                                                        <div class="layui-form-item">
+                                        <label class="layui-form-label">email</label>
+                                        <div class="layui-input-block">
+                                                                                        <input type="text"
+                                                   name="email" autocomplete="off"
+                                                   placeholder="请输入邮箱"
+                                                   class="layui-input">
+                                                                                    </div>
+                                    </div>
+                                                                        <div class="layui-form-item">
+                                        <label class="layui-form-label">password</label>
+                                        <div class="layui-input-block">
+                                                                                        <input type="text"
+                                                   name="password" autocomplete="off"
+                                                   placeholder="请输入密码"
+                                                   class="layui-input">
+                                                                                    </div>
+                                    </div>
+                                                                        <div class="layui-form-item">
+                                        <label class="layui-form-label">repassword</label>
+                                        <div class="layui-input-block">
+                                                                                        <input type="text"
+                                                   name="repassword" autocomplete="off"
+                                                   placeholder="请输入重复密码"
+                                                   class="layui-input">
+                                                                                    </div>
+                                    </div>
+                                                                        <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <button type="button" class="laytp-btn laytp-btn-primary"
+                                                    href="javascript:void(0);"
+                                                    onclick="api.testInline(13)">提 交
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="layui-card" id="response_card_13">
+                            <div class="layui-card-header" style="background-color: #F2F2F2;">响应输出</div>
+                            <div class="layui-card-body">
+                                <pre><code class="json" id="response_13"></code></pre>
+                                <pre class="layui-code" id="response_headers_13"></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                <div class="api-page-tab-content" id="api_14" style="display:none;">
+            <div class="layui-tab layui-tab-brief">
+                <ul class="layui-tab-title api-tab-title">
+                    <li class="layui-this">接口说明</li>
+                    <li>在线测试</li>
+                </ul>
+                <div class="layui-tab-content markdown-body api-content">
+                    <div class="layui-tab-item layui-show editormd-html-preview">
+                        <p><strong>简要说明</strong></p>
+                        <ul>
+                            <li>邮箱密码登录</li>
+                        </ul>
+                        <p><strong>请求地址</strong></p>
+                        <ul>
+                            <li><code class="api-url" route="/api.user/emailLogin">/api.user/emailLogin</code></li>
+                        </ul>
+                        <p><strong>Headers参数</strong></p>
+                                                <ul>
+                            <li>无</li>
+                        </ul>
+                                                <p><strong>Body参数</strong></p>
+                                                <div style="width: 100%;overflow-x: auto;">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th style="text-align: left;">名称</th>
+                                    <th style="text-align: left;">类型</th>
+                                    <th style="text-align: left;">必选</th>
+                                    <th style="text-align: left;">描述</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                <tr>
+                                    <td style="text-align:left">email</td>
+                                    <td style="text-align:left">string</td>
+                                    <td style="text-align:left">是</td>
+                                    <td>邮箱                                    </td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">password</td>
+                                    <td style="text-align:left">string</td>
+                                    <td style="text-align:left">是</td>
+                                    <td>密码                                    </td>
+                                </tr>
+                                                                </tbody>
+                            </table>
+                        </div>
+                                                <p><strong>返回示例</strong></p>
+                                                <pre><code class="json">{
+    &quot;code&quot;: 0,
+    &quot;msg&quot;: &quot;操作成功&quot;,
+    &quot;time&quot;: 1584513627,
+    &quot;data&quot;: {
+        &quot;token&quot;: &quot;b58ea1f0-e856-4ec4-b2b3-d852b9af86b5&quot;
+    }
+}</code></pre>
+                                                <p><strong>返回说明</strong></p>
+                                                <div style="width: 100%;overflow-x: auto;">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th style="text-align: left;">名称</th>
+                                    <th style="text-align: left;">类型</th>
+                                    <th style="text-align: left;">描述</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                <tr>
+                                    <td style="text-align:left">code</td>
+                                    <td style="text-align:left">integer</td>
+                                    <td style="text-align:left">接口返回码.0=常规正确码，表示常规操作成功；1=常规错误码，客户端仅需提示msg；其他返回码与具体业务相关。框架实现了的唯一其他返回码：10401，前端需要跳转至登录界面。在一个复杂的交互过程中，你可能需要自行定义其他返回码</td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">msg</td>
+                                    <td style="text-align:left">string</td>
+                                    <td style="text-align:left">返回描述</td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">time</td>
+                                    <td style="text-align:left">integer</td>
+                                    <td style="text-align:left">请求时间，Unix时间戳，单位秒</td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">data.token</td>
+                                    <td style="text-align:left">string</td>
+                                    <td style="text-align:left">用户登录后得到的凭证，token</td>
+                                </tr>
+                                                                </tbody>
+                            </table>
+                        </div>
+                                            </div>
+                    <div class="layui-tab-item editormd-html-preview">
+                        <div class="layui-card">
+                            <div class="layui-card-header" style="background-color: #F2F2F2;">Body传参</div>
+                            <div class="layui-card-body main-container">
+                                <form class="layui-form layui-form-pane" method="POST"
+                                      route="/api.user/emailLogin"
+                                      lay-filter="test_inline_14" id="test_inline_14">
+                                                                        <div class="layui-form-item">
+                                        <label class="layui-form-label">email</label>
+                                        <div class="layui-input-block">
+                                                                                        <input type="text"
+                                                   name="email" autocomplete="off"
+                                                   placeholder="请输入邮箱"
+                                                   class="layui-input">
+                                                                                    </div>
+                                    </div>
+                                                                        <div class="layui-form-item">
+                                        <label class="layui-form-label">password</label>
+                                        <div class="layui-input-block">
+                                                                                        <input type="text"
+                                                   name="password" autocomplete="off"
+                                                   placeholder="请输入密码"
+                                                   class="layui-input">
+                                                                                    </div>
+                                    </div>
+                                                                        <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <button type="button" class="laytp-btn laytp-btn-primary"
+                                                    href="javascript:void(0);"
+                                                    onclick="api.testInline(14)">提 交
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="layui-card" id="response_card_14">
+                            <div class="layui-card-header" style="background-color: #F2F2F2;">响应输出</div>
+                            <div class="layui-card-body">
+                                <pre><code class="json" id="response_14"></code></pre>
+                                <pre class="layui-code" id="response_headers_14"></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                <div class="api-page-tab-content" id="api_15" style="display:none;">
+            <div class="layui-tab layui-tab-brief">
+                <ul class="layui-tab-title api-tab-title">
+                    <li class="layui-this">接口说明</li>
+                    <li>在线测试</li>
+                </ul>
+                <div class="layui-tab-content markdown-body api-content">
+                    <div class="layui-tab-item layui-show editormd-html-preview">
+                        <p><strong>简要说明</strong></p>
+                        <ul>
+                            <li>注销登录信息</li>
+                        </ul>
+                        <p><strong>请求地址</strong></p>
+                        <ul>
+                            <li><code class="api-url" route="/api.user/logout">/api.user/logout</code></li>
+                        </ul>
+                        <p><strong>Headers参数</strong></p>
+                                                <div style="width: 100%;overflow-x: auto;">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th style="text-align: left;">名称</th>
+                                    <th style="text-align: left;">类型</th>
+                                    <th style="text-align: left;">必选</th>
+                                    <th style="text-align: left;">描述</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                <tr>
+                                    <td style="text-align:left">token</td>
+                                    <td style="text-align:left">string</td>
+                                    <td style="text-align:left">是</td>
+                                    <td>用户登录后得到的Token</td>
+                                </tr>
+                                                                </tbody>
+                            </table>
+                        </div>
+                                                <p><strong>Body参数</strong></p>
+                                                <ul>
+                            <li>无</li>
+                        </ul>
+                                                <p><strong>返回示例</strong></p>
+                                                <pre><code class="json">{
+    &quot;code&quot;: 0,
+    &quot;msg&quot;: &quot;注销成功&quot;,
+    &quot;time&quot;: 1584513627,
+    &quot;data&quot;: null
+}</code></pre>
+                                                <p><strong>返回说明</strong></p>
+                                                <div style="width: 100%;overflow-x: auto;">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th style="text-align: left;">名称</th>
+                                    <th style="text-align: left;">类型</th>
+                                    <th style="text-align: left;">描述</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                <tr>
+                                    <td style="text-align:left">code</td>
+                                    <td style="text-align:left">integer</td>
+                                    <td style="text-align:left">接口返回码.0=常规正确码，表示常规操作成功；1=常规错误码，客户端仅需提示msg；其他返回码与具体业务相关。框架实现了的唯一其他返回码：10401，前端需要跳转至登录界面。在一个复杂的交互过程中，你可能需要自行定义其他返回码</td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">msg</td>
+                                    <td style="text-align:left">string</td>
+                                    <td style="text-align:left">返回描述</td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">time</td>
+                                    <td style="text-align:left">integer</td>
+                                    <td style="text-align:left">请求时间，Unix时间戳，单位秒</td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">data</td>
+                                    <td style="text-align:left">null</td>
+                                    <td style="text-align:left">只会返回null</td>
+                                </tr>
+                                                                </tbody>
+                            </table>
+                        </div>
+                                            </div>
+                    <div class="layui-tab-item editormd-html-preview">
+                        <div class="layui-card">
+                            <div class="layui-card-header" style="background-color: #F2F2F2;">Body传参</div>
+                            <div class="layui-card-body main-container">
+                                <form class="layui-form layui-form-pane" method="GET"
+                                      route="/api.user/logout"
+                                      lay-filter="test_inline_15" id="test_inline_15">
+                                                                        <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <button type="button" class="laytp-btn laytp-btn-primary"
+                                                    href="javascript:void(0);"
+                                                    onclick="api.testInline(15)">提 交
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="layui-card" id="response_card_15">
+                            <div class="layui-card-header" style="background-color: #F2F2F2;">响应输出</div>
+                            <div class="layui-card-body">
+                                <pre><code class="json" id="response_15"></code></pre>
+                                <pre class="layui-code" id="response_headers_15"></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                        <div class="api-page-tab-content" id="api_17" style="display:none;">
+            <div class="layui-tab layui-tab-brief">
+                <ul class="layui-tab-title api-tab-title">
+                    <li class="layui-this">接口说明</li>
+                    <li>在线测试</li>
+                </ul>
+                <div class="layui-tab-content markdown-body api-content">
+                    <div class="layui-tab-item layui-show editormd-html-preview">
+                        <p><strong>简要说明</strong></p>
+                        <ul>
+                            <li>检测Token是否过期</li>
+                        </ul>
+                        <p><strong>请求地址</strong></p>
+                        <ul>
+                            <li><code class="api-url" route="/api.token/check">/api.token/check</code></li>
+                        </ul>
+                        <p><strong>Headers参数</strong></p>
+                                                <div style="width: 100%;overflow-x: auto;">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th style="text-align: left;">名称</th>
+                                    <th style="text-align: left;">类型</th>
+                                    <th style="text-align: left;">必选</th>
+                                    <th style="text-align: left;">描述</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                <tr>
+                                    <td style="text-align:left">token</td>
+                                    <td style="text-align:left">string</td>
+                                    <td style="text-align:left">是</td>
+                                    <td>用户登录后得到的Token</td>
+                                </tr>
+                                                                </tbody>
+                            </table>
+                        </div>
+                                                <p><strong>Body参数</strong></p>
+                                                <ul>
+                            <li>无</li>
+                        </ul>
+                                                <p><strong>返回示例</strong></p>
+                                                <pre><code class="json">{
+    &quot;code&quot;: 0,
+    &quot;msg&quot;: &quot;Token有效&quot;,
+    &quot;time&quot;: 1591167181,
+    &quot;data&quot;: {
+        &quot;token&quot;: &quot;827fb87e-2064-45c8-839a-128e195a7411&quot;,
+        &quot;expires_in&quot;: 1789
+    }
+}</code></pre>
+                                                <p><strong>返回说明</strong></p>
+                                                <div style="width: 100%;overflow-x: auto;">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th style="text-align: left;">名称</th>
+                                    <th style="text-align: left;">类型</th>
+                                    <th style="text-align: left;">描述</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                <tr>
+                                    <td style="text-align:left">code</td>
+                                    <td style="text-align:left">integer</td>
+                                    <td style="text-align:left">接口返回码.0=常规正确码，表示常规操作成功；1=常规错误码，客户端仅需提示msg；其他返回码与具体业务相关。框架实现了的唯一其他返回码：10401，前端需要跳转至登录界面。在一个复杂的交互过程中，你可能需要自行定义其他返回码</td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">msg</td>
+                                    <td style="text-align:left">string</td>
+                                    <td style="text-align:left">返回描述</td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">time</td>
+                                    <td style="text-align:left">integer</td>
+                                    <td style="text-align:left">请求时间，Unix时间戳，单位秒</td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">data</td>
+                                    <td style="text-align:left">object</td>
+                                    <td style="text-align:left">返回的数据对象</td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">data.token</td>
+                                    <td style="text-align:left">string</td>
+                                    <td style="text-align:left">用户登录凭证，token</td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">data.expires_in</td>
+                                    <td style="text-align:left">integer</td>
+                                    <td style="text-align:left">token有效时间，单位秒</td>
+                                </tr>
+                                                                </tbody>
+                            </table>
+                        </div>
+                                            </div>
+                    <div class="layui-tab-item editormd-html-preview">
+                        <div class="layui-card">
+                            <div class="layui-card-header" style="background-color: #F2F2F2;">Body传参</div>
+                            <div class="layui-card-body main-container">
+                                <form class="layui-form layui-form-pane" method="POST"
+                                      route="/api.token/check"
+                                      lay-filter="test_inline_17" id="test_inline_17">
+                                                                        <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <button type="button" class="laytp-btn laytp-btn-primary"
+                                                    href="javascript:void(0);"
+                                                    onclick="api.testInline(17)">提 交
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="layui-card" id="response_card_17">
+                            <div class="layui-card-header" style="background-color: #F2F2F2;">响应输出</div>
+                            <div class="layui-card-body">
+                                <pre><code class="json" id="response_17"></code></pre>
+                                <pre class="layui-code" id="response_headers_17"></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                <div class="api-page-tab-content" id="api_18" style="display:none;">
+            <div class="layui-tab layui-tab-brief">
+                <ul class="layui-tab-title api-tab-title">
+                    <li class="layui-this">接口说明</li>
+                    <li>在线测试</li>
+                </ul>
+                <div class="layui-tab-content markdown-body api-content">
+                    <div class="layui-tab-item layui-show editormd-html-preview">
+                        <p><strong>简要说明</strong></p>
+                        <ul>
+                            <li>刷新Token</li>
+                        </ul>
+                        <p><strong>请求地址</strong></p>
+                        <ul>
+                            <li><code class="api-url" route="/api.token/refresh">/api.token/refresh</code></li>
+                        </ul>
+                        <p><strong>Headers参数</strong></p>
+                                                <div style="width: 100%;overflow-x: auto;">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th style="text-align: left;">名称</th>
+                                    <th style="text-align: left;">类型</th>
+                                    <th style="text-align: left;">必选</th>
+                                    <th style="text-align: left;">描述</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                <tr>
+                                    <td style="text-align:left">token</td>
+                                    <td style="text-align:left">string</td>
+                                    <td style="text-align:left">是</td>
+                                    <td>用户登录后得到的Token</td>
+                                </tr>
+                                                                </tbody>
+                            </table>
+                        </div>
+                                                <p><strong>Body参数</strong></p>
+                                                <ul>
+                            <li>无</li>
+                        </ul>
+                                                <p><strong>返回示例</strong></p>
+                                                <pre><code class="json">{
+    &quot;code&quot;: 0,
+    &quot;msg&quot;: &quot;成功刷新Token&quot;,
+    &quot;time&quot;: 1591167423,
+    &quot;data&quot;: {
+        &quot;token&quot;: &quot;e356df60-ff03-4f15-bb66-c0e3ef37f335&quot;,
+        &quot;expires_in&quot;: 1800
+    }
+}</code></pre>
+                                                <p><strong>返回说明</strong></p>
+                                                <div style="width: 100%;overflow-x: auto;">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th style="text-align: left;">名称</th>
+                                    <th style="text-align: left;">类型</th>
+                                    <th style="text-align: left;">描述</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                <tr>
+                                    <td style="text-align:left">code</td>
+                                    <td style="text-align:left">integer</td>
+                                    <td style="text-align:left">接口返回码.0=常规正确码，表示常规操作成功；1=常规错误码，客户端仅需提示msg；其他返回码与具体业务相关。框架实现了的唯一其他返回码：10401，前端需要跳转至登录界面。在一个复杂的交互过程中，你可能需要自行定义其他返回码</td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">msg</td>
+                                    <td style="text-align:left">string</td>
+                                    <td style="text-align:left">返回描述</td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">time</td>
+                                    <td style="text-align:left">integer</td>
+                                    <td style="text-align:left">请求时间，Unix时间戳，单位秒</td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">data</td>
+                                    <td style="text-align:left">object</td>
+                                    <td style="text-align:left">返回的数据对象</td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">data.token</td>
+                                    <td style="text-align:left">string</td>
+                                    <td style="text-align:left">用户登录凭证，token</td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">data.expires_in</td>
+                                    <td style="text-align:left">integer</td>
+                                    <td style="text-align:left">token有效时间，单位秒</td>
+                                </tr>
+                                                                </tbody>
+                            </table>
+                        </div>
+                                            </div>
+                    <div class="layui-tab-item editormd-html-preview">
+                        <div class="layui-card">
+                            <div class="layui-card-header" style="background-color: #F2F2F2;">Body传参</div>
+                            <div class="layui-card-body main-container">
+                                <form class="layui-form layui-form-pane" method="POST"
+                                      route="/api.token/refresh"
+                                      lay-filter="test_inline_18" id="test_inline_18">
+                                                                        <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <button type="button" class="laytp-btn laytp-btn-primary"
+                                                    href="javascript:void(0);"
+                                                    onclick="api.testInline(18)">提 交
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="layui-card" id="response_card_18">
+                            <div class="layui-card-header" style="background-color: #F2F2F2;">响应输出</div>
+                            <div class="layui-card-body">
+                                <pre><code class="json" id="response_18"></code></pre>
+                                <pre class="layui-code" id="response_headers_18"></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                        <div class="api-page-tab-content" id="api_20" style="display:none;">
+            <div class="layui-tab layui-tab-brief">
+                <ul class="layui-tab-title api-tab-title">
+                    <li class="layui-this">接口说明</li>
+                    <li>在线测试</li>
+                </ul>
+                <div class="layui-tab-content markdown-body api-content">
+                    <div class="layui-tab-item layui-show editormd-html-preview">
+                        <p><strong>简要说明</strong></p>
+                        <ul>
+                            <li>需要登录的接口详细描述</li>
+                        </ul>
+                        <p><strong>请求地址</strong></p>
+                        <ul>
+                            <li><code class="api-url" route="/api.demo/test">/api.demo/test</code></li>
+                        </ul>
+                        <p><strong>Headers参数</strong></p>
+                                                <div style="width: 100%;overflow-x: auto;">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th style="text-align: left;">名称</th>
+                                    <th style="text-align: left;">类型</th>
+                                    <th style="text-align: left;">必选</th>
+                                    <th style="text-align: left;">描述</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                <tr>
+                                    <td style="text-align:left">token</td>
+                                    <td style="text-align:left">string</td>
+                                    <td style="text-align:left">是</td>
+                                    <td>请求的Token</td>
+                                </tr>
+                                                                </tbody>
+                            </table>
+                        </div>
+                                                <p><strong>Body参数</strong></p>
+                                                <div style="width: 100%;overflow-x: auto;">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th style="text-align: left;">名称</th>
+                                    <th style="text-align: left;">类型</th>
+                                    <th style="text-align: left;">必选</th>
+                                    <th style="text-align: left;">描述</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                <tr>
+                                    <td style="text-align:left">id</td>
+                                    <td style="text-align:left">integer</td>
+                                    <td style="text-align:left">是</td>
+                                    <td>会员ID                                    </td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">name</td>
+                                    <td style="text-align:left">string</td>
+                                    <td style="text-align:left">是</td>
+                                    <td>用户名                                    </td>
+                                </tr>
+                                                                </tbody>
+                            </table>
+                        </div>
+                                                <p><strong>返回示例</strong></p>
+                                                <pre><code class="json">{
+    &quot;code&quot;: 0,
+    &quot;msg&quot;: &quot;返回成功&quot;,
+    &quot;time&quot;: 1591168410,
+    &quot;data&quot;: {
+        &quot;id&quot;: &quot;&quot;,
+        &quot;name&quot;: &quot;&quot;
+    }
+}</code></pre>
+                                                <p><strong>返回说明</strong></p>
+                                                <div style="width: 100%;overflow-x: auto;">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th style="text-align: left;">名称</th>
+                                    <th style="text-align: left;">类型</th>
+                                    <th style="text-align: left;">描述</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                <tr>
+                                    <td style="text-align:left">code</td>
+                                    <td style="text-align:left">integer</td>
+                                    <td style="text-align:left">接口返回码.0=常规正确码，表示常规操作成功；1=常规错误码，客户端仅需提示msg；其他返回码与具体业务相关。框架实现了的唯一其他返回码：10401，前端需要跳转至登录界面。在一个复杂的交互过程中，你可能需要自行定义其他返回码</td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">msg</td>
+                                    <td style="text-align:left">string</td>
+                                    <td style="text-align:left">返回描述</td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">time</td>
+                                    <td style="text-align:left">integer</td>
+                                    <td style="text-align:left">请求时间，Unix时间戳，单位秒</td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">data</td>
+                                    <td style="text-align:left">object</td>
+                                    <td style="text-align:left">返回的数据对象</td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">data.id</td>
+                                    <td style="text-align:left">string</td>
+                                    <td style="text-align:left">参数id的值</td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">data.name</td>
+                                    <td style="text-align:left">string</td>
+                                    <td style="text-align:left">参数name的值</td>
+                                </tr>
+                                                                </tbody>
+                            </table>
+                        </div>
+                                            </div>
+                    <div class="layui-tab-item editormd-html-preview">
+                        <div class="layui-card">
+                            <div class="layui-card-header" style="background-color: #F2F2F2;">Body传参</div>
+                            <div class="layui-card-body main-container">
+                                <form class="layui-form layui-form-pane" method="POST"
+                                      route="/api.demo/test"
+                                      lay-filter="test_inline_20" id="test_inline_20">
+                                                                        <div class="layui-form-item">
+                                        <label class="layui-form-label">id</label>
+                                        <div class="layui-input-block">
+                                                                                        <input type="text"
+                                                   name="id" autocomplete="off"
+                                                   placeholder="请输入会员ID"
+                                                   class="layui-input">
+                                                                                    </div>
+                                    </div>
+                                                                        <div class="layui-form-item">
+                                        <label class="layui-form-label">name</label>
+                                        <div class="layui-input-block">
+                                                                                        <input type="text"
+                                                   name="name" autocomplete="off"
+                                                   placeholder="请输入用户名"
+                                                   class="layui-input">
+                                                                                    </div>
+                                    </div>
+                                                                        <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <button type="button" class="laytp-btn laytp-btn-primary"
+                                                    href="javascript:void(0);"
+                                                    onclick="api.testInline(20)">提 交
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="layui-card" id="response_card_20">
+                            <div class="layui-card-header" style="background-color: #F2F2F2;">响应输出</div>
+                            <div class="layui-card-body">
+                                <pre><code class="json" id="response_20"></code></pre>
+                                <pre class="layui-code" id="response_headers_20"></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                <div class="api-page-tab-content" id="api_21" style="display:none;">
+            <div class="layui-tab layui-tab-brief">
+                <ul class="layui-tab-title api-tab-title">
+                    <li class="layui-this">接口说明</li>
+                    <li>在线测试</li>
+                </ul>
+                <div class="layui-tab-content markdown-body api-content">
+                    <div class="layui-tab-item layui-show editormd-html-preview">
+                        <p><strong>简要说明</strong></p>
+                        <ul>
+                            <li>无需登录的接口详细描述</li>
+                        </ul>
+                        <p><strong>请求地址</strong></p>
+                        <ul>
+                            <li><code class="api-url" route="/api.demo/test1">/api.demo/test1</code></li>
+                        </ul>
+                        <p><strong>Headers参数</strong></p>
+                                                <ul>
+                            <li>无</li>
+                        </ul>
+                                                <p><strong>Body参数</strong></p>
+                                                <ul>
+                            <li>无</li>
+                        </ul>
+                                                <p><strong>返回示例</strong></p>
+                                                <pre><code class="json">{
+    &quot;code&quot;: 0,
+    &quot;msg&quot;: &quot;返回成功&quot;,
+    &quot;time&quot;: 1591168410,
+    &quot;data&quot;: {
+        &quot;action&quot;: &quot;test1&quot;
+    }
+}</code></pre>
+                                                <p><strong>返回说明</strong></p>
+                                                <div style="width: 100%;overflow-x: auto;">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th style="text-align: left;">名称</th>
+                                    <th style="text-align: left;">类型</th>
+                                    <th style="text-align: left;">描述</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                <tr>
+                                    <td style="text-align:left">code</td>
+                                    <td style="text-align:left">integer</td>
+                                    <td style="text-align:left">接口返回码.0=常规正确码，表示常规操作成功；1=常规错误码，客户端仅需提示msg；其他返回码与具体业务相关。框架实现了的唯一其他返回码：10401，前端需要跳转至登录界面。在一个复杂的交互过程中，你可能需要自行定义其他返回码</td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">msg</td>
+                                    <td style="text-align:left">string</td>
+                                    <td style="text-align:left">返回描述</td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">time</td>
+                                    <td style="text-align:left">integer</td>
+                                    <td style="text-align:left">请求时间，Unix时间戳，单位秒</td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">data</td>
+                                    <td style="text-align:left">object</td>
+                                    <td style="text-align:left">返回的数据对象</td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">data.action</td>
+                                    <td style="text-align:left">string</td>
+                                    <td style="text-align:left">固定返回test1</td>
+                                </tr>
+                                                                </tbody>
+                            </table>
+                        </div>
+                                            </div>
+                    <div class="layui-tab-item editormd-html-preview">
+                        <div class="layui-card">
+                            <div class="layui-card-header" style="background-color: #F2F2F2;">Body传参</div>
+                            <div class="layui-card-body main-container">
+                                <form class="layui-form layui-form-pane" method="POST"
+                                      route="/api.demo/test1"
+                                      lay-filter="test_inline_21" id="test_inline_21">
+                                                                        <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <button type="button" class="laytp-btn laytp-btn-primary"
+                                                    href="javascript:void(0);"
+                                                    onclick="api.testInline(21)">提 交
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="layui-card" id="response_card_21">
+                            <div class="layui-card-header" style="background-color: #F2F2F2;">响应输出</div>
+                            <div class="layui-card-body">
+                                <pre><code class="json" id="response_21"></code></pre>
+                                <pre class="layui-code" id="response_headers_21"></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                <div class="api-page-tab-content" id="api_22" style="display:none;">
+            <div class="layui-tab layui-tab-brief">
+                <ul class="layui-tab-title api-tab-title">
+                    <li class="layui-this">接口说明</li>
+                    <li>在线测试</li>
+                </ul>
+                <div class="layui-tab-content markdown-body api-content">
+                    <div class="layui-tab-item layui-show editormd-html-preview">
+                        <p><strong>简要说明</strong></p>
+                        <ul>
+                            <li>参数传递array的接口详细描述</li>
+                        </ul>
+                        <p><strong>请求地址</strong></p>
+                        <ul>
+                            <li><code class="api-url" route="/api.demo/arrayParam">/api.demo/arrayParam</code></li>
+                        </ul>
+                        <p><strong>Headers参数</strong></p>
+                                                <ul>
+                            <li>无</li>
+                        </ul>
+                                                <p><strong>Body参数</strong></p>
+                                                <div style="width: 100%;overflow-x: auto;">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th style="text-align: left;">名称</th>
+                                    <th style="text-align: left;">类型</th>
+                                    <th style="text-align: left;">必选</th>
+                                    <th style="text-align: left;">描述</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                <tr>
+                                    <td style="text-align:left">id</td>
+                                    <td style="text-align:left">string</td>
+                                    <td style="text-align:left">是</td>
+                                    <td>ID                                    </td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">name</td>
+                                    <td style="text-align:left">array</td>
+                                    <td style="text-align:left">是</td>
+                                    <td>数组中的值                                    </td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">array[key]</td>
+                                    <td style="text-align:left">array</td>
+                                    <td style="text-align:left">是</td>
+                                    <td>数组中的值                                    </td>
+                                </tr>
+                                                                </tbody>
+                            </table>
+                        </div>
+                                                <p><strong>返回示例</strong></p>
+                                                <pre><code class="json">{
+    &quot;code&quot;: 0,
+    &quot;msg&quot;: &quot;返回成功&quot;,
+    &quot;time&quot;: 1591168410,
+    &quot;data&quot;: {
+        &quot;action&quot;: &quot;test1&quot;
+    }
+}</code></pre>
+                                                <p><strong>返回说明</strong></p>
+                                                <div style="width: 100%;overflow-x: auto;">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th style="text-align: left;">名称</th>
+                                    <th style="text-align: left;">类型</th>
+                                    <th style="text-align: left;">描述</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                <tr>
+                                    <td style="text-align:left">code</td>
+                                    <td style="text-align:left">integer</td>
+                                    <td style="text-align:left">接口返回码.0=常规正确码，表示常规操作成功；1=常规错误码，客户端仅需提示msg；其他返回码与具体业务相关。框架实现了的唯一其他返回码：10401，前端需要跳转至登录界面。在一个复杂的交互过程中，你可能需要自行定义其他返回码</td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">msg</td>
+                                    <td style="text-align:left">string</td>
+                                    <td style="text-align:left">返回描述</td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">time</td>
+                                    <td style="text-align:left">integer</td>
+                                    <td style="text-align:left">请求时间，Unix时间戳，单位秒</td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">data</td>
+                                    <td style="text-align:left">object</td>
+                                    <td style="text-align:left">返回的数据对象</td>
+                                </tr>
+                                                                <tr>
+                                    <td style="text-align:left">data.action</td>
+                                    <td style="text-align:left">string</td>
+                                    <td style="text-align:left">固定返回test1</td>
+                                </tr>
+                                                                </tbody>
+                            </table>
+                        </div>
+                                            </div>
+                    <div class="layui-tab-item editormd-html-preview">
+                        <div class="layui-card">
+                            <div class="layui-card-header" style="background-color: #F2F2F2;">Body传参</div>
+                            <div class="layui-card-body main-container">
+                                <form class="layui-form layui-form-pane" method="POST"
+                                      route="/api.demo/arrayParam"
+                                      lay-filter="test_inline_22" id="test_inline_22">
+                                                                        <div class="layui-form-item">
+                                        <label class="layui-form-label">id</label>
+                                        <div class="layui-input-block">
+                                                                                        <input type="text"
+                                                   name="id" autocomplete="off"
+                                                   placeholder="请输入ID"
+                                                   class="layui-input">
+                                                                                    </div>
+                                    </div>
+                                                                        <div class="layui-form-item">
+                                        <label class="layui-form-label">name</label>
+                                        <div class="layui-input-block">
+                                                                                        <table class="layui-table">
+                                                <tbody>
+                                                <tr>
+                                                    <td align="right" style="width:400px">
+                                                        <input type="text" class="layui-input" name="name[]" autocomplete="off" placeholder="请输入数组中的值" />
+                                                    </td>
+                                                    <td>
+                                                        <a class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-delete del-array-param"></a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="4">
+                                                        <a class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-add-1 add-array-param" data-field="name">追加参数</a>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                                                                    </div>
+                                    </div>
+                                                                        <div class="layui-form-item">
+                                        <label class="layui-form-label">array[key]</label>
+                                        <div class="layui-input-block">
+                                                                                        <table class="layui-table">
+                                                <tbody>
+                                                <tr>
+                                                    <td align="right" style="width:400px">
+                                                        <input type="text" class="layui-input" name="array[key][]" autocomplete="off" placeholder="请输入数组中的值" />
+                                                    </td>
+                                                    <td>
+                                                        <a class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-delete del-array-param"></a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="4">
+                                                        <a class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-add-1 add-array-param" data-field="array[key]">追加参数</a>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                                                                    </div>
+                                    </div>
+                                                                        <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <button type="button" class="laytp-btn laytp-btn-primary"
+                                                    href="javascript:void(0);"
+                                                    onclick="api.testInline(22)">提 交
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="layui-card" id="response_card_22">
+                            <div class="layui-card-header" style="background-color: #F2F2F2;">响应输出</div>
+                            <div class="layui-card-body">
+                                <pre><code class="json" id="response_22"></code></pre>
+                                <pre class="layui-code" id="response_headers_22"></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                    </div>
+    <!-- 遮 盖 层 -->
+    <div class="laytp-cover"></div>
+    <!-- 加 载 动 画-->
+    <div class="loader-main">
+        <div class="loader"></div>
+    </div>
+</div>
+<!-- 移 动 端 便 捷 操 作 -->
+<div class="laytp-collasped-pe collaspe">
+    <a href="javascript:void(0);" class="layui-icon layui-icon-shrink-right"></a>
+</div>
+
+<!-- 请求配置弹出层内容开始 -->
+<script type="text/html" id="set">
+    <div class="popup-content">
+        <div class="api-page-tab-content">
+            <form class="layui-form" lay-filter="setDataForm" id="setDataForm">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">Api请求域名</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="apiUrl"
+                               placeholder="完整的请求前缀，以http://或者https://开头，不以/结尾" autocomplete="off" class="layui-input"
+                               value="{{d.apiUrl}}">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" title="开关">签名验证</label>
+                    <div class="layui-input-block">
+                        <!-- 隐藏域设置开关未选中时需要传递的参数值 -->
+                        <input type="hidden" name="createSign" id="createSign-2" value="2"/>
+                        <input type="checkbox" name="createSign" id="createSign-1" lay-skin="switch" lay-text="验证|不验证"
+                               {{# if(d.createSign== 1){ }}checked="checked" {{# } }} value="1"/>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" title="Header参数">Header参数</label>
+                    <div class="layui-input-block">
+                        <table class="layui-table">
+                            <thead>
+                            <tr>
+                                <th>参数Key</th>
+                                <th>参数Value</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td align="right">
+                                    <input type="text" class="layui-input" value="token" readonly="readonly"/>
+                                </td>
+                                <td>
+                                    <input type="text" class="layui-input" name="token" value="{{d.headerJson.token}}"
+                                           autocomplete="off"/>
+                                </td>
+                                <td></td>
+                            </tr>
+                            {{# let k; }}
+                            {{# for(k in d.headerJson){ }}
+                            {{# if(k !== "token" && k !== "sign" && k !== "request-time"){ }}
+                            <tr>
+                                <td align="right">
+                                    <input type="text" class="layui-input" name="header[key][]" value="{{k}}"
+                                           autocomplete="off"/>
+                                </td>
+                                <td>
+                                    <input type="text" class="layui-input" name="header[value][]"
+                                           value="{{d.headerJson[k]}}" autocomplete="off"/>
+                                </td>
+                                <td>
+                                    <a class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-delete del-header-param"></a>
+                                </td>
+                            </tr>
+                            {{# } }}
+                            {{# } }}
+                            <tr>
+                                <td colspan="4">
+                                    <a class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-add-1 add-header-param">追加参数</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</script>
+<!-- 请求配置弹出层内容结束 -->
+
+<script type="text/html" id="arrayParam">
+    <table class="layui-table">
+        <tbody>
+        <tr>
+            <td align="right">
+                <input type="text" class="layui-input" name="{{d.field}}[]" autocomplete="off"/>
+            </td>
+            <td>
+                <a class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-delete del-array-param"></a>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                <a class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-add-1 add-array-param">追加参数</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</script>
+
+<!-- 依 赖 脚 本 -->
+<script type="text/javascript" src="/static/component/jquery_3.3.1.js" charset="utf-8"></script>
+<script type="text/javascript" src="/static/component/jquery.serializejson.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="/static/component/highlight/highlight.pack.js" charset="utf-8"></script>
+<link rel="stylesheet" type="text/css" href="/static/component/highlight/styles/docco.css"/>
+
+<link rel="stylesheet" href="/static/plugin/meditor/css/editormd.css"/>
+<script src="/static/plugin/meditor/lib/marked.min.js"></script>
+<script src="/static/plugin/meditor/lib/prettify.min.js"></script>
+<script src="/static/plugin/meditor/lib/flowchart.min.js"></script>
+<script src="/static/plugin/meditor/lib/raphael.min.js"></script>
+<script src="/static/plugin/meditor/lib/underscore.min.js"></script>
+<script src="/static/plugin/meditor/lib/sequence-diagram.min.js"></script>
+<script src="/static/plugin/meditor/lib/jquery.flowchart.min.js"></script>
+<script src="/static/plugin/meditor/editormd.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/blueimp-md5/2.18.0/js/md5.js"></script>
+
+<script>
+    // 初始化静态文件版本号
+    localStorage.setItem("version","1.0.2.Release");
+    document.write("<script src='/static/component/layui/layui.js?v="+localStorage.getItem("version")+"'><\/script>");
+    document.write("<script src='/static/component/laytp/layuiConfig.js?v="+localStorage.getItem("version")+"'><\/script>");
+</script>
+<!-- 框 架 初 始 化 -->
+<script>
+    //定义storage
+    let storage = (function () {
+        let storage;
+        try {
+            storage = window.localStorage;
+            return storage;
+        } catch (exception) {
+            return false;
+        }
+    }());
+    layui.use(['laytp','apidoc','popup'], function() {
+        let createSignKey = "";
+        let apiDomain = "";
+        let apiUrl = (apiDomain.length > 0) ? apiDomain : window.location.protocol + "//" + window.location.host;
+
+        //请求配置
+        let nowSetJson = storage.getItem("setJson") ? JSON.parse(storage.getItem("setJson")) : {
+            apiUrl: apiUrl,
+            createSign: 2,
+            headerJson: {token: ""}
+        };
+
+        //渲染所有的meditor编辑器内容
+        layui.each($(".meditorContent"), function (key, item) {
+            editormd.markdownToHTML($(item).attr('id'), {
+                htmlDecode: "style,script,iframe", // you can filter tags decode
+                emoji: true,
+                taskList: true,
+                tex: true, // 默认不解析
+                flowChart: true, // 默认不解析
+                sequenceDiagram: true, // 默认不解析
+            });
+        });
+        //当表格列数过长时将自动出现滚动条
+        var themeColorContext = layui.context.get('theme-color-context');
+        $.each($('table'), function (i, item) {
+            if($(this).attr('class') !== 'layui-table'){
+                $('thead > tr', this).attr('style', 'background-color: '+themeColorContext+';color:white;');
+                $(this).prop('outerHTML', '<div style="width: 95%;overflow-x: auto;">' + $(this).prop('outerHTML') + '</div>');
+            }
+        });
+
+        //弹窗展示请求配置
+        $(document).off("click", ".apiSet").on("click", ".apiSet", function () {
+            let layerDiv = layui.layer.open({
+                type: 1,
+                offset: 'r',
+                area: ['600px', '100%'],
+                title: "请求配置",
+                content: layui.laytpl($("#set").html()).render(nowSetJson),
+                shade: 0.1,
+                closeBtn: 0,
+                shadeClose: false,
+                anim: -1,
+                skin: 'layer-anim-right',
+                move: false,
+                success: function (layero, index) {
+                    $(document).off("click", '#layui-layer-shade' + index).on("click", '#layui-layer-shade' + index, function () {
+                        var $layero = $('#layui-layer' + index);
+                        $layero.animate({
+                            left: $layero.offset().left + $layero.width()
+                        }, 200, function() {
+                            let formJson = $('#setDataForm').serializeJSON();
+                            let headerJson = {
+                                token: formJson.token
+                            };
+                            let keyJson = {};
+                            if (formJson.hasOwnProperty("header") && formJson.header.hasOwnProperty("key")) {
+                                keyJson = formJson.header.key;
+                            }
+                            let valueJson = {};
+                            if (formJson.hasOwnProperty("header") && formJson.header.hasOwnProperty("value")) {
+                                valueJson = formJson.header.value;
+                            }
+
+                            $.each(keyJson, function (key, item) {
+                                if(keyJson[key]){
+                                    headerJson[keyJson[key]] = valueJson[key];
+                                }
+                            });
+
+                            let setJson = {
+                                apiUrl: formJson.apiUrl,
+                                createSign: formJson.createSign,
+                                headerJson: headerJson
+                            };
+
+                            nowSetJson = setJson;
+
+                            storage.setItem("setJson", JSON.stringify(setJson));
+
+                            facade.success("保存成功");
+
+                            layer.close(index);
+                        });
+                    });
+                },
+                btn: ['保 存', '取 消'],
+                yes: function (index, layero) {
+                    let formJson = $('#setDataForm').serializeJSON();
+                    let headerJson = {
+                        token: formJson.token
+                    };
+                    let keyJson = {};
+                    if (formJson.hasOwnProperty("header") && formJson.header.hasOwnProperty("key")) {
+                        keyJson = formJson.header.key;
+                    }
+                    let valueJson = {};
+                    if (formJson.hasOwnProperty("header") && formJson.header.hasOwnProperty("value")) {
+                        valueJson = formJson.header.value;
+                    }
+
+                    $.each(keyJson, function (key, item) {
+                        if(keyJson[key]){
+                            headerJson[keyJson[key]] = valueJson[key];
+                        }
+                    });
+
+                    let setJson = {
+                        apiUrl: formJson.apiUrl,
+                        createSign: formJson.createSign,
+                        headerJson: headerJson
+                    };
+
+                    nowSetJson = setJson;
+
+                    storage.setItem("setJson", JSON.stringify(setJson));
+
+                    facade.success("保存成功");
+
+                    layer.close(index);
+                }
+            });
+            layui.laytpForm.render("#layui-layer" + layerDiv);
+        });
+
+        //追加Header参数
+        $(document).off("click", ".add-header-param").on("click", ".add-header-param", function () {
+            let clickObj = $(this);
+            let template = '<tr>' +
+                '<td align="right">' +
+                '<input type="text" class="layui-input" name="header[key][]" autocomplete="off" />' +
+                '</td>' +
+                '<td>' +
+                '<input type="text" class="layui-input" name="header[value][]" autocomplete="off" />' +
+                '</td>' +
+                '<td>' +
+                '<a class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-delete del-header-param"></a>' +
+                '</td>' +
+                '</tr>';
+            clickObj.parent().parent().before(template);
+        });
+
+        //追加数组参数
+        $(document).off("click", ".add-array-param").on("click", ".add-array-param", function () {
+            let clickObj = $(this);
+            let field = clickObj.data('field');
+            let template = '<tr>' +
+                '<td align="right">' +
+                '<input type="text" class="layui-input" name="' + field + '[]" autocomplete="off" />' +
+                '</td>' +
+                '<td>' +
+                '<a class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-delete del-array-param"></a>' +
+                '</td>' +
+                '</tr>';
+            clickObj.parent().parent().before(template);
+        });
+
+        //删除header参数
+        $(document).off("click", ".del-header-param").on("click", ".del-header-param", function () {
+            let clickObj = $(this);
+            clickObj.parent().parent().remove();
+        });
+
+        //删除array参数
+        $(document).off("click", ".del-array-param").on("click", ".del-array-param", function () {
+            let clickObj = $(this);
+            clickObj.parent().parent().remove();
+        });
+
+        layui.apidoc.setConfigType("yml");
+        layui.apidoc.setConfigPath("/static/component/laytp/config/api.config.yml?v=" + localStorage.getItem("version"));
+        layui.apidoc.render();
+        // 搜索菜单功能添加在这里，不要添加到js组件里面，因为会在子页面进行调用，这里只会在父页面执行
+        // 这里被注释的代码，触发搜索菜单要按下回车键
+        $(".search-menu").focus(
+            function(){
+                $(document).on("keydown",
+                    function(event){
+                        if( event.keyCode === 13 ){
+                            window.searchMenuData = [];
+                            var searchKey = $(".search-menu").val();
+                            if(searchKey){
+                                searchMenu(window.menuData, searchKey);
+                                layui.apidoc.setConfigType("yml");
+                                layui.apidoc.setConfigPath("/static/component/laytp/config/api.config.yml?v=" + localStorage.getItem("version"));
+                                var param = layui.apidoc.readConfig();
+                                param.menu.async = false;
+                                param.menu.data = window.searchMenuData;
+                                param.isSearch = true;
+                                layui.apidoc.render(param);
+                            }else{
+                                $("#sideMenu").show();
+                                $("#searchSideMenu").hide();
+                                renderMenu();
+                            }
+                        }
+                    }
+                );
+                $(".search-menu").unbind();
+            }
+        );
+
+        // 递归搜索菜单
+        window.searchMenu = function(menuData, searchKey){
+            searchKey = searchKey.toLowerCase();
+            $.each(menuData, function(i, item) {
+                var oldTitle = item.title;
+                item.title = item.title.toLowerCase();
+                if(item.title.indexOf(searchKey) > -1){
+                    item.title = oldTitle;
+                    window.searchMenuData.push(item);
+                }else{
+                    item.title = oldTitle;
+                    if(item.children && item.children.length > 0){
+                        searchMenu(item.children, searchKey);
+                    }
+                }
+            });
+        };
+
+        // 重新渲染菜单
+        window.renderMenu = function(){
+            $(".search-menu").val('');
+            layui.apidoc.setConfigType("yml");
+            layui.apidoc.setConfigPath("/static/component/laytp/config/api.config.yml?v=" + localStorage.getItem("version"));
+            var config = layui.apidoc.readConfig();
+            layui.apidoc.menuRender(config);
+        };
+
+        window.api = {
+            testInline: function (id) {
+                let route = $("#test_inline_" + id).attr('route');
+                let url = nowSetJson.apiUrl + route;
+
+                if (nowSetJson.createSign === "1") {
+                    nowSetJson.headerJson['request-time'] = Date.now();
+                    nowSetJson.headerJson.sign = api.createSign(nowSetJson.headerJson['request-time']);
+                }
+
+                let formData = new FormData();
+                $('#test_inline_'+id).find('input').each(function (i, input) {
+                    if ($(input).attr('type') == 'file') {
+                        formData.append($(input).attr('name'), $(input)[0].files[0]);
+                    } else {
+                        formData.append($(input).attr('name'), $(input).val())
+                    }
+                });
+
+                $.ajax({
+                    url: url,
+                    headers: nowSetJson.headerJson,
+                    data: $('#test_inline_'+id).prop('method').toLowerCase() == 'get' ? $('#test_inline_'+id).serialize() : formData,
+                    type: 'POST',
+                    dataType: 'json',
+                    contentType: false,
+                    processData: false,
+                    success: function (data, textStatus, xhr) {
+                        if (typeof data === 'object') {
+                            var str = JSON.stringify(data, null, 2);
+                            if(str) {
+                                $('#response_' + id).html(hljs.highlightAuto(str).value);
+                            }
+                        } else {
+                            $('#response_' + id).html(data || '');
+                        }
+                        $('#response_headers_' + id).html('HTTP ' + xhr.status + ' ' + xhr.statusText + '<br/><br/>' + xhr.getAllResponseHeaders());
+                        $('#response_card_' + id).show();
+                        facade.success('请求成功');
+                    },
+                    error: function (xhr) {
+                        try {
+                            var str = JSON.stringify($.parseJSON(xhr.responseText), null, 2);
+                        } catch (e) {
+                            var str = xhr.responseText;
+                        }
+                        $('#response_headers_' + id).html('HTTP ' + xhr.status + ' ' + xhr.statusText + '<br/><br/>' + xhr.getAllResponseHeaders());
+                        if(str){
+                            $('#response_' + id).html(hljs.highlightAuto(str).value);
+                        }
+                        $('#response_card_' + id).show();
+                        facade.error('请求失败');
+                    }
+                });
+                return false;
+            },
+            createSign: function (requestTime) {
+                return md5(md5(requestTime) + md5(createSignKey)).toUpperCase();
+            },
+        };
+    });
+</script>
+</body>
+</html>

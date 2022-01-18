@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>移动菜单</title>
+</head>
+<body>
+<form class="layui-form" lay-filter="layui-form">
+    <div class="mainBox">
+        <div class="main-container">
+            <div class="layui-form-item">
+                <label class="layui-form-label">父级</label>
+                <div class="layui-input-block">
+                    <div class="xmSelect"
+                         data-name="pid"
+                         data-sourceType="route"
+                         data-source="/admin.menu/index"
+                         data-params='{"search_param":{"is_menu":{"value":1,"condition":"="}}}'
+                         data-sourceTree="true"
+                         data-radio="true"
+                         data-textField="name"
+                         data-subTextField="rule"
+                         data-valueField="id"
+                    ></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bottom">
+        <div class="button-container">
+            <button type="submit" class="laytp-btn laytp-btn-primary laytp-btn-sm moveBtn" lay-submit="" lay-filter="move">
+                <i class="layui-icon layui-icon-ok"></i>
+                提交
+            </button>
+            <button type="reset" class="laytp-btn laytp-btn-sm">
+                <i class="layui-icon layui-icon-refresh"></i>
+                重置
+            </button>
+        </div>
+    </div>
+</form>
+<script>
+    if(localStorage.getItem("staticDomain")){
+        document.write("<link rel='stylesheet' href='" + localStorage.getItem("staticDomain") + "/component/layui/css/layui.css?v=" + localStorage.getItem("version") + "'>");
+        document.write("<script src='" + localStorage.getItem("staticDomain") + "/component/layui/layui.js?v="+localStorage.getItem("version")+"'><\/script>");
+        document.write("<script src='" + localStorage.getItem("staticDomain") + "/component/laytp/layuiConfig.js?v="+localStorage.getItem("version")+"'><\/script>");
+    }else{
+        document.write("<link rel='stylesheet' href='/static/component/layui/css/layui.css?v=" + localStorage.getItem("version") + "'>");
+        document.write("<script src='/static/component/layui/layui.js?v="+localStorage.getItem("version")+"'><\/script>");
+        document.write("<script src='/static/component/laytp/layuiConfig.js?v="+localStorage.getItem("version")+"'><\/script>");
+    }
+</script>
+<script>
+    layui.use(['laytp'], function () {
+        layui.form.on('submit(move)', function(data){
+            var btnAnim = layui.button.load({elem: '.moveBtn'});
+            let checkData = parent.laytpTreeTable.checkStatus(false);
+            if (checkData.length === 0) {
+                facade.error("请选择数据");
+                return false;
+            }
+            let ids = [];
+            let key;
+            for (key in checkData) {
+                ids.push(checkData[key].id);
+            }
+            data.field.ids = ids;
+            facade.ajax({
+                route:'/admin.menu/move',
+                data : data.field
+            }).done(function(res){
+                if(res.code === 0){
+                    parent.layui.layer.close(parent.layui.layer.getFrameIndex(window.name));//关闭当前页
+                    parent.funController.tableRender();
+                    parent.parent.renderMenu();//重新渲染菜单
+                }
+                btnAnim.stop();
+            }).fail(function(){
+                btnAnim.stop();
+            });
+            return false;
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>登录 - LayTp极速后台开发框架</title>
+		<!-- 资 源 引 入 -->
+		<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+		<!--[if lt IE 9]>
+		<script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+		<script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+		<script>
+            localStorage.setItem("version","1.0.2.Release");//静态资源版本号
+			// localStorage.setItem("adminDomainModel","true");// /public/admin目录是否独立绑定域名模式
+            // localStorage.setItem("adminApiDomain","http://localadminapi.laytp.com");// 请求后台接口的域名
+            // localStorage.setItem("staticDomain","http://localstatic.laytp.com");// 请求静态资源的域名
+			localStorage.setItem("adminDomainModel","false");// /public/admin目录是否独立绑定域名模式
+            localStorage.setItem("adminApiDomain","");// 请求后台接口的域名
+            localStorage.setItem("staticDomain","");// 请求静态资源的域名
+            if(localStorage.getItem("staticDomain")){
+                document.write("<link rel='stylesheet' href='" + localStorage.getItem("staticDomain") + "/component/layui/css/layui.css?v="+localStorage.getItem("version")+"'>");
+                document.write("<link rel='stylesheet' href='" + localStorage.getItem("staticDomain") + "/admin/css/other/login.css?v="+localStorage.getItem("version")+"'>");
+           }else{
+                document.write("<link rel='stylesheet' href='/static/component/layui/css/layui.css?v="+localStorage.getItem("version")+"'>");
+                document.write("<link rel='stylesheet' href='/static/admin/css/other/login.css?v="+localStorage.getItem("version")+"'>");
+           }
+		</script>
+	</head>
+    <!-- 代 码 结 构 -->
+	<body style="background-size: cover;display:none;">
+		<form class="layui-form" lay-filter="layui-form" action="javascript:void(0);">
+			<div class="layui-form-item">
+				<img class="logo" />
+				<div class="title">LayTp 3.0</div>
+				<div class="desc">
+					基于ThinkPHP6 + LayUI极速后台开发框架
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<input name="username" placeholder="账 户 : " lay-verify="required" hover class="layui-input" autocomplete="off"  />
+			</div>
+			<div class="layui-form-item login-form-item">
+				<input type="password" name="password" placeholder="密 码 : " lay-verify="required" hover class="layui-input"  />
+			</div>
+			<div class="layui-form-item login-form-item verifyCodeItem">
+				<input name="verify_code" placeholder="验证码 : " hover lay-verify="required" class="code layui-input layui-input-inline" autocomplete="off"  />
+				<img class="codeImage" />
+			</div>
+			<div class="layui-form-item login-form-item">
+				<input type="checkbox" name="remember" title="记住密码" lay-skin="primary" checked>
+			</div>
+			<div class="layui-form-item login-form-item">
+				<button type="submit" class="laytp-btn laytp-btn-success login" lay-submit lay-filter="login">
+					登 入
+				</button>
+			</div>
+		</form>
+	</body>
+	<!-- 依 赖 脚 本 -->
+	<script>
+		if(localStorage.getItem("staticDomain")){
+			document.write("<link rel='stylesheet' href='" + localStorage.getItem("staticDomain") + "/component/layui/css/layui.css?v=" + localStorage.getItem("version") + "'>");
+			document.write("<script src='" + localStorage.getItem("staticDomain") + "/component/layui/layui.js?v="+localStorage.getItem("version")+"'><\/script>");
+			document.write("<script src='" + localStorage.getItem("staticDomain") + "/component/laytp/layuiConfig.js?v="+localStorage.getItem("version")+"'><\/script>");
+		}else{
+			document.write("<link rel='stylesheet' href='/static/component/layui/css/layui.css?v=" + localStorage.getItem("version") + "'>");
+			document.write("<script src='/static/component/layui/layui.js?v="+localStorage.getItem("version")+"'><\/script>");
+			document.write("<script src='/static/component/laytp/layuiConfig.js?v="+localStorage.getItem("version")+"'><\/script>");
+		}
+	</script>
+	<!-- 框 架 初 始 化 -->
+	<script>
+        let tokenCookieKey = "laytpAdminToken";//Header中传递的token的key名称
+        let tokenKey = "LayTp-Admin-Token";//Header中传递的token的key名称
+        let ajaxHeaders = {
+            "LayTp-Admin-Token": getCookie(tokenCookieKey),
+            "Cache-Control": "no-cache"
+        };//ajax请求默认发送的Header部分
+
+        function getCookie(name) {
+            let arr = document.cookie.match(new RegExp("(^| )" + name + "=([^;]*)(;|$)"));
+            if (arr != null) {
+                return (arr[2]);
+            } else {
+                return "";
+            }
+        }
+
+        layui.use(['laytp','button'], function() {
+            var form = layui.form;
+            var $ = layui.$;
+            var context = layui.context;
+            if(localStorage.getItem("staticDomain")) {
+                $('body').attr('background', localStorage.getItem("staticDomain") + '/admin/images/background.svg');
+                $('.logo').attr('src', localStorage.getItem("staticDomain") + '/admin/images/logo.png');
+            }else{
+                $('body').attr('background', '/static/admin/images/background.svg');
+                $('.logo').attr('src', '/static/admin/images/logo.png');
+			}
+            if(localStorage.getItem("adminApiDomain")) {
+                $('.codeImage').attr('src', localStorage.getItem("adminApiDomain") + '/captcha/login');
+            }else{
+                $('.codeImage').attr('src', '/captcha/login');
+            }
+
+            // 背景图，验证码都是使用js动态加载的，因此需要先隐藏整个body层，然后执行加载背景图和验证码，然后显示body层，如果不这么做，页面加载时会闪烁
+            $('body').show();
+
+            //获取是否需要验证码配置项
+            facade.ajax({
+                route: "/admin.common/getLoginNeedCaptchaConf",
+                successAlert: false
+            }).done(function (res) {
+                if (res.code === 0) {
+                    if(res.data == 1){
+                        if(localStorage.getItem("adminApiDomain")) {
+                            $('.codeImage').attr('src', localStorage.getItem("adminApiDomain") + '/captcha/login');
+                        }else{
+                            $('.codeImage').attr('src', '/captcha/login');
+                        }
+                    }else{
+                        $(".verifyCodeItem").remove();
+                    }
+                }
+                // 背景图，验证码都是使用js动态加载的，因此需要先隐藏整个body层，然后执行加载背景图和验证码，然后显示body层，如果不这么做，页面加载时会闪烁
+                $('body').show();
+            });
+
+            //点击验证码图片，获取新的验证码图片地址
+            layui.$(document).off("click", ".codeImage").on("click", ".codeImage", function () {
+                if(localStorage.getItem("adminApiDomain")) {
+                    this.src = localStorage.getItem("adminApiDomain") + "/captcha/login?v=" + Math.random();
+                }else{
+                    this.src = "/captcha/login?v=" + Math.random();
+                }
+            });
+
+            // 登 录 提 交
+            form.on('submit(login)', function(data) {
+                var buttonAnim = layui.button.load({elem: '.login'});
+                data.field.session_id = facade.getCookie('PHPSESSID');
+                facade.ajax({route: '/admin.user/login', data: data.field}).done(function(res){
+                    if (res['code'] === 0) {
+                        var isAdminDomainModel = facade.isAdminDomainModel();
+                        facade.clearCache();
+                        let days = 0;
+                        if (data.field.remember === 'on') {
+                            days = 365;
+                        }
+                        context.put("user", res.data.user);
+                        context.put("authList", res.data.authList);
+                        context.put("pluginConf", res.data.pluginConf);
+                        facade.setCookie(tokenCookieKey, res['data']['user']['token'], days);
+                        context.put("tokenCookieKey",tokenCookieKey);
+                        context.put("tokenKey",tokenKey);
+                        //ajaxHeaders
+                        var ajaxHeaders = {};
+                        ajaxHeaders[context.get("tokenKey")] = facade.getCookie(context.get("tokenCookieKey"));
+                        ajaxHeaders["Cache-Control"] = "no-cache";
+                        context.put("ajaxHeaders", ajaxHeaders);
+                        //数据表格顶部按钮,默认的按钮监听事件,lay-event的值,包括添加、编辑、删除、搜索、刷新、回收站、回收站刷新、回收站搜索、还原、真实删除
+                        context.put("defaultTableToolbar",['add', 'edit', 'del', 'search', 'recycle', 'refresh', 'recycle-refresh', 'recycle-search', 'restore', 'true-del']);
+                        //数据表格每行的操作列按钮
+                        context.put("defaultTableTool",['detail', 'edit', 'del', 'restore', 'true-del']);
+                        if(isAdminDomainModel){
+                            window.location.href = '/index.html';
+                        }else{
+                            window.location.href = '/admin/index.html';
+                        }
+                    } else {
+                        $(".codeImage").click();
+                    }
+                    buttonAnim.stop();
+                }).fail(function(){
+					buttonAnim.stop();
+				});
+                return false;
+            });
+        });
+	</script>
+</html>

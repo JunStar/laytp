@@ -1,0 +1,42 @@
+.laytp-notice .layui-this {
+	color: #5FB878 !important;
+	font-weight: 500;
+}
+
+.laytp-notice li {
+	border-right: 1px solid whitesmoke;
+}
+
+.laytp-notice * {
+	color: dimgray !important;
+}
+
+.laytp-notice{
+	width: 285px!important;
+}
+
+.laytp-notice span{
+	margin-left: 20px;
+	font-size: 13px;
+}
+
+.laytp-notice img{
+	margin-left: 8px;
+	width: 33px!important;
+	height: 33px!important;
+	border-radius: 50px;
+}
+
+.laytp-notice-item{
+	height: 45px!important;
+	line-height: 45px!important;
+}
+
+/** 滚动条样式 */
+.laytp-notice *::-webkit-scrollbar{width:0px;height:0px;}
+.laytp-notice *::-webkit-scrollbar-track{background: white;border-radius:2px;}
+.laytp-notice *::-webkit-scrollbar-thumb{background: #E6E6E6;border-radius:2px;}
+.laytp-notice *::-webkit-scrollbar-thumb:hover{background: #E6E6E6;}
+.laytp-notice *::-webkit-scrollbar-corner{background: #f6f6f6;}
+
+

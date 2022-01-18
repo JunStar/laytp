@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>菜单与权限回收站</title>
+</head>
+<body class="laytp-container-recycle">
+<div class="layui-card" id="recycle-search-form" style="display:none;">
+    <div class="layui-card-body">
+        <form class="layui-form" lay-filter="layui-form">
+            <div class="layui-form-item">
+                <div class="layui-form-item layui-inline">
+                    <label class="layui-form-label" title="用户名">ID</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="search_param[id][value]" id="id" placeholder="请输入ID"
+                               class="layui-input" autocomplete="off">
+                        <input type="hidden" name="search_param[id][condition]" value="=">
+                    </div>
+                </div>
+
+                <div class="layui-form-item layui-inline">
+                    <label class="layui-form-label" title="名称">名称</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="search_param[name][value]" id="name" placeholder="请输入名称"
+                               class="layui-input" autocomplete="off">
+                        <input type="hidden" name="search_param[name][condition]" value="LIKE">
+                    </div>
+                </div>
+
+                <div class="layui-form-item layui-inline">
+                    <label class="layui-form-label" title="规则">规则</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="search_param[rule][value]" id="rule" placeholder="请输入规则"
+                               class="layui-input" autocomplete="off">
+                        <input type="hidden" name="search_param[rule][condition]" value="LIKE">
+                    </div>
+                </div>
+
+                <div class="layui-form-item layui-inline">
+                    <label class="layui-form-label" title="是否菜单">是否菜单</label>
+                    <div class="layui-input-inline">
+                        <select name="search_param[is_menu][value]" id="is_menu" placeholder="请输入是否菜单">
+                            <option value=""></option>
+                            <option value="1">是</option>
+                            <option value="2">否</option>
+                        </select>
+                        <input type="hidden" name="search_param[is_menu][condition]" value="=">
+                    </div>
+                </div>
+
+                <div class="layui-form-item layui-inline">
+                    <label class="layui-form-label" title="是否显示">是否显示</label>
+                    <div class="layui-input-inline">
+                        <select name="search_param[is_show][value]" id="is_show" placeholder="请输入是否显示">
+                            <option value=""></option>
+                            <option value="1">是</option>
+                            <option value="2">否</option>
+                        </select>
+                        <input type="hidden" name="search_param[is_show][condition]" value="=">
+                    </div>
+                </div>
+
+                <div class="layui-form-item layui-inline">
+                    <button class="laytp-btn laytp-btn-md laytp-btn-primary" lay-submit lay-filter="laytp-recycle-search-form">
+                        <i class="layui-icon layui-icon-search"></i>
+                        查询
+                    </button>
+                    <button type="reset" class="laytp-btn laytp-btn-md laytp-recycle-search-form-reset">
+                        <i class="layui-icon layui-icon-refresh"></i>
+                        重置
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="layui-card">
+    <div class="layui-card-body">
+        <table id="laytp-recycle-table" lay-filter="laytp-recycle-table"></table>
+    </div>
+</div>
+
+<script type="text/html" id="recycle-default-toolbar">
+    <button class="laytp-btn laytp-btn-primary laytp-btn-md" lay-event="restore">
+        <i class="laytp-icon laytp-icon-back"></i>
+        还原
+    </button>
+    <button class="laytp-btn laytp-btn-danger laytp-btn-md" lay-event="true-del">
+        <i class="layui-icon layui-icon-delete"></i>
+        删除
+    </button>
+    <button class="laytp-btn laytp-btn-warming laytp-btn-md" lay-event="recycle-search">
+        <i class="layui-icon layui-icon-search"></i>
+        搜索
+    </button>
+</script>
+
+<script type="text/html" id="recycle-default-bar">
+    <button class="laytp-btn laytp-btn-primary laytp-btn-xs" lay-event="restore"><i class="laytp-icon laytp-icon-back"></i>还原</button>
+    <button class="laytp-btn laytp-btn-danger laytp-btn-xs" lay-event="true-del"><i class="layui-icon layui-icon-delete"></i>删除</button>
+</script>
+
+<script>
+    if(localStorage.getItem("staticDomain")){
+        document.write("<link rel='stylesheet' href='" + localStorage.getItem("staticDomain") + "/component/layui/css/layui.css?v=" + localStorage.getItem("version") + "'>");
+        document.write("<script src='" + localStorage.getItem("staticDomain") + "/component/layui/layui.js?v="+localStorage.getItem("version")+"'><\/script>");
+        document.write("<script src='" + localStorage.getItem("staticDomain") + "/component/laytp/layuiConfig.js?v="+localStorage.getItem("version")+"'><\/script>");
+        document.write("<script src='" + localStorage.getItem("staticDomain") + "/admin/js/menuRecycle.js?v="+localStorage.getItem("version")+"'><\/script>");
+    }else{
+        document.write("<link rel='stylesheet' href='/static/component/layui/css/layui.css?v=" + localStorage.getItem("version") + "'>");
+        document.write("<script src='/static/component/layui/layui.js?v="+localStorage.getItem("version")+"'><\/script>");
+        document.write("<script src='/static/component/laytp/layuiConfig.js?v="+localStorage.getItem("version")+"'><\/script>");
+        document.write("<script src='/static/admin/js/menuRecycle.js?v="+localStorage.getItem("version")+"'><\/script>");
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>LayTp极速后台开发框架MEditor编辑器</title>
+    <script>
+        if(localStorage.getItem("staticDomain")){
+            document.write("<link rel='stylesheet' href='" + localStorage.getItem("staticDomain") + "/plugin/meditor/css/editormd.css?v="+localStorage.getItem("version")+"'>");
+            document.write("<script type=\"text/javascript\" src='" + localStorage.getItem("staticDomain") + "/component/jquery_3.3.1.js?v="+localStorage.getItem("version")+"'><\/script>");
+            document.write("<script type=\"text/javascript\" src='" + localStorage.getItem("staticDomain") + "/plugin/meditor/editormd.js?v="+localStorage.getItem("version")+"'><\/script>");
+        }else{
+            document.write("<link rel='stylesheet' href='/static/plugin/meditor/css/editormd.css?v="+localStorage.getItem("version")+"'>");
+            document.write("<script type=\"text/javascript\" src='/static/component/jquery_3.3.1.js?v="+localStorage.getItem("version")+"'><\/script>");
+            document.write("<script type=\"text/javascript\" src='/static/plugin/meditor/editormd.js?v="+localStorage.getItem("version")+"'><\/script>");
+        }
+    </script>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+<div class="editor" id="meditorMeditor" name="meditorMeditor"></div>
+<script>
+    /**
+     * 获取Url中传递的参数值
+     * @param name 参数名
+     * @returns {string}
+     */
+    function getUrlParam(name) {
+        let sear = window.location.search.substr(1);
+        let reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        let r = sear.match(reg);
+        return r ? sear.match(reg)[2] : "";
+    }
+
+    /**
+     * 如下两句为了渲染编辑页面，编辑器的内容
+     */
+    let id = getUrlParam('id');
+    // 得到url中传递的val，val的值就是编辑页面需要渲染编辑器内容的值
+    let editorVal = $('.editorContent[data-id="'+id+'"]', window.parent.document).text();
+
+    // 得到url中传递的upload_type，upload_type的值就是编辑器的文件上传方式
+    let uploadType = getUrlParam('upload_type');
+
+    // 编辑器的文件上传方式如果没有设置，默认使用local，本地上传方式
+    if(!uploadType){
+        uploadType = 'local';
+    }
+
+    // 验证upload_type的值，目前仅允许设置成local ali-oss qiniu-kodo三种中的一种
+    if(uploadType !== 'local' && uploadType !== 'ali-oss' && uploadType !== 'qiniu-kodo'){
+        console.log('编辑器的文件上传方式错误');
+    }
+
+    // 根据上传方式和是否多域名配置的不同，设置编辑器的配置 imageUploadURL
+    var imageUploadURL = '';
+    if(uploadType === 'local'){
+        if(localStorage.getItem("adminApiDomain")){
+            imageUploadURL = localStorage.getItem("adminApiDomain") + '/plugin/meditor/common/upload/accept/file/dir/meditor';
+        }else{
+            imageUploadURL = '/plugin/meditor/common/upload/accept/file/dir/meditor';
+        }
+    }else if(uploadType === 'ali-oss'){
+        if(localStorage.getItem("adminApiDomain")){
+            imageUploadURL = localStorage.getItem("adminApiDomain") + '/plugin/meditor/common/upload/accept/file/dir/meditor/upload_type/ali-oss';
+        }else{
+            imageUploadURL = '/plugin/meditor/common/upload/accept/file/dir/meditor/upload_type/ali-oss';
+        }
+    }else if(uploadType === 'qiniu-kodo'){
+        if(localStorage.getItem("adminApiDomain")){
+            imageUploadURL = localStorage.getItem("adminApiDomain") + '/plugin/meditor/common/upload/accept/file/dir/meditor/upload_type/qiniu-kodo';
+        }else{
+            imageUploadURL = '/plugin/meditor/common/upload/accept/file/dir/meditor/upload_type/qiniu-kodo';
+        }
+    }
+
+    // 根据是否多域名配置，设置编辑器的配置 path
+    var path = '';
+    if(localStorage.getItem("staticDomain")){
+        path = localStorage.getItem("staticDomain") + '/plugin/meditor/lib/';
+    }else{
+        path = '/static/plugin/meditor/lib/';
+    }
+
+    window.me = editormd("meditorMeditor", {
+        autoFocus: false,
+        saveHTMLToTextarea: true,
+        name: name,
+        value: editorVal,
+        width: "99%",
+        zIndex: 0,
+        height: 558,
+        syncScrolling: "single",
+        path: path,
+        taskList: true,
+        tex: true, // 默认不解析
+        flowChart: true, // 默认不解析
+        sequenceDiagram: true, // 默认不解析
+        imageUpload: true,
+        imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp", "JPG", "JPEG", "GIF", "PNG", "BMP", "WEBP"],
+        imageUploadURL: imageUploadURL,
+    });
+
+    window.getEditorContent = function () {
+        return window.me.getMarkdown();
+    }
+
+    window.getHtmlContent = function(){
+        return $("#meditorMeditor .markdown-body.editormd-preview-container").html();
+        // return window.me.getHTML();
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>LayTp极速后台开发框架UEditor编辑器</title>
+    <script>
+        if(localStorage.getItem("staticDomain")){
+            document.write("<script type='text/javascript' src='" + localStorage.getItem("staticDomain") + "/component/jquery_3.3.1.js' charset='utf-8'><\/script>");
+            document.write("<script type='text/javascript' src='" + localStorage.getItem("staticDomain") + "/plugin/ueditor/ueditor.config.js' charset='utf-8'><\/script>");
+            document.write("<script type='text/javascript' src='" + localStorage.getItem("staticDomain") + "/plugin/ueditor/ueditor.all.js' charset='utf-8'><\/script>");
+        }else{
+            document.write("<script type='text/javascript' src='/static/component/jquery_3.3.1.js' charset='utf-8'><\/script>");
+            document.write("<script type='text/javascript' src='/static/plugin/ueditor/ueditor.config.js' charset='utf-8'><\/script>");
+            document.write("<script type='text/javascript' src='/static/plugin/ueditor/ueditor.all.js' charset='utf-8'><\/script>");
+        }
+    </script>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+<script class="editor" id="ueditorUEditor" name="ueditorUEditor" type="text/plain"></script>
+<script>
+    /**
+     * 获取Url中传递的参数值
+     * @param name 参数名
+     * @returns {string}
+     */
+    function getUrlParam(name) {
+        let sear = window.location.search.substr(1);
+        let reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        let r = sear.match(reg);
+        return r ? sear.match(reg)[2] : "";
+    }
+
+    /**
+     * 如下两句为了渲染编辑页面，编辑器的内容
+     */
+    let id = getUrlParam('id');
+    // 得到url中传递的val，val的值就是编辑页面需要渲染编辑器内容的值
+    let editorVal = $('.editorContent[data-id="'+id+'"]', window.parent.document).text();
+    // 将编辑器的内容设置成val
+    $("#ueditorUEditor").html(editorVal);
+
+    // 得到url中传递的upload_type，upload_type的值就是编辑器的文件上传方式
+    let uploadType = getUrlParam('upload_type');
+
+    // 编辑器的文件上传方式如果没有设置，默认使用local，本地上传方式
+    if(!uploadType){
+        uploadType = 'local';
+    }
+
+    // 验证upload_type的值，目前仅允许设置成local ali-oss qiniu-kodo三种中的一种
+    if(uploadType !== 'local' && uploadType !== 'ali-oss' && uploadType !== 'qiniu-kodo'){
+        console.log('编辑器的文件上传方式错误');
+    }
+
+    // 根据上传方式和是否多域名配置的不同，设置编辑器的配置 serverUrl
+    var serverUrl = '';
+    if(uploadType === 'local'){
+        if(localStorage.getItem("adminApiDomain")){
+            serverUrl = localStorage.getItem("adminApiDomain") + '/plugin/ueditor/common/upload/accept/file/dir/ueditor';
+        }else{
+            serverUrl = '/plugin/ueditor/common/upload/accept/file/dir/ueditor';
+        }
+    }else if(uploadType === 'ali-oss'){
+        if(localStorage.getItem("adminApiDomain")){
+            serverUrl = localStorage.getItem("adminApiDomain") + '/plugin/ueditor/common/upload/accept/file/dir/ueditor/upload_type/ali-oss';
+        }else{
+            serverUrl = '/plugin/ueditor/common/upload/accept/file/dir/ueditor/upload_type/ali-oss';
+        }
+    }else if(uploadType === 'qiniu-kodo'){
+        if(localStorage.getItem("adminApiDomain")){
+            serverUrl = localStorage.getItem("adminApiDomain") + '/plugin/ueditor/common/upload/accept/file/dir/ueditor/upload_type/qiniu-kodo';
+        }else{
+            serverUrl = '/plugin/ueditor/common/upload/accept/file/dir/ueditor/upload_type/qiniu-kodo';
+        }
+    }
+
+    // 根据是否多域名配置，设置编辑器的配置 UEDITOR_HOME_URL
+    var UEDITOR_HOME_URL = '';
+    if(localStorage.getItem("staticDomain")){
+        UEDITOR_HOME_URL = localStorage.getItem("staticDomain") + '/plugin/ueditor/';
+    }else{
+        UEDITOR_HOME_URL = '/static/plugin/ueditor/';
+    }
+
+    // 根据是否多域名配置，设置编辑器的配置 langPath
+    var langPath = '';
+    if(localStorage.getItem("staticDomain")){
+        langPath = localStorage.getItem("staticDomain") + '/plugin/ueditor/lang/';
+    }else{
+        langPath = '/static/plugin/ueditor/lang/';
+    }
+
+    window.ue = UE.getEditor("ueditorUEditor", {
+        zIndex: 0,
+        serverUrl: serverUrl,
+        UEDITOR_HOME_URL: UEDITOR_HOME_URL,
+        langPath: langPath,
+        imageFieldName: "laytpUEditorUploadFile",
+        imageActionName: "uploadimage",
+        imageUrlPrefix: ""
+    });
+
+    window.getEditorContent = function () {
+        return window.ue.getContent();
+    }
+</script>
+</body>
+</html>

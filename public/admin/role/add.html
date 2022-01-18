@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>添加角色</title>
+</head>
+<body>
+<form class="layui-form" lay-filter="layui-form">
+    <div class="mainBox">
+        <div class="main-container">
+            <div class="main-container">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">角色名
+                        <text style="color:red;">*</text>
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="text" name="name" id="name" placeholder="请输入角色名" class="layui-input" lay-verify="required"
+                               autocomplete="off"/>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">权限设置</label>
+                    <div class="layui-input-block">
+                        <div id="treeview" class="laytp-tree-horizontal layui-form-mid"><i
+                                class="layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop"></i>
+                        </div>
+                        <input type="hidden" name="menu_ids" id="node_list"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bottom">
+        <div class="button-container">
+            <button type="submit" class="laytp-btn laytp-btn-primary laytp-btn-sm" lay-submit="" lay-filter="add">
+                <i class="layui-icon layui-icon-ok"></i>
+                提交
+            </button>
+            <button type="reset" class="laytp-btn laytp-btn-sm">
+                <i class="layui-icon layui-icon-refresh"></i>
+                重置
+            </button>
+        </div>
+    </div>
+</form>
+<script>
+    if(localStorage.getItem("staticDomain")){
+        document.write("<link rel='stylesheet' href='" + localStorage.getItem("staticDomain") + "/component/layui/css/layui.css?v=" + localStorage.getItem("version") + "'>");
+        document.write("<script src='" + localStorage.getItem("staticDomain") + "/component/layui/layui.js?v="+localStorage.getItem("version")+"'><\/script>");
+        document.write("<script src='" + localStorage.getItem("staticDomain") + "/component/laytp/layuiConfig.js?v="+localStorage.getItem("version")+"'><\/script>");
+    }else{
+        document.write("<link rel='stylesheet' href='/static/component/layui/css/layui.css?v=" + localStorage.getItem("version") + "'>");
+        document.write("<script src='/static/component/layui/layui.js?v="+localStorage.getItem("version")+"'><\/script>");
+        document.write("<script src='/static/component/laytp/layuiConfig.js?v="+localStorage.getItem("version")+"'><\/script>");
+    }
+</script>
+<script>
+    layui.use(["laytp"], function () {
+        const
+            $ = layui.$,
+            tree = layui.tree,
+            facade = layui.facade
+        ;
+
+        facade.ajax({
+            route: "/admin.menu/getTree",
+            successAlert: false
+        }).done(function(res){
+            if(res.code === 0){
+                let treeData = getTreeData(res.data);
+                tree.render({
+                    elem: '#treeview'
+                    , data: treeData
+                    , showCheckbox: true
+                    , accordion: false
+                    , showLine: false
+                    , id: 'auth_node'
+                    , oncheck: function () {
+                        var ids = facade.getTreeCheckedIds(tree.getChecked('auth_node'));
+                        $('#node_list').val(ids);
+                    }
+                });
+            }
+        });
+
+        function getTreeData(data) {
+            let key;
+            for (key in data) {
+                data[key].title = data[key].name;
+                data[key].spread = true;
+                if (data[key].children != null && data[key].children.length > 0) {
+                    data[key].children = getTreeData(data[key].children);
+                }
+            }
+            return data;
+        }
+
+        layui.form.on('submit(add)', function(data){
+            facade.ajax({
+                route:'/admin.role/add',
+                data : data.field
+            }).done(function(res){
+                if(res.code === 0){
+                    parent.layui.layer.close(parent.layui.layer.getFrameIndex(window.name));//关闭当前页
+                    parent.layui.table.reload("laytp-table");
+                }
+            });
+            return false;
+        });
+    });
+</script>
+</body>
+</html>

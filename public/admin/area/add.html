@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>添加页面</title>
+</head>
+<body>
+<form class="layui-form" lay-filter="layui-form">
+    <div class="mainBox">
+        <div class="main-container">
+            <div class="main-container">
+				<div class="layui-form-item">
+    				<label class="layui-form-label" title="父id">父id</label>
+    				<div class="layui-input-block">
+            			<div class="xmSelect"
+                            data-name="pid"
+                            data-sourceType="route"
+                            data-source="/admin.area/index"
+                            data-sourceTree="true"
+                            data-paging="false"
+                            data-radio="true"
+                            data-valueField="id"
+							data-textField="short_name"
+							data-placeholder="请选择父id"
+                            ></div>
+    				</div>
+				</div>
+
+				<div class="layui-form-item">
+    				<label class="layui-form-label" title="简称">简称</label>
+    				<div class="layui-input-block">
+            			<input autocomplete="off" type="text" name="short_name" id="short_name" placeholder="请输入简称" class="layui-input" lay-verify="">
+    				</div>
+				</div>
+
+				<div class="layui-form-item">
+    				<label class="layui-form-label" title="名称">名称</label>
+    				<div class="layui-input-block">
+            			<input autocomplete="off" type="text" name="name" id="name" placeholder="请输入名称" class="layui-input" lay-verify="">
+    				</div>
+				</div>
+
+				<div class="layui-form-item">
+    				<label class="layui-form-label" title="全称">全称</label>
+    				<div class="layui-input-block">
+            			<input autocomplete="off" type="text" name="merge_name" id="merge_name" placeholder="请输入全称" class="layui-input" lay-verify="">
+    				</div>
+				</div>
+
+				<div class="layui-form-item">
+    				<label class="layui-form-label" title="层级">层级</label>
+    				<div class="layui-input-block">
+            			<input type="radio" name="level" id="level-1" value="1" title="省"  />
+						<input type="radio" name="level" id="level-2" value="2" title="市"  />
+						<input type="radio" name="level" id="level-3" value="3" title="区"  />
+    				</div>
+				</div>
+
+				<div class="layui-form-item">
+    				<label class="layui-form-label" title="拼音">拼音</label>
+    				<div class="layui-input-block">
+            			<input autocomplete="off" type="text" name="pinyin" id="pinyin" placeholder="请输入拼音" class="layui-input" lay-verify="">
+    				</div>
+				</div>
+
+				<div class="layui-form-item">
+    				<label class="layui-form-label" title="长途区号">长途区号</label>
+    				<div class="layui-input-block">
+            			<input autocomplete="off" type="text" name="code" id="code" placeholder="请输入长途区号" class="layui-input" lay-verify="">
+    				</div>
+				</div>
+
+				<div class="layui-form-item">
+    				<label class="layui-form-label" title="邮编">邮编</label>
+    				<div class="layui-input-block">
+            			<input autocomplete="off" type="text" name="zip" id="zip" placeholder="请输入邮编" class="layui-input" lay-verify="">
+    				</div>
+				</div>
+
+				<div class="layui-form-item">
+    				<label class="layui-form-label" title="首字母">首字母</label>
+    				<div class="layui-input-block">
+            			<input autocomplete="off" type="text" name="first" id="first" placeholder="请输入首字母" class="layui-input" lay-verify="">
+    				</div>
+				</div>
+
+				<div class="layui-form-item">
+    				<label class="layui-form-label" title="经度">经度</label>
+    				<div class="layui-input-block">
+            			<input autocomplete="off" type="text" name="lng" id="lng" placeholder="请输入经度" class="layui-input" lay-verify="">
+    				</div>
+				</div>
+
+				<div class="layui-form-item">
+    				<label class="layui-form-label" title="纬度">纬度</label>
+    				<div class="layui-input-block">
+            			<input autocomplete="off" type="text" name="lat" id="lat" placeholder="请输入纬度" class="layui-input" lay-verify="">
+    				</div>
+				</div>
+
+				<div class="layui-form-item">
+    				<label class="layui-form-label" title="排序">排序</label>
+    				<div class="layui-input-block">
+            			<input autocomplete="off" type="text" name="sort" id="sort" placeholder="请输入排序" value="0" class="layui-input" lay-verify="">
+    				</div>
+				</div>
+            </div>
+        </div>
+    </div>
+    <div class="bottom">
+        <div class="button-container">
+            <button type="submit" class="laytp-btn laytp-btn-primary laytp-btn-sm" lay-submit="" lay-filter="add">
+                <i class="layui-icon layui-icon-ok"></i>
+                提交
+            </button>
+            <button type="reset" class="laytp-btn laytp-btn-sm">
+                <i class="layui-icon layui-icon-refresh"></i>
+                重置
+            </button>
+        </div>
+    </div>
+</form>
+<script>
+    if(localStorage.getItem("staticDomain")){
+        document.write("<link rel='stylesheet' href='" + localStorage.getItem("staticDomain") + "/component/layui/css/layui.css?v=" + localStorage.getItem("version") + "'>");
+        document.write("<script src='" + localStorage.getItem("staticDomain") + "/component/layui/layui.js?v="+localStorage.getItem("version")+"'><\/script>");
+        document.write("<script src='" + localStorage.getItem("staticDomain") + "/component/laytp/layuiConfig.js?v="+localStorage.getItem("version")+"'><\/script>");
+    }else{
+        document.write("<link rel='stylesheet' href='/static/component/layui/css/layui.css?v=" + localStorage.getItem("version") + "'>");
+        document.write("<script src='/static/component/layui/layui.js?v="+localStorage.getItem("version")+"'><\/script>");
+        document.write("<script src='/static/component/laytp/layuiConfig.js?v="+localStorage.getItem("version")+"'><\/script>");
+    }
+</script>
+<script>
+    layui.use(['laytp'],function(){
+        layui.form.on('submit(add)', function(data){
+            data = facade.setEditorField(data);
+            facade.ajax({
+                route:'/admin.area/add',
+                data : data.field
+            }).done(function(res){
+                if(res.code === 0){
+                    parent.layui.layer.close(parent.layui.layer.getFrameIndex(window.name));//关闭当前页
+                    parent.funController.tableRender();
+                }
+            });
+            return false;
+        });
+    })
+</script>
+</body>
+</html>

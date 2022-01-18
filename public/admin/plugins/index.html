@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>插件市场</title>
+</head>
+<body class="laytp-container">
+<div class="layui-card" id="search-form" style="display:none;">
+    <div class="layui-card-body">
+        <form class="layui-form" lay-filter="layui-form">
+            <div class="layui-form-item">
+                <div class="layui-form-item layui-inline">
+                    <label class="layui-form-label" title="所属分类">所属分类</label>
+                    <div class="layui-input-inline">
+                        <div class="xmSelect"
+                             data-name="category_id"
+                             data-sourceType="route"
+                             data-source="/admin.plugins/category"
+                             data-sourceTree="true"
+                             data-paging="false"
+                             data-radio="true"
+                             data-valueField="id"
+                             data-textField="name"
+                             data-placeholder="请选择所属分类"
+                        ></div>
+                    </div>
+                </div>
+
+                <div class="layui-form-item layui-inline">
+                    <button class="laytp-btn laytp-btn-md laytp-btn-primary" lay-submit lay-filter="laytp-search-form">
+                        <i class="layui-icon layui-icon-search"></i>
+                        查询
+                    </button>
+                    <button type="reset" class="laytp-btn laytp-btn-md laytp-search-form-reset">
+                        <i class="layui-icon layui-icon-refresh"></i>
+                        重置
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="layui-card">
+    <div class="layui-card-body">
+        <table id="laytp-table" lay-filter="laytp-table"></table>
+    </div>
+</div>
+
+<script type="text/html" id="default-toolbar">
+    <button class="laytp-btn laytp-btn-danger laytp-btn-md" lay-event="offLineInstall">
+        <i class="layui-icon layui-icon-download-circle"></i>
+        离线安装
+    </button>
+    <button class="laytp-btn laytp-btn-primary laytp-btn-md" lay-event="user">
+        <i class="layui-icon layui-icon-user"></i>
+        会员信息
+    </button>
+    <button class="laytp-btn laytp-btn-warming laytp-btn-md" lay-event="search">
+        <i class="layui-icon layui-icon-search"></i>
+        搜索
+    </button>
+</script>
+
+<script type="text/html" id="default-bar">
+    {{# if(d.installed == 2){ }}
+    <button class="laytp-btn laytp-btn-primary laytp-btn-xs" lay-event="install"><i class="layui-icon layui-icon-triangle-d"></i> 安装</button>
+    {{# }else{ }}
+    <button class="laytp-btn laytp-btn-xs" lay-event="uninstall"><i class="layui-icon layui-icon-delete"></i> 卸载</button>
+    {{# } }}
+</script>
+
+<script>
+    if(localStorage.getItem("staticDomain")){
+        document.write("<link rel='stylesheet' href='" + localStorage.getItem("staticDomain") + "/component/layui/css/layui.css?v=" + localStorage.getItem("version") + "'>");
+        document.write("<script src='" + localStorage.getItem("staticDomain") + "/component/layui/layui.js?v="+localStorage.getItem("version")+"'><\/script>");
+        document.write("<script src='" + localStorage.getItem("staticDomain") + "/component/laytp/layuiConfig.js?v="+localStorage.getItem("version")+"'><\/script>");
+        document.write("<script src='" + localStorage.getItem("staticDomain") + "/admin/js/plugins.js?v="+localStorage.getItem("version")+"'><\/script>");
+    }else{
+        document.write("<link rel='stylesheet' href='/static/component/layui/css/layui.css?v=" + localStorage.getItem("version") + "'>");
+        document.write("<script src='/static/component/layui/layui.js?v="+localStorage.getItem("version")+"'><\/script>");
+        document.write("<script src='/static/component/laytp/layuiConfig.js?v="+localStorage.getItem("version")+"'><\/script>");
+        document.write("<script src='/static/admin/js/plugins.js?v="+localStorage.getItem("version")+"'><\/script>");
+    }
+</script>
+</body>
+</html>

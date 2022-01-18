@@ -1,0 +1,443 @@
+html,
+body,
+.layui-layout {
+	height: 100%;
+}
+
+.laytp-admin .layui-header,
+.laytp-admin .layui-body,
+.laytp-admin .layui-logo,
+.laytp-admin .layui-side,
+.laytp-admin .layui-header .layui-layout-left {
+	transition: all .3s;
+}
+
+.laytp-admin .layui-logo .title {
+	font-size: 20px;
+}
+
+.laytp-admin .layui-layout-right .layui-nav-child {
+	border: 1px solid whitesmoke;
+	border-radius: 6px;
+	width: 150px;
+}
+
+.laytp-admin .layui-header {
+	left: 230px;
+	width: calc(100% - 230px);
+	background-color: white;
+	border-bottom: 1px solid whitesmoke;
+}
+
+.laytp-admin .layui-header .layui-nav-img {
+	width: 30px;
+	height: 30px;
+}
+
+.laytp-admin .layui-layout-control {
+	left: 120px;
+	position: absolute;
+}
+
+.laytp-admin .layui-logo {
+	width: 230px;
+	height: 60px;
+	line-height: 60px;
+	position: relative;
+	background-color: #28333E;
+
+}
+
+.laytp-admin .layui-logo img {
+	width: 34px;
+	height: 34px;
+}
+
+.laytp-admin .layui-logo .title {
+	font-size: 21px;
+	font-weight: 550;
+	color: #5FB878;
+	position: relative;
+	top: 5px;
+	margin-left: 5px;
+}
+
+.laytp-admin .layui-logo .logo {
+	display: none;
+}
+
+.laytp-admin .layui-side {
+	top: 0px;
+	width: 230px;
+	box-shadow: 2px 0 6px rgba(0, 21, 41, .35);
+	z-index: 9999;
+}
+
+.laytp-admin .layui-side-scroll::-webkit-scrollbar {
+	width: 0px;
+	height: 0px;
+}
+
+.laytp-admin .layui-side-scroll {
+	height: calc(100% - 116px) !important;
+	background-color: #28333E;
+	width: 247px;
+
+}
+
+.laytp-admin .layui-header .layui-nav .layui-nav-item>a {
+	color: black;
+	font-size: 15px;
+}
+
+.laytp-admin .layui-body {
+	left: 230px;
+	bottom: 0px;
+	padding-bottom: 0px;
+}
+
+.laytp-admin .layui-layout-left {
+	left: 0px;
+}
+
+/** 隐 藏 布 局 样 式 */
+.laytp-mini .layui-logo .title {
+	display: none;
+}
+
+.laytp-mini .layui-logo .logo {
+	display: inline-block;
+}
+
+.laytp-mini .layui-side {
+	width: 60px;
+}
+
+.laytp-mini .layui-header {
+	left: 60px;
+	width: calc(100% - 60px);
+}
+
+.laytp-mini .layui-body {
+	left: 60px;
+}
+
+.laytp-mini .layui-logo {
+	width: 60px;
+}
+
+.laytp-mini .layui-nav-tree .layui-nav-item span {
+	display: none;
+}
+
+.laytp-mini .bottom-nav li {
+	width: 100% !important;
+}
+
+.laytp-mini .layui-side-scroll {
+	height: calc(100% - 60px);
+}
+
+.laytp-admin .layui-header .layui-nav .layui-nav-bar {
+	top: 0px !important;
+	height: 2px !important;
+	background-color: #5FB878;
+}
+
+.laytp-admin .layui-header .layui-nav .layui-this:after {
+	display: none;
+}
+
+.laytp-admin .layui-header .layui-nav-more {
+	display: none;
+}
+
+.laytp-collasped-pe {
+	display: none;
+	width: 50px;
+	position: absolute;
+	z-index: 400000;
+	bottom: 30px;
+	right: 30px;
+	background-color: #5FB878 !important;
+	height: 50px;
+	line-height: 50px;
+	text-align: center;
+	border-radius: 50px;
+	box-shadow: 2px 0 6px rgba(0, 21, 41, .35);
+}
+
+.laytp-collasped-pe a {
+	color: white !important;
+}
+
+@media screen and (min-width: 768px) {
+	.layui-hide-sm {
+		display: inline-block !important;
+	}
+}
+
+@media screen and (min-width: 769px) {
+	.layui-hide-sm {
+		display: none !important;
+	}
+}
+
+/** 新增兼容 */
+@media screen and (max-width:768px) {
+	.collaspe {
+		display: none !important;
+	}
+
+	.laytp-collasped-pe {
+		display: inline-block !important;
+	}
+
+	.layui-layout-control {
+		left: 45px !important;
+	}
+
+	.layui-layout-left {
+		padding-left: 10px;
+		padding-right: 10px;
+	}
+
+	.laytp-mini .bottom-nav {
+		display: none;
+	}
+
+	.laytp-mini .layui-side-scroll {
+		height: calc(100% - 62px);
+	}
+
+	/** 隐 藏 布 局 样 式 */
+	.laytp-mini .layui-side {
+		width: 0px;
+	}
+
+	.laytp-mini .layui-header {
+		left: 0px;
+		width: 100%;
+	}
+
+	.laytp-mini .layui-body {
+		left: 0px;
+	}
+
+	.laytp-mini .layui-logo {
+		width: 0px;
+	}
+
+	.laytp-admin .layui-body {
+		left: 0px;
+	}
+
+	.laytp-admin .layui-header {
+		left: 0px;
+		width: 100%;
+	}
+
+	.laytp-admin .laytp-cover {
+		width: 100%;
+		height: 100%;
+		background-color: #1E1E1E;
+		display: block;
+		position: absolute;
+		z-index: 1000;
+		opacity: 0;
+		margin-top: -60px;
+	}
+
+	.laytp-mini .laytp-cover {
+		display: none;
+	}
+}
+
+@-webkit-keyframes am-horizontal-roll_show {
+	0% {
+		opacity: 1;
+		-webkit-transform: translateX(2000px);
+		transform: translateX(2000px)
+	}
+
+	100% {
+		opacity: 1;
+		-webkit-transform: translateX(0);
+		transform: translateX(0)
+	}
+}
+
+@keyframes am-horizontal-roll_show {
+	0% {
+		opacity: 1;
+		-webkit-transform: translateX(800px);
+		-ms-transform: translateX(800px);
+		transform: translateX(800px)
+	}
+
+	100% {
+		opacity: 1;
+		-webkit-transform: translateX(0);
+		-ms-transform: translateX(0);
+		transform: translateX(0)
+	}
+}
+
+.layer-anim-right {
+	-webkit-animation: am-horizontal-roll_show .6s ease-out;
+	animation: am-horizontal-roll_show .6s ease-out;
+
+}
+
+/** 亮色侧边风格 */
+.light-theme .layui-logo {
+	background-color: white !important;
+	color: black !important;
+}
+
+.light-theme .layui-side-scroll {
+	background-color: white !important;
+	color: black !important;
+}
+
+.light-theme .layui-side {
+	box-shadow: 2px 0 8px 0 rgba(29, 35, 41, .05) !important;
+}
+
+/** 主 题 选 择 界 面 样 式 */
+.laytpone-color .color-title {
+	padding: 15px 0 0px 20px;
+	margin-bottom: 4px;
+}
+
+.laytpone-color .color-content {
+	padding: 15px 10px 0 20px;
+}
+
+.laytpone-color .color-content ul {
+	list-style: none;
+	padding: 0px;
+}
+
+.laytpone-color .color-content ul li {
+	position: relative;
+	display: inline-block;
+	vertical-align: top;
+	width: 70px;
+	height: 50px;
+	margin: 0 20px 20px 0;
+	padding: 2px 2px 2px 2px;
+	background-color: #f2f2f2;
+	cursor: pointer;
+	font-size: 12px;
+	color: #666;
+}
+
+.laytpone-color .color-content li.layui-this:after,
+.laytpone-color .color-content li:hover:after {
+	width: 100%;
+	height: 100%;
+	padding: 4px;
+	top: -5px;
+	left: -5px;
+	border: #5FB878 2px solid;
+	opacity: 1;
+	border-radius: 4px;
+}
+
+.laytpone-color .color-content li:after {
+	content: '';
+	position: absolute;
+	z-index: 20;
+	top: 50%;
+	left: 50%;
+	width: 1px;
+	height: 0;
+	border: 2px solid #F2F2F2;
+	transition: all .3s;
+	-webkit-transition: all .3s;
+	opacity: 0;
+}
+
+.select-color {
+	margin-bottom: 30px;
+}
+
+.select-color .select-color-title {
+	padding: 15px 0 0px 20px;
+	margin-bottom: 4px;
+}
+
+.select-color .select-color-content {
+	padding: 20px 0 0px 0px;
+	margin-bottom: 4px;
+}
+
+.select-color .select-color-content .select-color-item {
+	background-color: gray;
+	width: 30px;
+	height: 30px;
+	border-radius: 3px;
+	float: left;
+	margin-left: 20px;
+	color: white;
+	font-size: 18px;
+	text-align: center;
+	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .15);
+	line-height: 30px;
+}
+
+/** 友情链接 */
+.more-setting {
+	margin-top: 45px;
+}
+
+.more-setting form {
+	margin-top: 30px;
+}
+
+.more-setting-title {
+	padding: 15px 0 0px 20px;
+	margin-bottom: 4px;
+}
+
+.more-setting .layui-form-label {
+	width: 60px;
+}
+
+.more-menu-list {
+	width: 100%;
+	margin-top: 80px;
+}
+
+.more-menu-item:first-child {
+	border-top: 1px solid #e8e8e8;
+}
+
+.more-menu-item .layui-icon {
+	font-size: 18px;
+	padding-right: 10px;
+}
+
+.more-menu-item {
+	color: #595959;
+	height: 50px;
+	line-height: 50px;
+	font-size: 16px;
+	padding: 0 25px;
+	border-bottom: 1px solid #e8e8e8;
+	font-style: normal;
+	display: block;
+}
+
+.more-menu-item:hover {
+	background-color: whitesmoke;
+}
+
+.more-menu-item:after {
+	color: #8c8c8c;
+	right: 16px;
+	content: "\e602";
+	position: absolute;
+	font-family: layui-icon !important;
+}

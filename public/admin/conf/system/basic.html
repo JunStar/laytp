@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>基础配置</title>
+</head>
+<body class="laytp-container">
+<div class="layui-card">
+    <div class="layui-card-body">
+        <form class="layui-form" lay-filter="layui-form">
+            <div class="table-container">
+            </div>
+            <div class="bottom">
+                <div class="button-container">
+                    <button type="submit" class="laytp-btn laytp-btn-primary laytp-btn-sm" lay-submit="" lay-filter="add">
+                        <i class="layui-icon layui-icon-ok"></i>
+                        保存配置
+                    </button>
+                    <button type="reset" class="laytp-btn laytp-btn-sm">
+                        <i class="layui-icon layui-icon-refresh"></i>
+                        重置
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script id="confTableHtml" type="text/html">
+    <input type="hidden" name="group" id="group" value="{{=d.group}}"/>
+    <table class="layui-table" style="margin: 0;" lay-skin="nob">
+        <colgroup>
+            <col width="15%">
+            <col width="70%">
+            <col width="15%">
+        </colgroup>
+        <tbody>
+        <tr>
+            <td style="text-align:right;">
+                登录验证码
+            </td>
+            <td>
+                <!-- 隐藏域设置开关未选中时需要传递的参数值 -->
+                <input type="hidden" name="loginNeedCaptcha" value="2"/>
+                <input type="checkbox" name="loginNeedCaptcha" lay-skin="switch"
+                       lay-text="需要|不需要"
+                       value="1" {{# if(d.loginNeedCaptcha == 1){ }}checked="checked"{{# } }}
+                />
+                <input type="hidden" name="form_type[loginNeedCaptcha]" value="switch" />
+            </td>
+            <td>
+                <div class="conf-des layui-form-mid layui-word-aux">
+                    <label title="后台登录是否需要输入验证码">后台登录是否需要输入验证码</label>
+                    <br/>
+                    <code title="{{=d.group}}.loginNeedCaptcha">{{=d.group}}.loginNeedCaptcha</code>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align:right;">
+                Api签名开关
+            </td>
+            <td>
+                <!-- 隐藏域设置开关未选中时需要传递的参数值 -->
+                <input type="hidden" name="checkSign" value="2"/>
+                <input type="checkbox" name="checkSign" lay-skin="switch"
+                       lay-text="需要|不需要"
+                       value="1" {{# if(d.checkSign == 1){ }}checked="checked"{{# } }}
+                />
+                <input type="hidden" name="form_type[checkSign]" value="switch" />
+            </td>
+            <td>
+                <div class="conf-des layui-form-mid layui-word-aux">
+                    <label title="请求api接口时，是否需要进行签名验证">请求api接口时，是否需要进行签名验证</label>
+                    <br/>
+                    <code title="{{=d.group}}.checkSign">{{=d.group}}.checkSign</code>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align:right;">
+                Api签名的Key
+            </td>
+            <td>
+                <input autocomplete="off" type="text" name="signKey" id="signKey" value="{{=d.signKey}}" placeholder="请输入单行文本输入框" class="layui-input" >
+                <input type="hidden" name="form_type[signKey]" value="input" />
+            </td>
+            <td>
+                <div class="conf-des layui-form-mid layui-word-aux">
+                    <label title="Api签名算法中定义的Key">Api签名算法中定义的Key</label>
+                    <br/>
+                    <code title="{{=d.group}}.signKey">{{=d.group}}.signKey</code>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</script>
+<script type="application/javascript">
+    if(localStorage.getItem("staticDomain")){
+        document.write("<link rel='stylesheet' href='" + localStorage.getItem("staticDomain") + "/component/layui/css/layui.css?v=" + localStorage.getItem("version") + "'>");
+        document.write("<script src='" + localStorage.getItem("staticDomain") + "/component/layui/layui.js?v="+localStorage.getItem("version")+"'><\/script>");
+        document.write("<script src='" + localStorage.getItem("staticDomain") + "/component/laytp/layuiConfig.js?v="+localStorage.getItem("version")+"'><\/script>");
+        document.write("<script src='" + localStorage.getItem("staticDomain") + "/component/jquery_3.3.1.js?v="+localStorage.getItem("version")+"'><\/script>");
+        document.write("<script src='" + localStorage.getItem("staticDomain") + "/component/jquery.tablednd.js?v="+localStorage.getItem("version")+"'><\/script>");
+    }else{
+        document.write("<link rel='stylesheet' href='/static/component/layui/css/layui.css?v=" + localStorage.getItem("version") + "'>");
+        document.write("<script src='/static/component/layui/layui.js?v="+localStorage.getItem("version")+"'><\/script>");
+        document.write("<script src='/static/component/laytp/layuiConfig.js?v="+localStorage.getItem("version")+"'><\/script>");
+        document.write("<script src='/static/component/jquery_3.3.1.js?v="+localStorage.getItem("version")+"'><\/script>");
+        document.write("<script src='/static/component/jquery.tablednd.js?v="+localStorage.getItem("version")+"'><\/script>");
+    }
+</script>
+<script>
+    layui.use(['laytp'],function(){
+        var group = "system.basic";
+        // 先获取数据，渲染表单
+        // 渲染完表单之后，设置滚动条
+        facade.ajax({
+            route: "/admin.conf/getGroupConf",
+            data: {"group" : group},
+            successAlert: false,
+            showLoading: true
+        }).done(function(res){
+            if(res.code === 0){
+                res.data.group = group;
+                layui.laytpl($("#confTableHtml").html()).render(res.data,function(string){
+                    $(".table-container").html(string);
+                    layui.laytpForm.render();
+                    var windowHeight = $(window).height();
+                    var maxHeight = parseInt(windowHeight) - 86;
+                    var minHeight = parseInt(windowHeight) - 86;
+                    // 设置table-container的最大高度和超过高度后展示滚动条
+                    $(".table-container").css("margin-bottom", '40px');
+                    $(".table-container").css("max-height", maxHeight + 'px');
+                    $(".table-container").css("min-height", minHeight + 'px');
+                    $(".table-container").css("overflow-y", "auto");
+
+                    $('.bottom').css("background-color", "#f6f6f6");
+                });
+            }
+        });
+
+        layui.form.on('submit(add)', function(data){
+            data = facade.setEditorField(data);
+            data.field.group = group;
+            facade.ajax({
+                route:'/admin.conf/saveGroupConf',
+                data : data.field
+            });
+            return false;
+        });
+    })
+</script>
+</body>
+</html>

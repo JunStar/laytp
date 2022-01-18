@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+		<meta http-equiv="Cache" content="no-cache">
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="Expires" content="0" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<title> Laytp Admin </title>
+		<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+		<!--[if lt IE 9]>
+		<script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+		<script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+		<script>
+			localStorage.setItem("version","1.0.2.Release");//静态资源版本号
+			// localStorage.setItem("adminDomainModel","true");// /public/admin目录是否独立绑定域名模式
+			// localStorage.setItem("adminApiDomain","http://localadminapi.laytp.com");// 请求后台接口的域名
+			// localStorage.setItem("staticDomain","http://localstatic.laytp.com");// 请求静态资源的域名
+			localStorage.setItem("adminDomainModel","false");// /public/admin目录是否独立绑定域名模式
+			localStorage.setItem("adminApiDomain","");// 请求后台接口的域名
+			localStorage.setItem("staticDomain","");// 请求静态资源的域名
+			if(localStorage.getItem("staticDomain")){
+				document.write("<link rel='stylesheet' href='" + localStorage.getItem("staticDomain") + "/component/layui/css/layui.css?v="+localStorage.getItem("version")+"'>");
+				document.write("<link rel='stylesheet' href='" + localStorage.getItem("staticDomain") + "/admin/css/load.css?v="+localStorage.getItem("version")+"'>");
+				document.write("<link rel='stylesheet' href='" + localStorage.getItem("staticDomain") + "/admin/css/admin.css?v="+localStorage.getItem("version")+"'>");
+			}else{
+				document.write("<link rel='stylesheet' href='/static/component/layui/css/layui.css?v="+localStorage.getItem("version")+"'>");
+				document.write("<link rel='stylesheet' href='/static/admin/css/load.css?v="+localStorage.getItem("version")+"'>");
+				document.write("<link rel='stylesheet' href='/static/admin/css/admin.css?v="+localStorage.getItem("version")+"'>");
+			}
+		</script>
+	</head>
+	<!-- 结 构 代 码 -->
+	<body class="layui-layout-body laytp-admin" style="display: none;">
+		<!-- 布 局 框 架 -->
+		<div class="layui-layout layui-layout-admin">
+			<div class="layui-header">
+				<!-- 顶 部 左 侧 功 能 -->
+				<ul class="layui-nav layui-layout-left">
+					<li class="collaspe layui-nav-item"><a href="javascript:void(0);" class="layui-icon layui-icon-shrink-right"></a></li>
+					<li class="refresh layui-nav-item"><a href="javascript:void(0);" class="layui-icon layui-icon-refresh-1" loading=600></a></li>
+				</ul>
+				<!-- 顶 部 右 侧 菜 单 -->
+				<div id="control" class="layui-layout-control"></div>
+				<ul class="layui-nav layui-layout-right">
+					<li class="layui-nav-item layui-hide-xs"><a href="javascript:void(0);" class="fullScreen layui-icon layui-icon-screen-full"></a></li>
+					<li class="layui-nav-item layui-hide-xs"><a href="http://www.laytpadmin.com" class="layui-icon layui-icon-website"></a></li>
+					<li class="layui-nav-item layui-hide-xs message"></li>
+					<li class="layui-nav-item user">
+						<!-- 头 像 -->
+						<a href="javascript:;">
+							<img class="layui-nav-img">
+						</a>
+						<!-- 功 能 菜 单 -->
+						<dl class="layui-nav-child">
+							<dd><a user-menu-url="/admin/user/single.html" user-menu-id="999999999" user-menu-title="基本资料">基本资料</a></dd>
+							<dd><a href="javascript:void(0);" class="logout">退出登录</a></dd>
+						</dl>
+					</li>
+					<!-- 主 题 配 置 -->
+					<li class="layui-nav-item setting"><a href="javascript:void(0);" class="layui-icon layui-icon-more-vertical"></a></li>
+				</ul>
+			</div>
+			<!-- 侧 边 区 域 -->
+			<div class="layui-side layui-bg-black">
+				<!-- 菜 单 顶 部 -->
+				<div class="layui-logo">
+					<!-- 图 标 -->
+					<img class="logo" />
+					<!-- 标 题 -->
+					<span class="title"></span>
+				</div>
+				<!-- 菜 单 内 容 -->
+				<div>
+				<ul class="layui-nav arrow layui-nav-tree laytp-nav-tree" style="display: block;">
+					<li class="layui-nav-item">
+						<div class="search">
+							<input type="text" class="layui-input search-menu" placeholder="搜索菜单">
+						</div>
+					</li>
+				</ul>
+				</div>
+				<div class="layui-side-scroll">
+					<div id="sideMenu"></div>
+				</div>
+			</div>
+			<!-- 视 图 页 面 -->
+			<div class="layui-body">
+				<!-- 内 容 页 面 -->
+				<div id="content"></div>
+			</div>
+			<!-- 遮 盖 层 -->
+			<div class="laytp-cover"></div>
+			<!-- 加 载 动 画-->
+			<div class="loader-main">
+				<div class="loader"></div>
+			</div>
+		</div>
+		<!-- 移 动 端 便 捷 操 作 -->
+		<div class="laytp-collasped-pe collaspe">
+			<a href="javascript:void(0);" class="layui-icon layui-icon-shrink-right"></a>
+		</div>
+		<!-- 依 赖 脚 本 -->
+		<script>
+			if(localStorage.getItem("staticDomain")){
+				document.write("<script src='" + localStorage.getItem("staticDomain") + "/component/layui/layui.js?v="+localStorage.getItem("version")+"'><\/script>");
+				document.write("<script src='" + localStorage.getItem("staticDomain") + "/component/laytp/layuiConfig.js?v="+localStorage.getItem("version")+"'><\/script>");
+			}else{
+				document.write("<script src='/static/component/layui/layui.js?v="+localStorage.getItem("version")+"'><\/script>");
+				document.write("<script src='/static/component/laytp/layuiConfig.js?v="+localStorage.getItem("version")+"'><\/script>");
+			}
+		</script>
+		<!-- 框 架 初 始 化 -->
+		<script>
+			layui.use(['laytp','admin','popup','context'], function() {
+				var context = layui.context;
+				// ajax请求，更新缓存
+				facade.ajax({route: '/admin.user/loginInfo',successAlert:false}).done(function(res){
+					if (res['code'] === 0) {
+						sessionStorage.clear();
+						context.put("user", res.data.user);
+						context.put("authList", res.data.authList);
+						context.put("pluginConf", res.data.pluginConf);
+
+						// 初始化顶部用户信息
+						var user = res.data.user;
+						if(user){
+							layui.admin.setAvatar(user.avatar_file.path,user.nickname);
+						}else{
+                            facade.redirect("/admin/login.html");
+							return false;
+						}
+						layui.admin.setConfigType("yml");
+						var laytpConfigYmlPath= '';
+						if(localStorage.getItem("staticDomain")){
+							laytpConfigYmlPath = localStorage.getItem("staticDomain") + "/component/laytp/config/laytp.config.yml?v=" + localStorage.getItem("version");
+						}else{
+							laytpConfigYmlPath = "/static/component/laytp/config/laytp.config.yml?v=" + localStorage.getItem("version")
+						}
+						layui.admin.setConfigPath(laytpConfigYmlPath);
+						layui.admin.render();
+						// 登出逻辑
+						layui.admin.logout(function(){
+							layui.popup.success("退出成功",function(){
+								facade.ajax({
+									route: "/admin.user/logout"
+								}).done(function(){
+                                    facade.redirect("/admin/login.html");
+								});
+							});
+							// 退出逻辑 返回 true / false
+							return true;
+						});
+						// 初始化消息回调
+						// layui.admin.message();
+						if(user){
+							$('body').show();
+							// 搜索菜单功能添加在这里，不要添加到js组件里面，因为会在子页面进行调用，这里只会在父页面执行
+							// 这里触发搜索菜单要按下回车键
+							$(".search-menu").focus(
+								function(){
+									$(document).on("keydown",
+										function(event){
+											if( event.keyCode === 13 ){
+												window.searchMenuData = [];
+												var searchKey = $(".search-menu").val();
+												if(searchKey){
+													searchMenu(window.menuData, searchKey);
+													layui.admin.setConfigPath(laytpConfigYmlPath);
+													var param = layui.admin.readConfig();
+													param.menu.async = false;
+													param.menu.data = window.searchMenuData;
+													param.isSearch = true;
+													layui.admin.render(param);
+												}else{
+													$("#sideMenu").show();
+													$("#searchSideMenu").hide();
+													renderMenu();
+												}
+											}
+										}
+									);
+									$(".search-menu").unbind();
+								}
+							);
+
+							// $(document).off('input propertychange', ".search-menu").on('input propertychange', ".search-menu", function() {
+							// 	var searchKey = $(this).val();
+							// 	if(searchKey){
+							// 		window.searchMenuData = [];
+							// 		searchMenu(window.menuData, searchKey);
+							// 		layui.admin.setConfigType("yml");
+							// 		layui.admin.setConfigPath("/static/component/laytp/config/laytp.config.yml?v=" + localStorage.getItem("version"));
+							// 		var param = layui.admin.readConfig();
+							// 		param.menu.async = false;
+							// 		param.menu.data = window.searchMenuData;
+							// 		sideMenu = layui.menu.render({
+							// 			elem: 'sideMenu',
+							// 			async: param.menu.async !== undefined ? param.menu.async : true,
+							// 			theme: "dark-theme",
+							// 			height: '100%',
+							// 			method: param.menu.method,
+							// 			control: param.menu.control ? 'control' : false, // control
+							// 			defaultMenu: 0,
+							// 			accordion: param.menu.accordion,
+							// 			url: param.menu.data,
+							// 			data: param.menu.data, //async为false时，传入菜单数组
+							// 			parseData: function(res){
+							// 				var result = {
+							// 					"id" : 0,
+							// 					"is_menu" : 1,
+							// 					"is_show" : 1,
+							// 					"title" : "搜索结果",
+							// 					"type" : 0,
+							// 					"children" : res,
+							// 					"href" : "",
+							// 					"icon" : ""
+							// 				};
+							// 				var resArr = [];
+							// 				resArr.push(result);
+							// 				return resArr;
+							// 			},
+							// 			done: function() {
+							// 				sideMenu.selectItem(param.menu.select);
+							// 			}
+							// 		});
+							// 	}else{
+							// 		layui.admin.setConfigType("yml");
+							// 		layui.admin.setConfigPath("/static/component/laytp/config/laytp.config.yml?v=" + localStorage.getItem("version"));
+							// 		var config = layui.admin.readConfig();
+							// 		layui.admin.menuRender(config);
+							// 	}
+							// });
+						}
+
+						// 递归搜索菜单
+						window.searchMenu = function(menuData, searchKey){
+							searchKey = searchKey.toLowerCase();
+							$.each(menuData, function(i, item) {
+								var oldTitle = item.title;
+								item.title = item.title.toLowerCase();
+								if(item.title.indexOf(searchKey) > -1){
+									item.title = oldTitle;
+									window.searchMenuData.push(item);
+								}else{
+									item.title = oldTitle;
+									if(item.children && item.children.length > 0){
+										searchMenu(item.children, searchKey);
+									}
+								}
+							});
+						};
+
+						// 重新渲染菜单
+						window.renderMenu = function(){
+							$(".search-menu").val('');
+							layui.admin.setConfigPath(laytpConfigYmlPath);
+							var config = layui.admin.readConfig();
+							layui.admin.menuRender(config);
+						};
+						// 重写消息回调 [消息列表点击事件]
+						// admin.message(function(id, title, context, form) {});
+					}
+				});
+			});
+		</script>
+		<script type="text/html" id="default-toolbar">
+			<button class="laytp-btn laytp-btn-primary laytp-btn-md" lay-event="add">
+				<i class="layui-icon layui-icon-add-1"></i>
+				新增
+			</button>
+			<button class="laytp-btn laytp-btn-danger laytp-btn-md" lay-event="batchRemove">
+				<i class="layui-icon layui-icon-delete"></i>
+				删除
+			</button>
+			<button class="laytp-btn laytp-btn-warming laytp-btn-md" lay-event="batchRemove">
+				<i class="layui-icon layui-icon-search"></i>
+				搜索
+			</button>
+		</script>
+	</body>
+</html>

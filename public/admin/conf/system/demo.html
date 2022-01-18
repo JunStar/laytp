@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>系统配置样例</title>
+</head>
+<body class="laytp-container">
+<div class="layui-card">
+    <div class="layui-card-body">
+        <form class="layui-form" lay-filter="layui-form">
+            <div class="table-container">
+            </div>
+            <div class="bottom">
+                <div class="button-container">
+                    <button type="submit" class="laytp-btn laytp-btn-primary laytp-btn-sm" lay-submit="" lay-filter="add">
+                        <i class="layui-icon layui-icon-ok"></i>
+                        保存配置
+                    </button>
+                    <button type="reset" class="laytp-btn laytp-btn-sm">
+                        <i class="layui-icon layui-icon-refresh"></i>
+                        重置
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script id="confTableHtml" type="text/html">
+    <input type="hidden" name="group" id="group" value="{{=d.group}}"/>
+    <table class="layui-table" style="margin: 0;" lay-skin="nob">
+        <colgroup>
+            <col width="15%">
+            <col width="70%">
+            <col width="15%">
+        </colgroup>
+        <tbody>
+        <tr>
+            <td style="text-align:right;">
+                单行文本输入框
+            </td>
+            <td>
+                <input autocomplete="off" type="text" name="input" id="input" value="{{=d.input}}" placeholder="请输入单行文本输入框" class="layui-input" lay-verify="required">
+                <input type="hidden" name="form_type[input]" value="input" />
+            </td>
+            <td>
+                <div class="conf-des layui-form-mid layui-word-aux">
+                    <label title="配置说明">这是一个单行输入框</label>
+                    <br/>
+                    <code title="{{=d.group}}.input">{{=d.group}}.input</code>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align:right;">
+                文本域
+            </td>
+            <td>
+                <textarea name="textarea" class="layui-textarea">{{=d.textarea}}</textarea>
+                <input type="hidden" name="form_type[textarea]" value="textarea" />
+            </td>
+            <td>
+                <div class="conf-des layui-form-mid layui-word-aux">
+                    <label title="配置说明">这是一个文本域</label>
+                    <br/>
+                    <code title="{{=d.group}}.textarea">{{=d.group}}.textarea</code>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align:right;">
+                单选下拉框
+            </td>
+            <td>
+                <div class="xmSelect"
+                     data-name="singleSelect"
+                     data-sourceType="data"
+                     data-radio="true"
+                     data-source="[{name:'唱歌',value:'1'},{name:'跳舞',value:'2'},{name:'朗诵',value:'3'},{name:'武术',value:'4'}]"
+                     data-selected="{{=d.singleSelect}}"
+                ></div>
+                <input type="hidden" name="form_type[singleSelect]" value="xmSelect" />
+            </td>
+            <td>
+                <div class="conf-des layui-form-mid layui-word-aux">
+                    <label title="配置说明">这个一个单选下拉框</label>
+                    <br/>
+                    <code title="{{=d.group}}.singleSelect')">{{=d.group}}.singleSelect')</code>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align:right;">
+                多选下拉框
+            </td>
+            <td>
+                <div class="xmSelect"
+                     data-name="multiSelect"
+                     data-sourceType="data"
+                     data-source="[{name:'唱歌',value:'1'},{name:'跳舞',value:'2'},{name:'朗诵',value:'3'},{name:'武术',value:'4'}]"
+                     data-selected="{{=d.multiSelect}}"
+                ></div>
+                <input type="hidden" name="form_type[multiSelect]" value="xmSelect" />
+            </td>
+            <td>
+                <div class="conf-des layui-form-mid layui-word-aux">
+                    <label title="配置说明">这是一个多选下拉框</label>
+                    <br/>
+                    <code title="{{=d.group}}.multiSelect">{{=d.group}}.multiSelect</code>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align:right;">
+                开关
+            </td>
+            <td>
+                <!-- 隐藏域设置开关未选中时需要传递的参数值 -->
+                <input type="hidden" name="switch" value="2"/>
+                <input type="checkbox" name="switch" lay-skin="switch"
+                       lay-text="打开|关闭"
+                       value="1" {{# if(d.switch == 1){ }}checked="checked"{{# } }}
+                />
+                <input type="hidden" name="form_type[switch]" value="switch" />
+            </td>
+            <td>
+                <div class="conf-des layui-form-mid layui-word-aux">
+                    <label title="这是一个开关">这是一个开关</label>
+                    <br/>
+                    <code title="{{=d.group}}.switch">{{=d.group}}.switch</code>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align:right;">
+                数组
+            </td>
+            <td>
+                <input type="hidden" name="form_type[array]" value="array" />
+                <table class="layui-table" style="margin: 0;" lay-skin="line">
+                    <colgroup>
+                        <col width="25%">
+                        <col width="70%">
+                        <col>
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th>Key</th>
+                        <th>Value</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody class="tableDnd">
+                    {{# if(d.array){ }}
+                    {{# var key; for(key in d.array){ }}
+                    <tr>
+                        <td style="padding: 4px 15px;"><input class="layui-input" type="text" name="array[key][]" value="{{=key}}" /></td>
+                        <td style="padding: 4px 15px;"><input class="layui-input" type="text" name="array[value][]" value="{{=d.array[key]}}" /></td>
+                        <td style="padding: 4px 15px;">
+                            <a href="javascript:void(0);" class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-delete delArrayItem" layer-tips="删除" title="删除"></a>
+                        </td>
+                    </tr>
+                    {{# } }}
+                    {{# }else{ }}
+                    <tr>
+                        <td style="padding: 4px 15px;"><input class="layui-input" type="text" name="array[key][]" value="" /></td>
+                        <td style="padding: 4px 15px;"><input class="layui-input" type="text" name="array[value][]" value="" /></td>
+                        <td style="padding: 4px 15px;">
+                            <a href="javascript:void(0);" class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-delete delArrayItem" layer-tips="删除" title="删除"></a>
+                        </td>
+                    </tr>
+                    {{# } }}
+                    <tr class='nodrop nodrag'>
+                        <td colspan="3" style="padding: 4px 15px;">
+                            <a href="javascript:void(0);" class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-add-1 addArrayItem" title="追加">追加</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+            <td>
+                <div class="conf-des layui-form-mid layui-word-aux">
+                    配置说明
+                    <br/>
+                    <code title="{{=d.group}}.array">{{=d.group}}.array</code>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align:right;">
+                多个图片
+            </td>
+            <td>
+                <div class="laytpUpload"
+                     data-name="imgs"
+                     data-accept="image"
+                     data-multi="true"
+                     data-uploadedId="{{d.imgs}}"
+                     data-uploaded="{{d.imgs_path}}"
+                     data-uploadedFilename="{{d.imgs_filename}}"
+                ></div>
+                <input type="hidden" name="form_type[imgs]" value="upload" />
+            </td>
+            <td>
+                <div class="conf-des layui-form-mid layui-word-aux">
+                    <label title="配置说明">配置说明</label>
+                    <br/>
+                    <code title="{{=d.group}}.imgs">{{=d.group}}.imgs</code>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align:right;">
+                单个图片
+            </td>
+            <td>
+                <div class="laytpUpload"
+                     data-name="img"
+                     data-accept="image"
+                     data-uploadedId="{{d.imgs}}"
+                     data-uploaded="{{d.imgs_path}}"
+                     data-uploadedFilename="{{d.imgs_filename}}"
+                ></div>
+                <input type="hidden" name="form_type[img]" value="upload" />
+            </td>
+            <td>
+                <div class="conf-des layui-form-mid layui-word-aux">
+                    <label title="配置说明">配置说明</label>
+                    <br/>
+                    <code title="{{=d.group}}.img">{{=d.group}}.img</code>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align:right;">
+                编辑器
+            </td>
+            <td>
+                <iframe src="/admin/ueditor.html?id=ueditor" class="editor" data-type="ueditor" data-id="ueditor" style="width:100%;height:530px;border: 0"></iframe>
+                <textarea class="editorContent" data-id="ueditor" style="display:none;">{{=d.ueditor}}</textarea>
+            </td>
+            <td>
+                <div class="conf-des layui-form-mid layui-word-aux">
+                    <label title="配置说明">配置说明</label>
+                    <br/>
+                    <code title="{{=d.group}}.ueditor">{{=d.group}}.ueditor</code>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</script>
+<script type="application/javascript">
+    if(localStorage.getItem("staticDomain")){
+        document.write("<link rel='stylesheet' href='" + localStorage.getItem("staticDomain") + "/component/layui/css/layui.css?v=" + localStorage.getItem("version") + "'>");
+        document.write("<script src='" + localStorage.getItem("staticDomain") + "/component/layui/layui.js?v="+localStorage.getItem("version")+"'><\/script>");
+        document.write("<script src='" + localStorage.getItem("staticDomain") + "/component/laytp/layuiConfig.js?v="+localStorage.getItem("version")+"'><\/script>");
+        document.write("<script src='" + localStorage.getItem("staticDomain") + "/component/jquery_3.3.1.js?v="+localStorage.getItem("version")+"'><\/script>");
+        document.write("<script src='" + localStorage.getItem("staticDomain") + "/component/jquery.tablednd.js?v="+localStorage.getItem("version")+"'><\/script>");
+    }else{
+        document.write("<link rel='stylesheet' href='/static/component/layui/css/layui.css?v=" + localStorage.getItem("version") + "'>");
+        document.write("<script src='/static/component/layui/layui.js?v="+localStorage.getItem("version")+"'><\/script>");
+        document.write("<script src='/static/component/laytp/layuiConfig.js?v="+localStorage.getItem("version")+"'><\/script>");
+        document.write("<script src='/static/component/jquery_3.3.1.js?v="+localStorage.getItem("version")+"'><\/script>");
+        document.write("<script src='/static/component/jquery.tablednd.js?v="+localStorage.getItem("version")+"'><\/script>");
+    }
+</script>
+<script>
+    layui.use(['laytp'],function(){
+        var group = "system.demo";
+        // 先获取数据，渲染表单
+        // 渲染完表单之后，设置滚动条
+        facade.ajax({
+            route: "/admin.conf/getGroupConf",
+            data: {"group" : group},
+            successAlert: false,
+            showLoading: true
+        }).done(function(res){
+            if(res.code === 0){
+                res.data.group = group;
+                layui.laytpl($("#confTableHtml").html()).render(res.data,function(string){
+                    $(".table-container").html(string);
+                    layui.laytpForm.render();
+                    layui.form.render();
+                    var windowHeight = $(window).height();
+                    var maxHeight = parseInt(windowHeight) - 86;
+                    var minHeight = parseInt(windowHeight) - 86;
+                    // 设置table-container的最大高度和超过高度后展示滚动条
+                    $(".table-container").css("margin-bottom", '40px');
+                    $(".table-container").css("max-height", maxHeight + 'px');
+                    $(".table-container").css("min-height", minHeight + 'px');
+                    $(".table-container").css("overflow-y", "auto");
+
+                    $('.bottom').css("background-color", "#f6f6f6");
+                });
+            }
+        });
+
+        layui.form.on('submit(add)', function(data){
+            data = facade.setEditorField(data);
+            data.field.group = group;
+            facade.ajax({
+                route:'/admin.conf/saveGroupConf',
+                data : data.field
+            }).done(function(res){
+                if(res.code === 0){
+
+                }
+            });
+            return false;
+        });
+    })
+</script>
+</body>
+</html>

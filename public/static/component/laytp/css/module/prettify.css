@@ -1,0 +1,91 @@
+.layui-form-label {
+    width: 80px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.main-container .layui-card-header {
+    background-color: #f5f5f5;
+}
+
+.layui-tab{
+    background-color: #fdfdfd;
+    margin: 0;
+}
+
+.layui-tab-content{
+    padding-top: 0;
+}
+
+.layui-card-body {
+    background-color: #fdfdfd;
+}
+
+.layui-colorpicker.layui-colorpicker-xs{
+    width:26px !important;
+    height:26px !important;
+    line-height:24px !important;
+}
+
+.layui-form-item{
+    margin-top: 5px  !important;
+    margin-bottom: 5px !important;
+}
+
+.laytp-container::-webkit-scrollbar{
+    width:10px;
+}
+
+.layui-table-body::-webkit-scrollbar{
+    height:10px;
+}
+
+/**
+ * 美化树形组件
+ *  增加了laytp-tree-horizontal样式的树形组件，最后一级会横向排列
+ *  增加了laytp-tree-horizontal样式的树形组件，在表单中 layui-form-mid样式优化 layui-tree-entry样式优化
+ */
+.laytp-tree-horizontal .layui-tree-pack.layui-tree-lineExtend .layui-tree-set.layui-tree-spread {
+    display: inline-block !important;
+    width: auto;
+}
+
+.laytp-tree-horizontal .layui-table-body::-webkit-scrollbar{
+    width:10px;
+}
+
+.laytp-tree-horizontal.layui-form-mid{
+    padding: 5px 0!important;
+}
+
+.layui-tree-entry{
+    height: 26px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.layui-table .layui-form-switch{
+    margin-top: 0;
+}
+
+.conf-des {
+    padding: 0 !important;
+    width: 300px;
+    white-space: nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.conf-des code {
+    color: #5FB878;
+}
+
+.layui-card .layui-card-body .layui-table-view{
+    margin: 0 !important;
+}
+
+.layui-table-view .layui-table{
+    width: 100%!important;
+}

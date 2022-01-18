@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>添加页面</title>
+</head>
+<body>
+<form class="layui-form" lay-filter="layui-form" id="htmlNode"></form>
+
+<script type="text/html" id="loginTemplate">
+    <div class="mainBox">
+        <div class="main-container">
+            <div class="main-container">
+                <blockquote class="layui-elem-quote">
+                    此处登录laytp官网账号
+                    如果没有laytp官网账号
+                    请先 <a style="color:#2d8cf0;" href="https://www.laytp.com" target="_blank">注册</a>
+                </blockquote>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label" title="用户名"> <text title="必填项" style="color:red;">*</text> 用户名</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" type="text" name="username" id="username" placeholder="用户名" class="layui-input" lay-verify="required">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label" title="密码"> <text title="必填项" style="color:red;">*</text> 密码</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" type="password" name="password" id="password" placeholder="密码" class="layui-input" lay-verify="required">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bottom">
+        <div class="button-container">
+            <button type="submit" class="laytp-btn laytp-btn-primary laytp-btn-sm addBtn" lay-submit="" lay-filter="add">
+                <i class="layui-icon layui-icon-ok"></i>
+                提交
+            </button>
+            <button type="reset" class="laytp-btn laytp-btn-sm">
+                <i class="layui-icon layui-icon-refresh"></i>
+                重置
+            </button>
+        </div>
+    </div>
+</script>
+
+<script type="text/html" id="userTemplate">
+    <div class="mainBox">
+        <div class="main-container">
+            <div class="main-container">
+                <blockquote class="layui-elem-quote">
+                    您已登录，昵称：{{d.nickname}}。请先购买插件<br />
+                </blockquote>
+
+                <div class="layui-row">
+                    <div class="layui-col-md6">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label" title="插件名">插件名</label>
+                            <div class="layui-input-block">
+                                <div class="layui-form-mid">{{d.name}}({{d.alias}})</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-md6">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label" title="价格">价格</label>
+                            <div class="layui-input-block">
+                                <div class="layui-form-mid">￥{{d.price/100}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label" title="支付方式">支付方式</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="payment" value="ali" title="支付宝" checked>
+                        <button type="button" class="layui-btn layui-btn-normal createOrder">生成支付二维码</button>
+                    </div>
+                </div>
+
+                <div class="layui-row">
+                    <div class="layui-col-md6">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label" title="支付二维码">支付二维码</label>
+                            <div class="layui-input-block">
+                                <div class="layui-form-mid" id="qrCode">请点击[生成支付二维码]按钮，生成支付二维码</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-md6">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label" title="支付状态">支付状态</label>
+                            <div class="layui-input-block">
+                                <div class="layui-form-mid" id="payStatus">
+                                    请点击[生成支付二维码]按钮，生成支付二维码
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+<script>
+    if(localStorage.getItem("staticDomain")){
+        document.write("<link rel='stylesheet' href='" + localStorage.getItem("staticDomain") + "/component/layui/css/layui.css?v=" + localStorage.getItem("version") + "'>");
+        document.write("<script src='" + localStorage.getItem("staticDomain") + "/component/layui/layui.js?v="+localStorage.getItem("version")+"'><\/script>");
+        document.write("<script src='" + localStorage.getItem("staticDomain") + "/component/laytp/layuiConfig.js?v="+localStorage.getItem("version")+"'><\/script>");
+        document.write("<script src='" + localStorage.getItem("staticDomain") + "/component/jquery_3.3.1.js?v="+localStorage.getItem("version")+"'><\/script>");
+        document.write("<script src='" + localStorage.getItem("staticDomain") + "/component/jquery.qrcode.js?v="+localStorage.getItem("version")+"'><\/script>");
+        document.write("<script src='" + localStorage.getItem("staticDomain") + "/component/qrcode.js?v="+localStorage.getItem("version")+"'><\/script>");
+    }else{
+        document.write("<link rel='stylesheet' href='/static/component/layui/css/layui.css?v=" + localStorage.getItem("version") + "'>");
+        document.write("<script src='/static/component/layui/layui.js?v="+localStorage.getItem("version")+"'><\/script>");
+        document.write("<script src='/static/component/laytp/layuiConfig.js?v="+localStorage.getItem("version")+"'><\/script>");
+        document.write("<script src='/static/component/jquery_3.3.1.js?v="+localStorage.getItem("version")+"'><\/script>");
+        document.write("<script src='/static/component/jquery.qrcode.js?v="+localStorage.getItem("version")+"'><\/script>");
+        document.write("<script src='/static/component/qrcode.js?v="+localStorage.getItem("version")+"'><\/script>");
+    }
+</script>
+<script>
+    layui.use(['laytp'],function(){
+        var name = decodeURI(facade.getUrlParam('name'));
+        var alias = facade.getUrlParam('alias');
+        var price = facade.getUrlParam('price');
+        facade.ajax({
+            headers: layui.context.get("laytpGwToken"),
+            url: "https://api.laytp.com/user/info",
+            successAlert: false
+        }).done(function(res){
+            if(res.code === 0){
+                if(res.data){
+                    res.data.name = name;
+                    res.data.alias = alias;
+                    res.data.price = price;
+                    layui.laytpl($("#userTemplate").html()).render(res.data, function(string){
+                        $("#htmlNode").html(string);
+                        layui.form.render();
+                    });
+                }else{
+                    layui.laytpl($("#loginTemplate").html()).render({}, function(string){
+                        $("#htmlNode").html(string);
+                    });
+                }
+            }
+        });
+
+        var interval;
+
+        // 监听生成支付二维码按钮点击
+        $(document).off("click", ".createOrder").on("click", ".createOrder", function () {
+            var createOrderBtnAnim = layui.button.load({elem:$(".createOrder")});
+            var data = layui.form.val("layui-form");
+            facade.ajax({
+                headers: layui.context.get("laytpGwToken"),
+                url: "https://api.laytp.com/plugins/createOrder",
+                data:{plugin:alias, payment:data.payment},
+                successAlert: false
+            }).done(function(res){
+                createOrderBtnAnim.stop();
+                clearInterval(interval);
+                if(res.code === 0){
+                    $('#qrCode').html('');
+                    $('#qrCode').qrcode(res.data.code_url);
+                    $('#payStatus').html('<i class="layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop"></i><span style="color:red">等待扫码支付中，支付完成请勿关闭当前页面，程序将自动安装插件...</span>');
+                    // 开始轮询获取订单支付状态
+                    interval = setInterval(function(){
+                        facade.ajax({
+                            url: "https://api.laytp.com/plugins/getOrderStatus",
+                            data: {order_no:res.data.order_no},
+                            successAlert: false,
+                            errorAlert: false
+                        }).done(function(res){
+                            if(res.code === 0 && parseInt(res.data) === 2){
+                                clearInterval(interval);
+                                $('#payStatus').html('<i class="layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop"></i><span style="color:#36b368">支付完成，正在安装插件</span>');
+                                facade.ajax({
+                                    route:"/admin.plugins/install",
+                                    data:{"plugin":alias, "laytpGwToken":layui.context.get("laytpGwToken").token}
+                                }).done(function(installRes){
+                                    if(installRes.code === 0){
+                                        parent.facade.success("安装成功");
+                                        parent.layui.layer.close(parent.layui.layer.getFrameIndex(window.name));//关闭当前页
+                                        parent.layui.table.reload("laytp-table");
+                                    }else{
+                                        facade.error("插件包程序错误，无法安装，请联系管理员");
+                                    }
+                                }).fail(function(){
+                                    facade.error("插件购买成功，安装时网络错误，请重新安装");
+                                });
+                            }
+                        });
+                    }, 5000);
+                }
+
+            }).fail(function(){
+                createOrderBtnAnim.stop();
+            });
+        });
+    })
+</script>
+</body>
+</html>

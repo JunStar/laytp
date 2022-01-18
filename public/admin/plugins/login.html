@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>添加页面</title>
+</head>
+<body>
+<form class="layui-form" lay-filter="layui-form" id="htmlNode">
+
+</form>
+<script type="text/html" id="loginTemplate">
+    <div class="mainBox">
+        <div class="main-container">
+            <div class="main-container">
+                <blockquote class="layui-elem-quote">
+                    此处登录laytp官网账号
+                    如果没有laytp官网账号
+                    请先 <a style="color:#2d8cf0;" href="https://www.laytp.com" target="_blank">注册</a>
+                </blockquote>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label" title="用户名"> <text title="必填项" style="color:red;">*</text> 用户名</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" type="text" name="username" id="username" placeholder="用户名" class="layui-input" lay-verify="required">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label" title="密码"> <text title="必填项" style="color:red;">*</text> 密码</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" type="password" name="password" id="password" placeholder="密码" class="layui-input" lay-verify="required">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bottom">
+        <div class="button-container">
+            <button type="submit" class="laytp-btn laytp-btn-primary laytp-btn-sm addBtn" lay-submit="" lay-filter="add">
+                <i class="layui-icon layui-icon-ok"></i>
+                提交
+            </button>
+            <button type="reset" class="laytp-btn laytp-btn-sm">
+                <i class="layui-icon layui-icon-refresh"></i>
+                重置
+            </button>
+        </div>
+    </div>
+</script>
+<script type="text/html" id="userTemplate">
+    <div class="mainBox">
+        <div class="main-container">
+            <div class="main-container">
+                <blockquote class="layui-elem-quote">
+                    您已经登录<br />
+                    用户名：{{d.username}}<br />
+                    可以 <a style="color:#2d8cf0;" href="javascript:void(0);" class="logout">退出</a> 后切换账号
+                </blockquote>
+            </div>
+        </div>
+    </div>
+</script>
+<script>
+    if(localStorage.getItem("staticDomain")){
+        document.write("<link rel='stylesheet' href='" + localStorage.getItem("staticDomain") + "/component/layui/css/layui.css?v=" + localStorage.getItem("version") + "'>");
+        document.write("<script src='" + localStorage.getItem("staticDomain") + "/component/layui/layui.js?v="+localStorage.getItem("version")+"'><\/script>");
+        document.write("<script src='" + localStorage.getItem("staticDomain") + "/component/laytp/layuiConfig.js?v="+localStorage.getItem("version")+"'><\/script>");
+    }else{
+        document.write("<link rel='stylesheet' href='/static/component/layui/css/layui.css?v=" + localStorage.getItem("version") + "'>");
+        document.write("<script src='/static/component/layui/layui.js?v="+localStorage.getItem("version")+"'><\/script>");
+        document.write("<script src='/static/component/laytp/layuiConfig.js?v="+localStorage.getItem("version")+"'><\/script>");
+    }
+</script>
+<script>
+    layui.use(['laytp'],function(){
+        facade.ajax({
+            headers: layui.context.get("laytpGwToken"),
+            url: "https://api.laytp.com/user/info",
+            successAlert: false
+        }).done(function(res){
+            if(res.code === 0){
+                if(res.data){
+                    layui.laytpl($("#userTemplate").html()).render(res.data, function(string){
+                        $("#htmlNode").html(string);
+                    });
+                }else{
+                    layui.laytpl($("#loginTemplate").html()).render({}, function(string){
+                        $("#htmlNode").html(string);
+                    });
+                }
+            }
+        });
+
+        // 退出登录
+        $(document).off("click", ".logout").on("click", ".logout", function () {
+            localStorage.removeItem('laytpGwToken');
+            facade.success("退出成功");
+            layui.laytpl($("#loginTemplate").html()).render({}, function(string){
+                $("#htmlNode").html(string);
+            });
+        });
+
+        layui.form.on('submit(add)', function(data){
+            var btnAnim = layui.button.load({elem:$(".addBtn")});
+            data = facade.setEditorField(data);
+            facade.ajax({
+                url:'https://api.laytp.com/user/clientLogin',
+                data : data.field
+            }).done(function(res){
+                if(res.code === 0){
+                    layui.context.put('laytpGwToken', res.data);
+                    parent.layui.layer.close(parent.layui.layer.getFrameIndex(window.name));//关闭当前页
+                    parent.layui.facade.success("登录成功");
+                }
+                btnAnim.stop();
+            }).fail(function(){
+                btnAnim.stop();
+            });
+            return false;
+        });
+    })
+</script>
+</body>
+</html>

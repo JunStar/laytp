@@ -1,0 +1,65 @@
+/**
+垂直选项卡
+ */
+.layui-vertical-card {
+    border-radius: 2px;
+    background-color: #fff;
+}
+
+.layui-tab.layui-tab-vertical {
+    position: relative;
+}
+
+.layui-tab.layui-tab-vertical:after {
+    content: "";
+    clear: both;
+    display: block;
+}
+
+.layui-tab-vertical > .layui-tab-title .layui-this:after {
+    border: none;
+    border-radius: 0;
+    border-bottom: 0;
+}
+
+
+.layui-tab.layui-tab-vertical > .layui-tab-title {
+    width: 130px;
+    min-height: 590px;
+    border: 0;
+    border-right: 1px solid #e9e9e9;
+    box-sizing: border-box;
+    float: left;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.layui-tab.layui-tab-vertical > .layui-tab-title > .layui-tab-vertical-btn {
+    line-height: normal;
+    padding: 10px 5px;
+    display: block;
+    white-space: normal;
+}
+
+.layui-tab.layui-tab-vertical > .layui-tab-title > li.layui-this {
+    color: var(--laytp-head-bg);
+    border-right: 3px solid var(--laytp-head-bg);
+}
+
+.layui-tab.layui-tab-vertical > .layui-tab-title::-webkit-scrollbar {
+    height: 1px;
+    width: 0;
+}
+
+.layui-tab.layui-tab-vertical > .layui-tab-title > li {
+    display: block;
+    border-right: 3px solid transparent;
+    white-space: normal;
+    line-height: normal;
+    padding: 10px 15px;
+    text-align: right;
+}
+
+.layui-tab.layui-tab-vertical > .layui-tab-content {
+    margin-left: 130px;
+}

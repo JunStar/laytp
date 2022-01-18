@@ -1,0 +1,2155 @@
+{
+  "data": [
+    {
+      "name": "fa fa-address-book"
+    },
+    {
+      "name": "fa fa-address-book-o"
+    },
+    {
+      "name": "fa fa-address-card"
+    },
+    {
+      "name": "fa fa-address-card-o"
+    },
+    {
+      "name": "fa fa-adjust"
+    },
+    {
+      "name": "fa fa-american-sign-language-interpreting"
+    },
+    {
+      "name": "fa fa-anchor"
+    },
+    {
+      "name": "fa fa-archive"
+    },
+    {
+      "name": "fa fa-area-chart"
+    },
+    {
+      "name": "fa fa-arrows"
+    },
+    {
+      "name": "fa fa-arrows-h"
+    },
+    {
+      "name": "fa fa-arrows-v"
+    },
+    {
+      "name": "fa fa-asl-interpreting"
+    },
+    {
+      "name": "fa fa-assistive-listening-systems"
+    },
+    {
+      "name": "fa fa-asterisk"
+    },
+    {
+      "name": "fa fa-at"
+    },
+    {
+      "name": "fa fa-audio-description"
+    },
+    {
+      "name": "fa fa-automobile"
+    },
+    {
+      "name": "fa fa-balance-scale"
+    },
+    {
+      "name": "fa fa-ban"
+    },
+    {
+      "name": "fa fa-bank"
+    },
+    {
+      "name": "fa fa-bar-chart"
+    },
+    {
+      "name": "fa fa-bar-chart-o"
+    },
+    {
+      "name": "fa fa-barcode"
+    },
+    {
+      "name": "fa fa-bars"
+    },
+    {
+      "name": "fa fa-bath"
+    },
+    {
+      "name": "fa fa-bathtub"
+    },
+    {
+      "name": "fa fa-battery"
+    },
+    {
+      "name": "fa fa-battery-0"
+    },
+    {
+      "name": "fa fa-battery-1"
+    },
+    {
+      "name": "fa fa-battery-2"
+    },
+    {
+      "name": "fa fa-battery-3"
+    },
+    {
+      "name": "fa fa-battery-4"
+    },
+    {
+      "name": "fa fa-battery-empty"
+    },
+    {
+      "name": "fa fa-battery-full"
+    },
+    {
+      "name": "fa fa-battery-half"
+    },
+    {
+      "name": "fa fa-battery-quarter"
+    },
+    {
+      "name": "fa fa-battery-three-quarters"
+    },
+    {
+      "name": "fa fa-bed"
+    },
+    {
+      "name": "fa fa-beer"
+    },
+    {
+      "name": "fa fa-bell"
+    },
+    {
+      "name": "fa fa-bell-o"
+    },
+    {
+      "name": "fa fa-bell-slash"
+    },
+    {
+      "name": "fa fa-bell-slash-o"
+    },
+    {
+      "name": "fa fa-bicycle"
+    },
+    {
+      "name": "fa fa-binoculars"
+    },
+    {
+      "name": "fa fa-birthday-cake"
+    },
+    {
+      "name": "fa fa-blind"
+    },
+    {
+      "name": "fa fa-bluetooth"
+    },
+    {
+      "name": "fa fa-bluetooth-b"
+    },
+    {
+      "name": "fa fa-bolt"
+    },
+    {
+      "name": "fa fa-bomb"
+    },
+    {
+      "name": "fa fa-book"
+    },
+    {
+      "name": "fa fa-bookmark"
+    },
+    {
+      "name": "fa fa-bookmark-o"
+    },
+    {
+      "name": "fa fa-braille"
+    },
+    {
+      "name": "fa fa-briefcase"
+    },
+    {
+      "name": "fa fa-bug"
+    },
+    {
+      "name": "fa fa-building"
+    },
+    {
+      "name": "fa fa-building-o"
+    },
+    {
+      "name": "fa fa-bullhorn"
+    },
+    {
+      "name": "fa fa-bullseye"
+    },
+    {
+      "name": "fa fa-bus"
+    },
+    {
+      "name": "fa fa-cab"
+    },
+    {
+      "name": "fa fa-calculator"
+    },
+    {
+      "name": "fa fa-calendar"
+    },
+    {
+      "name": "fa fa-calendar-check-o"
+    },
+    {
+      "name": "fa fa-calendar-minus-o"
+    },
+    {
+      "name": "fa fa-calendar-o"
+    },
+    {
+      "name": "fa fa-calendar-plus-o"
+    },
+    {
+      "name": "fa fa-calendar-times-o"
+    },
+    {
+      "name": "fa fa-camera"
+    },
+    {
+      "name": "fa fa-camera-retro"
+    },
+    {
+      "name": "fa fa-car"
+    },
+    {
+      "name": "fa fa-caret-square-o-down"
+    },
+    {
+      "name": "fa fa-caret-square-o-left"
+    },
+    {
+      "name": "fa fa-caret-square-o-right"
+    },
+    {
+      "name": "fa fa-caret-square-o-up"
+    },
+    {
+      "name": "fa fa-cart-arrow-down"
+    },
+    {
+      "name": "fa fa-cart-plus"
+    },
+    {
+      "name": "fa fa-cc"
+    },
+    {
+      "name": "fa fa-certificate"
+    },
+    {
+      "name": "fa fa-check"
+    },
+    {
+      "name": "fa fa-check-circle"
+    },
+    {
+      "name": "fa fa-check-circle-o"
+    },
+    {
+      "name": "fa fa-check-square"
+    },
+    {
+      "name": "fa fa-check-square-o"
+    },
+    {
+      "name": "fa fa-child"
+    },
+    {
+      "name": "fa fa-circle"
+    },
+    {
+      "name": "fa fa-circle-o"
+    },
+    {
+      "name": "fa fa-circle-o-notch"
+    },
+    {
+      "name": "fa fa-circle-thin"
+    },
+    {
+      "name": "fa fa-clock-o"
+    },
+    {
+      "name": "fa fa-clone"
+    },
+    {
+      "name": "fa fa-close"
+    },
+    {
+      "name": "fa fa-cloud"
+    },
+    {
+      "name": "fa fa-cloud-download"
+    },
+    {
+      "name": "fa fa-cloud-upload"
+    },
+    {
+      "name": "fa fa-code"
+    },
+    {
+      "name": "fa fa-code-fork"
+    },
+    {
+      "name": "fa fa-coffee"
+    },
+    {
+      "name": "fa fa-cog"
+    },
+    {
+      "name": "fa fa-cogs"
+    },
+    {
+      "name": "fa fa-comment"
+    },
+    {
+      "name": "fa fa-comment-o"
+    },
+    {
+      "name": "fa fa-commenting"
+    },
+    {
+      "name": "fa fa-commenting-o"
+    },
+    {
+      "name": "fa fa-comments"
+    },
+    {
+      "name": "fa fa-comments-o"
+    },
+    {
+      "name": "fa fa-compass"
+    },
+    {
+      "name": "fa fa-copyright"
+    },
+    {
+      "name": "fa fa-creative-commons"
+    },
+    {
+      "name": "fa fa-credit-card"
+    },
+    {
+      "name": "fa fa-credit-card-alt"
+    },
+    {
+      "name": "fa fa-crop"
+    },
+    {
+      "name": "fa fa-crosshairs"
+    },
+    {
+      "name": "fa fa-cube"
+    },
+    {
+      "name": "fa fa-cubes"
+    },
+    {
+      "name": "fa fa-cutlery"
+    },
+    {
+      "name": "fa fa-dashboard"
+    },
+    {
+      "name": "fa fa-database"
+    },
+    {
+      "name": "fa fa-deaf"
+    },
+    {
+      "name": "fa fa-deafness"
+    },
+    {
+      "name": "fa fa-desktop"
+    },
+    {
+      "name": "fa fa-diamond"
+    },
+    {
+      "name": "fa fa-dot-circle-o"
+    },
+    {
+      "name": "fa fa-download"
+    },
+    {
+      "name": "fa fa-drivers-license"
+    },
+    {
+      "name": "fa fa-drivers-license-o"
+    },
+    {
+      "name": "fa fa-edit"
+    },
+    {
+      "name": "fa fa-ellipsis-h"
+    },
+    {
+      "name": "fa fa-ellipsis-v"
+    },
+    {
+      "name": "fa fa-envelope"
+    },
+    {
+      "name": "fa fa-envelope-o"
+    },
+    {
+      "name": "fa fa-envelope-open"
+    },
+    {
+      "name": "fa fa-envelope-open-o"
+    },
+    {
+      "name": "fa fa-envelope-square"
+    },
+    {
+      "name": "fa fa-eraser"
+    },
+    {
+      "name": "fa fa-exchange"
+    },
+    {
+      "name": "fa fa-exclamation"
+    },
+    {
+      "name": "fa fa-exclamation-circle"
+    },
+    {
+      "name": "fa fa-exclamation-triangle"
+    },
+    {
+      "name": "fa fa-external-link"
+    },
+    {
+      "name": "fa fa-external-link-square"
+    },
+    {
+      "name": "fa fa-eye"
+    },
+    {
+      "name": "fa fa-eye-slash"
+    },
+    {
+      "name": "fa fa-eyedropper"
+    },
+    {
+      "name": "fa fa-fax"
+    },
+    {
+      "name": "fa fa-feed"
+    },
+    {
+      "name": "fa fa-female"
+    },
+    {
+      "name": "fa fa-fighter-jet"
+    },
+    {
+      "name": "fa fa-file-archive-o"
+    },
+    {
+      "name": "fa fa-file-audio-o"
+    },
+    {
+      "name": "fa fa-file-code-o"
+    },
+    {
+      "name": "fa fa-file-excel-o"
+    },
+    {
+      "name": "fa fa-file-image-o"
+    },
+    {
+      "name": "fa fa-file-movie-o"
+    },
+    {
+      "name": "fa fa-file-pdf-o"
+    },
+    {
+      "name": "fa fa-file-photo-o"
+    },
+    {
+      "name": "fa fa-file-picture-o"
+    },
+    {
+      "name": "fa fa-file-powerpoint-o"
+    },
+    {
+      "name": "fa fa-file-sound-o"
+    },
+    {
+      "name": "fa fa-file-video-o"
+    },
+    {
+      "name": "fa fa-file-word-o"
+    },
+    {
+      "name": "fa fa-file-zip-o"
+    },
+    {
+      "name": "fa fa-film"
+    },
+    {
+      "name": "fa fa-filter"
+    },
+    {
+      "name": "fa fa-fire"
+    },
+    {
+      "name": "fa fa-fire-extinguisher"
+    },
+    {
+      "name": "fa fa-flag"
+    },
+    {
+      "name": "fa fa-flag-checkered"
+    },
+    {
+      "name": "fa fa-flag-o"
+    },
+    {
+      "name": "fa fa-flash"
+    },
+    {
+      "name": "fa fa-flask"
+    },
+    {
+      "name": "fa fa-folder"
+    },
+    {
+      "name": "fa fa-folder-o"
+    },
+    {
+      "name": "fa fa-folder-open"
+    },
+    {
+      "name": "fa fa-folder-open-o"
+    },
+    {
+      "name": "fa fa-frown-o"
+    },
+    {
+      "name": "fa fa-futbol-o"
+    },
+    {
+      "name": "fa fa-gamepad"
+    },
+    {
+      "name": "fa fa-gavel"
+    },
+    {
+      "name": "fa fa-gear"
+    },
+    {
+      "name": "fa fa-gears"
+    },
+    {
+      "name": "fa fa-gift"
+    },
+    {
+      "name": "fa fa-glass"
+    },
+    {
+      "name": "fa fa-globe"
+    },
+    {
+      "name": "fa fa-graduation-cap"
+    },
+    {
+      "name": "fa fa-group"
+    },
+    {
+      "name": "fa fa-hand-grab-o"
+    },
+    {
+      "name": "fa fa-hand-lizard-o"
+    },
+    {
+      "name": "fa fa-hand-paper-o"
+    },
+    {
+      "name": "fa fa-hand-peace-o"
+    },
+    {
+      "name": "fa fa-hand-pointer-o"
+    },
+    {
+      "name": "fa fa-hand-rock-o"
+    },
+    {
+      "name": "fa fa-hand-scissors-o"
+    },
+    {
+      "name": "fa fa-hand-spock-o"
+    },
+    {
+      "name": "fa fa-hand-stop-o"
+    },
+    {
+      "name": "fa fa-handshake-o"
+    },
+    {
+      "name": "fa fa-hard-of-hearing"
+    },
+    {
+      "name": "fa fa-hashtag"
+    },
+    {
+      "name": "fa fa-hdd-o"
+    },
+    {
+      "name": "fa fa-headphones"
+    },
+    {
+      "name": "fa fa-heart"
+    },
+    {
+      "name": "fa fa-heart-o"
+    },
+    {
+      "name": "fa fa-heartbeat"
+    },
+    {
+      "name": "fa fa-history"
+    },
+    {
+      "name": "fa fa-home"
+    },
+    {
+      "name": "fa fa-hotel"
+    },
+    {
+      "name": "fa fa-hourglass"
+    },
+    {
+      "name": "fa fa-hourglass-1"
+    },
+    {
+      "name": "fa fa-hourglass-2"
+    },
+    {
+      "name": "fa fa-hourglass-3"
+    },
+    {
+      "name": "fa fa-hourglass-end"
+    },
+    {
+      "name": "fa fa-hourglass-half"
+    },
+    {
+      "name": "fa fa-hourglass-o"
+    },
+    {
+      "name": "fa fa-hourglass-start"
+    },
+    {
+      "name": "fa fa-i-cursor"
+    },
+    {
+      "name": "fa fa-id-badge"
+    },
+    {
+      "name": "fa fa-id-card"
+    },
+    {
+      "name": "fa fa-id-card-o"
+    },
+    {
+      "name": "fa fa-image"
+    },
+    {
+      "name": "fa fa-inbox"
+    },
+    {
+      "name": "fa fa-industry"
+    },
+    {
+      "name": "fa fa-info"
+    },
+    {
+      "name": "fa fa-info-circle"
+    },
+    {
+      "name": "fa fa-institution"
+    },
+    {
+      "name": "fa fa-key"
+    },
+    {
+      "name": "fa fa-keyboard-o"
+    },
+    {
+      "name": "fa fa-language"
+    },
+    {
+      "name": "fa fa-laptop"
+    },
+    {
+      "name": "fa fa-leaf"
+    },
+    {
+      "name": "fa fa-legal"
+    },
+    {
+      "name": "fa fa-lemon-o"
+    },
+    {
+      "name": "fa fa-level-down"
+    },
+    {
+      "name": "fa fa-level-up"
+    },
+    {
+      "name": "fa fa-life-bouy"
+    },
+    {
+      "name": "fa fa-life-buoy"
+    },
+    {
+      "name": "fa fa-life-ring"
+    },
+    {
+      "name": "fa fa-life-saver"
+    },
+    {
+      "name": "fa fa-lightbulb-o"
+    },
+    {
+      "name": "fa fa-line-chart"
+    },
+    {
+      "name": "fa fa-location-arrow"
+    },
+    {
+      "name": "fa fa-lock"
+    },
+    {
+      "name": "fa fa-low-vision"
+    },
+    {
+      "name": "fa fa-magic"
+    },
+    {
+      "name": "fa fa-magnet"
+    },
+    {
+      "name": "fa fa-mail-forward"
+    },
+    {
+      "name": "fa fa-mail-reply"
+    },
+    {
+      "name": "fa fa-mail-reply-all"
+    },
+    {
+      "name": "fa fa-male"
+    },
+    {
+      "name": "fa fa-map"
+    },
+    {
+      "name": "fa fa-map-marker"
+    },
+    {
+      "name": "fa fa-map-o"
+    },
+    {
+      "name": "fa fa-map-pin"
+    },
+    {
+      "name": "fa fa-map-signs"
+    },
+    {
+      "name": "fa fa-meh-o"
+    },
+    {
+      "name": "fa fa-microchip"
+    },
+    {
+      "name": "fa fa-microphone"
+    },
+    {
+      "name": "fa fa-microphone-slash"
+    },
+    {
+      "name": "fa fa-minus"
+    },
+    {
+      "name": "fa fa-minus-circle"
+    },
+    {
+      "name": "fa fa-minus-square"
+    },
+    {
+      "name": "fa fa-minus-square-o"
+    },
+    {
+      "name": "fa fa-mobile"
+    },
+    {
+      "name": "fa fa-mobile-phone"
+    },
+    {
+      "name": "fa fa-money"
+    },
+    {
+      "name": "fa fa-moon-o"
+    },
+    {
+      "name": "fa fa-mortar-board"
+    },
+    {
+      "name": "fa fa-motorcycle"
+    },
+    {
+      "name": "fa fa-mouse-pointer"
+    },
+    {
+      "name": "fa fa-music"
+    },
+    {
+      "name": "fa fa-navicon"
+    },
+    {
+      "name": "fa fa-newspaper-o"
+    },
+    {
+      "name": "fa fa-object-group"
+    },
+    {
+      "name": "fa fa-object-ungroup"
+    },
+    {
+      "name": "fa fa-paint-brush"
+    },
+    {
+      "name": "fa fa-paper-plane"
+    },
+    {
+      "name": "fa fa-paper-plane-o"
+    },
+    {
+      "name": "fa fa-paw"
+    },
+    {
+      "name": "fa fa-pencil"
+    },
+    {
+      "name": "fa fa-pencil-square"
+    },
+    {
+      "name": "fa fa-pencil-square-o"
+    },
+    {
+      "name": "fa fa-percent"
+    },
+    {
+      "name": "fa fa-phone"
+    },
+    {
+      "name": "fa fa-phone-square"
+    },
+    {
+      "name": "fa fa-photo"
+    },
+    {
+      "name": "fa fa-picture-o"
+    },
+    {
+      "name": "fa fa-pie-chart"
+    },
+    {
+      "name": "fa fa-plane"
+    },
+    {
+      "name": "fa fa-plug"
+    },
+    {
+      "name": "fa fa-plus"
+    },
+    {
+      "name": "fa fa-plus-circle"
+    },
+    {
+      "name": "fa fa-plus-square"
+    },
+    {
+      "name": "fa fa-plus-square-o"
+    },
+    {
+      "name": "fa fa-podcast"
+    },
+    {
+      "name": "fa fa-power-off"
+    },
+    {
+      "name": "fa fa-print"
+    },
+    {
+      "name": "fa fa-puzzle-piece"
+    },
+    {
+      "name": "fa fa-qrcode"
+    },
+    {
+      "name": "fa fa-question"
+    },
+    {
+      "name": "fa fa-question-circle"
+    },
+    {
+      "name": "fa fa-question-circle-o"
+    },
+    {
+      "name": "fa fa-quote-left"
+    },
+    {
+      "name": "fa fa-quote-right"
+    },
+    {
+      "name": "fa fa-random"
+    },
+    {
+      "name": "fa fa-recycle"
+    },
+    {
+      "name": "fa fa-refresh"
+    },
+    {
+      "name": "fa fa-registered"
+    },
+    {
+      "name": "fa fa-remove"
+    },
+    {
+      "name": "fa fa-reorder"
+    },
+    {
+      "name": "fa fa-reply"
+    },
+    {
+      "name": "fa fa-reply-all"
+    },
+    {
+      "name": "fa fa-retweet"
+    },
+    {
+      "name": "fa fa-road"
+    },
+    {
+      "name": "fa fa-rocket"
+    },
+    {
+      "name": "fa fa-rss"
+    },
+    {
+      "name": "fa fa-rss-square"
+    },
+    {
+      "name": "fa fa-s15"
+    },
+    {
+      "name": "fa fa-search"
+    },
+    {
+      "name": "fa fa-search-minus"
+    },
+    {
+      "name": "fa fa-search-plus"
+    },
+    {
+      "name": "fa fa-send"
+    },
+    {
+      "name": "fa fa-send-o"
+    },
+    {
+      "name": "fa fa-server"
+    },
+    {
+      "name": "fa fa-share"
+    },
+    {
+      "name": "fa fa-share-alt"
+    },
+    {
+      "name": "fa fa-share-alt-square"
+    },
+    {
+      "name": "fa fa-share-square"
+    },
+    {
+      "name": "fa fa-share-square-o"
+    },
+    {
+      "name": "fa fa-shield"
+    },
+    {
+      "name": "fa fa-ship"
+    },
+    {
+      "name": "fa fa-shopping-bag"
+    },
+    {
+      "name": "fa fa-shopping-basket"
+    },
+    {
+      "name": "fa fa-shopping-cart"
+    },
+    {
+      "name": "fa fa-shower"
+    },
+    {
+      "name": "fa fa-sign-in"
+    },
+    {
+      "name": "fa fa-sign-language"
+    },
+    {
+      "name": "fa fa-sign-out"
+    },
+    {
+      "name": "fa fa-signal"
+    },
+    {
+      "name": "fa fa-signing"
+    },
+    {
+      "name": "fa fa-sitemap"
+    },
+    {
+      "name": "fa fa-sliders"
+    },
+    {
+      "name": "fa fa-smile-o"
+    },
+    {
+      "name": "fa fa-snowflake-o"
+    },
+    {
+      "name": "fa fa-soccer-ball-o"
+    },
+    {
+      "name": "fa fa-sort"
+    },
+    {
+      "name": "fa fa-sort-alpha-asc"
+    },
+    {
+      "name": "fa fa-sort-alpha-desc"
+    },
+    {
+      "name": "fa fa-sort-amount-asc"
+    },
+    {
+      "name": "fa fa-sort-amount-desc"
+    },
+    {
+      "name": "fa fa-sort-asc"
+    },
+    {
+      "name": "fa fa-sort-desc"
+    },
+    {
+      "name": "fa fa-sort-down"
+    },
+    {
+      "name": "fa fa-sort-numeric-asc"
+    },
+    {
+      "name": "fa fa-sort-numeric-desc"
+    },
+    {
+      "name": "fa fa-sort-up"
+    },
+    {
+      "name": "fa fa-space-shuttle"
+    },
+    {
+      "name": "fa fa-spinner"
+    },
+    {
+      "name": "fa fa-spoon"
+    },
+    {
+      "name": "fa fa-square"
+    },
+    {
+      "name": "fa fa-square-o"
+    },
+    {
+      "name": "fa fa-star"
+    },
+    {
+      "name": "fa fa-star-half"
+    },
+    {
+      "name": "fa fa-star-half-empty"
+    },
+    {
+      "name": "fa fa-star-half-full"
+    },
+    {
+      "name": "fa fa-star-half-o"
+    },
+    {
+      "name": "fa fa-star-o"
+    },
+    {
+      "name": "fa fa-sticky-note"
+    },
+    {
+      "name": "fa fa-sticky-note-o"
+    },
+    {
+      "name": "fa fa-street-view"
+    },
+    {
+      "name": "fa fa-suitcase"
+    },
+    {
+      "name": "fa fa-sun-o"
+    },
+    {
+      "name": "fa fa-support"
+    },
+    {
+      "name": "fa fa-tablet"
+    },
+    {
+      "name": "fa fa-tachometer"
+    },
+    {
+      "name": "fa fa-tag"
+    },
+    {
+      "name": "fa fa-tags"
+    },
+    {
+      "name": "fa fa-tasks"
+    },
+    {
+      "name": "fa fa-taxi"
+    },
+    {
+      "name": "fa fa-television"
+    },
+    {
+      "name": "fa fa-terminal"
+    },
+    {
+      "name": "fa fa-thermometer"
+    },
+    {
+      "name": "fa fa-thermometer-0"
+    },
+    {
+      "name": "fa fa-thermometer-1"
+    },
+    {
+      "name": "fa fa-thermometer-2"
+    },
+    {
+      "name": "fa fa-thermometer-3"
+    },
+    {
+      "name": "fa fa-thermometer-4"
+    },
+    {
+      "name": "fa fa-thermometer-empty"
+    },
+    {
+      "name": "fa fa-thermometer-full"
+    },
+    {
+      "name": "fa fa-thermometer-half"
+    },
+    {
+      "name": "fa fa-thermometer-quarter"
+    },
+    {
+      "name": "fa fa-thermometer-three-quarters"
+    },
+    {
+      "name": "fa fa-thumb-tack"
+    },
+    {
+      "name": "fa fa-thumbs-down"
+    },
+    {
+      "name": "fa fa-thumbs-o-down"
+    },
+    {
+      "name": "fa fa-thumbs-o-up"
+    },
+    {
+      "name": "fa fa-thumbs-up"
+    },
+    {
+      "name": "fa fa-ticket"
+    },
+    {
+      "name": "fa fa-times"
+    },
+    {
+      "name": "fa fa-times-circle"
+    },
+    {
+      "name": "fa fa-times-circle-o"
+    },
+    {
+      "name": "fa fa-times-rectangle"
+    },
+    {
+      "name": "fa fa-times-rectangle-o"
+    },
+    {
+      "name": "fa fa-tint"
+    },
+    {
+      "name": "fa fa-toggle-down"
+    },
+    {
+      "name": "fa fa-toggle-left"
+    },
+    {
+      "name": "fa fa-toggle-off"
+    },
+    {
+      "name": "fa fa-toggle-on"
+    },
+    {
+      "name": "fa fa-toggle-right"
+    },
+    {
+      "name": "fa fa-toggle-up"
+    },
+    {
+      "name": "fa fa-trademark"
+    },
+    {
+      "name": "fa fa-trash"
+    },
+    {
+      "name": "fa fa-trash-o"
+    },
+    {
+      "name": "fa fa-tree"
+    },
+    {
+      "name": "fa fa-trophy"
+    },
+    {
+      "name": "fa fa-truck"
+    },
+    {
+      "name": "fa fa-tty"
+    },
+    {
+      "name": "fa fa-tv"
+    },
+    {
+      "name": "fa fa-umbrella"
+    },
+    {
+      "name": "fa fa-universal-access"
+    },
+    {
+      "name": "fa fa-university"
+    },
+    {
+      "name": "fa fa-unlock"
+    },
+    {
+      "name": "fa fa-unlock-alt"
+    },
+    {
+      "name": "fa fa-unsorted"
+    },
+    {
+      "name": "fa fa-upload"
+    },
+    {
+      "name": "fa fa-user"
+    },
+    {
+      "name": "fa fa-user-circle"
+    },
+    {
+      "name": "fa fa-user-circle-o"
+    },
+    {
+      "name": "fa fa-user-o"
+    },
+    {
+      "name": "fa fa-user-plus"
+    },
+    {
+      "name": "fa fa-user-secret"
+    },
+    {
+      "name": "fa fa-user-times"
+    },
+    {
+      "name": "fa fa-users"
+    },
+    {
+      "name": "fa fa-vcard"
+    },
+    {
+      "name": "fa fa-vcard-o"
+    },
+    {
+      "name": "fa fa-video-camera"
+    },
+    {
+      "name": "fa fa-volume-control-phone"
+    },
+    {
+      "name": "fa fa-volume-down"
+    },
+    {
+      "name": "fa fa-volume-off"
+    },
+    {
+      "name": "fa fa-volume-up"
+    },
+    {
+      "name": "fa fa-warning"
+    },
+    {
+      "name": "fa fa-wheelchair"
+    },
+    {
+      "name": "fa fa-wheelchair-alt"
+    },
+    {
+      "name": "fa fa-wifi"
+    },
+    {
+      "name": "fa fa-window-close"
+    },
+    {
+      "name": "fa fa-window-close-o"
+    },
+    {
+      "name": "fa fa-window-maximize"
+    },
+    {
+      "name": "fa fa-window-minimize"
+    },
+    {
+      "name": "fa fa-window-restore"
+    },
+    {
+      "name": "fa fa-wrench"
+    },
+    {
+      "name": "fa fa-american-sign-language-interpreting"
+    },
+    {
+      "name": "fa fa-asl-interpreting"
+    },
+    {
+      "name": "fa fa-assistive-listening-systems"
+    },
+    {
+      "name": "fa fa-audio-description"
+    },
+    {
+      "name": "fa fa-blind"
+    },
+    {
+      "name": "fa fa-braille"
+    },
+    {
+      "name": "fa fa-cc"
+    },
+    {
+      "name": "fa fa-deaf"
+    },
+    {
+      "name": "fa fa-deafness"
+    },
+    {
+      "name": "fa fa-hard-of-hearing"
+    },
+    {
+      "name": "fa fa-low-vision"
+    },
+    {
+      "name": "fa fa-question-circle-o"
+    },
+    {
+      "name": "fa fa-sign-language"
+    },
+    {
+      "name": "fa fa-signing"
+    },
+    {
+      "name": "fa fa-tty"
+    },
+    {
+      "name": "fa fa-universal-access"
+    },
+    {
+      "name": "fa fa-volume-control-phone"
+    },
+    {
+      "name": "fa fa-wheelchair"
+    },
+    {
+      "name": "fa fa-wheelchair-alt"
+    },
+    {
+      "name": "fa fa-hand-grab-o"
+    },
+    {
+      "name": "fa fa-hand-lizard-o"
+    },
+    {
+      "name": "fa fa-hand-o-down"
+    },
+    {
+      "name": "fa fa-hand-o-left"
+    },
+    {
+      "name": "fa fa-hand-o-right"
+    },
+    {
+      "name": "fa fa-hand-o-up"
+    },
+    {
+      "name": "fa fa-hand-paper-o"
+    },
+    {
+      "name": "fa fa-hand-peace-o"
+    },
+    {
+      "name": "fa fa-hand-pointer-o"
+    },
+    {
+      "name": "fa fa-hand-rock-o"
+    },
+    {
+      "name": "fa fa-hand-scissors-o"
+    },
+    {
+      "name": "fa fa-hand-spock-o"
+    },
+    {
+      "name": "fa fa-hand-stop-o"
+    },
+    {
+      "name": "fa fa-thumbs-down"
+    },
+    {
+      "name": "fa fa-thumbs-o-down"
+    },
+    {
+      "name": "fa fa-thumbs-o-up"
+    },
+    {
+      "name": "fa fa-thumbs-up"
+    },
+    {
+      "name": "fa fa-ambulance"
+    },
+    {
+      "name": "fa fa-automobile"
+    },
+    {
+      "name": "fa fa-bicycle"
+    },
+    {
+      "name": "fa fa-bus"
+    },
+    {
+      "name": "fa fa-cab"
+    },
+    {
+      "name": "fa fa-car"
+    },
+    {
+      "name": "fa fa-fighter-jet"
+    },
+    {
+      "name": "fa fa-motorcycle"
+    },
+    {
+      "name": "fa fa-plane"
+    },
+    {
+      "name": "fa fa-rocket"
+    },
+    {
+      "name": "fa fa-ship"
+    },
+    {
+      "name": "fa fa-space-shuttle"
+    },
+    {
+      "name": "fa fa-subway"
+    },
+    {
+      "name": "fa fa-taxi"
+    },
+    {
+      "name": "fa fa-train"
+    },
+    {
+      "name": "fa fa-truck"
+    },
+    {
+      "name": "fa fa-genderless"
+    },
+    {
+      "name": "fa fa-intersex"
+    },
+    {
+      "name": "fa fa-mars"
+    },
+    {
+      "name": "fa fa-mars-double"
+    },
+    {
+      "name": "fa fa-mars-stroke"
+    },
+    {
+      "name": "fa fa-mars-stroke-h"
+    },
+    {
+      "name": "fa fa-mars-stroke-v"
+    },
+    {
+      "name": "fa fa-mercury"
+    },
+    {
+      "name": "fa fa-neuter"
+    },
+    {
+      "name": "fa fa-transgender"
+    },
+    {
+      "name": "fa fa-transgender-alt"
+    },
+    {
+      "name": "fa fa-venus"
+    },
+    {
+      "name": "fa fa-venus-double"
+    },
+    {
+      "name": "fa fa-venus-mars"
+    },
+    {
+      "name": "fa fa-file"
+    },
+    {
+      "name": "fa fa-file-archive-o"
+    },
+    {
+      "name": "fa fa-file-audio-o"
+    },
+    {
+      "name": "fa fa-file-code-o"
+    },
+    {
+      "name": "fa fa-file-excel-o"
+    },
+    {
+      "name": "fa fa-file-image-o"
+    },
+    {
+      "name": "fa fa-file-movie-o"
+    },
+    {
+      "name": "fa fa-file-o"
+    },
+    {
+      "name": "fa fa-file-pdf-o"
+    },
+    {
+      "name": "fa fa-file-photo-o"
+    },
+    {
+      "name": "fa fa-file-picture-o"
+    },
+    {
+      "name": "fa fa-file-powerpoint-o"
+    },
+    {
+      "name": "fa fa-file-sound-o"
+    },
+    {
+      "name": "fa fa-file-text"
+    },
+    {
+      "name": "fa fa-file-text-o"
+    },
+    {
+      "name": "fa fa-file-video-o"
+    },
+    {
+      "name": "fa fa-file-word-o"
+    },
+    {
+      "name": "fa fa-file-zip-o"
+    },
+    {
+      "name": "fa fa-circle-o-notch"
+    },
+    {
+      "name": "fa fa-cog"
+    },
+    {
+      "name": "fa fa-gear"
+    },
+    {
+      "name": "fa fa-refresh"
+    },
+    {
+      "name": "fa fa-spinner"
+    },
+    {
+      "name": "fa fa-check-square"
+    },
+    {
+      "name": "fa fa-check-square-o"
+    },
+    {
+      "name": "fa fa-circle"
+    },
+    {
+      "name": "fa fa-circle-o"
+    },
+    {
+      "name": "fa fa-dot-circle-o"
+    },
+    {
+      "name": "fa fa-minus-square"
+    },
+    {
+      "name": "fa fa-minus-square-o"
+    },
+    {
+      "name": "fa fa-plus-square"
+    },
+    {
+      "name": "fa fa-plus-square-o"
+    },
+    {
+      "name": "fa fa-square"
+    },
+    {
+      "name": "fa fa-square-o"
+    },
+    {
+      "name": "fa fa-cc-amex"
+    },
+    {
+      "name": "fa fa-cc-diners-club"
+    },
+    {
+      "name": "fa fa-cc-discover"
+    },
+    {
+      "name": "fa fa-cc-jcb"
+    },
+    {
+      "name": "fa fa-cc-mastercard"
+    },
+    {
+      "name": "fa fa-cc-paypal"
+    },
+    {
+      "name": "fa fa-cc-stripe"
+    },
+    {
+      "name": "fa fa-cc-visa"
+    },
+    {
+      "name": "fa fa-credit-card"
+    },
+    {
+      "name": "fa fa-credit-card-alt"
+    },
+    {
+      "name": "fa fa-google-wallet"
+    },
+    {
+      "name": "fa fa-paypal"
+    },
+    {
+      "name": "fa fa-area-chart"
+    },
+    {
+      "name": "fa fa-bar-chart"
+    },
+    {
+      "name": "fa fa-bar-chart-o"
+    },
+    {
+      "name": "fa fa-line-chart"
+    },
+    {
+      "name": "fa fa-pie-chart"
+    },
+    {
+      "name": "fa fa-bitcoin"
+    },
+    {
+      "name": "fa fa-btc"
+    },
+    {
+      "name": "fa fa-cny"
+    },
+    {
+      "name": "fa fa-dollar"
+    },
+    {
+      "name": "fa fa-eur"
+    },
+    {
+      "name": "fa fa-euro"
+    },
+    {
+      "name": "fa fa-gbp"
+    },
+    {
+      "name": "fa fa-gg"
+    },
+    {
+      "name": "fa fa-gg-circle"
+    },
+    {
+      "name": "fa fa-ils"
+    },
+    {
+      "name": "fa fa-inr"
+    },
+    {
+      "name": "fa fa-jpy"
+    },
+    {
+      "name": "fa fa-krw"
+    },
+    {
+      "name": "fa fa-money"
+    },
+    {
+      "name": "fa fa-rmb"
+    },
+    {
+      "name": "fa fa-rouble"
+    },
+    {
+      "name": "fa fa-rub"
+    },
+    {
+      "name": "fa fa-ruble"
+    },
+    {
+      "name": "fa fa-rupee"
+    },
+    {
+      "name": "fa fa-shekel"
+    },
+    {
+      "name": "fa fa-sheqel"
+    },
+    {
+      "name": "fa fa-try"
+    },
+    {
+      "name": "fa fa-turkish-lira"
+    },
+    {
+      "name": "fa fa-usd"
+    },
+    {
+      "name": "fa fa-won"
+    },
+    {
+      "name": "fa fa-yen"
+    },
+    {
+      "name": "fa fa-align-center"
+    },
+    {
+      "name": "fa fa-align-justify"
+    },
+    {
+      "name": "fa fa-align-left"
+    },
+    {
+      "name": "fa fa-align-right"
+    },
+    {
+      "name": "fa fa-bold"
+    },
+    {
+      "name": "fa fa-chain"
+    },
+    {
+      "name": "fa fa-chain-broken"
+    },
+    {
+      "name": "fa fa-clipboard"
+    },
+    {
+      "name": "fa fa-columns"
+    },
+    {
+      "name": "fa fa-copy"
+    },
+    {
+      "name": "fa fa-cut"
+    },
+    {
+      "name": "fa fa-dedent"
+    },
+    {
+      "name": "fa fa-eraser"
+    },
+    {
+      "name": "fa fa-file"
+    },
+    {
+      "name": "fa fa-file-o"
+    },
+    {
+      "name": "fa fa-file-text"
+    },
+    {
+      "name": "fa fa-file-text-o"
+    },
+    {
+      "name": "fa fa-files-o"
+    },
+    {
+      "name": "fa fa-floppy-o"
+    },
+    {
+      "name": "fa fa-font"
+    },
+    {
+      "name": "fa fa-header"
+    },
+    {
+      "name": "fa fa-indent"
+    },
+    {
+      "name": "fa fa-italic"
+    },
+    {
+      "name": "fa fa-link"
+    },
+    {
+      "name": "fa fa-list"
+    },
+    {
+      "name": "fa fa-list-alt"
+    },
+    {
+      "name": "fa fa-list-ol"
+    },
+    {
+      "name": "fa fa-list-ul"
+    },
+    {
+      "name": "fa fa-outdent"
+    },
+    {
+      "name": "fa fa-paperclip"
+    },
+    {
+      "name": "fa fa-paragraph"
+    },
+    {
+      "name": "fa fa-paste"
+    },
+    {
+      "name": "fa fa-repeat"
+    },
+    {
+      "name": "fa fa-rotate-left"
+    },
+    {
+      "name": "fa fa-rotate-right"
+    },
+    {
+      "name": "fa fa-save"
+    },
+    {
+      "name": "fa fa-scissors"
+    },
+    {
+      "name": "fa fa-strikethrough"
+    },
+    {
+      "name": "fa fa-subscript"
+    },
+    {
+      "name": "fa fa-superscript"
+    },
+    {
+      "name": "fa fa-table"
+    },
+    {
+      "name": "fa fa-text-height"
+    },
+    {
+      "name": "fa fa-text-width"
+    },
+    {
+      "name": "fa fa-th"
+    },
+    {
+      "name": "fa fa-th-large"
+    },
+    {
+      "name": "fa fa-th-list"
+    },
+    {
+      "name": "fa fa-underline"
+    },
+    {
+      "name": "fa fa-undo"
+    },
+    {
+      "name": "fa fa-unlink"
+    },
+    {
+      "name": "fa fa-angle-double-down"
+    },
+    {
+      "name": "fa fa-angle-double-left"
+    },
+    {
+      "name": "fa fa-angle-double-right"
+    },
+    {
+      "name": "fa fa-angle-double-up"
+    },
+    {
+      "name": "fa fa-angle-down"
+    },
+    {
+      "name": "fa fa-angle-left"
+    },
+    {
+      "name": "fa fa-angle-right"
+    },
+    {
+      "name": "fa fa-angle-up"
+    },
+    {
+      "name": "fa fa-arrow-circle-down"
+    },
+    {
+      "name": "fa fa-arrow-circle-left"
+    },
+    {
+      "name": "fa fa-arrow-circle-o-down"
+    },
+    {
+      "name": "fa fa-arrow-circle-o-left"
+    },
+    {
+      "name": "fa fa-arrow-circle-o-right"
+    },
+    {
+      "name": "fa fa-arrow-circle-o-up"
+    },
+    {
+      "name": "fa fa-arrow-circle-right"
+    },
+    {
+      "name": "fa fa-arrow-circle-up"
+    },
+    {
+      "name": "fa fa-arrow-down"
+    },
+    {
+      "name": "fa fa-arrow-left"
+    },
+    {
+      "name": "fa fa-arrow-right"
+    },
+    {
+      "name": "fa fa-arrow-up"
+    },
+    {
+      "name": "fa fa-arrows"
+    },
+    {
+      "name": "fa fa-arrows-alt"
+    },
+    {
+      "name": "fa fa-arrows-h"
+    },
+    {
+      "name": "fa fa-arrows-v"
+    },
+    {
+      "name": "fa fa-caret-down"
+    },
+    {
+      "name": "fa fa-caret-left"
+    },
+    {
+      "name": "fa fa-caret-right"
+    },
+    {
+      "name": "fa fa-caret-square-o-down"
+    },
+    {
+      "name": "fa fa-caret-square-o-left"
+    },
+    {
+      "name": "fa fa-caret-square-o-right"
+    },
+    {
+      "name": "fa fa-caret-square-o-up"
+    },
+    {
+      "name": "fa fa-caret-up"
+    },
+    {
+      "name": "fa fa-chevron-circle-down"
+    },
+    {
+      "name": "fa fa-chevron-circle-left"
+    },
+    {
+      "name": "fa fa-chevron-circle-right"
+    },
+    {
+      "name": "fa fa-chevron-circle-up"
+    },
+    {
+      "name": "fa fa-chevron-down"
+    },
+    {
+      "name": "fa fa-chevron-left"
+    },
+    {
+      "name": "fa fa-chevron-right"
+    },
+    {
+      "name": "fa fa-chevron-up"
+    },
+    {
+      "name": "fa fa-exchange"
+    },
+    {
+      "name": "fa fa-hand-o-down"
+    },
+    {
+      "name": "fa fa-hand-o-left"
+    },
+    {
+      "name": "fa fa-hand-o-right"
+    },
+    {
+      "name": "fa fa-hand-o-up"
+    },
+    {
+      "name": "fa fa-long-arrow-down"
+    },
+    {
+      "name": "fa fa-long-arrow-left"
+    },
+    {
+      "name": "fa fa-long-arrow-right"
+    },
+    {
+      "name": "fa fa-long-arrow-up"
+    },
+    {
+      "name": "fa fa-toggle-down"
+    },
+    {
+      "name": "fa fa-toggle-left"
+    },
+    {
+      "name": "fa fa-toggle-right"
+    },
+    {
+      "name": "fa fa-toggle-up"
+    },
+    {
+      "name": "fa fa-arrows-alt"
+    },
+    {
+      "name": "fa fa-backward"
+    },
+    {
+      "name": "fa fa-compress"
+    },
+    {
+      "name": "fa fa-eject"
+    },
+    {
+      "name": "fa fa-expand"
+    },
+    {
+      "name": "fa fa-fast-backward"
+    },
+    {
+      "name": "fa fa-fast-forward"
+    },
+    {
+      "name": "fa fa-forward"
+    },
+    {
+      "name": "fa fa-pause"
+    },
+    {
+      "name": "fa fa-pause-circle"
+    },
+    {
+      "name": "fa fa-pause-circle-o"
+    },
+    {
+      "name": "fa fa-play"
+    },
+    {
+      "name": "fa fa-play-circle"
+    },
+    {
+      "name": "fa fa-play-circle-o"
+    },
+    {
+      "name": "fa fa-random"
+    },
+    {
+      "name": "fa fa-step-backward"
+    },
+    {
+      "name": "fa fa-step-forward"
+    },
+    {
+      "name": "fa fa-stop"
+    },
+    {
+      "name": "fa fa-stop-circle"
+    },
+    {
+      "name": "fa fa-stop-circle-o"
+    },
+    {
+      "name": "fa fa-youtube-play"
+    }
+  ]
+}

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>添加菜单</title>
+</head>
+<body>
+<form class="layui-form" lay-filter="layui-form">
+    <div class="mainBox">
+        <div class="main-container">
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    <text style="color:red;">*</text>
+                    名称</label>
+                <div class="layui-input-block">
+                    <input type="text" name="name" placeholder="请输入标题" class="layui-input" lay-verify="required"
+                           autocomplete="off">
+                </div>
+            </div>
+
+            <div class="layui-row">
+                <div class="layui-inline layui-col-lg6 layui-col-md6 layui-col-sm6 layui-col-xs6">
+                    <label class="layui-form-label">菜单</label>
+                    <div class="layui-input-block">
+                        <!-- 隐藏域设置开关未选中时需要传递的参数值 -->
+                        <input type="hidden" name="is_menu" value="2"/>
+                        <input type="checkbox" name="is_menu" id="is_menu" lay-skin="switch" lay-text="是|否" value="1"
+                               checked="checked"/>
+                    </div>
+                </div>
+
+                <div class="layui-inline layui-col-lg6 layui-col-md6 layui-col-sm6 layui-col-xs6">
+                    <label class="layui-form-label">显示</label>
+                    <div class="layui-input-block">
+                        <!-- 隐藏域设置开关未选中时需要传递的参数值 -->
+                        <input type="hidden" name="is_show" value="2"/>
+                        <input type="checkbox" name="is_show" id="is_show" lay-skin="switch" lay-text="是|否" value="1"
+                               checked="checked"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">父级</label>
+                <div class="layui-input-block">
+                    <div class="xmSelect"
+                         data-name="pid"
+                         data-sourceType="route"
+                         data-source="/admin.menu/index"
+                         data-params='{"search_param":{"is_menu":{"value":1,"condition":"="}}}'
+                         data-sourceTree="true"
+                         data-radio="true"
+                         data-textField="name"
+                         data-subTextField="rule"
+                         data-valueField="id"
+                    ></div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">菜单链接</label>
+                <div class="layui-input-block">
+                    <input type="text" name="href" placeholder="请输静态Html地址" class="layui-input" autocomplete="off">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">打开方式</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="open_type" value="_iframe" title="iframe打开" checked="checked" />
+                    <input type="radio" name="open_type" value="_blank" title="新窗口打开" />
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">路由规则</label>
+                <div class="layui-input-block">
+                    <input type="text" name="rule" placeholder="请输入路由规则" class="layui-input" autocomplete="off">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">图标</label>
+                <div class="layui-input-block">
+                    <div class="laytpIcon"
+                         data-name="icon"
+                         data-placeholder="请选择图标"
+                    ></div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">排序</label>
+                <div class="layui-input-block">
+                    <input type="text" id="sort" name="sort" value="0" placeholder="请输入排序，从大到小，倒序排列" class="layui-input"
+                           autocomplete="off">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bottom">
+        <div class="button-container">
+            <button type="submit" class="laytp-btn laytp-btn-primary laytp-btn-sm" lay-submit="" lay-filter="add">
+                <i class="layui-icon layui-icon-ok"></i>
+                提交
+            </button>
+            <button type="reset" class="laytp-btn laytp-btn-sm">
+                <i class="layui-icon layui-icon-refresh"></i>
+                重置
+            </button>
+        </div>
+    </div>
+</form>
+<script>
+    if(localStorage.getItem("staticDomain")){
+        document.write("<link rel='stylesheet' href='" + localStorage.getItem("staticDomain") + "/component/layui/css/layui.css?v=" + localStorage.getItem("version") + "'>");
+        document.write("<script src='" + localStorage.getItem("staticDomain") + "/component/layui/layui.js?v="+localStorage.getItem("version")+"'><\/script>");
+        document.write("<script src='" + localStorage.getItem("staticDomain") + "/component/laytp/layuiConfig.js?v="+localStorage.getItem("version")+"'><\/script>");
+    }else{
+        document.write("<link rel='stylesheet' href='/static/component/layui/css/layui.css?v=" + localStorage.getItem("version") + "'>");
+        document.write("<script src='/static/component/layui/layui.js?v="+localStorage.getItem("version")+"'><\/script>");
+        document.write("<script src='/static/component/laytp/layuiConfig.js?v="+localStorage.getItem("version")+"'><\/script>");
+    }
+</script>
+<script>
+    layui.use(['laytp'], function () {
+        layui.form.on('submit(add)', function(data){
+            facade.ajax({
+                route:'/admin.menu/add',
+                data : data.field
+            }).done(function(res){
+                if(res.code === 0){
+                    parent.layui.layer.close(parent.layui.layer.getFrameIndex(window.name));//关闭当前页
+                    parent.funController.tableRender();
+                    parent.parent.renderMenu();//重新渲染菜单
+                }
+            });
+            return false;
+        });
+    });
+</script>
+</body>
+</html>

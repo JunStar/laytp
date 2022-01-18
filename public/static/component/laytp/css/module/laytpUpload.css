@@ -1,0 +1,116 @@
+.laytp-more {
+    margin-top:5px;
+    width: 100%;
+}
+
+.laytp-more li {
+    width: 90px;
+    float: left;
+    margin-right: 5px;
+    display: inline-block;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.laytp-more li .layui-input {
+    display: initial;
+}
+
+.laytp-more li a {
+    position: absolute;
+    top: 0;
+}
+
+.laytp-more li a i {
+    font-size: 24px;
+    background-color: #008800;
+}
+
+.laytp-more-upload-list .item_img img {
+    width: 90px;
+    height: 90px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    padding: 4px;
+}
+
+.laytp-more-upload-list .item_video {
+    width: 200px;
+    height: 232px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    padding: 4px;
+    margin-bottom: 10px
+}
+
+.laytp-more-upload-list .item_audio {
+    width: 300px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    padding: 4px;
+    margin-bottom: 10px
+}
+
+.laytp-more-upload-list .item_file .file {
+    width: 90px;
+    height: 90px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    padding: 4px;
+    font-size: 84px;
+    text-align:center;
+}
+
+.laytp-more-upload-list .item_file img {
+    width: 90px;
+    height: 90px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    padding: 4px;
+}
+
+.laytp-more-upload-list li {
+    position: relative;
+}
+
+.laytp-more-upload-list li .operate {
+    color: #000;
+    display: none;
+}
+
+.laytp-more-upload-list li .toleft {
+    position: absolute;
+    top: 40px;
+    left: 1px;
+    cursor: pointer;
+}
+
+.laytp-more-upload-list li .toright {
+    position: absolute;
+    top: 40px;
+    right: 1px;
+    cursor: pointer;
+}
+
+.laytp-more-upload-list li .upload_img_close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+}
+
+.laytp-more-upload-list li .upload_file_close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+}
+
+.laytp-more-upload-list li:hover .operate {
+    display: block;
+}

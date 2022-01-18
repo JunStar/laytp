@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>添加页面</title>
+</head>
+<body>
+<form class="layui-form" lay-filter="layui-form">
+    <div class="mainBox">
+        <div class="main-container">
+            <div class="main-container">
+				<div class="layui-form-item">
+    				<label class="layui-form-label" title="操作者">操作者</label>
+    				<div class="layui-input-block">
+            			<div class="xmSelect"
+                            data-name="admin_id"
+                            data-sourceType="route"
+                            data-source="/admin.user/index"
+                            data-sourceTree="false"
+                            data-paging="true"
+                            data-radio="true"
+                            data-valueField="id"
+							data-textField="nickname"
+							data-placeholder="请选择操作者"
+                            ></div>
+    				</div>
+				</div>
+
+				<div class="layui-form-item">
+    				<label class="layui-form-label" title="路由规则">路由规则</label>
+    				<div class="layui-input-block">
+            			<input autocomplete="off" type="text" name="rule" id="rule" placeholder="请输入路由规则" class="layui-input" lay-verify="">
+    				</div>
+				</div>
+
+				<div class="layui-form-item">
+    				<label class="layui-form-label" title="操作菜单">操作菜单</label>
+    				<div class="layui-input-block">
+            			<input autocomplete="off" type="text" name="menu" id="menu" placeholder="请输入操作菜单" class="layui-input" lay-verify="">
+    				</div>
+				</div>
+
+				<div class="layui-form-item">
+    				<label class="layui-form-label" title="body参数">body参数</label>
+    				<div class="layui-input-block">
+            			<textarea name="request_body" id="request_body" placeholder="请输入body参数" class="layui-textarea" lay-verify=""></textarea>
+    				</div>
+				</div>
+
+				<div class="layui-form-item">
+    				<label class="layui-form-label" title="header参数">header参数</label>
+    				<div class="layui-input-block">
+            			<textarea name="request_header" id="request_header" placeholder="请输入header参数" class="layui-textarea" lay-verify=""></textarea>
+    				</div>
+				</div>
+
+				<div class="layui-form-item">
+    				<label class="layui-form-label" title="IP">IP</label>
+    				<div class="layui-input-block">
+            			<input autocomplete="off" type="text" name="ip" id="ip" placeholder="请输入IP" class="layui-input" lay-verify="">
+    				</div>
+				</div>
+
+				<div class="layui-form-item">
+    				<label class="layui-form-label" title="创建时间">创建时间</label>
+    				<div class="layui-input-block">
+            			<input type="text" class="layui-input laydate"
+            name="create_time" id="create_time" data-type="datetime"
+            autocomplete="off" placeholder="请选择创建时间" lay-verify="" />
+    				</div>
+				</div>
+            </div>
+        </div>
+    </div>
+    <div class="bottom">
+        <div class="button-container">
+            <button type="submit" class="laytp-btn laytp-btn-primary laytp-btn-sm" lay-submit="" lay-filter="add">
+                <i class="layui-icon layui-icon-ok"></i>
+                提交
+            </button>
+            <button type="reset" class="laytp-btn laytp-btn-sm">
+                <i class="layui-icon layui-icon-refresh"></i>
+                重置
+            </button>
+        </div>
+    </div>
+</form>
+<script>
+    if(localStorage.getItem("staticDomain")){
+        document.write("<link rel='stylesheet' href='" + localStorage.getItem("staticDomain") + "/component/layui/css/layui.css?v=" + localStorage.getItem("version") + "'>");
+        document.write("<script src='" + localStorage.getItem("staticDomain") + "/component/layui/layui.js?v="+localStorage.getItem("version")+"'><\/script>");
+        document.write("<script src='" + localStorage.getItem("staticDomain") + "/component/laytp/layuiConfig.js?v="+localStorage.getItem("version")+"'><\/script>");
+    }else{
+        document.write("<link rel='stylesheet' href='/static/component/layui/css/layui.css?v=" + localStorage.getItem("version") + "'>");
+        document.write("<script src='/static/component/layui/layui.js?v="+localStorage.getItem("version")+"'><\/script>");
+        document.write("<script src='/static/component/laytp/layuiConfig.js?v="+localStorage.getItem("version")+"'><\/script>");
+    }
+</script>
+<script>
+    layui.use(['laytp'],function(){
+        layui.form.on('submit(add)', function(data){
+            data = facade.setEditorField(data);
+            facade.ajax({
+                route:'/admin.action.log/add',
+                data : data.field
+            }).done(function(res){
+                if(res.code === 0){
+                    parent.layui.layer.close(parent.layui.layer.getFrameIndex(window.name));//关闭当前页
+                    parent.layui.table.reload("laytp-table");
+                }
+            });
+            return false;
+        });
+    })
+</script>
+</body>
+</html>

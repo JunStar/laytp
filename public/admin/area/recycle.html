@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>回收站</title>
+</head>
+<body class="laytp-container-recycle">
+<div class="layui-card" id="recycle-search-form" style="display:none;">
+    <div class="layui-card-body">
+        <form class="layui-form" style="margin-bottom:0px;">
+            <div class="layui-form-item layui-inline">
+                <label class="layui-form-label" title="ID">ID</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="search_param[id][value]" id="id" placeholder="请输入ID"
+                           class="layui-input" autocomplete="off">
+                    <input type="hidden" name="search_param[id][condition]" value="=">
+                </div>
+            </div>
+
+            <div class="layui-form-item layui-inline">
+                <label class="layui-form-label" title="父id">父id</label>
+                <div class="layui-input-inline">
+                    <div class="xmSelect"
+                        data-name="search_param[pid][value]"
+                        data-sourceType="route"
+                        data-source="/admin.area/index"
+                        data-sourceTree="false"
+                        data-paging="true"
+                        data-valueField="id"
+						data-textField="short_name"
+						data-placeholder="请选择父id"
+                    ></div>
+                    <input type="hidden" name="search_param[pid][condition]" value="FIND_IN_SET">
+                </div>
+            </div>
+
+		<div class="layui-form-item layui-inline">
+                <label class="layui-form-label" title="名称">名称</label>
+                <div class="layui-input-inline">
+                    <input autocomplete="off" type="text" id="name" name="search_param[name][value]" placeholder="请输入名称" class="layui-input">
+                    <input type="hidden" name="search_param[name][condition]" value="LIKE">
+                </div>
+            </div>
+
+		<div class="layui-form-item layui-inline">
+                <label class="layui-form-label" title="层级">层级</label>
+                <div class="layui-input-inline">
+                    <select id="level" name="search_param[level][value]">
+        <option value="">请选择层级</option>
+        				<option value=""></option>
+						<option value="1">省</option>
+						<option value="2">市</option>
+						<option value="3">区</option>
+                    </select>
+                    <input type="hidden" name="search_param[level][condition]" value="=">
+                </div>
+            </div>
+
+		<div class="layui-form-item layui-inline">
+                <label class="layui-form-label" title="拼音">拼音</label>
+                <div class="layui-input-inline">
+                    <input autocomplete="off" type="text" id="pinyin" name="search_param[pinyin][value]" placeholder="请输入拼音" class="layui-input">
+                    <input type="hidden" name="search_param[pinyin][condition]" value="LIKE">
+                </div>
+            </div>
+
+		<div class="layui-form-item layui-inline">
+                <label class="layui-form-label" title="长途区号">长途区号</label>
+                <div class="layui-input-inline">
+                    <input autocomplete="off" type="text" id="code" name="search_param[code][value]" placeholder="请输入长途区号" class="layui-input">
+                    <input type="hidden" name="search_param[code][condition]" value="LIKE">
+                </div>
+            </div>
+
+		<div class="layui-form-item layui-inline">
+                <label class="layui-form-label" title="邮编">邮编</label>
+                <div class="layui-input-inline">
+                    <input autocomplete="off" type="text" id="zip" name="search_param[zip][value]" placeholder="请输入邮编" class="layui-input">
+                    <input type="hidden" name="search_param[zip][condition]" value="LIKE">
+                </div>
+            </div>
+
+		<div class="layui-form-item layui-inline">
+                <label class="layui-form-label" title="首字母">首字母</label>
+                <div class="layui-input-inline">
+                    <input autocomplete="off" type="text" id="first" name="search_param[first][value]" placeholder="请输入首字母" class="layui-input">
+                    <input type="hidden" name="search_param[first][condition]" value="LIKE">
+                </div>
+            </div>
+
+		<div class="layui-form-item layui-inline">
+                <label class="layui-form-label" title="经度">经度</label>
+                <div class="layui-input-inline">
+                    <input autocomplete="off" type="text" id="lng" name="search_param[lng][value]" placeholder="请输入经度" class="layui-input">
+                    <input type="hidden" name="search_param[lng][condition]" value="LIKE">
+                </div>
+            </div>
+
+		<div class="layui-form-item layui-inline">
+                <label class="layui-form-label" title="纬度">纬度</label>
+                <div class="layui-input-inline">
+                    <input autocomplete="off" type="text" id="lat" name="search_param[lat][value]" placeholder="请输入纬度" class="layui-input">
+                    <input type="hidden" name="search_param[lat][condition]" value="LIKE">
+                </div>
+            </div>
+
+		<div class="layui-form-item layui-inline">
+                <label class="layui-form-label" title="排序">排序</label>
+                <div class="layui-input-inline">
+                    <input autocomplete="off" type="text" id="sort" name="search_param[sort][value]" placeholder="请输入排序" class="layui-input">
+                    <input type="hidden" name="search_param[sort][condition]" value="LIKE">
+                </div>
+            </div>
+
+		<div class="layui-form-item layui-inline">
+                <label class="layui-form-label" title="创建时间">创建时间</label>
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input laydate"
+    id="create_time" name="search_param[create_time][value]"
+    data-type="datetime" data-isRange="true" placeholder="请选择创建时间">
+<input type="hidden" name="search_param[create_time][condition]" value="BETWEEN">
+                </div>
+            </div>
+
+            <div class="layui-form-item layui-inline">
+                <button class="laytp-btn laytp-btn-md laytp-btn-primary" lay-submit lay-filter="laytp-recycle-search-form">
+                    <i class="layui-icon layui-icon-search"></i>
+                    查询
+                </button>
+                <button type="reset" class="laytp-btn laytp-btn-md laytp-recycle-search-form-reset">
+                    <i class="layui-icon layui-icon-refresh"></i>
+                    重置
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<table id="laytp-recycle-table" lay-filter="laytp-recycle-table"></table>
+
+<script type="text/html" id="recycle-default-toolbar">
+    <button class="laytp-btn laytp-btn-primary laytp-btn-md" lay-event="restore">
+        <i class="laytp-icon laytp-icon-back"></i>
+        还原
+    </button>
+    <button class="laytp-btn laytp-btn-danger laytp-btn-md" lay-event="true-del">
+        <i class="layui-icon layui-icon-delete"></i>
+        删除
+    </button>
+    <button class="laytp-btn laytp-btn-warming laytp-btn-md" lay-event="recycle-search">
+        <i class="layui-icon layui-icon-search"></i>
+        搜索
+    </button>
+</script>
+
+<script type="text/html" id="recycle-default-bar">
+    <button class="laytp-btn laytp-btn-primary laytp-btn-xs" lay-event="restore"><i class="laytp-icon laytp-icon-back"></i>还原</button>
+    <button class="laytp-btn laytp-btn-danger laytp-btn-xs" lay-event="true-del"><i class="layui-icon layui-icon-delete"></i>删除</button>
+</script>
+
+<script>
+    if(localStorage.getItem("staticDomain")){
+        document.write("<link rel='stylesheet' href='" + localStorage.getItem("staticDomain") + "/component/layui/css/layui.css?v=" + localStorage.getItem("version") + "'>");
+        document.write("<script src='" + localStorage.getItem("staticDomain") + "/component/layui/layui.js?v="+localStorage.getItem("version")+"'><\/script>");
+        document.write("<script src='" + localStorage.getItem("staticDomain") + "/component/laytp/layuiConfig.js?v="+localStorage.getItem("version")+"'><\/script>");
+        document.write("<script src='" + localStorage.getItem("staticDomain") + "/admin/js/areaRecycle.js?v="+localStorage.getItem("version")+"'><\/script>");
+    }else{
+        document.write("<link rel='stylesheet' href='/static/component/layui/css/layui.css?v=" + localStorage.getItem("version") + "'>");
+        document.write("<script src='/static/component/layui/layui.js?v="+localStorage.getItem("version")+"'><\/script>");
+        document.write("<script src='/static/component/laytp/layuiConfig.js?v="+localStorage.getItem("version")+"'><\/script>");
+        document.write("<script src='/static/admin/js/areaRecycle.js?v="+localStorage.getItem("version")+"'><\/script>");
+    }
+</script>
+</body>
+</html>

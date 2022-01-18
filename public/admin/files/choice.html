@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>列表页面</title>
+</head>
+<body class="laytp-container">
+<div class="layui-card" id="search-form" style="display:none;">
+    <div class="layui-card-body">
+        <form class="layui-form" lay-filter="layui-form">
+            <div class="layui-form-item">
+                <div class="layui-form-item layui-inline">
+                    <label class="layui-form-label" title="ID">ID</label>
+                    <div class="layui-input-inline">
+                        <input autocomplete="off" type="text" id="id" name="search_param[id][value]" id="id" placeholder="请输入ID" class="layui-input">
+                        <input type="hidden" name="search_param[id][condition]" value="=">
+                    </div>
+                </div>
+
+                <div class="layui-form-item layui-inline">
+                    <label class="layui-form-label" title="所属分类">所属分类</label>
+                    <div class="layui-input-inline">
+                        <div class="xmSelect"
+                             data-name="search_param[category_id][value]"
+                             data-sourceType="route"
+                             data-source="/admin.files.category/index"
+                             data-sourceTree="true"
+                             data-paging="false"
+                             data-valueField="id"
+                             data-textField="name"
+                             data-placeholder="请选择所属分类"
+                             data-selected="{{=d.category_id}}"
+                        ></div>
+                        <input type="hidden" name="search_param[category_id][condition]" value="FIND_IN_SET">
+                    </div>
+                </div>
+
+                <div class="layui-form-item layui-inline">
+                    <label class="layui-form-label" title="文件名称">文件名称</label>
+                    <div class="layui-input-inline">
+                        <input autocomplete="off" type="text" id="name" name="search_param[name][value]" placeholder="请输入文件名称" class="layui-input">
+                        <input type="hidden" name="search_param[name][condition]" value="LIKE">
+                    </div>
+                </div>
+
+                <div class="layui-form-item layui-inline">
+                    <label class="layui-form-label" title="文件类型">文件类型</label>
+                    <div class="layui-input-inline">
+                        <select id="file_type" name="search_param[file_type][value]">
+                            <option value="">请选择文件类型</option>
+                            <option value=""></option>
+                            <option value="image" {{# if(d.file_type === 'image'){ }}selected="selected"{{# } }}>图片</option>
+                            <option value="video" {{# if(d.file_type === 'video'){ }}selected="selected"{{# } }}>视频</option>
+                            <option value="music" {{# if(d.file_type === 'audio'){ }}selected="selected"{{# } }}>音频</option>
+                            <option value="file">文件</option>
+                        </select>
+                        <input type="hidden" name="search_param[file_type][condition]" value="=">
+                    </div>
+                </div>
+
+                <div class="layui-form-item layui-inline">
+                    <label class="layui-form-label" title="上传方式">上传方式</label>
+                    <div class="layui-input-inline">
+                        <select id="upload_type" name="search_param[upload_type][value]">
+                            <option value="">请选择上传方式</option>
+                            <option value=""></option>
+                            <option value="local">本地上传</option>
+                            <option value="ali-oss">阿里云OSS</option>
+                            <option value="qiniu-kodo">七牛云KODO</option>
+                        </select>
+                        <input type="hidden" name="search_param[upload_type][condition]" value="=">
+                    </div>
+                </div>
+
+                <div class="layui-form-item layui-inline">
+                    <label class="layui-form-label" title="创建者">创建者</label>
+                    <div class="layui-input-inline">
+                        <div class="xmSelect"
+                             data-name="search_param[create_admin_user_id][value]"
+                             data-sourceType="route"
+                             data-source="/admin.user/index"
+                             data-sourceTree="false"
+                             data-paging="true"
+                             data-valueField="id"
+                             data-textField="nickname"
+                             data-placeholder="请选择创建者"
+                        ></div>
+                        <input type="hidden" name="search_param[create_admin_user_id][condition]" value="FIND_IN_SET">
+                    </div>
+                </div>
+
+                <div class="layui-form-item layui-inline">
+                    <label class="layui-form-label" title="最后更新者">最后更新者</label>
+                    <div class="layui-input-inline">
+                        <div class="xmSelect"
+                             data-name="search_param[update_admin_user_id][value]"
+                             data-sourceType="route"
+                             data-source="/admin.user/index"
+                             data-sourceTree="false"
+                             data-paging="true"
+                             data-valueField="id"
+                             data-textField="nickname"
+                             data-placeholder="请选择最后更新者"
+                        ></div>
+                        <input type="hidden" name="search_param[update_admin_user_id][condition]" value="FIND_IN_SET">
+                    </div>
+                </div>
+
+                <div class="layui-form-item layui-inline">
+                    <label class="layui-form-label" title="创建时间">创建时间</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input laydate"
+                               id="create_time" name="search_param[create_time][value]"
+                               data-type="datetime" data-isRange="true" placeholder="请选择创建时间">
+                        <input type="hidden" name="search_param[create_time][condition]" value="BETWEEN">
+                    </div>
+                </div>
+
+                <div class="layui-form-item layui-inline">
+                    <button class="laytp-btn laytp-btn-md laytp-btn-primary" lay-submit lay-filter="laytp-search-form">
+                        <i class="layui-icon layui-icon-search"></i>
+                        查询
+                    </button>
+                    <button type="reset" class="laytp-btn laytp-btn-md laytp-search-form-reset">
+                        <i class="layui-icon layui-icon-refresh"></i>
+                        重置
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="layui-card">
+    <div class="layui-card-body">
+        <table id="laytp-table" lay-filter="laytp-table"></table>
+    </div>
+</div>
+<script type="text/html" id="default-toolbar">
+    {{# if(facade.hasAuth("/admin.files/edit") || facade.hasAuth("/admin.files/del")){ }}
+    <div class="dropdown-menu">
+        <button class="laytp-btn laytp-btn-primary laytp-btn-md">
+            <i class="layui-icon layui-icon-triangle-d"></i>
+            批量操作
+        </button>
+        <ul class="dropdown-menu-nav layui-anim-upbit dropdown-bottom-left layui-anim">
+            <div class="dropdown-anchor"></div>
+            {{# if(facade.hasAuth("/admin.files/edit")){ }}
+            <li><a lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a></li>
+            {{# } }}
+            {{# if(facade.hasAuth("/admin.files/del")){ }}
+            <li><a lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a></li>
+            {{# } }}
+        </ul>
+    </div>
+    {{# } }}
+    {{# if(facade.hasAuth("/admin.files/add")){ }}
+    <button class="laytp-btn laytp-btn-danger laytp-btn-md" lay-event="add">
+        <i class="layui-icon layui-icon-add-1"></i>
+        新增
+    </button>
+    {{# } }}
+    <button class="laytp-btn laytp-btn-warming laytp-btn-md" lay-event="search">
+        <i class="layui-icon layui-icon-search"></i>
+        搜索
+    </button>
+    {{# if(facade.hasAuth("/admin.files/recycle")){ }}
+    <button class="laytp-btn laytp-btn-success laytp-btn-md" lay-event="recycle">
+        <i class="layui-icon layui-icon-delete"></i>
+        回收站
+    </button>
+    {{# } }}
+    <button class="laytp-btn laytp-btn-primary laytp-btn-md" lay-event="finishChoice">
+        <i class="layui-icon layui-icon-ok-circle"></i>
+        完成选择
+    </button>
+</script>
+
+<script type="text/html" id="default-bar">
+    {{# if(facade.hasAuth("/admin.files/edit")){ }}
+    <button class="laytp-btn laytp-btn-primary laytp-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</button>
+    {{# } }}
+    {{# if(facade.hasAuth("/admin.files/del")){ }}
+    <button class="laytp-btn laytp-btn-danger laytp-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</button>
+    {{# } }}
+</script>
+<script>
+    if (localStorage.getItem("staticDomain")) {
+        document.write("<link rel='stylesheet' href='" + localStorage.getItem("staticDomain") + "/component/layui/css/layui.css?v=" + localStorage.getItem("version") + "'>");
+        document.write("<script src='" + localStorage.getItem("staticDomain") + "/component/layui/layui.js?v=" + localStorage.getItem("version") + "'><\/script>");
+        document.write("<script src='" + localStorage.getItem("staticDomain") + "/component/laytp/layuiConfig.js?v=" + localStorage.getItem("version") + "'><\/script>");
+    } else {
+        document.write("<link rel='stylesheet' href='/static/component/layui/css/layui.css?v=" + localStorage.getItem("version") + "'>");
+        document.write("<script src='/static/component/layui/layui.js?v=" + localStorage.getItem("version") + "'><\/script>");
+        document.write("<script src='/static/component/laytp/layuiConfig.js?v=" + localStorage.getItem("version") + "'><\/script>");
+    }
+</script>
+<script>
+    layui.use(['laytp'], function () {
+        const
+            facade = layui.facade
+        ;
+
+        // 选择右侧数据表格，展示某分类下的附件列表
+        const funController = {};
+        //静态页面地址前缀
+        window.htmlPrefix = facade.compatibleHtmlPath("/admin/files/");
+        //后端接口地址前缀
+        window.apiPrefix  = facade.compatibleApiRoute("/admin.files/");
+
+        //表格渲染
+        funController.tableRender = function (where, page) {
+            layui.table.render({
+                elem: "#laytp-table"
+                , id: "laytp-table"
+                , url: facade.url("/admin.files/index")
+                , toolbar: "#default-toolbar"
+                , defaultToolbar: [{
+                    title: '刷新',
+                    layEvent: 'refresh',
+                    icon: 'layui-icon-refresh',
+                }, 'filter', 'print', 'exports']
+                , where: where
+                , method: "GET"
+                , cellMinWidth: 120
+                , skin: 'line'
+                , loading: false
+                , page: {
+                    curr: page
+                }
+                , parseData: function (res) { //res 即为原始返回的数据
+                    return facade.parseTableData(res, true);
+                }
+                , done: function(res){
+                    layui.laytpTable.done();
+                    // 已经选中的数据，设置选中复选框或者单选框
+                    for(let k in res.data){
+                        for(let id in checkedItems){
+                            if(res.data[k].id === parseInt(id)){
+                                //这句才是真正选中，通过设置关键字LAY_CHECKED为true选中
+                                res.data[k]["LAY_CHECKED"]='true';
+                                //下面三句是通过更改css来实现选中的效果
+                                var index= res.data[k]['LAY_TABLE_INDEX'];
+                                $('tr[data-index=' + index + '] input[type="checkbox"]').prop('checked', true);
+                                $('tr[data-index=' + index + '] input[type="checkbox"]').next().addClass('layui-form-checked');
+
+                                //单选框选中
+                                $(".layui-table-view[lay-id='laytp-table'] .layui-table-body tr[data-index="+index+"] .layui-form-radio").click();
+                            }
+                        }
+                    }
+                }
+                , cols: [[
+                    {type:colsType, fixed:'left', checked:true}
+                    ,{field:'id',title:'ID',align:'center',width:80,fixed:'left'}
+                    ,{field:'category_id',title:'所属分类',align:'center',templet:'<div>{{# if(d.category){ }}{{d.category.name}}{{# }else{ }}-{{# } }}</div>'}
+                    ,{field:'name',title:'文件名称',align:'center',templet:function(d){
+                        return layui.laytpl('{{=d.name}}').render({name:d.name});
+                    }}
+                    ,{field:'file_type',title:'文件类型',align:'center',templet:function(d){
+                        return laytp.tableFormatter.status('file_type',d.file_type,{"value":["image","video","music","file"],"text":["图片","视频","音频","文件"]});
+                    }}
+                    ,{field:'path',title:'文件预览',align:'center',templet:function(d){
+                        if(d.file_type === "image"){
+                            return laytp.tableFormatter.images(d.path);
+                        }else if(d.file_type === "video"){
+                            return laytp.tableFormatter.video(d.path);
+                        }else if(d.file_type === "music"){
+                            return laytp.tableFormatter.audio(d.path);
+                        }else if(d.file_type === "file"){
+                            return laytp.tableFormatter.file(d.path);
+                        }
+                    }}
+                    ,{field:'upload_type',title:'上传方式',align:'center',templet:function(d){
+                        return laytp.tableFormatter.status('upload_type',d.upload_type,{"value":["local","ali-oss","qiniu-kodo"],"text":["本地上传","阿里云OSS","七牛云KODO"]});
+                    }}
+                    ,{field:'create_admin_user_id',title:'创建者',align:'center',templet:'<div>{{# if(d.createAdminUser){ }}{{d.createAdminUser.nickname}}{{# }else{ }}-{{# } }}</div>'}
+                    ,{field:'create_time',title:'创建时间',align:'center'}
+                    ,{field:'operation',title:'操作',align:'center',toolbar:'#default-bar',width:150,fixed:'right'}
+                ]]
+            });
+
+            //监听数据表格顶部左侧按钮点击事件
+            layui.table.on("toolbar(laytp-table)", function (obj) {
+                //默认按钮点击事件，包括添加按钮和回收站按钮
+                var defaultTableToolbar = layui.context.get("defaultTableToolbar");
+                if (defaultTableToolbar.indexOf(obj.event) !== -1) {
+                    laytp.tableToolbar(obj);
+                } else {
+                    //自定义按钮点击事件
+                    switch(obj.event){
+                        //完成选择
+                        case "finishChoice":
+                            var name = facade.getUrlParam("name");
+                            layui.laytpUpload.choiceAfter(name, multi, fileType, checkedItems);
+                            parent.layui.layer.close(parent.layui.layer.getFrameIndex(window.name));//关闭当前页
+                            break;
+                    }
+                }
+            });
+
+            //监听数据表格[操作列]按钮点击事件
+            layui.table.on("tool(laytp-table)", function (obj) {
+                var defaultTableTool = layui.context.get("defaultTableTool");
+                if (defaultTableTool.indexOf(obj.event) !== -1) {
+                    laytp.tableTool(obj);
+                } else {
+                    // //自定义按钮点击事件
+                    // switch(obj.event){
+                    // //自定义按钮点击事件
+                    // case "":
+                    //
+                    //     break;
+                    // }
+                }
+            });
+
+            //监听表头排序事件
+            layui.table.on('sort(laytp-table)', function(obj){
+                layui.table.reload('laytp-table', {
+                    initSort: obj //记录初始排序，如果不设的话，将无法标记表头的排序状态。
+                    , where: {
+                        "order_param" : {
+                            "field" : obj.field,
+                            "type" : obj.type
+                        }
+                    }
+                });
+            });
+
+            // 监听复选框选择事件
+            layui.table.on('checkbox(laytp-table)', function(obj){
+                if(obj.checked){
+                    if(obj.type === 'one'){
+                        checkedItems[obj.data.id] = obj.data;
+                    }else if(obj.type === 'all'){
+                        allData = layui.table.getData("laytp-table");
+                        for(let k in allData){
+                            checkedItems[allData[k].id] = allData[k];
+                        }
+                    }
+                }else{
+                    if(obj.type === 'one'){
+                        delete checkedItems[obj.data.id];
+                    }else if(obj.type === 'all'){
+                        allData = layui.table.getData("laytp-table");
+                        for(let k in allData){
+                            delete checkedItems[allData[k].id];
+                        }
+                    }
+                }
+            });
+
+            // 监听单选框选择事件
+            layui.table.on('radio(laytp-table)', function(obj){ //test 是 table 标签对应的 lay-filter 属性
+                checkedItems = {};
+                checkedItems[obj.data.id] = obj.data;
+            });
+        };
+
+        // 全局定义一个存储已选择项的对象
+        var checkedItems = {};
+        // 全局定义一个变量，用来存储当前页的所有数据
+        var allData;
+
+        window.funController = funController;
+
+        // 根据参数，设置搜索表单的值并执行一次搜索
+        var multi = (facade.getUrlParam('multi') === 'true');
+        var colsType = multi ? 'checkbox' : 'radio';
+
+        var categoryId = facade.getUrlParam('category_id') ? facade.getUrlParam('category_id') : 0;
+        var fileType = facade.getUrlParam('file_type') ? facade.getUrlParam('file_type') : "";
+
+        var checkedIds = facade.getUrlParam('checked_ids') ? decodeURI(facade.getUrlParam('checked_ids')) : "";
+
+        if(checkedIds){
+            var checkedIdsArr = checkedIds.split(", ");
+            for(let k in checkedIdsArr){
+                checkedItems[checkedIdsArr[k]] = checkedIdsArr[k];
+            }
+            funController.tableRender();
+        }else{
+            funController.tableRender();
+        }
+    });
+</script>
+</body>
+</html>

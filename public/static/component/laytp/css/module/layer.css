@@ -1,0 +1,45 @@
+.layui-layer-msg{
+	border-color: transparent!important;
+	box-shadow: 2px 0 6px rgb(0 21 41 / 0.05)!important;
+}
+
+/*CSS*/
+body .laytp.layui-layer{box-shadow:0 0;}
+body .laytp .layui-layer-title{background:#36b368!important; color:#fff; border: none;}
+body .laytp .layui-layer-min cite{background-color:#fff;}
+
+body .laytp .layui-layer-setwin > a
+{
+	background:none !important;
+}
+
+body .laytp .layui-layer-setwin .layui-layer-max:after
+{
+	font-family:layui-icon!important;
+	font-style:normal;
+	font-size:16px;
+	content:"\e622";
+	color: #fff;
+}
+
+body .laytp .layui-layer-setwin .layui-layer-max.layui-layer-maxmin:after
+{
+	font-family:layui-icon!important;
+	font-style:normal;
+	font-size:16px;
+	content:"\e758";
+	color: #fff;
+}
+
+body .laytp .layui-layer-setwin .layui-layer-close:after
+{
+	font-family:layui-icon!important;
+	font-style:normal;
+	font-size:16px;
+	content:"\1006";
+	color: #fff;
+}
+
+/*layui-icon-screen-restore*/
+/*layui-icon-screen-full*/
+/*layui-icon layui-icon-close*/

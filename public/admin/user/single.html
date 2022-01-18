@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>个人资料</title>
+</head>
+<body>
+<script type="text/html" id="formTemplate">
+    <div class="mainBox">
+        <div class="main-container">
+            <div class="main-container">
+                <input type="hidden" name="id" value="{{d.id}}" />
+                <div class="layui-form-item">
+                    <label class="layui-form-label">用户名</label>
+                    <div class="layui-input-block">
+                        <div class="layui-form-mid">{{d.username}}</div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">昵称</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="nickname" value="{{d.nickname}}" lay-verify="require" autocomplete="off" placeholder="请输入昵称" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">旧密码</label>
+                    <div class="layui-input-block">
+                        <input type="password" name="old_password" autocomplete="off" placeholder="请输入旧密码，留空表示不修改密码" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">新密码</label>
+                    <div class="layui-input-block">
+                        <input type="password" name="password" autocomplete="off" placeholder="请输入新密码，留空表示不修改密码" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">重复新密码</label>
+                    <div class="layui-input-block">
+                        <input type="password" name="re_password" autocomplete="off" placeholder="请输入重复新密码，留空表示不修改密码" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">头像</label>
+                    <div class="layui-input-block">
+                        <div class="laytpUpload"
+                             data-name="avatar"
+                             data-accept="image"
+                             data-width="400"
+                             data-uploaded="{{ d.avatar_file.path }}"
+                             data-uploadedId="{{ d.avatar_file.id }}"
+                        ></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bottom">
+        <div class="button-container">
+            <button type="submit" class="laytp-btn laytp-btn-primary laytp-btn-sm" lay-submit="" lay-filter="singleEdit">
+                <i class="layui-icon layui-icon-ok"></i>
+                提交
+            </button>
+            <button type="reset" class="laytp-btn laytp-btn-sm">
+                <i class="layui-icon layui-icon-refresh"></i>
+                重置
+            </button>
+        </div>
+    </div>
+</script>
+<form class="layui-form" lay-filter="layui-form"></form>
+<script>
+    if(localStorage.getItem("staticDomain")){
+        document.write("<link rel='stylesheet' href='" + localStorage.getItem("staticDomain") + "/component/layui/css/layui.css?v=" + localStorage.getItem("version") + "'>");
+        document.write("<script src='" + localStorage.getItem("staticDomain") + "/component/layui/layui.js?v="+localStorage.getItem("version")+"'><\/script>");
+        document.write("<script src='" + localStorage.getItem("staticDomain") + "/component/laytp/layuiConfig.js?v="+localStorage.getItem("version")+"'><\/script>");
+    }else{
+        document.write("<link rel='stylesheet' href='/static/component/layui/css/layui.css?v=" + localStorage.getItem("version") + "'>");
+        document.write("<script src='/static/component/layui/layui.js?v="+localStorage.getItem("version")+"'><\/script>");
+        document.write("<script src='/static/component/laytp/layuiConfig.js?v="+localStorage.getItem("version")+"'><\/script>");
+    }
+</script>
+<script>
+    layui.use(['laytp'],function(){
+        var user = layui.context.get("user");
+        layui.laytpl($("#formTemplate").html()).render(user,function(string){
+            $("form").html(string);
+            layui.laytpForm.render();
+            layui.form.render();
+        });
+
+        layui.form.on('submit(singleEdit)', function(data){
+            facade.ajax({
+                route:'/admin.user/singleEdit',
+                data : data.field,
+                successAlert: false
+            }).done(function(res){
+                if(res.code === 0){
+                    layui.popup.success("操作成功，请重新登录",function(){
+                        facade.ajax({
+                            route: "/admin.user/logout",
+                            successAlert: false
+                        }).done(function(){
+                            facade.redirect("/admin/login.html");
+                        });
+                    });
+                }
+            });
+            return false;
+        });
+    });
+</script>
+</body>
+</html>
