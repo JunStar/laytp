@@ -4,7 +4,7 @@ namespace laytp\library;
 use think\facade\Cache;
 
 /**
- * 随机生成类
+ * Redis锁
  */
 class Redis
 {
