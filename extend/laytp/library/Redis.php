@@ -28,6 +28,22 @@ class Redis
     }
 
     /**
+     * 获取一次Redis锁
+     * @param $name
+     * @param int $ttl
+     * @return bool
+     */
+    public static function getOnceLock($name, $ttl=600)
+    {
+        $redis = Cache::store('redis')->handler();
+        if($redis->setnx($name, 1)){
+            $redis->expire($name, $ttl);
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * 删除一个redis锁
      * @param $name string 锁名称
      * @return bool
