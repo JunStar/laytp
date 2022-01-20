@@ -107,7 +107,9 @@ class Plugins
     // 获取上传zip文件所在目录
     public function getPluginRuntimeDir()
     {
-        return $dir = runtime_path() . 'storage' . DS . 'plugins';
+        $dir = runtime_path() . 'storage' . DS . 'plugins';
+        DirFile::createDir($dir);
+        return $dir;
     }
 
     // 下载zip文件到本地
