@@ -4,4 +4,3 @@
 *.log
 .env
 composer.lock
-/public/api.html
