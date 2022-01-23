@@ -88,6 +88,9 @@ layui.use(["laytp"], function () {
                             text: "真的卸载吗？卸载前请确保已经备份数据库，卸载插件的同时会将插件相关数据库表一并卸载删除",
                             route: window.apiPrefix + "uninstall",
                             data: {plugin: obj.data.alias}
+                        }, function(){
+                            layui.table.reload("laytp-table");
+                            parent.parent.renderMenu();//重新渲染菜单
                         });
                         break;
                     // 安装

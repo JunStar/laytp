@@ -84,17 +84,23 @@ class Plugins
         $pluginDir = $this->getPluginPath($plugin) . DS;
         // 删除数据库文件
         $migrationsFile = DirFile::recurDir($pluginDir . 'database' . DS . 'migrations');
-        foreach($migrationsFile as $file){
-            $baseNameArr = explode('_', $file['baseName']);
-            $baseNameArr = explode('.', $baseNameArr[1]);
-            $migration = Migrations::where('migration_name', '=', ucfirst($baseNameArr[0]))->find();
-            if($migration) $migration->delete();
-            unlink(root_path() . 'database' . DS . 'migrations' . DS . $file['baseName']);
+        if($migrationsFile){
+            foreach($migrationsFile as $file){
+                $baseNameArr = explode('_', $file['baseName']);
+                $baseNameArr = explode('.', $baseNameArr[1]);
+                $migration = Migrations::where('migration_name', '=', ucfirst($baseNameArr[0]))->find();
+                if($migration) $migration->delete();
+                unlink(root_path() . 'database' . DS . 'migrations' . DS . $file['baseName']);
+            }
         }
         // 删除菜单
         $info = $this->getPluginInfo($plugin);
         $menuIds = $info['menu_ids'];
-        $menuIds && Menu::where('id', explode(',', $menuIds))->delete();
+        if($menuIds){
+            Menu::destroy(function($query) use ($menuIds){
+                $query->where('id', 'in', explode(',', $menuIds));
+            });
+        }
         // 删除public目录下的文件
         $this->removePublicFile($plugin);
         // 删除插件目录
