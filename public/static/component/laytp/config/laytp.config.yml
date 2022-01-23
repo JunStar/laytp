@@ -63,7 +63,7 @@ links:
     href: "http://www.laytp.com"
   - icon: "layui-icon layui-icon-read"
     title: "开发文档"
-    href: "http://www.laytp.com/doc/"
+    href: "https://www.laytp.com/doc.html"
   - icon: "layui-icon layui-icon-fonts-code"
     title: "开源地址"
     href: "https://gitee.com/junstar/laytp"
