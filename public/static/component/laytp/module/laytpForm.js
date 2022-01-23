@@ -95,7 +95,7 @@ layui.define([
          *      data-source="plugin/core/auth.menu/getTreeList" //这种，对应的data-sourceType="route"，这里是一个Api接口地址，返回的数据结构是数组或者对象，具体请参考当data-sourceType="data"时，data-source的说明
          *      data-params='{"is_tree":1,"all_data":1}'//请求后台接口地址时，需要传递的参数，json字符串，这个在自动生成时，不会用到
          *      data-sourceTree="true"//非必设，是否展示成树形结构，与data-source连用，当为true时，需要展示data-source的值是树形结构的数据
-         *      data-strict="false"//树形结构是否严格父子级，当data-sourceTree="true"时有效，可选值是true和false，默认值是，当data-radio="true"时是false，当data-radio="false"时是true
+         *      data-strict="false"//树形结构是否严格父子级，无需设置，值都是false
          *      data-treeType="tree"//非必设，树形结构展示方式，默认tree，可选项tree和cascader，cascader为级联模式
          *      data-textField="name"//非必设，默认为name，当数据源的数据结构是一个数组时，显示的文本字段名称，当数据源数据结构是一个对象时，此设置无意义
          *      data-subTextField="value"//非必设，附属的文本字段名称，仅在下拉框列表中展示，如果返回的数据结果中有对象，比如后台是使用with关联得到的数据，支持使用.号取对象的数据
@@ -254,7 +254,7 @@ layui.define([
                             //默认展开节点的数组, 为 true 时, 展开所有节点
                             expandedKeys: true,
                             //是否严格遵守父子模式
-                            strict: strict,
+                            strict: false,
                             //是否开启极简模式
                             simple: true,
                             clickExpand: false,
@@ -265,7 +265,7 @@ layui.define([
                             show: true,
                             indent: 200,
                             //是否严格遵守父子模式
-                            strict: strict,
+                            strict: false,
                         };
                     }
                 }
