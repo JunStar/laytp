@@ -4,7 +4,7 @@
 laytp2.x.x是基于ThinkPHP6和Layui的极速后台开发框架！
 
 #### 官网
-http://www.laytp.com
+https://www.laytp.com
 
 #### 演示
 - 地址:http://demo.laytp.com
