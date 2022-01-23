@@ -107,6 +107,7 @@ layui.use(["laytp"], function () {
                         }).done(function(res){
                             if(res.code === 0){
                                 layui.table.reload("laytp-table");
+                                parent.parent.renderMenu();//重新渲染菜单
                             }else if(res.code === 1){
                                 facade.popupDiv({
                                     title: "会员信息",
