@@ -3,7 +3,7 @@
 <div align="center">
 <img src="https://static.laytp.com/component/front/images/un28.png" width="126" height="66"/>
 </div>
-<p align="center"><strong>价值源自分享</strong></p>
+<p align="center"><strong>价值源自分享 成功在于坚持</strong></p>
 
 <p align="center">
 	<a href="https://www.laytp.com" target="_blank">官方平台</a> 
