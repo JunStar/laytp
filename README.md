@@ -7,7 +7,7 @@ laytp2.x.x是基于ThinkPHP6和Layui的极速后台开发框架！
 https://www.laytp.com
 
 #### 演示
-- 地址:http://demo.laytp.com
+- 地址:https://demo.laytp.com
 - 账号:admin
 - 密码:123456
 
