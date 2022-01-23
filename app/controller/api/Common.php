@@ -4,6 +4,7 @@ namespace app\controller\api;
 
 use app\service\ConfServiceFacade;
 use laytp\library\Random;
+use laytp\library\UploadDomain;
 use plugin\ali_oss\service\Oss;
 use plugin\ali_sms\service\AliSmsServiceFacade;
 use plugin\email\service\EmailServiceFacade;
@@ -26,11 +27,12 @@ class Common extends Api
     /*@formatter:off*/
     /**
      * @ApiTitle    (文件上传)
-     * @ApiSummary  (文件上传，兼容阿里云OSS、七牛云KODO和本地上传，需在后台[系统配置 - 上传配置]选择上传方式)
+     * @ApiSummary  (文件上传，兼容阿里云OSS、七牛云KODO和本地上传，自行在接口中传递参数选择上传方式，阿里云OSS和七牛云KODO需要后端安装相应插件)
      * @ApiMethod   (POST)
      * @ApiRoute    (/api.common/upload)
      * @ApiHeaders  (name="token", type="string", required="true", description="用户登录后得到的Token")
      * @ApiParams   (name="file", type="file", required="true", description="文件")
+     * @ApiParams   (name="upload_type", type="string", required="false", description="上传方式，允许为空，local=本地上传，ali-oss=阿里云OSS上传，qiniu-kodo=七牛云KODO上传，默认为local", sample="avatar")
      * @ApiParams   (name="upload_dir", type="string", required="false", description="上传目录，允许为空", sample="avatar")
      * @ApiReturnParams   (name="code", type="integer", description="错误码.0=没有错误，表示操作成功；1=常规错误码，客户端仅需提示msg；其他错误码与具体业务相关，其他错误码举例：10401。前端需要跳转至登录界面。")
      * @ApiReturnParams   (name="msg", type="string", description="返回描述")
@@ -48,83 +50,119 @@ class Common extends Api
     public function upload()
     {
         try {
-            $uploadType = ConfServiceFacade::get('system.upload.type');
-            $file       = $this->request->file('file'); // 获取上传的文件
+            $uploadType = $this->request->param('upload_type', 'local');
+            if (!in_array($uploadType, ['local', 'ali-oss', 'qiniu-kodo'])) {
+                return $this->error($uploadType . '上传方式未定义');
+            }
+            $file = $this->request->file('laytpUploadFile'); // 获取上传的文件
             if (!$file) {
                 return $this->error('上传失败，请选择需要上传的文件');
             }
-            $fileExt   = strtolower($file->getOriginalExtension());
-            $saveName  = date("Ymd") . "/" . md5(uniqid(mt_rand())) . ".{$fileExt}";
-            $uploadDir = $this->request->param('dir', '');
-            $object    = $uploadDir . $saveName;//上传至阿里云或者七牛云的文件名
-            $upload    = ConfServiceFacade::groupGet('system.upload');
-            if (!$upload) {
-                return $this->error('上传配置未保存，请到后台[控制台 - 常规管理 - 系统配置 - 上传配置]，点击保存配置');
+            $fileExt = strtolower($file->getOriginalExtension());
+            $uploadDomain = new UploadDomain();
+            if (!$uploadDomain->check($file->getOriginalName(), $file->getSize(), $fileExt, $file->getMime())) {
+                return $this->error($uploadDomain->getError());
             }
-            $size = $this->request->param('size', $upload['size']);
-            preg_match('/(\d+)(\w+)/', $size, $matches);
-            $type     = strtolower($matches[2]);
-            $typeDict = ['b' => 0, 'k' => 1, 'kb' => 1, 'm' => 2, 'mb' => 2, 'gb' => 3, 'g' => 3];
-            $size     = (int)$size * pow(1024, isset($typeDict[$type]) ? $typeDict[$type] : 0);
-            if ($file->getSize() > $size) {
-                return $this->error('上传失败，文件大小超过' . $size);
-            }
+            $saveName = date("Ymd") . "/" . md5(uniqid(mt_rand())) . ".{$fileExt}";
+            /**
+             * 不能以斜杆开头
+             *  - 因为OSS存储时，不允许以/开头
+             */
+            $uploadDir = $this->request->param('dir');
+            $object = $uploadDir ? $uploadDir . '/' . $saveName : $saveName;//设置了上传目录的上传文件名
+            $filePath = $object; //保存到lt_files中的path
 
-            $allowMime = $this->request->param('mime', $upload['mime']);
-            $mimeArr   = explode(',', strtolower($allowMime));
-            //禁止上传PHP和HTML文件
-            if (in_array($file->getMime(), ['text/x-php', 'text/html']) || in_array($fileExt, ['php', 'html', 'htm'])) {
-                return $this->error('上传失败，禁止上传php和html文件');
-            }
-            //验证文件后缀
-            if ($allowMime !== '*' && (!in_array($fileExt, $mimeArr))) {
-                return $this->error('上传失败，允许上传的文件后缀为' . implode(',', $mimeArr) . '，实际上传文件[ ' . $file->getOriginalName() . ' ]的后缀为' . $fileExt);
-            }
-            //验证文件的mime
-            if ($allowMime !== '*') {
-                $canUpload = false;
-                foreach ($mimeArr as $mime) {
-                    if (stripos($file->getMime(), $mime) !== false) {
-                        $canUpload = true;
-                        break;
+            //如果上传的是图片，验证图片的宽和高
+            $accept = $this->request->param('accept');
+            if ($accept == "image") {
+                $width = $this->request->param('width');
+                $height = $this->request->param('height');
+                if ($width || $height) {
+                    $imageInfo = getimagesize($file->getFileInfo());
+                    if (($width && $imageInfo[0] > $width) || ($height && $imageInfo[1] > $height)) {
+                        return $this->error('上传失败，图片尺寸要求宽：' . $width . 'px，高：' . $height . 'px，实际上传文件[ ' . $file->getOriginalName() . ' ]的尺寸为宽' . $imageInfo[0] . 'px，高：' . $imageInfo[1] . 'px');
                     }
                 }
-                if (!$canUpload) return $this->error('上传失败，允许上传的文件类型为' . implode(',', $mimeArr) . '，实际上传文件[ ' . $file->getOriginalName() . ' ]的文件类型为' . $file->getMime() . '。您可以到常规管理-系统配置-上传配置中添加允许上传的文件类型来避免这个错误');
             }
 
             $inputValue = "";
             //上传至七牛云
-            if ($uploadType == 'qiniu') {
+            if ($uploadType == 'qiniu-kodo') {
+                if(ConfServiceFacade::get('qiniuKodo.conf.switch') != 1){
+                    return $this->error('未开启七牛云KODO存储，请到七牛云KODO配置中开启');
+                }
+                $kodoConf = [
+                    'accessKey' => ConfServiceFacade::get('qiniuKodo.conf.accessKey'),
+                    'secretKey' => ConfServiceFacade::get('qiniuKodo.conf.secretKey'),
+                    'bucket' => ConfServiceFacade::get('qiniuKodo.conf.bucket'),
+                    'domain' => ConfServiceFacade::get('qiniuKodo.conf.domain'),
+                ];
                 $kodo = Kodo::instance();
-                $inputValue = $kodo->upload($file->getPathname(), $object);
-                if(!$inputValue){
-                    return $this->error('上传失败,' . $kodo->getError());
+                $kodoRes = $kodo->upload($file->getPathname(), $object, $kodoConf);
+                if ($kodoRes) {
+                    $inputValue = $kodoRes;
+                } else {
+                    return $this->error($kodo->getError());
                 }
             }
 
             //上传至阿里云
-            if ($uploadType == 'aliyun') {
+            if ($uploadType == 'ali-oss') {
+                if(ConfServiceFacade::get('system.aliOss.switch') != 1){
+                    return $this->error('未开启阿里云OSS存储，请到阿里云OSS配置中开启');
+                }
+                $ossConf = [
+                    'accessKeyID' => ConfServiceFacade::get('aliOss.conf.accessKeyID'),
+                    'accessKeySecret' => ConfServiceFacade::get('aliOss.conf.accessKeySecret'),
+                    'bucket' => ConfServiceFacade::get('aliOss.conf.bucket'),
+                    'endpoint' => ConfServiceFacade::get('aliOss.conf.endpoint'),
+                    'domain' => ConfServiceFacade::get('aliOss.conf.domain'),
+                ];
                 $oss = Oss::instance();
-                $inputValue = $oss->upload($file->getPathname(), $object);
-                if(!$inputValue){
+                $ossUploadRes = $oss->upload($file->getPathname(), $object, $ossConf);
+                if ($ossUploadRes) {
+                    $inputValue = $ossUploadRes;
+                } else {
                     return $this->error($oss->getError());
                 }
             }
 
             //本地上传
             if ($uploadType == 'local') {
-                $saveName   = Filesystem::putFileAs($uploadDir, $file, $object);
-                $saveName   = str_replace('\\', '/', $saveName);
+                $uploadDir = ltrim('/', $uploadDir);
+                $saveName = Filesystem::putFileAs('/' . $uploadDir, $file, '/' . $object);
+                $filePath = $saveName;
                 $staticDomain = Env::get('domain.static');
-                if($staticDomain){
+                if ($staticDomain) {
                     $inputValue = $staticDomain . '/storage/' . $saveName;
-                }else{
+                } else {
                     $inputValue = request()->domain() . '/static/storage/' . $saveName;
                 }
             }
-            return $this->success('上传成功', $inputValue);
+
+            //将inputValue存入lt_files表中
+            $filesModel = new \app\model\Files();
+            $fileId = $filesModel->insertGetId([
+                'category_id' => (int)$this->request->param('file_category_id', 0),
+                'name' => $file->getOriginalName(),
+                'file_type' => $this->request->param('accept'),
+                'path' => $filePath,
+                'upload_type' => $uploadType,
+                'size' => $file->getSize(),
+                'ext' => $file->getExtension(),
+                'create_admin_user_id' => 0,
+                'update_admin_user_id' => 0,
+                'create_time' => date('Y-m-d H:i:s'),
+                'update_time' => date('Y-m-d H:i:s'),
+            ]);
+
+            return $this->success('上传成功', [
+                'id' => $fileId,
+                'path' => $inputValue,
+                'name' => $file->getOriginalName(),
+            ]);
         } catch (\Exception $e) {
-            return $this->error('上传异常');
+            return $this->exceptionError($e);
         }
     }
 

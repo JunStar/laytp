@@ -671,6 +671,7 @@ layui.define([
                 if (options.mime) options.params.mime = options.mime;
                 if (options.size) options.params.size = options.size;
                 if (options.type) options.params.upload_type = options.type;
+                if (options.fileCategoryId) options.params.file_category_id = options.fileCategoryId;
                 if (options.viaServer === 'via') {
                     layui.laytpUpload.render(options);
                 } else {
