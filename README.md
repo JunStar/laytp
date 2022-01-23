@@ -1,7 +1,7 @@
-# laytp2.0
+# laytp2.x.x
 
 #### 介绍
-laytp2.0是基于ThinkPHP6和Layui的极速后台开发框架！
+laytp2.x.x是基于ThinkPHP6和Layui的极速后台开发框架！
 
 #### 官网
 http://www.laytp.com
