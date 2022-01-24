@@ -9,7 +9,7 @@
     <!-- 主 题 更 换 -->
     <style id="laytpadmin-bg-color"></style>
 </head>
-<body class="laytp-container">
+<body class="laytp-container" style="display:none;">
 <div>
     <div class="layui-row layui-col-space10">
         <div class="layui-col-xs6 layui-col-md3">
@@ -285,6 +285,8 @@
             num: 373.23,
             regulator: 50
         })
+
+        $('body').show();
 
         var echartsRecords = echarts.init(document.getElementById('echarts-records'), 'walden');
 
