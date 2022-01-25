@@ -90,7 +90,7 @@ class Plugins
                 $baseNameArr = explode('.', $baseNameArr[1]);
                 $migration = Migrations::where('migration_name', '=', ucfirst($baseNameArr[0]))->find();
                 if($migration) $migration->delete();
-                unlink(root_path() . 'database' . DS . 'migrations' . DS . $file['baseName']);
+                @unlink(root_path() . 'database' . DS . 'migrations' . DS . $file['baseName']);
             }
         }
         // 删除菜单
@@ -191,7 +191,7 @@ class Plugins
         $file = $this->getPluginRuntimeDir() . DS . $plugin . '.zip';
         $zip = new \ZipArchive;
         if ($zip->open($file) !== TRUE) {
-            unlink($file);
+            @unlink($file);
             throw new \Exception('不能打开zip文件');
         }
         if(strtolower(trim($zip->getNameIndex(0),'/')) == strtolower($plugin)){
@@ -201,11 +201,11 @@ class Plugins
         }
         if (!$zip->extractTo($dir)) {
             $zip->close();
-            unlink($file);
+            @unlink($file);
             throw new \Exception('不能提取zip文件');
         }
         $zip->close();
-        unlink($file);
+        @unlink($file);
         return true;
     }
 
