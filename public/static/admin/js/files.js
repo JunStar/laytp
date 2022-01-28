@@ -50,7 +50,6 @@ layui.use(["laytp"], function () {
 				,{field:'create_admin_user_id',title:'创建者',align:'center',templet:'<div>{{# if(d.createAdminUser){ }}{{d.createAdminUser.nickname}}{{# }else{ }}-{{# } }}</div>'}
 				,{field:'update_admin_user_id',title:'最后更新者',align:'center',templet:'<div>{{# if(d.updateAdminUser){ }}{{d.updateAdminUser.nickname}}{{# }else{ }}-{{# } }}</div>'}
 				,{field:'create_time',title:'创建时间',align:'center'}
-                ,{field:'operation',title:'操作',align:'center',toolbar:'#default-bar',width:150,fixed:'right'}
             ]]
         });
 

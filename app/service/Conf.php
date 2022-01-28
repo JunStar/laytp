@@ -52,6 +52,18 @@ class Conf
             $value = $conf['value'];
             $formType = $conf['form_type'];
             if($formType == 'array') return json_decode($value, JSON_UNESCAPED_UNICODE);
+            if($formType == 'upload'){
+                $fileInfo = UploadDomain::multiJoin($value);
+                $return[$key] = $value;
+                if($fileInfo){
+                    $return[$key.'_path'] = $fileInfo['path'];
+                    $return[$key.'_filename'] = $fileInfo['filename'];
+                }else{
+                    $return[$key.'_path'] = '';
+                    $return[$key.'_filename'] = '';
+                }
+                return $return;
+            }
             return $value ? $value : $defaultValue;
         }else{
             return '';

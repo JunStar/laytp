@@ -47,8 +47,23 @@ layui.use(["laytp"], function () {
                     return d.price > 0 ? "￥" + d.price/100 : "免费";
                 }}
                 , {field: "download_num", title: "下载次数", align: "center"}
+                , {field: "version", title: "当前版本", align: "center", templet:function(d){
+                    return d.version ? d.version : "-";
+                }}
                 , {field: "version", title: "最新版本", align: "center", templet:function(d){
-                    return d.lastVersion ? d.lastVersion.version_num : "-";
+                    if(d.lastVersion){
+                        if(d.version){
+                            if(d.lastVersion.version_num > d.version){
+                                return "<span class=\"layui-badge-dot\"></span> " + d.lastVersion.version_num;
+                            }else{
+                                return d.lastVersion.version_num;
+                            }
+                        }else{
+                            return d.lastVersion.version_num;
+                        }
+                    }else{
+                        return "-";
+                    }
                 }}
                 , {field: "operation", title: "操作", align: "center", fixed: 'right', toolbar: "#default-bar", width: 140}
             ]]

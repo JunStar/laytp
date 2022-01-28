@@ -39,6 +39,13 @@ class Plugins extends Backend
         foreach($data['data'] as $k=>$datum){
             if($installed && in_array($datum['alias'], $installed)){
                 $data['data'][$k]['installed'] = 1;
+                $pluginInfo = PluginsServiceFacade::getPluginInfo($datum['alias']);
+                if(isset($pluginInfo['version'])){
+                    $version = $pluginInfo['version'];
+                }else{
+                    $version = '1.0.0';
+                }
+                $data['data'][$k]['version'] = $version;
             }else{
                 $data['data'][$k]['installed'] = 2;
             }
