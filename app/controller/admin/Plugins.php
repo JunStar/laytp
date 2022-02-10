@@ -37,7 +37,7 @@ class Plugins extends Backend
         $data = json_decode(Http::get($url, $params), true)['data'];
         $installed = Config::get('plugin.installed');
         foreach($data['data'] as $k=>$datum){
-            if(in_array($datum['alias'], $installed)){
+            if($installed && in_array($datum['alias'], $installed)){
                 $data['data'][$k]['installed'] = 1;
                 $pluginInfo = PluginsServiceFacade::getPluginInfo($datum['alias']);
                 if(isset($pluginInfo['version'])){
