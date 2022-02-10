@@ -139,34 +139,36 @@
             form.on('submit(login)', function(data) {
                 var buttonAnim = layui.button.load({elem: '.login'});
                 data.field.session_id = facade.getCookie('PHPSESSID');
-                facade.ajax({route: '/admin.user/login', data: data.field}).done(function(res){
+                facade.ajax({route: '/admin.user/login', data: data.field, successAlert: false}).done(function(res){
                     if (res['code'] === 0) {
-                        var isAdminDomainModel = facade.isAdminDomainModel();
-                        facade.clearCache();
-                        let days = 0;
-                        if (data.field.remember === 'on') {
-                            days = 365;
-                        }
-                        context.put("user", res.data.user);
-                        context.put("authList", res.data.authList);
-                        context.put("pluginConf", res.data.pluginConf);
-                        facade.setCookie(tokenCookieKey, res['data']['user']['token'], days);
-                        context.put("tokenCookieKey",tokenCookieKey);
-                        context.put("tokenKey",tokenKey);
-                        //ajaxHeaders
-                        var ajaxHeaders = {};
-                        ajaxHeaders[context.get("tokenKey")] = facade.getCookie(context.get("tokenCookieKey"));
-                        ajaxHeaders["Cache-Control"] = "no-cache";
-                        context.put("ajaxHeaders", ajaxHeaders);
-                        //数据表格顶部按钮,默认的按钮监听事件,lay-event的值,包括添加、编辑、删除、搜索、刷新、回收站、回收站刷新、回收站搜索、还原、真实删除
-                        context.put("defaultTableToolbar",['add', 'edit', 'del', 'search', 'recycle', 'refresh', 'recycle-refresh', 'recycle-search', 'restore', 'true-del']);
-                        //数据表格每行的操作列按钮
-                        context.put("defaultTableTool",['detail', 'edit', 'del', 'restore', 'true-del']);
-                        if(isAdminDomainModel){
-                            window.location.href = '/index.html';
-                        }else{
-                            window.location.href = '/admin/index.html';
-                        }
+                        layui.popup.success("登录成功",function(){
+                            var isAdminDomainModel = facade.isAdminDomainModel();
+                            facade.clearCache();
+                            let days = 0;
+                            if (data.field.remember === 'on') {
+                                days = 365;
+                            }
+                            context.put("user", res.data.user);
+                            context.put("authList", res.data.authList);
+                            context.put("pluginConf", res.data.pluginConf);
+                            facade.setCookie(tokenCookieKey, res['data']['user']['token'], days);
+                            context.put("tokenCookieKey",tokenCookieKey);
+                            context.put("tokenKey",tokenKey);
+                            //ajaxHeaders
+                            var ajaxHeaders = {};
+                            ajaxHeaders[context.get("tokenKey")] = facade.getCookie(context.get("tokenCookieKey"));
+                            ajaxHeaders["Cache-Control"] = "no-cache";
+                            context.put("ajaxHeaders", ajaxHeaders);
+                            //数据表格顶部按钮,默认的按钮监听事件,lay-event的值,包括添加、编辑、删除、搜索、刷新、回收站、回收站刷新、回收站搜索、还原、真实删除
+                            context.put("defaultTableToolbar",['add', 'edit', 'del', 'search', 'recycle', 'refresh', 'recycle-refresh', 'recycle-search', 'restore', 'true-del']);
+                            //数据表格每行的操作列按钮
+                            context.put("defaultTableTool",['detail', 'edit', 'del', 'restore', 'true-del']);
+                            if(isAdminDomainModel){
+                                window.location.href = '/index.html';
+                            }else{
+                                window.location.href = '/admin/index.html';
+                            }
+                        });
                     } else {
                         $(".codeImage").click();
                     }
