@@ -28,15 +28,17 @@ layui.define([
         custom: ["#FF5722", "#009688", "#FFB800", "#2F4056", "#1E9FFF", "#393D49", "#999999", "#0b1bf8", "#7a0bf8", "#f00bf8", "#5FB878", "#1E9FFF", "#2F4056"],
         status: function (field, value, json, isTreeTable) {
             let customIndex = 0, key;
-            for (key in json['value']) {
-                if (value.toString() === json['value'][key].toString()) {
-                    if(isTreeTable){
-                        return '<span class="layui-icon layui-icon-circle-dot" style="color:' + laytp.tableFormatter.custom[customIndex] + ';font-size:14px;">' + json['text'][key] + '</span>';
-                    }else{
-                        return '<a href="javascript:void(0);" class="laytpClickSearch layerTips layui-icon layui-icon-circle-dot" data-field="' + field + '" data-val="' + value + '" data-text="点击搜索 ' + json['text'][key] + '" data-tipsColor="#393D49" style="color:' + laytp.tableFormatter.custom[customIndex] + ';font-size:14px;">' + json['text'][key] + '</a>';
+            if(value){
+                for (key in json['value']) {
+                    if (value.toString() === json['value'][key].toString()) {
+                        if(isTreeTable){
+                            return '<span class="layui-icon layui-icon-circle-dot" style="color:' + laytp.tableFormatter.custom[customIndex] + ';font-size:14px;">' + json['text'][key] + '</span>';
+                        }else{
+                            return '<a href="javascript:void(0);" class="laytpClickSearch layerTips layui-icon layui-icon-circle-dot" data-field="' + field + '" data-val="' + value + '" data-text="点击搜索 ' + json['text'][key] + '" data-tipsColor="#393D49" style="color:' + laytp.tableFormatter.custom[customIndex] + ';font-size:14px;">' + json['text'][key] + '</a>';
+                        }
                     }
+                    customIndex++;
                 }
-                customIndex++;
             }
             return '';
         },
