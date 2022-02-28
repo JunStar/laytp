@@ -561,7 +561,8 @@ layui.define([
          *  shade  非必设，阴影，默认0.0001
          *  width  非必设，宽度，单位支持px和%，默认，手机模式下100%，PC模式下90%
          *  height 高度，单位支持px和%，默认，手机模式下100%，PC模式下90%
-         *  closeBtn layer提供了两种风格的关闭按钮，可通过配置1和2来展示，如果不显示，则closeBtn: 0
+         *  closeBtn layer提供了两种风格的关闭按钮，可通过配置1和2来展示，如果不显示，则closeBtn: 1
+         *  type   非必设，弹出层类型，1=页面层，2=iframe层，默认2
          * }
          */
         popupDiv: function (options) {
@@ -593,8 +594,11 @@ layui.define([
             if(options.closeBtn == null){
                 options.closeBtn = 1;
             }
+            if(options.type == null){
+                options.type = 2;
+            }
             let layerDivConfig = {
-                type: 2
+                type: options.type
                 , title: options.title
                 , anim: 2
                 , shade: options.shade
@@ -735,6 +739,15 @@ layui.define([
                 if (index > -1) {
                     arr.splice(index, 1);
                 }
+            }
+        },
+
+        // 获取对象属性，如果对象不存在此属性，就返回空字符串
+        getObjAttr: function(object, attr){
+            if(object.hasOwnProperty(attr)){
+                return object[attr];
+            }else{
+                return '';
             }
         }
     };
