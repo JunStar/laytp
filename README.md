@@ -123,7 +123,11 @@ php think migrate:run
 - 密码：123456
 
 ## 框架文档
+layt官网文档
 https://www.laytp.com/doc/laytp.html
+
+PHPDoc文档
+https://apidoc.gitee.com/junstar/laytp
 
 ## 更新日志
 https://www.laytp.com/doc/laytp/7.html
