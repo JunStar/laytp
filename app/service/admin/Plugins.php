@@ -215,6 +215,17 @@ class Plugins
         $pluginDir = $this->getPluginPath($plugin) . DS;
         if(is_dir($pluginDir . 'database' . DS . 'migrations')){
             DirFile::copyDirs($pluginDir . 'database' . DS . 'migrations', root_path() . 'database' . DS . 'migrations');
+            // 删除数据库migrations表，已经安装过的版本
+            $list = scandir($pluginDir . 'database' . DS . 'migrations');
+            $migrationNameArr = [];
+            foreach ($list as $value) {
+                $pathinfo = pathinfo($value);
+                if ($pathinfo['extension'] == 'php') {
+                    $tempArr = explode('_', $pathinfo['filename']);
+                    $migrationNameArr[] = ucfirst($tempArr[1]);
+                }
+            }
+            Migrations::where('migration_name', 'in', $migrationNameArr)->delete();
             sleep(1);
             exec('php ' . app()->getRootPath() . '\think migrate:run');
         }
