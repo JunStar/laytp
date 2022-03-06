@@ -1017,7 +1017,7 @@ layui.define([
                     } else {
                         postData = {field_val: closeValue, id: idVal, is_recycle: 1};
                     }
-                    facade.ajax({route: url, data: postData});
+                    facade.ajax({route: url, data: postData, showLoading: true});
                 } else {
                     facade.error("无权进行此操作");
                 }
@@ -1082,7 +1082,8 @@ layui.define([
                         facade.ajax({
                             route: url,
                             data: {"field": field, "field_val": value, "id": id, is_recycle: 1},
-                            successAlert: true
+                            successAlert: true,
+                            showLoading: true
                         }).done(function (res) {
                             if (res.code === 0) {
                                 funRecycleController.tableRender();
