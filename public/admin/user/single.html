@@ -90,6 +90,7 @@
         });
 
         layui.form.on('submit(singleEdit)', function(data){
+            var btnAnim = layui.button.load({elem:$(this)});
             facade.ajax({
                 route:'/admin.user/singleEdit',
                 data : data.field,
@@ -105,6 +106,9 @@
                         });
                     });
                 }
+                btnAnim.stop();
+            }).fail(function(){
+                btnAnim.stop();
             });
             return false;
         });

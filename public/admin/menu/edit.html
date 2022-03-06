@@ -158,7 +158,7 @@
         });
 
         form.on('submit(laytp-form)', function(data){
-            // console.log($("#sideMenu", window.parent.parent.document).html());
+            var btnAnim = layui.button.load({elem:$(this)});
             facade.ajax({
                 route:'/admin.menu/edit',
                 data:data.field
@@ -168,6 +168,9 @@
                     parent.funController.tableRender();
                     parent.parent.renderMenu();//重新渲染菜单
                 }
+                btnAnim.stop();
+            }).fail(function(){
+                btnAnim.stop();
             });
             return false;
         });

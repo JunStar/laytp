@@ -296,15 +296,16 @@
         });
 
         layui.form.on('submit(add)', function(data){
+            var btnAnim = layui.button.load({elem:$(this)});
             data = facade.setEditorField(data);
             data.field.group = group;
             facade.ajax({
                 route:'/admin.conf/saveGroupConf',
                 data : data.field
             }).done(function(res){
-                if(res.code === 0){
-
-                }
+                btnAnim.stop();
+            }).fail(function(){
+                btnAnim.stop();
             });
             return false;
         });

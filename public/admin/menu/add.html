@@ -125,6 +125,7 @@
 <script>
     layui.use(['laytp'], function () {
         layui.form.on('submit(add)', function(data){
+            var btnAnim = layui.button.load({elem:$(this)});
             facade.ajax({
                 route:'/admin.menu/add',
                 data : data.field
@@ -134,6 +135,9 @@
                     parent.funController.tableRender();
                     parent.parent.renderMenu();//重新渲染菜单
                 }
+                btnAnim.stop();
+            }).fail(function(){
+                btnAnim.stop();
             });
             return false;
         });
