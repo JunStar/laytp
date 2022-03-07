@@ -844,6 +844,9 @@ layui.define([
         // 接下来，等待所有的延迟对象ajax请求执行完成，渲染表单元素
         $.when.apply($, defArr).done(function () {
             layui.form.render();
+            if (typeof callback == "function") {
+                callback();
+            }
         });
     };
 
