@@ -329,6 +329,29 @@ layui.define([
         },
 
         /**
+         * 点击按钮打开新的tab menu
+         * 所有拥有tabMenu类名的节点，点击后都会打开新的tab menu
+         *  data-id 菜单ID，用于菜单自动选中
+         *  data-url 必填,弹窗展示的静态文件url
+         *  data-title tab菜单的名称
+         */
+        openTabMenu: function(){
+            $(document).off("click", ".openTabMenu").on("click", ".openTabMenu", function () {
+                if (parent.config.tab.muiltTab) {
+                    parent.bodyTab.addTabOnly({
+                        id: $(this).data("id"),
+                        title: $(this).data("title"),
+                        url: $(this).data("url"),
+                        icon: "",
+                        close: true
+                    }, 300);
+                } else {
+                    parent.bodyFrame.changePage($(this).data("url"), "", true);
+                }
+            });
+        },
+
+        /**
          * 监听拥有laytpClickSearch样式的节点，点击进行表单搜索
          */
         laytpClickSearch: function () {

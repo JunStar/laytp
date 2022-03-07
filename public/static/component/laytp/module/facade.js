@@ -621,6 +621,29 @@ layui.define([
         },
 
         /**
+         * 点击按钮打开新的tab menu
+         * @param options
+         * {
+         *     id : "菜单ID，用于菜单自动选中，允许不传",
+         *     title : "tab菜单的名称",
+         *     url : "必填,弹窗展示的静态文件url",
+         * }
+         */
+        openTabMenu: function(options){
+            if (parent.config.tab.muiltTab) {
+                parent.bodyTab.addTabOnly({
+                    id: options.id,
+                    title: options.title,
+                    url: options.url,
+                    icon: "",
+                    close: true
+                }, 300);
+            } else {
+                parent.bodyFrame.changePage(options.url, "", true);
+            }
+        },
+
+        /**
          * 封装弹出确认框
          * @param options
          * {

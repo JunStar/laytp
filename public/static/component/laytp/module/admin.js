@@ -74,6 +74,8 @@ layui.define([
 				} else {
 					applyConfig(laytpAdmin.readConfig());
 				}
+				window.config = config;
+				window.bodyTab = bodyTab;
 			};
 
 			this.readConfig = function() {
@@ -259,6 +261,7 @@ layui.define([
 						width: '100%',
 						height: '100%'
 					});
+					window.bodyFrame = bodyFrame;
 
 					sideMenu.click(function(dom, data) {
 						bodyFrame.changePage(data.menuUrl, data.menuPath, true);
