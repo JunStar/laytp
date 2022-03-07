@@ -298,7 +298,12 @@
 
         layui.form.on('submit(add)', function(data){
             var btnAnim = layui.button.load({elem:$(this)});
-            data = facade.setEditorField(data);
+            try{
+                data = facade.setEditorField(data);
+            }catch (e) {
+                facade.error(e);
+                return false;
+            }
             data.field.group = group;
             facade.ajax({
                 route:'/admin.conf/saveGroupConf',

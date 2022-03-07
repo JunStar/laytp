@@ -102,7 +102,12 @@
 
         layui.form.on('submit(add)', function(data){
             var btnAnim = layui.button.load({elem:$(".addBtn")});
-            data = facade.setEditorField(data);
+            try{
+                data = facade.setEditorField(data);
+            }catch (e) {
+                facade.error(e);
+                return false;
+            }
             facade.ajax({
                 url:'https://api.laytp.com/user/clientLogin',
                 data : data.field

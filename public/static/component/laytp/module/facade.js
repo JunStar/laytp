@@ -129,12 +129,20 @@ layui.define([
                 layui.each(obj, function (key, item) {
                     let id = $(item).data('id');
                     let type = $(item).data('type');
-                    data.field[id] = $(item)[0].contentWindow.getEditorContent();//这一句不能省略，否则第一次提交表单时会获取不到值
+                    try{
+                        data.field[id] = $(item)[0].contentWindow.getEditorContent();//这一句不能省略，否则第一次提交表单时会获取不到值
+                    }catch (e) {
+                        throw new Error('ueditor编辑器未初始化完成，请勿提交表单');
+                    }
                     // meditor编辑器有两个内容，
                     // 一个是Markdown语法的内容，一个是html标记的内容，
                     // Markdown语法的内容会存入字段，如果需要存储html的内容，自行在控制器中加入代码存储
                     if(type === "meditor"){
-                        data.field[id+"_html"] = $(item)[0].contentWindow.getHtmlContent();
+                        try{
+                            data.field[id+"_html"] = $(item)[0].contentWindow.getHtmlContent();//这一句不能省略，否则第一次提交表单时会获取不到值
+                        }catch (e) {
+                            throw new Error('meditor编辑器未初始化完成，请勿提交表单');
+                        }
                     }
                 });
             }

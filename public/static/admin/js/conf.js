@@ -165,7 +165,12 @@ layui.use(["laytp"], function () {
 
     //表单提交绑定事件
     layui.form.on('submit(laytp-form)', function (data) {
-        data = facade.setEditorField(data);
+        try{
+                data = facade.setEditorField(data);
+            }catch (e) {
+                facade.error(e);
+                return false;
+            }
         facade.ajax({route: "/admin.conf/set", data: data.field});
         return false;
     });

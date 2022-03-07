@@ -135,7 +135,12 @@
     layui.use(['laytp'],function(){
         layui.form.on('submit(add)', function(data){
             var btnAnim = layui.button.load({elem:$(this)});
-            data = facade.setEditorField(data);
+            try{
+                data = facade.setEditorField(data);
+            }catch (e) {
+                facade.error(e);
+                return false;
+            }
             facade.ajax({
                 route:'/admin.area/add',
                 data : data.field

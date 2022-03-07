@@ -129,7 +129,12 @@
 
         form.on('submit(laytp-form)', function(data){
             var btnAnim = layui.button.load({elem:$(this)});
-            data = facade.setEditorField(data);
+            try{
+                data = facade.setEditorField(data);
+            }catch (e) {
+                facade.error(e);
+                return false;
+            }
             facade.ajax({
                 route:'/admin.files/edit',
                 data:data.field
