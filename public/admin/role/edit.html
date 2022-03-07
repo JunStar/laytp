@@ -127,6 +127,7 @@
         }
 
         form.on('submit(laytp-form)', function(data){
+            var btnAnim = layui.button.load({elem:$(this)});
             facade.ajax({
                 route:'/admin.role/edit',
                 data:data.field
@@ -135,6 +136,9 @@
                     parent.layer.close(parent.layer.getFrameIndex(window.name));//关闭当前页
                     parent.layui.table.reload("laytp-table");
                 }
+                btnAnim.stop();
+            }).fail(function(){
+                btnAnim.stop();
             });
             return false;
         });

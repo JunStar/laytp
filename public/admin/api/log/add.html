@@ -89,6 +89,7 @@
 <script>
     layui.use(['laytp'],function(){
         layui.form.on('submit(add)', function(data){
+            var btnAnim = layui.button.load({elem:$(this)});
             data = facade.setEditorField(data);
             facade.ajax({
                 route:'/admin.api.log/add',
@@ -98,6 +99,9 @@
                     parent.layui.layer.close(parent.layui.layer.getFrameIndex(window.name));//关闭当前页
                     parent.layui.table.reload("laytp-table");
                 }
+                btnAnim.stop();
+            }).fail(function(){
+                btnAnim.stop();
             });
             return false;
         });
