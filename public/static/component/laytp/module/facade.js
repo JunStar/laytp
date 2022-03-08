@@ -664,7 +664,7 @@ layui.define([
                 options.params = {};
             }
             let layerConfirm = layui.layer.confirm(options.text, {title: "确认继续", skin: "laytp"}, function () {
-                facade.ajax({route: options.route, url: options.url, data: options.data}).done(function (res) {
+                facade.ajax({route: options.route, url: options.url, data: options.data, showLoading: true}).done(function (res) {
                     if (res.code === 0) {
                         if (typeof callback === "function") {
                             callback(res);
