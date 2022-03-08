@@ -111,6 +111,10 @@ class Backend extends BaseController
                         case '<=':
                             $where[] = [$field, '<=', $valueCondition['value']];
                             break;
+                        case '<>':
+                        case '!=':
+                            $where[] = [$field, '<>', $valueCondition['value']];
+                            break;
                     }
                 }
             }
