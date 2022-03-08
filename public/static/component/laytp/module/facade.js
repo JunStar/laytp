@@ -122,6 +122,15 @@ layui.define([
             }
         },
 
+        //首字母大写
+        ucFirst: function(str){
+            let ret = str.toLowerCase();
+            ret = ret.replace(/\b(\w)(\w*)/g, function($0, $1, $2) {
+                return $1.toUpperCase() + $2;
+            });
+            return ret;
+        },
+
         //获取表单中编辑器的内容设置到表单元素中
         setEditorField: function(data){
             let obj = $(".editor");
