@@ -162,7 +162,7 @@ layui.define(['jquery', 'element'], function(exports) {
 			id: opt.id
 		});
 
-		setTimeout("document.getElementById("+opt.id+").src='"+opt.url+"';",0);
+		setTimeout("document.getElementById('"+opt.id+"').src='"+opt.url+"';",0);
 
 		tabData.push(opt);
 		sessionStorage.setItem(this.option.elem + "-laytp-tab-data", JSON.stringify(tabData));
@@ -225,7 +225,7 @@ layui.define(['jquery', 'element'], function(exports) {
 				id: opt.id
 			});
 
-			setTimeout("document.getElementById("+opt.id+").src='"+opt.url+"';",0);
+			setTimeout("document.getElementById('"+opt.id+"').src='"+opt.url+"';",0);
 
 			tabData.push(opt);
 			sessionStorage.setItem(elem + "-laytp-tab-data", JSON.stringify(tabData));
@@ -262,7 +262,7 @@ layui.define(['jquery', 'element'], function(exports) {
 					id: opt.id
 				});
 
-				setTimeout("document.getElementById("+opt.id+").src='"+opt.url+"';",0);
+				setTimeout("document.getElementById('"+opt.id+"').src='"+opt.url+"';",0);
 
 				tabData.push(opt);
 				sessionStorage.setItem(elem + "-laytp-tab-data", JSON.stringify(tabData));
@@ -307,7 +307,7 @@ layui.define(['jquery', 'element'], function(exports) {
 				id: opt.id
 			});
 
-			setTimeout("document.getElementById("+opt.id+").src='"+opt.url+"';",0);
+			setTimeout("document.getElementById('"+opt.id+"').src='"+opt.url+"';",0);
 
 			tabData.push(opt);
 			sessionStorage.setItem(this.option.elem + "-laytp-tab-data", JSON.stringify(tabData));
@@ -354,7 +354,7 @@ layui.define(['jquery', 'element'], function(exports) {
 				});
 
 				// 兼容FireFox，避免NS_BINDING_ABORTED错误
-				setTimeout("document.getElementById(" + opt.id + ").src='"+opt.url+"';", 10);
+				setTimeout("document.getElementById('"+opt.id+"').src='"+opt.url+"';", 10);
 
 				tabData.push(opt);
 				sessionStorage.setItem(this.option.elem + "-laytp-tab-data", JSON.stringify(tabData));
