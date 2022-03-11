@@ -382,6 +382,8 @@ layui.define([
                 let childrenLength = clickObj.parent().parent().parent().children().length;
                 if(childrenLength>2){
                     clickObj.parent().parent().remove();
+                }else{
+                    facade.error('请留下这唯一的一行数据');
                 }
             });
         },
