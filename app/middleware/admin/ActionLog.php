@@ -58,8 +58,8 @@ class ActionLog extends BaseMiddleware
             'admin_id'       => UserServiceFacade::getUser()->id,
             'rule'           => $request->url(),
             'menu'           => $menu,
-            'request_body'   => json_encode($requestBody),
-            'request_header' => json_encode(request()->header()),
+            'request_body'   => json_encode($requestBody, JSON_UNESCAPED_UNICODE),
+            'request_header' => json_encode(request()->header(), JSON_UNESCAPED_UNICODE),
             'ip'             => request()->ip(),
             'create_time'    => date('Y-m-d H:i:s'),
         ]);
