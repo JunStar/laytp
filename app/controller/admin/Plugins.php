@@ -85,14 +85,14 @@ class Plugins extends Backend
             return $this->success('安装成功');
         }else{
             $code = PluginsServiceFacade::getError();
-            $msg = '安装遇到错误';
             if($code === 1){
                 $msg = '请先登录';
-            }
-            if($code === 2){
+            }else if($code === 2){
                 $msg = '请先购买插件';
+            }else{
+                $msg = '安装遇到错误。' . $code;
             }
-            return $this->error($msg, $code);
+            return $this->error($msg);
         }
     }
 }
