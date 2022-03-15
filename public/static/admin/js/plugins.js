@@ -136,6 +136,8 @@ layui.use(["laytp"], function () {
                                     title: "购买插件",
                                     path: "/admin/plugins/buy.html?name="+obj.data.name+"&alias="+obj.data.alias+"&price="+obj.data.price
                                 });
+                            }else if(res.code === 3){
+                                facade.error(res["msg"]);
                             }
                             btnAnim.stop();
                         }).fail(function(){

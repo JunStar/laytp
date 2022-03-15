@@ -91,6 +91,7 @@ class Plugins extends Backend
                 $msg = '请先购买插件';
             }else{
                 $msg = '安装遇到错误。' . $code;
+                $code = 3;
             }
             return $this->error($msg, $code);
         }
