@@ -92,7 +92,7 @@ class Plugins extends Backend
             }else{
                 $msg = '安装遇到错误。' . $code;
             }
-            return $this->error($msg);
+            return $this->error($msg, $code);
         }
     }
 }
