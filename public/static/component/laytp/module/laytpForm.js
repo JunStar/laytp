@@ -96,7 +96,7 @@ layui.define([
          *      data-params='{"is_tree":1,"all_data":1}'//请求后台接口地址时，需要传递的参数，json字符串，这个在自动生成时，不会用到
          *      data-sourceTree="true"//非必设，是否展示成树形结构，与data-source连用，当为true时，需要展示data-source的值是树形结构的数据
          *      data-strict="false"//树形结构是否严格父子级，无需设置，值都是false
-         *      data-treeType="tree"//非必设，树形结构展示方式，默认tree，可选项tree和cascader，cascader为级联模式
+         *      data-treeType="tree"//非必设，树形结构展示方式，默认tree，可选项tree、tree-group、cascader，tree-group为树形分组模式，cascader为级联模式
          *      data-textField="name"//非必设，默认为name，当数据源的数据结构是一个数组时，显示的文本字段名称，当数据源数据结构是一个对象时，此设置无意义
          *      data-subTextField="value"//非必设，附属的文本字段名称，仅在下拉框列表中展示，如果返回的数据结果中有对象，比如后台是使用with关联得到的数据，支持使用.号取对象的数据
          *      data-valueField="value"//非必设，默认为value，当数据源的数据结构是一个数组时，提交表单的值，当数据源数据结构是一个对象时，此设置无意义
@@ -146,7 +146,7 @@ layui.define([
                 let textField = $(item).data("textfield");
                 let subTextField = $(item).data("subtextfield");
                 let radio = $(item).data("radio") === true;
-                let strict = (typeof $(item).data("strict") !== "undefined") ? $(item).data("strict") : !radio;
+                let strict = !radio;
                 //这里是第一次渲染
                 let options = {
                     el: item
@@ -177,16 +177,18 @@ layui.define([
                     , layVerType: $(item).data("layvertype") ? $(item).data("layvertype") : ""
                     , clickClose: $(item).data("radio") === true
                     , tips: $(item).data("placeholder") ? $(item).data("placeholder") : "请选择"
-                    , toolbar: {
-                        show: !($(item).data("radio") === true),
-                        list: ['ALL', 'REVERSE', 'CLEAR']
-                    }
+                    , toolbar: {show: !($(item).data("radio") === true)}
                     , theme: {
                         color: localStorage.getItem("theme-color-context")
                     }
                 };
                 let max = $(item).data("max");
                 if (max) options.max = max;
+                let selected = $(item).data("selected");
+                if (selected && selected !== "undefined") {
+                    selected = selected.toString();
+                    options.initValue = selected.split(',');
+                }
                 options.direction = $(item).data("direction") ? $(item).data("direction") : "auto";
                 options.textField = $(item).data("textfield") ? $(item).data("textfield") : "name";
                 options.subTextField = $(item).data("subtextfield") ? $(item).data("subtextfield") : "";
@@ -252,26 +254,7 @@ layui.define([
                             //默认展开节点的数组, 为 true 时, 展开所有节点
                             expandedKeys: true,
                             //是否严格遵守父子模式
-                            strict: strict,
-                            //是否开启极简模式
-                            simple: true,
-                            clickExpand: false,
-                            clickCheck: true,
-                        };
-                    }else if(options.treeType === 'tree-group'){
-                        options.tree = {
-                            //是否显示树状结构
-                            show: false,
-                            //是否展示三角图标
-                            showFolderIcon: true,
-                            //是否显示虚线
-                            showLine: true,
-                            //间距
-                            indent: 20,
-                            //默认展开节点的数组, 为 true 时, 展开所有节点
-                            expandedKeys: true,
-                            //是否严格遵守父子模式
-                            strict: strict,
+                            strict: false,
                             //是否开启极简模式
                             simple: true,
                             clickExpand: false,
@@ -282,7 +265,7 @@ layui.define([
                             show: true,
                             indent: 200,
                             //是否严格遵守父子模式
-                            strict: strict,
+                            strict: false,
                         };
                     }
                 }
@@ -316,11 +299,6 @@ layui.define([
                         }
                         options.data = res.data;
                         window.xmSelectObj[options.name] = xmSelect.render(options);
-                        let selected = $(item).data("selected");
-                        if (selected && selected !== "undefined") {
-                            selected = selected.toString();
-                            window.xmSelectObj[options.name].setValue(selected.split(','));
-                        }
                     });
 
                     // let params = $(item).data("params");
@@ -391,11 +369,6 @@ layui.define([
                 } else if (sourceType === "data") {
                     options.data = eval(source);
                     window.xmSelectObj[options.name] = xmSelect.render(options);
-                    let selected = $(item).data("selected");
-                    if (selected && selected !== "undefined") {
-                        selected = selected.toString();
-                        window.xmSelectObj[options.name].setValue(selected.split(','));
-                    }
                 }
             });
         },
