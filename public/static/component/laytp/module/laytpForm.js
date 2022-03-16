@@ -146,7 +146,7 @@ layui.define([
                 let textField = $(item).data("textfield");
                 let subTextField = $(item).data("subtextfield");
                 let radio = $(item).data("radio") === true;
-                let strict = !radio;
+                let strict = (typeof $(item).data("strict") !== "undefined") ? $(item).data("strict") : !radio;
                 //这里是第一次渲染
                 let options = {
                     el: item
@@ -249,7 +249,26 @@ layui.define([
                             //默认展开节点的数组, 为 true 时, 展开所有节点
                             expandedKeys: true,
                             //是否严格遵守父子模式
-                            strict: false,
+                            strict: strict,
+                            //是否开启极简模式
+                            simple: true,
+                            clickExpand: false,
+                            clickCheck: true,
+                        };
+                    }else if(options.treeType === 'tree-group'){
+                        options.tree = {
+                            //是否显示树状结构
+                            show: false,
+                            //是否展示三角图标
+                            showFolderIcon: true,
+                            //是否显示虚线
+                            showLine: true,
+                            //间距
+                            indent: 20,
+                            //默认展开节点的数组, 为 true 时, 展开所有节点
+                            expandedKeys: true,
+                            //是否严格遵守父子模式
+                            strict: strict,
                             //是否开启极简模式
                             simple: true,
                             clickExpand: false,
@@ -260,7 +279,7 @@ layui.define([
                             show: true,
                             indent: 200,
                             //是否严格遵守父子模式
-                            strict: false,
+                            strict: strict,
                         };
                     }
                 }
