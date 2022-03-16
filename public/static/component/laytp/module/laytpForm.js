@@ -184,11 +184,6 @@ layui.define([
                 };
                 let max = $(item).data("max");
                 if (max) options.max = max;
-                let selected = $(item).data("selected");
-                if (selected && selected !== "undefined") {
-                    selected = selected.toString();
-                    options.initValue = selected.split(',');
-                }
                 options.direction = $(item).data("direction") ? $(item).data("direction") : "auto";
                 options.textField = $(item).data("textfield") ? $(item).data("textfield") : "name";
                 options.subTextField = $(item).data("subtextfield") ? $(item).data("subtextfield") : "";
@@ -299,6 +294,11 @@ layui.define([
                         }
                         options.data = res.data;
                         window.xmSelectObj[options.name] = xmSelect.render(options);
+                        let selected = $(item).data("selected");
+                        if (selected && selected !== "undefined") {
+                            selected = selected.toString();
+                            window.xmSelectObj[options.name].setValue(selected.split(','));
+                        }
                     });
 
                     // let params = $(item).data("params");
@@ -369,6 +369,11 @@ layui.define([
                 } else if (sourceType === "data") {
                     options.data = eval(source);
                     window.xmSelectObj[options.name] = xmSelect.render(options);
+                    let selected = $(item).data("selected");
+                    if (selected && selected !== "undefined") {
+                        selected = selected.toString();
+                        window.xmSelectObj[options.name].setValue(selected.split(','));
+                    }
                 }
             });
         },
