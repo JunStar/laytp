@@ -177,7 +177,10 @@ layui.define([
                     , layVerType: $(item).data("layvertype") ? $(item).data("layvertype") : ""
                     , clickClose: $(item).data("radio") === true
                     , tips: $(item).data("placeholder") ? $(item).data("placeholder") : "请选择"
-                    , toolbar: {show: !($(item).data("radio") === true)}
+                    , toolbar: {
+                        show: !($(item).data("radio") === true),
+                        list: ['ALL', 'REVERSE', 'CLEAR']
+                    }
                     , theme: {
                         color: localStorage.getItem("theme-color-context")
                     }
