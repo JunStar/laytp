@@ -1151,7 +1151,13 @@ layui.define([
          */
         laytpSearchFormReset: function () {
             $(document).off("click", ".laytp-search-form-reset").on("click", ".laytp-search-form-reset", function () {
-                $(".layui-form").trigger("reset");
+                var thisObj = $(this);
+                var formObj = thisObj.closest("form");
+                // 设置这个表单下所有xmSelect的值为空
+                $(".xmSelect", formObj).each(function(index, item){
+                    xmSelectObj[$(item).data('name')].setValue([]);
+                });
+                formObj.trigger("reset");
                 funController.tableRender();
             });
         },
