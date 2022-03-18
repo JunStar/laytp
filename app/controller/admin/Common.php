@@ -31,7 +31,8 @@ class Common extends Backend
     {
         try {
             $defaultType = ConfServiceFacade::get('system.upload.defaultType', 'local');
-            $uploadType = $this->request->param('upload_type', $defaultType);
+            $uploadType = $this->request->param('upload_type', 'default');
+            if($uploadType == 'default') $uploadType = $defaultType;
             if (!in_array($uploadType, ['local', 'ali-oss', 'qiniu-kodo'])) {
                 return $this->error($uploadType . '上传方式未定义');
             }

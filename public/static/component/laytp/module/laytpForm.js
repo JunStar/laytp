@@ -625,7 +625,8 @@ layui.define([
          * 上传组件
          * <div class="laytpUpload"//class="laytpUpload"是上传组件渲染的标识
          *      data-name="name"//必设，提交表单时的name
-         *      data-type="local"//非必设，上传方式，目前允许使用的上传方式有
+         *      data-type="default"//非必设，上传方式，默认的值为default，目前允许使用的上传方式有
+         *          - default=默认上传方式，系统会获取由系统配置，上传配置，默认上传方式配置项进行配置的上传方式;
          *          - local=本地上传;
          *          - ali-oss=阿里云OSS上传;
          *          - qiniu-kodo=七牛云KODO上传
@@ -643,7 +644,7 @@ layui.define([
          *      data-multi="true"//非必设，多文件模式，true=开启多文件模式，false=关闭多文件模式，默认false
          *      data-max="2"//非必设，多文件模式下有效的参数，设置允许最多上传的文件个数，默认不限制个数
          *      data-dir=""//非必设，上传的目录，允许不传，不传就传到storage目录下，如果不为空，则在storage目录下创建对应的目录，允许使用/指明多级目录
-         // *      data-url=""//非必设，文件上传请求的后台地址，默认为facade.url("/admin.common/upload")，自定义的url返回数据格式要和/admin.common/upload保持一致
+         *      data-route=""//非必设，文件上传请求的后台地址，默认为facade.url("/admin.common/upload")，自定义的url返回数据格式要和/admin.common/upload保持一致
          *      data-uploaded=""//非必设，已经上传的文件路径，多个以英文半角的逗号+空格进行分割，用于编辑页面展示已经上传的文件
          *      data-uploadedId=""//非必设，已经上传的文件列表的ID值，多个以英文半角的逗号进行分割，用于编辑页面展示已经上传的文件Id
          *      data-uploadedFilename=""//非必设，已经上传的文件列表的数据库存储的文件名，多个以英文半角逗号+空格进行分割，用于编辑页面展示已经上传的文件名，目前仅上传文件时需要展示

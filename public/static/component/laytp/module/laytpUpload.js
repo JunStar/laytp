@@ -307,7 +307,7 @@ layui.define(["jquery", "element"], function (exports) {
             layui.upload.render({
                 headers: ajaxHeaders,
                 elem: $("#laytpUploadBtn_" + options.name, options.parentElem),
-                url: facade.url("/admin.common/upload"),
+                url: options.route ? facade.url(options.route) : facade.url("/admin.common/upload"),
                 accept: options.accept,
                 multiple: options.multi,
                 data: options.params,
@@ -434,7 +434,7 @@ layui.define(["jquery", "element"], function (exports) {
             $(options.el).after(laytpUpload.uploadHtml(options));
             var uploadInst = layui.upload.render({
                 elem: $("#laytpUploadBtn_" + options.name, options.parentElem),
-                url: options.url,
+                url: options.route ? facade.url(options.route) : facade.url("/admin.common/upload"),
                 accept: options.accept,
                 multiple: options.multi,
                 data: options.params,
@@ -629,7 +629,7 @@ layui.define(["jquery", "element"], function (exports) {
             $(options.el).after(laytpUpload.uploadHtml(options));
             var uploadInst = layui.upload.render({
                 elem: $("#laytpUploadBtn_" + options.name, options.parentElem),
-                url: options.url,
+                url: options.route ? facade.url(options.route) : facade.url("/admin.common/upload"),
                 accept: options.accept,
                 multiple: options.multi,
                 data: options.params,
