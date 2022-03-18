@@ -264,6 +264,9 @@
 						// admin.message(function(id, title, context, form) {});
 					}
 				});
+			}).fail(function(){
+				$('.layui-layout-admin').html('');
+				$('body').show();
 			});
 		</script>
 		<script type="text/html" id="default-toolbar">
