@@ -27,11 +27,17 @@ class Conf extends Migrator
         $data = [
             '1'  => [
                 'group'     => 'system.upload',
-                'key'       => 'size',
+                'key'       => 'defaultType',
                 'value'     => '200MB',
                 'form_type' => 'input',
             ],
             '2'  => [
+                'group'     => 'system.upload',
+                'key'       => 'size',
+                'value'     => '200MB',
+                'form_type' => 'input',
+            ],
+            '3'  => [
                 'group'     => 'system.upload',
                 'key'       => 'mime',
                 'value'     => 'png,jpg,gif,jpeg,doc,xls,pdf',

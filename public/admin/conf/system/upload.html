@@ -36,7 +36,30 @@
         <tbody>
         <tr>
             <td style="text-align:right;">
-                <span style="color: red;">*</span>最大上传文件大小
+                <span style="color: red;">*</span> 默认上传方式
+            </td>
+            <td>
+                <div class="xmSelect"
+                     data-name="defaultType"
+                     data-sourceType="data"
+                     data-source="[{name:'本地上传',value:'local'},{name:'阿里云OSS',value:'ali-oss'},{name:'七牛云KODO',value:'qiniu-kodo'}]"
+                     data-radio="true"
+                     data-layVerify="required"
+                     data-selected="{{# if(!d.defaultType){ d.defaultType = 'local'; } }}{{d.defaultType}}"
+                ></div>
+                <input type="hidden" name="form_type[defaultType]" value="xmSelect" />
+            </td>
+            <td>
+                <div class="conf-des layui-form-mid layui-word-aux">
+                    <label title="本系统所有的上传组件不定义上传方式时使用的默认上传方式">本系统所有的上传组件，不定义上传方式时，使用的默认上传方式</label>
+                    <br/>
+                    <code title="{{=d.group}}.defaultType')">{{=d.group}}.defaultType</code>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align:right;">
+                <span style="color: red;">*</span> 最大上传文件大小
             </td>
             <td>
                 <input autocomplete="off" type="text" name="size" id="size" value="{{=d.size}}" placeholder="请输入站点名称" class="layui-input" lay-verify="required">
@@ -53,7 +76,7 @@
         </tr>
         <tr>
             <td style="text-align:right;">
-                <span style="color: red;">*</span>允许上传的文件后缀
+                <span style="color: red;">*</span> 允许上传的文件后缀
             </td>
             <td>
                 <input autocomplete="off" type="text" name="mime" id="mime" value="{{=d.mime}}" placeholder="请输入站点名称" class="layui-input" lay-verify="required">
