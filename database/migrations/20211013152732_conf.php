@@ -28,8 +28,8 @@ class Conf extends Migrator
             '1'  => [
                 'group'     => 'system.upload',
                 'key'       => 'defaultType',
-                'value'     => '200MB',
-                'form_type' => 'input',
+                'value'     => 'local',
+                'form_type' => 'xmSelect',
             ],
             '2'  => [
                 'group'     => 'system.upload',
