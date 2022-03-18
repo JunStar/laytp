@@ -117,6 +117,8 @@ class UploadDomain
      */
     static public function addUploadDomain($string, $uploadType = 'local')
     {
+        $defaultType = ConfServiceFacade::get('system.upload.defaultType', 'local');
+        if($uploadType == 'default') $uploadType = $defaultType;
         $uploadDomain = self::getUploadDomain($uploadType, 'via');
         //ueditor编辑器正则替换所有的图片、视频、音频
         /*    $string       = preg_replace("/(<img .*?src=\")^(?!http)(.*?)(\".*?>+)/is", "\${1}{$uploadDomain}\${2}\${3}", $string);*/
@@ -144,6 +146,8 @@ class UploadDomain
      */
     static public function delUploadDomain($string, $uploadType = 'local')
     {
+        $defaultType = ConfServiceFacade::get('system.upload.defaultType', 'local');
+        if($uploadType == 'default') $uploadType = $defaultType;
         $uploadDomain = addcslashes(self::getUploadDomain($uploadType, 'via'), '/');
         //ueditor编辑器正则替换所有的图片、视频、音频
         $string = preg_replace("/(<img .*?src=\"){$uploadDomain}(.*?)(\".*?>+)/is", "\${1}\${2}\${3}", $string);
