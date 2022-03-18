@@ -331,17 +331,18 @@ layui.define([
         /**
          * ajax封装
          * @param options
-         *  options.route         route和url二选一，优先使用route，请求接口的路由，函数内部会自行兼容单域名和多域名部署模式
-         *  options.url           route和url二选一，请求接口的完整url地址，如果仅设置了url参数，那么url的值是什么，ajax请求的地址就是什么
-         *  options.data          请求参数,调用时允许设置成对象，封装函数会判断为对象时，自动转换成json字符串
-         *  options.type          请求方式,默认为POST
-         *  options.async         是否异步请求，默认为true，是异步请求
-         *  options.contentType   参数传递的格式，默认application/json
-         *  options.dataType      解析数据返回的格式，默认json
-         *  options.successAlert  请求成功是否弹窗提示，默认true
-         *  options.errorAlert    请求失败是否弹窗提示，默认true
-         *  options.showLoading   是否显示加载层，默认false，不显示加载层
-         *  options.headers       ajax请求时，需要传递的headers，默认值使用ajaxHeaders全局变量进行定义
+         *  options.route          route和url二选一，优先使用route，请求接口的路由，函数内部会自行兼容单域名和多域名部署模式
+         *  options.url            route和url二选一，请求接口的完整url地址，如果仅设置了url参数，那么url的值是什么，ajax请求的地址就是什么
+         *  options.data           请求参数,调用时允许设置成对象，封装函数会判断为对象时，自动转换成json字符串
+         *  options.type           请求方式,默认为POST
+         *  options.async          是否异步请求，默认为true，是异步请求
+         *  options.contentType    参数传递的格式，默认application/json
+         *  options.dataType       解析数据返回的格式，默认json
+         *  options.successAlert   请求成功是否弹窗提示，默认true
+         *  options.errorAlert     请求失败是否弹窗提示，默认true
+         *  options.exceptionAlert 请求异常是否弹窗提示，默认true
+         *  options.showLoading    是否显示加载层，默认false，不显示加载层
+         *  options.headers        ajax请求时，需要传递的headers，默认值使用ajaxHeaders全局变量进行定义
          * @returns {PromiseLike<T | never> | Promise<T | never> | *}
          */
         ajax: function (options) {
@@ -362,6 +363,7 @@ layui.define([
             }
             if (options.successAlert == null) options.successAlert = true;
             if (options.errorAlert == null) options.errorAlert = true;
+            if (options.exceptionAlert == null) options.exceptionAlert = true;
             if (options.async == null) options.async = true;
             if (options.type == null) options.type = "POST";
             // TP6已经完全兼容application/json和application/x-www-form-urlencoded方式传递参数
@@ -373,7 +375,6 @@ layui.define([
             if (typeof options.data === "object" && options.contentType === "application/json") options.data = JSON.stringify(options.data);
             if (options.headers == null) options.headers = layui.context.get("ajaxHeaders");
 
-            // var defer = $.Deferred();
             return $.ajax({
                 timeout: 30000,
                 headers: options.headers,
@@ -413,15 +414,19 @@ layui.define([
                     // defer.resolve(res);
                 },
                 error: function (xhr) {
-                    if (xhr["responseJSON"] === undefined) {
-                        facade.error(xhr["responseText"], "异常提示");
-                    } else {
-                        facade.error("[Message:]" + xhr["responseJSON"]["message"] + "<br /><br />[File:]" + xhr["responseJSON"]["traces"][0]["file"] + "<br /><br />[Line:]" + xhr["responseJSON"]["traces"][0]["line"], "异常提示");
+                    if(options.exceptionAlert){
+                        if(xhr.status === 0){
+                            facade.error('Ajax请求【' + options.url + '】时出现网络错误');
+                        }else{
+                            if (xhr["responseJSON"] === undefined) {
+                                facade.error(xhr["responseText"]);
+                            } else {
+                                facade.error("[Message:]" + xhr["responseJSON"]["message"] + "<br /><br />[File:]" + xhr["responseJSON"]["traces"][0]["file"] + "<br /><br />[Line:]" + xhr["responseJSON"]["traces"][0]["line"], "异常提示");
+                            }
+                        }
                     }
-                    // defer.fail();
                 }
             });
-            // return defer;
 
             // return $.ajax({
             //     timeout: 30000,
