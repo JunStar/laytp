@@ -262,6 +262,9 @@
 						};
 						// 重写消息回调 [消息列表点击事件]
 						// admin.message(function(id, title, context, form) {});
+					}else{
+						$('.layui-layout-admin').html('');
+						$('body').show();
 					}
 				}).fail(function(){
 					$('.layui-layout-admin').html('');
